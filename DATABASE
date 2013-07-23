@@ -1,5 +1,5 @@
 users
-	id						// user id, primary key
+	id					// user id, primary key
 	bzid					// bzflag id
 	team					// team id
 	username				// bzflag callsign & website username
@@ -13,7 +13,7 @@ users
 	visits					// serialized array of previous visits, including ip, host and timestamp
 
 teams
-	id						// team id, primary key
+	id					// team id, primary key
 	name					// team name
 	description				// team description
 	avatar					// url to team avater
@@ -22,36 +22,36 @@ teams
 	activity				// current team activity
 	leader					// bzid of leader
 	matches_won				// number of matches won
-	matches_lost			// number of matches lost
-	matches_draw			// number of matches ending in a draw
+	matches_lost				// number of matches lost
+	matches_draw				// number of matches ending in a draw
 	members					// number of members
 	status					// team status: open, closed, deleted
 
 matches
-	id						// match id, primary key
+	id					// match id, primary key
 	team_a					// team 1
 	team_b					// team 2
-	team_a_points			// team 1 points scored
-	team_b_points			// team 2 points scored
+	team_a_points				// team 1 points scored
+	team_b_points				// team 2 points scored
 	time 					// timestamp of match
 	duration				// match duration: 20 or 30
 	entered_by				// bzid of person that entered the match
 
 countries
-	id						// country id, primary key
+	id					// country id, primary key
 	name					// country name
 	flag					// url of country flag
 
 invitations
-	id						// invite id, primary key
-	invited_player			// bzid of invited player
+	id					// invite id, primary key
+	invited_player				// bzid of invited player
 	teamid					// id of inviting team
 	expiration				// timestamp of invite expiration
 	text					// invite text
 
 mail
-	id						// mail id, primary key
-	to 						// recipient's bzid
+	id					// mail id, primary key
+	to 					// recipient's bzid
 	from					// sender's bzid
 	subject					// mail subject
 	timestamp				// timestamp of mail
