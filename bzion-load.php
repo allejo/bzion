@@ -1,23 +1,25 @@
 <?php
 
-    include('bzion-config.php');
+include('bzion-config.php');
 
-    $classesDir = array (
-        ROOT_DIR . 'classes/'
-    );
+$classesDir = array (
+    ROOT_DIR . 'classes/'
+);
 
-    function __autoload($class_name)
+function __autoload($class_name)
+{
+    global $classesDir;
+
+    foreach ($classesDir as $directory)
     {
-        global $classesDir;
-
-        foreach ($classesDir as $directory)
+        if (file_exists($directory . $class_name . '.php'))
         {
-            if (file_exists($directory . $class_name . '.php'))
-            {
-                require_once ($directory . $class_name . '.php');
-                return;
-            }
+            require_once ($directory . $class_name . '.php');
+            return;
         }
     }
+}
 
-    $mysqli = new DatabaseConnection();
+$mysqli = new DatabaseConnection();
+
+?>
