@@ -33,7 +33,7 @@ matches
 	team_b					// team 2
 	team_a_points				// team 1 points scored
 	team_b_points				// team 2 points scored
-	time 					// timestamp of match
+	timestamp 					// timestamp of match
 	duration				// match duration: 20 or 30
 	entered_by				// bzid of person that entered the match
 
@@ -45,7 +45,7 @@ countries
 invitations
 	id					// invite id, primary key
 	invited_player				// bzid of invited player
-	teamid					// id of inviting team
+	team					// id of inviting team
 	expiration				// timestamp of invite expiration
 	text					// invite text
 
@@ -57,3 +57,11 @@ mail
 	timestamp				// timestamp of mail
 	message					// mail body
 	status					// status of mail: unread, read, reported, deleted
+
+visits
+	id					// visit id, primary key
+	bzid					// bzid of visiting player
+	ip					// visitor's ip address
+	host					// visitor's host
+	referer					// HTTP referer
+	timestamp				// timestamp of visit
