@@ -28,10 +28,13 @@ teams
 
 matches
 	id					// match id, primary key
-	team_a					// team 1
-	team_b					// team 2
-	team_a_points				// team 1 points scored
-	team_b_points				// team 2 points scored
+	team_a					// team a
+	team_b					// team b
+	team_a_points				// team a points scored
+	team_b_points				// team b points scored
+	team_a_elo				// team a new elo
+	team_b_elo				// team b new elo
+	elo_diff				// difference between new elo and old elo
 	timestamp 				// timestamp of match
 	duration				// match duration: 20 or 30
 	entered_by				// bzid of person that entered the match
