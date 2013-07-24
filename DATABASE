@@ -65,3 +65,28 @@ visits
 	host					// visitor's host
 	referer					// HTTP referer
 	timestamp				// timestamp of visit
+	
+pages
+	id					// page id, primary key
+	name					// page name
+	content					// page content
+	created					// timestamp of creation
+	updated					// timestamp of last update
+	author					// bzid of author
+	
+news
+	id					// news id, primary key
+	subject					// news subject
+	content					// news content
+	created					// timestamp of creation
+	updated					// timestamp of last update
+	author					// bzid of author
+	
+bans
+	id					// ban id, primary key
+	player					// bzid of banned player
+	expiration				// timestamp when ban is lifted
+	reason					// ban reason
+	created					// timestamp of creation
+	updated					// timestamp of last update
+	author					// bzid of banner
