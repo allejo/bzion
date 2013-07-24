@@ -1,0 +1,39 @@
+<html> 
+<head>
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="jquery.jeditable.js"></script>
+<script>
+</script>
+</head>
+<body>
+<div class="container1">
+<a href="#"><h2>GU-League</h2></a>
+<div class="menubar" style="margin-top:12px; text-align:center;">
+<a id="next" href="#">Home</a>
+<a id="next" href="news.html">News</a>
+<a id="next" href="matches.html">Matches</a>
+<a id="next" href="teams.html">Teams</a>
+<a id="next" href="rules.html">Rules</a>
+<a id="next" href="faq.html">Info</a>
+<a id="next" href="contact.html">Contact</a>
+</div>
+<a href="profilepage.html"><div id="loginbutton"> Log in </div></a>
+</div>
+
+<div class="main_body_text">
+<div id="team1"> Team 1: <select id="team_name"><option value="team">Team1</option></select></div> <br>
+<div id="team2"> Team 2: </div>
+<input id="field" type="text" placeholder="team1's score">  
+<br><br>
+<input id="field" type="text" placeholder="team2's score">  
+
+
+</div>
+<script>
+  $(".menubar").hide(0).delay(100).fadeIn("slow")
+  $(".main_body_text").hide(0).delay(300).fadeIn("slow")
+</script>
+</body> 
+
+</html>

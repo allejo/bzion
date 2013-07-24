@@ -1,0 +1,515 @@
+h2 {
+font-family: HelveticaNeue-CondensedBold;
+font-weight: normal;
+color: #0CA7DB;
+position: absolute;
+margin-left:20px;
+margin-bottom:0px;
+margin-top: 0px; 
+top: 6px;
+}
+h2:hover{
+color: orange;
+}
+#large_title{
+font-family:"HelveticaNeue-CondensedBold";
+font-size:3.4em;
+text-align:center;
+}
+#notfound{
+font-family:"Baskerville";
+font-size:1.4em;
+text-align: center;
+}
+.container1{
+background-color: #333;
+position: fixed;
+left: 0;
+top: 0;
+width:100%;
+height: 40px;
+box-shadow: 0px 0px 10px grey;
+}
+body{
+background-image: url("../imgs/bg.png");
+}
+#next{
+color: white;
+text-transform: uppercase;
+text-decoration: none;
+font-family: HelveticaNeue;
+margin-right: 10px;
+padding: 2px 4px 2px 5px;
+border: 1px solid grey;
+font-size: 13px;
+}
+#next:hover{
+color: orange;
+}
+#loginbutton{
+font-family: "helveticaNeue-light";
+position: absolute;
+top: 6px;
+right: 12px;
+font-size: 1.3em;
+color: #0CA7DB;
+}
+#loginbutton:hover{
+color: orange;
+}
+body .main_body_text{
+margin-top: 87px;
+margin-left: auto;
+margin-right: auto;
+padding: 0;
+}
+.main_body_text{
+width:600px;
+font-family: HelveticaNeue-light;
+font-size: 14px;
+line-height: 1.5em;
+}
+#server{
+margin-left:8px;
+}
+#heading{
+font-weight: bold;
+font-family: "HelveticaNeue-Light";
+}
+.attending{
+width: 256px;
+height: 256px;
+background-color: rgb(26,51,78);
+float: left;
+margin: 143 30;
+font-family: GillSans-Light;
+box-shadow: 0px 0px 8px grey;
+}
+body .playercontent{
+margin-top: 87px;
+margin-left: auto;
+margin-right: auto;
+padding: 0;
+}
+label{
+text-align:left;
+}
+.button_save{
+background: rgb(51,51,51);
+padding: 10px;
+box-shadow: 0px 0px 10px grey;
+color: white;
+text-decoration: none;
+}
+.playercontent{
+width: 300px;
+height: 300px;
+background-color:rgb(51,51,51);
+box-shadow:0px 0px 10px black;
+}
+
+#name{
+position:absolute;
+margin-left: 15px; 
+margin-top: 9px;
+color:white;
+font-family:HelveticaNeue-CondensedBold;
+font-size:24px;
+float:top;
+}
+body .tableui{
+width: 60%;
+margin: 0 auto;
+margin-top: 70px; 
+box-shadow:0px 0px 10px grey;
+}
+.tableui{
+border-radius:5px;
+}
+#match_tr{
+text-align:center;
+width: 80px;
+height: 30px;
+background-color: white;
+font-family:HelveticaNeue-light;
+border-radius:20px;
+}
+.previous_matches{
+border-radius:5px;
+width: 40%;
+}
+.options_box{
+float: right;
+background-color:rgb(51,51,51);
+width:31%;
+height:32px;
+box-shadow: 0px 0px 10px black;
+border-radius:10px;
+}
+#match2_tr{
+text-align:center;
+width: 120px;
+height: 40px;
+background-color: white;
+font-family:HelveticaNeue-light;
+border-radius:20px;
+}
+.teampage_container{
+margin: 0 auto;
+width: 80%;
+margin-top:80px;
+
+}
+.match_stats{
+width: 30%;
+border-radius: 5px;
+margin-top: 30px;
+}
+#member_tr a{
+color: black;
+}
+#stats_tr{
+width:80px;
+height:30px;
+font-family:HelveticaNeue-light;
+text-align:center;
+background-color:white;
+}
+#team_desc{
+width: 70%;
+margin-top: 10px;
+font-family: HelveticaNeue-Light;
+}
+#team_name{
+position:absolute;
+margin-left: 15px; 
+margin-top: 49px;
+color:white;
+font-family:HelveticaNeue-Light;
+font-size:20px;
+}
+#team_name a{
+color: white;
+}
+#team_name a:hover { color: orange; }
+#country{
+position:absolute;
+margin-left: 15px; 
+margin-top: 89px;
+color:white;
+font-family:HelveticaNeue-Light;
+font-size:20px;
+}
+
+.member_table{
+width: 40%;
+margin-top: 30px;
+}
+#member_tr{
+width:120px;
+height:30px;
+font-family: HelveticaNeue-Light;
+text-align:left;
+background-color:white;
+margin-left:10px;
+}
+#title_tr{
+width:120px;
+height:30px;
+font-family: HelveticaNeue-Light;
+text-align:left;
+background-color:white;
+}
+
+#bzid{
+position:absolute;
+margin-left: 15px; 
+margin-top: 129px;
+color:white;
+font-family:HelveticaNeue-Light;
+font-size:20px;
+}
+#joined{
+position:absolute;
+margin-left: 15px; 
+margin-top: 169px;
+color:white;
+font-family:HelveticaNeue-Light;
+font-size:20px;
+}
+#subject{
+position: absolute;
+margin-left: 9px;
+font-size: 22px;
+color: white;
+margin-top: 9px;
+}
+#button{
+font-family: Helvetica Neue;
+font-size:13px;
+color: white;
+text-transform: uppercase;
+position: relative;
+float: left;
+left: 6px;
+border: 0.2px solid grey;
+padding: 10px;
+top: 87%;
+right: 0px;
+}
+#button_team_options{
+font-family: Helvetica Neue;
+font-size:13px;
+color: white;
+text-transform: uppercase;
+float: left;
+left: 6px;
+border: 0.2px solid grey;
+padding: 10px;
+margin-top: 0px;
+right: 0px;
+text-align:center;
+}
+#button_team_options_disabled{
+font-family: Helvetica Neue;
+font-size:13px;
+color: silver;
+text-transform: uppercase;
+float: left;
+left: 6px;
+border: 0.2px solid grey;
+padding: 10px;
+margin-top: 0px;
+right: 0px;
+text-align:center;
+}
+#button_team_options:hover{
+color:orange;
+}
+#button:hover{
+color: orange;
+}
+.attending:hover{
+background-color: rgb(26,102,178);
+
+}
+.mailbox{
+width:29%;
+float: left;
+margin-left: 20px;
+margin-top: 80px;
+}
+
+.mail_list{
+width: 100%;
+}
+#mail{
+width: 100%;
+background-color:white;
+
+}
+#mail:hover{
+background-color: rgb(51,51,51);
+color: white;
+}
+
+.mail_content{
+width: 67%;
+float:right;
+background-color: white;
+height: 80%;
+margin-top: 80px;
+margin-right: 30px; 
+}
+.mail_toolbar{
+background-color: rgb(51,51,51);
+width:100%;
+height:32px;
+}
+.toggle_toolbar{
+background-color: rgb(51,51,51);
+width:99%;
+height:32px;
+margin-left:2px;
+}
+#message_options{
+font-family: Helvetica Neue;
+font-size:13px;
+color: white;
+text-transform: uppercase;
+float: left;
+left: 6px;
+border: 0.2px solid grey;
+padding: 10px;
+margin-top: 0px;
+right: 0px;
+text-align:center;
+}
+#message_options_disabled{
+font-family: Helvetica Neue;
+font-size:13px;
+color: silver;
+text-transform: uppercase;
+float: left;
+left: 6px;
+border: 0.2px solid grey;
+padding: 10px;
+margin-top: 0px;
+right: 0px;
+text-align:center;
+}
+#toggle_options{
+font-family: Helvetica Neue;
+font-size:13px;
+color: white;
+text-transform: uppercase;
+float: left;
+left: 6px;
+border: 0.2px solid grey;
+padding: 10px;
+margin-top: 0px;
+right: 0px;
+text-align:center;
+}
+
+#message_options:hover{
+color: orange;
+}
+#toggle_options:hover{
+color: orange;
+}
+.team_content{
+width: 80%;
+margin:0 auto;
+margin-top: 70px;
+}
+.teams_table{
+table-layout: fixed;
+width:100%;
+}
+
+#teams_tr{
+width:120px;
+height:30px;
+font-family: HelveticaNeue-Light;
+text-align:left;
+background-color:white;
+margin-left:10px;
+
+}
+.news_content{
+width: 70%;
+margin: 0 auto;
+margin-top: 70px;
+}
+.news_box{
+width: 50%;
+margin: 0px auto;
+background-color: white;
+line-height:1.4em;
+box-shadow: 0px 0px 10px grey;
+margin-top: 30px;
+padding-bottom:6px;
+}
+#news_title{
+font-size: 1.5em;
+font-family: HelveticaNeue-light;
+margin-left: 6px;
+text-align: center;
+}
+#author, #author a{
+color: #ffffff;
+text-decoration: none;
+font-family: HelveticaNeue-light;
+margin-left: 6px;
+text-align: left;
+float: left;
+}
+.content{
+font-family: Baskerville;
+margin-left: 6px;
+}
+
+#date_of_add{
+text-align: right;
+font-family: HelveticaNeue-light;
+margin-right:6px;
+}
+
+.title_and_author{
+width=100%; 
+background-color:rgb(51,51,51); 
+color: white; 
+padding-top: 5px;
+}
+
+.rules_content{
+width:60%;
+margin: 0 auto;
+margin-top: 80px;
+font-family: HelveticaNeue;
+}
+#title{
+font-family: helveticaNeue-condensedbold;
+font-size:28px;
+}
+#penalty{
+font-family: HelveticaNeue;
+font-weight: bold;
+}
+.contact_content{
+width:60%;
+margin: 0 auto;
+margin-top: 80px;
+font-family: HelveticaNeue;
+}
+.faq_content{
+width:70%;
+margin: 0 auto;
+margin-top: 80px;
+font-family: HelveticaNeue;
+}
+#compose_page_content{
+width:48%;
+margin:0 auto;
+margin-top:80px;
+text-align:center;
+display: none;
+}
+#field {
+width: 80%;
+height: 42px;
+padding-left:10px;
+border-radius: 11px;
+border: 0px;
+font-family: HelveticaNeue-Light;
+font-size: 18;
+box-shadow: 0 1px 1px #CCC inset, 0 1px 0 white;
+background-color: white;
+color: black;
+}
+
+#label{
+font-family: HelveticaNeue;
+font-weight: bold;
+font-stretch: condensed;
+float:left;
+}
+#text_content{
+margin: 2px;
+width: 80%;
+border: none;
+box-shadow: rgb(204, 204, 204) 0px 1px 1px inset, white 0px 1px 0px;
+font-family: Helvetica Neue;
+font-weight: 300;
+padding-left: 10px;
+border-radius: 10px;
+font-size: 0.9em;
+}
+#add_button{
+background-image:url('../imgs/add_button.png');
+float:right;
+width:32px;
+height:32px;
+background-size: 32 32;
+}

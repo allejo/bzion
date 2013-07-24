@@ -1,0 +1,42 @@
+<html> 
+<head>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="jquery.jeditable.js"></script>
+<script>
+</script>
+</head>
+<body>
+<div class="container1">
+<a href="#"><h2>GU-League</h2></a>
+<div class="menubar" style="margin-top:12px; text-align:center;">
+<a id="next" href="#">Home</a>
+<a id="next" href="news.html">News</a>
+<a id="next" href="matches.html">Matches</a>
+<a id="next" href="teams.html">Teams</a>
+<a id="next" href="rules.html">Rules</a>
+<a id="next" href="faq.html">Info</a>
+<a id="next" href="contact.html">Contact</a>
+</div>
+<a href="profilepage.html"><div id="loginbutton"> Log in </div></a>
+</div>
+
+<div class="main_body_text">
+<input id="field" type="text" placeholder="team name">  
+<br><br>
+<textarea rows="14", cols="60" id="text_content">Team Description</textarea> 
+<br><br>
+
+<label>Want people to join without an invite?<input id="team_join_status" type="checkbox" value="yes"></label>
+<br><br>
+<a href="#" class="button_save">Save</a>
+<a href="#" class="button_save">Discard</a>
+
+</div>
+<script>
+  $(".menubar").hide(0).delay(100).fadeIn("slow")
+  $(".main_body_text").hide(0).delay(300).fadeIn("slow")
+</script>
+</body> 
+
+</html>
