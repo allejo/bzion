@@ -63,8 +63,6 @@ class DatabaseConnection
     /**
      * Prepares and executes a MySQL prepared statement
      *
-     * @example ../examples/prepared_query.php Example usage for this function
-     *
      * @param String $query The prepared SQL statement that will be executed
      * @param Array $parameters The array of values that will be binded to the prepared statement
      * @param String $param_types The types of values that will be passed through the prepared statement
