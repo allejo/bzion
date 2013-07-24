@@ -10,7 +10,6 @@ users
 	timezone				// timezone
 	joined					// join date
 	last_login				// date of last login
-	visits					// serialized array of previous visits, including ip, host and timestamp
 
 teams
 	id					// team id, primary key
@@ -33,9 +32,10 @@ matches
 	team_b					// team 2
 	team_a_points				// team 1 points scored
 	team_b_points				// team 2 points scored
-	timestamp 					// timestamp of match
+	timestamp 				// timestamp of match
 	duration				// match duration: 20 or 30
 	entered_by				// bzid of person that entered the match
+	status					// match status: entered, deleted
 
 countries
 	id					// country id, primary key
