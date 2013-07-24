@@ -3,7 +3,8 @@ users
 	bzid					// bzflag id
 	team					// team id
 	username				// bzflag callsign & website username
-	status					// website status: active, disabled, banned, etc
+	status					// website status: active, disabled, banned
+	access					// access level id
 	avatar					// url to profile avatar
 	description				// profile description
 	country					// geographical location
@@ -93,3 +94,11 @@ bans
 	created					// timestamp of creation
 	updated					// timestamp of last update
 	author					// bzid of banner
+	
+servers
+	id					// server id, primary key
+	name					// server name
+	address					// server address, including port
+	owner					// bzid of owner
+	info					// serialized array of bzfquery info
+	updated					// last update
