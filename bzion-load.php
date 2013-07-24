@@ -21,5 +21,3 @@ function __autoload($class_name)
 }
 
 $mysqli = new DatabaseConnection();
-
-?>
