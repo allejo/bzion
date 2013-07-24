@@ -11,4 +11,5 @@ Matthew Pavia (tw1sted)<br\>
 Ashvala Vinay (ashvala)<br\>
 
 ## License
-GNU Lesser General Public License 3.0
+GNU Lesser General Public License 3.0<br\>
+http://www.gnu.org/licenses/lgpl.txt
