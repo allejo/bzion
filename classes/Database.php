@@ -115,6 +115,7 @@ class Database
                 if ($stmt->execute())
                 {
                     $resultMetaData = $stmt->result_metadata();
+                    $this->last_id = $stmt->insert_id;
 
                     if ($resultMetaData)
                     {
@@ -142,8 +143,6 @@ class Database
                         }
 
                         mysqli_stmt_free_result($stmt);
-
-                        $this->last_id = $stmt->insert_id;
                     }
                     else
                         $queryResult[] = mysqli_stmt_affected_rows($stmt);
