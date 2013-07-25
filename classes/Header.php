@@ -39,11 +39,16 @@ class Header {
     <body>
 
         <a href="index.php">Home</a> | 
+
         <?php if (isset($_SESSION['username'])) { ?>
+
         <a href="profile.php">Profile</a> | 
         <a href="logout.php">Logout [<?php echo $_SESSION['username']; ?>]</a>
+
         <?php } else { ?>
+
         <a href="login.php">Login</a>
+        
         <?php } ?>
 
     <?php
