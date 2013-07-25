@@ -1,7 +1,7 @@
 <?php
 
 class Player {
-	
+
 	private $id;
 	private $bzid;
 	private $team;

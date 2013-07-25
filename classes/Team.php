@@ -1,29 +1,29 @@
 <?php
 
 class Team {
-	
-	private $id;
-	private $name;
-	private $description;
-	private $avatar;
-	private $created;
-	private $elo;
-	private $activity;
-	private $leader;
-	private $mathes_won;
-	private $mathes_lost;
-	private $mathes_draw;
-	private $total_matches;
-	private $members;
-	private $status;
 
-	private $db;
+		private $id;
+		private $name;
+		private $description;
+		private $avatar;
+		private $created;
+		private $elo;
+		private $activity;
+		private $leader;
+		private $mathes_won;
+		private $mathes_lost;
+		private $mathes_draw;
+		private $total_matches;
+		private $members;
+		private $status;
 
-	function __construct($id) {
+		private $db;
+
+		function __construct($id) {
 
 		$this->db = new Database();
 		$this->id = $id;
-		
+
 		$results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
 
 		$this->name = $results['name'];
