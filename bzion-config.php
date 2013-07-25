@@ -12,7 +12,7 @@ DEFINE("MYSQL_PASSWORD", "password");
  * An array of directories to be autoloaded in bzion-config.php
  */
 $classesDir = array (
-    'classes/'
+    "classes/"
 );
 
 /*
