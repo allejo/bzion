@@ -21,10 +21,10 @@ class Team {
 	function __construct($id) {
 
 		$this->db = new Database();
+		$this->id = $id;
+		
+		$results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
 
-		$results = $this->db->query("SELECT * FROM teams WHERE id = '" . $id . "'");
-
-		$this->id = $results['id'];
 		$this->name = $results['name'];
 		$this->description = $results['description'];
 		$this->avatar = $results['avatar'];
@@ -45,7 +45,7 @@ class Team {
 	}
 
 	function members() {
-		$members = $this->db->query("SELECT * FROM users WHERE team = '" . $this->id . "'");
+		$members = $this->db->query("SELECT * FROM users WHERE team = ?", "i", array($this->id));
 		return $members;
 	}
 
