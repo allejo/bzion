@@ -2,11 +2,8 @@
 
 class DatabaseConnection
 {
-    public $dbc;             //The database object we'll be using
-    public $result;          //The results from any
-    public $num_rows;        //The number of rows returned in a query
-    public $last_id;         //The ID of the last row updated/entered
-    public $PATH_TO_UPLOADS; //The location where image uploads will be stored
+    private $dbc;            //The database object we'll be using
+    private $last_id;        //The ID of the last row updated/entered
 
     /**
      * Create a new connection to the database
@@ -24,17 +21,6 @@ class DatabaseConnection
     function __destruct()
     {
         $this->closeConnection();
-    }
-
-    /**
-     * Clean a string from SQL injections
-     *
-     * @param (String) The string to be cleansed
-     * @return (String) The cleaned string
-     */
-    function clean_string($string)
-    {
-        return $this->dbc->real_escape_string($string);
     }
 
     /**
@@ -61,6 +47,16 @@ class DatabaseConnection
     }
 
     /**
+     * Get the unique row ID of the last row that was inserted
+     *
+     * @return Int The ID of the row
+     */
+    function getInsertId()
+    {
+        return $this->last_id;
+    }
+
+    /**
      * Prepares and executes a MySQL prepared statement
      *
      * @param String $query The prepared SQL statement that will be executed
@@ -73,7 +69,7 @@ class DatabaseConnection
     {
         if ($stmt = $this->dbc->prepare($query))
         {
-            if(count($params) == count($params, 1))
+            if (count($params) == count($params, 1))
             {
                 $params = array($params);
                 $multiQuery = false;
@@ -81,13 +77,13 @@ class DatabaseConnection
             else
                 $multiQuery = true;
 
-            if($typeDef)
+            if ($typeDef)
             {
                 $bindParams = array();
                 $bindParamsReferences = array();
                 $bindParams = array_pad($bindParams, (count($params, 1) - count($params))/count($params), "");
 
-                foreach($bindParams as $key => $value)
+                foreach ($bindParams as $key => $value)
                     $bindParamsReferences[$key] = &$bindParams[$key];
 
                 array_unshift($bindParamsReferences, $typeDef);
@@ -96,17 +92,17 @@ class DatabaseConnection
             }
 
             $result = array();
-            foreach($params as $queryKey => $query)
+            foreach ($params as $queryKey => $query)
             {
-                foreach($bindParams as $paramKey => $value)
+                foreach ($bindParams as $paramKey => $value)
                     $bindParams[$paramKey] = $query[$paramKey];
 
                 $queryResult = array();
-                if($stmt->execute())
+                if ($stmt->execute())
                 {
                     $resultMetaData = $stmt->result_metadata();
 
-                    if($resultMetaData)
+                    if ($resultMetaData)
                     {
                         $stmtRow = array();
                         $rowReferences = array();
@@ -120,10 +116,10 @@ class DatabaseConnection
                         $bindResultMethod = new ReflectionMethod('mysqli_stmt', 'bind_result');
                         $bindResultMethod->invokeArgs($stmt, $rowReferences);
 
-                        while(mysqli_stmt_fetch($stmt))
+                        while (mysqli_stmt_fetch($stmt))
                         {
                             $row = array();
-                            foreach($stmtRow as $key => $value)
+                            foreach ($stmtRow as $key => $value)
                             {
                                 $row[$key] = $value;
                             }
@@ -132,6 +128,8 @@ class DatabaseConnection
                         }
 
                         mysqli_stmt_free_result($stmt);
+
+                        $this->last_id = $stmt->insert_id;
                     }
                     else
                         $queryResult[] = mysqli_stmt_affected_rows($stmt);
@@ -147,7 +145,7 @@ class DatabaseConnection
         else
             $result = false;
 
-        if($multiQuery)
+        if ($multiQuery)
             return $result;
         else
             return $result[0];
