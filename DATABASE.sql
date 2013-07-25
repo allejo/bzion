@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS `invitations` (
 
 CREATE TABLE IF NOT EXISTS `mail` (
   `id` int(10) unsigned NOT NULL,
-  `to` int(10) unsigned NOT NULL,
-  `from` int(10) unsigned NOT NULL,
+  `player_to` int(10) unsigned NOT NULL,
+  `player_from` int(10) unsigned NOT NULL,
   `subject` varchar(100) NOT NULL,
   `timestamp` datetime NOT NULL,
   `message` text NOT NULL,
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `team_b` int(10) unsigned NOT NULL,
   `team_a_points` int(11) NOT NULL,
   `team_b_points` int(11) NOT NULL,
-  `team_a_elo` int(10) unsigned NOT NULL,
-  `team_b_elo` int(10) unsigned NOT NULL,
+  `team_a_elo_new` int(10) unsigned NOT NULL,
+  `team_b_elo_new` int(10) unsigned NOT NULL,
   `elo_diff` int(10) unsigned NOT NULL,
   `timestamp` datetime NOT NULL,
   `updated` datetime NOT NULL,
