@@ -3,7 +3,7 @@
 include('bzion-config.php');
 
 $classesDir = array (
-    ROOT_DIR . 'classes/'
+    'classes/'
 );
 
 function __autoload($class_name)
