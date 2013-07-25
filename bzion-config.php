@@ -9,7 +9,7 @@ DEFINE("MYSQL_USER", "bzion_admin");
 DEFINE("MYSQL_PASSWORD", "password");
 
 /*
- * An array of directories to be autoloaded in bzion-config.php
+ * An array of directories to be autoloaded in bzion-load.php
  */
 $classesDir = array (
     "classes/"
