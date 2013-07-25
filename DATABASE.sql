@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `bzid` int(10) unsigned NOT NULL,
   `team` int(10) unsigned NOT NULL,
   `username` varchar(32) NOT NULL,
-  `status` set('active', 'disabled', 'deleted', 'banned') NOT NULL DEFAULT 'active',
+  `status` set('active', 'disabled', 'deleted', 'reportted', 'banned') NOT NULL DEFAULT 'active',
   `access` tinyint(4) NOT NULL,
   `avatar` varchar(200) NOT NULL,
   `description` text NOT NULL,
