@@ -23,7 +23,7 @@ class Match {
         $this->db = new Database();
         $this->id = $id;
 
-        $results = $this->db->query("SELECT * FROM matches WHERE bzid = ?", "i", array($id));
+        $results = $this->db->query("SELECT * FROM matches WHERE id = ?", "i", array($id));
 
         $this->team_a = $results['team_a'];
         $this->team_b = $results['team_b'];
