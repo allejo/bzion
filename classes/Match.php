@@ -59,6 +59,8 @@ class Match {
         $db = new Database();
         $results = $db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iiiiiiissiii", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp, $timestamp, $duration, $entered_by, 0));
+
+        return new Match($db->getInsertId());
     }
 
     function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {

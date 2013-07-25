@@ -216,6 +216,8 @@ class Team {
 
         $db = new Database();
         $db->query($query, "sssi", $params);
+
+        return new Team($db->getInsertId());
     }
 
     /**

@@ -98,6 +98,8 @@ class Mail {
 
         $db = new Database();
         $db->query($query, "iisss", $params);
+
+        return new Mail($db->getInsertId());
     }
 
     /**
