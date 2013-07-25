@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `matches_lost` int(10) unsigned NOT NULL,
   `matches_draw` int(10) unsigned NOT NULL,
   `members` int(10) unsigned NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` set('open', 'closed', 'deleted') NOT NULL DEFAULT 'open',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
