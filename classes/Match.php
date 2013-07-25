@@ -29,8 +29,8 @@ class Match {
         $this->team_b = $results['team_b'];
         $this->team_a_points = $results['team_a_points'];
         $this->team_b_points = $results['team_b_points'];
-        $this->team_a_elo = $results['team_a_elo'];
-        $this->team_b_elo = $results['team_b_elo'];
+        $this->team_a_elo_new = $results['team_a_elo_new'];
+        $this->team_b_elo_new = $results['team_b_elo_new'];
         $this->elo_diff = $results['elo_diff'];
         $this->timestamp = new DateTime($results['timestamp']);
         $this->updated = new DateTime($results['updated']);
@@ -55,7 +55,7 @@ class Match {
 
         $timestamp = new DateTime($timestamp);
         
-        $results = $this->db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo, team_b_elo, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        $results = $this->db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iiiiiiissiii", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp, $timestamp, $duration, $entered_by, 0));
     }
 
