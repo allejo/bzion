@@ -2,10 +2,6 @@
 
 include('bzion-config.php');
 
-$classesDir = array (
-    'classes/'
-);
-
 function __autoload($class_name)
 {
     global $classesDir;
