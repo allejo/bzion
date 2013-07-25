@@ -84,12 +84,29 @@ class Mail {
     }
 
     /**
+     * Create a new message
+     * @param int $to The BZID of the receiver
+     * @param int $from The BZID of the sender
+     * @param string $subject The subject of the message
+     * @param string $message The body of the message
+     * @param string $status The status of the message - can be 'opened', 'unopened', 'deleted' or 'reported'
+     */
+    public static function sendMail($to, $from, $subject, $message, $status='unopened')
+    {
+        $query = "INSERT INTO mail VALUES(NULL, ?, ?, ?, NOW(), ?, ?)";
+        $params = array($to, $from, $subject, $message, $status);
+
+        $db = new Database();
+        $db->query($query, "iisss", $params);
+    }
+
+    /**
      * Delete the message
      *
      * Please note that this does not delete the message entirely from the database,
      * it only hides it from users.
      */
-    function delete() {
+    public function delete() {
         $this->__set('status', 'deleted');
     }
 
@@ -98,7 +115,7 @@ class Mail {
      *
      * This function deletes the message from the database, making it impossible to recover.
      */
-    function wipe() {
+    public function wipe() {
         $this->db->query("DELETE FROM mail WHERE id = ?", "i", array($this->id));
     }
 
