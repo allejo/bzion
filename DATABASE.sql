@@ -9,7 +9,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `bans` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player` int(10) unsigned NOT NULL,
   `expiration` datetime NOT NULL,
   `reason` varchar(200) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `bans` (
 --
 
 CREATE TABLE IF NOT EXISTS `countries` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `flag` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
 --
 
 CREATE TABLE IF NOT EXISTS `invitations` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `invited_player` int(10) unsigned NOT NULL,
   `team` int(10) unsigned NOT NULL,
   `expiration` datetime NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `invitations` (
 --
 
 CREATE TABLE IF NOT EXISTS `mail` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player_to` int(10) unsigned NOT NULL,
   `player_from` int(10) unsigned NOT NULL,
   `subject` varchar(100) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
 --
 
 CREATE TABLE IF NOT EXISTS `matches` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `team_a` int(10) unsigned NOT NULL,
   `team_b` int(10) unsigned NOT NULL,
   `team_a_points` int(11) NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `matches` (
 --
 
 CREATE TABLE IF NOT EXISTS `news` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `subject` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `created` datetime NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `news` (
 --
 
 CREATE TABLE IF NOT EXISTS `pages` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `created` datetime NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 --
 
 CREATE TABLE IF NOT EXISTS `permissions` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `add_user` tinyint(4) NOT NULL,
   `edit_user` tinyint(4) NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `players` (
 --
 
 CREATE TABLE IF NOT EXISTS `servers` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `address` varchar(50) NOT NULL,
   `owner` int(10) unsigned NOT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `servers` (
 --
 
 CREATE TABLE IF NOT EXISTS `teams` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
   `avatar` varchar(200) NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `teams` (
 --
 
 CREATE TABLE IF NOT EXISTS `visits` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `bzid` int(10) unsigned NOT NULL,
   `ip` varchar(15) NOT NULL,
   `host` varchar(100) NOT NULL,
