@@ -82,7 +82,7 @@ class Team {
 
     /**
      * The team's status
-     * @var int
+     * @var string
      */
     private $status;
 
