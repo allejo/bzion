@@ -7,8 +7,8 @@ class Match {
     private $team_b;
     private $team_a_points;
     private $team_b_points;
-    private $team_a_elo;
-    private $team_b_elo;
+    private $team_a_elo_new;
+    private $team_b_elo_new;
     private $elo_diff;
     private $timestamp;
     private $updated;
@@ -54,7 +54,7 @@ class Match {
         $diff = abs($diff);
 
         $timestamp = new DateTime($timestamp);
-        
+
         $results = $this->db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iiiiiiissiii", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp, $timestamp, $duration, $entered_by, 0));
     }
