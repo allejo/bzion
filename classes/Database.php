@@ -58,7 +58,7 @@ class Database
     }
 
     /**
-     * Prepares and executes a MySQL prepared statement
+     * Prepares and executes a MySQL prepared statement. <em>Second two parameters are optional when using this function to execute a query with no placeholders.</em>
      *
      * <code>
      *      //the appropriate letters to show what type of variable will be passed
@@ -75,8 +75,8 @@ class Database
      * </code>
      *
      * @param string $query The prepared SQL statement that will be executed
-     * @param string $typeDef The types of values that will be passed through the prepared statement. One letter per parameter
-     * @param array $params The array of values that will be binded to the prepared statement
+     * @param string $typeDef (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
+     * @param array $params (Optional) The array of values that will be binded to the prepared statement
      * @return mixed Returns an array of the values received from the query or returns false on empty
      */
     function query($query, $typeDef = FALSE, $params = FALSE)
