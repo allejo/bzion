@@ -13,6 +13,7 @@ class Team {
 	private $mathes_won;
 	private $mathes_lost;
 	private $mathes_draw;
+	private $total_matches;
 	private $members;
 	private $status;
 
@@ -38,10 +39,8 @@ class Team {
 		$this->members = $results['members'];
 		$this->status = $results['status'];
 
-	}
+		$total_matches = $this->matches_won + $this->matches_lost + $this->matches_draw;
 
-	function total_matches() {
-		return ($this->matches_won + $this->matches_lost + $this->matches_draw);
 	}
 
 	function members() {
