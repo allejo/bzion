@@ -4,15 +4,52 @@ include_once("bzfquery.php");
 
 class Server {
 
+    /**
+     * The id of the server
+     * @var int
+     */
     private $id;
+
+    /**
+     * The name of the server
+     * @var string
+     */
     private $name;
+
+    /**
+     * The address of the server
+     * @var string
+     */
     private $address;
+
+    /**
+     * The bzid of the owner of the server
+     * @var int
+     */
     private $owner;
+
+    /**
+     * The server's bzfquery information
+     * @var mixed
+     */
     private $info;
+
+    /**
+     * The date of the last bzfquery of the server
+     * @var string
+     */
     private $updated;
 
+    /**
+     * The database variable used for queries
+     * @var MySQLi
+     */
     private $db;
 
+    /**
+     * Construct a new Server
+     * @param int $id The team's id
+     */
     function __construct($id) {
 
         $this->db = new Database();
@@ -28,7 +65,11 @@ class Server {
 
     }
 
-
+    /**
+     * Overload __set to update instance variables and database
+     * @param string $name The variable's name
+     * @param mixed $value The variable's new value
+     */
     function __set($name, $value) {
         switch ($name) {
             case 'name':
@@ -54,30 +95,56 @@ class Server {
         }
     }
 
+    /**
+     * Update the server with current information
+     */
     function force_update() {
     	$this->info = bzfquery($this->address);
     	$this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
 
+    /**
+     * Checks if the server is online (listed on the public list server)
+     * @return bool Whether the server is online
+     */
     function is_online() {
         $servers = file(LIST_SERVER);
-        return in_array($this->address, $servers);
+        foreach ($servers as $server) {
+            list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
+            if ($this->address == $host) {
+                return true;
+            }
+        }
+        return false;
     }
 
+    /**
+     * Checks if the server has players
+     * @return bool Whether the server has any players
+     */
     function has_players() {
         return $this->info['numPlayers'] > 0;
     }
 
+    /**
+     * Gets the number of players on the server
+     * @return int The number of players
+     */
     function num_players() {
         return $this->info['numPlayers'];
     }
 
+    /**
+     * Gets the players on the server
+     * @return array The players on the server
+     */
     function get_players() {
         return $this->info['player'];
     }
 
-    /*
-     * Returns if the last update was done greater than UPDATE_INTERVAL mins ago
+    /**
+     * Checks if the last update is older than the update interval
+     * @return bool Whether the information is older than the update interval
      */
     function stale_info() {
         $now = new DateTime("now");
@@ -86,6 +153,10 @@ class Server {
         return $last_update->format('%i') > UPDATE_INTERVAL;
     }
 
+    /**
+     * Gets the server's ip address
+     * @return string The server's ip address
+     */
     function server_ip() {
         return $this->info['ip'];
     }
