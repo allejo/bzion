@@ -16,6 +16,7 @@ $classesDir = array (
 );
 
 /*
- * Misc settings
+ * Miscellaneous settings
  */
-DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221");
+DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server
+DEFINE("UPDATE_INTERVAL", "5"); // Server polling interval in minutes
