@@ -1,9 +1,9 @@
 TODO
 ====
 
+<em>In no specific order</em>
+
 - Create necessary classes
-    - Bans
-    - Mail
     - Invitation
     - News
     - Page
