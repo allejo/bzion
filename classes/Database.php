@@ -49,7 +49,8 @@ class Database
     /**
      * Get the unique row ID of the last row that was inserted
      *
-     * @return Int The ID of the row
+     * @param (void)
+     * @return integer The ID of the row
      */
     function getInsertId()
     {
@@ -74,8 +75,8 @@ class Database
      * </code>
      *
      * @param String $query The prepared SQL statement that will be executed
-     * @param Array $parameters The array of values that will be binded to the prepared statement
-     * @param String $param_types The types of values that will be passed through the prepared statement
+     * @param String $typeDef The types of values that will be passed through the prepared statement
+     * @param Array $params The array of values that will be binded to the prepared statement
      *
      * @return Array The elements that were returned from the SQL query or null
      */
@@ -163,18 +164,5 @@ class Database
             return $result;
         else
             return $result[0];
-    }
-
-    /**
-     * Output an error that has occured
-     *
-     * @param (String) The error message to be displayed
-     * @param (int) The line number where the error occured
-     *
-     * @return (void)
-     */
-    function throw_error($message, $query)
-    {
-        die("The following error has occured: " . $message . "<br>Executing the following query: " . $query);
     }
 }
