@@ -2,8 +2,6 @@ TODO
 ====
 
 - Create necessary classes
-    - Bans
-    - Mail
     - Invitation
     - News
     - Page
