@@ -39,7 +39,7 @@ class Team {
 		$this->members = $results['members'];
 		$this->status = $results['status'];
 
-		$total_matches = $this->matches_won + $this->matches_lost + $this->matches_draw;
+		$this->total_matches = $this->matches_won + $this->matches_lost + $this->matches_draw;
 
 	}
 
