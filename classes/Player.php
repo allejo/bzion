@@ -22,7 +22,7 @@ class Player {
 		$this->db = new Database();
 		$this->bzid = $bzid;
 
-		$results = $this->db->query("SELECT * FROM players WHERE bzid = '" . $bzid . "'");
+		$results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
 
 		$this->id = $results['id'];
 		$this->username = $results['username'];
