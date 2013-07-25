@@ -2,23 +2,100 @@
 
 class Team {
 
+    /**
+     * The id of the team
+     * @var int
+     */
     private $id;
+
+    /**
+     * The name of the team
+     * @var string
+     */
     private $name;
+
+    /**
+     * The description of the team
+     * @var string
+     */
     private $description;
+
+    /**
+     * The url of the team's avatar
+     * @var string
+     */
     private $avatar;
+
+    /**
+     * The creation date of the teamm
+     * @var string
+     */
     private $created;
+
+    /**
+     * The team's current elo
+     * @var int
+     */
     private $elo;
+
+    /**
+     * The team's activity
+     * @var double
+     */
     private $activity;
+
+    /**
+     * The bzid of the team leader
+     * @var int
+     */
     private $leader;
+
+    /**
+     * The number of matches won
+     * @var int
+     */
     private $mathes_won;
+
+    /**
+     * The number of matches lost
+     * @var int
+     */
     private $mathes_lost;
+
+    /**
+     * The number of matches tied
+     * @var int
+     */
     private $mathes_draw;
+
+    /**
+     * The total number of matches
+     * @var int
+     */
     private $matches_total;
+
+    /**
+     * The number of members
+     * @var int
+     */
     private $members;
+
+    /**
+     * The team's status
+     * @var int
+     */
     private $status;
 
+    /**
+     * The database variable used for queries
+     * @var MySQLi
+     */
     private $db;
 
+    /**
+     * Construct a new Team
+     * @param int $id The team's id
+     */
     function __construct($id) {
 
         $this->db = new Database();
@@ -43,6 +120,11 @@ class Team {
 
     }
 
+    /**
+     * Overload __set to update instance variables and database
+     * @param string $name The variable's name
+     * @param mixed $value The variable's new value
+     */
     function __set($name, $value)
     {
         switch ($name)
@@ -119,6 +201,10 @@ class Team {
         }
     }
 
+    /**
+     * Get the members on the team
+     * @return array The members on the team
+     */
     function members() {
         $members = $this->db->query("SELECT * FROM players WHERE team = ?", "i", array($this->id));
         return $members;

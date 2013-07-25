@@ -48,7 +48,7 @@ class Server {
 
     /**
      * Construct a new Server
-     * @param int $id The team's id
+     * @param int $id The server's id
      */
     function __construct($id) {
 
@@ -96,7 +96,7 @@ class Server {
     }
 
     /**
-     * Update the server with current information
+     * Update the server with current bzfquery information
      */
     function force_update() {
     	$this->info = bzfquery($this->address);
