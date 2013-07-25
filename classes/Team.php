@@ -13,7 +13,7 @@ class Team {
     private $mathes_won;
     private $mathes_lost;
     private $mathes_draw;
-    private $total_matches;
+    private $matches_total;
     private $members;
     private $status;
 
