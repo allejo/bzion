@@ -56,7 +56,7 @@ class Mail {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM mail WHERE id = ?", "i", array($id));
-	$message = $results[0];
+        $message = $results[0];
 
         $this->to = $message['player_to'];
         $this->from = $message['player_from'];
@@ -75,12 +75,12 @@ class Mail {
         $table = "mail";
 
         if ($name == 'to' || $name == 'from') {
-	    $this->db->query("UPDATE ". $table . " SET player_" . $name . " = ? WHERE id = ?", "ii", array($value, $this->id));
-	    $this->{$name} = $value;
-	} else if ($name == 'subject' || $name == 'timestamp' || $name == 'message' || $name == 'status') {
-	    $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", "si", array($value, $this->id));
-	    $this->{$name} = $value;
-	}
+            $this->db->query("UPDATE ". $table . " SET player_" . $name . " = ? WHERE id = ?", "ii", array($value, $this->id));
+            $this->{$name} = $value;
+        } else if ($name == 'subject' || $name == 'timestamp' || $name == 'message' || $name == 'status') {
+            $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", "si", array($value, $this->id));
+            $this->{$name} = $value;
+        }
     }
 
     /**

@@ -60,7 +60,7 @@ class Ban {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM bans WHERE id = ?", "i", array($id));
-	$ban = $results[0];
+        $ban = $results[0];
 
         $this->player = $ban['player'];
         $this->expiration = new DateTime($ban['expiration']);

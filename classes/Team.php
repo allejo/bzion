@@ -102,7 +102,7 @@ class Team {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
-	$team = $results[0];
+        $team = $results[0];
 
         $this->name = $team['name'];
         $this->description = $team['description'];

@@ -56,7 +56,7 @@ class Server {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM servers WHERE id = ?", "i", array($id));
-	$server = $results[0];
+        $server = $results[0];
 
         $this->name = $server['name'];
         $this->address = $server['address'];
@@ -100,8 +100,8 @@ class Server {
      * Update the server with current bzfquery information
      */
     function force_update() {
-    	$this->info = bzfquery($this->address);
-    	$this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($this->info), $this->id));
+        $this->info = bzfquery($this->address);
+        $this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
 
     /**

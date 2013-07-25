@@ -24,7 +24,7 @@ class Match {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM matches WHERE id = ?", "i", array($id));
-	$match = $results[0];
+        $match = $results[0];
 
         $this->team_a = $match['team_a'];
         $this->team_b = $match['team_b'];

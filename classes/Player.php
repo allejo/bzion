@@ -90,7 +90,7 @@ class Player {
         $this->bzid = $bzid;
 
         $results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
-	$player = $results[0];
+        $player = $results[0];
 
         $this->id = $player['id'];
         $this->username = $player['username'];
