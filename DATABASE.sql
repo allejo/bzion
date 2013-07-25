@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `team_b_elo` int(10) unsigned NOT NULL,
   `elo_diff` int(10) unsigned NOT NULL,
   `timestamp` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   `duration` int(10) unsigned NOT NULL,
   `entered_by` int(10) unsigned NOT NULL,
   `status` tinyint(4) NOT NULL,
