@@ -99,7 +99,7 @@ class Server {
     /**
      * Update the server with current bzfquery information
      */
-    function force_update() {
+    function forceUpdate() {
         $this->info = bzfquery($this->address);
         $this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
@@ -108,7 +108,7 @@ class Server {
      * Checks if the server is online (listed on the public list server)
      * @return bool Whether the server is online
      */
-    function is_online() {
+    function isOnline() {
         $servers = file(LIST_SERVER);
         foreach ($servers as $server) {
             list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
@@ -123,7 +123,7 @@ class Server {
      * Checks if the server has players
      * @return bool Whether the server has any players
      */
-    function has_players() {
+    function hasPlayers() {
         return $this->info['numPlayers'] > 0;
     }
 
@@ -131,7 +131,7 @@ class Server {
      * Gets the number of players on the server
      * @return int The number of players
      */
-    function num_players() {
+    function numPlayers() {
         return $this->info['numPlayers'];
     }
 
@@ -139,7 +139,7 @@ class Server {
      * Gets the players on the server
      * @return array The players on the server
      */
-    function get_players() {
+    function getPlayers() {
         return $this->info['player'];
     }
 
@@ -147,7 +147,7 @@ class Server {
      * Checks if the last update is older than the update interval
      * @return bool Whether the information is older than the update interval
      */
-    function stale_info() {
+    function staleInfo() {
         $now = new DateTime("now");
         $last_update = $this->updated->diff($now);
 
@@ -158,7 +158,7 @@ class Server {
      * Gets the server's ip address
      * @return string The server's ip address
      */
-    function server_ip() {
+    function serverIp() {
         return $this->info['ip'];
     }
 

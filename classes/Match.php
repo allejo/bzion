@@ -41,14 +41,14 @@ class Match {
 
     }
 
-    public static function enter_match($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
+    public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
 
         $result = $this->db->query("SELECT elo FROM teams WHERE id = ?", "i", array($a));
         $a_elo = $result['elo'];
         $result = $this->db->query("SELECT elo FROM teams WHERE id = ?", "i", array($b));
         $b_elo = $result['elo'];
 
-        $diff = calculate_elo_diff($a_elo, $b_elo, $team_a_points, $team_a_points, $duration);
+        $diff = calculateEloDiff($a_elo, $b_elo, $team_a_points, $team_a_points, $duration);
 
         $a_elo += $diff;
         $b_elo -= $diff;
@@ -61,7 +61,7 @@ class Match {
         "iiiiiiissiii", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp, $timestamp, $duration, $entered_by, 0));
     }
 
-    function calculate_elo_diff($a_elo, $b_elo, $a_points, $b_points, $duration) {
+    function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
         $prob = 1.0 / (1 + 10 ^ (($team_b-$team_a)/400.0));
         if ($a_points > $b_points) {
            $diff = 50*(1-$prob);
