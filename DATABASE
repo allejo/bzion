@@ -3,7 +3,7 @@ users
 	bzid					// bzflag id
 	team					// team id
 	username				// bzflag callsign & website username
-	status					// website status: active, disabled, banned
+	status					// website status: active, disabled, reported, banned
 	access					// access level id
 	avatar					// url to profile avatar
 	description				// profile description
@@ -102,3 +102,31 @@ servers
 	owner					// bzid of owner
 	info					// serialized array of bzfquery info
 	updated					// last update
+	
+permissions
+	id					// permission id, primary key
+	name					// permission name
+	add_user				// add a new user
+	edit_user				// edit a user
+	del_user				// delete a user
+	add_team				// add a new team
+	edit_team				// edit a team
+	del_team				// delete a team
+	add_match				// add a new match
+	edit_match				// edit a match
+	del_match				// delete a match
+	add_page				// add a new page
+	edit_page				// edit a page
+	del_page				// delete a page
+	add_news				// add a new news entry
+	edit_news				// edit a news entry
+	del_news				// delete a news entry
+	add_ban					// add a new ban
+	edit_ban				// edit a ban
+	del_ban					// delete a ban
+	add_server				// add a new server
+	edit_server				// edit a server
+	del_server				// delete a server
+	add_perm				// add a new permission
+	edit_perm				// edit a permission
+	del_perm				// delete a permission
