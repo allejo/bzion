@@ -60,13 +60,14 @@ class Ban {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM bans WHERE id = ?", "i", array($id));
+	$ban = $results[0];
 
-        $this->player = $results['player'];
-        $this->expiration = new DateTime($results['expiration']);
-        $this->reason = $results['reason'];
-        $this->created = unserialize($results['created']);
-        $this->updated = new DateTime($results['updated']);
-        $this->author = $results['author'];
+        $this->player = $ban['player'];
+        $this->expiration = new DateTime($ban['expiration']);
+        $this->reason = $ban['reason'];
+        $this->created = unserialize($ban['created']);
+        $this->updated = new DateTime($ban['updated']);
+        $this->author = $ban['author'];
 
     }
 

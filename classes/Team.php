@@ -102,19 +102,20 @@ class Team {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
+	$team = $results[0];
 
-        $this->name = $results['name'];
-        $this->description = $results['description'];
-        $this->avatar = $results['avatar'];
-        $this->created = new DateTime($results['created']);
-        $this->elo = $reults['elo'];
-        $this->activity = $results['activity'];
-        $this->leader = $result['leader'];
-        $this->matches_won = $results['matches_won'];
-        $this->matches_lost = $results['matches_lost'];
-        $this->matches_draw = $results['matches_draw'];
-        $this->members = $results['members'];
-        $this->status = $results['status'];
+        $this->name = $team['name'];
+        $this->description = $team['description'];
+        $this->avatar = $team['avatar'];
+        $this->created = new DateTime($team['created']);
+        $this->elo = $team['elo'];
+        $this->activity = $team['activity'];
+        $this->leader = $team['leader'];
+        $this->matches_won = $team['matches_won'];
+        $this->matches_lost = $team['matches_lost'];
+        $this->matches_draw = $team['matches_draw'];
+        $this->members = $team['members'];
+        $this->status = $team['status'];
 
         $this->matches_total = $this->matches_won + $this->matches_lost + $this->matches_draw;
 

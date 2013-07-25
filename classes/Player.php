@@ -90,17 +90,18 @@ class Player {
         $this->bzid = $bzid;
 
         $results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
+	$player = $results[0];
 
-        $this->id = $results['id'];
-        $this->username = $results['username'];
-        $this->status = $results['status'];
-        $this->access = $results['access'];
-        $this->avatar = $results['avatar'];
-        $this->description = $results['description'];
-        $this->country = $results['country'];
-        $this->timezone = $results['timezone'];
-        $this->joined = new DateTime($results['joined']);
-        $this->last_login = new DateTime($results['last_login']);
+        $this->id = $player['id'];
+        $this->username = $player['username'];
+        $this->status = $player['status'];
+        $this->access = $player['access'];
+        $this->avatar = $player['avatar'];
+        $this->description = $player['description'];
+        $this->country = $player['country'];
+        $this->timezone = $player['timezone'];
+        $this->joined = new DateTime($player['joined']);
+        $this->last_login = new DateTime($player['last_login']);
 
     }
 

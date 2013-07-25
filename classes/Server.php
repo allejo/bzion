@@ -56,12 +56,13 @@ class Server {
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM servers WHERE id = ?", "i", array($id));
+	$server = $results[0];
 
-        $this->name = $results['name'];
-        $this->address = $results['address'];
-        $this->owner = $results['owner'];
-        $this->info = unserialize($results['info']);
-        $this->updated = new DateTime($results['updated']);
+        $this->name = $server['name'];
+        $this->address = $server['address'];
+        $this->owner = $server['owner'];
+        $this->info = unserialize($server['info']);
+        $this->updated = new DateTime($server['updated']);
 
     }
 
