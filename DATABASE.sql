@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `subject` varchar(100) NOT NULL,
   `timestamp` datetime NOT NULL,
   `message` text NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` set('opened', 'unopened', 'deleted', 'reported') NOT NULL DEFAULT 'unopened',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `updated` datetime NOT NULL,
   `duration` int(10) unsigned NOT NULL,
   `entered_by` int(10) unsigned NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` set('entered', 'disabled', 'deleted', 'reported') NOT NULL DEFAULT 'entered',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `author` int(10) unsigned NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` set('live', 'disabled', 'deleted') NOT NULL DEFAULT 'live',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `author` int(10) unsigned NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` set('live', 'disabled', 'deleted') NOT NULL DEFAULT 'live',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `bzid` int(10) unsigned NOT NULL,
   `team` int(10) unsigned NOT NULL,
   `username` varchar(32) NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` set('active', 'disabled', 'deleted', 'banned') NOT NULL DEFAULT 'active',
   `access` tinyint(4) NOT NULL,
   `avatar` varchar(200) NOT NULL,
   `description` text NOT NULL,
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `matches_lost` int(10) unsigned NOT NULL,
   `matches_draw` int(10) unsigned NOT NULL,
   `members` int(10) unsigned NOT NULL,
-  `status` set('open', 'closed', 'deleted') NOT NULL DEFAULT 'open',
+  `status` set('open', 'closed', 'disabled', 'deleted') NOT NULL DEFAULT 'open',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
