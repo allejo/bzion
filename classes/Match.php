@@ -70,10 +70,10 @@ class Match {
         }
 
         if ($duration == 20) {
-            return (2/3)*$diff;
+            return floor((2/3)*$diff);
         }
 
-        return $diff;
+        return floor($diff);
     }
 
 }
