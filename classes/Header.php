@@ -2,14 +2,30 @@
 
 class Header {
 
+	/**
+     * The title of the page
+     * @var string
+     */
 	private $title;
-	private $db;
 
+	/**
+     * The database variable used for queries
+     * @var MySQLi
+     */
+    private $db;
+
+	/**
+     * Construct a new Header object
+     * @param string $title The page's title
+     */
 	function __construct($title) {
-		$this->db = new Database();
 		$this->title = $title;
+		$this->db = new Database();
 	}
 
+	/**
+     * Draw the header
+     */
 	function draw() {
 
 	?>
@@ -34,6 +50,10 @@ class Header {
 
 	}
 
+	/**
+     * Redirect the page using PHP's header() function
+     * @param string $location The page to redirect to
+     */
 	function go($location = "index.php") {
     	if (strtolower($location) == "default" || strtolower($location) == "index.php") {
     		header("Location: index.php");
