@@ -2,12 +2,20 @@
 
 class Database
 {
-    private $dbc;            //The database object we'll be using
-    private $last_id;        //The ID of the last row updated/entered
+    /**
+     * The database object used inside this class
+     * @var mixed
+     */
+    private $dbc;
+    
+    /**
+     * The id of the last row entered
+     * @var mixed
+     */
+    private $last_id;
 
     /**
      * Create a new connection to the database
-     *
      * @return MySQLi
      */
     function __construct()
@@ -25,9 +33,6 @@ class Database
 
     /**
      * Close the current connection to the MySQL database
-     *
-     * @param (void)
-     * @return (void)
      */
     function closeConnection()
     {
@@ -35,11 +40,8 @@ class Database
     }
 
     /**
-     * Tests whether or not the connection to the database
-     * is still active
-     *
-     * @param (void)
-     * @return (void)
+     * Tests whether or not the connection to the database is still active
+     * @return bool True if the connection is active
      */
     function isConnected()
     {
@@ -48,9 +50,7 @@ class Database
 
     /**
      * Get the unique row ID of the last row that was inserted
-     *
-     * @param (void)
-     * @return integer The ID of the row
+     * @return int The ID of the row
      */
     function getInsertId()
     {
@@ -74,11 +74,10 @@ class Database
      *      $results = $database->query($query, "i", $params); //execute the prepared query
      * </code>
      *
-     * @param String $query The prepared SQL statement that will be executed
-     * @param String $typeDef The types of values that will be passed through the prepared statement
-     * @param Array $params The array of values that will be binded to the prepared statement
-     *
-     * @return Array The elements that were returned from the SQL query or null
+     * @param string $query The prepared SQL statement that will be executed
+     * @param string $typeDef The types of values that will be passed through the prepared statement. One letter per parameter
+     * @param array $params The array of values that will be binded to the prepared statement
+     * @return mixed Returns an array of the values received from the query or returns false on empty
      */
     function query($query, $typeDef = FALSE, $params = FALSE)
     {
