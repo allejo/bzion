@@ -202,6 +202,21 @@ class Team {
     }
 
     /**
+     * Create a new team
+     * @param string $name The name of the team
+     * @param int $leader The BZID of the person creating the team, also the leader
+     * @param string $avatar The URL to the team's avatar
+     * @param string $description The team's description
+     */
+    public static function createTeam($name, $leader, $avatar, $description)
+    {
+        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 1, 'open')";
+        $params = array($name, $description, $avatar, $leader);
+
+        $this->db->query($query, "sssi", $params);
+    }
+
+    /**
      * Get the members on the team
      * @return array The members on the team
      */
