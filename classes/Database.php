@@ -1,6 +1,6 @@
 <?php
 
-class DatabaseConnection
+class Database
 {
     private $dbc;            //The database object we'll be using
     private $last_id;        //The ID of the last row updated/entered
@@ -59,13 +59,27 @@ class DatabaseConnection
     /**
      * Prepares and executes a MySQL prepared statement
      *
+     * <code>
+     *      //the appropriate letters to show what type of variable will be passed
+     *      //i - integer
+     *      //d - double
+     *      //s - string
+     *      //b - blob
+     *
+     *      $database = new DatabaseConnection(); //create a new database object
+     *
+     *      $query = "SELECT * FROM table WHERE id = ?"; //write the prepared statement where ? are placeholders
+     *      $params = array("1"); //all the parameters to be binded, in order
+     *      $results = $database->prepared_query($query, "i", $params); //execute the prepared query
+     * </code>
+     *
      * @param String $query The prepared SQL statement that will be executed
      * @param Array $parameters The array of values that will be binded to the prepared statement
      * @param String $param_types The types of values that will be passed through the prepared statement
      *
      * @return Array The elements that were returned from the SQL query or null
      */
-    function prepared_query($query, $typeDef = FALSE, $params = FALSE)
+    function query($query, $typeDef = FALSE, $params = FALSE)
     {
         if ($stmt = $this->dbc->prepare($query))
         {
