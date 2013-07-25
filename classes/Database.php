@@ -71,7 +71,7 @@ class Database
      *
      *      $query = "SELECT * FROM table WHERE id = ?"; //write the prepared statement where ? are placeholders
      *      $params = array("1"); //all the parameters to be binded, in order
-     *      $results = $database->prepared_query($query, "i", $params); //execute the prepared query
+     *      $results = $database->query($query, "i", $params); //execute the prepared query
      * </code>
      *
      * @param String $query The prepared SQL statement that will be executed
