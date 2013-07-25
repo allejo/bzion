@@ -159,6 +159,28 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `players`
+--
+
+CREATE TABLE IF NOT EXISTS `players` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `bzid` int(10) unsigned NOT NULL,
+  `team` int(10) unsigned NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `access` tinyint(4) NOT NULL,
+  `avatar` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `country` int(10) unsigned NOT NULL,
+  `timezone` tinyint(4) NOT NULL,
+  `joined` datetime NOT NULL,
+  `last_login` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `servers`
 --
 
@@ -192,28 +214,6 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `matches_draw` int(10) unsigned NOT NULL,
   `members` int(10) unsigned NOT NULL,
   `status` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `bzid` int(10) unsigned NOT NULL,
-  `team` int(10) unsigned NOT NULL,
-  `username` varchar(32) NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `access` tinyint(4) NOT NULL,
-  `avatar` varchar(200) NOT NULL,
-  `description` text NOT NULL,
-  `country` int(10) unsigned NOT NULL,
-  `timezone` tinyint(4) NOT NULL,
-  `joined` datetime NOT NULL,
-  `last_login` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
