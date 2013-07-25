@@ -66,7 +66,7 @@ class Database
      *      //s - string
      *      //b - blob
      *
-     *      $database = new DatabaseConnection(); //create a new database object
+     *      $database = new Database(); //create a new database object
      *
      *      $query = "SELECT * FROM table WHERE id = ?"; //write the prepared statement where ? are placeholders
      *      $params = array("1"); //all the parameters to be binded, in order
