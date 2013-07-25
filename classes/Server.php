@@ -30,7 +30,7 @@ class Server {
 
     function force_update() {
     	$this->info = bzfquery($this->address);
-    	$this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($info), $this->id));
+    	$this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
 
     function is_online() {
