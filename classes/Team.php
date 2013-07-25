@@ -23,7 +23,7 @@ class Team {
 
 		$this->db = new Database();
 		$this->id = $id;
-
+		
 		$results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
 
 		$this->name = $results['name'];
