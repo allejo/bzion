@@ -213,7 +213,8 @@ class Team {
         $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 1, 'open')";
         $params = array($name, $description, $avatar, $leader);
 
-        $this->db->query($query, "sssi", $params);
+        $db = new Database();
+        $db->query($query, "sssi", $params);
     }
 
     /**
