@@ -224,4 +224,3 @@ function bzfdump ($server) {
 # End: ***
 # ex: shiftwidth=2 tabstop=8
 
-?>
