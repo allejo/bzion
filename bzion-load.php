@@ -16,4 +16,4 @@ function __autoload($class_name)
     }
 }
 
-$mysqli = new Database();
+$db = new Database();
