@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `servers` (
 CREATE TABLE IF NOT EXISTS `teams` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
+  `alias` varchar(32) DEFAULT NULL,
   `description` text NOT NULL,
   `avatar` varchar(200) NOT NULL,
   `created` datetime NOT NULL,
