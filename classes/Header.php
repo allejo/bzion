@@ -47,7 +47,7 @@ class Header {
 
         <?php } else { ?>
 
-        <!-- THIS NEEDS TO SEND USER TO MY.BZFLAG.ORG LOGIN PAGE -->
+        <!-- TODO: THIS NEEDS TO SEND USER TO MY.BZFLAG.ORG LOGIN PAGE -->
         <a href="login.php">Login</a>
 
         <?php } ?>
