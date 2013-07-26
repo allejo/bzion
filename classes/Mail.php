@@ -90,6 +90,7 @@ class Mail {
      * @param string $subject The subject of the message
      * @param string $message The body of the message
      * @param string $status The status of the message - can be 'opened', 'unopened', 'deleted' or 'reported'
+     * @return Mail An object that represents the sent message
      */
     public static function sendMail($to, $from, $subject, $message, $status='unopened')
     {

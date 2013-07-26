@@ -208,6 +208,7 @@ class Team {
      * @param int $leader The BZID of the person creating the team, also the leader
      * @param string $avatar The URL to the team's avatar
      * @param string $description The team's description
+     * @return Team An object that represents the newly created team
      */
     public static function createTeam($name, $leader, $avatar, $description)
     {
