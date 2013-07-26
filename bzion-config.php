@@ -1,5 +1,5 @@
 <?php
-    
+
 /*
  * Set the credentials used for the MySQL database
  */
@@ -20,7 +20,7 @@ $classesDir = array (
  */
 DEFINE("DURATION", serialize(array(
 	"20" => "(2/3)" // 20 minute match is 2/3rds of a normal match's elo
-));
+)));
 
 /*
  * Miscellaneous settings
