@@ -63,7 +63,7 @@ class Match {
         return new Match($db->getInsertId());
     }
 
-    function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
+    public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
         $prob = 1.0 / (1 + 10 ^ (($team_b-$team_a)/400.0));
         if ($a_points > $b_points) {
            $diff = 50*(1-$prob);
