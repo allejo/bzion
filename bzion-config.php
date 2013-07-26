@@ -16,6 +16,14 @@ $classesDir = array (
 );
 
 /*
+ * League specific settings
+ */
+DEFINE("DURATION", serialize(array(
+	"20" => "(2/3)" // 20 minute match is 2/3rds of a normal match's elo
+));
+
+
+/*
  * Miscellaneous settings
  */
 DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server

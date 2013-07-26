@@ -167,8 +167,12 @@ class Match {
             $diff = 50*(0-$prob);
         }
 
-        if ($duration == 20) {
-            return floor((2/3)*$diff);
+        $durations = unserialize(DURATION);
+
+        foreach ($durations as $time => $modifier) {
+            if ($duration == $time) {
+                return floor($modifier*$diff);
+            }
         }
 
         return floor($diff);
