@@ -7,62 +7,74 @@ class Match {
      * @var int
      */
     private $id;
+    
     /**
      * The ID of the first team of the match
      * @todo Does Team A represent the winner? Or is the team assignment random?
      * @var int
      */
     private $team_a;
+    
     /**
      * The ID of the second team of the match
      * @var int
      */
     private $team_b;
+    
     /**
      * The match points (usually the number of flag captures) Team A scored
      * @var int
      */
     private $team_a_points;
+    
      /**
      * The match points Team B scored
      * @var int
      */
     private $team_b_points;
+    
      /**
      * The ELO score of Team A after the match
      * @var int
      */
     private $team_a_elo_new;
+    
      /**
      * The ELO score of Team B after the match
      * @var int
      */
     private $team_b_elo_new;
+    
     /**
      * The absolute value of the ELO score difference
      * @var int
      */
     private $elo_diff;
+    
     /**
      * The timestamp representing when the match was played
      * @var string
      */
     private $timestamp;
+    
     /**
      * The timestamp representing when the match information was last updated
      * @var string
      */
     private $updated;
+    
     /**
      * The duration of the match in minutes
      * @var int
      */
     private $duration;
+    
     /**
      * The BZID of the person (i.e. referee) who last updated the match information
      * @var string
      */
     private $entered_by;
+    
     /**
      * The status of the match. Can be 'entered', 'disabled', 'deleted' or 'reported'
      * @var string
@@ -155,8 +167,12 @@ class Match {
             $diff = 50*(0-$prob);
         }
 
-        if ($duration == 20) {
-            return floor((2/3)*$diff);
+        $durations = unserialize(DURATION);
+
+        foreach ($durations as $time => $modifier) {
+            if ($duration == $time) {
+                return floor($modifier*$diff);
+            }
         }
 
         return floor($diff);

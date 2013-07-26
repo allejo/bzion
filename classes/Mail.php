@@ -7,31 +7,37 @@ class Mail {
      * @var int
      */
     private $id;
+    
     /**
      * The BZID of the player the message was sent to
      * @var int
      */
     private $to;
+    
     /**
      * The BZID of the player the message was sent from
      * @var int
      */
     private $from;
+    
     /**
      * The subject of the message
      * @var string
      */
     private $subject;
+    
     /**
      * The message creation date
      * @var string
      */
     private $timestamp;
+    
     /**
      * The content of the message
      * @var string
      */
     private $message;
+    
     /**
      * The status of the message
      *
@@ -85,6 +91,7 @@ class Mail {
 
     /**
      * Create a new message
+     * 
      * @param int $to The BZID of the receiver
      * @param int $from The BZID of the sender
      * @param string $subject The subject of the message
