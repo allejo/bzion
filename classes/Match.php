@@ -2,22 +2,83 @@
 
 class Match {
 
+    /**
+     * The ID of the match
+     * @var int
+     */
     private $id;
+    /**
+     * The ID of the first team of the match
+     * @todo Does Team A represent the winner? Or is the team assignment random?
+     * @var int
+     */
     private $team_a;
+    /**
+     * The ID of the second team of the match
+     * @var int
+     */
     private $team_b;
+    /**
+     * The match points (usually the number of flag captures) Team A scored
+     * @var int
+     */
     private $team_a_points;
+     /**
+     * The match points Team B scored
+     * @var int
+     */
     private $team_b_points;
+     /**
+     * The ELO score of Team A after the match
+     * @var int
+     */
     private $team_a_elo_new;
+     /**
+     * The ELO score of Team B after the match
+     * @var int
+     */
     private $team_b_elo_new;
+    /**
+     * The absolute value of the ELO score difference
+     * @var int
+     */
     private $elo_diff;
+    /**
+     * The timestamp representing when the match was played
+     * @var string
+     */
     private $timestamp;
+    /**
+     * The timestamp representing when the match information was last updated
+     * @var string
+     */
     private $updated;
+    /**
+     * The duration of the match in minutes
+     * @var int
+     */
     private $duration;
+    /**
+     * The BZID of the person (i.e. referee) who last updated the match information
+     * @var string
+     */
     private $entered_by;
+    /**
+     * The status of the match. Can be 'entered', 'disabled', 'deleted' or 'reported'
+     * @var string
+     */
     private $status;
 
+    /**
+     * The database variable used for queries
+     * @var Database
+     */
     private $db;
 
+    /**
+     * Construct a new Match
+     * @param int $id The match's ID
+     */
     function __construct($id) {
 
         $this->db = new Database();
@@ -41,6 +102,15 @@ class Match {
 
     }
 
+    /**
+     * Enter a new match to the database
+     * @param int $a Team A's ID
+     * @param int $b Team B's ID
+     * @param int $a_points Team A's match points
+     * @param int $b_points Team B's match points
+     * @param int $duration The match duration in minutes
+     * @param string $timestamp When the match was played
+     */
     public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
 
         $result = $this->db->query("SELECT elo FROM teams WHERE id = ?", "i", array($a));
@@ -63,6 +133,18 @@ class Match {
         return new Match($db->getInsertId());
     }
 
+    /**
+     * Calculate the ELO score difference
+     *
+     * Computes the absolute value of the ELO score difference on each team
+     * after a match, based on GU League's rules.
+     *
+     * @param int $a_elo Team A's current ELO score
+     * @param int $b_elo Team B's current ELO score
+     * @param int $a_points Team A's match points
+     * @param int $b_points Team B's match points
+     * @param int $duration The match duration in minutes
+     */
     public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
         $prob = 1.0 / (1 + 10 ^ (($team_b-$team_a)/400.0));
         if ($a_points > $b_points) {
