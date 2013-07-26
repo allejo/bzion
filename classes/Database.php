@@ -7,7 +7,7 @@ class Database
      * @var mixed
      */
     private $dbc;
-    
+
     /**
      * The id of the last row entered
      * @var mixed
@@ -24,6 +24,8 @@ class Database
 
         if ($this->dbc->connect_errno)
             echo "Something went wrong with the database connection.";
+        else
+            $this->dbc->set_charset("utf8");
     }
 
     function __destruct()
