@@ -10,7 +10,7 @@ class Header {
 
     /**
      * The database variable used for queries
-     * @var MySQLi
+     * @var Database
      */
     private $db;
 
@@ -38,11 +38,11 @@ class Header {
     </head>
     <body>
 
-        <a href="index.php">Home</a> | 
+        <a href="index.php">Home</a> |
 
         <?php if (isset($_SESSION['username'])) { ?>
 
-        <a href="profile.php">Profile</a> | 
+        <a href="profile.php">Profile</a> |
         <a href="logout.php">Logout [<?php echo $_SESSION['username']; ?>]</a>
 
         <?php } else { ?>

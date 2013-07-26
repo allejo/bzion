@@ -16,7 +16,7 @@ class Database
 
     /**
      * Create a new connection to the database
-     * @return MySQLi
+     * @return Database
      */
     function __construct()
     {

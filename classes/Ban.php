@@ -46,7 +46,7 @@ class Ban {
 
     /**
      * The database variable used for queries
-     * @var MySQLi
+     * @var Database
      */
     private $db;
 

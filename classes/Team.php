@@ -94,7 +94,7 @@ class Team {
 
     /**
      * The database variable used for queries
-     * @var MySQLi
+     * @var Database
      */
     private $db;
 
