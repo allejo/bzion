@@ -125,23 +125,31 @@ class Match {
      * @return Match An object representing the match that was just entered
      */
     public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
+        $db = new Database();
 
-        $result = $this->db->query("SELECT elo FROM teams WHERE id = ?", "i", array($a));
-        $a_elo = $result['elo'];
-        $result = $this->db->query("SELECT elo FROM teams WHERE id = ?", "i", array($b));
-        $b_elo = $result['elo'];
+        $result = $db->query("SELECT elo FROM teams WHERE id = ?", "i", array($a));
+        $a_elo = $result[0]['elo'];
+        $result = $db->query("SELECT elo FROM teams WHERE id = ?", "i", array($b));
+        $b_elo = $result[0]['elo'];
 
-        $diff = calculateEloDiff($a_elo, $b_elo, $team_a_points, $team_a_points, $duration);
+        $diff = Match::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
 
         $a_elo += $diff;
         $b_elo -= $diff;
         $diff = abs($diff);
 
         $timestamp = new DateTime($timestamp);
+        var_dump($timestamp->format('Y-m-d H:i:s'));
 
-        $db = new Database();
         $results = $db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
-        "iiiiiiisiii", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp, $duration, $entered_by, 0));
+        "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format('Y-m-d H:i:s'), $duration, $entered_by, "entered"));
+
+        // Update team ELOs
+        $team_a = new Team($a);
+        $team_b = new Team($b);
+        $team_a->elo = $a_elo;
+        $team_b->elo = $b_elo;
+
 
         return new Match($db->getInsertId());
     }
@@ -160,7 +168,7 @@ class Match {
      * @return int The ELO score difference
      */
     public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
-        $prob = 1.0 / (1 + 10 ^ (($team_b-$team_a)/400.0));
+        $prob = 1.0 / (1 + 10 ^ (($b_elo-$a_elo)/400.0));
         if ($a_points > $b_points) {
            $diff = 50*(1-$prob);
         } else if ($a_points == $b_points) {
