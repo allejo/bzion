@@ -216,7 +216,8 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `matches_draw` int(10) unsigned NOT NULL,
   `members` int(10) unsigned NOT NULL,
   `status` set('open', 'closed', 'disabled', 'deleted') NOT NULL DEFAULT 'open',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
