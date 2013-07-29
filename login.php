@@ -15,10 +15,13 @@ if (isset($info)) {
     }
 
     session_start();
+
     $_SESSION['username'] = $info['username'];
     $_SESSION['bzid'] = $info['bzid'];
     $_SESSION['groups'] = $info['groups'];
 
+    $player = new Player($info['bzid']);
+    $player->updateLastLogin();
     Visit::enterVisit($info['bzid'], $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
     
     Header::go("index.php");
