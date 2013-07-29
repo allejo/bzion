@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `servers` (
 CREATE TABLE IF NOT EXISTS `teams` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
-  `alias` varchar(32) NOT NULL,
+  `alias` varchar(32) DEFAULT NULL,
   `description` text NOT NULL,
   `avatar` varchar(200) NOT NULL,
   `created` datetime NOT NULL,
@@ -235,3 +235,14 @@ CREATE TABLE IF NOT EXISTS `visits` (
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger to use team ID as alias in case it's null
+--
+
+CREATE TRIGGER team_name_alias AFTER INSERT ON teams FOR EACH ROW
+  IF NEW.alias IS NULL THEN
+    SET NEW.alias := NEW.id;
+  END IF;;
