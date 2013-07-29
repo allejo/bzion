@@ -167,13 +167,24 @@ class Team {
      */
     public static function createTeam($name, $leader, $avatar, $description)
     {
-        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 1, 'open')";
-        $params = array($name, Team::generateAlias($name) ,$description, $avatar, $leader);
+        $alias = Team::generateAlias($name);
 
         $db = Database::getInstance();
-        $db->query($query, "ssssi", $params);
 
-        return new Team($db->getInsertId());
+        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 1, 'open')";
+        $params = array($name, $alias ,$description, $avatar, $leader);
+
+        $db->query($query, "ssssi", $params);
+        $id = $db->getInsertId();
+
+        // If the generateAlias() method couldn't find an appropriate alias,
+        // just make it the same as the ID
+        if ($alias === null) {
+            $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array($id));
+        }
+
+
+        return new Team($id);
     }
 
     /**
