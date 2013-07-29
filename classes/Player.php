@@ -105,4 +105,30 @@ class Player {
 
     }
 
+    /**
+     * Enter a new player to the database
+     * @param int $bzid The player's bzid
+     * @param string $username The player's username
+     * @param int $team The player's team
+     * @param int $status The player's status
+     * @param int $access The player's access level
+     * @param string $avatar The player's profile avatar
+     * @param string $description The player's profile description
+     * @param int $country The player's country
+     * @param int $timezone The player's timezone
+     * @param date $joined The date the player joined
+     * @param date $last_login The timestamp of the player's last login
+     * @return Player An object representing the player that was just entered
+     */
+    public static function newPlayer($bzid, $username, $team=0, $status=0, $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
+
+        $joined = new DateTime($joined);
+        $last_login = new DateTime($last_login);
+
+        $results = $db->query("INSERT INTO players (bzid, team, username, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "iisiissiiss", array($bzid, $team, $username, $status, $access, $avatar, $description, $country, $timezone, $joined->format('Y-m-d H:i:s'), $last_login->format('Y-m-d H:i:s')));
+
+        return new Player($db->getInsertId());
+    }
+
 }
