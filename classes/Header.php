@@ -47,7 +47,8 @@ class Header {
 
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
-            $url .= urlencode("http://" . HTTP_ROOT . "/login.php?token=%TOKEN%&username=%USERNAME%");
+            $slash = (substr(HTTP_ROOT, -1) == "/") ? "" : "/";
+            $url .= urlencode("http://" . HTTP_ROOT . $slash . "login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>">Login</a>
 
@@ -61,7 +62,7 @@ class Header {
      * Redirect the page using PHP's header() function
      * @param string $location The page to redirect to
      */
-    function go($location = "index.php") {
+    public static function go($location = "index.php") {
         if (strtolower($location) == "default" || strtolower($location) == "index.php") {
             header("Location: index.php");
         } else {

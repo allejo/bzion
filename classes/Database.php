@@ -171,9 +171,26 @@ class Database
         else
             $result = false;
 
+        if ($this->db->error)
+            writeToDebug("MySQL Error :: " . $this->db->error);
+
         if ($multiQuery)
             return $result;
         else
             return $result[0];
+    }
+
+    /**
+    * Writes the specified string to the log file if logging is enabled
+    * @param The string that will written
+    */
+    function writeToDebug($string)
+    {
+        if (MYSQL_DEBUG)
+        {
+            $file_handler = fopen(ERROR)_LOG, 'a');
+            fwrite($file_handler, date("Y-m-d H:i:s") . " :: " . $string . "\n");
+            fclose($file_handler);
+        }
     }
 }
