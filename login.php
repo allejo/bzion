@@ -13,6 +13,8 @@ if (isset($info)) {
     $_SESSION['username'] = $info['username'];
     $_SESSION['bzid'] = $info['bzid'];
     $_SESSION['groups'] = $info['groups'];
+
+    Visit::enterVisit($info['bzid'], $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
     
     Header::go("index.php");
 
