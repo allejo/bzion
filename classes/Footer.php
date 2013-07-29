@@ -12,7 +12,7 @@ class Footer {
      * Construct a new Footer object
      */
     function __construct() {
-        $this->db = new Database();
+        $this->db = $GLOBALS['db'];
     }
 
     /**

@@ -104,7 +104,7 @@ class Team {
      */
     function __construct($id) {
 
-        $this->db = new Database();
+        $this->db = $GLOBALS['db'];
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
@@ -170,7 +170,7 @@ class Team {
         $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 1, 'open')";
         $params = array($name, Team::generateAlias($name) ,$description, $avatar, $leader);
 
-        $db = new Database();
+        $db = $GLOBALS['db'];
         $db->query($query, "ssssi", $params);
 
         return new Team($db->getInsertId());
@@ -217,7 +217,7 @@ class Team {
         }
 
         // Try to find duplicates
-        $db = new Database();
+        $db = $GLOBALS['db'];
         $result = $db->query("SELECT alias FROM teams WHERE alias REGEXP ?", 's', array("^".$team."[0-9]*$"));
 
         // The functionality of the following code block is provided in PHP 5.5's

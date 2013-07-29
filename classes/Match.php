@@ -93,7 +93,7 @@ class Match {
      */
     function __construct($id) {
 
-        $this->db = new Database();
+        $this->db = $GLOBALS['db'];
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM matches WHERE id = ?", "i", array($id));
@@ -125,7 +125,7 @@ class Match {
      * @return Match An object representing the match that was just entered
      */
     public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
-        $db = new Database();
+        $db = $GLOBALS['db'];
 
         $team_a = new Team($a);
         $team_b = new Team($b);

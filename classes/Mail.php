@@ -58,7 +58,7 @@ class Mail {
      */
     function __construct($id) {
 
-        $this->db = new Database();
+        $this->db = $GLOBALS['db'];
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM mail WHERE id = ?", "i", array($id));
@@ -104,7 +104,7 @@ class Mail {
         $query = "INSERT INTO mail VALUES(NULL, ?, ?, ?, NOW(), ?, ?)";
         $params = array($to, $from, $subject, $message, $status);
 
-        $db = new Database();
+        $db = $GLOBALS['db'];
         $db->query($query, "iisss", $params);
 
         return new Mail($db->getInsertId());

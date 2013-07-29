@@ -52,7 +52,7 @@ class Server {
      */
     function __construct($id) {
 
-        $this->db = new Database();
+        $this->db = $GLOBALS['db'];
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM servers WHERE id = ?", "i", array($id));
