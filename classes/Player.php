@@ -122,6 +122,8 @@ class Player {
      */
     public static function newPlayer($bzid, $username, $team=0, $status=0, $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
 
+        $db = Database::getInstance();
+
         $joined = new DateTime($joined);
         $last_login = new DateTime($last_login);
 
@@ -136,7 +138,9 @@ class Player {
      * @param int $bzid The player's bzid
      */
     public static function playerExists($bzid) {
-        $results = $this->db->query("SELECT count(*) FROM players WHERE bzid = ?", "i", array($bzid));
+        $db = Database::getInstance();
+
+        $results = $db->query("SELECT count(*) FROM players WHERE bzid = ?", "i", array($bzid));
         return ($results[0] > 0);
     }
 
