@@ -45,10 +45,11 @@ class Header {
         <a href="profile.php">Profile</a> |
         <a href="logout.php">Logout [<?php echo $_SESSION['username']; ?>]</a>
 
-        <?php } else { ?>
-
-        <!-- TODO: THIS NEEDS TO SEND USER TO MY.BZFLAG.ORG LOGIN PAGE -->
-        <a href="login.php">Login</a>
+        <?php } else {
+            $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
+            $url .= urlencode("http://" . HTTP_ROOT . "login.php?token=%TOKEN%&username=%USERNAME%");
+        ?>
+        <a href="<?php echo $url; ?>">Login</a>
 
         <?php } ?>
 
