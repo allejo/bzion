@@ -1,6 +1,6 @@
 <?php
 
-class Ban {
+class Visit {
 
     /**
      * The id of the visiting user
