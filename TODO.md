@@ -4,7 +4,6 @@ TODO
 <em>In no specific order</em>
 
 - Create necessary classes
-    - Invitation
     - News
     - Page
     - Visit
