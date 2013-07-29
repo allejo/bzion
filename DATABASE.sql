@@ -239,11 +239,3 @@ CREATE TABLE IF NOT EXISTS `visits` (
 
 -- --------------------------------------------------------
 
---
--- Trigger to use team ID as alias in case it's null
---
-
-CREATE TRIGGER team_name_alias AFTER INSERT ON teams FOR EACH ROW
-  IF NEW.alias IS NULL THEN
-    SET NEW.alias := NEW.id;
-  END IF;;
