@@ -131,4 +131,13 @@ class Player {
         return new Player($db->getInsertId());
     }
 
+    /**
+     * Determine if a player exists in the database
+     * @param int $bzid The player's bzid
+     */
+    public static function playerExists($bzid) {
+        $results = $this->db->query("SELECT count(*) FROM players WHERE bzid = ?", "i", array($bzid));
+        return ($results > 0);
+    }
+
 }
