@@ -8,9 +8,9 @@ function __autoload($class_name)
 
     foreach ($classesDir as $directory)
     {
-        if (file_exists($directory . $class_name . '.php'))
+        if (file_exists( DOC_ROOT . '/' . $directory . $class_name . '.php'))
         {
-            require_once ($directory . $class_name . '.php');
+            require_once ( DOC_ROOT . '/' . $directory . $class_name . '.php');
             return;
         }
     }
