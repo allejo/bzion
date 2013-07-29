@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
 CREATE TABLE IF NOT EXISTS `invitations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `invited_player` int(10) unsigned NOT NULL,
+  `sent_by` int(10) unsigned NOT NULL,
   `team` int(10) unsigned NOT NULL,
   `expiration` datetime NOT NULL,
   `text` text NOT NULL,
