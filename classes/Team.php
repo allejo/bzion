@@ -212,7 +212,7 @@ class Team {
 
         // An alias name can't only contain numbers, because it will be
         // indistinguishable from an ID. If it does, add a dash in the end.
-        if (preg_match("/[0-9]+/", $team)) {
+        if (preg_match("/^[0-9]+$/", $team)) {
             $team = $team . '-';
         }
 
