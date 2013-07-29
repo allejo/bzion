@@ -20,7 +20,7 @@ class Header {
      */
     function __construct($title) {
         $this->title = $title;
-        $this->db = $GLOBALS['db'];
+        $this->db = Database::getInstance();
     }
 
     /**

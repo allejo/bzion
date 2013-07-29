@@ -56,7 +56,7 @@ class Ban {
      */
     function __construct($id) {
 
-        $this->db = $GLOBALS['db'];
+        $this->db = Database::getInstance();
         $this->id = $id;
 
         $results = $this->db->query("SELECT * FROM bans WHERE id = ?", "i", array($id));

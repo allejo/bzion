@@ -86,7 +86,7 @@ class Player {
      */
     function __construct($bzid) {
 
-        $this->db = $GLOBALS['db'];
+        $this->db = Database::getInstance();
         $this->bzid = $bzid;
 
         $results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
