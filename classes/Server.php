@@ -74,8 +74,14 @@ class Server {
     function __set($name, $value) {
         $table = "servers";
 
-        if ($name == 'name' || $name == 'address' || $name == 'owner' || $name == 'info' || $name == 'updated') {
+        if ($name == 'name' || $name == 'address' || $name == 'info' || $name == 'updated') {
             $type = 's';
+        } else if ($name == 'owner') {
+            $type = 'i';
+        }
+
+        if ($name == 'info') {
+            $value = serialize($value);
         }
 
         if (isset($type)) {
