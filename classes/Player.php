@@ -106,6 +106,15 @@ class Player {
     }
 
     /**
+     * Updates this player's last login
+     * @param string $when The date of the last login
+     */
+    function updateLastLogin($when = "now") {
+        $last = new DateTime($when);
+        $results = $this->db->query("UPDATE players SET last_login = ?", "s", array($last->format('Y-m-d H:i:s')));
+    }
+
+    /**
      * Enter a new player to the database
      * @param int $bzid The player's bzid
      * @param string $username The player's username
