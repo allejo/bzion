@@ -137,7 +137,7 @@ class Player {
      */
     public static function playerExists($bzid) {
         $results = $this->db->query("SELECT count(*) FROM players WHERE bzid = ?", "i", array($bzid));
-        return ($results > 0);
+        return ($results[0] > 0);
     }
 
 }
