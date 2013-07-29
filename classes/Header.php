@@ -47,7 +47,7 @@ class Header {
 
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
-            $url .= urlencode("http://" . HTTP_ROOT . "login.php?token=%TOKEN%&username=%USERNAME%");
+            $url .= urlencode("http://" . HTTP_ROOT . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>">Login</a>
 
