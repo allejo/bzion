@@ -72,28 +72,17 @@ class Server {
      * @param mixed $value The variable's new value
      */
     function __set($name, $value) {
-        switch ($name) {
-            case 'name':
-                $this->db->query("UPDATE servers SET name = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->name = $value;
-                break;
-            case 'address':
-                $this->db->query("UPDATE servers SET address = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->address = $value;
-                break;
-            case 'owner':
-                $this->db->query("UPDATE servers SET owner = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->owner = $value;
-                break;
-            case 'info':
-                $this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($value), $this->id));
-                $this->info = $value;
-                break;
-            case 'updated':
-                $this->db->query("UPDATE servers SET updated = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->updated = $value;
-                break;
+        $table = "servers";
+
+        if ($name == 'name' || $name == 'address' || $name == 'owner' || $name == 'info' || $name == 'updated') {
+            $type = 's';
         }
+
+        if (isset($type)) {
+            $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
+            $this->{$name} = $value;
+        }
+
     }
 
     /**
