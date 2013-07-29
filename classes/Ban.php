@@ -10,7 +10,7 @@ class Ban {
 
     /**
      * The bzid of the banned player
-     * @var id
+     * @var int
      */
     private $player;
 
@@ -40,7 +40,7 @@ class Ban {
 
     /**
      * The bzid of the ban author
-     * @var bzid
+     * @var int
      */
     private $author;
 
