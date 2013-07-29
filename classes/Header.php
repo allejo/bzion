@@ -62,7 +62,7 @@ class Header {
      * Redirect the page using PHP's header() function
      * @param string $location The page to redirect to
      */
-    public stati function go($location = "index.php") {
+    public static function go($location = "index.php") {
         if (strtolower($location) == "default" || strtolower($location) == "index.php") {
             header("Location: index.php");
         } else {
