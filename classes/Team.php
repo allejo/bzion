@@ -210,6 +210,12 @@ class Team {
             return null;
         }
 
+        // An alias name can't only contain numbers, because it will be
+        // indistinguishable from an ID. If it does, add a dash in the end.
+        if (preg_match("/[0-9]+/", $team)) {
+            $team = $team . '-';
+        }
+
         // Try to find duplicates
         $db = new Database();
         $result = $db->query("SELECT alias FROM teams WHERE alias REGEXP ?", 's', array("^".$team."[0-9]*$"));
