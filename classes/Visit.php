@@ -27,13 +27,19 @@ class Ban {
     private $host;
 
     /**
+     * The user agent of the visiting user
+     * @var string
+     */
+    private $user_agent;
+
+    /**
      * The HTTP_REFERER of the visiting user
      * @var string
      */
     private $referer;
 
     /**
-     * The date of the visit
+     * The timestamp of the visit
      * @var date
      */
     private $timestamp;
@@ -59,6 +65,7 @@ class Ban {
         $this->bzid = $visit['bzid'];
         $this->ip = $visit['ip'];
         $this->host = $visit['host'];
+        $this->user_agent = $visit['user_agent'];
         $this->referer = $visit['referer'];
         $this->timestamp = new DateTime($visit['timestamp']);
 
@@ -88,21 +95,21 @@ class Ban {
     }
 
     /**
-     * Enter a new visit to the database
+     * Enter a new visit into the database
      * @param int $bzid The visitor's bzid
-     * @param int $ip The visitor's ip address
-     * @param int $host The visitor's host
-     * @param int $referer The HTTP_REFERER of the visit
+     * @param string $ip The visitor's ip address
+     * @param string $host The visitor's host
+     * @param string $referer The HTTP_REFERER of the visit
      * @param string $timestamp The timestamp of the visit
      * @return Visit An object representing the visit that was just entered
      */
-    public static function enterVisit($bzid, $ip, $host, $referer, $timestamp = "now") {
+    public static function enterVisit($bzid, $ip, $host, $user_agent, $referer, $timestamp = "now") {
         $db = Database::getInstance();
 
         $timestamp = new DateTime($timestamp);
 
-        $results = $db->query("INSERT INTO visits (bzid, ip, host, referer, timestamp) VALUES (?, ?, ?, ?, ?)",
-        "issss", array($bzid, $ip, $host, $referer, $timestamp->format('Y-m-d H:i:s')));
+        $results = $db->query("INSERT INTO visits (bzid, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
+        "isssss", array($bzid, $ip, $host, $user_agent, $referer, $timestamp->format('Y-m-d H:i:s')));
 
 
         return new Visit($db->getInsertId());

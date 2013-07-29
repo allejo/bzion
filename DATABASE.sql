@@ -232,6 +232,7 @@ CREATE TABLE IF NOT EXISTS `visits` (
   `bzid` int(10) unsigned NOT NULL,
   `ip` varchar(15) NOT NULL,
   `host` varchar(100) NOT NULL,
+  `user_agent` text NOT NULL,
   `referer` varchar(200) NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`)
