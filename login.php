@@ -1,6 +1,7 @@
 <?php
 
 require_once("checkToken.php");
+require_once("bzion-load.php");
 
 $token = $_GET["token"];
 $username = $_GET["username"];
@@ -12,7 +13,9 @@ if (isset($info)) {
     $_SESSION['username'] = $info['username'];
     $_SESSION['bzid'] = $info['bzid'];
     $_SESSION['groups'] = $info['groups'];
+    
     Header::go("index.php");
+
 } else {
     echo "There was an error processing your login. Please go back and try again.";
 }
