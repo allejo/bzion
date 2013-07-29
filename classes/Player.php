@@ -141,8 +141,9 @@ class Player {
     public static function playerExists($bzid) {
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT count(*) FROM players WHERE bzid = ?", "i", array($bzid));
-        return ($results[0] > 0);
+        $results = $db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
+
+        return (count($results[0]) > 0);
     }
 
 }
