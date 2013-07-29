@@ -188,7 +188,7 @@ class Database
     {
         if (MYSQL_DEBUG)
         {
-            $file_handler = fopen(ERROR)_LOG, 'a');
+            $file_handler = fopen(ERROR_LOG, 'a');
             fwrite($file_handler, date("Y-m-d H:i:s") . " :: " . $string . "\n");
             fclose($file_handler);
         }
