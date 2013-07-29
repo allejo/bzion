@@ -136,6 +136,7 @@ class Player {
     /**
      * Determine if a player exists in the database
      * @param int $bzid The player's bzid
+     * @return bool Whether the player exists in the database
      */
     public static function playerExists($bzid) {
         $db = Database::getInstance();
