@@ -92,6 +92,27 @@ class Server {
     }
 
     /**
+     * Add a new server
+     *
+     * @param string $name The name of the server
+     * @param string $address The address of the server (e.g: server.com:5155)
+     * @param int $owner The BZID of the server owner
+     * @return Mail An object that represents the sent message
+     */
+    static function addServer($name, $address, $owner) {
+        $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW())";
+        $params = array($name, $address, $owner);
+
+        $db = Database::getInstance();
+        $db->query($query, "ssi", $params);
+
+        $server = new Server($db->getInsertId());
+        $server->forceUpdate();
+
+        return $server;
+    }
+
+    /**
      * Update the server with current bzfquery information
      */
     function forceUpdate() {
