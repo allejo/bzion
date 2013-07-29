@@ -11,8 +11,7 @@ $info = validate_token($token, $username);
 if (isset($info)) {
 
     if (!Player::playerExists($info['bzid'])) {
-        echo "Yup";
-        //Player::newPlayer($info['bzid'], $info['username']);
+        Player::newPlayer($info['bzid'], $info['username']);
     }
 
     session_start();
