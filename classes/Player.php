@@ -120,7 +120,7 @@ class Player {
      * @param date $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
-    public static function newPlayer($bzid, $username, $team=0, $status=0, $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
+    public static function newPlayer($bzid, $username, $team=0, $status="active", $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
 
         $db = Database::getInstance();
 
@@ -128,7 +128,7 @@ class Player {
         $last_login = new DateTime($last_login);
 
         $results = $db->query("INSERT INTO players (bzid, team, username, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iisiissiiss", array($bzid, $team, $username, $status, $access, $avatar, $description, $country, $timezone, $joined->format('Y-m-d H:i:s'), $last_login->format('Y-m-d H:i:s')));
+        "iississiiss", array($bzid, $team, $username, $status, $access, $avatar, $description, $country, $timezone, $joined->format('Y-m-d H:i:s'), $last_login->format('Y-m-d H:i:s')));
 
         return new Player($db->getInsertId());
     }
