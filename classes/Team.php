@@ -235,8 +235,10 @@ class Team {
         // array_column function. What is does is convert the multi-dimensional
         // array that $db->query() gave us into a single-dimensional one.
         $aliases = array();
-        foreach ($result as $r) {
-            $aliases[] = $r['alias'];
+        if (is_array($result)) {
+            foreach ($result as $r) {
+                $aliases[] = $r['alias'];
+            }
         }
 
         if (!in_array($team, $aliases))
