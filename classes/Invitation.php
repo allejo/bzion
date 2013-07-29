@@ -19,19 +19,19 @@ class Invitation
      * @var int
      */
     private $sent_by;
-    
+
     /**
      * The ID of the team a player was invited to
      * @var int
      */
     private $team;
-    
+
     /**
      * The time the invitation will expire (Format: YYYY-MM-DD HH:MM:SS)
      * @var date
      */
     private $expiration;
-    
+
     /**
      * The optional message sent to a player to join a team
      * @var string
