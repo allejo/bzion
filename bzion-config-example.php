@@ -30,8 +30,4 @@ DEFINE("UPDATE_INTERVAL", "5"); // Server polling interval in minutes
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
 DEFINE("HTTP_ROOT", $_SERVER["HTTP_HOST"]); // The root URL of the website
 DEFINE("MYSQL_DEBUG", true);  // Whether or not to log MySQL errors
-<<<<<<< HEAD
 DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where errors will be written
-=======
-DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where errors will be written
->>>>>>> c04277a52106523eb41e039b9e1d3e9b09590e71
