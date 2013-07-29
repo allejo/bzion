@@ -127,10 +127,10 @@ class Match {
     public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
         $db = new Database();
 
-        $result = $db->query("SELECT elo FROM teams WHERE id = ?", "i", array($a));
-        $a_elo = $result[0]['elo'];
-        $result = $db->query("SELECT elo FROM teams WHERE id = ?", "i", array($b));
-        $b_elo = $result[0]['elo'];
+        $team_a = new Team($a);
+        $team_b = new Team($b);
+        $a_elo = $team_a->elo;
+        $b_elo = $team_b->elo;
 
         $diff = Match::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
 
@@ -145,11 +145,8 @@ class Match {
         "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format('Y-m-d H:i:s'), $duration, $entered_by, "entered"));
 
         // Update team ELOs
-        $team_a = new Team($a);
-        $team_b = new Team($b);
         $team_a->elo = $a_elo;
         $team_b->elo = $b_elo;
-
 
         return new Match($db->getInsertId());
     }
