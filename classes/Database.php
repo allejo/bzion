@@ -34,6 +34,17 @@ class Database
     }
 
     /**
+     * Get an instance of the Database object
+     *
+     * This should be the main way to acquire access
+     * to the database
+     * @return Database The Database object
+     */
+    static function getInstance() {
+        return $GLOBALS['db'];
+    }
+
+    /**
      * Close the current connection to the MySQL database
      */
     function closeConnection()
