@@ -50,7 +50,7 @@ class Invitation
      */
     function __construct($id)
     {
-        $this->db = $GLOBALS['db'];
+        $this->db = Database::getInstance();
         $results = $this->db->query("SELECT * FROM invitations WHERE id = ?", "i", array($id));
 
         $this->id = $id;
@@ -71,7 +71,7 @@ class Invitation
      */
     public static function sendInvite($to, $from, $teamid, $message = "")
     {
-        $db = $GLOBALS['db'];
+        $db = Database::getInstance();
         $db->query("INSERT INTO invitations VALUES (NULL, ?, ?, ?, ADDDATE(NOW(), INTERVAL 7 DAY), ?)", "iis", array($to, $from, $teamid, $message));
 
         return new Invitation($db->getInsertId());
