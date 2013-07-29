@@ -111,7 +111,7 @@ class Player {
      */
     function updateLastLogin($when = "now") {
         $last = new DateTime($when);
-        $results = $this->db->query("UPDATE players SET last_login = ?", "s", array($last->format('Y-m-d H:i:s')));
+        $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format('Y-m-d H:i:s'), $this->bzid));
     }
 
     /**
