@@ -45,8 +45,8 @@ class Invitation
     private $db;
 
     /**
-     * Construct a new Team
-     * @param int $id The team's id
+     * Construct a new invite
+     * @param int $id The invite's id
      */
     function __construct($id)
     {
