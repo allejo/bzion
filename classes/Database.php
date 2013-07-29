@@ -171,7 +171,7 @@ class Database
         else
             $result = false;
 
-        if ($this->db->error)
+        if ($this->dbc->error)
             writeToDebug("MySQL Error :: " . $this->db->error);
 
         if ($multiQuery)
