@@ -27,3 +27,5 @@ DEFINE("DURATION", serialize(array(
  */
 DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server
 DEFINE("UPDATE_INTERVAL", "5"); // Server polling interval in minutes
+DEFINE("DOC_ROOT", dirname(__FILE__)); // BZiON document root
+DEFINE("HTTP_ROOT", $_SERVER["HTTP_HOST"]);
