@@ -36,15 +36,16 @@ abstract class Controller {
      *
      * @param int $id The ID of the object to look for
      * @param int $table The name of the DB table used for queries
+     * @param string $column The column to use to identify separate database entries
      */
-    function __construct($id, $table=null) {
+    function __construct($id, $table=null, $column="id") {
 
         $this->db = Database::getInstance();
 
-        $this->id = $id;
+        if ($column == "id") $this->id = $id;
         $this->table = $table;
 
-        $results = $this->db->query("SELECT * FROM " . $table . " WHERE id = ?", "i", array($id));
+        $results = $this->db->query("SELECT * FROM " . $table . " WHERE " . $column . " = ?", "i", array($id));
         $this->result = $results[0];
     }
 
