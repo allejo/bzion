@@ -6,7 +6,9 @@ require_once("bzion-load.php");
 $token = $_GET["token"];
 $username = $_GET["username"];
 
-$info = validate_token($token, $username);
+// Don't check whether IPs match if we're on a development environment
+$checkIP = !DEVELOPMENT;
+$info = validate_token($token, $username, array(), $checkIP);
 
 if (isset($info)) {
 
@@ -23,7 +25,7 @@ if (isset($info)) {
     $player = new Player($info['bzid']);
     $player->updateLastLogin();
     Visit::enterVisit($info['bzid'], $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
-    
+
     Header::go("index.php");
 
 } else {
