@@ -22,8 +22,10 @@ class Database
     {
         $this->dbc = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
 
-        if ($this->dbc->connect_errno)
-            echo "Something went wrong with the database connection.";
+        if ($this->dbc->connect_errno) {
+            if (!DEVELOPMENT) echo "Something went wrong with the database connection.";
+            $this->debug($this->dbc->connect_error, $this->dbc->connect_errno);
+        }
         else
             $this->dbc->set_charset("utf8");
     }
@@ -172,7 +174,7 @@ class Database
             $result = false;
 
         if ($this->dbc->error)
-            $this->writeToDebug("MySQL Error :: " . $this->dbc->error);
+            $this->debug($this->dbc->error, $this->dbc->errno);
 
         if ($multiQuery)
             return $result;
@@ -182,7 +184,7 @@ class Database
 
     /**
     * Writes the specified string to the log file if logging is enabled
-    * @param The string that will written
+    * @param The string that will be written
     */
     function writeToDebug($string)
     {
@@ -193,4 +195,31 @@ class Database
             fclose($file_handler);
         }
     }
+
+    /**
+    * Outputs the specified string if debugging is enabled
+    * @param The string that will be shown
+    */
+    function printDebug($string)
+    {
+        if (DEVELOPMENT) {
+            echo '<pre style="white-space:pre-wrap;background-color:#EEE;border:1px solid #999;border-radius:3px;padding:9px;margin:10px;">',
+            $string, '</pre>';
+        }
+    }
+
+    /**
+    * Calls the two debug functions (debug to file & screen), feeding them
+    * with fancy messages
+    * @param $error The error string
+    * @param $id The error ID
+    */
+    function debug($error, $id=null) {
+        $this->writeToDebug("MySQL Error :: " . $error);
+
+        $idstring = ($id != null) ? '<i style="color:#140">(#'.$id.')</i>' : '';
+        $this->printDebug("<b style=\"color:#300\">MySQLi error:</b> $error $idstring");
+
+    }
+
 }
