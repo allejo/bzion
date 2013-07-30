@@ -1,12 +1,7 @@
 <?php
 
-class Player {
-
-    /**
-     * The id of the player
-     * @var int
-     */
-    private $id;
+class Player extends Controller
+{
 
     /**
      * The bzid of the player
@@ -25,6 +20,12 @@ class Player {
      * @var string
      */
     private $username;
+
+    /**
+     * The URL-friendly alias of the player
+     * @var string
+     */
+    private $alias;
 
     /**
      * The player's status
@@ -75,25 +76,18 @@ class Player {
     private $last_login;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Player
      * @param int $bzid The player's bzid
      */
     function __construct($bzid) {
 
-        $this->db = Database::getInstance();
+        parent::__construct($bzid, "players", "bzid");
+        $player = $this->result;
+
         $this->bzid = $bzid;
-
-        $results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
-        $player = $results[0];
-
         $this->id = $player['id'];
         $this->username = $player['username'];
+        $this->alias = $player['alias'];
         $this->status = $player['status'];
         $this->access = $player['access'];
         $this->avatar = $player['avatar'];
@@ -136,10 +130,10 @@ class Player {
         $joined = new DateTime($joined);
         $last_login = new DateTime($last_login);
 
-        $results = $db->query("INSERT INTO players (bzid, team, username, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iississiiss", array($bzid, $team, $username, $status, $access, $avatar, $description, $country, $timezone, $joined->format('Y-m-d H:i:s'), $last_login->format('Y-m-d H:i:s')));
+        $results = $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format('Y-m-d H:i:s'), $last_login->format('Y-m-d H:i:s')));
 
-        return new Player($db->getInsertId());
+        return new Player($bzid);
     }
 
     /**
@@ -153,6 +147,52 @@ class Player {
         $results = $db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
 
         return (count($results[0]) > 0);
+    }
+
+    /**
+     * Generate a URL-friendly unique alias for a username
+     *
+     * @param string $name The original username
+     * @return string The generated alias
+     */
+    static function generateAlias($name) {
+        $name = strtolower($name);
+        $name = str_replace(' ', '-', $name);
+
+        // An alias name can't only contain numbers, because it will be
+        // indistinguishable from an ID. If it does, add a dash in the end.
+        if (preg_match("/^[0-9]+$/", $name)) {
+            $name = $name . '-';
+        }
+
+        // Try to find duplicates
+        $db = Database::getInstance();
+        $result = $db->query("SELECT alias FROM players WHERE alias REGEXP ?", 's',
+                  array("^". preg_quote($name) ."[0-9]*$"));
+
+        // The functionality of the following code block is provided in PHP 5.5's
+        // array_column function. What is does is convert the multi-dimensional
+        // array that $db->query() gave us into a single-dimensional one.
+        $aliases = array();
+        if (is_array($result)) {
+            foreach ($result as $r) {
+                $aliases[] = $r['alias'];
+            }
+        }
+
+        // No duplicates found
+        if (!in_array($name, $aliases))
+            return $name;
+
+        // If there's already an entry with the alias we generated, put a number
+        // in the end of it and keep incrementing it until there is we find
+        // an open spot.
+        $i = 2;
+        while(in_array($name.$i, $aliases)) {
+            $i++;
+        }
+
+        return $name.$i;
     }
 
 }

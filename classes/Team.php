@@ -1,12 +1,7 @@
 <?php
 
-class Team {
-
-    /**
-     * The id of the team
-     * @var int
-     */
-    private $id;
+class Team extends Controller
+{
 
     /**
      * The name of the team
@@ -93,22 +88,13 @@ class Team {
     private $status;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Team
      * @param int $id The team's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
-        $team = $results[0];
+        parent::__construct($id, "teams");
+        $team = $this->result;
 
         $this->name = $team['name'];
         $this->alias = $team['alias'];
@@ -194,65 +180,6 @@ class Team {
     function members() {
         $members = $this->db->query("SELECT * FROM players WHERE team = ?", "i", array($this->id));
         return $members;
-    }
-
-    /**
-     * Generate a URL-friendly unique alias for a team name
-     *
-     * @param string $name The original team name
-     * @return string|Null The generated alias, or Null if we couldn't make one
-     * @todo Make this method more general, so it can be used for pages as well?
-     */
-    static function generateAlias($team) {
-        // Convert team name to lowercase
-        $team = strtolower($team);
-
-        // List of characters which should be converted to dashes
-        $makeDash = array(' ', '_');
-
-        $team = str_replace($makeDash, '-', $team);
-
-        // Only keep letters, numbers and dashes - delete everything else
-        $team = preg_replace("/[^a-zA-Z\-0-9]+/", "", $team);
-
-        if (str_replace('-', '', $team) == '') {
-            // The team name only contains symbols or Unicode characters!
-            // This means we can't convert it to an alias
-            return null;
-        }
-
-        // An alias name can't only contain numbers, because it will be
-        // indistinguishable from an ID. If it does, add a dash in the end.
-        if (preg_match("/^[0-9]+$/", $team)) {
-            $team = $team . '-';
-        }
-
-        // Try to find duplicates
-        $db = Database::getInstance();
-        $result = $db->query("SELECT alias FROM teams WHERE alias REGEXP ?", 's', array("^".$team."[0-9]*$"));
-
-        // The functionality of the following code block is provided in PHP 5.5's
-        // array_column function. What is does is convert the multi-dimensional
-        // array that $db->query() gave us into a single-dimensional one.
-        $aliases = array();
-        if (is_array($result)) {
-            foreach ($result as $r) {
-                $aliases[] = $r['alias'];
-            }
-        }
-
-        if (!in_array($team, $aliases))
-            return $team;
-
-        // If there's already a team with the alias we generated, put a number
-        // in the end of it and keep incrementing it until there is we find
-        // an open spot.
-        $i = 2;
-        while(in_array($team.$i, $aliases)) {
-            $i++;
-        }
-
-        return $team.$i;
     }
 
 }
