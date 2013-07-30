@@ -49,4 +49,23 @@ abstract class Controller {
         $this->result = $results[0];
     }
 
+    /**
+     * Delete the object
+     *
+     * Please note that this does not delete the object entirely from the database,
+     * it only hides it from users. You should overload this function if your object
+     * does not have a 'status' column which can be set to 'deleted'.
+     */
+    public function delete() {
+        $this->__set('status', 'deleted');
+    }
+
+    /**
+     * Permanently delete the object from the database
+     */
+    public function wipe() {
+        $this->db->query("DELETE FROM ". $this->table ." WHERE id = ?", "i", array($this->id));
+    }
+
+
 }

@@ -96,23 +96,4 @@ class Mail extends Controller
         return new Mail($db->getInsertId());
     }
 
-    /**
-     * Delete the message
-     *
-     * Please note that this does not delete the message entirely from the database,
-     * it only hides it from users.
-     */
-    public function delete() {
-        $this->__set('status', 'deleted');
-    }
-
-    /**
-     * Permanently delete the message
-     *
-     * This function deletes the message from the database, making it impossible to recover.
-     */
-    public function wipe() {
-        $this->db->query("DELETE FROM mail WHERE id = ?", "i", array($this->id));
-    }
-
 }
