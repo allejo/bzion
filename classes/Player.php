@@ -150,7 +150,6 @@ class Player extends Controller
     }
 
     /**
-<<<<<<< HEAD
      * Get all the players in the database that have an active status
      * @return mixed An array of players
      */
@@ -159,8 +158,10 @@ class Player extends Controller
 
         $results = $db->query("SELECT * FROM players WHERE status=?", "s", array("active"));
 
-        return $results[0];
-=======
+        return $results;
+    }
+
+    /*
      * Generate a URL-friendly unique alias for a username
      *
      * @param string $name The original username
@@ -204,7 +205,6 @@ class Player extends Controller
         }
 
         return $name.$i;
->>>>>>> f51ac14aee4d4af9da1496e1e8291dd22a8592d1
     }
 
 }
