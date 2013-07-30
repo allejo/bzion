@@ -177,9 +177,58 @@ class Team extends Controller
      * Get the members on the team
      * @return array The members on the team
      */
-    function getMembers() {
-        $members = $this->db->query("SELECT * FROM players WHERE team = ?", "i", array($this->id));
+    function getMembers($select="*") {
+        $members = $this->db->query("SELECT $select FROM players WHERE team = ?", "i", array($this->id));
         return $members;
+    }
+
+    /**
+     * Get the number of members on the team
+     * @return int The number of members on the team
+     */
+    function getNumMembers() {
+        return $this->members;
+    }
+
+    /**
+     * Get the total number of matches this team has played
+     * @return int The total number of matches this team has played
+     */
+    function getNumTotalMatches() {
+        return $this->matches_total;
+    }
+
+    /**
+     * Get the current elo of the team
+     * @return double The elo of the team
+     */
+    function getElo() {
+        return $this->elo;
+    }
+
+    /**
+     * Get the name of the team
+     * @return string The name of the team
+     */
+    function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Get the activity of the team
+     * @return double The team's activity
+     */
+    function getActivity() {
+        return $this->activity;
+    }
+
+    /**
+     * Get the leader of the team
+     * @return string The name of the team leader
+     */
+    function getLeader() {
+        $results = $this->db->query("SELECT id,bzid,username FROM players WHERE bzid = ?", "i", array($this->leader));
+        return $results[0];
     }
 
     /**
