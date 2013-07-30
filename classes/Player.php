@@ -105,7 +105,7 @@ class Player extends Controller
      */
     function updateLastLogin($when = "now") {
         $last = new DateTime($when);
-        $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format('Y-m-d H:i:s'), $this->bzid));
+        $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
     }
 
     /**
@@ -131,7 +131,7 @@ class Player extends Controller
         $last_login = new DateTime($last_login);
 
         $results = $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format('Y-m-d H:i:s'), $last_login->format('Y-m-d H:i:s')));
+        "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
 
         return new Player($bzid);
     }

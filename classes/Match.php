@@ -125,10 +125,10 @@ class Match extends Controller
         $diff = abs($diff);
 
         $timestamp = new DateTime($timestamp);
-        var_dump($timestamp->format('Y-m-d H:i:s'));
+        var_dump($timestamp->format(DATE_FORMAT));
 
         $results = $db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
-        "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format('Y-m-d H:i:s'), $duration, $entered_by, "entered"));
+        "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format(DATE_FORMAT), $duration, $entered_by, "entered"));
 
         // Update team ELOs
         $team_a->elo = $a_elo;

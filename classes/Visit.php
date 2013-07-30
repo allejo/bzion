@@ -95,7 +95,7 @@ class Visit extends Controller
         $timestamp = new DateTime($timestamp);
 
         $results = $db->query("INSERT INTO visits (bzid, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-        "isssss", array($bzid, $ip, $host, $user_agent, $referer, $timestamp->format('Y-m-d H:i:s')));
+        "isssss", array($bzid, $ip, $host, $user_agent, $referer, $timestamp->format(DATE_FORMAT)));
 
 
         return new Visit($db->getInsertId());
