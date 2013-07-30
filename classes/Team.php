@@ -255,4 +255,16 @@ class Team {
         return $team.$i;
     }
 
+    /**
+     * Get all the teams in the database that have are not disabled or deleted
+     * @return mixed An array of teams
+     */
+    public static function getTeams() {
+        $db = Database::getInstance();
+
+        $results = $db->query("SELECT * FROM teams WHERE status!=? AND status!=?", "ss", array("disabled", "deleted"));
+
+        return $results;
+    }
+
 }
