@@ -10,6 +10,11 @@ DEFINE("MYSQL_PASSWORD", "password"); // Database password
 DEFINE("MYSQL_DEBUG", true);  // Whether or not to log MySQL errors
 
 /*
+ * Site settings
+ */
+DEFINE("SITE_TITLE", "BZiON: A League Management System");
+
+/*
  * An array of directories to be autoloaded in bzion-load.php
  */
 $classesDir = array (
