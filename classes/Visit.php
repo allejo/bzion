@@ -1,6 +1,7 @@
 <?php
 
-class Visit {
+class Visit extends Controller
+{
 
     /**
      * The bzid of the visiting user
@@ -39,22 +40,13 @@ class Visit {
     private $timestamp;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Visit
      * @param int $id The visit's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM visits WHERE id = ?", "i", array($id));
-        $visit = $results[0];
+        parent::__construct($id, "visits");
+        $visit = $this->result;
 
         $this->bzid = $visit['bzid'];
         $this->ip = $visit['ip'];

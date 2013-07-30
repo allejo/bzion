@@ -36,22 +36,13 @@ class Server extends Controller
     private $updated;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Server
      * @param int $id The server's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM servers WHERE id = ?", "i", array($id));
-        $server = $results[0];
+        parent::__construct($id, "servers");
+        $server = $this->result;
 
         $this->name = $server['name'];
         $this->address = $server['address'];

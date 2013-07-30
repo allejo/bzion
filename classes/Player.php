@@ -70,23 +70,15 @@ class Player extends Controller
     private $last_login;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Player
      * @param int $bzid The player's bzid
      */
     function __construct($bzid) {
 
-        $this->db = Database::getInstance();
+        parent::__construct($bzid, "players");
+        $player = $this->result;
+
         $this->bzid = $bzid;
-
-        $results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
-        $player = $results[0];
-
         $this->id = $player['id'];
         $this->username = $player['username'];
         $this->status = $player['status'];

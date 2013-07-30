@@ -88,22 +88,13 @@ class Team extends Controller
     private $status;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Team
      * @param int $id The team's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
-        $team = $results[0];
+        parent::__construct($id, "teams");
+        $team = $this->result;
 
         $this->name = $team['name'];
         $this->alias = $team['alias'];

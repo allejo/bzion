@@ -42,22 +42,13 @@ class Mail extends Controller
     private $status;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new message
      * @param int $id The message's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM mail WHERE id = ?", "i", array($id));
-        $message = $results[0];
+        parent::__construct($id, "mail");
+        $message = $this->result;
 
         $this->to = $message['player_to'];
         $this->from = $message['player_from'];

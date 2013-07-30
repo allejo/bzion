@@ -34,26 +34,19 @@ class Invitation extends Controller
     private $text;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new invite
      * @param int $id The invite's id
      */
     function __construct($id)
     {
-        $this->db = Database::getInstance();
-        $results = $this->db->query("SELECT * FROM invitations WHERE id = ?", "i", array($id));
+        parent::__construct($id, "invitations");
+        $invitation = $this->result;
 
-        $this->id = $id;
-        $this->invited_player = $results['invited_player'];
-        $this->sent_by = $results['sent_by'];
-        $this->team = $results['team'];
-        $this->expiration = $results['expiration'];
-        $this->text = $results['text'];
+        $this->invited_player = $invitation['invited_player'];
+        $this->sent_by = $invitation['sent_by'];
+        $this->team = $invitation['team'];
+        $this->expiration = $invitation['expiration'];
+        $this->text = $invitation['text'];
     }
 
     /**
