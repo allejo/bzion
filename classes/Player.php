@@ -155,4 +155,16 @@ class Player {
         return (count($results[0]) > 0);
     }
 
+    /**
+     * Get all the players in the database that have an active status
+     * @return mixed An array of players
+     */
+    public static function getPlayers() {
+        $db = Database::getInstance();
+
+        $results = $db->query("SELECT * FROM players WHERE status=?", "s", array("active"));
+
+        return $results[0];
+    }
+
 }
