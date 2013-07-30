@@ -1,7 +1,7 @@
 # BZiON files #
 ###############
 bzion-config.php
-bzion_error.log
+bzion_errors.log
 update.php
 
 # OS generated files #
