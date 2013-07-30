@@ -177,7 +177,7 @@ class Team extends Controller
      * Get the members on the team
      * @return array The members on the team
      */
-    function members() {
+    function getMembers() {
         $members = $this->db->query("SELECT * FROM players WHERE team = ?", "i", array($this->id));
         return $members;
     }
