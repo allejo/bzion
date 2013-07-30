@@ -1,4 +1,8 @@
+# BZiON files #
+###############
 bzion-config.php
+bzion_error.log
+update.php
 
 # OS generated files #
 ######################
@@ -10,4 +14,3 @@ bzion-config.php
 Icon?
 ehthumbs.db
 Thumbs.db
-update.php

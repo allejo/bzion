@@ -10,8 +10,11 @@ $info = validate_token($token, $username);
 
 if (isset($info)) {
 
+    $go = "index.php";
+
     if (!Player::playerExists($info['bzid'])) {
         Player::newPlayer($info['bzid'], $info['username']);
+        $go = "profile.php"; // If they're new, redirect to their profile page so they can add some info
     }
 
     session_start();
@@ -24,7 +27,7 @@ if (isset($info)) {
     $player->updateLastLogin();
     Visit::enterVisit($info['bzid'], $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
     
-    Header::go("index.php");
+    Header::go($go);
 
 } else {
     echo "There was an error processing your login. Please go back and try again.";
