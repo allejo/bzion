@@ -43,3 +43,4 @@ DEFINE("UPDATE_INTERVAL", "5"); // Server polling interval in minutes
 DEFINE("DEVELOPMENT", FALSE); // Whether to enable some functions which make debugging easier
                               // WARNING: Setting this to TRUE might introduce significant security risks
                               // and should NOT be used in a production environment
+DEFINE("DATE_FORMAT", "Y-m-d H:i:s"); // Default date format. Default results in: YYYY-MM-DD HH:MM:SS
