@@ -1,6 +1,7 @@
 <?php
 
-class Match {
+class Match extends Controller
+{
 
     /**
      * The ID of the match

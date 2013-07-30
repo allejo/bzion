@@ -1,6 +1,7 @@
 <?php
 
-class Player {
+class Player extends Controller
+{
 
     /**
      * The id of the player

@@ -1,6 +1,6 @@
 <?php
 
-class Invitation
+class Invitation extends Controller
 {
     /**
      * The ID of the invitation

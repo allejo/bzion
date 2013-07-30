@@ -1,6 +1,7 @@
 <?php
 
-class Mail {
+class Mail extends Controller
+{
 
     /**
      * The id of the message

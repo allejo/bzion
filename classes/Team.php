@@ -1,6 +1,7 @@
 <?php
 
-class Team {
+class Team extends Controller
+{
 
     /**
      * The id of the team

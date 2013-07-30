@@ -2,7 +2,8 @@
 
 include_once("bzfquery.php");
 
-class Server {
+class Server extends Controller
+{
 
     /**
      * The id of the server

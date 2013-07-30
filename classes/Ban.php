@@ -1,6 +1,6 @@
 <?php
 
-class Ban {
+class Ban extends Controller {
 
     /**
      * The id of the ban
