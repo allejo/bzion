@@ -1,12 +1,7 @@
 <?php
 
-class Team {
-
-    /**
-     * The id of the team
-     * @var int
-     */
-    private $id;
+class Team extends Controller
+{
 
     /**
      * The name of the team
@@ -93,22 +88,13 @@ class Team {
     private $status;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Team
      * @param int $id The team's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM teams WHERE id = ?", "i", array($id));
-        $team = $results[0];
+        parent::__construct($id, "teams");
+        $team = $this->result;
 
         $this->name = $team['name'];
         $this->alias = $team['alias'];
@@ -196,6 +182,7 @@ class Team {
         return $members;
     }
 
+<<<<<<< HEAD
     /**
      * Generate a URL-friendly unique alias for a team name
      *
@@ -267,4 +254,6 @@ class Team {
         return $results;
     }
 
+=======
+>>>>>>> f51ac14aee4d4af9da1496e1e8291dd22a8592d1
 }

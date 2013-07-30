@@ -169,6 +169,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `bzid` int(10) unsigned NOT NULL,
   `team` int(10) unsigned NOT NULL,
   `username` varchar(32) NOT NULL,
+  `alias` varchar(32) DEFAULT NULL,
   `status` set('active', 'disabled', 'deleted', 'reported', 'banned') NOT NULL DEFAULT 'active',
   `access` tinyint(4) NOT NULL,
   `avatar` varchar(200) NOT NULL,
@@ -177,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `players` (
   `timezone` tinyint(4) NOT NULL,
   `joined` datetime NOT NULL,
   `last_login` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
