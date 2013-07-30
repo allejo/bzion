@@ -20,7 +20,7 @@ class Header {
      * Construct a new Header object
      * @param string $title The page's title
      */
-    function __construct($title) {
+    function __construct($title="") {
         $this->title = $title;
         $this->db = Database::getInstance();
     }
@@ -28,25 +28,25 @@ class Header {
     /**
      * Draw the header
      */
-    function draw() {
+    function draw($title="") {
+        $title = ($title=="") ? $this->title : $title;
 
     ?>
 
 <!DOCTYPE html>
     <head>
         <meta charset="utf-8">
-        <title><?php echo $this->title; ?></title>
+        <title><?php echo $title; ?></title>
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
 
-        <a href="index.php">Home</a> |
+        <a href="index.php">Home</a> | 
+        <a href="teams.php">Teams</a> |
 
         <?php if (isset($_SESSION['username'])) { ?>
-
         <a href="profile.php">Profile</a> |
         <a href="logout.php">Logout [<?php echo $_SESSION['username']; ?>]</a>
-
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
             $slash = (substr(HTTP_ROOT, -1) == "/") ? "" : "/";
