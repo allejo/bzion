@@ -232,6 +232,14 @@ class Team extends Controller
     }
 
     /**
+     * Get the creation date of the team
+     * @return string The creation date of the team
+     */
+    function getCreationDate() {
+        return $this->created->format(DATE_FORMAT);
+    }
+
+    /**
      * Get all the teams in the database that have are not disabled or deleted
      * @return mixed An array of teams
      */
