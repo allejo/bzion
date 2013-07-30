@@ -96,6 +96,7 @@ class Database
      */
     function query($query, $typeDef = FALSE, $params = FALSE)
     {
+        $multiQuery = true;
         if ($stmt = $this->dbc->prepare($query))
         {
             if (count($params) == count($params, 1))
@@ -103,8 +104,6 @@ class Database
                 $params = array($params);
                 $multiQuery = false;
             }
-            else
-                $multiQuery = true;
 
             if ($typeDef)
             {
