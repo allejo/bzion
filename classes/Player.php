@@ -1,12 +1,7 @@
 <?php
 
-class Player {
-
-    /**
-     * The id of the player
-     * @var int
-     */
-    private $id;
+class Player extends Controller
+{
 
     /**
      * The bzid of the player
@@ -81,23 +76,15 @@ class Player {
     private $last_login;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Player
      * @param int $bzid The player's bzid
      */
     function __construct($bzid) {
 
-        $this->db = Database::getInstance();
+        parent::__construct($bzid, "players", "bzid");
+        $player = $this->result;
+
         $this->bzid = $bzid;
-
-        $results = $this->db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
-        $player = $results[0];
-
         $this->id = $player['id'];
         $this->username = $player['username'];
         $this->alias = $player['alias'];

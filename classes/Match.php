@@ -1,12 +1,7 @@
 <?php
 
-class Match {
-
-    /**
-     * The ID of the match
-     * @var int
-     */
-    private $id;
+class Match extends Controller
+{
 
     /**
      * The ID of the first team of the match
@@ -82,22 +77,13 @@ class Match {
     private $status;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Match
      * @param int $id The match's ID
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM matches WHERE id = ?", "i", array($id));
-        $match = $results[0];
+        parent::__construct($id, "matches");
+        $match = $this->result;
 
         $this->team_a = $match['team_a'];
         $this->team_b = $match['team_b'];

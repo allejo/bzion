@@ -1,12 +1,7 @@
 <?php
 
-class Mail {
-
-    /**
-     * The id of the message
-     * @var int
-     */
-    private $id;
+class Mail extends Controller
+{
 
     /**
      * The BZID of the player the message was sent to
@@ -47,22 +42,13 @@ class Mail {
     private $status;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new message
      * @param int $id The message's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM mail WHERE id = ?", "i", array($id));
-        $message = $results[0];
+        parent::__construct($id, "mail");
+        $message = $this->result;
 
         $this->to = $message['player_to'];
         $this->from = $message['player_from'];
@@ -108,25 +94,6 @@ class Mail {
         $db->query($query, "iisss", $params);
 
         return new Mail($db->getInsertId());
-    }
-
-    /**
-     * Delete the message
-     *
-     * Please note that this does not delete the message entirely from the database,
-     * it only hides it from users.
-     */
-    public function delete() {
-        $this->__set('status', 'deleted');
-    }
-
-    /**
-     * Permanently delete the message
-     *
-     * This function deletes the message from the database, making it impossible to recover.
-     */
-    public function wipe() {
-        $this->db->query("DELETE FROM mail WHERE id = ?", "i", array($this->id));
     }
 
 }

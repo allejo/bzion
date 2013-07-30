@@ -1,12 +1,6 @@
 <?php
 
-class Ban {
-
-    /**
-     * The id of the ban
-     * @var int
-     */
-    private $id;
+class Ban extends Controller {
 
     /**
      * The bzid of the banned player
@@ -45,22 +39,13 @@ class Ban {
     private $author;
 
     /**
-     * The database variable used for queries
-     * @var Database
-     */
-    private $db;
-
-    /**
      * Construct a new Ban
      * @param int $id The ban's id
      */
     function __construct($id) {
 
-        $this->db = Database::getInstance();
-        $this->id = $id;
-
-        $results = $this->db->query("SELECT * FROM bans WHERE id = ?", "i", array($id));
-        $ban = $results[0];
+        parent::__construct($id, "bans");
+        $ban = $this->result;
 
         $this->player = $ban['player'];
         $this->expiration = new DateTime($ban['expiration']);
