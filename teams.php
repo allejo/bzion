@@ -7,6 +7,8 @@ $header->draw("Teams");
 
 $teams = Team::getTeams();
 
+echo "<br /><br />";
+
 foreach ($teams as $key => $value) {
 	$team = new Team($value['id']);
 	echo "<b>" . $team->getName() . "</b><br />";
