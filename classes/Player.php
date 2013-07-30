@@ -75,7 +75,7 @@ class Player extends Controller
      */
     function __construct($bzid) {
 
-        parent::__construct($bzid, "players");
+        parent::__construct($bzid, "players", "bzid");
         $player = $this->result;
 
         $this->bzid = $bzid;
