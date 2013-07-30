@@ -3,12 +3,6 @@
 class Ban extends Controller {
 
     /**
-     * The id of the ban
-     * @var int
-     */
-    private $id;
-
-    /**
      * The bzid of the banned player
      * @var int
      */

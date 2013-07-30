@@ -4,12 +4,6 @@ class Player extends Controller
 {
 
     /**
-     * The id of the player
-     * @var int
-     */
-    private $id;
-
-    /**
      * The bzid of the player
      * @var int
      */

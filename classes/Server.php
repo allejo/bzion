@@ -6,12 +6,6 @@ class Server extends Controller
 {
 
     /**
-     * The id of the server
-     * @var int
-     */
-    private $id;
-
-    /**
      * The name of the server
      * @var string
      */

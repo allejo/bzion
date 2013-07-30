@@ -4,12 +4,6 @@ class Match extends Controller
 {
 
     /**
-     * The ID of the match
-     * @var int
-     */
-    private $id;
-
-    /**
      * The ID of the first team of the match
      * @todo Does Team A represent the winner? Or is the team assignment random?
      * @var int

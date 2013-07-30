@@ -3,16 +3,22 @@
 abstract class Controller {
 
     /**
+     * The Database ID of the object
+     * @var int
+     */
+    protected $id;
+
+    /**
      * The name of the database table used for queries
      * @var Database
      */
-    private $table;
+    protected $table;
 
     /**
      * The database variable used for queries
      * @var Database
      */
-    private $db;
+    protected $db;
 
     /**
      * Construct a new Controller

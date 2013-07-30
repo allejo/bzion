@@ -3,12 +3,6 @@
 class Visit {
 
     /**
-     * The id of the visiting user
-     * @var int
-     */
-    private $id;
-
-    /**
      * The bzid of the visiting user
      * @var int
      */

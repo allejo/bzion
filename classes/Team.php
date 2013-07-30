@@ -4,12 +4,6 @@ class Team extends Controller
 {
 
     /**
-     * The id of the team
-     * @var int
-     */
-    private $id;
-
-    /**
      * The name of the team
      * @var string
      */

@@ -4,12 +4,6 @@ class Mail extends Controller
 {
 
     /**
-     * The id of the message
-     * @var int
-     */
-    private $id;
-
-    /**
      * The BZID of the player the message was sent to
      * @var int
      */

@@ -2,11 +2,6 @@
 
 class Invitation extends Controller
 {
-    /**
-     * The ID of the invitation
-     * @var int
-     */
-    private $id;
 
     /**
      * The BZID of the player receiving the invite
