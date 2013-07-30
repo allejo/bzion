@@ -24,9 +24,11 @@ abstract class Controller {
      * Construct a new Controller
      * @param int $table The name of the DB table used for queries
      */
-    function __construct($table=null) {
+    function __construct($id, $table=null) {
 
         $this->db = Database::getInstance();
+
+        $this->id = id;
         $this->table = $table;
 
     }
