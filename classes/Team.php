@@ -263,4 +263,15 @@ class Team extends Controller
         return $results;
     }
 
+    /**
+     * Gets a team's id from the supplied alias
+     * @param string $alias The team's alias
+     * @return int The team's id
+     */
+    public static function getIdFromAlias($alias) {
+        $db = Database::getInstance();
+        $results = $db->query("SELECT id FROM teams WHERE alias=?", "s", array($alias));
+        return $results[0];
+    }
+
 }
