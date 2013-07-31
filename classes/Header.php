@@ -49,8 +49,7 @@ class Header {
         <a href="logout.php">Logout [<?php echo $_SESSION['username']; ?>]</a>
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
-            $slash = (substr(HTTP_ROOT, -1) == "/") ? "" : "/";
-            $url .= urlencode("http://" . HTTP_ROOT . $slash . "login.php?token=%TOKEN%&username=%USERNAME%");
+            $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>">Login</a>
 
