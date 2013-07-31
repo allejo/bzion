@@ -41,11 +41,12 @@ class Header {
     </head>
     <body>
 
-        <a href="index.php">Home</a> | 
-        <a href="teams.php">Teams</a> |
+        <?php $baseUrl = "http://" . rtrim(HTTP_ROOT, '/'); ?>
+        <a href="<?php echo $baseUrl; ?>/">Home</a> | 
+        <a href="<?php echo $baseUrl; ?>/teams">Teams</a> |
 
         <?php if (isset($_SESSION['username'])) { ?>
-        <a href="profile.php">Profile</a> |
+        <a href="<?php echo $baseUrl; ?>/profile">Profile</a> |
         <a href="logout.php">Logout [<?php echo $_SESSION['username']; ?>]</a>
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
