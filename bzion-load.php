@@ -12,7 +12,7 @@ function __autoload($class_name)
     foreach ($classesDir as $directory)
     {
         $doc = rtrim(DOC_ROOT, '/') . '/' . $directory . $class_name . '.php');
-        if (file_exists($doc)
+        if (file_exists($doc))
         {
             require_once($doc);
             return;
