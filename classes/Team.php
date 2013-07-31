@@ -221,6 +221,18 @@ class Team extends Controller
     function getActivity() {
         return $this->activity;
     }
+    
+    /**
+     * Get the URL that points to the team's page
+     * @return string The team's URL, without a trailing slash
+     */
+    function getURL() {
+        $alias = $this->alias;
+        if (!$alias)
+            $alias = $this->id;
+        $url = "http://" . rtrim(HTTP_ROOT, '/') . "/teams/" . $alias;
+        return $url;
+    }
 
     /**
      * Get the leader of the team
