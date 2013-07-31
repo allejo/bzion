@@ -1,6 +1,9 @@
 <?php
 
-include('bzion-config.php');
+if (!@include("bzion-config.php")) {
+    header("Location: install.php");
+    die();
+}
 
 function __autoload($class_name)
 {
