@@ -55,19 +55,19 @@ class Team extends Controller
      * The number of matches won
      * @var int
      */
-    private $mathes_won;
+    private $matches_won;
 
     /**
      * The number of matches lost
      * @var int
      */
-    private $mathes_lost;
+    private $matches_lost;
 
     /**
      * The number of matches tied
      * @var int
      */
-    private $mathes_draw;
+    private $matches_draw;
 
     /**
      * The total number of matches
