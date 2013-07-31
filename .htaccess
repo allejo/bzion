@@ -15,3 +15,4 @@ RewriteBase /bzion
 
 RewriteRule ^teams/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
 RewriteRule ^teams/([0-9a-z\-_]+)$ teams.php?alias=$1 [QSA,NC,L]
+RewriteRule ^teams teams.php [QSA,NC,L]
