@@ -8,3 +8,10 @@
     Deny from all
 </Files>
 
+RewriteEngine On
+
+#TODO: See if it's possible to omit the name of the directory
+RewriteBase /bzion
+
+RewriteRule ^team/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
+RewriteRule ^team/([0-9a-z\-_]+)$ teams.php?alias=$1 [QSA,NC,L]
