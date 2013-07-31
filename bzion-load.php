@@ -11,9 +11,10 @@ function __autoload($class_name)
 
     foreach ($classesDir as $directory)
     {
-        if (file_exists( DOC_ROOT . '/' . $directory . $class_name . '.php'))
+        $doc = rtrim(DOC_ROOT, '/') . '/' . $directory . $class_name . '.php');
+        if (file_exists($doc)
         {
-            require_once ( DOC_ROOT . '/' . $directory . $class_name . '.php');
+            require_once($doc);
             return;
         }
     }
