@@ -27,6 +27,7 @@ class Header {
 
     /**
      * Draw the header
+     * @param string $title The page's title
      */
     function draw($title="") {
         $title = ($title=="") ? $this->title : $title;
