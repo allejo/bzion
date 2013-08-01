@@ -45,7 +45,8 @@ class Header {
         <?php $baseUrl = "http://" . rtrim(HTTP_ROOT, '/'); ?>
         <a href="<?php echo $baseUrl; ?>/">Home</a> | 
         <a href="<?php echo $baseUrl; ?>/teams">Teams</a> | 
-        <a href="<?php echo $baseUrl; ?>/players">Players</a> |
+        <a href="<?php echo $baseUrl; ?>/players">Players</a> | 
+        <a href="<?php echo $baseUrl; ?>/matches">Matches</a> | 
 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/profile">Profile</a> |
