@@ -8,15 +8,18 @@
     Deny from all
 </Files>
 
+Options -MultiViews
+
 RewriteEngine On
 
-#TODO: See if it's possible to omit the name of the directory
-RewriteBase /bzion
+# Uncomment this line and set it to bzion's directory
+# if you are experiencing issues with mod_rewrite
+#RewriteBase /
 
 RewriteRule ^teams/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
 RewriteRule ^teams/([0-9a-z\-_]+)$ teams.php?alias=$1 [QSA,NC,L]
 RewriteRule ^teams teams.php [QSA,NC,L]
 
 RewriteRule ^players/([0-9]+)$ players.php?id=$1 [QSA,NC,L]
-RewriteRule ^players/([0-9a-z\-_]+)$ players.php?alias=$1 [QSA,NC,L]
+RewriteRule ^players/(.+)$ players.php?alias=$1 [QSA,NC,L]
 RewriteRule ^players players.php [QSA,NC,L]
