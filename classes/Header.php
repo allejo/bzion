@@ -67,9 +67,11 @@ class Header {
      * Redirect the page using PHP's header() function
      * @param string $location The page to redirect to
      */
-    public static function go($location = "/") {
+    public static function go($location = "/", $override = false) {
         $url = "http://" . rtrim(HTTP_ROOT, '/');
-        if (strtolower($location) == "default" || strtolower($location) == "index.php" || strtolower($location) == "/") {
+        if ($override) {
+            header("Location: $location");
+        } else if (strtolower($location) == "default" || strtolower($location) == "index.php" || strtolower($location) == "/") {
             header("Location: $url");
         } else {
             header("Location: $url" . $location);

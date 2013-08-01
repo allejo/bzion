@@ -9,12 +9,14 @@ $header = new Header();
 
 session_destroy();
 
-$loc = "index.php";
+$loc = "/";
+$use_own = false;
 
 if (isset($_SERVER["HTTP_REFERER"])) {
     $loc = $_SERVER["HTTP_REFERER"];
+    $use_own = true;
 }
 
-Header::go($loc);
+Header::go($loc, $use_own);
 
 ?>
