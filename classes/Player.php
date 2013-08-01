@@ -161,6 +161,14 @@ class Player extends Controller
         return $results;
     }
 
+    /**
+     * Get a URL that points to the player's page
+     * @return string The URL
+     */
+    function getURL() {
+        return parent::getURL("players", $this->bzid);
+    }
+
     /*
      * Generate a URL-friendly unique alias for a username
      *
