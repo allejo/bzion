@@ -182,7 +182,7 @@ class Player extends Controller
      * Get a URL that points to the player's page
      * @return string The URL
      */
-    function getURL($dir="players", $default = NULL) {
+    function getURL($dir="players", $default=NULL) {
         return parent::getURL($dir, $default);
     }
 
