@@ -87,6 +87,7 @@ class Player extends Controller
         $this->id = $player['id'];
         $this->username = $player['username'];
         $this->alias = $player['alias'];
+        $this->team = $player['team'];
         $this->status = $player['status'];
         $this->access = $player['access'];
         $this->avatar = $player['avatar'];
