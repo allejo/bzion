@@ -67,6 +67,18 @@ abstract class Controller {
         $this->db->query("DELETE FROM ". $this->table ." WHERE id = ?", "i", array($this->id));
     }
 
+    /**
+     * Gets one object's id from the supplied alias
+     * @param string $value The value which the column should be equal to
+     * @param string $column The name of the database column
+     * @param string $table The name of the table where the entries are located
+     * @return int The ID of the object
+     */
+    protected static function getIdFrom($value, $column, $table) {
+        $db = Database::getInstance();
+        $results = $db->query("SELECT id FROM " . $table . " WHERE " . $column . "=?", "s", array($value));
+        return $results[0]['id'];
+    }
 
     /**
      * Generate a URL-friendly unique alias for an object name
