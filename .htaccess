@@ -11,7 +11,7 @@
 RewriteEngine On
 
 #TODO: See if it's possible to omit the name of the directory
-RewriteBase /bzion
+#RewriteBase /bzion
 
 RewriteRule ^teams/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
 RewriteRule ^teams/([0-9a-z\-_]+)$ teams.php?alias=$1 [QSA,NC,L]
