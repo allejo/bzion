@@ -219,10 +219,10 @@ class Team extends Controller
 
     /**
      * Get the activity of the team
-     * @return double The team's activity
+     * @return double The team's activity formated to two decimal places
      */
     function getActivity() {
-        return $this->activity;
+        return sprintf("%.2f", $this->activity);
     }
     
     /**
