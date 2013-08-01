@@ -22,12 +22,6 @@ class Player extends Controller
     private $username;
 
     /**
-     * The URL-friendly alias of the player
-     * @var string
-     */
-    private $alias;
-
-    /**
      * The player's status
      * @var string
      */

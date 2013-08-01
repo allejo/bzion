@@ -7,6 +7,12 @@ abstract class Controller {
      * @var int
      */
     protected $id;
+    
+    /**
+     * A unique URL-friendly identifier for the object
+     * @var string
+     */
+    protected $alias;
 
     /**
      * The name of the database table used for queries
@@ -60,9 +66,9 @@ abstract class Controller {
 
     /**
      * Update a database field
-     * @param type $name The name of the column
-     * @param type $value The value to set the column to
-     * @param type $type The type of the value, can be 's' (string), 
+     * @param string $name The name of the column
+     * @param mixed $value The value to set the column to
+     * @param string $type The type of the value, can be 's' (string), 
      * 'i' (integer), 'd' (double), 'b' (blob) or nothing to let the
      * function guess it
      */
@@ -99,6 +105,20 @@ abstract class Controller {
      */
     public function wipe() {
         $this->db->query("DELETE FROM " . $this->table . " WHERE id = ?", "i", array($this->id));
+    }
+
+    /*
+     * Get a URL that points to an object's page
+     * @param string $dir The virtual directory the URL should point to
+     * @return string 
+     */
+    protected function getURL($dir) {
+        $alias = $this->id;
+        if (isset($this->alias) && $this->alias) {
+            $alias = $this->alias;
+        }
+        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . '/' . $alias;
+        return $url;
     }
 
     /**

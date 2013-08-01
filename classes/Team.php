@@ -10,12 +10,6 @@ class Team extends Controller
     private $name;
 
     /**
-     * The unique URL-friendly identifier of the team
-     * @var string
-     */
-    private $alias;
-
-    /**
      * The description of the team
      * @var string
      */
@@ -231,11 +225,7 @@ class Team extends Controller
      * @return string The team's URL, without a trailing slash
      */
     function getURL() {
-        $alias = $this->alias;
-        if (!$alias)
-            $alias = $this->id;
-        $url = "http://" . rtrim(HTTP_ROOT, '/') . "/teams/" . $alias;
-        return $url;
+        return parent::getURL("teams");
     }
 
     /**
