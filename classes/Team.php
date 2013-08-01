@@ -203,7 +203,7 @@ class Team extends Controller
 
     /**
      * Get the current elo of the team
-     * @return double The elo of the team
+     * @return int The elo of the team
      */
     function getElo() {
         return $this->elo;
