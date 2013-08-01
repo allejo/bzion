@@ -182,7 +182,7 @@ class Player extends Controller
      * Get a URL that points to the player's page
      * @return string The URL
      */
-    function getURL($dir="players", $default=NULL) {
+    function getURL($dir="players", $default="bzid") {
         return parent::getURL($dir, $default);
     }
 
@@ -235,7 +235,7 @@ class Player extends Controller
     /**
      * Gets a player object from the supplied alias
      * @param string $alias The player's alias
-     * @return Player The player
+     * @return Team The player
      */
     public static function getFromAlias($alias) {
         return new Player(parent::getIdFrom($alias, "alias", true));
