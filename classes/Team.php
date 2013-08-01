@@ -178,6 +178,7 @@ class Team extends Controller
 
     /**
      * Get the members on the team
+     * @param string $select A comma separated list of fields to get
      * @return array The members on the team
      */
     function getMembers($select="*") {
@@ -252,6 +253,15 @@ class Team extends Controller
      */
     function getCreationDate() {
         return $this->created->format(DATE_FORMAT);
+    }
+
+    /**
+     * Adds a new member to the team
+     * @param int $bzid The bzid of the player to add to the team
+     */
+    function addMember($bzid) {
+        $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array($this->id, $bzid));
+        $this->members++;
     }
 
     /**
