@@ -16,10 +16,27 @@ RewriteEngine On
 # if you are experiencing issues with mod_rewrite
 #RewriteBase /
 
+# Rewrite rule for teams
+# Example:
+#       http://example.com/teams.php?alias=bzion
+#                   becomes
+#       http://example.com/teams/bzion
 RewriteRule ^teams/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
 RewriteRule ^teams/([0-9a-z\-_]+)$ teams.php?alias=$1 [QSA,NC,L]
 RewriteRule ^teams teams.php [QSA,NC,L]
 
+# Rewrite rule for players
+# Example:
+#       http://example.com/players.php?alias=bzion
+#                   becomes
+#       http://example.com/players/bzion
 RewriteRule ^players/([0-9]+)$ players.php?id=$1 [QSA,NC,L]
 RewriteRule ^players/(.+)$ players.php?alias=$1 [QSA,NC,L]
 RewriteRule ^players players.php [QSA,NC,L]
+
+# Rewrite rule for matches
+# Example:
+#       http://example.com/matches.php
+#                   becomes
+#       http://example.com/matches
+RewriteRule ^matches matches.php [QSA,NC,L]
