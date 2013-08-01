@@ -224,8 +224,8 @@ class Team extends Controller
      * Get the URL that points to the team's page
      * @return string The team's URL, without a trailing slash
      */
-    function getURL() {
-        return parent::getURL("teams");
+    function getURL($dir="teams", $default = NULL) {
+        return parent::getURL($dir, $default);
     }
 
     /**

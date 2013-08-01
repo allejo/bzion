@@ -108,6 +108,23 @@ class Player extends Controller
         $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
     }
 
+    function getUsername() {
+        return $this->username;
+    }
+
+    function getTeam() {
+        $team = new Team($this->team);
+        return $team->getName();
+    }
+
+    /**
+     * Get the joined date of the player
+     * @return string The joined date of the player
+     */
+    function getJoinedDate() {
+        return $this->joined->format(DATE_FORMAT);
+    }
+
     /**
      * Enter a new player to the database
      * @param int $bzid The player's bzid
@@ -165,8 +182,8 @@ class Player extends Controller
      * Get a URL that points to the player's page
      * @return string The URL
      */
-    function getURL() {
-        return parent::getURL("players", $this->bzid);
+    function getURL($dir="players", $default = NULL) {
+        return parent::getURL($dir, $default);
     }
 
     /*
@@ -213,6 +230,15 @@ class Player extends Controller
         }
 
         return $name.$i;
+    }
+
+    /**
+     * Gets a player object from the supplied alias
+     * @param string $alias The player's alias
+     * @return Team The player
+     */
+    public static function getFromAlias($alias) {
+        return new Team(self::getIdFrom($alias, "alias"));
     }
 
 }
