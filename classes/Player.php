@@ -109,14 +109,6 @@ class Player extends Controller
     }
 
     /**
-     * Get the URL that points to the player's page
-     * @return string The player's URL
-     */
-    function getURL() {
-        return parent::getURL("players");
-    }
-
-    /**
      * Enter a new player to the database
      * @param int $bzid The player's bzid
      * @param string $username The player's username
