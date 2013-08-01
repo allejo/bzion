@@ -12,11 +12,11 @@ $info = validate_token($token, $username, array(), $checkIP);
 
 if (isset($info)) {
 
-    $go = "index.php";
+    $go = "/";
 
     if (!Player::playerExists($info['bzid'])) {
         Player::newPlayer($info['bzid'], $info['username']);
-        $go = "profile.php"; // If they're new, redirect to their profile page so they can add some info
+        $go = "/profile"; // If they're new, redirect to their profile page so they can add some info
     }
 
     session_start();
