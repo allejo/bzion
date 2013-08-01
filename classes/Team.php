@@ -261,7 +261,7 @@ class Team extends Controller
     public static function getTeams() {
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT * FROM teams WHERE status!=? AND status!=?", "ss", array("disabled", "deleted"));
+        $results = $db->query("SELECT id FROM teams WHERE status!=? AND status!=?", "ss", array("disabled", "deleted"));
 
         return $results;
     }

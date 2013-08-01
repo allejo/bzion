@@ -173,7 +173,7 @@ class Player extends Controller
     public static function getPlayers() {
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT * FROM players WHERE status=?", "s", array("active"));
+        $results = $db->query("SELECT bzid FROM players WHERE status=?", "s", array("active"));
 
         return $results;
     }
