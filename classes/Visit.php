@@ -40,12 +40,17 @@ class Visit extends Controller
     private $timestamp;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "visits";
+
+    /**
      * Construct a new Visit
      * @param int $id The visit's id
      */
     function __construct($id) {
 
-        parent::__construct($id, "visits");
+        parent::__construct($id);
         $visit = $this->result;
 
         $this->bzid = $visit['bzid'];
@@ -64,8 +69,6 @@ class Visit extends Controller
      */
     function __set($name, $value)
     {
-        $table = "visits";
-
         if ($name == 'bzid') {
             $type = 'i';
         } else if ($name == 'ip' || $name == 'host' || $name == 'referer' ||
@@ -74,7 +77,7 @@ class Visit extends Controller
         }
 
         if (isset($type)) {
-            $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
+            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
             $this->{$name} = $value;
         }
 

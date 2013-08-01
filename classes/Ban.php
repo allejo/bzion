@@ -39,12 +39,17 @@ class Ban extends Controller {
     private $author;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "bans";
+
+    /**
      * Construct a new Ban
      * @param int $id The ban's id
      */
     function __construct($id) {
 
-        parent::__construct($id, "bans");
+        parent::__construct($id);
         $ban = $this->result;
 
         $this->player = $ban['player'];

@@ -42,12 +42,17 @@ class Mail extends Controller
     private $status;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "mail";
+
+    /**
      * Construct a new message
      * @param int $id The message's id
      */
     function __construct($id) {
 
-        parent::__construct($id, "mail");
+        parent::__construct($id);
         $message = $this->result;
 
         $this->to = $message['player_to'];
@@ -64,13 +69,11 @@ class Mail extends Controller
      * @param mixed $value The variable's new value
      */
     function __set($name, $value) {
-        $table = "mail";
-
         if ($name == 'to' || $name == 'from') {
-            $this->db->query("UPDATE ". $table . " SET player_" . $name . " = ? WHERE id = ?", "ii", array($value, $this->id));
+            $this->db->query("UPDATE ". $this->table . " SET player_" . $name . " = ? WHERE id = ?", "ii", array($value, $this->id));
             $this->{$name} = $value;
         } else if ($name == 'subject' || $name == 'timestamp' || $name == 'message' || $name == 'status') {
-            $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", "si", array($value, $this->id));
+            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", "si", array($value, $this->id));
             $this->{$name} = $value;
         }
     }

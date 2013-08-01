@@ -77,12 +77,17 @@ class Match extends Controller
     private $status;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "matches";
+
+    /**
      * Construct a new Match
      * @param int $id The match's ID
      */
     function __construct($id) {
 
-        parent::__construct($id, "matches");
+        parent::__construct($id);
         $match = $this->result;
 
         $this->team_a = $match['team_a'];

@@ -34,12 +34,17 @@ class Invitation extends Controller
     private $text;
 
     /**
+     * The name of the database table used for queries
+     */
+
+    const TABLE = "invitations";
+
+    /**
      * Construct a new invite
      * @param int $id The invite's id
      */
-    function __construct($id)
-    {
-        parent::__construct($id, "invitations");
+    function __construct($id) {
+        parent::__construct($id);
         $invitation = $this->result;
 
         $this->invited_player = $invitation['invited_player'];
@@ -57,11 +62,11 @@ class Invitation extends Controller
      * @param string $message (Optional) The message that will be displayed to the person receiving the invitation
      * @return Invitation The object of the invitation just sent
      */
-    public static function sendInvite($to, $from, $teamid, $message = "")
-    {
+    public static function sendInvite($to, $from, $teamid, $message = "") {
         $db = Database::getInstance();
         $db->query("INSERT INTO invitations VALUES (NULL, ?, ?, ?, ADDDATE(NOW(), INTERVAL 7 DAY), ?)", "iis", array($to, $from, $teamid, $message));
 
         return new Invitation($db->getInsertId());
     }
+
 }

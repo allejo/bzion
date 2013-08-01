@@ -36,12 +36,17 @@ class Server extends Controller
     private $updated;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "servers";
+
+    /**
      * Construct a new Server
      * @param int $id The server's id
      */
     function __construct($id) {
 
-        parent::__construct($id, "servers");
+        parent::__construct($id);
         $server = $this->result;
 
         $this->name = $server['name'];
@@ -58,8 +63,6 @@ class Server extends Controller
      * @param mixed $value The variable's new value
      */
     function __set($name, $value) {
-        $table = "servers";
-
         if ($name == 'name' || $name == 'address' || $name == 'info' || $name == 'updated') {
             $type = 's';
         } else if ($name == 'owner') {
@@ -71,7 +74,7 @@ class Server extends Controller
         }
 
         if (isset($type)) {
-            $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
+            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
             $this->{$name} = $value;
         }
 

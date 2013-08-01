@@ -12,7 +12,7 @@ session_destroy();
 $loc = "index.php";
 
 if (isset($_SERVER["HTTP_REFERER"])) {
-	$loc = $_SERVER["HTTP_REFERER"];
+    $loc = $_SERVER["HTTP_REFERER"];
 }
 
 Header::go($loc);

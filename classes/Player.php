@@ -76,12 +76,17 @@ class Player extends Controller
     private $last_login;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "players";
+
+    /**
      * Construct a new Player
      * @param int $bzid The player's bzid
      */
     function __construct($bzid) {
 
-        parent::__construct($bzid, "players", "bzid");
+        parent::__construct($bzid, "bzid");
         $player = $this->result;
 
         $this->bzid = $bzid;

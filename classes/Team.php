@@ -88,12 +88,17 @@ class Team extends Controller
     private $status;
 
     /**
+     * The name of the database table used for queries
+     */
+    const TABLE = "teams";
+
+    /**
      * Construct a new Team
      * @param int $id The team's id
      */
     function __construct($id) {
 
-        parent::__construct($id, "teams");
+        parent::__construct($id);
         $team = $this->result;
 
         $this->name = $team['name'];
@@ -121,8 +126,6 @@ class Team extends Controller
      */
     function __set($name, $value)
     {
-        $table = "teams";
-
         if ($name == 'elo' || $name == 'leader' || $name == 'matches_draw' || $name == 'matches_lost' || $name == 'matches_won') {
             $type = 'i';
         } else if ($name == 'alias' || $name == 'avatar' || $name == 'description' ||
@@ -133,7 +136,7 @@ class Team extends Controller
         }
 
         if (isset($type)) {
-            $this->db->query("UPDATE ". $table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
+            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
             $this->{$name} = $value;
         }
 
@@ -269,7 +272,7 @@ class Team extends Controller
      * @return Team The team's id
      */
     public static function getFromAlias($alias) {
-        return new Team(self::getIdFrom($alias, "alias", "teams"));
+        return new Team(self::getIdFrom($alias, "alias"));
     }
 
 }

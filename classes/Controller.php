@@ -10,7 +10,7 @@ abstract class Controller {
 
     /**
      * The name of the database table used for queries
-     * @var Database
+     * @var string
      */
     protected $table;
 
@@ -27,6 +27,14 @@ abstract class Controller {
     protected $db;
 
     /**
+     * The name of the database table used for queries
+     * You can use this constant in static functions as such:
+     * static::TABLE
+     */
+
+    const TABLE = "";
+
+    /**
      * Construct a new Controller
      *
      * This method takes the table and ID of the object to look for, and
@@ -38,14 +46,15 @@ abstract class Controller {
      * @param int $table The name of the DB table used for queries
      * @param string $column The column to use to identify separate database entries
      */
-    function __construct($id, $table=null, $column="id") {
+    function __construct($id, $column = "id") {
 
         $this->db = Database::getInstance();
 
-        if ($column == "id") $this->id = $id;
-        $this->table = $table;
+        if ($column == "id")
+            $this->id = $id;
+        $this->table = static::TABLE;
 
-        $results = $this->db->query("SELECT * FROM " . $table . " WHERE " . $column . " = ?", "i", array($id));
+        $results = $this->db->query("SELECT * FROM " . $this->table . " WHERE " . $column . " = ?", "i", array($id));
         $this->result = $results[0];
     }
 
@@ -64,19 +73,18 @@ abstract class Controller {
      * Permanently delete the object from the database
      */
     public function wipe() {
-        $this->db->query("DELETE FROM ". $this->table ." WHERE id = ?", "i", array($this->id));
+        $this->db->query("DELETE FROM " . $this->table . " WHERE id = ?", "i", array($this->id));
     }
 
     /**
      * Gets one object's id from the supplied alias
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
-     * @param string $table The name of the table where the entries are located
      * @return int The ID of the object
      */
-    protected static function getIdFrom($value, $column, $table) {
+    protected static function getIdFrom($value, $column) {
         $db = Database::getInstance();
-        $results = $db->query("SELECT id FROM " . $table . " WHERE " . $column . "=?", "s", array($value));
+        $results = $db->query("SELECT id FROM " . static::TABLE . " WHERE " . $column . "=?", "s", array($value));
         return $results[0]['id'];
     }
 
@@ -112,7 +120,7 @@ abstract class Controller {
 
         // Try to find duplicates
         $db = Database::getInstance();
-        $result = $db->query("SELECT alias FROM " . $this->table . " WHERE alias REGEXP ?", 's', array("^".$name."[0-9]*$"));
+        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE alias REGEXP ?", 's', array("^" . $name . "[0-9]*$"));
 
         // The functionality of the following code block is provided in PHP 5.5's
         // array_column function. What is does is convert the multi-dimensional
@@ -132,11 +140,11 @@ abstract class Controller {
         // in the end of it and keep incrementing it until there is we find
         // an open spot.
         $i = 2;
-        while(in_array($name.$i, $aliases)) {
+        while (in_array($name . $i, $aliases)) {
             $i++;
         }
 
-        return $name.$i;
+        return $name . $i;
     }
 
 }
