@@ -1,6 +1,6 @@
 # BZiON
 
-A Content Mangement System (CMS) intended for BZFlag leagues to display details.
+A Content Mangement System (CMS) intended for BZFlag leagues to manage players, teams, matches and more.
 
 ## Authors
 
