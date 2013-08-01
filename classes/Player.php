@@ -235,7 +235,7 @@ class Player extends Controller
     /**
      * Gets a player object from the supplied alias
      * @param string $alias The player's alias
-     * @return Team The player
+     * @return Player The player
      */
     public static function getFromAlias($alias) {
         return new Player(parent::getIdFrom($alias, "alias", true));

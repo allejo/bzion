@@ -68,9 +68,7 @@ abstract class Controller {
      * Update a database field
      * @param string $name The name of the column
      * @param mixed $value The value to set the column to
-     * @param string $type The type of the value, can be 's' (string), 
-     * 'i' (integer), 'd' (double), 'b' (blob) or nothing to let the
-     * function guess it
+     * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double), 'b' (blob) or nothing to let the function guess it
      */
     public function update($name, $value, $type=NULL) {
         if (!$type) {
@@ -130,6 +128,7 @@ abstract class Controller {
      * Gets one object's id from the supplied alias
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
+     * @param bool $bzid Whether the function should return a BZID instead of an ID
      * @return int The ID of the object
      */
     protected static function getIdFrom($value, $column, $bzid=false) {
