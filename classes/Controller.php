@@ -110,13 +110,18 @@ abstract class Controller {
     /*
      * Get a URL that points to an object's page
      * @param string $dir The virtual directory the URL should point to
+     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string 
      */
-    protected function getURL($dir) {
-        $alias = $this->id;
+    protected function getURL($dir, $default = null) {
         if (isset($this->alias) && $this->alias) {
             $alias = $this->alias;
+        } else if (!$default) {
+            $alias = $this->id;
+        } else {
+            $alias = $default;
         }
+        
         $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . '/' . $alias;
         return $url;
     }
