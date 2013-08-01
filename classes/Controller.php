@@ -59,6 +59,31 @@ abstract class Controller {
     }
 
     /**
+     * Update a database field
+     * @param type $name The name of the column
+     * @param type $value The value to set the column to
+     * @param type $type The type of the value, can be 's' (string), 
+     * 'i' (integer), 'd' (double), 'b' (blob) or nothing to let the
+     * function guess it
+     */
+    public function update($name, $value, $type=NULL) {
+        if (!$type) {
+            if (is_int($value))
+                $type = 'i';
+            else if (is_float($value))
+                $type = 'd';
+            else if (is_array($value)) {
+                $type = 's';
+                $value = serialize($value);
+            } else {
+                $type = 's';
+            }
+        }
+
+        $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
+    }
+
+    /**
      * Delete the object
      *
      * Please note that this does not delete the object entirely from the database,
