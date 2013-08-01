@@ -7,8 +7,7 @@ $header = new Header();
 
 if (isset($_GET['alias'])) {
 
-    $id = Team::getIdFromAlias($_GET['alias']);
-    $team = new Team($id['id']);
+    $team = Team::getFromAlias($_GET['alias']);
 
     $header->draw("Teams :: " . $team->getName());
 
