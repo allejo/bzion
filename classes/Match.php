@@ -105,6 +105,10 @@ class Match extends Controller
 
     }
 
+    function getTimestamp() {
+        return $this->timestamp->format(DATE_FORMAT);
+    }
+
     /**
      * Enter a new match to the database
      * @param int $a Team A's ID
@@ -174,6 +178,18 @@ class Match extends Controller
         }
 
         return floor($diff);
+    }
+
+    /**
+     * Get all the matches in the database that arent disabled or deleted
+     * @return mixed An array of matches
+     */
+    public static function getMatches() {
+        $db = Database::getInstance();
+
+        $results = $db->query("SELECT * FROM matches WHERE status!=? AND status!=?", "ss", array("disabled","deleted"));
+
+        return $results;
     }
 
 }
