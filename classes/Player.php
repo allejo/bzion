@@ -183,7 +183,7 @@ class Player extends Controller
      * @return string The URL
      */
     function getURL($dir="players", $default="bzid") {
-        return parent::getURL($dir, $default);
+        return parent::getURL($dir, $this->$default);
     }
 
     /*
