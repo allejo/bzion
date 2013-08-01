@@ -265,7 +265,7 @@ class Team extends Controller
     }
 
     /**
-     * Get all the teams in the database that have are not disabled or deleted
+     * Get all the teams in the database that are not disabled or deleted
      * @return mixed An array of teams
      */
     public static function getTeams() {
