@@ -35,6 +35,20 @@ CREATE TABLE IF NOT EXISTS `countries` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `groups`
+--
+
+CREATE TABLE IF NOT EXISTS `groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subject` varchar(50) unsigned NOT NULL,
+  `members` text NOT NULL,
+  `status` set('active', 'disabled' 'deleted', 'reported') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `invitations`
 --
 
@@ -51,17 +65,16 @@ CREATE TABLE IF NOT EXISTS `invitations` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mail`
+-- Table structure for table `messages`
 --
 
-CREATE TABLE IF NOT EXISTS `mail` (
+CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `player_to` int(10) unsigned NOT NULL,
+  `group_to` int(10) unsigned NOT NULL,
   `player_from` int(10) unsigned NOT NULL,
-  `subject` varchar(100) NOT NULL,
   `timestamp` datetime NOT NULL,
   `message` text NOT NULL,
-  `status` set('opened', 'unopened', 'deleted', 'reported') NOT NULL DEFAULT 'unopened',
+  `status` set('delivered', 'disabled', 'deleted', 'reported') NOT NULL DEFAULT 'delivered',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
