@@ -238,7 +238,7 @@ class Player extends Controller
      * @return Team The player
      */
     public static function getFromAlias($alias) {
-        return new Team(self::getIdFrom($alias, "alias"));
+        return new Player(parent::getIdFrom($alias, "alias", true));
     }
 
 }

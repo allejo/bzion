@@ -132,10 +132,11 @@ abstract class Controller {
      * @param string $column The name of the database column
      * @return int The ID of the object
      */
-    protected static function getIdFrom($value, $column) {
+    protected static function getIdFrom($value, $column, $bzid=false) {
+        $bz = ($bzid) ? "bz" : "";
         $db = Database::getInstance();
-        $results = $db->query("SELECT id FROM " . static::TABLE . " WHERE " . $column . "=?", "s", array($value));
-        return $results[0]['id'];
+        $results = $db->query("SELECT " . $bz . "id FROM " . static::TABLE . " WHERE " . $column . "=?", "s", array($value));
+        return $results[0][$bz.'id'];
     }
 
     /**
