@@ -109,6 +109,38 @@ class Match extends Controller
         return $this->timestamp->format(DATE_FORMAT);
     }
 
+    function getTeamA() {
+        return $this->team_a;
+    }
+
+    function getTeamB() {
+        return $this->team_b;
+    }
+
+    function getTeamAPoints() {
+        return $this->team_a_points;
+    }
+
+    function getTeamBPoints() {
+        return $this->team_b_points;
+    }
+
+    function getEloDiff() {
+        return $this->elo_diff;
+    }
+
+    function getTeamAEloNew() {
+        return $this->team_a_elo_new;
+    }
+
+    function getTeamBEloNew() {
+        return $this->team_b_elo_new;
+    }
+
+    function getDuration() {
+        return $this->duration;
+    }
+
     /**
      * Enter a new match to the database
      * @param int $a Team A's ID
@@ -187,7 +219,7 @@ class Match extends Controller
     public static function getMatches() {
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT * FROM matches WHERE status!=? AND status!=?", "ss", array("disabled","deleted"));
+        $results = $db->query("SELECT id FROM matches WHERE status!=? AND status!=?", "ss", array("disabled","deleted"));
 
         return $results;
     }
