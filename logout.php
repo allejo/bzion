@@ -10,13 +10,13 @@ $header = new Header();
 session_destroy();
 
 $loc = "/";
-$use_own = false;
+$override = false;
 
 if (isset($_SERVER["HTTP_REFERER"])) {
     $loc = $_SERVER["HTTP_REFERER"];
-    $use_own = true;
+    $override = true;
 }
 
-Header::go($loc, $use_own);
+Header::go($loc, $override);
 
 ?>
