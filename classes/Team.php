@@ -202,6 +202,14 @@ class Team extends Controller
     }
 
     /**
+     * Get the URL that points to the team's list of matches
+     * @return string The team's list of matches
+     */
+    function getMatchesURL($dir="matches", $default=NULL) {
+        return parent::getURL($dir, $default);
+    }
+
+    /**
      * Get the leader of the team
      * @return string The name of the team leader
      */
@@ -225,6 +233,15 @@ class Team extends Controller
     function addMember($bzid) {
         $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array($this->id, $bzid));
         $this->members++;
+    }
+
+    /**
+     * Get the matches this team has participated in
+     * @return array The array of matches this team has participated in
+     */
+    function getMatches() {
+        $results = $this->db->query("SELECT * FROM matches WHERE team_a=? OR team_b=?", "ii", array($this->id, $this->id));
+        return $results;
     }
 
     /**
