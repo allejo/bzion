@@ -56,8 +56,8 @@ class Page extends Controller {
         $this->content = $page['content'];
         $this->created = new DateTime($page['created']);
         $this->updated = new DateTime($page['updated']);
-        $this->author = $news['author'];
-        $this->status = $news['page'];
+        $this->author = $page['author'];
+        $this->status = $page['page'];
 
     }
 
