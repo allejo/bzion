@@ -1,6 +1,6 @@
 <?php
 
-require_once("checkToken.php");
+require_once("inclues/checkToken.php");
 require_once("bzion-load.php");
 
 $token = $_GET["token"];
