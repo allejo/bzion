@@ -7,7 +7,7 @@ abstract class Controller {
      * @var int
      */
     protected $id;
-    
+
     /**
      * A unique URL-friendly identifier for the object
      * @var string
@@ -108,7 +108,7 @@ abstract class Controller {
      * Get a URL that points to an object's page
      * @param string $dir The virtual directory the URL should point to
      * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
-     * @return string 
+     * @return string
      */
     protected function getURL($dir, $default = null) {
         if (isset($this->alias) && $this->alias) {
@@ -118,7 +118,7 @@ abstract class Controller {
         } else {
             $alias = $default;
         }
-        
+
         $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . '/' . $alias;
         return $url;
     }
@@ -135,6 +135,23 @@ abstract class Controller {
         $db = Database::getInstance();
         $results = $db->query("SELECT " . $bz . "id FROM " . static::TABLE . " WHERE " . $column . "=?", "s", array($value));
         return $results[0][$bz.'id'];
+    }
+
+    /**
+     * Gets an array of object IDs
+     * @param bool $bzid Whether to locate BZIDs instead of IDs
+     * @return array A list of IDs
+     */
+    protected static function getIds($bzid=false) {
+        $bz = ($bzid) ? "bz" : "";
+        $db = Database::getInstance();
+        $results = $db->query("SELECT " . $bz . "id FROM " . static::TABLE, "", array());
+
+        $ids = array();
+        foreach ($results as $r) {
+            $ids[] = $r[$bz . 'id'];
+        }
+        return $ids;
     }
 
     /**
