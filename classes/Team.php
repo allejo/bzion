@@ -150,8 +150,7 @@ class Team extends Controller
      * @return array The members on the team
      */
     function getMembers($select="*") {
-        $members = $this->db->query("SELECT $select FROM players WHERE team = ?", "i", array($this->id));
-        return $members;
+        return Player::getIds($select, "WHERE team = ?", "i", array($this->id));
     }
 
     /**
@@ -253,13 +252,7 @@ class Team extends Controller
      * @return array The array of match IDs this team has participated in
      */
     function getMatches() {
-        $results = $this->db->query("SELECT id FROM matches WHERE team_a=? OR team_b=?", "ii", array($this->id, $this->id));
-
-        $ids = array();
-        foreach($results as $r) {
-            $ids[] = $r['id'];
-        }
-        return $ids;
+        return Match::getIds('id', "WHERE team_a=? OR team_b=?", "ii", array($this->id, $this->id));
     }
 
     /**
