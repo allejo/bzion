@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `player_from` int(10) unsigned NOT NULL,
   `timestamp` datetime NOT NULL,
   `message` text NOT NULL,
-  `status` set('delivered', 'hidden', 'deleted', 'reported') NOT NULL DEFAULT 'delivered',
+  `status` set('sent', 'hidden', 'deleted', 'reported') NOT NULL DEFAULT 'delivered',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
