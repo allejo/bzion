@@ -17,7 +17,7 @@ if (isset($team)) {
     echo "<br /><br />";
     echo "<b>" . $team->getName() . "</b><br />";
     echo "ELO: " . $team->getElo() . "<br />";
-    echo "Matches: " . $team->getNumTotalMatches() . "<br />";
+    echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";
     echo "Members: " . $team->getNumMembers() . "<br />";
     $leader = $team->getLeader();
     echo "Leader: " . $leader['username'] . "<br />";
@@ -37,7 +37,7 @@ if (isset($team)) {
         $team = new Team($value['id']);
         echo "<b><a href='" . $team->getURL() . "'>" . $team->getName() . "</a></b><br />";
         echo "ELO: " . $team->getElo() . "<br />";
-        echo "Matches: " . $team->getNumTotalMatches() . "<br />";
+        echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";
         echo "Members: " . $team->getNumMembers() . "<br />";
         $leader = $team->getLeader();
         echo "Leader: " . $leader['username'] . "<br />";
