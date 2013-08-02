@@ -105,38 +105,74 @@ class Match extends Controller
 
     }
 
+    /**
+     * Get the timestamp of the match
+     * @return string The match's timestamp
+     */
     function getTimestamp() {
         return $this->timestamp->format(DATE_FORMAT);
     }
 
+    /**
+     * Get the first team involved in the match
+     * @return int Team A's id
+     */
     function getTeamA() {
         return $this->team_a;
     }
 
+    /**
+     * Get the second team involved in the match
+     * @return int Team B's id
+     */
     function getTeamB() {
         return $this->team_b;
     }
 
+    /**
+     * Get the first team's points
+     * @return int Team A's points
+     */
     function getTeamAPoints() {
         return $this->team_a_points;
     }
 
+    /**
+     * Get the second team's points
+     * @return int Team B's points
+     */
     function getTeamBPoints() {
         return $this->team_b_points;
     }
 
+    /**
+     * Get the ELO difference applied to each team's old ELO
+     * @return int The ELO difference
+     */
     function getEloDiff() {
         return $this->elo_diff;
     }
 
+    /**
+     * Get the first team's new ELO
+     * @return int Team A's new ELO
+     */
     function getTeamAEloNew() {
         return $this->team_a_elo_new;
     }
 
+    /**
+     * Get the second team's new ELO
+     * @return int Team B's new ELO
+     */
     function getTeamBEloNew() {
         return $this->team_b_elo_new;
     }
 
+    /**
+     * Get the match duration
+     * @return int The duration
+     */
     function getDuration() {
         return $this->duration;
     }

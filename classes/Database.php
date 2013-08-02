@@ -30,6 +30,9 @@ class Database
             $this->dbc->set_charset("utf8");
     }
 
+    /**
+     * Destroy this connection to the database
+     */
     function __destruct()
     {
         $this->closeConnection();

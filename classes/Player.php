@@ -108,10 +108,18 @@ class Player extends Controller
         $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
     }
 
+    /**
+     * Get the player's username
+     * @return string The username
+     */
     function getUsername() {
         return $this->username;
     }
 
+    /**
+     * Get the player's team
+     * @return int The id of the team
+     */
     function getTeam() {
         $team = new Team($this->team);
         return $team->getName();
