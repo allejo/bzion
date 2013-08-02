@@ -179,7 +179,7 @@ class Player extends Controller
      * @return array An array of player BZIDs
      */
     public static function getPlayers($select = "bzid") {
-        return parent::getIds($select);
+        return parent::getIdsFrom("status", array("active"), "s", false, $select);
     }
 
     /**
