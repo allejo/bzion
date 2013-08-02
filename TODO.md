@@ -7,6 +7,14 @@ TODO
     - News
     - Page
 - Discuss features with admins
-    - find if there is anything lacking on the current site
-- Design basic page layout
-- Begin crafting CMS
+- Implement different features
+	- Messages
+	- Notifications
+	- News
+	- Bans
+	- Invites
+	- Custom Pages
+	- Servers
+	- Admin Interface
+- Style everything
+- Bug testing, bug testing and more bug testing
