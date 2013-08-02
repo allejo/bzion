@@ -33,8 +33,8 @@ if (isset($team)) {
 
     echo "<br /><br />";
 
-    foreach ($teams as $key => $value) {
-        $team = new Team($value['id']);
+    foreach ($teams as $key => $id) {
+        $team = new Team($id);
         echo "<b><a href='" . $team->getURL() . "'>" . $team->getName() . "</a></b><br />";
         echo "ELO: " . $team->getElo() . "<br />";
         echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";

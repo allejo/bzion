@@ -250,23 +250,24 @@ class Team extends Controller
 
     /**
      * Get the matches this team has participated in
-     * @return array The array of matches this team has participated in
+     * @return array The array of match IDs this team has participated in
      */
     function getMatches() {
-        $results = $this->db->query("SELECT * FROM matches WHERE team_a=? OR team_b=?", "ii", array($this->id, $this->id));
-        return $results;
+        $results = $this->db->query("SELECT id FROM matches WHERE team_a=? OR team_b=?", "ii", array($this->id, $this->id));
+
+        $ids = array();
+        foreach($results as $r) {
+            $ids[] = $r['id'];
+        }
+        return $ids;
     }
 
     /**
      * Get all the teams in the database that are not disabled or deleted
-     * @return mixed An array of teams
+     * @return array An array of Team IDs
      */
     public static function getTeams($select = "id") {
-        $db = Database::getInstance();
-
-        $results = $db->query("SELECT $select FROM teams WHERE status!=? AND status!=?", "ss", array("disabled", "deleted"));
-
-        return $results;
+        return parent::getIds($select);
     }
 
     /**

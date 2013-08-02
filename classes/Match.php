@@ -250,14 +250,10 @@ class Match extends Controller
 
     /**
      * Get all the matches in the database that arent disabled or deleted
-     * @return mixed An array of matches
+     * @return array An array of match IDs
      */
     public static function getMatches($select = "id") {
-        $db = Database::getInstance();
-
-        $results = $db->query("SELECT $select FROM matches WHERE status!=? AND status!=?", "ss", array("disabled","deleted"));
-
-        return $results;
+        return parent::getIds($select);
     }
 
 }

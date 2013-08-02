@@ -18,7 +18,7 @@ if (isset($player)) {
     echo "<b>" . $player->getUsername() . "</b><br />";
     echo "Team: " . $player->getTeam() . "<br />";
     echo "Joined: " . $player->getJoinedDate() . "<br />";
-        
+
     echo "<br />";
 
 } else {
@@ -28,12 +28,12 @@ if (isset($player)) {
 
     echo "<br /><br />";
 
-    foreach ($players as $key => $value) {
-        $player = new Player($value['bzid']);
+    foreach ($players as $key => $bzid) {
+        $player = new Player($bzid);
         echo "<b><a href='" . $player->getURL() . "'>" . $player->getUsername() . "</a></b><br />";
         echo "Team: " . $player->getTeam() . "<br />";
         echo "Joined: " . $player->getJoinedDate() . "<br />";
-        
+
         echo "<br />";
     }
 

@@ -18,8 +18,8 @@ if (isset($team)) {
 
     echo "<br /><br />";
 
-    foreach ($matches as $key => $value) {
-        $match = new Match($value['id']);
+    foreach ($matches as $key => $id) {
+        $match = new Match($id);
         $team_a = new Team($match->getTeamA());
         $team_b = new Team($match->getTeamB());
         echo "<b>" . $team_a->getName() . " (" . $match->getTeamAPoints() . " points) vs " . $team_b->getName() . " (" . $match->getTeamBPoints() . " points) </b><br />";
@@ -39,8 +39,8 @@ if (isset($team)) {
 
     echo "<br /><br />";
 
-    foreach ($matches as $key => $value) {
-        $match = new Match($value['id']);
+    foreach ($matches as $key => $id) {
+        $match = new Match($id);
         $team_a = new Team($match->getTeamA());
         $team_b = new Team($match->getTeamB());
         echo "<b>" . $team_a->getName() . " (" . $match->getTeamAPoints() . " points) vs " . $team_b->getName() . " (" . $match->getTeamBPoints() . " points) </b><br />";
