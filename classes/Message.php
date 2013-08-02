@@ -1,28 +1,22 @@
 <?php
 
-class Mail extends Controller
+class Message extends Controller
 {
 
     /**
-     * The BZID of the player the message was sent to
+     * The id of the group this message belongs to
      * @var int
      */
-    private $to;
+    private $group_to;
 
     /**
-     * The BZID of the player the message was sent from
+     * The BZID of the player who sent the message
      * @var int
      */
-    private $from;
+    private $player_from;
 
     /**
-     * The subject of the message
-     * @var string
-     */
-    private $subject;
-
-    /**
-     * The message creation date
+     * The timestamp of when the message was sent
      * @var string
      */
     private $timestamp;
@@ -36,7 +30,7 @@ class Mail extends Controller
     /**
      * The status of the message
      *
-     * Can be 'opened', 'unopened', 'deleted' or 'reported'
+     * Can be 'delivered', 'hidden', 'deleted' or 'reported'
      * @var string
      */
     private $status;
@@ -44,7 +38,7 @@ class Mail extends Controller
     /**
      * The name of the database table used for queries
      */
-    const TABLE = "mail";
+    const TABLE = "messages";
 
     /**
      * Construct a new message
@@ -71,7 +65,7 @@ class Mail extends Controller
      * @param string $subject The subject of the message
      * @param string $message The body of the message
      * @param string $status The status of the message - can be 'opened', 'unopened', 'deleted' or 'reported'
-     * @return Mail An object that represents the sent message
+     * @return Message An object that represents the sent message
      */
     public static function sendMail($to, $from, $subject, $message, $status='unopened')
     {
@@ -81,7 +75,7 @@ class Mail extends Controller
         $db = Database::getInstance();
         $db->query($query, "iisss", $params);
 
-        return new Mail($db->getInsertId());
+        return new Message($db->getInsertId());
     }
 
 }
