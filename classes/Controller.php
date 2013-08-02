@@ -37,7 +37,6 @@ abstract class Controller {
      * You can use this constant in static functions as such:
      * static::TABLE
      */
-
     const TABLE = "";
 
     /**
