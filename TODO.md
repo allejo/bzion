@@ -4,6 +4,7 @@ TODO
 <em>In no specific order</em>
 
 - Create necessary classes
+	- Groups
     - Page
 - Discuss features with admins
 - Implement different features
