@@ -154,8 +154,8 @@ abstract class Controller {
             // FIXME
             throw new Exception("Unsupported parameters");
         } else {
-            $results = $db->query("SELECT " . $select . " FROM " . static::TABLE .
-                       " " . $condition, $types, $params);
+            $results = $db->query("SELECT $select FROM " . static::TABLE .
+                       " $condition", $types, $params);
         }
 
         // If $select specifies multiple columns, just return the $results array
@@ -169,6 +169,34 @@ abstract class Controller {
             $ids[] = $r[$select];
         }
         return $ids;
+    }
+
+    /**
+     * Gets an array of object IDs that have a column equal to something else
+     * @param string $column The name of the column that should be tested
+     * @param array $possible_values List of acceptable values
+     * @param bool $negate Whether to search if the value of $column does NOT belong to the $possible_values array
+     * @param string $type The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
+     * @param string $select The name of the column(s) that the returned array should contain
+     * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
+     */
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id') {
+        $conditions = array();
+        $types = "";
+        $equality = "=";
+        $conjunction = "OR";
+        if ($negate) {
+            $equality = "!=";
+            $conjunction = "AND";
+        }
+
+        foreach ($possible_values as $p) {
+            $conditions[] = "$column $equality ?";
+            $types .= $type;
+        }
+        $conditionString = "WHERE " . implode(" $conjunction ", $conditions);
+
+        return self::getIds($select, $conditionString, $types, $possible_values);
     }
 
     /**
