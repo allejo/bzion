@@ -30,7 +30,7 @@ class Message extends Controller
     /**
      * The status of the message
      *
-     * Can be 'delivered', 'hidden', 'deleted' or 'reported'
+     * Can be 'sent', 'hidden', 'deleted' or 'reported'
      * @var string
      */
     private $status;
@@ -64,16 +64,16 @@ class Message extends Controller
      * @param int $from The BZID of the sender
      * @param string $subject The subject of the message
      * @param string $message The body of the message
-     * @param string $status The status of the message - can be 'opened', 'unopened', 'deleted' or 'reported'
+     * @param string $status The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
      */
-    public static function sendMail($to, $from, $subject, $message, $status='unopened')
+    public static function sendMessage($to, $from, $message, $status='sent')
     {
-        $query = "INSERT INTO mail VALUES(NULL, ?, ?, ?, NOW(), ?, ?)";
-        $params = array($to, $from, $subject, $message, $status);
+        $query = "INSERT INTO messages VALUES(NULL, ?, ?, NOW(), ?, ?)";
+        $params = array($to, $from, $message, $status);
 
         $db = Database::getInstance();
-        $db->query($query, "iisss", $params);
+        $db->query($query, "iiss", $params);
 
         return new Message($db->getInsertId());
     }
