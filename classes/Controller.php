@@ -139,17 +139,23 @@ abstract class Controller {
 
     /**
      * Gets an array of object IDs
-     * @param bool $bzid Whether to locate BZIDs instead of IDs
-     * @return array A list of IDs
+     * @todo Make this PHPDoc message easier to understand
+     * @param string $select The name of the column(s) that the returned array should contain
+     * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($bzid=false) {
-        $bz = ($bzid) ? "bz" : "";
+    protected static function getIds($select='id') {
         $db = Database::getInstance();
-        $results = $db->query("SELECT " . $bz . "id FROM " . static::TABLE, "", array());
+        $results = $db->query("SELECT " . $select . " FROM " . static::TABLE . " WHERE 1 = ?", "i", array(1));
+
+        // If $select specifies multiple columns, just return the $results array
+        if (isset($results[0]) && count($results[0]) != 1) {
+            return $results;
+        }
 
         $ids = array();
+
         foreach ($results as $r) {
-            $ids[] = $r[$bz . 'id'];
+            $ids[] = $r[$select];
         }
         return $ids;
     }
