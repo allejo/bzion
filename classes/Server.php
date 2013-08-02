@@ -1,6 +1,6 @@
 <?php
 
-include_once("bzfquery.php");
+include_once(DOC_ROOT . "/includes/bzfquery.php");
 
 class Server extends Controller
 {
