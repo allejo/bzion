@@ -139,6 +139,7 @@ class Team extends Controller
             $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array($id));
         }
 
+        $this->addMember($leader);
 
         return new Team($id);
     }
@@ -192,7 +193,7 @@ class Team extends Controller
     function getActivity() {
         return sprintf("%.2f", $this->activity);
     }
-    
+
     /**
      * Get the URL that points to the team's page
      * @return string The team's URL, without a trailing slash
@@ -232,7 +233,7 @@ class Team extends Controller
      */
     function addMember($bzid) {
         $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array($this->id, $bzid));
-        $this->members++;
+        $this->update('members', ++$this->members);
     }
 
     /**
