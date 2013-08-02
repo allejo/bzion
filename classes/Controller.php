@@ -141,11 +141,22 @@ abstract class Controller {
      * Gets an array of object IDs
      * @todo Make this PHPDoc message easier to understand
      * @param string $select The name of the column(s) that the returned array should contain
+     * @param string $condition The MySQL condition that the rows should fulfil (e.g. `WHERE id = 5`)
+     * @param string $types The types of values that will be passed to Database::query()
+     * @param array $params The parameter values that will be passed to Database::query()
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($select='id') {
+    protected static function getIds($select='id', $condition='', $types='', $params=array()) {
         $db = Database::getInstance();
-        $results = $db->query("SELECT " . $select . " FROM " . static::TABLE . " WHERE 1 = ?", "i", array(1));
+        if (empty($condition)) {
+            $results = $db->query("SELECT " . $select . " FROM " . static::TABLE . " WHERE 1 = ?", "i", array(1));
+        } else if (empty($types)) {
+            // FIXME
+            throw new Exception("Unsupported parameters");
+        } else {
+            $results = $db->query("SELECT " . $select . " FROM " . static::TABLE .
+                       " " . $condition, $types, $params);
+        }
 
         // If $select specifies multiple columns, just return the $results array
         if (isset($results[0]) && count($results[0]) != 1) {
