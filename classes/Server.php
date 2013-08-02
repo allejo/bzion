@@ -58,29 +58,6 @@ class Server extends Controller
     }
 
     /**
-     * Overload __set to update instance variables and database
-     * @param string $name The variable's name
-     * @param mixed $value The variable's new value
-     */
-    function __set($name, $value) {
-        if ($name == 'name' || $name == 'address' || $name == 'info' || $name == 'updated') {
-            $type = 's';
-        } else if ($name == 'owner') {
-            $type = 'i';
-        }
-
-        if ($name == 'info') {
-            $value = serialize($value);
-        }
-
-        if (isset($type)) {
-            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
-            $this->{$name} = $value;
-        }
-
-    }
-
-    /**
      * Add a new server
      *
      * @param string $name The name of the server

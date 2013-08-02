@@ -64,21 +64,6 @@ class Mail extends Controller
     }
 
     /**
-     * Overload __set to update instance variables and database
-     * @param string $name The variable's name
-     * @param mixed $value The variable's new value
-     */
-    function __set($name, $value) {
-        if ($name == 'to' || $name == 'from') {
-            $this->db->query("UPDATE ". $this->table . " SET player_" . $name . " = ? WHERE id = ?", "ii", array($value, $this->id));
-            $this->{$name} = $value;
-        } else if ($name == 'subject' || $name == 'timestamp' || $name == 'message' || $name == 'status') {
-            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", "si", array($value, $this->id));
-            $this->{$name} = $value;
-        }
-    }
-
-    /**
      * Create a new message
      *
      * @param int $to The BZID of the receiver

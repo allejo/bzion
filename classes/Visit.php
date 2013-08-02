@@ -63,27 +63,6 @@ class Visit extends Controller
     }
 
     /**
-     * Overload __set to update instance variables and database
-     * @param string $name The variable's name
-     * @param mixed $value The variable's new value
-     */
-    function __set($name, $value)
-    {
-        if ($name == 'bzid') {
-            $type = 'i';
-        } else if ($name == 'ip' || $name == 'host' || $name == 'referer' ||
-                   $name == 'timestamp') {
-            $type = 's';
-        }
-
-        if (isset($type)) {
-            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
-            $this->{$name} = $value;
-        }
-
-    }
-
-    /**
      * Enter a new visit into the database
      * @param int $bzid The visitor's bzid
      * @param string $ip The visitor's ip address

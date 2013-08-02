@@ -61,30 +61,4 @@ class Ban extends Controller {
 
     }
 
-    /**
-     * Overload __set to update instance variables and database
-     * @param string $name The variable's name
-     * @param mixed $value The variable's new value
-     */
-    function __set($name, $value) {
-        switch ($name) {
-            case 'expiration':
-                $this->db->query("UPDATE bans SET expiration = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->expiration = $value;
-                break;
-            case 'reason':
-                $this->db->query("UPDATE bans SET reason = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->address = $value;
-                break;
-            case 'updated':
-                $this->db->query("UPDATE bans SET updated = ? WHERE id = ?", "si", array($value, $this->id));
-                $this->updated = $value;
-                break;
-            case 'author':
-                $this->db->query("UPDATE bans SET info = ? WHERE id = ?", "si", array(serialize($value), $this->id));
-                $this->author = $value;
-                break;
-        }
-    }
-
 }

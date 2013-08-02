@@ -114,33 +114,6 @@ class Team extends Controller
     }
 
     /**
-     * Overload __set to update instance variables and database
-     * @param string $name The variable's name
-     * @param mixed $value The variable's new value
-     */
-    function __set($name, $value)
-    {
-        if ($name == 'elo' || $name == 'leader' || $name == 'matches_draw' || $name == 'matches_lost' || $name == 'matches_won') {
-            $type = 'i';
-        } else if ($name == 'alias' || $name == 'avatar' || $name == 'description' ||
-                   $name == 'message' || $name == 'name' || $name == 'status') {
-            $type = 's';
-        } else if ($name == 'activity') {
-            $type = 'd';
-        }
-
-        if (isset($type)) {
-            $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
-            $this->{$name} = $value;
-        }
-
-        if ($name == 'name') {
-            $this->__set('alias', $this->generateAlias($value));
-        }
-
-    }
-
-    /**
      * Create a new team
      * @param string $name The name of the team
      * @param int $leader The BZID of the person creating the team, also the leader
