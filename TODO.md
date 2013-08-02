@@ -5,7 +5,6 @@ TODO
 
 - Create necessary classes
 	- Groups
-    - Page
 - Discuss features with admins
 - Implement different features
 	- Messages
