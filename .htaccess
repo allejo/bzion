@@ -39,4 +39,6 @@ RewriteRule ^players players.php [QSA,NC,L]
 #       http://example.com/matches.php
 #                   becomes
 #       http://example.com/matches
+RewriteRule ^matches/([0-9]+)$ matches.php?id=$1 [QSA,NC,L]
+RewriteRule ^matches/(.+)$ matches.php?alias=$1 [QSA,NC,L]
 RewriteRule ^matches matches.php [QSA,NC,L]
