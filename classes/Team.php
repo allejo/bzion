@@ -248,10 +248,10 @@ class Team extends Controller
      * Get all the teams in the database that are not disabled or deleted
      * @return mixed An array of teams
      */
-    public static function getTeams() {
+    public static function getTeams($select = "id") {
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT id FROM teams WHERE status!=? AND status!=?", "ss", array("disabled", "deleted"));
+        $results = $db->query("SELECT $select FROM teams WHERE status!=? AND status!=?", "ss", array("disabled", "deleted"));
 
         return $results;
     }

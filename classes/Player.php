@@ -178,10 +178,10 @@ class Player extends Controller
      * Get all the players in the database that have an active status
      * @return mixed An array of players
      */
-    public static function getPlayers() {
+    public static function getPlayers($select = "bzid") {
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT bzid FROM players WHERE status=?", "s", array("active"));
+        $results = $db->query("SELECT $select FROM players WHERE status=?", "s", array("active"));
 
         return $results;
     }
