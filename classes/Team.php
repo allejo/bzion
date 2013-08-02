@@ -237,6 +237,18 @@ class Team extends Controller
     }
 
     /**
+     * Removes a member from the team
+     *
+     * *Warning*: This method does not check whether the player is already
+     * a member of the team
+     * @param int $bzid The bzid of the player to remove
+     */
+    function removeMember($bzid) {
+        $this->db->query("UPDATE players SET team=0 WHERE bzid=?", "i", array($bzid));
+        $this->update('members', --$this->members);
+    }
+
+    /**
      * Get the matches this team has participated in
      * @return array The array of matches this team has participated in
      */
