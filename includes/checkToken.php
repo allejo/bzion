@@ -96,4 +96,3 @@ function validate_token($token, $username, $groups = array(), $checkIP = true)
     }
   } // if (isset($token, $username))
 } // validate_token(...)
-
