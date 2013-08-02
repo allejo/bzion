@@ -29,7 +29,7 @@ DEFINE("DURATION", serialize(array(
 )));
 
 /*
- * File and directory settings
+ * File, directory and URL settings
  */
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
 DEFINE("HTTP_ROOT", $_SERVER["HTTP_HOST"]); // The root URL of the website
