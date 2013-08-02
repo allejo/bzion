@@ -55,7 +55,7 @@ class Ban extends Controller {
         $this->player = $ban['player'];
         $this->expiration = new DateTime($ban['expiration']);
         $this->reason = $ban['reason'];
-        $this->created = unserialize($ban['created']);
+        $this->created = new DateTime($ban['created']);
         $this->updated = new DateTime($ban['updated']);
         $this->author = $ban['author'];
 
