@@ -7,7 +7,7 @@ DEFINE("MYSQL_HOST", "localhost"); // Database host
 DEFINE("MYSQL_DB_NAME", "bzion"); // Database name
 DEFINE("MYSQL_USER", "bzion_admin"); // Database username
 DEFINE("MYSQL_PASSWORD", "password"); // Database password
-DEFINE("MYSQL_DEBUG", true);  // Whether or not to log MySQL errors on a file
+DEFINE("MYSQL_DEBUG", TRUE);  // Whether or not to log MySQL errors on a file
 
 /*
  * Site settings
@@ -15,7 +15,7 @@ DEFINE("MYSQL_DEBUG", true);  // Whether or not to log MySQL errors on a file
 DEFINE("SITE_TITLE", "BZiON: A League Management System");
 
 /*
- * An array of directories to be autoloaded in bzion-load.php
+ * Directories to be autoloaded in bzion-load.php
  */
 $classesDir = array (
     "classes/"
@@ -25,11 +25,11 @@ $classesDir = array (
  * League specific settings
  */
 DEFINE("DURATION", serialize(array(
-	"20" => "(2/3)" // 20 minute match is 2/3rds of a normal match's elo
+	"20" => "(2/3)" // 20 minute match is 2/3rds of a normal match's ELO
 )));
 
 /*
- * Files and directories settings
+ * File and directory settings
  */
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
 DEFINE("HTTP_ROOT", $_SERVER["HTTP_HOST"]); // The root URL of the website
