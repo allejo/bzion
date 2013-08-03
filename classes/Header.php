@@ -43,7 +43,7 @@ class Header {
     <body>
     <div class="navbar"> 
         <?php $baseUrl = "http://" . rtrim(HTTP_ROOT, '/'); ?>
-	<div class="menu"
+	<div class="menu">
         <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a>  
         <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a>  
         <a href="<?php echo $baseUrl; ?>/players" id="navbutton">Players</a>  
