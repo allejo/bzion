@@ -31,6 +31,7 @@ class Header {
      */
     function draw($title="") {
         $title = ($title=="") ? $this->title : $title;
+        $baseUrl = "http://" . rtrim(HTTP_ROOT, '/');
 
     ?>
 
@@ -38,11 +39,10 @@ class Header {
     <head>
         <meta charset="utf-8">
         <title><?php echo $title; ?></title>
-        <link rel="stylesheet" href="<?php echo DOC_ROOT; ?>/css/style.css">
+        <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
     </head>
     <body>
     <div class="navbar"> 
-        <?php $baseUrl = "http://" . rtrim(HTTP_ROOT, '/'); ?>
 	<div id="menu">
         <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a>  
         <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a>  
