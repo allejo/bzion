@@ -36,7 +36,9 @@ top: 6px;
 right: 12px;
 font-size: 1.3em;
 color: #0CA7DB;
+text-decoration:none;
 }
 #loginbutton:hover{
 color: orange;
+text-decoration:underline;
 }
