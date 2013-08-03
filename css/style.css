@@ -1,7 +1,6 @@
 body{
 background-image: url("imgs/bg.png");
 }
-
 .navbar{
 background-color: #333;
 position: fixed;
@@ -28,5 +27,16 @@ border: 1px solid grey;
 font-size: 13px;
 }
 #navbutton:hover{
+color: orange;
+}
+#loginbutton{
+font-family: "helveticaNeue-light";
+position: absolute;
+top: 6px;
+right: 12px;
+font-size: 1.3em;
+color: #0CA7DB;
+}
+#loginbutton:hover{
 color: orange;
 }

@@ -48,7 +48,7 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a>  
         <a href="<?php echo $baseUrl; ?>/players" id="navbutton">Players</a>  
         <a href="<?php echo $baseUrl; ?>/matches" id="navbutton">Matches</a>  
-
+	</div>
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/profile" id="navbutton">Profile</a> 
         <a href="logout.php" id="navbutton">Logout [<?php echo $_SESSION['username']; ?>]</a>
@@ -56,9 +56,10 @@ class Header {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
             $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
-        <a href="<?php echo $url; ?>" id="navbutton">Login</a>
+        <a href="<?php echo $url; ?>" id="loginbutton">Login</a>
 	</div>
-	</div>
+	
+
         <?php } ?>
 
     <?php
