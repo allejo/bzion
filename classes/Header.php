@@ -43,13 +43,13 @@ class Header {
     <body>
     <div class="navbar"> 
         <?php $baseUrl = "http://" . rtrim(HTTP_ROOT, '/'); ?>
-        <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a> | 
-        <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a> | 
-        <a href="<?php echo $baseUrl; ?>/players" id="navbutton">Players</a> | 
-        <a href="<?php echo $baseUrl; ?>/matches" id="navbutton">Matches</a> | 
+        <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a>  
+        <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a>  
+        <a href="<?php echo $baseUrl; ?>/players" id="navbutton">Players</a>  
+        <a href="<?php echo $baseUrl; ?>/matches" id="navbutton">Matches</a>  
 
         <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/profile" id="navbutton">Profile</a> |
+        <a href="<?php echo $baseUrl; ?>/profile" id="navbutton">Profile</a> 
         <a href="logout.php" id="navbutton">Logout [<?php echo $_SESSION['username']; ?>]</a>
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
