@@ -120,7 +120,7 @@ class Database
      *
      * @param string $query The prepared SQL statement that will be executed
      * @param string $typeDef (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
-     * @param array $params (Optional) The array of values that will be binded to the prepared statement
+     * @param mixed|array $params (Optional) The array of values that will be binded to the prepared statement
      * @return mixed Returns an array of the values received from the query or returns false on empty
      */
     function query($query, $typeDef = FALSE, $params = FALSE)
@@ -128,8 +128,9 @@ class Database
         $multiQuery = true;
         if ($stmt = $this->dbc->prepare($query))
         {
-            if (count($params) == count($params, 1))
-            {
+            if (!is_array($params)) {
+                $params = array($params);
+            } else if (count($params) == count($params, 1)) {
                 $params = array($params);
                 $multiQuery = false;
             }
