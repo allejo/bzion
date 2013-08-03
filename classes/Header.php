@@ -41,7 +41,7 @@ class Header {
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-
+    <div class="navbar"> 
         <?php $baseUrl = "http://" . rtrim(HTTP_ROOT, '/'); ?>
         <a href="<?php echo $baseUrl; ?>/">Home</a> | 
         <a href="<?php echo $baseUrl; ?>/teams">Teams</a> | 
@@ -56,7 +56,7 @@ class Header {
             $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>">Login</a>
-
+	</div>
         <?php } ?>
 
     <?php
