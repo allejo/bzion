@@ -71,18 +71,8 @@ abstract class Controller {
      */
     public function update($name, $value, $type=NULL) {
         if (!$type) {
-            if (is_int($value))
-                $type = 'i';
-            else if (is_float($value))
-                $type = 'd';
-            else if (is_array($value)) {
-                $type = 's';
-                $value = serialize($value);
-            } else {
-                $type = 's';
-            }
+            $type = Database::getType($value);
         }
-
         $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
     }
 
