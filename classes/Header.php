@@ -52,19 +52,20 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton">Bans</a> 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbutton">Profile</a> 
-	</div>	       	         
+	</div>
 
    	<a href="logout.php" class="loginbutton">Logout [<?php echo $_SESSION['username']; ?>]</a>
-        <?php } else {
-            $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
-            $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
-        ?>
-        <a href="<?php echo $url; ?>" class="loginbutton">Login</a>
-     
-     </div>
-	
-
+    <?php } else {
+        $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
+        $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
+    ?>
+    <a href="<?php echo $url; ?>" class="loginbutton">Login</a>
+    </div>
         <?php } ?>
+
+    </div>
+
+    <div class="content">
 
     <?php
 
