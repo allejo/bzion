@@ -61,4 +61,36 @@ class Ban extends Controller {
 
     }
 
+    function getPlayer() {
+        return $this->player;
+    }
+
+    function getExpiration() {
+        return $this->expiration->format(DATE_FORMAT);
+    }
+
+    function getReason() {
+        return $this->reason;
+    }
+
+    function getCreated() {
+        return $this->created->format(DATE_FORMAT);
+    }
+
+    function getUpdated() {
+        return $this->updated->format(DATE_FORMAT);
+    }
+
+    function getAuthor() {
+        return $this->author;
+    }
+
+    /**
+     * Get all the bans in the database that arent disabled or deleted
+     * @return array An array of ban IDs
+     */
+    public static function getBans($select = "id") {
+        return parent::getIds();
+    }
+
 }
