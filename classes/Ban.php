@@ -90,7 +90,7 @@ class Ban extends Controller {
      * @return array An array of ban IDs
      */
     public static function getBans($select = "id") {
-        return parent::getIds();
+        return array_reverse(parent::getIds());
     }
 
 }

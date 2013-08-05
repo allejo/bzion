@@ -86,7 +86,7 @@ class News extends Controller {
      * @return array An array of news IDs
      */
     public static function getNews($select = "id") {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select);
+        return array_reverse(parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select));
     }
 
 }
