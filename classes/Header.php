@@ -43,22 +43,22 @@ class Header {
     </head>
     <body>
     <div class="navbar"> 
-	<div id="menu">
-        <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a> 
-        <a href="<?php echo $baseUrl; ?>/news" id="navbutton">News</a> 
-        <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a>  
-        <a href="<?php echo $baseUrl; ?>/players" id="navbutton">Players</a>  
-        <a href="<?php echo $baseUrl; ?>/matches" id="navbutton">Matches</a>  
+	<div class="menu">
+        <a href="<?php echo $baseUrl; ?>/" class="navbutton">Home</a> 
+        <a href="<?php echo $baseUrl; ?>/news" class="navbutton">News</a> 
+        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton">Teams</a>  
+        <a href="<?php echo $baseUrl; ?>/players" class="navbutton">Players</a>  
+        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton">Matches</a>  
         <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/profile" id="navbutton">Profile</a> 
+        <a href="<?php echo $baseUrl; ?>/profile" class="navbutton">Profile</a> 
 	</div>	       	         
 
-   	<a href="logout.php" id="loginbutton">Logout [<?php echo $_SESSION['username']; ?>]</a>
+   	<a href="logout.php" class="loginbutton">Logout [<?php echo $_SESSION['username']; ?>]</a>
         <?php } else {
             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
             $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
-        <a href="<?php echo $url; ?>" id="loginbutton">Login</a>
+        <a href="<?php echo $url; ?>" class="loginbutton">Login</a>
      
      </div>
 	
