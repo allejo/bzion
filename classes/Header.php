@@ -44,7 +44,8 @@ class Header {
     <body>
     <div class="navbar"> 
 	<div id="menu">
-        <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a>  
+        <a href="<?php echo $baseUrl; ?>/" id="navbutton">Home</a> 
+        <a href="<?php echo $baseUrl; ?>/news" id="navbutton">News</a> 
         <a href="<?php echo $baseUrl; ?>/teams" id="navbutton">Teams</a>  
         <a href="<?php echo $baseUrl; ?>/players" id="navbutton">Players</a>  
         <a href="<?php echo $baseUrl; ?>/matches" id="navbutton">Matches</a>  
