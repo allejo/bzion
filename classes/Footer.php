@@ -21,7 +21,7 @@ class Footer {
     function draw() {
 
     ?>
-
+        </div> <!-- end .content -->
     </body>
 </html>
 
