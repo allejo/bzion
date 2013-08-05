@@ -46,9 +46,10 @@ class Header {
 	<div class="menu">
         <a href="<?php echo $baseUrl; ?>/" class="navbutton">Home</a> 
         <a href="<?php echo $baseUrl; ?>/news" class="navbutton">News</a> 
-        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton">Teams</a>  
-        <a href="<?php echo $baseUrl; ?>/players" class="navbutton">Players</a>  
-        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton">Matches</a>  
+        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton">Teams</a> 
+        <a href="<?php echo $baseUrl; ?>/players" class="navbutton">Players</a> 
+        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton">Matches</a> 
+        <a href="<?php echo $baseUrl; ?>/bans" class="navbutton">Bans</a> 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbutton">Profile</a> 
 	</div>	       	         
