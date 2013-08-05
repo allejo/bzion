@@ -49,3 +49,10 @@ RewriteRule ^matches matches.php [QSA,NC,L]
 #                   becomes
 #       http://example.com/news
 RewriteRule ^news news.php [QSA,NC,L]
+
+# Rewrite rule for bans
+# Example:
+#       http://example.com/bans.php
+#                   becomes
+#       http://example.com/bans
+RewriteRule ^bans bans.php [QSA,NC,L]
