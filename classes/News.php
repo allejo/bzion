@@ -56,8 +56,37 @@ class News extends Controller {
         $this->content = $news['content'];
         $this->created = new DateTime($news['created']);
         $this->updated = new DateTime($news['updated']);
+        $this->author = $news['author'];
         $this->status = $news['status'];
 
+    }
+
+    function getSubject() {
+        return $this->subject;
+    }
+
+    function getAuthor() {
+        return $this->author;
+    }
+
+    function getContent() {
+        return $this->content;
+    }
+
+    function getUpdated() {
+        return $this->updated->format(DATE_FORMAT);
+    }
+
+    function getCreated() {
+        return $this->created->format(DATE_FORMAT);
+    }
+
+    /**
+     * Get all the news entries in the database that arent disabled or deleted
+     * @return array An array of news IDs
+     */
+    public static function getNews($select = "id") {
+        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select);
     }
 
 }
