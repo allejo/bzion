@@ -60,9 +60,8 @@ class Message extends Controller
     /**
      * Create a new message
      *
-     * @param int $to The BZID of the receiver
+     * @param int $to The id of the group the message is sent to
      * @param int $from The BZID of the sender
-     * @param string $subject The subject of the message
      * @param string $message The body of the message
      * @param string $status The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
