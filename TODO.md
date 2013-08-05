@@ -3,6 +3,8 @@ TODO
 
 <em>In no specific order</em>
 
+- Create necessary classes
+    - Notification
 - Discuss features with admins
 - Implement different features
 	- Messages
