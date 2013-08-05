@@ -5,6 +5,9 @@ TODO
 
 - Create necessary classes
     - Notification
+- Misc fixes
+    - Order matches by most recent
+    - Figure whether PHP's array_reverse or MySQL's ORDER BY is faster
 - Discuss features with admins
 - Implement different features
 	- Messages
