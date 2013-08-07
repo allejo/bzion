@@ -71,5 +71,10 @@ RewriteRule ^servers servers.php [QSA,NC,L]
 #       http://example.com/pages.php?alias=bzion
 #                   becomes
 #       http://example.com/bzion
+# ************************************
+# * NOTE: THIS RULE MUST BE THE LAST *
+# *       RULE IN THE FILE OTHERWISE *
+# *       THINGS WILL GET REAL WEIRD *
+# ************************************
 RewriteRule ^([0-9]+)$ pages.php?id=$1 [QSA,NC,L]
 RewriteRule ^([a-z\-_]+)$ pages.php?alias=$1 [QSA,NC,L]
