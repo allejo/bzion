@@ -36,6 +36,12 @@ class Server extends Controller
     private $updated;
 
     /**
+     * The server's status
+     * @var string
+     */
+    private $status;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "servers";
@@ -83,7 +89,7 @@ class Server extends Controller
      */
     function forceUpdate() {
         $this->info = bzfquery($this->address);
-        $this->db->query("UPDATE servers SET info = ? WHERE id = ?", "si", array(serialize($this->info), $this->id));
+        $this->db->query("UPDATE servers SET info = ?, updated = NOW() WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
 
     /**
@@ -140,8 +146,34 @@ class Server extends Controller
      * Gets the server's ip address
      * @return string The server's ip address
      */
-    function serverIp() {
+    function getServerIp() {
         return $this->info['ip'];
+    }
+
+    function getName() {
+        return $this->name;
+    }
+
+    function getAddress() {
+        return $this->address;
+    }
+
+    function getUpdated() {
+        return $this->updated->format(DATE_FORMAT);
+    }
+
+    function lastUpdate() {
+        $last_update = $this->updated->diff(new DateTime("now"));
+
+        return $last_update->format('%i min ago');
+    }
+
+    /**
+     * Get all the servers in the database that have an active status
+     * @return array An array of server IDs
+     */
+    public static function getServers() {
+        return parent::getIdsFrom("status", array("active"), "s");
     }
 
 }
