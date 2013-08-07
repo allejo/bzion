@@ -100,16 +100,19 @@ abstract class Controller {
      * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string
      */
-    protected function getURL($dir, $default = null) {
+    protected function getURL($dir="", $default = null) {
+        if (!empty($dir)) {
+            $dir .= "/";
+        }
         if (isset($this->alias) && $this->alias) {
-            $alias = $this->alias;
+            $alias = $dir . $this->alias;
         } else if (!$default) {
-            $alias = $this->id;
+            $alias = $dir . $this->id;
         } else {
             $alias = $default;
         }
 
-        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . '/' . $alias;
+        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $alias;
         return $url;
     }
 
