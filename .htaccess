@@ -11,6 +11,8 @@
 Options -MultiViews
 
 RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 # Uncomment this line and set it to bzion's directory
 # if you are experiencing issues with mod_rewrite
@@ -62,7 +64,5 @@ RewriteRule ^bans bans.php [QSA,NC,L]
 #       http://example.com/pages.php?alias=bzion
 #                   becomes
 #       http://example.com/bzion
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([0-9]+)$ pages.php?id=$1 [QSA,NC,L]
 RewriteRule ^([a-z\-_]+)$ pages.php?alias=$1 [QSA,NC,L]
