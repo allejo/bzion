@@ -14,7 +14,6 @@ if (isset($_GET['alias'])) {
 if (isset($team)) {
     $header->draw("Teams :: " . $team->getName());
 
-    echo "<br /><br />";
     echo "<b>" . $team->getName() . "</b><br />";
     echo "ELO: " . $team->getElo() . "<br />";
     echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";
@@ -30,8 +29,6 @@ if (isset($team)) {
     $header->draw("Teams");
 
     $teams = Team::getTeams();
-
-    echo "<br /><br />";
 
     foreach ($teams as $key => $id) {
         $team = new Team($id);

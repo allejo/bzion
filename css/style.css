@@ -53,3 +53,7 @@ h4 {
     color: orange;
     text-decoration: underline;
 }
+
+.content {
+    margin-top: 50px;
+}

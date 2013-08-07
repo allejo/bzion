@@ -8,8 +8,6 @@ $header->draw();
 
 $banList = Ban::getBans();
 
-echo "<br /><br />";
-
 foreach ($banList as $key => $id) {
     $ban = new Ban($id);
     $bannedPlayer = new Player($ban->getPlayer());

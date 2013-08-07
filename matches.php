@@ -16,8 +16,6 @@ if (isset($team)) {
 
     $matches = $team->getMatches();
 
-    echo "<br /><br />";
-
     foreach ($matches as $key => $id) {
         $match = new Match($id);
         $team_a = new Team($match->getTeamA());
@@ -36,8 +34,6 @@ if (isset($team)) {
     $header->draw("Matches");
 
     $matches = Match::getMatches();
-
-    echo "<br /><br />";
 
     foreach ($matches as $key => $id) {
         $match = new Match($id);

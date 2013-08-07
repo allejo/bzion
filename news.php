@@ -8,8 +8,6 @@ $header->draw();
 
 $newsArticles = News::getNews();
 
-echo "<br /><br />";
-
 foreach ($newsArticles as $key => $id) {
     $news = new News($id);
     echo "<h4>" . $news->getSubject() . "</h4>";
