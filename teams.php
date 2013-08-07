@@ -14,7 +14,7 @@ if (isset($_GET['alias'])) {
 if (isset($team)) {
     $header->draw("Teams :: " . $team->getName());
 
-    echo "<div class="team_name">" . $team->getName() . "</div>";
+    echo "<b>" . $team->getName() . "</b> <br />";
     echo "ELO: " . $team->getElo() . "<br />";
     echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";
     echo "Members: " . $team->getNumMembers() . "<br />";
