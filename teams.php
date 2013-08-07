@@ -48,13 +48,14 @@ if (isset($team)) {
         echo "<td>" . $leader['username'] . "</td>";
         echo "<td> " . $team->getNumMembers() . "</td>";
         echo "<td><a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a></td>";
-        echo "<td>" . $team->getActivity() . "</td>>";
+        echo "<td>" . $team->getActivity() . "</td>";
         echo "Created: " . $team->getCreationDate() . "<br />";
         echo "<br />";
     }
 
 }
-
+?>
+</table>
 $footer = new Footer();
 $footer->draw();
 
