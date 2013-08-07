@@ -4,11 +4,13 @@ include("bzion-load.php");
 
 $header = new Header();
 
-if (!isset($_GET['alias'])) {
+if (isset($_GET['alias'])) {
+    $page = Page::getFromAlias($_GET['alias']);
+} else if (isset($_GET['id'])) {
+    $page = new Page($_GET['id']);
+} else {
     $header->go("home");
 }
-
-$page = Page::getFromAlias($_GET['alias']);
 
 $header->draw($page->getName());
 

@@ -65,4 +65,4 @@ RewriteRule ^bans bans.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([0-9]+)$ pages.php?id=$1 [QSA,NC,L]
-RewriteRule ^(.+)$ pages.php?alias=$1 [QSA,NC,L]
+RewriteRule ^([a-z\-_]+)$ pages.php?alias=$1 [QSA,NC,L]
