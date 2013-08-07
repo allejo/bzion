@@ -140,12 +140,13 @@ abstract class Controller {
         $db = Database::getInstance();
         if (empty($condition)) {
             $results = $db->query("SELECT " . $select . " FROM " . static::TABLE . " WHERE 1 = ?", "i", array(1));
-        } else if (empty($types)) {
-            // FIXME
-            throw new Exception("Unsupported parameters");
         } else {
-            $results = $db->query("SELECT $select FROM " . static::TABLE .
-                       " $condition", $types, $params);
+            if (empty($types)) {
+                $condition = "WHERE 1 = ? " . $condition;
+                $types = "i";
+                $params = array(1);
+            }
+            $results = $db->query("SELECT $select FROM " . static::TABLE . " $condition", $types, $params);
         }
 
         // If $select specifies multiple columns, just return the $results array
@@ -170,7 +171,7 @@ abstract class Controller {
      * @param string $select The name of the column(s) that the returned array should contain
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id') {
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params='') {
         $conditions = array();
         $types = "";
         $equality = "=";
@@ -185,6 +186,10 @@ abstract class Controller {
             $types .= $type;
         }
         $conditionString = "WHERE " . implode(" $conjunction ", $conditions);
+
+        if (!empty($additional_params)) {
+            $conditionString .= " " . $additional_params;
+        }
 
         return self::getIds($select, $conditionString, $types, $possible_values);
     }
