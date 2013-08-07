@@ -49,7 +49,7 @@ class Message extends Controller
         parent::__construct($id);
         $message = $this->result;
 
-        $this->to = $message['player_to'];
+        $this->to = $message['group_to'];
         $this->from = $message['player_from'];
         $this->subject = $message['subject'];
         $this->timestamp = $message['timestamp'];
@@ -75,6 +75,17 @@ class Message extends Controller
         $db->query($query, "iiss", $params);
 
         return new Message($db->getInsertId());
+    }
+
+    /**
+     * Get all the messages in the database that are not disabled or deleted
+     * @param int $bzid The bzid of the player whose messages are being retrieved
+     * @return array An array of message IDs
+     */
+    public static function getMessages($bzid) {
+        // get all messages where player_from = $bzid or group_to has member $bzid and status != hidden or deleted
+        //
+        // return parent::getIdsFrom("status", array("hidden", "deleted"), "s", true);
     }
 
 }
