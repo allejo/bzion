@@ -49,6 +49,17 @@ h4 {
     text-align: left;
 }
 
+.navbuttonicon {
+    width: 3em;
+    line-height: 3.3em;
+    vertical-align: middle;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-right: 1px solid #666666;
+}
+
 .navbutton {
     width: 6.2em;
     line-height: 3.3em;
@@ -60,15 +71,11 @@ h4 {
     border-right: 1px solid #666666;
 }
 
-    .navbutton .icon-home {
-        font-size: 110%!important;
-    }
-
-    .navbutton:hover {
+    .navbutton:hover, .navbuttonicon:hover {
         background-color: #333333;
     }
 
-    .navbutton:last-child {
+    .navbutton:last-child, .navbuttonicon:last-child {
         border-left: 1px solid #666666;
     }
 

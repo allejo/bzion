@@ -45,9 +45,9 @@ class Header {
     <body>
     <div class="navbar"> 
     <div class="navmenu">
-        <a href="<?php echo $baseUrl; ?>/" class="navbutton left"><i class="icon-home"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a> 
         <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/messages" class="navbutton left"><i class="icon-comments"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left"><i class="icon-comments"></i></a> 
         <?php } ?>
         <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a> 
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a> 
@@ -66,14 +66,14 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a> 
         <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a> 
     <?php if (isset($_SESSION['username'])) { ?>
-    <a href="<?php echo $baseUrl; ?>/logout.php" class="navbutton right">Logout</a>
-        <a href="<?php echo $baseUrl; ?>/profile" class="navbutton right">Profile</a> 
+    <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
+        <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a> 
         <?php
     } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
         $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
-        <a href="<?php echo $url; ?>" class="navbutton right">Login</a>
+        <a href="<?php echo $url; ?>" class="navbuttonicon right"><i class="icon-signin"></i></a>
     </div> <!-- end .navmenu -->
     <?php } ?>
 
