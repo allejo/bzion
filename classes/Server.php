@@ -132,14 +132,14 @@ class Server extends Controller
     }
 
     /**
-     * Checks if the last update is older than the update interval
+     * Checks if the last update is older than or equal to the update interval
      * @return bool Whether the information is older than the update interval
      */
     function staleInfo() {
         $now = new DateTime("now");
         $last_update = $this->updated->diff($now);
 
-        return $last_update->format('%i') > UPDATE_INTERVAL;
+        return $last_update->format('%i') >= UPDATE_INTERVAL;
     }
 
     /**
