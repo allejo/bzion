@@ -59,6 +59,13 @@ RewriteRule ^news news.php [QSA,NC,L]
 #       http://example.com/bans
 RewriteRule ^bans bans.php [QSA,NC,L]
 
+# Rewrite rule for servers
+# Example:
+#       http://example.com/servers.php
+#                   becomes
+#       http://example.com/servers
+RewriteRule ^servers servers.php [QSA,NC,L]
+
 # Rewrite rule for pages
 # Example:
 #       http://example.com/pages.php?alias=bzion
@@ -66,10 +73,3 @@ RewriteRule ^bans bans.php [QSA,NC,L]
 #       http://example.com/bzion
 RewriteRule ^([0-9]+)$ pages.php?id=$1 [QSA,NC,L]
 RewriteRule ^([a-z\-_]+)$ pages.php?alias=$1 [QSA,NC,L]
-
-# Rewrite rule for servers
-# Example:
-#       http://example.com/servers.php
-#                   becomes
-#       http://example.com/servers
-RewriteRule ^servers servers.php [QSA,NC,L]
