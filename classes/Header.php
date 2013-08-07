@@ -30,7 +30,7 @@ class Header {
      * @param string $title The page's title
      */
     function draw($title="") {
-        $title = ($title=="") ? $this->title : $title;
+        $title = (empty($title)) ? $this->title : $title;
         $baseUrl = "http://" . rtrim(HTTP_ROOT, '/');
 
     ?>
