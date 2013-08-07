@@ -60,6 +60,7 @@ class Header {
 
         ?>
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton">Bans</a> 
+        <a href="<?php echo $baseUrl; ?>/servers" class="navbutton">Servers</a> 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbutton">Profile</a> 
 	</div>
