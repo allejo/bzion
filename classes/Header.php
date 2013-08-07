@@ -46,6 +46,9 @@ class Header {
     <div class="navbar"> 
     <div class="navmenu">
         <a href="<?php echo $baseUrl; ?>/" class="navbutton left"><i class="icon-home"></i></a> 
+        <?php //if (isset($_SESSION['username'])) { ?>
+        <a href="<?php echo $baseUrl; ?>/messages" class="navbutton left">Messages</a> 
+        <?php //} ?>
         <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a> 
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a> 
         <a href="<?php echo $baseUrl; ?>/players" class="navbutton left">Players</a> 
