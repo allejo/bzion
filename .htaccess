@@ -56,3 +56,11 @@ RewriteRule ^news news.php [QSA,NC,L]
 #                   becomes
 #       http://example.com/bans
 RewriteRule ^bans bans.php [QSA,NC,L]
+
+# Rewrite rule for pages
+# Example:
+#       http://example.com/pages.php?alias=bzion
+#                   becomes
+#       http://example.com/bzion
+#RewriteRule ^([0-9]+)$ pages.php?id=$1 [QSA,NC,L]
+#RewriteRule ^(.+)$ pages.php?alias=$1 [QSA,NC,L]
