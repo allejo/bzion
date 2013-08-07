@@ -2,13 +2,6 @@
 
 include("bzion-load.php");
 
-define("ROGUE", 0);
-define("RED", 1);
-define("GREEN", 2);
-define("BLUE", 3);
-define("PURPLE", 4);
-define("OBSERVER", 5);
-
 $header = new Header("Servers");
 $header->draw();
 
@@ -19,6 +12,7 @@ foreach ($servers as $key => $id) {
 
     if ($server->staleInfo()) {
         $server->forceUpdate();
+        $header->go("/servers");
     }
 
     echo "<strong>" . $server->getName() . "</strong><br />";
@@ -30,22 +24,22 @@ foreach ($servers as $key => $id) {
         foreach($server->getPlayers() as $player) {
             echo "<li>" . $player['sign'];
             switch ($player['team']) {
-                case ROGUE:
+                case 0:
                     echo " (Rogue)";
                     break;
-                case RED:
+                case 1:
                     echo " (Red)";
                     break;
-                case GREEN:
+                case 2:
                     echo " (Green)";
                     break;
-                case BLUE:
+                case 3:
                     echo " (Blue)";
                     break;
-                case PURPLE:
+                case 4:
                     echo " (Purple)";
                     break;
-                case OBSERVER:
+                case 5:
                     echo " (Observer)";
                     break;
                 default:
