@@ -53,7 +53,9 @@ if (isset($team)) {
 
 }
 ?>
+
 </table>
+<?php
 $footer = new Footer();
 $footer->draw();
 
