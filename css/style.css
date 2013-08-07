@@ -86,7 +86,6 @@ h4 {
     width: 90%;
     margin: 0 auto;
     padding: 1em 0 1em 0;
-    font-family: HelveticaNeue-Light, Helvetica, Sans-Serif;
 }
 
 /**
@@ -96,4 +95,12 @@ h4 {
 font-family: HelveticaNeue-CondensedBold;
 font-size: 2.5em;
 }
+
 .team_rating{
+font-family: HelveticaNeue;
+font-size: 20px;
+
+}
+.team_leader{
+font-size: 18px;
+}
