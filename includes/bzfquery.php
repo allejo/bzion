@@ -61,7 +61,7 @@ function readpacket(&$fp) {
 }
 
 function bzfquery ($hostport) {
-  list($server['host'], $server['port']) = split(":", $hostport, 2);
+  list($server['host'], $server['port']) = explode(":", $hostport, 2);
   $protocol = 'tcp';
   $get_prot = getprotobyname($protocol);
   if ($get_prot == -1) {
