@@ -40,39 +40,40 @@ class Header {
         <meta charset="utf-8">
         <title><?php echo $title; ?></title>
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
     </head>
     <body>
     <div class="navbar"> 
-	<div class="menu">
-        <a href="<?php echo $baseUrl; ?>/" class="navbutton">Home</a> 
-        <a href="<?php echo $baseUrl; ?>/news" class="navbutton">News</a> 
-        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton">Teams</a> 
-        <a href="<?php echo $baseUrl; ?>/players" class="navbutton">Players</a> 
-        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton">Matches</a> 
+	<div class="navmenu">
+        <a href="<?php echo $baseUrl; ?>/" class="navbutton left"><i class="icon-home"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a> 
+        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a> 
+        <a href="<?php echo $baseUrl; ?>/players" class="navbutton left">Players</a> 
+        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton left">Matches</a> 
         <?php
 
         $pages = Page::getPages();
 
         foreach ($pages as $key => $id) {
             $page = new Page($id);
-            echo "<a href='" . $page->getURL() . "' class='navbutton'>" . $page->getName() . "</a> ";
+            echo "<a href='" . $page->getURL() . "' class='navbutton left'>" . $page->getName() . "</a> ";
         }
 
         ?>
-        <a href="<?php echo $baseUrl; ?>/bans" class="navbutton">Bans</a> 
-        <a href="<?php echo $baseUrl; ?>/servers" class="navbutton">Servers</a> 
-        <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/profile" class="navbutton">Profile</a> 
-	</div>
+        <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a> 
+        <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a> 
+    <?php if (isset($_SESSION['username'])) { ?>
+        <a href="<?php echo $baseUrl; ?>/profile" class="navbutton right">Profile</a> 
 
-   	<a href="logout.php" class="loginbutton">Logout [<?php echo $_SESSION['username']; ?>]</a>
-    <?php } else {
+   	    <a href="logout.php" class="navbutton right">Logout [<?php echo $_SESSION['username']; ?>]</a>
+        <?php
+    } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
         $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
-    ?>
-    <a href="<?php echo $url; ?>" class="loginbutton">Login</a>
+        ?>
+        <a href="<?php echo $url; ?>" class="navbutton right">Login</a>
     </div>
-        <?php } ?>
+    <?php } ?>
 
     </div>
 
