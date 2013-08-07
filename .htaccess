@@ -66,6 +66,13 @@ RewriteRule ^bans bans.php [QSA,NC,L]
 #       http://example.com/servers
 RewriteRule ^servers servers.php [QSA,NC,L]
 
+# Rewrite rule for messages
+# Example:
+#       http://example.com/messages.php
+#                   becomes
+#       http://example.com/messages
+RewriteRule ^messages messages.php [QSA,NC,L]
+
 # Rewrite rule for pages
 # Example:
 #       http://example.com/pages.php?alias=bzion
