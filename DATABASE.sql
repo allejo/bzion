@@ -209,6 +209,7 @@
     `owner` int(10) unsigned NOT NULL,
     `info` text NOT NULL,
     `updated` datetime NOT NULL,
+    `status` set('active', 'disabled', 'deleted') NOT NULL DEFAULT 'active',
     PRIMARY KEY (`id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
