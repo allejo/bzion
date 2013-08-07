@@ -44,7 +44,7 @@ class Header {
     </head>
     <body>
     <div class="navbar"> 
-	<div class="navmenu">
+    <div class="navmenu">
         <a href="<?php echo $baseUrl; ?>/" class="navbutton left"><i class="icon-home"></i></a> 
         <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a> 
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a> 
@@ -71,10 +71,10 @@ class Header {
         $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>" class="navbutton right">Login</a>
-    </div>
+    </div> <!-- end .navmenu -->
     <?php } ?>
 
-    </div>
+    </div> <!-- end .navbar -->
 
     <div class="content">
 
