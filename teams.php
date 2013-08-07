@@ -30,6 +30,7 @@ if (isset($team)) {
 
     $teams = Team::getTeams();
 ?>
+<div class="teampage_content">
 <table class="teams_table">
 <tr class="teams_tr">
 <th style="width:30%"> Name </th>
@@ -42,7 +43,7 @@ if (isset($team)) {
 <?php
     foreach ($teams as $key => $id) {
         $team = new Team($id);
-	echo "<tr id=\"teams_tr\">\n";
+	echo "<tr class=\"teams_tr\">\n";
         echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</td>\n";
         echo "<td>" . $team->getElo() . "</td>\n";
         $leader = $team->getLeader();
@@ -57,6 +58,7 @@ if (isset($team)) {
 ?>
 
 </table>
+</div>
 <?php
 $footer = new Footer();
 $footer->draw();
