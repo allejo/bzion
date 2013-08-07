@@ -43,16 +43,13 @@ h4 {
 
 .navmenu {
     width: 90%;
-    height: 100%;
     margin: 0 auto;
-    border-left: 1px solid #666666;
-    text-align: left;
+    text-align: center;
 }
 
 .navbuttonicon {
     width: 3em;
     line-height: 3.3em;
-    vertical-align: middle;
     text-align: center;
     color: #ffffff;
     text-transform: uppercase;
@@ -61,21 +58,21 @@ h4 {
 }
 
 .navbutton {
-    width: 6.2em;
+    width: 5.5em;
     line-height: 3.3em;
     vertical-align: middle;
-    text-align: center;
     color: #ffffff;
     text-transform: uppercase;
     text-decoration: none;
     border-right: 1px solid #666666;
+    display: inline-block;
 }
 
     .navbutton:hover, .navbuttonicon:hover {
         background-color: #333333;
     }
 
-    .navbutton:last-child, .navbuttonicon:last-child {
+    .navbuttonicon:first-child, .navbuttonicon:nth-last-child(1) {
         border-left: 1px solid #666666;
     }
 
@@ -86,6 +83,7 @@ h4 {
     width: 90%;
     margin: 0 auto;
     padding: 1em 0 1em 0;
+    clear: both;
 }
 
 /**
