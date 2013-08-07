@@ -63,9 +63,8 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a> 
         <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a> 
     <?php if (isset($_SESSION['username'])) { ?>
+    <a href="<?php echo $baseUrl; ?>/logout.php" class="navbutton right">Logout</a>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbutton right">Profile</a> 
-
-   	    <a href="logout.php" class="navbutton right">Logout [<?php echo $_SESSION['username']; ?>]</a>
         <?php
     } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";

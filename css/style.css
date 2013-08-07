@@ -37,7 +37,7 @@ h4 {
     height: 100%;
     margin: 0 auto;
     border-left: 1px solid #666666;
-    border-right: 1px solid #666666;
+    /*border-right: 1px solid #666666;*/
     text-align: left;
 }
 
@@ -57,12 +57,11 @@ h4 {
 }
 
 .navbutton:hover {
-    background-color: #222222;
+    background-color: #333333;
 }
 
 .navbutton:last-child {
     border-left: 1px solid #666666;
-    border-right: none;
 }
 
 .content {
