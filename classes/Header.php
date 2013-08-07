@@ -49,6 +49,16 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton">Teams</a> 
         <a href="<?php echo $baseUrl; ?>/players" class="navbutton">Players</a> 
         <a href="<?php echo $baseUrl; ?>/matches" class="navbutton">Matches</a> 
+        <?php
+
+        $pages = Page::getPages();
+
+        foreach ($pages as $key => $id) {
+            $page = new Page($id);
+            echo "<a href='" . $page->getURL() . "' class='navbutton'>" . $page->getName() . "</a> ";
+        }
+
+        ?>
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton">Bans</a> 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbutton">Profile</a> 
@@ -79,7 +89,7 @@ class Header {
         $url = "http://" . rtrim(HTTP_ROOT, '/');
         if ($override) {
             header("Location: $location");
-        } else if (strtolower($location) == "default" || strtolower($location) == "index.php" || strtolower($location) == "/") {
+        } else if (strtolower($location) == "default" || strtolower($location) == "home" || strtolower($location) == "index.php" || strtolower($location) == "/") {
             header("Location: $url");
         } else {
             header("Location: $url" . $location);
