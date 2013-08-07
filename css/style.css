@@ -96,6 +96,8 @@ h4 {
 
 .teampage_content{
 width: 80%;
+margin:0px auto;
+margin-top: 90px;
 }
 .team_name {
 font-family: HelveticaNeue-CondensedBold;
