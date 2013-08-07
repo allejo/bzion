@@ -48,9 +48,8 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a> 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left"><i class="icon-comments"></i></a> 
-        <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon left"><i class="icon-bell-alt"></i></a> 
         <?php } ?>
-        <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a>
+        <a href="<?php echo $baseUrl; ?>/news" class="navbuttonicon left"><i class="icon-pushpin"></i></a>
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a>
         <a href="<?php echo $baseUrl; ?>/players" class="navbutton left">Players</a>
         <a href="<?php echo $baseUrl; ?>/matches" class="navbutton left">Matches</a>
@@ -67,8 +66,9 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a> 
         <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a> 
     <?php if (isset($_SESSION['username'])) { ?>
-    <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
+        <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a> 
         <?php
     } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
