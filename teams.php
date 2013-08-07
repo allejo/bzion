@@ -42,15 +42,13 @@ if (isset($team)) {
 <?php
     foreach ($teams as $key => $id) {
         $team = new Team($id);
-        echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</td>";
-        echo "<td>" . $team->getElo() . "</td>";
+        echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</td>\n";
+        echo "<td>" . $team->getElo() . "</td>\n";
         $leader = $team->getLeader();
-        echo "<td>" . $leader['username'] . "</td>";
-        echo "<td> " . $team->getNumMembers() . "</td>";
-        echo "<td><a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a></td>";
-        echo "<td>" . $team->getActivity() . "</td>";
-        echo "Created: " . $team->getCreationDate() . "<br />";
-        echo "<br />";
+        echo "<td>" . $leader['username'] . "</td>\n";
+        echo "<td> " . $team->getNumMembers() . "</td>\n";
+        echo "<td><a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a></td>\n";
+        echo "<td>" . $team->getActivity() . "</td>\n";
     }
 
 }
