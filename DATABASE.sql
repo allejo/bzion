@@ -126,7 +126,8 @@
 
   CREATE TABLE IF NOT EXISTS `pages` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `name` varchar(100) NOT NULL,
+    `name` varchar(32) NOT NULL,
+    `alias` varchar(32) DEFAULT NULL,
     `content` text NOT NULL,
     `created` datetime NOT NULL,
     `updated` datetime NOT NULL,
