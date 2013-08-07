@@ -96,11 +96,11 @@ font-family: HelveticaNeue-CondensedBold;
 font-size: 2.5em;
 }
 
-#team_rating{
+.team_rating{
 font-family: HelveticaNeue;
 font-size: 20px;
 
 }
-#team_leader{
+.team_leader{
 font-size: 18px;
 }

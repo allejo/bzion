@@ -15,9 +15,9 @@ if (isset($team)) {
     $header->draw("Teams :: " . $team->getName());
     
     echo "<div class='team_name'>" . $team->getName() . "</div> <br />";
-    echo "<div id='team_rating'>" ELO: " . $team->getElo() . "</div><br />";
+    echo "<div class='team_rating'>" ELO: " . $team->getElo() . "</div><br />";
     $leader = $team->getLeader();
-    echo "<div id='team_leader'>Leader: " . $leader['username'] . "</div><br />";
+    echo "<div class='team_leader'>Leader: " . $leader['username'] . "</div><br />";
     echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";
     echo "Members: " . $team->getNumMembers() . "<br />";
     echo "Activity: " . $team->getActivity() . "<br />";
