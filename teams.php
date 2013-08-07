@@ -43,7 +43,7 @@ if (isset($team)) {
     foreach ($teams as $key => $id) {
         $team = new Team($id);
 	echo "<tr id=\"teams_tr\">\n";
-        echo "<td><a href='\" . $team->getURL() . "'>" . $team->getName() . "</td>\n";
+        echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</td>\n";
         echo "<td>" . $team->getElo() . "</td>\n";
         $leader = $team->getLeader();
         echo "<td>" . $leader['username'] . "</td>\n";
