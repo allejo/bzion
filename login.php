@@ -12,18 +12,18 @@ $info = validate_token($token, $username, array(), $checkIP);
 
 if (isset($info)) {
 
-    $go = "/";
-
-    if (!Player::playerExists($info['bzid'])) {
-        Player::newPlayer($info['bzid'], $info['username']);
-        $go = "/profile"; // If they're new, redirect to their profile page so they can add some info
-    }
-
     session_start();
 
     $_SESSION['username'] = $info['username'];
     $_SESSION['bzid'] = $info['bzid'];
     $_SESSION['groups'] = $info['groups'];
+
+    $go = "home";
+
+    if (!Player::playerExists($info['bzid'])) {
+        Player::newPlayer($info['bzid'], $info['username']);
+        $go = "/profile"; // If they're new, redirect to their profile page so they can add some info
+    }
 
     $player = new Player($info['bzid']);
     $player->updateLastLogin();
