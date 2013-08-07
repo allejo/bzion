@@ -48,11 +48,12 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a> 
         <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left"><i class="icon-comments"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon left"><i class="icon-bell-alt"></i></a> 
         <?php } ?>
-        <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a> 
-        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a> 
-        <a href="<?php echo $baseUrl; ?>/players" class="navbutton left">Players</a> 
-        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton left">Matches</a> 
+        <a href="<?php echo $baseUrl; ?>/news" class="navbutton left">News</a>
+        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a>
+        <a href="<?php echo $baseUrl; ?>/players" class="navbutton left">Players</a>
+        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton left">Matches</a>
         <?php
 
         $pages = Page::getPages();
