@@ -8,7 +8,6 @@ TODO
 - Create basic test pages
     - Messages
     - Notifications
-    - Servers
 - Discuss features with admins
 - Implement different features
 	- Messages
