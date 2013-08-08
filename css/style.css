@@ -118,20 +118,24 @@ h4 {
     width: 100%;
 }
 
-.teams_tr {
-    font-family: HelveticaNeue-Light;
-    text-align: left;
-}
+    .teams_table th {
+        padding: 10px 5px 10px 5px;
+        background-color: #fff;
+    }
 
-.teams_table th {
-    padding: 10px 5px 10px 5px;
-    background-color: #fff;
-}
+    .teams_table th:first-child {
+        width: 30%;
+    }
 
-.teams_table td {
-    padding: 7px 5px 7px 5px;
-}
+    .teams_table td {
+        padding: 7px 5px 7px 5px;
+    }
 
-.teams_tr:nth-child(even) {
-    background-color: #f7f7f7;
-}
+    .teams_table tr {
+        font-family: HelveticaNeue-Light;
+        text-align: left;
+    }
+
+    .teams_table tr:nth-child(even) {
+        background-color: #f7f7f7;
+    }
