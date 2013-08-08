@@ -19,6 +19,7 @@ foreach ($newsArticles as $key => $id) {
     echo "<div id='author'>By " . $author->getUsername() . " at " . $news->getUpdated() . "</div>";
     echo "</div>"
     echo "<div class='news'>". $news->getContent() . "</div>";
+    echo "</div>"
 }
 ?>
 </div>
