@@ -23,7 +23,7 @@ a {
 }
 
 a:hover {
-    color: #FFA500;
+    color: #e69500;
 }
 
 /**
@@ -83,6 +83,7 @@ a:hover {
 
     .navbutton:hover, .navbuttonicon:hover {
         background-color: #333333;
+        color: #ffffff;
     }
 
     .navbutton:last-child, .navbuttonicon:last-child {
