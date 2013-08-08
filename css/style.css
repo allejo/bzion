@@ -170,12 +170,14 @@ font-size: 1.5em;
 font-family: HelveticaNeue-light;
 margin-left: 6px;
 text-align: center;
+margin-top:10px;
 }
 
 #author{
 font-family: HelveticaNeue-light;
 margin-left: 6px;
 text-align: left;
+margin-top:10px;
 }
 .news{
 font-family: Baskerville;
