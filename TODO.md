@@ -3,6 +3,7 @@ TODO
 
 <em>In no specific order</em>
 
+- Get mysqldump of GU's database for testing purposes
 - Create necessary classes
     - Notification
 - Create basic test pages
