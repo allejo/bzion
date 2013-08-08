@@ -59,7 +59,9 @@ if (isset($team)) {
 
     </table> <!-- end .teams_table -->
 </div> <!-- end .teampage_content -->
+
 <?php
+
 $footer = new Footer();
 $footer->draw();
 
