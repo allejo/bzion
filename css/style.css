@@ -144,16 +144,15 @@ h4 {
  * News page
  */
 .news {
-    width: 100%;
     margin: 0 auto;
     margin-top: 2em;
 }
 
 .news_box {
     width: 60%;
-    margin: 0px auto;
+    margin: 0 auto;
     line-height: 1.4em;
-    margin-top: 30px;
+    margin-top: 2em;
 }
 
     .news_box:hover .title_box {
