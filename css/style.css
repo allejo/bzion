@@ -18,6 +18,14 @@ h4 {
     font-size: 1.2em;
 }
 
+a {
+    color: #555;
+}
+
+a:hover {
+    color: #FFA500;
+}
+
 /**
  * Floats
  */
