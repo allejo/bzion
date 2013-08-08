@@ -75,8 +75,8 @@ class Header {
         $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>" class="navbuttonicon right"><i class="icon-signin"></i></a>
-    </div> <!-- end .navmenu -->
     <?php } ?>
+    </div> <!-- end .navmenu -->
 
     </div> <!-- end .navbar -->
 
