@@ -165,11 +165,11 @@ a:hover {
 }
 
     .news_box:hover .title_box {
-        background-color: #444;
+        background-color: #333333;
     }
 
 .title_box {
-    background-color: #333333;
+    background-color: #444444;
     color: white;
     padding: .8em .5em .8em .5em;
 }
