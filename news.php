@@ -21,7 +21,7 @@ foreach ($newsArticles as $key => $id) {
     echo "<div class='news'>". $news->getContent() . "</div>";
 }
 ?>
-
+</div>
 <?php
 $footer = new Footer();
 $footer->draw();
