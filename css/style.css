@@ -92,7 +92,7 @@ h4 {
 }
 
 /**
- * Team page content
+ * Team page
  */
 .teampage_content {
     width: 80%;
@@ -133,7 +133,6 @@ h4 {
     }
 
     .teams_table tr {
-        font-family: HelveticaNeue-Light;
         text-align: left;
     }
 
@@ -142,44 +141,47 @@ h4 {
     }
 
 /**
- * News page stuff
+ * News page
  */
- 
-.news_content{
-width: 80%;
-margin: 0px auto;
-margin-top: 2em;
+.news {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 2em;
 }
 
-.news_box{
-width: 50%;
-margin: 0px auto;
-background-color: white;
-line-height: 1.4em;
-box-shadow: 0px 0px 10px grey;
-margin-top: 30px;
-padding-bottom: 6px;
-}
-.title_box{
-background-color: rgb(51,51,51);
-color: white;
-padding-top: 3px;
-}
-#news_title{
-font-size: 1.5em;
-font-family: HelveticaNeue-light;
-margin-left: 6px;
-text-align: center;
-margin-top:10px;
+.news_box {
+    width: 60%;
+    margin: 0px auto;
+    line-height: 1.4em;
+    margin-top: 30px;
 }
 
-#author{
-font-family: HelveticaNeue-light;
-margin-left: 6px;
-text-align: left;
-margin-top:10px;
+    .news_box:hover .title_box {
+        background-color: #444;
+    }
+
+.title_box {
+    background-color: #333333;
+    color: white;
+    padding: .8em .5em .8em .5em;
 }
-.news{
-font-family: Baskerville;
-margin-left: 6px;
+
+.news_title {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.news_author {
+    text-align: right;
+    font-size: .8em;
+    padding: .5em 0 0 .5em;
+    margin-right: -8px;
+}
+
+.news_content {
+    font-family: "Baskerville";
+    background-color: #fff;
+    padding: .8em .8em 0 .8em;
+    border: 1px solid #bdbdbd;
+    border-top: none;
 }
