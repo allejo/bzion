@@ -7,16 +7,22 @@ $header = new Header("News");
 $header->draw();
 
 $newsArticles = News::getNews();
-
+?>
+<div class="news_content"> 
+<?php
 foreach ($newsArticles as $key => $id) {
     $news = new News($id);
-    echo "<h4>" . $news->getSubject() . "</h4>";
+    echo "<div class='news_box'>"
+    echo "<div class='title_box'>"
+    echo "<div id='news_title'>" . $news->getSubject() . "</div>";
     $author = new Player($news->getAuthor());
-    echo "<small>By " . $author->getUsername() . " at " . $news->getUpdated() . "</small><br />";
-    echo $news->getContent() . "<br />";
-    echo "<br />";
+    echo "<div id='author'>By " . $author->getUsername() . " at " . $news->getUpdated() . "</div>";
+    echo "</div>"
+    echo "<div class='news'>. $news->getContent() . "</div>";
 }
+?>
 
+<?php
 $footer = new Footer();
 $footer->draw();
 
