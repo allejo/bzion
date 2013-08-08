@@ -12,7 +12,7 @@ $newsArticles = News::getNews();
 <?php
 foreach ($newsArticles as $key => $id) {
     $news = new News($id);
-    echo "<div class='news_box'>"
+    echo "<div class=\"news_box"\>"
     echo "<div class='title_box'>"
     echo "<div id='news_title'>" . $news->getSubject() . "</div>";
     $author = new Player($news->getAuthor());
