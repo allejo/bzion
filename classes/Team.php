@@ -260,7 +260,7 @@ class Team extends Controller
      * @return array An array of Team IDs
      */
     public static function getTeams($select = "id") {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select);
+        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select, "ORDER BY elo DESC");
     }
 
     /**
