@@ -70,8 +70,10 @@ a:hover {
 }
 
 .navbutton {
-    width: 6.2em;
+    min-width: 5.4em;
     line-height: 3.3em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
     vertical-align: middle;
     text-align: center;
     color: #ffffff;
