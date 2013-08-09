@@ -105,14 +105,14 @@ abstract class Controller {
             $dir .= "/";
         }
         if (isset($this->alias) && $this->alias) {
-            $alias = $dir . $this->alias;
+            $alias = $this->alias;
         } else if (!$default) {
-            $alias = $dir . $this->id;
+            $alias = $this->id;
         } else {
             $alias = $default;
         }
 
-        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $alias;
+        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . $alias;
         return $url;
     }
 
