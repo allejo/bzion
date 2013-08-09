@@ -17,7 +17,7 @@ if (isset($team)) {
     echo "<div class='team_name'>" . $team->getName() . "</div> <br />";
     echo "<div class='team_rating'> ELO: " . $team->getElo() . "</div><br />";
     $leader = $team->getLeader();
-    echo "<div class='team_leader'>Leader: " . $leader['username'] . "</div><br />";
+    echo "<div class='team_leader'>Leader: <a href='" . $leader->getURL() . "'>" . $leader->getUsername() . "</a></div><br />";
     echo "Matches: <a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a><br />";
     echo "Members: " . $team->getNumMembers() . "<br />";
     echo "Activity: " . $team->getActivity() . "<br />";
@@ -47,7 +47,7 @@ if (isset($team)) {
             echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</td>\n";
             echo "<td>" . $team->getElo() . "</td>\n";
             $leader = $team->getLeader();
-            echo "<td>" . $leader['username'] . "</td>\n";
+            echo "<td>" . $leader->getUsername() . "</td>\n";
             echo "<td> " . $team->getNumMembers() . "</td>\n";
             echo "<td><a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a></td>\n";
             echo "<td>" . $team->getActivity() . "</td>\n";
