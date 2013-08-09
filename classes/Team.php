@@ -211,11 +211,10 @@ class Team extends Controller
 
     /**
      * Get the leader of the team
-     * @return string The name of the team leader
+     * @return Player The object representing the team leader
      */
     function getLeader() {
-        $results = $this->db->query("SELECT id,bzid,username FROM players WHERE bzid = ?", "i", array($this->leader));
-        return $results[0];
+        return new Player($this->leader);
     }
 
     /**
