@@ -22,7 +22,7 @@ foreach ($servers as $key => $id) {
     if ($server->numPlayers() > 0) {
         echo "<ul>";
         foreach($server->getPlayers() as $player) {
-            echo "<li>" . $player['sign'];
+            echo "<li>" . htmlspecialchars($player['sign']);
             switch ($player['team']) {
                 case 0:
                     echo " (Rogue)";
