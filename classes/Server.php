@@ -165,6 +165,15 @@ class Server extends Controller
     function lastUpdate() {
         $last_update = $this->updated->diff(new DateTime("now"));
 
+        if ($last_update->y +
+            $last_update->m +
+            $last_update->d +
+            $last_update->h +
+            $last_update->i == 0) {
+            if ($last_update->s < 10) return "now";
+            else return $last_update->format('%s sec ago');
+        }
+
         return $last_update->format('%i min ago');
     }
 
