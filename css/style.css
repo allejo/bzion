@@ -166,11 +166,11 @@ a:hover {
     margin-top: 2em;
 }
 
-    .news_box:hover .title_box {
+    .news_box:hover .news_title_box {
         background-color: #333333;
     }
 
-.title_box {
+.news_title_box {
     background-color: #555555;
     color: white;
     padding: .8em .5em .8em .5em;
@@ -189,6 +189,51 @@ a:hover {
 }
 
 .news_content {
+    font-family: "Baskerville";
+    background-color: #fff;
+    padding: .8em .8em 0 .8em;
+    border: 1px solid #bdbdbd;
+    border-top: none;
+}
+
+/**
+ * Bans page
+ */
+.bans {
+    margin: 0 auto;
+    margin-top: 2em;
+}
+
+.ban_box {
+    width: 60%;
+    margin: 0 auto;
+    line-height: 1.4em;
+    margin-top: 2em;
+}
+
+    .ban_box:hover .ban_title_box {
+        background-color: #333333;
+    }
+
+.ban_title_box {
+    background-color: #555555;
+    color: white;
+    padding: .8em .5em .8em .5em;
+}
+
+.ban_title {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.ban_author {
+    text-align: right;
+    font-size: .8em;
+    padding: .5em 0 0 .5em;
+    margin-right: -8px;
+}
+
+.ban_content {
     font-family: "Baskerville";
     background-color: #fff;
     padding: .8em .8em 0 .8em;
