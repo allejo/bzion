@@ -199,6 +199,19 @@
   -- --------------------------------------------------------
 
   --
+  -- Table structure for table `player_groups`
+  --
+
+  CREATE TABLE `player_groups` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `player` int(10) unsigned NOT NULL,
+    `group` int(10) unsigned NOT NULL,
+    PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  -- --------------------------------------------------------
+
+  --
   -- Table structure for table `servers`
   --
 
