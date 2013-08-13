@@ -17,7 +17,6 @@ TODO
 	- Admin Interface
     - Maintenance
 - Style everything
-	- Bans
 	- Player page
 	- Everything else
 - Bug testing, bug testing and more bug testing
