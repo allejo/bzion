@@ -15,6 +15,7 @@ TODO
 	- Notifications
 	- Invites
 	- Admin Interface
+    - Maintenance
 - Style everything
 	- Bans
 	- Player page
