@@ -51,7 +51,6 @@ class Message extends Controller
 
         $this->to = $message['group_to'];
         $this->from = $message['player_from'];
-        $this->subject = $message['subject'];
         $this->timestamp = $message['timestamp'];
         $this->message = $message['message'];
         $this->status = $message['status'];
