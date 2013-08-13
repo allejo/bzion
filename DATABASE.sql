@@ -202,7 +202,7 @@
   -- Table structure for table `player_groups`
   --
 
-  CREATE TABLE `player_groups` (
+  CREATE TABLE IF NOT EXISTS `player_groups` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `player` int(10) unsigned NOT NULL,
     `group` int(10) unsigned NOT NULL,
