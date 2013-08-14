@@ -184,7 +184,8 @@ abstract class Controller {
         // For example, if $select is "groups.id", we should convert it to
         // "id", because that's how MySQLi stores column names in the $results
         // array.
-        $select = end(explode(".",$select));
+        $selectArray = explode(".",$select);
+        $select = end($selectArray);
 
         foreach ($results as $r) {
             $ids[] = $r[$select];
