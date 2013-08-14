@@ -68,9 +68,10 @@ RewriteRule ^servers servers.php [QSA,NC,L]
 
 # Rewrite rule for messages
 # Example:
-#       http://example.com/messages.php
+#       http://example.com/messages.php?id=1
 #                   becomes
-#       http://example.com/messages
+#       http://example.com/messages/1
+RewriteRule ^messages/(.+)$ messages.php?id=$1 [QSA,NC,L]
 RewriteRule ^messages messages.php [QSA,NC,L]
 
 # Rewrite rule for pages
