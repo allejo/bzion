@@ -99,7 +99,7 @@ class Group extends Controller {
      * @return array An array of group IDs
      */
     public static function getGroups($bzid) {
-        return parent::getIdsFrom("player", array($bzid), "i", false, "id", "player_groups");
+        return parent::getIdsFrom("player", array($bzid), "i", false, "id", "", "player_groups");
     }
 
 }

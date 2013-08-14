@@ -175,7 +175,7 @@ abstract class Controller {
      * @param string $select The name of the column(s) that the returned array should contain
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $table = "", $additional_params='') {
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params='', $table = "") {
         $table = (empty($table)) ? static::TABLE : $table;
         $conditions = array();
         $types = "";
