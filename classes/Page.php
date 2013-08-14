@@ -107,4 +107,24 @@ class Page extends Controller {
         return new Page(parent::getIdFrom($alias, "alias"));
     }
 
+     /**
+     * Generate a URL-friendly unique alias for a page name
+     *
+     * @param string $name The original page name
+     * @return string|Null The generated alias, or Null if we couldn't make one
+     */
+    static function generateAlias($name) {
+        $alias = parent::generateAlias($name);
+
+        $disallowed_aliases = array("bans", "index", "login", "logout", "matches",
+                                    "messages", "news", "notifications", "pages",
+                                    "players", "servers", "teams");
+
+        while (in_array($alias, $disallowed_aliases)) {
+            $alias .= '-';
+        }
+
+        return $alias;
+    }
+
 }
