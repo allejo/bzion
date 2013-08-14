@@ -134,23 +134,21 @@ abstract class Controller {
      * Gets an array of object IDs
      * @todo Make this PHPDoc message easier to understand
      * @param string $select The name of the column(s) that the returned array should contain
-     * @param string $condition The MySQL condition that the rows should fulfil (e.g. `WHERE id = 5`)
+     * @param string $additional_params Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string $types The types of values that will be passed to Database::query()
      * @param array $params The parameter values that will be passed to Database::query()
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($select='id', $condition='', $types='', $params=array(), $table = "") {
+    protected static function getIds($select='id', $additional_params='', $types='', $params=array(), $table = "") {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
-        if (empty($condition)) {
+        if (empty($additional_params)) {
             $results = $db->query("SELECT " . $select . " FROM " . $table . " WHERE 1 = ?", "i", array(1));
         } else {
             if (empty($types)) {
-                $condition = "WHERE 1 = ? " . $condition;
-                $types = "i";
-                $params = array(1);
+                $results = $db->query("SELECT $select FROM " . $table . " $additional_params");
             }
-            $results = $db->query("SELECT $select FROM " . $table . " $condition", $types, $params);
+            $results = $db->query("SELECT $select FROM " . $table . " $additional_params", $types, $params);
         }
 
         // If $select specifies multiple columns, just return the $results array
