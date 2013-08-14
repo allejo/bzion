@@ -39,15 +39,16 @@ class Header {
     <head>
         <meta charset="utf-8">
         <title><?php echo $title; ?></title>
+        <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/strolljs/css/stroll.min.css">
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
     </head>
     <body>
-    <div class="navbar"> 
+    <div class="navbar">
     <div class="navmenu">
-        <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
         <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left"><i class="icon-comments"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left"><i class="icon-comments"></i></a>
         <?php } ?>
         <a href="<?php echo $baseUrl; ?>/news" class="navbuttonicon left"><i class="icon-pushpin"></i></a>
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a>
@@ -63,12 +64,12 @@ class Header {
         }
 
         ?>
-        <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a> 
-        <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a> 
+        <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a>
+        <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a>
     <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
-        <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a> 
-        <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a> 
+        <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a>
+        <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a>
         <?php
     } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
