@@ -152,8 +152,10 @@ class Database
             $result = array();
             foreach ($params as $queryKey => $query)
             {
-                foreach ($bindParams as $paramKey => $value)
-                    $bindParams[$paramKey] = $query[$paramKey];
+                if ($typeDef) {
+                    foreach ($bindParams as $paramKey => $value)
+                        $bindParams[$paramKey] = $query[$paramKey];
+                }
 
                 $queryResult = array();
                 if ($stmt->execute())
