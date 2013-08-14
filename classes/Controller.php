@@ -117,6 +117,20 @@ abstract class Controller {
     }
 
     /**
+     * Get a permanent URL that points to an object's page
+     * @param string $dir The virtual directory the URL should point to
+     * @return string
+     */
+    protected function getPermaLink($dir="") {
+        if (!empty($dir)) {
+            $dir .= "/";
+        }
+
+        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . $this->id;
+        return $url;
+    }
+
+    /**
      * Gets one object's id from the supplied alias
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
