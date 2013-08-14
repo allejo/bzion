@@ -21,7 +21,8 @@ $groups = Group::getGroups($_SESSION['bzid']);
                     <p>This is a modal window. You can do the following things with it:</p>
                     <textarea id="composeArea" placeholder="Enter your message here..."></textarea>
                     <br />
-                    <button onclick="sendResponse()" type="submit">Send Message</button>
+                    <!--<button type="submit">Send Message</button>-->
+                    <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out"><span class="ladda-label">Submit</span></button>
                     <button type="reset">Reset</button>
                     <button class="nifty-close">Cancel editing</button>
                 </form>
