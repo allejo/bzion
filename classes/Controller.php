@@ -94,6 +94,14 @@ abstract class Controller {
         $this->db->query("DELETE FROM " . $this->table . " WHERE id = ?", "i", array($this->id));
     }
 
+    /**
+     * Get an object's database ID
+     * @return int The ID
+     */
+    public function getId() {
+        return $this->id;
+    }
+
     /*
      * Get a URL that points to an object's page
      * @param string $dir The virtual directory the URL should point to
