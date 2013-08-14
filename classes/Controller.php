@@ -180,6 +180,12 @@ abstract class Controller {
 
         $ids = array();
 
+        // Find the correct value if the user specified a table
+        // For example, if $select is "groups.id", we should convert it to
+        // "id", because that's how MySQLi stores column names in the $results
+        // array.
+        $select = end(explode(".",$select));
+
         foreach ($results as $r) {
             $ids[] = $r[$select];
         }
