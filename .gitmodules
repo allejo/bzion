@@ -1,3 +1,6 @@
 [submodule "includes/strolljs"]
 	path = includes/strolljs
 	url = git@github.com:hakimel/stroll.js.git
+[submodule "includes/niftyjs"]
+	path = includes/niftyjs
+	url = git@github.com:jblashill/Nifty.js.git
