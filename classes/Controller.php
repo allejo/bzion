@@ -139,17 +139,18 @@ abstract class Controller {
      * @param array $params The parameter values that will be passed to Database::query()
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($select='id', $condition='', $types='', $params=array()) {
+    protected static function getIds($select='id', $condition='', $types='', $params=array(), $table = "") {
+        $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
         if (empty($condition)) {
-            $results = $db->query("SELECT " . $select . " FROM " . static::TABLE . " WHERE 1 = ?", "i", array(1));
+            $results = $db->query("SELECT " . $select . " FROM " . $table . " WHERE 1 = ?", "i", array(1));
         } else {
             if (empty($types)) {
                 $condition = "WHERE 1 = ? " . $condition;
                 $types = "i";
                 $params = array(1);
             }
-            $results = $db->query("SELECT $select FROM " . static::TABLE . " $condition", $types, $params);
+            $results = $db->query("SELECT $select FROM " . $table . " $condition", $types, $params);
         }
 
         // If $select specifies multiple columns, just return the $results array
@@ -174,7 +175,8 @@ abstract class Controller {
      * @param string $select The name of the column(s) that the returned array should contain
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params='') {
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $table = "", $additional_params='') {
+        $table = (empty($table)) ? static::TABLE : $table;
         $conditions = array();
         $types = "";
         $equality = "=";
@@ -194,7 +196,7 @@ abstract class Controller {
             $conditionString .= " " . $additional_params;
         }
 
-        return self::getIds($select, $conditionString, $types, $possible_values);
+        return self::getIds($select, $conditionString, $types, $possible_values, $table);
     }
 
     /**
