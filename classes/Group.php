@@ -103,7 +103,12 @@ class Group extends Controller {
      * @return array An array of group IDs
      */
     public static function getGroups($bzid) {
-        return parent::getIdsFrom("player", array($bzid), "i", false, "id", "", "player_groups");
+        $additional_query = "LEFT JOIN groups ON player_groups.group=groups.id
+                             WHERE player_groups.player = ? AND groups.status
+                             NOT IN (?, ?)";
+        $params = array($bzid, "disabled", "deleted");
+
+        return parent::getIds("groups.id", $additional_query, "iss", $params, "player_groups");
     }
 
 }
