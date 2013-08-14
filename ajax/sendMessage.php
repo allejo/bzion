@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     die("You need to be logged in to do this.");
 }
 
-if (!isset($_GET['to']) || !isset($_GET['content'])) {
+if (!isset($_POST['to']) || !isset($_POST['content'])) {
     die("Bad request");
 }
 
