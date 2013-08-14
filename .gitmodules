@@ -1,0 +1,3 @@
+[submodule "includes/strolljs"]
+	path = includes/strolljs
+	url = git@github.com:hakimel/stroll.js.git
