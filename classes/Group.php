@@ -46,8 +46,6 @@ class Group extends Controller {
     }
 
     function getLastActivity() {
-        date_default_timezone_set('America/New_York');
-
         $last_message = $this->last_activity->diff(new DateTime("now"));
 
         if ($last_message->y + $last_message->m + $last_message->d + $last_message->h + $last_message->i == 0) {
