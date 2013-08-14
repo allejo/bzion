@@ -244,3 +244,128 @@ a:hover {
     border: 1px solid #bdbdbd;
     border-top: none;
 }
+
+/**
+ * Messages page
+ */
+.groups {
+    width: 29%;
+    float: left;
+    margin-left: 20px;
+    margin-top: 80px;
+}
+
+.groups_toolbar {
+    background-color: #555555;
+    width: 100%;
+    height: 32px;
+}
+
+.groups_toolbar_option a {
+    font-family: HelveticaNeue;
+    font-size: 13px;
+    color: white;
+    text-transform: uppercase;
+    float: left;
+    left: 6px;
+    padding: 10px;
+    right: 0px;
+    text-align: center;
+    text-decoration: none;
+}
+
+    .groups_toolbar_option a:hover {
+        color: orange;
+    }
+
+.group_list {
+    width: 100%;
+    margin: 0;
+}
+
+    .group_list tr {
+        width: 100%;
+        background-color: white;
+    }
+
+        .group_list tr:hover {
+            background-color: #555555;
+            color: white;
+        }
+
+    .group_list a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+.group_subject {
+    font-weight: bold;
+    font-size: 22px;
+    float: left;
+    padding: 0 0 0 5px;
+}
+
+.group_last_activity {
+    font-size: 14px;
+    float: right;
+    padding: 5px 5px 0 0;
+}
+
+.content_one {
+    font-family: HelveticaNeue-light;
+    font-size: 16px;
+    padding: 0 0 0 5px;
+}
+
+.content_two {
+    font-family: HelveticaNeue-light;
+    font-size: 12px;
+    padding: 0 0 3px 5px;
+}
+
+.group_message {
+    width: 69%;
+    float:right;
+    margin-top: 80px;
+}
+
+.group_message_toolbar {
+    background-color: #555555;
+    height: 32px;
+}
+
+.group_message_option a {
+    font-family: HelveticaNeue;
+    font-size: 13px;
+    color: white;
+    text-transform: uppercase;
+    float: left;
+    left: 6px;
+    padding: 10px;
+    margin-top: 0px;
+    right: 0px;
+    text-align: center;
+    text-decoration: none;
+}
+
+    .group_message_option a:hover {
+        color: orange;
+    }
+
+.group_message_option_disabled {
+    font-family: HelveticaNeue;
+    font-size: 13px;
+    color: silver;
+    text-transform: uppercase;
+    float: left;
+    left: 6px;
+    padding: 10px;
+    margin-top: 0px;
+    right: 0px;
+    text-align: center;
+}
+
+.group_message_content {
+    background-color: white;
+    padding: 10px;
+}
