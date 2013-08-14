@@ -74,23 +74,27 @@ class Group extends Controller {
     }
 
     /**
-     * Create a new message
+     * Create a new message group
      *
-     * @param int $to The id of the group the message is sent to
-     * @param int $from The BZID of the sender
-     * @param string $message The body of the message
-     * @param string $status The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
-     * @return Message An object that represents the sent message
+     * @param string $subject The subject of the group
+     * @param array $members A list of BZIDs representing the group's members
+     * @return Group An object that represents the created group
      */
-    public static function sendMessage($to, $from, $message, $status='sent')
+    public static function createGroup($subject, $members=array())
     {
-        $query = "INSERT INTO messages VALUES(NULL, ?, ?, NOW(), ?, ?)";
-        $params = array($to, $from, $message, $status);
+        $query = "INSERT INTO groups(subject, last_activity, status) VALUES(?, NOW(), ?)";
+        $params = array($subject, "active");
 
         $db = Database::getInstance();
-        $db->query($query, "iiss", $params);
+        $db->query($query, "ss", $params);
+        $groupid = $db->getInsertId();
 
-        return new Message($db->getInsertId());
+        foreach ($members as $bzid) {
+            $query = "INSERT INTO `player_groups` (`player`, `group`) VALUES(?, ?)";
+            $db->query($query, "ii", array($bzid, $groupid));
+        }
+
+        return new Group($groupid);
     }
 
     /**
