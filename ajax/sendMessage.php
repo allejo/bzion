@@ -12,8 +12,8 @@ if (!isset($_POST['to']) || !isset($_POST['content'])) {
     die("Bad request");
 }
 
-$group_to = $_GET['to'];
-$content  = $_GET['content'];
+$group_to = $_POST['to'];
+$content  = $_POST['content'];
 
 // TODO: Check if the user belongs in that group
 Message::sendMessage($group_to, $_SESSION['bzid'], $content);
