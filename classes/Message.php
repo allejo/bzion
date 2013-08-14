@@ -78,13 +78,17 @@ class Message extends Controller
 
     /**
      * Get all the messages in the database that are not disabled or deleted
-     * @param int $bzid The bzid of the player whose messages are being retrieved
+     * @param int $id The id of the group whose messages are being retrieved
      * @return array An array of message IDs
      */
-    public static function getMessages($bzid) {
-        // get all messages where player_from = $bzid or group_to has member $bzid and status != hidden or deleted
-        //
-        // return parent::getIdsFrom("status", array("hidden", "deleted"), "s", true);
+    public static function getMessages($id) {
+        //return parent::getIdsFrom("status", array("hidden", "deleted"), "s", true);
+
+        $db = Database::getInstance();
+
+        $results = $db->query("SELECT * FROM messages WHERE group_to = ? ORDER BY timestamp DESC", "i", array($id));
+
+        return $results;
     }
 
 }
