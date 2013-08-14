@@ -14,6 +14,20 @@ $groups = Group::getGroups($_SESSION['bzid']);
 
 ?>
 
+<div style='display:none' id="composeModal">
+            <h3>Compose a new message</h3>
+            <div class="nifty-inner">
+                <form>
+                    <p>This is a modal window. You can do the following things with it:</p>
+                    <textarea placeholder="Enter your message here..."></textarea>
+                    <br />
+                    <button type="submit">Send message</button>
+                    <button type="reset">Reset</button>
+                    <button class="nifty-close">Cancel editing</button>
+                </form>
+            </div>
+</div>
+
 <div class="groups">
 
 <div class="groups_toolbar">
@@ -54,7 +68,7 @@ if (isset($_GET['id'])) {
         <div class="group_message_toolbar">
             <div class="group_message_option"><a href="#">Compose</a></div>
             <div class="group_message_option"><a href="#">Delete</a></div>
-            <div class="group_message_option_disabled">Respond</div>
+            <div class="group_message_option"><a onclick="showComposeModal('composeModal')" href="#">Respond</a></div>
             <div class="group_message_option_disabled">Forward</div>
         </div>
         <div class="group_message_content">
