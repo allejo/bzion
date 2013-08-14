@@ -4,3 +4,6 @@
 [submodule "includes/niftyjs"]
 	path = includes/niftyjs
 	url = git@github.com:jblashill/Nifty.js.git
+[submodule "includes/ladda"]
+	path = includes/ladda
+	url = git@github.com:hakimel/Ladda.git
