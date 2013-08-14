@@ -10,7 +10,7 @@ $banList = Ban::getBans();
 
 ?>
 
-<div class="bans"> 
+<div class="bans">
 
 <?php
 

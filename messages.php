@@ -60,7 +60,10 @@ if (isset($_GET['id'])) {
         <div class="group_message_content">
             <?php
             echo "<pre>";
-            print_r($messages);
+            foreach($messages as $id) {
+                $msg = new Message($id);
+                var_dump($msg);
+            }
             echo "</pre>";
             ?>
         </div>
