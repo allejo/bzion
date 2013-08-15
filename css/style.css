@@ -125,7 +125,7 @@ a:hover {
     font-size: 1.2em;
 }
 
-.teams_table { 
+.teams_table {
     table-layout: fixed;
     width: 100%;
 }
@@ -368,4 +368,37 @@ a:hover {
 .group_message_content {
     background-color: white;
     padding: 10px;
+}
+
+/**
+ * Compose message modal
+ */
+.nifty-modal {
+    max-width: none;
+    width: auto;
+}
+.nifty-modal h3 {
+    background-color: #555555;
+}
+
+.nifty-modal textarea {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    font-size: 14px;
+    height: 400px;
+    line-height: 1.42857;
+    margin: 6px 0;
+    min-height: 100px;
+    min-width:  530px;
+    padding: 6px 12px;
+    resize: both;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    width: 850px;
 }
