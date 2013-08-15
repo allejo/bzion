@@ -89,6 +89,7 @@ class Server extends Controller
      */
     function forceUpdate() {
         $this->info = bzfquery($this->address);
+        $this->updated = new DateTime("now");
         $this->db->query("UPDATE servers SET info = ?, updated = NOW() WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
 
