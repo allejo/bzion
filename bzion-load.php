@@ -8,10 +8,11 @@ if (!@include("bzion-config.php")) {
 function __autoload($class_name)
 {
     global $classesDir;
+    $part = explode('\\', $class_name);
 
     foreach ($classesDir as $directory)
     {
-        $doc = rtrim(DOC_ROOT, '/') . '/' . $directory . $class_name . '.php';
+        $doc = rtrim(DOC_ROOT, '/') . '/' . $directory . end($part) . '.php';
         if (file_exists($doc))
         {
             require_once($doc);
