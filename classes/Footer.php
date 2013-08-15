@@ -29,7 +29,7 @@ class Footer {
         <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
         <!--<script src="<?php echo $baseUrl ?>/includes/strolljs/js/stroll.min.js"></script>-->
         <script src="<?php echo $baseUrl ?>/includes/niftyjs/js/templates.js"></script>
-        <script src="<?php echo $baseUrl ?>/includes/niftyjs/js/nifty.js"></script>
+        <script src="<?php echo $baseUrl ?>/includes/niftyjs/js/Nifty.js"></script>
         <script src="<?php echo $baseUrl ?>/includes/ladda/js/spin.js"></script>
         <script src="<?php echo $baseUrl ?>/includes/ladda/js/ladda.js"></script>
 		<script>
