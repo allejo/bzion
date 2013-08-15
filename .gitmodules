@@ -1,0 +1,3 @@
+[submodule "includes/Carbon"]
+	path = includes/Carbon
+	url = git@github.com:briannesbitt/Carbon.git
