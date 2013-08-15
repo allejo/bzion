@@ -121,6 +121,9 @@ class Player extends Controller
      * @return int The id of the team
      */
     function getTeam() {
+        if ($this->team == 0) {
+            return "<em>None</em>";
+        }
         $team = new Team($this->team);
         return $team->getName();
     }
