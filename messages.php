@@ -65,24 +65,26 @@ foreach ($groups as $key => $id) {
 if (isset($_GET['id'])) {
     $messages = Message::getMessages($_GET['id']);
     ?>
-    <div class="group_message">
-        <div class="group_message_toolbar">
-            <div class="group_message_option"><a href="#">Compose</a></div>
-            <div class="group_message_option"><a href="#">Delete</a></div>
-            <div class="group_message_option"><a onclick="showComposeModal('composeModal',<?php echo $_GET['id']; ?>)" href="#">Respond</a></div>
-            <div class="group_message_option_disabled">Forward</div>
-        </div>
-        <div class="group_message_content">
-            <?php
-            echo "<pre>";
-            foreach($messages as $id) {
-                $msg = new Message($id);
-                var_dump($msg);
-            }
-            echo "</pre>";
-            ?>
-        </div>
-    </div> <!-- end .group_message -->
+    <div id="group_messages">
+        <div class="group_message">
+            <div class="group_message_toolbar">
+                <div class="group_message_option"><a href="#">Compose</a></div>
+                <div class="group_message_option"><a href="#">Delete</a></div>
+                <div class="group_message_option"><a onclick="showComposeModal('composeModal',<?php echo $_GET['id']; ?>)" href="#">Respond</a></div>
+                <div class="group_message_option_disabled">Forward</div>
+            </div>
+            <div class="group_message_content">
+                <?php
+                echo "<pre>";
+                foreach($messages as $id) {
+                    $msg = new Message($id);
+                    var_dump($msg);
+                }
+                echo "</pre>";
+                ?>
+            </div>
+        </div> <!-- end .group_message -->
+    </div> <!-- end #group_messages -->
 
 <?php
 }

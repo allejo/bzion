@@ -33,13 +33,12 @@ class Footer {
         <script src="<?php echo $baseUrl ?>/includes/ladda/js/spin.js"></script>
         <script src="<?php echo $baseUrl ?>/includes/ladda/js/ladda.js"></script>
 		<script>
-            // Create a new instance of ladda for the specified button
 
-
+            var compose_modal;
             var response_group = 0;
 
 			function showComposeModal(object_id, group_id) {
-                Nifty.modal({
+                compose_modal = Nifty.modal({
                     content: $("#"+object_id).html(),
                     background: "#e74c3c",
                     effect: 1,
@@ -57,6 +56,8 @@ class Footer {
                     data: { to: response_group, content: $("#composeArea").val() }
                     }).done(function( msg ) {
                         l.stop();
+                        compose_modal.hide();
+                        $("#group_messages").load(" #group_messages");
                     });
             };
 		</script>
