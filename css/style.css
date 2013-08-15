@@ -385,8 +385,11 @@ a:hover {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
     border-radius: 4px 4px 4px 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    color: #555555;
+    color: #333333;
     font-size: 14px;
     height: 400px;
     line-height: 1.42857;
@@ -396,9 +399,6 @@ a:hover {
     padding: 6px 12px;
     resize: both;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-    svertical-align: middle;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    vertical-align: middle;
     width: 850px;
 }
