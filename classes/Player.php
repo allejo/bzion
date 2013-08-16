@@ -81,6 +81,8 @@ class Player extends Controller
     function __construct($bzid) {
 
         parent::__construct($bzid, "bzid");
+        if (!$this->valid) return;
+
         $player = $this->result;
 
         $this->bzid = $bzid;
@@ -118,14 +120,10 @@ class Player extends Controller
 
     /**
      * Get the player's team
-     * @return int The id of the team
+     * @return Team The object representing the team
      */
     function getTeam() {
-        if ($this->team == 0) {
-            return "<em>None</em>";
-        }
-        $team = new Team($this->team);
-        return $team->getName();
+        return new Team($this->team);
     }
 
     /**
