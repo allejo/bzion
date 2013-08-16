@@ -21,6 +21,13 @@ abstract class Controller {
     protected $table;
 
     /**
+     * False if there isn't any row in the database representing
+     * the requested object ID
+     * @var boolean
+     */
+    protected $valid;
+
+    /**
      * The result of the database query to locate the object with a specific ID
      * @var array
      */
@@ -42,16 +49,21 @@ abstract class Controller {
     /**
      * Construct a new Controller
      *
-     * This method takes the table and ID of the object to look for, and
-     * creates a $this->db object which can be used to communicate with the
-     * database, as well as a $this->result array which is the single result
-     * of the $this->db->query function
+     * This method takes the ID of the object to look for and creates a
+     * $this->db object which can be used to communicate with the database,
+     * as well as a $this->result array which is the single result of the
+     * $this->db->query function. If the $id is specified as 0, then an
+     * invalid object will be returned
      *
      * @param int $id The ID of the object to look for
-     * @param int $table The name of the DB table used for queries
      * @param string $column The column to use to identify separate database entries
      */
     function __construct($id, $column = "id") {
+        if ($id == 0) {
+            $this->valid  = false;
+            $this->result = array();
+            return;
+        }
 
         $this->db = Database::getInstance();
 
@@ -60,7 +72,14 @@ abstract class Controller {
         $this->table = static::TABLE;
 
         $results = $this->db->query("SELECT * FROM " . $this->table . " WHERE " . $column . " = ?", "i", array($id));
-        $this->result = $results[0];
+
+        if (count($results) < 1) {
+            $this->valid  = false;
+            $this->result = array();
+        } else {
+            $this->valid  = true;
+            $this->result = $results[0];
+        }
     }
 
     /**
