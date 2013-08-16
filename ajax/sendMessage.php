@@ -13,12 +13,12 @@ try {
         throw new Exception("You need to be logged in to do this.");
     }
 
-    if (!isset($_GET['to']) || !isset($_GET['content'])) {
+    if (!isset($_POST['to']) || !isset($_POST['content'])) {
         throw new Exception("Bad request");
     }
 
-    $group_to = new Group($_GET['to']);
-    $content  = $_GET['content'];
+    $group_to = new Group($_POST['to']);
+    $content  = $_POST['content'];
     $bzid     = $_SESSION['bzid'];
 
     if (!$group_to->isValid()) {
