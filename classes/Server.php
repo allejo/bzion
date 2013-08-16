@@ -53,6 +53,8 @@ class Server extends Controller
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $server = $this->result;
 
         $this->name = $server['name'];

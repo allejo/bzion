@@ -50,6 +50,8 @@ class Ban extends Controller {
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $ban = $this->result;
 
         $this->player = $ban['player'];

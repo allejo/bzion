@@ -51,6 +51,8 @@ class Visit extends Controller
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $visit = $this->result;
 
         $this->bzid = $visit['bzid'];

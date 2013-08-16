@@ -50,6 +50,8 @@ class News extends Controller {
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $news = $this->result;
 
         $this->subject = $news['subject'];

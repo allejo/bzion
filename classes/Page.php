@@ -50,6 +50,8 @@ class Page extends Controller {
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $page = $this->result;
 
         $this->name = $page['name'];

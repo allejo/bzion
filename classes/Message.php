@@ -47,6 +47,8 @@ class Message extends Controller
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $message = $this->result;
 
         $this->to = $message['group_to'];

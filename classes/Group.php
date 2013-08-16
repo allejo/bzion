@@ -34,6 +34,8 @@ class Group extends Controller {
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $group = $this->result;
 
         $this->subject = $group['subject'];
