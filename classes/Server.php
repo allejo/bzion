@@ -25,7 +25,7 @@ class Server extends Controller
 
     /**
      * The server's bzfquery information
-     * @var mixed
+     * @var array
      */
     private $info;
 
