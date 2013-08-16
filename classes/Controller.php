@@ -121,6 +121,14 @@ abstract class Controller {
         return $this->id;
     }
 
+    /**
+     * See if an object is valid
+     * @return bool
+     */
+    public function isValid() {
+        return $this->valid;
+    }
+
     /*
      * Get a URL that points to an object's page
      * @param string $dir The virtual directory the URL should point to
@@ -168,6 +176,9 @@ abstract class Controller {
         $bz = ($bzid) ? "bz" : "";
         $db = Database::getInstance();
         $results = $db->query("SELECT " . $bz . "id FROM " . static::TABLE . " WHERE " . $column . "=?", "s", array($value));
+
+        if(!isset($results[0]))
+            return 0;
         return $results[0][$bz.'id'];
     }
 
@@ -243,6 +254,13 @@ abstract class Controller {
         }
 
         return self::getIds($select, $conditionString, $types, $possible_values, $table);
+    }
+
+    /**
+     * Generate an invalid object
+     */
+    public static function invalid() {
+        return new static(0);
     }
 
     /**
