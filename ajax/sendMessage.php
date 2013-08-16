@@ -8,12 +8,21 @@ if (!isset($_SESSION['username'])) {
     die("You need to be logged in to do this.");
 }
 
-if (!isset($_POST['to']) || !isset($_POST['content'])) {
+if (!isset($_GET['to']) || !isset($_GET['content'])) {
     die("Bad request");
 }
 
-$group_to = $_POST['to'];
-$content  = $_POST['content'];
+$group_to = new Group($_GET['to']);
+$content  = $_GET['content'];
+$bzid     = $_SESSION['bzid'];
+
+if (!$group_to->isValid()) {
+    die("The group you specified does not exist");
+}
+
+if (!$group_to->isMember($bzid)) {
+    die("You aren't a member of that group");
+}
 
 // TODO: Check if the user belongs in that group
-Message::sendMessage($group_to, $_SESSION['bzid'], $content);
+Message::sendMessage($group_to->getId(), $_SESSION['bzid'], $content);
