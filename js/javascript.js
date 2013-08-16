@@ -17,7 +17,7 @@ function sendResponse() {
         type: "POST",
         dataType: "json",
         url: baseURL + "/ajax/sendMessage.php",
-        data: { to: response_group, content: $("#composeArea").val() }
+        data: { group_to: response_group, content: $("#composeArea").val() }
         }).done(function( msg ) {
             l.stop();
             compose_modal.hide();
