@@ -36,4 +36,8 @@ try {
     $message = $e->getMessage();
 }
 
-echo $message;
+$response = array();
+$response['success'] = !$error;
+$response['message'] = $message;
+
+echo json_encode($response);
