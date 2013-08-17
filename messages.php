@@ -51,7 +51,7 @@ foreach ($groups as $key => $id) {
     echo "<div style='clear:both'>";
     echo "<div class='content_one'>Some Content</div>";
     echo "<div class='content_two'>Some More Content</div>";
-    echo "</a></td></tr>";
+    echo "</div></a></td></tr>\n";
 }
 
 ?>
