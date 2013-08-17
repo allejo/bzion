@@ -4,13 +4,13 @@ class Database
 {
     /**
      * The database object used inside this class
-     * @var mixed
+     * @var MySQLi
      */
     private $dbc;
 
     /**
      * The id of the last row entered
-     * @var mixed
+     * @var int
      */
     private $last_id;
 

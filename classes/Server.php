@@ -25,7 +25,7 @@ class Server extends Controller
 
     /**
      * The server's bzfquery information
-     * @var mixed
+     * @var array
      */
     private $info;
 
@@ -53,6 +53,8 @@ class Server extends Controller
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $server = $this->result;
 
         $this->name = $server['name'];

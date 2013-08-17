@@ -36,6 +36,8 @@ class Group extends Controller {
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $group = $this->result;
 
         $this->subject = $group['subject'];
@@ -95,6 +97,18 @@ class Group extends Controller {
         $params = array($bzid, "disabled", "deleted");
 
         return parent::getIds("groups.id", $additional_query, "iss", $params, "player_groups");
+    }
+
+    /**
+     * Checks if a player belongs in the group
+     * @param int $bzid The ID of the player
+     * @return bool True if the player belongs in the group, false if they don't
+     */
+    public function isMember($bzid) {
+        $result = $this->db->query("SELECT 1 FROM `player_groups` WHERE `group` = ?
+                                    AND `player` = ?", "ii", array($this->id, $bzid));
+
+        return count($result) > 0;
     }
 
 }

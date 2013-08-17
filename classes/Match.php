@@ -88,6 +88,8 @@ class Match extends Controller
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $match = $this->result;
 
         $this->team_a = $match['team_a'];
