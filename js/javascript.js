@@ -12,6 +12,20 @@ function showComposeModal(object_id, group_id) {
 }
 */
 
+$(".group_link").click(function(event) {
+    // Don't let the link change the web page,
+    // AJAX will handle the click
+    event.preventDefault();
+
+    url = $(this).attr("href");
+    id  = $(this).attr("data-id");
+
+    document.location.hash = id;
+    $("#group_messages").load(url + " #group_messages");
+
+
+});
+
 function sendResponse() {
     var l = Ladda.create( document.querySelector( '#composeButton' ) );
     l.start();

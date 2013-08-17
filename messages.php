@@ -45,7 +45,7 @@ foreach ($groups as $key => $id) {
     $group = new Group($id);
 
     date_default_timezone_set('America/New_York');
-    echo "<tr><td><a href='" . $group->getURL() . "'>";
+    echo "<tr><td><a class='group_link' data-id='" . $group->getId() . "' href='" . $group->getURL() . "'>";
     echo "<div class='group_subject'>" . $group->getSubject() . "</div>";
     echo "<div class='group_last_activity'>" . $group->getLastActivity() . "</div>";
     echo "<div style='clear:both'>";
@@ -60,35 +60,40 @@ foreach ($groups as $key => $id) {
 
 </div> <!-- end .groups -->
 
+<div id="group_messages">
 <?php
 
 if (isset($_GET['id'])) {
     $messages = Message::getMessages($_GET['id']);
     ?>
-    <div id="group_messages">
-        <div class="group_message">
-            <div class="group_message_toolbar">
-                <div class="group_message_option"><a href="#">Compose</a></div>
-                <div class="group_message_option"><a href="#">Delete</a></div>
-                <div class="group_message_option"><a onclick="showComposeModal('composeModal',<?php echo $_GET['id']; ?>)" href="#">Respond</a></div>
-                <div class="group_message_option_disabled">Forward</div>
-            </div>
-            <div class="group_message_content">
-                <?php
-                echo "<pre>";
-                foreach($messages as $id) {
-                    $msg = new Message($id);
-                    var_dump($msg);
-                }
-                echo "</pre>";
-                ?>
-            </div>
-        </div> <!-- end .group_message -->
-    </div> <!-- end #group_messages -->
+
+    <div class="group_message">
+        <div class="group_message_toolbar">
+            <div class="group_message_option"><a href="#">Compose</a></div>
+            <div class="group_message_option"><a href="#">Delete</a></div>
+            <div class="group_message_option"><a onclick="showComposeModal('composeModal',<?php echo $_GET['id']; ?>)" href="#">Respond</a></div>
+            <div class="group_message_option_disabled">Forward</div>
+        </div>
+        <div class="group_message_content">
+            <?php
+            echo "<pre>";
+            foreach($messages as $id) {
+                $msg = new Message($id);
+                var_dump($msg);
+            }
+            echo "</pre>";
+            ?>
+        </div>
+    </div> <!-- end .group_message -->
+
 
 <?php
 }
+?>
 
+</div> <!-- end #group_messages -->
+
+<?php
 $footer = new Footer();
 $footer->draw();
 
