@@ -41,7 +41,6 @@ class Header {
         <title><?php echo $title; ?></title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
         <!--<link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/strolljs/css/stroll.min.css">-->
-        <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/niftyjs/css/nifty.css" />
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/ladda/dist/ladda.min.css" />
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
     </head>
