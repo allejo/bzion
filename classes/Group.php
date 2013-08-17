@@ -1,7 +1,5 @@
 <?php
 
-use Carbon\Carbon;
-
 class Group extends Controller {
 
     /**
@@ -12,7 +10,7 @@ class Group extends Controller {
 
     /**
      * The time of the last message to the group
-     * @var Carbon
+     * @var Date
      */
     private $last_activity;
 
@@ -41,7 +39,7 @@ class Group extends Controller {
         $group = $this->result;
 
         $this->subject = $group['subject'];
-        $this->last_activity = Carbon::parse($group['last_activity']);
+        $this->last_activity = Date::parse($group['last_activity']);
         $this->status = $group['status'];
     }
 
