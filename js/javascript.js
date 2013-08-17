@@ -26,6 +26,9 @@ $(".group_link").click(function(event) {
 
 });
 
+/**
+ * Perform an AJAX request to send a response to a message group
+ */
 function sendResponse() {
     var l = Ladda.create( document.querySelector( '#composeButton' ) );
     l.start();
@@ -45,7 +48,17 @@ function sendResponse() {
             $("#group_messages").load(" #group_messages");
         });
 };
+
+
 notify("Test");
+
+/**
+ * Show a notification
+ * @todo Convert this to a class
+ * @todo Style the notification
+ * @param message string The message to display
+ * @param type string Can be "success" or "error"
+ */
 function notify(message, type) {
 
     // Default to "success" if the caller hasn't specified a type
