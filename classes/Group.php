@@ -10,7 +10,7 @@ class Group extends Controller {
 
     /**
      * The time of the last message to the group
-     * @var Date
+     * @var TimeDate
      */
     private $last_activity;
 
@@ -39,7 +39,7 @@ class Group extends Controller {
         $group = $this->result;
 
         $this->subject = $group['subject'];
-        $this->last_activity = Date::parse($group['last_activity']);
+        $this->last_activity = TimeDate::parse($group['last_activity']);
         $this->status = $group['status'];
     }
 
