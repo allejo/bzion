@@ -74,7 +74,7 @@ class Header {
         <?php
     } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&url=";
-        $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
+        $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&amp;username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>" class="navbuttonicon right"><i class="icon-signin"></i></a>
     <?php } ?>
