@@ -32,11 +32,11 @@ try {
         $group_to = new Group($_POST['group_to']);
 
         if (!$group_to->isValid()) {
-            throw new Exception("The group you specified does not exist.");
+            throw new Exception("The message group you specified does not exist.");
         }
 
         if (!$group_to->isMember($bzid)) {
-            throw new Exception("You aren't a member of that group.");
+            throw new Exception("You aren't a member of that message group.");
         }
 
         Message::sendMessage($group_to->getId(), $_SESSION['bzid'], $content);
