@@ -258,6 +258,15 @@ abstract class Controller {
 
     /**
      * Generate an invalid object
+     *
+     * <code>
+     *     <?php
+     *     $object = Team::invalid();
+     *
+     *     get_class($object); // Team
+     *     $object->isValid(); // false
+     * </code>
+     * @return Controller
      */
     public static function invalid() {
         return new static(0);
