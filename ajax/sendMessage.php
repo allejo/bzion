@@ -23,6 +23,10 @@ try {
     }
     $content = $_POST['content'];
 
+    if (trim($content) == "") {
+        throw new Exception("You can't send an empty message!");
+    }
+
     if (isset($_POST['group_to'])) {
         // Send a message to a group
         $group_to = new Group($_POST['group_to']);
