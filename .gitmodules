@@ -4,3 +4,6 @@
 [submodule "includes/ladda"]
 	path = includes/ladda
 	url = git@github.com:hakimel/Ladda.git
+[submodule "includes/Carbon"]
+	path = includes/Carbon
+	url = git@github.com:briannesbitt/Carbon.git

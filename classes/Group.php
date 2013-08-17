@@ -9,8 +9,8 @@ class Group extends Controller {
     private $subject;
 
     /**
-     * The timestamp of the last message to the group
-     * @var string
+     * The time of the last message to the group
+     * @var TimeDate
      */
     private $last_activity;
 
@@ -39,7 +39,7 @@ class Group extends Controller {
         $group = $this->result;
 
         $this->subject = $group['subject'];
-        $this->last_activity = new DateTime($group['last_activity']);
+        $this->last_activity = TimeDate::parse($group['last_activity']);
         $this->status = $group['status'];
     }
 
@@ -48,23 +48,7 @@ class Group extends Controller {
     }
 
     function getLastActivity() {
-        $last_message = $this->last_activity->diff(new DateTime("now"));
-
-        if ($last_message->y + $last_message->m + $last_message->d + $last_message->h + $last_message->i == 0) {
-            if ($last_message->s < 10) {
-                return "now";
-            } else {
-                return $last_message->format('%s sec ago');
-            }
-        } elseif ($last_message->y + $last_message->m + $last_message->d + $last_message->h == 0) {
-            return $last_message->format('%i min ago');
-        } elseif ($last_message->y + $last_message->m + $last_message->d == 0) {
-            return $last_message->format('%h hour(s) ago');
-        } else {
-            return $last_message->format('%d day(s) ago');
-        }
-
-        //return $this->last_activity->format(DATE_FORMAT);
+        return $this->last_activity->diffForHumans();
     }
 
     /**
