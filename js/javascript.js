@@ -50,8 +50,6 @@ function sendResponse() {
 };
 
 
-notify("Test");
-
 /**
  * Show a notification
  * @todo Convert this to a class
@@ -66,10 +64,10 @@ function notify(message, type) {
 
     not = $(".notification");
 
-    $(".notification").css("top", "-" + $(".notification").outerHeight( true ) + "px");
-    $(".notification").attr("class", "notification notification-" + type);
+    not.css("top", "-" + not.outerHeight( true ) + "px");
+    not.attr("class", "notification notification-" + type);
     // Position element in the center
-    $(".notification").css("left", Math.max(0, (($(window).width() - $(".notification").outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    not.css("left", Math.max(0, (($(window).width() - not.outerWidth()) / 2) + $(window).scrollLeft()) + "px");
 
     // Determine which icon should be used
     switch(type) {
@@ -87,7 +85,7 @@ function notify(message, type) {
 
     $(".notification span").html(message);
 
-    //alert("-" + $(".notification").outerHeight( true ));
+    //alert("-" + not.outerHeight( true ));
     $( ".notification" ).animate({
         top: "0"
         }, 500, function() {
