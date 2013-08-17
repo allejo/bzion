@@ -93,6 +93,40 @@ a:hover {
     }
 
 /**
+ * Notifications
+ */
+.notification {
+    border: 1px solid #222;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 0 3px #333;
+    color: #fff;
+    display: none;
+    text-shadow: 1px 1px 5px #333;
+    left: 25em;
+    min-width: 16em;
+    position: fixed;
+    padding: 0.4em 1em;
+    text-align: center;
+    top: -1px;
+    z-index: 10;
+}
+
+.notification-success {
+    background-color: #117711;
+    display: block;
+}
+
+.notification-error {
+    background-color: #991111;
+    display: block;
+}
+
+.notification-hidden {
+    display: none;
+}
+
+/**
  * Content
  */
 .content {
