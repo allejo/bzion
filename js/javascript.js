@@ -21,7 +21,7 @@ $(".group_link").click(function(event) {
     id  = $(this).attr("data-id");
 
     document.location.hash = id;
-    $("#group_messages").load(url + " #group_messages");
+    $("#groupMessages").load(url + " #groupMessages > *");
 
 
 });
@@ -39,7 +39,7 @@ function sendResponse() {
         data: { group_to: response_group, content: $("#composeArea").val() }
         }).done(function( msg ) {
             l.stop();
-            compose_modal.hide(function() { alert(1) } );
+            //compose_modal.hide(function() { alert(1) } );
 
             // Find the notification type
             type = msg.success ? "success" : "error";
