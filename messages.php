@@ -53,9 +53,10 @@ foreach ($groups as $key => $id) {
 </div> <!-- end .groups -->
 
 <div id="groupMessages" class="group_messages">
-    <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
+
     <div class="compose_panel">
-        <form>
+        <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
+        <form class="compose_form">
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />
             <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out">

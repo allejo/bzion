@@ -439,8 +439,11 @@ a:hover {
 }
 
 .compose_panel {
+    margin-bottom: 1em;
+}
+
+.compose_form {
     background-color: #fff;
     margin-top: 2px;
-    margin-bottom: 1em;
     padding: 1em;
 }
