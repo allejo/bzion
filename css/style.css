@@ -12,6 +12,10 @@ body {
     font-size: 1em;
 }
 
+pre {
+    white-space: pre-wrap;
+}
+
 h4 {
     margin: 0;
     padding: 0;
@@ -283,27 +287,25 @@ a:hover {
  * Messages page
  */
 .groups {
-    width: 29%;
+    width: 30%;
     float: left;
-    margin-left: 20px;
-    margin-top: 80px;
+    margin-top: 2em;
+
 }
 
 .groups_toolbar {
+    font-weight: normal;
     background-color: #555555;
-    width: 100%;
-    height: 32px;
+    color: #fff;
 }
 
 .groups_toolbar_option a {
     font-family: HelveticaNeue;
-    font-size: 13px;
+    font-size: .8em;
     color: white;
     text-transform: uppercase;
     float: left;
-    left: 6px;
     padding: 10px;
-    right: 0px;
     text-align: center;
     text-decoration: none;
 }
@@ -314,11 +316,9 @@ a:hover {
 
 .group_list {
     width: 100%;
-    margin: 0;
 }
 
     .group_list tr {
-        width: 100%;
         background-color: white;
     }
 
@@ -334,50 +334,51 @@ a:hover {
 
 .group_subject {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 1.4em;
     float: left;
     padding: 0 0 0 5px;
 }
 
 .group_last_activity {
-    font-size: 14px;
+    font-size: .8em;
     float: right;
     padding: 5px 5px 0 0;
 }
 
 .content_one {
     font-family: HelveticaNeue-light;
-    font-size: 16px;
+    font-size: 1em;
     padding: 0 0 0 5px;
 }
 
 .content_two {
     font-family: HelveticaNeue-light;
-    font-size: 12px;
+    font-size: .8em;
     padding: 0 0 3px 5px;
 }
 
+.group_messages {
+    width: 70%;
+    float: left;
+    margin-top: 2em;
+}
+
 .group_message {
-    width: 69%;
-    float:right;
-    margin-top: 80px;
+    width: 100%;
 }
 
 .group_message_toolbar {
+    font-family: HelveticaNeue;
     background-color: #555555;
-    height: 32px;
 }
 
 .group_message_option a {
-    font-family: HelveticaNeue;
-    font-size: 13px;
-    color: white;
+    font-weight: normal;
+    font-size: .8em;
+    color: #fff;
     text-transform: uppercase;
     float: left;
-    left: 6px;
     padding: 10px;
-    margin-top: 0px;
-    right: 0px;
     text-align: center;
     text-decoration: none;
 }
@@ -387,20 +388,18 @@ a:hover {
     }
 
 .group_message_option_disabled {
-    font-family: HelveticaNeue;
-    font-size: 13px;
+    font-weight: normal;
+    font-size: .8em;
     color: silver;
     text-transform: uppercase;
     float: left;
-    left: 6px;
     padding: 10px;
     margin-top: 0px;
-    right: 0px;
     text-align: center;
 }
 
 .group_message_content {
-    background-color: white;
+    background-color: #fff;
     padding: 10px;
 }
 
