@@ -17,12 +17,6 @@ $groups = Group::getGroups($_SESSION['bzid']);
 
 <div class="groups">
 
-<!-- <div class="groups_toolbar">
-    <div class="groups_toolbar_option"><a href="#">Active</a></div>
-    <div class="groups_toolbar_option"><a href="#">Inactive</a></div>
-    <div class="groups_toolbar_option"><a href="#">Other</a></div>
-</div>
- -->
 <table class="group_list">
 
     <tr><th class="groups_toolbar">
