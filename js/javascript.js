@@ -21,8 +21,9 @@ $(".group_link").click(function(event) {
     id  = $(this).attr("data-id");
 
     document.location.hash = id;
-    $("#groupMessages").load(url + " #groupMessages > *");
+    response_group = id;
 
+    $("#groupMessages").load(url + " #groupMessages > *");
 
 });
 
@@ -45,7 +46,7 @@ function sendResponse() {
             type = msg.success ? "success" : "error";
 
             notify(msg.message, type);
-            $("#group_messages").load(" #group_messages");
+            $("#groupMessages").load(url + " #groupMessages > *");
         });
 };
 

@@ -14,20 +14,6 @@ $groups = Group::getGroups($_SESSION['bzid']);
 
 ?>
 
-<script type="text/html" id="composeModal">
-            <h3>Compose a new message</h3>
-            <div class="nifty-inner">
-                <form>
-                    <p>This is a modal window. You can do the following things with it:</p>
-                    <textarea id="composeArea" placeholder="Enter your message here..."></textarea>
-                    <br />
-                    <!--<button type="submit">Send Message</button>-->
-                    <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out"><span class="ladda-label">Submit</span></button>
-                    <button type="reset">Reset</button>
-                    <button class="nifty-close">Cancel editing</button>
-                </form>
-            </div>
-</script>
 
 <div class="groups">
 
@@ -66,8 +52,19 @@ foreach ($groups as $key => $id) {
 
 </div> <!-- end .groups -->
 
-<div class="group_messages">
-
+<div id="groupMessages" class="group_messages">
+    <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
+    <div class="compose_panel">
+        <form>
+            <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
+            <br />
+            <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out">
+                <span class="ladda-label">Submit</span>
+            </button>
+            <button type="reset">Reset</button>
+            <button>Cancel editing</button>
+        </form>
+    </div>
 <?php
 
 if (isset($_GET['id'])) {
@@ -75,14 +72,14 @@ if (isset($_GET['id'])) {
     ?>
 
     <table class="group_message">
-        
+
         <tr><th class="group_message_toolbar">
             <div class="group_message_option"><a href="#">Compose</a></div>
             <div class="group_message_option"><a href="#">Delete</a></div>
             <div class="group_message_option"><a onclick="showComposeModal('composeModal',<?php echo $_GET['id']; ?>)" href="#">Respond</a></div>
             <div class="group_message_option_disabled">Forward</div>
         </th></tr>
-        
+
 
         <div style="clear: both"></div>
 

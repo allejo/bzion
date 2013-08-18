@@ -360,7 +360,7 @@ a:hover {
 .group_messages {
     width: 70%;
     float: left;
-    margin-top: 2em;
+    margin-top: 2.1em;
 }
 
 .group_message {
@@ -387,6 +387,17 @@ a:hover {
         color: orange;
     }
 
+.group_toolbar_text {
+    font-weight: normal;
+    font-size: .8em;
+    color: #fff;
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
 .group_message_option_disabled {
     font-weight: normal;
     font-size: .8em;
@@ -404,19 +415,11 @@ a:hover {
 }
 
 /**
- * Compose message modal
+ * Compose message panel
  */
-.nifty-modal {
-    max-width: none;
-    width: auto;
-}
-.nifty-modal h3 {
-    background-color: #555555;
-}
-
-.nifty-modal textarea {
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
+.compose_area {
+    background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 4px 4px 4px 4px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -424,14 +427,20 @@ a:hover {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     color: #333333;
     font-size: 14px;
-    height: 400px;
+    height: 100px;
     line-height: 1.42857;
     margin: 6px 0;
-    min-height: 100px;
-    min-width:  530px;
+    min-height: 70px;
     padding: 6px 12px;
-    resize: both;
+    resize: vertical;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     vertical-align: middle;
-    width: 850px;
+    width: 100%;
+}
+
+.compose_panel {
+    background-color: #fff;
+    margin-top: 2px;
+    margin-bottom: 1em;
+    padding: 1em;
 }
