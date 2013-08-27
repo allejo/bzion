@@ -1,16 +1,6 @@
 var compose_modal;
 var response_group = 0;
 
-/**
-function showComposeModal(object_id, group_id) {
-    compose_modal = Nifty.modal({
-        content: $("#"+object_id).html(),
-        background: "#e74c3c",
-        effect: 1,
-    });
-    response_group = group_id;
-}
-*/
 
 $(".group_link").click(function(event) {
     // Don't let the link change the web page,
@@ -31,16 +21,21 @@ $(".group_link").click(function(event) {
  * Perform an AJAX request to send a response to a message group
  */
 function sendResponse() {
-    var l = Ladda.create( document.querySelector( '#composeButton' ) );
-    l.start();
+
+    // If the Ladda class exists, use it to style the button
+    if (typeof(Ladda) != "undefined") {
+        var l = Ladda.create( document.querySelector( '#composeButton' ) );
+        l.start();
+    }
+
     $.ajax({
         type: "POST",
         dataType: "json",
         url: baseURL + "/ajax/sendMessage.php",
         data: { group_to: response_group, content: $("#composeArea").val() }
         }).done(function( msg ) {
-            l.stop();
-            //compose_modal.hide(function() { alert(1) } );
+            if (l)
+                l.stop();
 
             // Find the notification type
             type = msg.success ? "success" : "error";
@@ -86,11 +81,9 @@ function notify(message, type) {
 
     $(".notification span").html(message);
 
-    //alert("-" + not.outerHeight( true ));
-    $( ".notification" ).animate({
+    not.animate({
         top: "0"
         }, 500, function() {
-            //notify(message + "," + message);
     });
 }
 
