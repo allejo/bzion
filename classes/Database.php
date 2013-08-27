@@ -130,7 +130,8 @@ class Database
         {
             if (!is_array($params)) {
                 $params = array($params);
-            } else if (count($params) == count($params, 1)) {
+            }
+            if (count($params) == count($params, 1)) {
                 $params = array($params);
                 $multiQuery = false;
             }
