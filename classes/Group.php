@@ -60,6 +60,14 @@ class Group extends Controller {
     }
 
     /**
+     * Get a list containing the BZIDs of each member of the group
+     * @return array An array of player BZIDs
+     */
+    function getMembers() {
+        return parent::getIds("player", "WHERE `group` = ?", "i", $this->id, "player_groups");
+    }
+
+    /**
      * Create a new message group
      *
      * @param string $subject The subject of the group
