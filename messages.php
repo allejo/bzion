@@ -12,6 +12,13 @@ $header->draw("Messages");
 
 $groups = Group::getGroups($_SESSION['bzid']);
 
+if (isset($_GET['id'])) {
+    $messages = Message::getMessages($_GET['id']);
+    $currentGroup = new Group($_GET['id']);
+} else {
+    $messages = false;
+    $currentGroup = false;
+}
 ?>
 
 
@@ -51,6 +58,31 @@ foreach ($groups as $key => $id) {
     <div class="compose_panel">
         <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
         <form class="compose_form">
+            <?php
+                $recipientLabel = "Recipients";
+                if($messages) {
+                    $recipients = $currentGroup->getMembers();
+                    if (count($recipients) == 1)
+                        $recipientLabel = "Recipient";
+                }
+
+                echo "$recipientLabel: ";
+
+                if ($messages && $recipients) {
+                    // Move the array iterator to the end of the array, so we
+                    // can find the last element later
+                    end($recipients);
+                    foreach($recipients as $key => $bzid) {
+                        $recipient = new Player($bzid);
+                        echo $recipient->getUsername();
+
+                        // Show a comma if this isn't the last element
+                        if($key !== key($recipients)) {
+                            echo ", ";
+                        }
+                    }
+                }
+            ?>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />
             <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out">
@@ -62,8 +94,7 @@ foreach ($groups as $key => $id) {
     </div>
 <?php
 
-if (isset($_GET['id'])) {
-    $messages = Message::getMessages($_GET['id']);
+if ($messages) {
     ?>
 
     <table class="group_message">
