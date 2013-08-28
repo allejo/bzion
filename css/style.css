@@ -16,6 +16,10 @@ pre {
     white-space: pre-wrap;
 }
 
+button {
+    margin: 5px;
+}
+
 h4 {
     margin: 0;
     padding: 0;
@@ -369,6 +373,8 @@ a:hover {
 
 .group_message {
     width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
 }
 
 .group_message_toolbar {
@@ -414,7 +420,6 @@ a:hover {
 }
 
 .group_message_content {
-    background-color: #fff;
     padding: 10px;
 }
 
@@ -446,6 +451,24 @@ a:hover {
     width: 100%;
 }
 
+.input_compose_area {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    font-size: 14px;
+    line-height: 1.42857;
+    margin: 6px 0;
+    min-height: 31px;
+    padding: 6px 12px;
+    resize: vertical;
+    width: 92%;
+}
+
 .compose_panel {
     margin-bottom: 1em;
 }
@@ -454,6 +477,10 @@ a:hover {
     background-color: #fff;
     margin-top: 2px;
     padding: 1em;
+}
+
+.alt_compose_form {
+    margin-top: 2px;
 }
 
 .input_group label {

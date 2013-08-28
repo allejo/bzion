@@ -37,7 +37,6 @@ if (isset($_GET['id'])) {
 foreach ($groups as $key => $id) {
     $group = new Group($id);
 
-    //date_default_timezone_set('America/New_York');
     echo "<tr><td><a class='group_link' data-id='" . $group->getId() . "' href='" . $group->getURL() . "'>";
     echo "<div class='group_subject'>" . $group->getSubject() . "</div>";
     echo "<div class='group_last_activity'>" . $group->getLastActivity() . "</div>";
@@ -54,13 +53,15 @@ foreach ($groups as $key => $id) {
 </div> <!-- end .groups -->
 
 <div id="groupMessages" class="group_messages">
-
+<?php
+if (!$messages) {
+?>
     <div class="compose_panel">
         <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
         <form class="compose_form">
             <div class="input_group">
                 <label for="compose_subject">Subject:</label>
-                <input  id="compose_subject" class="input_group_main" name="subject" type="text" placeholder="Enter message subject"
+                <input id="compose_subject" class="input_group_main" name="subject" type="text" placeholder="Enter message subject"
                 <?php
                     if ($messages) {
                         echo 'disabled value="', $currentGroup->getSubject(), '"';
@@ -109,24 +110,23 @@ foreach ($groups as $key => $id) {
             </button>
             <button type="reset">Reset</button>
             <button>Cancel editing</button>
-        </form>
-    </div>
+        </form> <!-- end .compose_form -->
+    </div> <!-- end .compose_panel -->
 <?php
-
-if ($messages) {
-    ?>
-
+} else {
+?>
     <table class="group_message">
 
-        <tr><th class="group_message_toolbar">
+        <!-- <tr><th class="group_message_toolbar">
             <div class="group_message_option"><a href="#">Compose</a></div>
             <div class="group_message_option"><a href="#">Delete</a></div>
             <div class="group_message_option"><a href="#">Respond</a></div>
             <div class="group_message_option_disabled">Forward</div>
-        </th></tr>
+        </th></tr> -->
 
 
         <div style="clear: both"></div>
+        
 
         <?php
         foreach($messages as $id) {
@@ -141,6 +141,12 @@ if ($messages) {
 
     </table> <!-- end .group_message -->
 
+    <form class="alt_compose_form">
+        <input type="text" id="composeArea" class="input_compose_area" placeholder="Enter your message here..." />
+        <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out" data-size="xs">
+            <span class="ladda-label">Submit</span>
+        </button>
+    </form> <!-- end .alt_compose_form -->
 
 <?php
 }
