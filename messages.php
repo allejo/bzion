@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
 foreach ($groups as $key => $id) {
     $group = new Group($id);
 
-    date_default_timezone_set('America/New_York');
+    //date_default_timezone_set('America/New_York');
     echo "<tr><td><a class='group_link' data-id='" . $group->getId() . "' href='" . $group->getURL() . "'>";
     echo "<div class='group_subject'>" . $group->getSubject() . "</div>";
     echo "<div class='group_last_activity'>" . $group->getLastActivity() . "</div>";
@@ -132,7 +132,9 @@ if ($messages) {
         foreach($messages as $id) {
             echo "<tr><td class='group_message_content'>";
             $msg = new Message($id);
+            echo "<div>";
             echo $msg->getContent();
+            echo "</div><span class='group_message_info'>Sent by {$msg->getAuthor()->getUsername()} {$msg->getCreationDate()}</span>";
             echo "</td></tr>";
         }
         ?>

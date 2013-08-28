@@ -418,6 +418,10 @@ a:hover {
     padding: 10px;
 }
 
+.group_message_info {
+    font-size: 9pt;
+}
+
 /**
  * Compose message panel
  */
