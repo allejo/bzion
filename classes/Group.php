@@ -61,10 +61,20 @@ class Group extends Controller {
 
     /**
      * Get a list containing the BZIDs of each member of the group
+     * @param bool $hideSelf Whether to hide the currently logged in player
      * @return array An array of player BZIDs
      */
-    function getMembers() {
-        return parent::getIds("player", "WHERE `group` = ?", "i", $this->id, "player_groups");
+    function getMembers($hideSelf=false) {
+        $additional_query = "WHERE `group` = ?";
+        $types = "i";
+        $params = array($this->id);
+
+        if ($hideSelf && isset($_SESSION['bzid'])) {
+            $additional_query .= " AND `player` != ?";
+            $types .= "i";
+            $params[] = $_SESSION['bzid'];
+        }
+        return parent::getIds("player", $additional_query, $types, $params, "player_groups");
     }
 
     /**
