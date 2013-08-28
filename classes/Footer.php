@@ -30,7 +30,7 @@ class Footer {
         <!--<script src="<?php echo $baseUrl ?>/includes/strolljs/js/stroll.min.js"></script>-->
         <script src="<?php echo $baseUrl ?>/includes/ladda/js/spin.js"></script>
         <script src="<?php echo $baseUrl ?>/includes/ladda/js/ladda.js"></script>
-        <script src="<?php echo $baseUrl ?>/js/javascript.js"></script>
+        <script src="<?php echo $baseUrl ?>/js/messages.js"></script>
 
     </body>
 </html>

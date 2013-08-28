@@ -1,5 +1,15 @@
-var compose_modal;
 var response_group = 0;
+
+$(document).ready(function() {
+    // Load the page if only the hash is provided in the URL, example:
+    // http://bzion.com/messages#21
+    //
+    // TODO: Fix for IE
+    if (document.location.hash) {
+        url = baseURL + "/messages/" + document.location.hash.substring(1);
+        $("#groupMessages").load(url + " #groupMessages > *");
+    }
+});
 
 
 $(".group_link").click(function(event) {
@@ -23,7 +33,7 @@ $(".group_link").click(function(event) {
 function sendResponse() {
 
     // If the Ladda class exists, use it to style the button
-    if (typeof(Ladda) != "undefined") {
+    if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( document.querySelector( '#composeButton' ) );
         l.start();
     }
