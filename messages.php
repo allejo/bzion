@@ -121,7 +121,7 @@ if ($messages) {
         <tr><th class="group_message_toolbar">
             <div class="group_message_option"><a href="#">Compose</a></div>
             <div class="group_message_option"><a href="#">Delete</a></div>
-            <div class="group_message_option"><a onclick="showComposeModal('composeModal',<?php echo $_GET['id']; ?>)" href="#">Respond</a></div>
+            <div class="group_message_option"><a href="#">Respond</a></div>
             <div class="group_message_option_disabled">Forward</div>
         </th></tr>
 
@@ -130,10 +130,10 @@ if ($messages) {
 
         <?php
         foreach($messages as $id) {
-            echo "<tr><td class='group_message_content'><pre>";
+            echo "<tr><td class='group_message_content'>";
             $msg = new Message($id);
-            var_dump($msg);
-            echo "</pre></td></tr>";
+            echo $msg->getContent();
+            echo "</td></tr>";
         }
         ?>
 
