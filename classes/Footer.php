@@ -9,10 +9,25 @@ class Footer {
     private $db;
 
     /**
+     * A list of javascript URLs to include in the page
+     * @var Array
+     */
+    private $scripts;
+
+    /**
      * Construct a new Footer object
      */
     function __construct() {
         $this->db = Database::getInstance();
+    }
+
+    /**
+     * Add a new JS script to the list
+     * @param $url The URL of the script, relative to the base URL (e.g: js/messages.js)
+     */
+    public function addScript($url) {
+        $url = ltrim($url, "/");
+        $this->scripts[] = $url;
     }
 
     /**
@@ -27,10 +42,12 @@ class Footer {
             var baseURL = "<?php echo $baseUrl; ?>";
 		</script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <!--<script src="<?php echo $baseUrl ?>/includes/strolljs/js/stroll.min.js"></script>-->
-        <script src="<?php echo $baseUrl ?>/includes/ladda/js/spin.js"></script>
-        <script src="<?php echo $baseUrl ?>/includes/ladda/js/ladda.js"></script>
-        <script src="<?php echo $baseUrl ?>/js/messages.js"></script>
+
+        <?php
+            foreach($this->scripts as $url) {
+                echo "<script src=\"$baseUrl/$url\"></script>";
+            }
+        ?>
 
     </body>
 </html>
