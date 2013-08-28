@@ -99,6 +99,10 @@ class Message extends Controller
         $db = Database::getInstance();
         $db->query($query, "iiss", $params);
 
+        $query = "UPDATE groups SET last_activity = NOW() WHERE id = ?";
+        $params = array($to);
+        $db->query($query, "i", $params);
+
         return new Message($db->getInsertId());
     }
 
