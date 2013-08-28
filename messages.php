@@ -61,7 +61,7 @@ foreach ($groups as $key => $id) {
             <?php
                 $recipientLabel = "Recipients";
                 if($messages) {
-                    $recipients = $currentGroup->getMembers();
+                    $recipients = $currentGroup->getMembers(true);
                     if (count($recipients) == 1)
                         $recipientLabel = "Recipient";
                 }
@@ -81,6 +81,8 @@ foreach ($groups as $key => $id) {
                             echo ", ";
                         }
                     }
+                } elseif ($messages) {
+                    echo "<em>No one</em>";
                 }
             ?>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
