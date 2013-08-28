@@ -19,6 +19,7 @@ class Footer {
      */
     function __construct() {
         $this->db = Database::getInstance();
+        $this->scripts = array();
     }
 
     /**
