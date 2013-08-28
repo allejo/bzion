@@ -58,15 +58,27 @@ foreach ($groups as $key => $id) {
     <div class="compose_panel">
         <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
         <form class="compose_form">
+            <div class="input_group">
+                <label for="compose_subject">Subject:</label>
+                <input  id="compose_subject" class="input_group_main" name="subject" type="text" placeholder="Enter message subject"
+                <?php
+                    if ($messages) {
+                        echo 'disabled value="', $currentGroup->getSubject(), '"';
+                    }
+                ?>
+                >
+            </div>
+            <div class="input_group">
             <?php
                 $recipientLabel = "Recipients";
-                if($messages) {
+                if ($messages) {
                     $recipients = $currentGroup->getMembers(true);
                     if (count($recipients) == 1)
                         $recipientLabel = "Recipient";
                 }
 
-                echo "$recipientLabel: ";
+                echo "<label>$recipientLabel: </label>\n";
+                echo '<span class="input_group_main">';
 
                 if ($messages && $recipients) {
                     // Move the array iterator to the end of the array, so we
@@ -83,8 +95,13 @@ foreach ($groups as $key => $id) {
                     }
                 } elseif ($messages) {
                     echo "<em>No one</em>";
+                } else {
+                    echo "&nbsp";
                 }
+
+                echo '</span>';
             ?>
+            </div>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />
             <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out">

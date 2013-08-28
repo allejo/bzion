@@ -326,7 +326,7 @@ a:hover {
         background-color: white;
     }
 
-        .group_list tr:hover {
+        .group_list tr:hover, .group_list tr.active {
             background-color: #555555;
             color: white;
         }
@@ -450,4 +450,22 @@ a:hover {
     background-color: #fff;
     margin-top: 2px;
     padding: 1em;
+}
+
+.input_group label {
+    display: inline-block;
+    text-align: right;
+    width: 7%;
+}
+
+.input_group_main {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: inline-block;
+    height: 1.8em;
+    margin: 3px;
+    margin-left: 0.5%;
+    padding: 0.2em;
+    width: 90%;
 }

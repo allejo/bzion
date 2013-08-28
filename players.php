@@ -42,7 +42,7 @@ if (isset($player)) {
         echo "Team: " . $player->getTeam()->getName() . "<br />";
         echo "Joined: " . $player->getJoinedDate() . "<br />";
 
-        echo "<br />";
+        echo "<br />\n";
     }
 
 }
