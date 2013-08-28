@@ -83,8 +83,7 @@ class Header {
     </div> <!-- end .navbar -->
 
     <div class="notification">
-    <i class="icon-ok"></i>
-    <span>Your message was sent successfully</span>
+        <i class="icon-ok"></i><span>Your message was sent successfully</span>
     </div>
 
     <div class="content">
