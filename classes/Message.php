@@ -17,7 +17,7 @@ class Message extends Controller
 
     /**
      * The timestamp of when the message was sent
-     * @var string
+     * @var TimeDate
      */
     private $timestamp;
 
@@ -53,9 +53,33 @@ class Message extends Controller
 
         $this->to = $message['group_to'];
         $this->from = $message['player_from'];
-        $this->timestamp = $message['timestamp'];
+        $this->timestamp = new TimeDate($message['timestamp']);
         $this->message = $message['message'];
         $this->status = $message['status'];
+    }
+
+    /**
+     * Get the content of the message
+     * @return string The message itself
+     */
+    public function getContent() {
+        return $this->message;
+    }
+
+    /**
+     * Gets the creator of the message
+     * @return Player An object representing the message's author
+     */
+    public function getAuthor() {
+        return new Player($this->from);
+    }
+
+    /**
+     * Gets a human-readable representation of the time when the message was sent
+     * @return string
+     */
+    public function getCreationDate() {
+        return $this->timestamp->diffForHumans();
     }
 
     /**
