@@ -150,6 +150,11 @@ if ($messages) {
 
 <?php
 $footer = new Footer();
+
+$footer->addScript("includes/ladda/js/spin.js");
+$footer->addScript("includes/ladda/js/ladda.js");
+$footer->addScript("js/messages.js");
+
 $footer->draw();
 
 ?>
