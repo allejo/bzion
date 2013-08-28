@@ -31,7 +31,7 @@ class Server extends Controller
 
     /**
      * The date of the last bzfquery of the server
-     * @var string
+     * @var TimeDate
      */
     private $updated;
 
@@ -61,8 +61,7 @@ class Server extends Controller
         $this->address = $server['address'];
         $this->owner = $server['owner'];
         $this->info = unserialize($server['info']);
-        $this->updated = new DateTime($server['updated']);
-
+        $this->updated = new TimeDate($server['updated']);
     }
 
     /**
@@ -91,7 +90,7 @@ class Server extends Controller
      */
     function forceUpdate() {
         $this->info = bzfquery($this->address);
-        $this->updated = new DateTime("now");
+        $this->updated = TimeDate::now();
         $this->db->query("UPDATE servers SET info = ?, updated = NOW() WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }
 
@@ -139,10 +138,9 @@ class Server extends Controller
      * @return bool Whether the information is older than the update interval
      */
     function staleInfo() {
-        $now = new DateTime("now");
-        $last_update = $this->updated->diff($now);
-
-        return $last_update->format('%i') >= UPDATE_INTERVAL;
+        $update_time = $this->updated->copy();
+        $update_time->addMinutes(UPDATE_INTERVAL);
+        return TimeDate::now()->gte($update_time);
     }
 
     /**
@@ -165,19 +163,13 @@ class Server extends Controller
         return $this->updated->format(DATE_FORMAT);
     }
 
+    /**
+     * Returns the amount of time passed since the server was
+     * last updated in a human-readable form
+     * @return string
+     */
     function lastUpdate() {
-        $last_update = $this->updated->diff(new DateTime("now"));
-
-        if ($last_update->y +
-            $last_update->m +
-            $last_update->d +
-            $last_update->h +
-            $last_update->i == 0) {
-            if ($last_update->s < 10) return "now";
-            else return $last_update->format('%s sec ago');
-        }
-
-        return $last_update->format('%i min ago');
+        return $this->updated->diffForHumans();
     }
 
     /**
