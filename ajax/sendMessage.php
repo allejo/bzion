@@ -12,7 +12,7 @@ try {
     if (!isset($_SESSION['username'])) {
         throw new Exception("You need to be logged in to do this.");
     }
-    $bzid     = $_SESSION['bzid'];
+    $bzid = $_SESSION['bzid'];
 
     // Two different POST variable layouts are acceptable:
     //
@@ -44,7 +44,17 @@ try {
         throw new Exception("Bad request");
     } else {
         // Create a group and send a message to it
-        $group_to = Group::createGroup(htmlspecialchars($_POST['subject']), explode(",", $_POST['to']));
+
+        $recipients = explode(',', $_POST['to']);
+
+        if (count($recipients) < 1){
+            throw new Exception("You need to specify at least one recipient!");
+        }
+
+        // Add currently logged-in user to the list of recipients, if they are
+        // not yet there
+        $recipients[] = $_SESSION['bzid'];
+        $group_to = Group::createGroup(htmlspecialchars($_POST['subject']), array_unique($recipients));
 
         Message::sendMessage($group_to->getId(), $_SESSION['bzid'], $content);
     }
@@ -57,5 +67,7 @@ try {
 $response = array();
 $response['success'] = !$error;
 $response['message'] = $message;
+if (isset($group_to))
+    $response['id'] = $group_to->getId();
 
 echo json_encode($response);
