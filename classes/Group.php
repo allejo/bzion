@@ -109,7 +109,7 @@ class Group extends Controller {
     public static function getGroups($bzid) {
         $additional_query = "LEFT JOIN groups ON player_groups.group=groups.id
                              WHERE player_groups.player = ? AND groups.status
-                             NOT IN (?, ?)";
+                             NOT IN (?, ?) ORDER BY last_activity DESC";
         $params = array($bzid, "disabled", "deleted");
 
         return parent::getIds("groups.id", $additional_query, "iss", $params, "player_groups");
