@@ -7,6 +7,7 @@ function updatePage() {
     // TODO: Fix for IE
     if (document.location.hash) {
         url = baseURL + "/messages/" + document.location.hash.substring(1);
+        $(".groups").load(url + " .groups > *");
         $("#groupMessages").load(url + " #groupMessages > *", function() {
             $(".chosen-select").chosen();
         });
