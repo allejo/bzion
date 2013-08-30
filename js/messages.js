@@ -1,14 +1,22 @@
 var response_group = 0;
 
-$(document).ready(function() {
-    // Load the page if only the hash is provided in the URL, example:
+function updatePage() {
+    // Load the page if just the hash is provided in the URL, example:
     // http://bzion.com/messages#21
     //
     // TODO: Fix for IE
     if (document.location.hash) {
         url = baseURL + "/messages/" + document.location.hash.substring(1);
-        $("#groupMessages").load(url + " #groupMessages > *");
+        $("#groupMessages").load(url + " #groupMessages > *", function() {
+            $(".chosen-select").chosen();
+        });
+    } else {
+        $(".chosen-select").chosen();
     }
+}
+
+$(document).ready(function() {
+    updatePage();
 });
 
 
@@ -23,7 +31,7 @@ $(".group_link").click(function(event) {
     document.location.hash = id;
     response_group = id;
 
-    $("#groupMessages").load(url + " #groupMessages > *");
+    updatePage();
 
 });
 
@@ -43,6 +51,33 @@ function sendResponse() {
         dataType: "json",
         url: baseURL + "/ajax/sendMessage.php",
         data: { group_to: response_group, content: $("#composeArea").val() }
+        }).done(function( msg ) {
+            if (l)
+                l.stop();
+
+            // Find the notification type
+            type = msg.success ? "success" : "error";
+
+            notify(msg.message, type);
+            $("#groupMessages").load(url + " #groupMessages > *");
+        });
+};
+
+/**
+ * Perform an AJAX request to create a new message group
+ */
+function sendMessage() {
+
+    if (typeof(Ladda) !== "undefined") {
+        var l = Ladda.create( document.querySelector( '#composeButton' ) );
+        l.start();
+    }
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: baseURL + "/ajax/sendMessage.php",
+        data: { subject: "Subject here", to: "2", content: $("#composeArea").val() }
         }).done(function( msg ) {
             if (l)
                 l.stop();

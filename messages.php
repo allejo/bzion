@@ -70,38 +70,28 @@ if (!$messages) {
                 >
             </div>
             <div class="input_group">
-            <?php
-                $recipientLabel = "Recipients";
-                if ($messages) {
-                    $recipients = $currentGroup->getMembers(true);
-                    if (count($recipients) == 1)
-                        $recipientLabel = "Recipient";
-                }
+                <label>Recipients:</label>
+                <div class="input_group_main" style="padding: 0">
+                    <select data-placeholder="Enter message recipients" multiple="" style="width:350px;" class="chosen-select" tabindex="5">
+                        <option value=""></option>
+                        <optgroup label="Players">
+                          <?php
 
-                echo "<label>$recipientLabel: </label>\n";
-                echo '<span class="input_group_main">';
+                          foreach (Player::getPlayers() as $key => $bzid) {
+                              $player = new Player($bzid);
 
-                if ($messages && $recipients) {
-                    // Move the array iterator to the end of the array, so we
-                    // can find the last element later
-                    end($recipients);
-                    foreach($recipients as $key => $bzid) {
-                        $recipient = new Player($bzid);
-                        echo $recipient->getUsername();
+                              $selected = "";
+                              if ($currentGroup && $currentGroup->isMember($bzid)) {
+                                  $selected = 'selected=""';
+                              }
 
-                        // Show a comma if this isn't the last element
-                        if($key !== key($recipients)) {
-                            echo ", ";
-                        }
-                    }
-                } elseif ($messages) {
-                    echo "<em>No one</em>";
-                } else {
-                    echo "&nbsp";
-                }
+                              echo "<option $selected value=\"$bzid\">", $player->getUsername(), "</option>";
+                          }
 
-                echo '</span>';
-            ?>
+                          ?>
+                        </optgroup>
+                    </select>
+                </div>
             </div>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />
@@ -126,7 +116,7 @@ if (!$messages) {
 
 
         <div style="clear: both"></div>
-        
+
 
         <?php
         foreach($messages as $id) {
@@ -159,6 +149,7 @@ $footer = new Footer();
 
 $footer->addScript("includes/ladda/js/spin.js");
 $footer->addScript("includes/ladda/js/ladda.js");
+$footer->addScript("includes/chosen/chosen.jquery.min.js");
 $footer->addScript("js/messages.js");
 
 $footer->draw();
