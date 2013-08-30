@@ -20,8 +20,9 @@ $(document).ready(function() {
     updatePage();
 });
 
-
-$(".group_link").click(function(event) {
+// Use "on" instead of just "click", so that new elements of that class added
+// to the page using $.load() also respond to events
+$(".content").on("click", ".group_link", function(event) {
     // Don't let the link change the web page,
     // AJAX will handle the click
     event.preventDefault();
