@@ -70,9 +70,9 @@ if (!$messages) {
                 >
             </div>
             <div class="input_group">
-                <label for="recipient-list">Recipients:</label>
+                <label for="compose_recipients">Recipients:</label>
                 <div class="input_group_main" style="padding: 0">
-                    <select id="recipient-list" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
+                    <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
                         <option value=""></option>
                         <optgroup label="Players">
                           <?php
@@ -95,7 +95,7 @@ if (!$messages) {
             </div>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />
-            <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out">
+            <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button" data-style="zoom-out">
                 <span class="ladda-label">Submit</span>
             </button>
             <button type="reset">Reset</button>

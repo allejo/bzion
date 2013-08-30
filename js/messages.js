@@ -50,17 +50,20 @@ function sendResponse() {
         type: "POST",
         dataType: "json",
         url: baseURL + "/ajax/sendMessage.php",
-        data: { group_to: response_group, content: $("#composeArea").val() }
-        }).done(function( msg ) {
-            if (l)
-                l.stop();
+        data: {
+            group_to: response_group,
+            content: $("#composeArea").val()
+        }
+    }).done(function( msg ) {
+        if (l)
+            l.stop();
 
-            // Find the notification type
-            type = msg.success ? "success" : "error";
+        // Find the notification type
+        type = msg.success ? "success" : "error";
 
-            notify(msg.message, type);
-            $("#groupMessages").load(url + " #groupMessages > *");
-        });
+        notify(msg.message, type);
+        updatePage();
+    });
 };
 
 /**
@@ -73,21 +76,35 @@ function sendMessage() {
         l.start();
     }
 
+    // Generate a comma-separated of recipients which the AJAX script will read
+    recipients = ""
+
+    if ($("#compose_recipients").val())
+        recipients = $("#compose_recipients").val().join(',')
+
     $.ajax({
         type: "POST",
         dataType: "json",
         url: baseURL + "/ajax/sendMessage.php",
-        data: { subject: "Subject here", to: "2", content: $("#composeArea").val() }
-        }).done(function( msg ) {
-            if (l)
-                l.stop();
+        data: {
+            subject: $("#compose_subject").val(),
+            to:  recipients,
+            content: $("#composeArea").val()
+        }
+    }).done(function( msg ) {
+        if (l)
+            l.stop();
 
-            // Find the notification type
-            type = msg.success ? "success" : "error";
+        // Find the notification type
+        type = msg.success ? "success" : "error";
 
-            notify(msg.message, type);
-            $("#groupMessages").load(url + " #groupMessages > *");
-        });
+        notify(msg.message, type);
+
+        if (msg.success) {
+            document.location.hash = msg.id;
+            updatePage();
+        }
+    });
 };
 
 
