@@ -44,10 +44,9 @@ try {
         throw new Exception("Bad request");
     } else {
         // Create a group and send a message to it
-
         $recipients = explode(',', $_POST['to']);
 
-        if (count($recipients) < 1){
+        if (count($recipients) < 1 || trim($_POST['to']) == ''){
             throw new Exception("You need to specify at least one recipient!");
         }
 
