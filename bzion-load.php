@@ -5,20 +5,12 @@ if (!@include("bzion-config.php")) {
     die();
 }
 
-function __autoload($class_name)
-{
-    global $classesDir;
-    $part = explode('\\', $class_name);
+require("classes/Autoloader.php");
 
-    foreach ($classesDir as $directory)
-    {
-        $doc = rtrim(DOC_ROOT, '/') . '/' . $directory . end($part) . '.php';
-        if (file_exists($doc))
-        {
-            require_once($doc);
-            return;
-        }
-    }
+foreach ($classesDir as $dir) {
+    AutoLoader::registerDirectory($dir);
 }
+
+spl_autoload_register(array("AutoLoader", "loadClass"));
 
 $db = new Database();
