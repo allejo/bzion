@@ -70,9 +70,9 @@ if (!$messages) {
                 >
             </div>
             <div class="input_group">
-                <label>Recipients:</label>
+                <label for="recipient-list">Recipients:</label>
                 <div class="input_group_main" style="padding: 0">
-                    <select data-placeholder="Enter message recipients" multiple="" style="width:350px;" class="chosen-select" tabindex="5">
+                    <select id="recipient-list" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
                         <option value=""></option>
                         <optgroup label="Players">
                           <?php
