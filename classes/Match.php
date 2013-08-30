@@ -117,18 +117,18 @@ class Match extends Controller
 
     /**
      * Get the first team involved in the match
-     * @return int Team A's id
+     * @return Team Team A's id
      */
     function getTeamA() {
-        return $this->team_a;
+        return new Team($this->team_a);
     }
 
     /**
      * Get the second team involved in the match
-     * @return int Team B's id
+     * @return Team Team B's id
      */
     function getTeamB() {
-        return $this->team_b;
+        return new Team($this->team_b);
     }
 
     /**
@@ -194,8 +194,8 @@ class Match extends Controller
 
         $team_a = new Team($a);
         $team_b = new Team($b);
-        $a_elo = $team_a->elo;
-        $b_elo = $team_b->elo;
+        $a_elo = $team_a->getElo();
+        $b_elo = $team_b->getElo();
 
         $diff = Match::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
 
@@ -204,16 +204,17 @@ class Match extends Controller
         $diff = abs($diff);
 
         $timestamp = new DateTime($timestamp);
-        var_dump($timestamp->format(DATE_FORMAT));
 
         $results = $db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
         "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format(DATE_FORMAT), $duration, $entered_by, "entered"));
 
-        // Update team ELOs
-        $team_a->elo = $a_elo;
-        $team_b->elo = $b_elo;
+        $id = $db->getInsertId();
 
-        return new Match($db->getInsertId());
+        // Update team ELOs
+        $team_a->changeElo($diff);
+        $team_b->changeElo(-$diff);
+
+        return new Match($id);
     }
 
     /**
