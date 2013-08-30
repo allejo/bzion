@@ -141,9 +141,11 @@ class Team extends Controller
             $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array($id));
         }
 
-        $this->addMember($leader);
+        $team = new Team($id);
 
-        return new Team($id);
+        $team->addMember($leader);
+
+        return $team;
     }
 
     /**
@@ -177,6 +179,15 @@ class Team extends Controller
      */
     function getElo() {
         return $this->elo;
+    }
+
+    /**
+     * Increase or decrease the ELO of the team
+     * @param int $adjust The value to be added to the current ELO (negative to substract)
+     */
+    function changeElo($adjust) {
+        $this->elo += $adjust;
+        $this->update("elo", $this->elo, "i");
     }
 
     /**
