@@ -45,6 +45,8 @@ class Invitation extends Controller
      */
     function __construct($id) {
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $invitation = $this->result;
 
         $this->invited_player = $invitation['invited_player'];

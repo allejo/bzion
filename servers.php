@@ -10,10 +10,8 @@ $servers = Server::getServers();
 foreach ($servers as $key => $id) {
     $server = new Server($id);
 
-    if ($server->staleInfo()) {
+    if ($server->staleInfo())
         $server->forceUpdate();
-        $header->go("/servers");
-    }
 
     echo "<strong>" . $server->getName() . "</strong><br />";
     echo "<em>" . $server->getAddress() . "</em><br />";

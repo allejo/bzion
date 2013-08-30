@@ -18,7 +18,8 @@ DEFINE("SITE_TITLE", "BZiON: A League Management System");
  * Directories to be autoloaded in bzion-load.php
  */
 $classesDir = array (
-    "classes/"
+    "classes/",
+    "includes/Carbon/src/Carbon/"
 );
 
 /*

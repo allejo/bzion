@@ -9,8 +9,8 @@ class Group extends Controller {
     private $subject;
 
     /**
-     * The timestamp of the last message to the group
-     * @var string
+     * The time of the last message to the group
+     * @var TimeDate
      */
     private $last_activity;
 
@@ -34,10 +34,12 @@ class Group extends Controller {
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $group = $this->result;
 
         $this->subject = $group['subject'];
-        $this->last_activity = new DateTime($group['last_activity']);
+        $this->last_activity = TimeDate::parse($group['last_activity']);
         $this->status = $group['status'];
     }
 
@@ -46,23 +48,7 @@ class Group extends Controller {
     }
 
     function getLastActivity() {
-        $last_message = $this->last_activity->diff(new DateTime("now"));
-
-        if ($last_message->y + $last_message->m + $last_message->d + $last_message->h + $last_message->i == 0) {
-            if ($last_message->s < 10) {
-                return "now";
-            } else {
-                return $last_message->format('%s sec ago');
-            }
-        } elseif ($last_message->y + $last_message->m + $last_message->d + $last_message->h == 0) {
-            return $last_message->format('%i min ago');
-        } elseif ($last_message->y + $last_message->m + $last_message->d == 0) {
-            return $last_message->format('%h hour(s) ago');
-        } else {
-            return $last_message->format('%d day(s) ago');
-        }
-
-        //return $this->last_activity->format(DATE_FORMAT);
+        return $this->last_activity->diffForHumans();
     }
 
     /**
@@ -71,6 +57,24 @@ class Group extends Controller {
      */
     function getURL($dir="messages", $default=NULL) {
         return parent::getURL($dir, $default);
+    }
+
+    /**
+     * Get a list containing the BZIDs of each member of the group
+     * @param bool $hideSelf Whether to hide the currently logged in player
+     * @return array An array of player BZIDs
+     */
+    function getMembers($hideSelf=false) {
+        $additional_query = "WHERE `group` = ?";
+        $types = "i";
+        $params = array($this->id);
+
+        if ($hideSelf && isset($_SESSION['bzid'])) {
+            $additional_query .= " AND `player` != ?";
+            $types .= "i";
+            $params[] = $_SESSION['bzid'];
+        }
+        return parent::getIds("player", $additional_query, $types, $params, "player_groups");
     }
 
     /**
@@ -109,6 +113,18 @@ class Group extends Controller {
         $params = array($bzid, "disabled", "deleted");
 
         return parent::getIds("groups.id", $additional_query, "iss", $params, "player_groups");
+    }
+
+    /**
+     * Checks if a player belongs in the group
+     * @param int $bzid The ID of the player
+     * @return bool True if the player belongs in the group, false if they don't
+     */
+    public function isMember($bzid) {
+        $result = $this->db->query("SELECT 1 FROM `player_groups` WHERE `group` = ?
+                                    AND `player` = ?", "ii", array($this->id, $bzid));
+
+        return count($result) > 0;
     }
 
 }

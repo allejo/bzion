@@ -4,13 +4,13 @@ class Database
 {
     /**
      * The database object used inside this class
-     * @var mixed
+     * @var MySQLi
      */
     private $dbc;
 
     /**
      * The id of the last row entered
-     * @var mixed
+     * @var int
      */
     private $last_id;
 
@@ -130,7 +130,8 @@ class Database
         {
             if (!is_array($params)) {
                 $params = array($params);
-            } else if (count($params) == count($params, 1)) {
+            }
+            if (count($params) == count($params, 1)) {
                 $params = array($params);
                 $multiQuery = false;
             }

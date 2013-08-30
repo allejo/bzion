@@ -93,6 +93,8 @@ class Team extends Controller
     function __construct($id) {
 
         parent::__construct($id);
+        if (!$this->valid) return;
+
         $team = $this->result;
 
         $this->name = $team['name'];
@@ -182,6 +184,8 @@ class Team extends Controller
      * @return string The name of the team
      */
     function getName() {
+        if (!$this->valid)
+            return "<em>None</em>";
         return $this->name;
     }
 

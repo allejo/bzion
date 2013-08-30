@@ -12,6 +12,14 @@ body {
     font-size: 1em;
 }
 
+pre {
+    white-space: pre-wrap;
+}
+
+button {
+    margin: 5px;
+}
+
 h4 {
     margin: 0;
     padding: 0;
@@ -93,6 +101,44 @@ a:hover {
     }
 
 /**
+ * Notifications
+ */
+.notification {
+    border: 1px solid #222;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 0 3px #333;
+    color: #fff;
+    display: none;
+    text-shadow: 1px 1px 5px #333;
+    left: 25em;
+    min-width: 16em;
+    position: fixed;
+    padding: 0.4em 1em;
+    text-align: center;
+    top: -1px;
+    z-index: 10;
+}
+
+    .notification i {
+        margin-right: 0.5em;
+    }
+
+.notification-success {
+    background-color: #117711;
+    display: block;
+}
+
+.notification-error {
+    background-color: #991111;
+    display: block;
+}
+
+.notification-hidden {
+    display: none;
+}
+
+/**
  * Content
  */
 .content {
@@ -125,7 +171,7 @@ a:hover {
     font-size: 1.2em;
 }
 
-.teams_table { 
+.teams_table {
     table-layout: fixed;
     width: 100%;
 }
@@ -249,27 +295,25 @@ a:hover {
  * Messages page
  */
 .groups {
-    width: 29%;
+    width: 30%;
     float: left;
-    margin-left: 20px;
-    margin-top: 80px;
+    margin-top: 2em;
+
 }
 
 .groups_toolbar {
+    font-weight: normal;
     background-color: #555555;
-    width: 100%;
-    height: 32px;
+    color: #fff;
 }
 
 .groups_toolbar_option a {
     font-family: HelveticaNeue;
-    font-size: 13px;
+    font-size: .8em;
     color: white;
     text-transform: uppercase;
     float: left;
-    left: 6px;
     padding: 10px;
-    right: 0px;
     text-align: center;
     text-decoration: none;
 }
@@ -280,15 +324,13 @@ a:hover {
 
 .group_list {
     width: 100%;
-    margin: 0;
 }
 
     .group_list tr {
-        width: 100%;
         background-color: white;
     }
 
-        .group_list tr:hover {
+        .group_list tr:hover, .group_list tr.active {
             background-color: #555555;
             color: white;
         }
@@ -300,50 +342,53 @@ a:hover {
 
 .group_subject {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 1.4em;
     float: left;
     padding: 0 0 0 5px;
 }
 
 .group_last_activity {
-    font-size: 14px;
+    font-size: .8em;
     float: right;
     padding: 5px 5px 0 0;
 }
 
 .content_one {
     font-family: HelveticaNeue-light;
-    font-size: 16px;
+    font-size: 1em;
     padding: 0 0 0 5px;
 }
 
 .content_two {
     font-family: HelveticaNeue-light;
-    font-size: 12px;
+    font-size: .8em;
     padding: 0 0 3px 5px;
 }
 
+.group_messages {
+    width: 70%;
+    float: left;
+    margin-top: 2.1em;
+}
+
 .group_message {
-    width: 69%;
-    float:right;
-    margin-top: 80px;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
 }
 
 .group_message_toolbar {
+    font-family: HelveticaNeue;
     background-color: #555555;
-    height: 32px;
 }
 
 .group_message_option a {
-    font-family: HelveticaNeue;
-    font-size: 13px;
-    color: white;
+    font-weight: normal;
+    font-size: .8em;
+    color: #fff;
     text-transform: uppercase;
     float: left;
-    left: 6px;
     padding: 10px;
-    margin-top: 0px;
-    right: 0px;
     text-align: center;
     text-decoration: none;
 }
@@ -352,20 +397,106 @@ a:hover {
         color: orange;
     }
 
+.group_toolbar_text {
+    font-weight: normal;
+    font-size: .8em;
+    color: #fff;
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
 .group_message_option_disabled {
-    font-family: HelveticaNeue;
-    font-size: 13px;
+    font-weight: normal;
+    font-size: .8em;
     color: silver;
     text-transform: uppercase;
     float: left;
-    left: 6px;
     padding: 10px;
     margin-top: 0px;
-    right: 0px;
     text-align: center;
 }
 
 .group_message_content {
-    background-color: white;
     padding: 10px;
+}
+
+.group_message_info {
+    font-size: 9pt;
+}
+
+/**
+ * Compose message panel
+ */
+.compose_area {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    font-size: 14px;
+    height: 100px;
+    line-height: 1.42857;
+    margin: 6px 0;
+    min-height: 70px;
+    padding: 6px 12px;
+    resize: vertical;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.input_compose_area {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    font-size: 14px;
+    line-height: 1.42857;
+    margin: 6px 0;
+    min-height: 31px;
+    padding: 6px 12px;
+    resize: vertical;
+    width: 92%;
+}
+
+.compose_panel {
+    margin-bottom: 1em;
+}
+
+.compose_form {
+    background-color: #fff;
+    margin-top: 2px;
+    padding: 1em;
+}
+
+.alt_compose_form {
+    margin-top: 2px;
+}
+
+.input_group label {
+    display: inline-block;
+    text-align: right;
+    width: 7%;
+}
+
+.input_group_main {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: inline-block;
+    height: 1.8em;
+    margin: 3px;
+    margin-left: 0.5%;
+    padding: 0.2em;
+    width: 90%;
 }
