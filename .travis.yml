@@ -4,5 +4,7 @@ php:
   - 5.4
   - 5.3
 
+script: phpunit --coverage-text --bootstrap bzion-load.php --colors tests
+
 notifications:
   irc: "irc.freenode.org##alezakos"
