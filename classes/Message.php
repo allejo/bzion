@@ -112,7 +112,7 @@ class Message extends Controller
      * @return array An array of message IDs
      */
     public static function getMessages($id) {
-        return parent::getIds("id", "WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp DESC",
+        return parent::getIds("id", "WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
                               "ssi", array("hidden", "deleted", $id));
     }
 
