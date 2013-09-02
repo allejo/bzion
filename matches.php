@@ -17,8 +17,8 @@ if (isset($team)) {
 
     foreach ($matches as $key => $id) {
         $match = new Match($id);
-        $team_a = new Team($match->getTeamA());
-        $team_b = new Team($match->getTeamB());
+        $team_a = $match->getTeamA();
+        $team_b = $match->getTeamB();
         echo "<b>" . $team_a->getName() . " (" . $match->getTeamAPoints() . " points) vs " . $team_b->getName() . " (" . $match->getTeamBPoints() . " points) </b><br />";
         echo "+/- " . $match->getEloDiff() . "<br />";
         echo $team_a->getName() . "'s new ELO: " . $match->getTeamAEloNew() . "<br />";
