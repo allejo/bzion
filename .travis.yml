@@ -4,10 +4,9 @@ php:
   - 5.4
   - 5.3
 
-before-script: tests/initialize.sh
+before_script: bash -xe tests/initialize.sh
 
-script: phpunit --coverage-text --bootstrap bzion-load.php --colors tests
-script: tests/testFile.sh `find . -maxdepth 1 -iname '*.php' -and ! -iname 'bzion*' | sort`
+script: tests/runTest.sh
 
 notifications:
   irc: "irc.freenode.org##alezakos"
