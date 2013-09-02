@@ -7,8 +7,7 @@
 #
 # tests/testFile.sh matches.php news.php
 
-ERRORLOG="error.log"
-
+# Color codes
 GREY="\033[0;37m"
 MAGENTA="\033[0;35m"
 RED="\033[0;31m"
@@ -16,28 +15,24 @@ YELLOW="\033[0;33m"
 GREEN="\033[0;32m"
 BLUE="\033[0;34m"
 CYAN="\033[0;36m"
-
-ERROR=0
-
 NO_COLOR="\033[0;39m"
 
-ERROR_LOG_CONTENTS=""
+# The return code of the script
+ERROR=0
+
+# A string containing PHP's output which includes all the errors found
+ERROR_LOG=""
 
 for file
 do
-    # Delete error.log if it exists
-    [ -f $ERRORLOG ] && rm $ERRORLOG
+    ERRORS=`php $file 2>&1 > /dev/null`
 
-    php $file > /dev/null 2> $ERRORLOG
-
-    [ -f $ERRORLOG ] || continue
-
-    # Find number of different messages included in the error.log file
-    notices=`grep -i notice $ERRORLOG | wc -l`
-    warnings=`grep -i warning $ERRORLOG | wc -l`
-    fatal=`grep -i fatal $ERRORLOG | wc -l`
-    parse=`grep -i parse $ERRORLOG | wc -l`
-    strict=`grep -i 'strict\|deprecated' $ERRORLOG | wc -l`
+    # Find number of different messages included PHP's output
+    notices=`echo $ERRORS | grep -i notice | wc -l`
+    warnings=`echo $ERRORS | grep -i warning | wc -l`
+    fatal=`echo $ERRORS | grep -i fatal | wc -l`
+    parse=`echo $ERRORS | grep -i parse | wc -l`
+    strict=`echo $ERRORS | grep -i 'strict\|deprecated' | wc -l`
 
     message=() # Array where parts of the message shown to the user are stored
     color=$GREEN
@@ -65,10 +60,10 @@ do
       ERROR=3
     fi
 
-    # If errorlog is not empty, save its contents in a variable
-    if [[ `wc -w < $ERRORLOG` -ne 0 ]]; then
+    # If $ERRORS is not empty, save its contents in $ERROR_LOG_CONTENTS
+    if [[ `echo $ERRORS | wc -w` -ne 0 ]]; then
         ERROR_LOG_CONTENTS+="\n$BLUE""Error log for file $file:$NO_COLOR\n"
-        ERROR_LOG_CONTENTS+=`cat $ERRORLOG`
+        ERROR_LOG_CONTENTS+="$ERRORS"
     fi
 
     # Implode/join the parts of the message array

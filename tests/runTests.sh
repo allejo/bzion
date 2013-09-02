@@ -5,6 +5,8 @@ PHPUNIT=$?
 
 FILES="`find . -maxdepth 1 -iname '*.php' -and ! -iname 'bzion*' | sort`"
 
+echo -e "\n\n"
+
 tests/testFile.sh $FILES
 FILETEST=$?
 

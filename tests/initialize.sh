@@ -13,5 +13,3 @@ sed -i 's/\$_SERVER\[\"HTTP_HOST\"\]/\"http:\/\/localhost\/bzion\"/' $FILE
 sed -i 's/"DEVELOPMENT", FALSE/"DEVELOPMENT", TRUE/' $FILE
 
 echo "error_reporting (E_ALL | E_STRICT | E_DEPRECATED);" >> $FILE
-echo 'ini_set("log_errors", 1);' >> $FILE
-echo 'ini_set("error_log", "error.log");' >> $FILE
