@@ -147,8 +147,8 @@ if (!$messages) {
 <?php
 $footer = new Footer();
 
-$footer->addScript("includes/ladda/js/spin.js");
-$footer->addScript("includes/ladda/js/ladda.js");
+$footer->addScript("includes/ladda/dist/spin.min.js");
+$footer->addScript("includes/ladda/dist/ladda.min.js");
 $footer->addScript("includes/chosen/chosen.jquery.min.js");
 $footer->addScript("js/messages.js");
 
