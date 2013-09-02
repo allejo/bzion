@@ -14,9 +14,8 @@ MAGENTA="\033[0;35m"
 RED="\033[0;31m"
 YELLOW="\033[0;33m"
 GREEN="\033[0;32m"
-LGREEN="\033[0;92m"
-BLUE="\033[0;94m"
-CYAN="\033[0;96m"
+BLUE="\033[0;34m"
+CYAN="\033[0;36m"
 
 ERROR=0
 
@@ -45,7 +44,6 @@ do
 
     if [[ $notices -ne 0 ]]; then
       message+=("$notices notices")
-      color=$LGREEN
     fi
     if [[ $warnings -ne 0 ]]; then
       message+=("$warnings warnings")
@@ -53,17 +51,17 @@ do
     fi
     if [[ $strict -ne 0 ]]; then
       message+=("$strict strict warnings")
-      color=$RED
+      color=$MAGENTA
       ERROR=1
     fi
     if [[ $fatal -ne 0 ]]; then
       message+=("$fatal fatal errors")
-      color=$MAGENTA
+      color=$RED
       ERROR=2
     fi
     if [[ $parse -ne 0 ]]; then
       message+=("$parse parse errors")
-      color=$MAGENTA
+      color=$RED
       ERROR=3
     fi
 
