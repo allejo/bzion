@@ -5,7 +5,6 @@ class Match extends Controller
 
     /**
      * The ID of the first team of the match
-     * @todo Does Team A represent the winner? Or is the team assignment random?
      * @var int
      */
     private $team_a;
@@ -230,7 +229,7 @@ class Match extends Controller
      * @return int The ELO score difference
      */
     public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
-        $prob = 1.0 / (1 + 10 ^ (($b_elo-$a_elo)/400.0));
+        $prob = 1.0 / (1 + pow(10, (($b_elo-$a_elo)/400.0)));
         if ($a_points > $b_points) {
            $diff = 50*(1-$prob);
         } else if ($a_points == $b_points) {
