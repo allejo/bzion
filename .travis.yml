@@ -6,7 +6,7 @@ php:
 
 before_script: bash -xe tests/initialize.sh
 
-script: tests/runTest.sh
+script: tests/runTests.sh
 
 notifications:
   irc: "irc.freenode.org##alezakos"
