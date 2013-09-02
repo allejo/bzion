@@ -26,7 +26,7 @@ $classesDir = array (
  * League specific settings
  */
 DEFINE("DURATION", serialize(array(
-	"20" => "(2/3)" // 20 minute match is 2/3rds of a normal match's ELO
+	"20" => (2/3) // 20 minute match is 2/3rds of a normal match's ELO
 )));
 
 /*
