@@ -28,11 +28,11 @@ do
     ERRORS=`php $file 2>&1 > /dev/null`
 
     # Find number of different messages included PHP's output
-    notices=`echo $ERRORS | grep -i notice | wc -l`
-    warnings=`echo $ERRORS | grep -i warning | wc -l`
-    fatal=`echo $ERRORS | grep -i fatal | wc -l`
-    parse=`echo $ERRORS | grep -i parse | wc -l`
-    strict=`echo $ERRORS | grep -i 'strict\|deprecated' | wc -l`
+    notices=`echo "$ERRORS" | grep -i notice | wc -l`
+    warnings=`echo "$ERRORS" | grep -i warning | wc -l`
+    fatal=`echo "$ERRORS" | grep -i fatal | wc -l`
+    parse=`echo "$ERRORS" | grep -i parse | wc -l`
+    strict=`echo "$ERRORS" | grep -i 'strict\|deprecated' | wc -l`
 
     message=() # Array where parts of the message shown to the user are stored
     color=$GREEN
