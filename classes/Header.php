@@ -105,5 +105,7 @@ class Header {
         } else {
             header("Location: $url" . $location);
         }
+
+        die();
     }
 }

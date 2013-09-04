@@ -92,7 +92,7 @@ abstract class Controller {
         if (!$type) {
             $type = Database::getType($value);
         }
-        $this->db->query("UPDATE ". $this->table . " SET " . $name . " = ? WHERE id = ?", $type."i", array($value, $this->id));
+        $this->db->query("UPDATE ". static::TABLE . " SET $name = ? WHERE id = ?", $type."i", array($value, $this->id));
     }
 
     /**

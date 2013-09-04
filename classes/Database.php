@@ -54,7 +54,7 @@ class Database
      */
     function closeConnection()
     {
-        mysqli_close($this->dbc);
+        @mysqli_close($this->dbc);
     }
 
     /**
