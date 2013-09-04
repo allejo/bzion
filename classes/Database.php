@@ -216,7 +216,7 @@ class Database
 
     /**
     * Writes the specified string to the log file if logging is enabled
-    * @param string The string that will be written
+    * @param string $string The string that will be written
     */
     function writeToDebug($string)
     {
@@ -230,7 +230,7 @@ class Database
 
     /**
     * Outputs the specified string if debugging is enabled
-    * @param string The string that will be shown
+    * @param string $string The string that will be shown
     */
     function printDebug($string)
     {
