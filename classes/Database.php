@@ -216,7 +216,7 @@ class Database
 
     /**
     * Writes the specified string to the log file if logging is enabled
-    * @param The string that will be written
+    * @param string The string that will be written
     */
     function writeToDebug($string)
     {
@@ -230,7 +230,7 @@ class Database
 
     /**
     * Outputs the specified string if debugging is enabled
-    * @param The string that will be shown
+    * @param string The string that will be shown
     */
     function printDebug($string)
     {
@@ -243,8 +243,8 @@ class Database
     /**
     * Calls the two debug functions (debug to file & screen), feeding them
     * with fancy messages
-    * @param $error The error string
-    * @param $id The error ID
+    * @param string $error The error string
+    * @param int $id The error ID
     */
     function debug($error, $id=null) {
         $this->writeToDebug("MySQL Error :: " . $error);
