@@ -18,6 +18,9 @@ class AutoLoader {
      * @param string $dir_name The path to the directory
      */
     public static function registerDirectory($dir_name) {
+        // Add a trailing slash to the directory name
+        $dir_name = rtrim($dir_name, "/") . "/";
+
         AutoLoader::$classDirectories[] = $dir_name;
     }
 
