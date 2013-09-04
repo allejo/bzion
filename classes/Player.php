@@ -145,8 +145,8 @@ class Player extends Controller
      * @param string $description The player's profile description
      * @param int $country The player's country
      * @param int $timezone The player's timezone
-     * @param date $joined The date the player joined
-     * @param date $last_login The timestamp of the player's last login
+     * @param DateTime $joined The date the player joined
+     * @param DateTime $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
     public static function newPlayer($bzid, $username, $team=0, $status="active", $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {

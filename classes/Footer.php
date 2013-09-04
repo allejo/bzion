@@ -24,7 +24,7 @@ class Footer {
 
     /**
      * Add a new JS script to the list
-     * @param $url The URL of the script, relative to the base URL (e.g: js/messages.js)
+     * @param string $url The URL of the script, relative to the base URL (e.g: js/messages.js)
      */
     public function addScript($url) {
         $url = ltrim($url, "/");
