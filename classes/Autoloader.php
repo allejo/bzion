@@ -6,12 +6,26 @@
  */
 class AutoLoader {
 
+    /**
+     * The list of directories where classes are saved
+     * @var array
+     */
     static private $classDirectories = array();
 
+    /**
+     * Add a directory to the list of directories where class files are located
+     *
+     * @param string $dir_name The path to the directory
+     */
     public static function registerDirectory($dir_name) {
         AutoLoader::$classDirectories[] = $dir_name;
     }
 
+    /**
+     * Include the file where a class is located
+     *
+     * @param string $class_name The name of the class
+     */
     public static function loadClass($class_name) {
         $part = explode('\\', $class_name);
 
