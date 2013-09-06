@@ -4,6 +4,10 @@ bzion-config.php
 bzion_errors.log
 update.php
 
+# Test files #
+##############
+coverage-report
+
 # OS generated files #
 ######################
 .DS_Store

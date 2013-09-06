@@ -1,12 +1,37 @@
 #!/usr/bin/env bash
 
-phpunit --coverage-text --bootstrap bzion-load.php --colors tests
+COVERAGE_TYPE="--coverage-text"
+
+# Evaluate command-line arguments
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help)
+            echo "runTests.sh - run BZIon tests"
+            echo " "
+            echo "$0 [options]"
+            echo " "
+            echo "options:"
+            echo "-h, --help        show help message"
+            echo "-t, --html        save coverage information in HTML format"
+            exit 0
+            ;;
+        -t|--html)
+            shift
+                COVERAGE_TYPE="--coverage-html coverage-report"
+            ;;
+    esac
+done
+
+# Run PHPUnit and save its return code
+phpunit $COVERAGE_TYPE --bootstrap bzion-load.php --colors tests
 PHPUNIT=$?
 
+# Find all PHP files on the root directory which do not start with "bzion"
 FILES="`find . -maxdepth 1 -iname '*.php' -and ! -iname 'bzion*' | sort`"
 
-echo -e "\n\n"
+echo -e "\n"
 
+# Test each of those files
 tests/testFile.sh $FILES
 FILETEST=$?
 
