@@ -1,6 +1,6 @@
 <?php
 
-class MatchTest extends PHPUnit_Framework_TestCase{
+class MatchTest extends TestCase{
 
      protected function setUp()
     {
@@ -30,6 +30,8 @@ class MatchTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals(30, $match->getDuration());
 
         $this->assertEquals(25, $match->getEloDiff());
+
+        $this->wipe($team_a, $team_b, $match);
     }
 
     public function testTeamBWin(){
@@ -45,6 +47,8 @@ class MatchTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals(5, $match->getTeamBPoints());
 
         $this->assertEquals(25, $match->getEloDiff());
+
+        $this->wipe($team_a, $team_b, $match);
     }
 
 
@@ -60,6 +64,8 @@ class MatchTest extends PHPUnit_Framework_TestCase{
 
         $this->assertEquals(1209, $match->getTeamAEloNew());
         $this->assertEquals(1201, $match->getTeamBEloNew());
+
+        $this->wipe($team_a, $team_b, $match);
     }
 
     public function testEqualEloDraw() {
@@ -71,6 +77,7 @@ class MatchTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals(0, $match->getEloDiff());
         $this->assertEquals($match->getTeamAEloNew(), $match->getTeamBEloNew());
 
+        $this->wipe($team_a, $team_b, $match);
     }
 
     public function testShortMatch(){
@@ -85,6 +92,8 @@ class MatchTest extends PHPUnit_Framework_TestCase{
 
         $this->assertEquals(1216, $match->getTeamAEloNew());
         $this->assertEquals(1184, $match->getTeamBEloNew());
+
+        $this->wipe($team_a, $team_b, $match);
     }
 
 }
