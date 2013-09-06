@@ -41,8 +41,22 @@ foreach ($groups as $key => $id) {
     echo "<div class='group_subject'>" . $group->getSubject() . "</div>";
     echo "<div class='group_last_activity'>" . $group->getLastActivity() . "</div>";
     echo "<div style='clear:both'></div>";
-    echo "<div class='content_one'>Some Content</div>";
-    echo "<div class='content_two'>Some More Content</div>";
+    $groupUsernames = array();
+    foreach ($group->getMembers(true) as $key => $value) {
+        $player = new Player($value);
+        $groupUsernames[] = $player->getUsername();
+    }
+    if (count($groupUsernames) == 0)
+        $groupMembers = "No other recipients";
+    else
+        $groupMembers = implode(",", $groupUsernames);
+
+    $lastMessage = $group->getLastMessage();
+    $playerFrom = new Player($lastMessage['player_from']);
+    $playerFrom = $playerFrom->getUsername();
+    $lastMessage = $lastMessage['message'];
+    echo "<div class='group_members'>$groupMembers</div>";
+    echo "<div class='group_last_message'>$playerFrom: $lastMessage</div>";
     echo "</a></td></tr>\n";
 }
 

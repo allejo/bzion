@@ -51,6 +51,12 @@ class Group extends Controller {
         return $this->last_activity->diffForHumans();
     }
 
+    function getLastMessage() {
+        $result = $this->db->query("SELECT player_from,message FROM `messages` WHERE `group_to` = ? ORDER BY id DESC LIMIT 0,1", "i", array($this->id));
+
+        return $result[0];
+    }
+
     /**
      * Get the URL that points to the group's page
      * @return string The group's URL, without a trailing slash

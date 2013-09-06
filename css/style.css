@@ -353,13 +353,13 @@ a:hover {
     padding: 5px 5px 0 0;
 }
 
-.content_one {
+.group_members {
     font-family: HelveticaNeue-light;
     font-size: 1em;
     padding: 0 0 0 5px;
 }
 
-.content_two {
+.group_last_message {
     font-family: HelveticaNeue-light;
     font-size: .8em;
     padding: 0 0 3px 5px;
