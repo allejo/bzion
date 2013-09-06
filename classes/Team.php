@@ -246,7 +246,7 @@ class Team extends Controller
      */
     function addMember($bzid) {
         $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array($this->id, $bzid));
-        $this->update('members', ++$this->members);
+        $this->update('members', ++$this->members, "i");
     }
 
     /**
@@ -258,7 +258,7 @@ class Team extends Controller
      */
     function removeMember($bzid) {
         $this->db->query("UPDATE players SET team=0 WHERE bzid=?", "i", array($bzid));
-        $this->update('members', --$this->members);
+        $this->update('members', --$this->members, "i");
     }
 
     /**
