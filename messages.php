@@ -49,7 +49,7 @@ foreach ($groups as $key => $id) {
     if (count($groupUsernames) == 0)
         $groupMembers = "No other recipients";
     else
-        $groupMembers = implode(",", $groupUsernames);
+        $groupMembers = implode(", ", $groupUsernames);
 
     $lastMessage = $group->getLastMessage();
     $playerFrom = new Player($lastMessage['player_from']);
