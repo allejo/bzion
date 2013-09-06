@@ -89,9 +89,6 @@ abstract class Controller {
      * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double), 'b' (blob) or nothing to let the function guess it
      */
     public function update($name, $value, $type=NULL) {
-        if (!$type) {
-            $type = Database::getType($value);
-        }
         $this->db->query("UPDATE ". static::TABLE . " SET $name = ? WHERE id = ?", $type."i", array($value, $this->id));
     }
 

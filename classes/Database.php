@@ -76,32 +76,6 @@ class Database
     }
 
     /**
-     * Get the type a $value
-     * @param mixed $value The value to test or an array of values
-     * @return string The letters to show what type of variable will be passed
-     */
-    static function getType($value) {
-        if (!is_array($value))
-            $value = array($value);
-
-        $type = "";
-        foreach ($value as $v) {
-            if (is_int($v))
-                $type .= 'i';
-            else if (is_float($v))
-                $type .= 'd';
-            else if (is_array($v)) {
-                $type .= 's';
-                $value = serialize($v);
-            } else {
-                $type .= 's';
-            }
-        }
-
-        return $type;
-    }
-
-    /**
      * Prepares and executes a MySQL prepared statement. <em>Second two parameters are optional when using this function to execute a query with no placeholders.</em>
      *
      * <code>
