@@ -416,11 +416,11 @@ a:hover {
 
 .group_toolbar_text {
     font-weight: normal;
-    font-size: .8em;
+    font-size: 1.3em;
     color: #fff;
     display: inline-block;
     text-transform: uppercase;
-    padding: 10px;
+    padding: 5px 0px 5px 10px;
     text-align: center;
     text-decoration: none;
 }
