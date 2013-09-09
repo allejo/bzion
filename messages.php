@@ -121,12 +121,24 @@ if (!$messages) {
 ?>
     <table class="group_message">
 
-        <!-- <tr><th class="group_message_toolbar">
-            <div class="group_message_option"><a href="#">Compose</a></div>
-            <div class="group_message_option"><a href="#">Delete</a></div>
-            <div class="group_message_option"><a href="#">Respond</a></div>
-            <div class="group_message_option_disabled">Forward</div>
-        </th></tr> -->
+        <?php
+
+        $groupUsernames = array();
+        foreach ($currentGroup->getMembers(true) as $key => $value) {
+            $player = new Player($value);
+            $groupUsernames[] = $player->getUsername();
+        }
+        if (count($groupUsernames) == 0)
+            $groupMembers = "No other recipients";
+        else
+            $groupMembers = implode(", ", $groupUsernames);
+
+        ?>
+
+        <tr><th class="group_message_toolbar">
+            <div class="group_message_title"><?php echo $currentGroup->getSubject(); ?></div>
+            <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
+        </th></tr>
 
 
         <div style="clear: both"></div>

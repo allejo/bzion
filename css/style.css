@@ -382,20 +382,27 @@ a:hover {
     background-color: #555555;
 }
 
-.group_message_option a {
+.group_message_title {
     font-weight: normal;
-    font-size: .8em;
+    font-size: 1.3em;
     color: #fff;
     text-transform: uppercase;
     float: left;
-    padding: 10px;
+    padding: 5px 5px 5px 10px;
     text-align: center;
     text-decoration: none;
 }
 
-    .group_message_option a:hover {
-        color: orange;
-    }
+.group_message_title_members {
+    font-weight: normal;
+    font-size: .8em;
+    color: silver;
+    text-transform: uppercase;
+    float: left;
+    padding: 10px;
+    margin-top: 0px;
+    text-align: center;
+}
 
 .group_toolbar_text {
     font-weight: normal;
@@ -406,17 +413,6 @@ a:hover {
     padding: 10px;
     text-align: center;
     text-decoration: none;
-}
-
-.group_message_option_disabled {
-    font-weight: normal;
-    font-size: .8em;
-    color: silver;
-    text-transform: uppercase;
-    float: left;
-    padding: 10px;
-    margin-top: 0px;
-    text-align: center;
 }
 
 .group_message_content {
