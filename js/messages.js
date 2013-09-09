@@ -9,7 +9,7 @@ function updatePage() {
         var hash = document.location.hash.substring(1);
         url = baseURL + "/messages/";
         if (hash != "new") {
-            url += document.location.hash.substring(1);
+            url += hash;
             $(".groups").load(url + " .groups > *");
             $("#groupMessages").load(url + " #groupMessages > *", function() {
                 $(".chosen-select").chosen();
