@@ -340,6 +340,16 @@ a:hover {
         text-decoration: none;
     }
 
+.group_new {
+    font-weight: bold;
+    font-size: 1.4em;
+    float: left;
+    padding: 0 0 0 5px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
 .group_subject {
     font-weight: bold;
     font-size: 1.4em;
