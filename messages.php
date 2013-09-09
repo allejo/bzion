@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
         <div class="groups_toolbar_option"><a href="#">Other</a></div>
     </th></tr>
 
-    <tr><td><a class='group_link' href='messages'>
+    <tr><td><a class='group_link' data-id='new' href='messages'>
         <div class='group_new'>New Message</div>
     </a></td></tr>
 
