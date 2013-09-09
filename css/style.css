@@ -435,7 +435,7 @@ a:hover {
     box-sizing: border-box;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     color: #333333;
-    font-size: 14px;
+    font-size: 1em;
     height: 100px;
     line-height: 1.42857;
     margin: 6px 0;
@@ -456,13 +456,13 @@ a:hover {
     box-sizing: border-box;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     color: #333333;
-    font-size: 14px;
+    font-size: 1em;
     line-height: 1.42857;
     margin: 6px 0;
     min-height: 31px;
     padding: 6px 12px;
     resize: vertical;
-    width: 92%;
+    width: 90%;
 }
 
 .compose_panel {
