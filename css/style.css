@@ -149,6 +149,45 @@ a:hover {
 }
 
 /**
+ * Players page
+ */
+.playerpage_content {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2em;
+}
+
+.players_table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+    .players_table th {
+        padding: 10px 5px 10px 5px;
+        background-color: #fff;
+    }
+
+        .players_table th:first-child {
+            width: 30%;
+        }
+
+    .players_table td {
+        padding: 7px 5px 7px 5px;
+    }
+
+    .players_table tr {
+        text-align: left;
+    }
+
+        .players_table tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
+        .players_table tr:hover {
+            background-color: #d6d6d6;
+        }
+
+/**
  * Team page
  */
 .teampage_content {

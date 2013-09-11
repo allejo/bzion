@@ -36,14 +36,34 @@ if (isset($player)) {
 
     $players = Player::getPlayers();
 
+    ?>
+
+<div class="playerpage_content">
+    <table class="players_table">
+        <tr>
+            <th> Name </th>
+            <th> Team </th>
+            <th> Joined </th>
+        </tr>
+    <?php
     foreach ($players as $key => $bzid) {
         $player = new Player($bzid);
-        echo "<b><a href='" . $player->getURL() . "'>" . $player->getUsername() . "</a></b><br />";
-        echo "Team: " . $player->getTeam()->getName() . "<br />";
-        echo "Joined: " . $player->getJoinedDate() . "<br />";
-
-        echo "<br />\n";
+        echo "<tr>";
+        echo "<td><a href='" . $player->getURL() . "'>" . $player->getUsername() . "</a></td>";
+        $teamlink = $player->getTeam()->getName();
+        if ($player->getTeam()->isValid()) {
+            $teamlink = '<a href="' . $player->getTeam()->getURL() . '">' . $teamlink . '</a>';
+        }
+        echo "<td>$teamlink</td>";
+        echo "<td>" . $player->getJoinedDate() . "</td>";
+        echo "</tr>";
     }
+    ?>
+
+    </table> <!-- end .players_table -->
+</div> <!-- end .playerspage_content -->
+
+<?php
 
 }
 
