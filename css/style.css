@@ -145,8 +145,32 @@ a:hover {
     width: 90%;
     margin: 0 auto;
     padding: 1em 0 1em 0;
-    margin-top: 3em;
+    margin-top: 4em;
 }
+
+/**
+ * Custom Pages
+ */
+ .custom_page {
+    width: 80%;
+    margin: 0 auto;
+ }
+
+.custom_page_title {
+    background-color: #555555;
+    color: white;
+    text-align: center;
+    padding: .5em;
+    font-family: "helveticaNeue-light";
+    font-size: 1.5em;
+ }
+
+.custom_page_content {
+    background-color: #fff;
+    padding: .8em;
+    border: 1px solid #bdbdbd;
+    border-top: none;
+ }
 
 /**
  * Players page
@@ -154,7 +178,6 @@ a:hover {
 .playerpage_content {
     width: 80%;
     margin: 0 auto;
-    margin-top: 2em;
 }
 
 .players_table {
@@ -193,7 +216,6 @@ a:hover {
 .teampage_content {
     width: 80%;
     margin: 0 auto;
-    margin-top: 2em;
 }
 
 .team_name {
@@ -245,14 +267,13 @@ a:hover {
  */
 .news {
     margin: 0 auto;
-    margin-top: 2em;
 }
 
 .news_box {
     width: 60%;
     margin: 0 auto;
     line-height: 1.4em;
-    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
     .news_box:hover .news_title_box {
@@ -290,14 +311,13 @@ a:hover {
  */
 .bans {
     margin: 0 auto;
-    margin-top: 2em;
 }
 
 .ban_box {
     width: 60%;
     margin: 0 auto;
     line-height: 1.4em;
-    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
     .ban_box:hover .ban_title_box {
