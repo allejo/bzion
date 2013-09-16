@@ -259,7 +259,7 @@ class Match extends Controller
      * @return array An array of match IDs
      */
     public static function getMatches($select = "id") {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select);
+        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select, 'ORDER BY timestamp DESC');
     }
 
 }
