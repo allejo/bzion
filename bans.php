@@ -23,7 +23,7 @@ foreach ($banList as $key => $id) {
     $author = new Player($ban->getAuthor());
     echo "</div>\n";
     echo "<div class=\"ban_content\">". $ban->getReason() . "\n";
-    echo "<div class=\"ban_author\">By <a href=\"" . $author->getURL() . "\">" . $author->getUsername() . "</a> at " . $ban->getUpdated() . "</div></div>\n";
+    echo "<div class=\"ban_author\">By <a href=\"" . $author->getURL() . "\">" . $author->getUsername() . "</a> " . $ban->getUpdated() . "</div></div>\n";
     echo "</div>\n";
 }
 

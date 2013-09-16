@@ -10,7 +10,7 @@ class Ban extends Controller {
 
     /**
      * The ban expiration date
-     * @var string
+     * @var TimeDate
      */
     private $expiration;
 
@@ -22,13 +22,13 @@ class Ban extends Controller {
 
     /**
      * The ban creation date
-     * @var string
+     * @var TimeDate
      */
     private $created;
 
     /**
      * The date the ban was last updated
-     * @var string
+     * @var TimeDate
      */
     private $updated;
 
@@ -55,10 +55,10 @@ class Ban extends Controller {
         $ban = $this->result;
 
         $this->player = $ban['player'];
-        $this->expiration = new DateTime($ban['expiration']);
+        $this->expiration = new TimeDate($ban['expiration']);
         $this->reason = $ban['reason'];
-        $this->created = new DateTime($ban['created']);
-        $this->updated = new DateTime($ban['updated']);
+        $this->created = new TimeDate($ban['created']);
+        $this->updated = new TimeDate($ban['updated']);
         $this->author = $ban['author'];
 
     }
@@ -68,7 +68,7 @@ class Ban extends Controller {
     }
 
     function getExpiration() {
-        return $this->expiration->format(DATE_FORMAT);
+        return $this->expiration->diffForHumans();
     }
 
     function getReason() {
@@ -76,11 +76,11 @@ class Ban extends Controller {
     }
 
     function getCreated() {
-        return $this->created->format(DATE_FORMAT);
+        return $this->created->diffForHumans();
     }
 
     function getUpdated() {
-        return $this->updated->format(DATE_FORMAT);
+        return $this->updated->diffForHumans();
     }
 
     function getAuthor() {

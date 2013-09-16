@@ -98,8 +98,8 @@ class Match extends Controller
         $this->team_a_elo_new = $match['team_a_elo_new'];
         $this->team_b_elo_new = $match['team_b_elo_new'];
         $this->elo_diff = $match['elo_diff'];
-        $this->timestamp = new DateTime($match['timestamp']);
-        $this->updated = new DateTime($match['updated']);
+        $this->timestamp = new TimeDate($match['timestamp']);
+        $this->updated = new TimeDate($match['updated']);
         $this->duration = $match['duration'];
         $this->entered_by = $match['entered_by'];
         $this->status = $match['status'];
@@ -111,7 +111,7 @@ class Match extends Controller
      * @return string The match's timestamp
      */
     function getTimestamp() {
-        return $this->timestamp->format(DATE_FORMAT);
+        return $this->timestamp->diffForHumans();
     }
 
     /**
@@ -202,7 +202,7 @@ class Match extends Controller
         $b_elo -= $diff;
         $diff = abs($diff);
 
-        $timestamp = new DateTime($timestamp);
+        $timestamp = new TimeDate($timestamp);
 
         $results = $db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
         "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format(DATE_FORMAT), $duration, $entered_by, "entered"));

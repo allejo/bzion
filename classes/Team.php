@@ -23,7 +23,7 @@ class Team extends Controller
 
     /**
      * The creation date of the teamm
-     * @var string
+     * @var TimeDate
      */
     private $created;
 
@@ -101,7 +101,7 @@ class Team extends Controller
         $this->alias = $team['alias'];
         $this->description = $team['description'];
         $this->avatar = $team['avatar'];
-        $this->created = new DateTime($team['created']);
+        $this->created = new TimeDate($team['created']);
         $this->elo = $team['elo'];
         $this->activity = $team['activity'];
         $this->leader = $team['leader'];
@@ -237,7 +237,7 @@ class Team extends Controller
      * @return string The creation date of the team
      */
     function getCreationDate() {
-        return $this->created->format(DATE_FORMAT);
+        return $this->created->diffForHumans();
     }
 
     /**

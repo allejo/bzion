@@ -16,13 +16,13 @@ class Page extends Controller {
 
     /**
      * The creation date of the page
-     * @var string
+     * @var TimeDate
      */
     private $created;
 
     /**
      * The date the page was last updated
-     * @var string
+     * @var TimeDate
      */
     private $updated;
 
@@ -57,8 +57,8 @@ class Page extends Controller {
         $this->name = $page['name'];
         $this->alias = $page['alias'];
         $this->content = $page['content'];
-        $this->created = new DateTime($page['created']);
-        $this->updated = new DateTime($page['updated']);
+        $this->created = new TimeDate($page['created']);
+        $this->updated = new TimeDate($page['updated']);
         $this->author = $page['author'];
         $this->status = $page['status'];
 
@@ -73,11 +73,11 @@ class Page extends Controller {
     }
 
     function getCreated() {
-        return $this->created->format(DATE_FORMAT);
+        return $this->created->diffForHumans();
     }
 
     function getUpdated() {
-        return $this->updated->format(DATE_FORMAT);
+        return $this->updated->diffForHumans();
     }
 
     function getAuthor() {

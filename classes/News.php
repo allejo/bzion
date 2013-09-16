@@ -56,8 +56,8 @@ class News extends Controller {
 
         $this->subject = $news['subject'];
         $this->content = $news['content'];
-        $this->created = new DateTime($news['created']);
-        $this->updated = new DateTime($news['updated']);
+        $this->created = new TimeDate($news['created']);
+        $this->updated = new TimeDate($news['updated']);
         $this->author = $news['author'];
         $this->status = $news['status'];
 
@@ -76,11 +76,11 @@ class News extends Controller {
     }
 
     function getUpdated() {
-        return $this->updated->format(DATE_FORMAT);
+        return $this->updated->diffForHumans();
     }
 
     function getCreated() {
-        return $this->created->format(DATE_FORMAT);
+        return $this->created->diffForHumans();
     }
 
     /**

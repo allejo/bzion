@@ -59,13 +59,13 @@ class Player extends Controller
 
     /**
      * The date the player joined the site
-     * @var string
+     * @var TimeDate
      */
     private $joined;
 
     /**
      * The date of the player's last login
-     * @var string
+     * @var TimeDate
      */
     private $last_login;
 
@@ -96,8 +96,8 @@ class Player extends Controller
         $this->description = $player['description'];
         $this->country = $player['country'];
         $this->timezone = $player['timezone'];
-        $this->joined = new DateTime($player['joined']);
-        $this->last_login = new DateTime($player['last_login']);
+        $this->joined = new TimeDate($player['joined']);
+        $this->last_login = new TimeDate($player['last_login']);
 
     }
 
@@ -106,7 +106,7 @@ class Player extends Controller
      * @param string $when The date of the last login
      */
     function updateLastLogin($when = "now") {
-        $last = new DateTime($when);
+        $last = new TimeDate($when);
         $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
     }
 
@@ -131,7 +131,7 @@ class Player extends Controller
      * @return string The joined date of the player
      */
     function getJoinedDate() {
-        return $this->joined->format(DATE_FORMAT);
+        return $this->joined->diffForHumans();
     }
 
     /**
@@ -145,16 +145,16 @@ class Player extends Controller
      * @param string $description The player's profile description
      * @param int $country The player's country
      * @param int $timezone The player's timezone
-     * @param DateTime $joined The date the player joined
-     * @param DateTime $last_login The timestamp of the player's last login
+     * @param TimeDate $joined The date the player joined
+     * @param TimeDate $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
     public static function newPlayer($bzid, $username, $team=0, $status="active", $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
 
         $db = Database::getInstance();
 
-        $joined = new DateTime($joined);
-        $last_login = new DateTime($last_login);
+        $joined = new TimeDate($joined);
+        $last_login = new TimeDate($last_login);
 
         $results = $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
