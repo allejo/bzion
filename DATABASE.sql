@@ -193,6 +193,7 @@
     `joined` datetime NOT NULL,
     `last_login` datetime NOT NULL,
     PRIMARY KEY (`id`),
+    UNIQUE KEY `bzid` (`bzid`),
     UNIQUE KEY `alias` (`alias`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
