@@ -159,13 +159,14 @@ a:hover {
 .custom_page_title {
     background-color: #555555;
     color: white;
+    font-family: "helveticaNeue-light";
     text-align: center;
     padding: .5em;
-    font-family: "helveticaNeue-light";
     font-size: 1.5em;
  }
 
 .custom_page_content {
+    font-family: "Baskerville";
     background-color: #fff;
     padding: .8em;
     border: 1px solid #bdbdbd;
