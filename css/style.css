@@ -352,6 +352,44 @@ a:hover {
 }
 
 /**
+ * Matches page
+ */
+.matchpage_content {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.matches_table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+    .matches_table th {
+        padding: 10px 5px 10px 5px;
+        background-color: #fff;
+    }
+
+        .matches_table th:nth-child(2) {
+            width: 30%;
+        }
+
+    .matches_table td {
+        padding: 7px 5px 7px 5px;
+    }
+
+    .matches_table tr {
+        text-align: left;
+    }
+
+        .matches_table tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
+        .matches_table tr:hover {
+            background-color: #d6d6d6;
+        }
+
+/**
  * Messages page
  */
 .groups {

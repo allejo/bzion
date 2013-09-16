@@ -178,6 +178,10 @@ class Match extends Controller
         return $this->duration;
     }
 
+    function getEnteredBy() {
+        return $this->entered_by;
+    }
+
     /**
      * Enter a new match to the database
      * @param int $a Team A's ID
