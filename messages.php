@@ -78,16 +78,6 @@ if (!$messages) {
         <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
         <form class="compose_form">
             <div class="input_group">
-                <label for="compose_subject">Subject:</label>
-                <input id="compose_subject" class="input_group_main" name="subject" type="text" placeholder="Enter message subject"
-                <?php
-                    if ($messages) {
-                        echo 'disabled value="', $currentGroup->getSubject(), '"';
-                    }
-                ?>
-                >
-            </div>
-            <div class="input_group">
                 <label for="compose_recipients">Recipients:</label>
                 <div class="input_group_main" style="padding: 0">
                     <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
@@ -110,6 +100,10 @@ if (!$messages) {
                         </optgroup>
                     </select>
                 </div>
+            </div>
+            <div class="input_group">
+                <label for="compose_subject">Subject:</label>
+                <input id="compose_subject" class="input_group_main" name="subject" type="text" placeholder="Enter message subject">
             </div>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />

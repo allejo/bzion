@@ -594,13 +594,37 @@ a:hover {
 }
 
 .input_group_main {
+    border-radius: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     display: inline-block;
-    height: 1.8em;
-    margin: 3px;
+    font-family: sans-serif;
+    height: 29px;
+    margin: 1px;
     margin-left: 0.5%;
-    padding: 0.2em;
+    padding: 5px;
     width: 90%;
+}
+
+.input_group_main[type=text] {
+    background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
+    border: 1px solid rgb(170, 170, 170);
+}
+
+::-webkit-input-placeholder {
+    color: rgb(102, 102, 102);
+    opacity: 1;
+}
+:-moz-placeholder {
+    color: rgb(102, 102, 102);
+    opacity: 1;
+}
+*::-moz-placeholder {
+    color: rgb(102, 102, 102);
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    color: rgb(102, 102, 102);
+    opacity: 1;
 }
