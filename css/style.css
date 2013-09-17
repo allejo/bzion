@@ -532,7 +532,7 @@ a:hover {
     margin-top: 5px;
     border: 1px solid #555555;
     border-radius: 15px;
-    max-width: 40%;
+    max-width: 35%;
 }
 
 .group_message_author_me, .group_message_author_other {
