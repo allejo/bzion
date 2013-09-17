@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
     <tr><th class="groups_toolbar">
         <div class="groups_toolbar_option"><a href="#">Active</a></div>
         <div class="groups_toolbar_option"><a href="#">Inactive</a></div>
-        <div class="groups_toolbar_option"><a href="#">Other</a></div>
+        <div class="groups_toolbar_option"><a href="#">Trash</a></div>
     </th></tr>
 
     <tr><td><a class='group_link' data-id='new' href='messages'>
