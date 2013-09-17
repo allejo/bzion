@@ -12,6 +12,7 @@ TODO
         - Move message to trash
         - Active and inactive
         - Leave a group?
+        - Scrollable message box so message container isn't huge
     - Notifications
     - Invites
     - Admin Interface
