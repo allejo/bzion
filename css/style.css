@@ -489,6 +489,10 @@ a:hover {
         margin-bottom: 10px;
     }
 
+    .group_message td:hover .group_message_date_me, .group_message td:hover .group_message_date_other {
+        display: inline;
+    }
+
 .group_message_toolbar {
     font-family: HelveticaNeue;
     background-color: #555555;
@@ -540,6 +544,7 @@ a:hover {
 }
 
 .group_message_date_me, .group_message_date_other {
+    display: none;
     width: 10%;
     text-align: center;
     margin: 0 auto;
@@ -559,7 +564,7 @@ a:hover {
 }
 
 .group_message_date_me {
-    padding-left: 20%;
+    float: right;
 }
 
 .group_message_from_other {
@@ -574,7 +579,7 @@ a:hover {
 }
 
 .group_message_date_other {
-    padding-right: 20%;
+    float: left;
 }
 
 /**
