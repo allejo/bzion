@@ -144,18 +144,21 @@ if (!$messages) {
 
 
         <?php
+        $prev_author = null;
         foreach($messages as $id) {
-            echo "<tr><td>";
             $msg = new Message($id);
-            echo "<div class='group_message_content";
+            $who = "other";
             if ($msg->getAuthor(true) == $_SESSION['bzid'])
-                echo " group_message_from_me'>";
-            else
-                echo " group_message_from_other'>";
+                $who = "me";
+            echo "<tr><td>";
+            if ($msg->getAuthor()->getBZID() != $prev_author)
+                echo "<div class='group_message_author_$who'>{$msg->getAuthor()->getUsername()}</div>";
+            echo "<div class='group_message_content group_message_from_$who'>";
             echo $msg->getContent();
-            echo "<div class='group_message_info'>{$msg->getAuthor()->getUsername()} {$msg->getCreationDate()}</div>";
             echo "</div>";
+            echo "<div class='group_message_date_$who'>{$msg->getCreationDate()}</div>";
             echo "</td></tr>";
+            $prev_author = $msg->getAuthor()->getBZID();
         }
         ?>
 

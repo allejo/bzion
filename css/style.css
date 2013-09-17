@@ -535,8 +535,16 @@ a:hover {
     max-width: 40%;
 }
 
-.group_message_info {
+.group_message_author_me, .group_message_author_other {
     font-size: .75em;
+}
+
+.group_message_date_me, .group_message_date_other {
+    width: 10%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: .75em;
+    margin-top: 10px;
 }
 
 .group_message_from_me {
@@ -545,9 +553,14 @@ a:hover {
     background-color: #B8B8B8;
 }
 
-    .group_message_from_me .group_message_info {
-        text-align: right;
-    }
+.group_message_author_me {
+    text-align: right;
+    margin-right: 15px;
+}
+
+.group_message_date_me {
+    padding-left: 20%;
+}
 
 .group_message_from_other {
     float: left;
@@ -555,9 +568,14 @@ a:hover {
     background-color: #E0E0E0;
 }
 
-    .group_message_from_other .group_message_info {
-        text-align: left;
-    }
+.group_message_author_other {
+    text-align: left;
+    margin-left: 15px;
+}
+
+.group_message_date_other {
+    padding-right: 20%;
+}
 
 /**
  * Compose message panel

@@ -118,6 +118,10 @@ class Player extends Controller
         return $this->username;
     }
 
+    function getBZID() {
+        return $this->bzid;
+    }
+
     /**
      * Get the player's team
      * @return Team The object representing the team
