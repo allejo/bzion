@@ -6,13 +6,16 @@ TODO
 - Get mysqldump of GU's database for testing purposes
 - Create necessary classes
     - Notification
-- Create basic test pages
+- Implement features & style pages
+    - Messages
+        - Push new messages from others to page without refresh
+        - Move message to trash
+        - Active and inactive
+        - Leave a group?
     - Notifications
-- Discuss features with admins
-- Implement different features
-	- Notifications
-	- Invites
-	- Admin Interface
+    - Invites
+    - Admin Interface
     - Maintenance
-- Style everything
+    - Profile
+- Discuss features with admins
 - Bug testing, bug testing and more bug testing
