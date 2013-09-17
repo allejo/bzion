@@ -10,8 +10,10 @@ TODO
     - Messages
         - Push new messages from others to page without refresh
         - Move message to trash
+        - Group settings
+            - Leave a group?
+            - Add/Remove members from the group
         - Active and inactive
-        - Leave a group?
         - Scrollable message box so message container isn't huge
     - Notifications
     - Invites
