@@ -520,14 +520,17 @@ a:hover {
     text-align: center;
 }
 
-.group_message_title_trash {
-    color: #fff;
+.group_message_title_icon {
     float: right;
-    margin-right: 5px;
+    display: inline-block;
+    color: #fff;
+    text-align: right;
     padding: 5px;
+    margin-top: 2px;
+    margin-right: 5px;
 }
 
-    .group_message_title_trash:hover {
+    .group_message_title_icon:hover {
         color: orange;
         cursor: pointer;
     }

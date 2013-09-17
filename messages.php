@@ -137,7 +137,8 @@ if (!$messages) {
         <tr><th class="group_message_toolbar">
             <div class="group_message_title"><?php echo $currentGroup->getSubject(); ?></div>
             <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
-            <div class="group_message_title_trash">x</div>
+            <div class="group_message_title_icon"><i class="icon-remove"></i></div>
+            <div class="group_message_title_icon"><i class="icon-cog"></i></div>
         </th></tr>
 
 
