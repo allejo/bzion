@@ -546,10 +546,8 @@ a:hover {
 .group_message_date_me, .group_message_date_other {
     display: none;
     width: 10%;
-    text-align: center;
-    margin: 0 auto;
     font-size: .75em;
-    margin-top: 10px;
+    margin-top: 14px;
 }
 
 .group_message_from_me {
@@ -565,6 +563,8 @@ a:hover {
 
 .group_message_date_me {
     float: right;
+    text-align: right;
+    margin-right: 5px;
 }
 
 .group_message_from_other {
@@ -580,6 +580,8 @@ a:hover {
 
 .group_message_date_other {
     float: left;
+    text-align: left;
+    margin-left: 5px;
 }
 
 /**
