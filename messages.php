@@ -19,6 +19,7 @@ if (isset($_GET['id'])) {
     $messages = false;
     $currentGroup = false;
 }
+
 ?>
 
 
@@ -144,11 +145,16 @@ if (!$messages) {
 
         <?php
         foreach($messages as $id) {
-            echo "<tr><td class='group_message_content'>";
+            echo "<tr><td>";
             $msg = new Message($id);
-            echo "<div>";
+            echo "<div class='group_message_content";
+            if ($msg->getAuthor(true) == $_SESSION['bzid'])
+                echo " group_message_from_me'>";
+            else
+                echo " group_message_from_other'>";
             echo $msg->getContent();
-            echo "</div><span class='group_message_info'>Sent by {$msg->getAuthor()->getUsername()} {$msg->getCreationDate()}</span>";
+            echo "<div class='group_message_info'>{$msg->getAuthor()->getUsername()} {$msg->getCreationDate()}</div>";
+            echo "</div>";
             echo "</td></tr>";
         }
         ?>

@@ -485,6 +485,10 @@ a:hover {
     background-color: #fff;
 }
 
+    .group_message tr:last-child .group_message_content {
+        margin-bottom: 10px;
+    }
+
 .group_message_toolbar {
     font-family: HelveticaNeue;
     background-color: #555555;
@@ -524,12 +528,35 @@ a:hover {
 }
 
 .group_message_content {
-    padding: 10px;
+    padding: 7px;
+    margin-top: 5px;
+    border: 1px solid #555555;
+    border-radius: 15px;
 }
 
 .group_message_info {
-    font-size: 9pt;
+    font-size: .75em;
 }
+
+.group_message_from_me {
+    float: right;
+    margin-right: 10px;
+    background-color: #B8B8B8;
+}
+
+    .group_message_from_me .group_message_info {
+        text-align: right;
+    }
+
+.group_message_from_other {
+    float: left;
+    margin-left: 10px;
+    background-color: #E0E0E0;
+}
+
+    .group_message_from_other .group_message_info {
+        text-align: left;
+    }
 
 /**
  * Compose message panel

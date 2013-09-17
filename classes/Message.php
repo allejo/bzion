@@ -51,8 +51,8 @@ class Message extends Controller
 
         $message = $this->result;
 
-        $this->to = $message['group_to'];
-        $this->from = $message['player_from'];
+        $this->group_to = $message['group_to'];
+        $this->player_from = $message['player_from'];
         $this->timestamp = new TimeDate($message['timestamp']);
         $this->message = $message['message'];
         $this->status = $message['status'];
@@ -70,8 +70,11 @@ class Message extends Controller
      * Gets the creator of the message
      * @return Player An object representing the message's author
      */
-    public function getAuthor() {
-        return new Player($this->from);
+    public function getAuthor($bzid = false) {
+        if ($bzid)
+            return $this->player_from;
+        else
+            return new Player($this->player_from);
     }
 
     /**
