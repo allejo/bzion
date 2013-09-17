@@ -520,6 +520,18 @@ a:hover {
     text-align: center;
 }
 
+.group_message_title_trash {
+    color: #fff;
+    float: right;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+    .group_message_title_trash:hover {
+        color: orange;
+        cursor: pointer;
+    }
+
 .group_toolbar_text {
     font-weight: normal;
     font-size: 1.3em;
