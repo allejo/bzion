@@ -545,7 +545,7 @@ a:hover {
 
 .group_message_date_me, .group_message_date_other {
     display: none;
-    width: 10%;
+    /*width: 10%;*/
     font-size: .75em;
     margin-top: 14px;
 }
