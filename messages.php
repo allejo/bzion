@@ -59,9 +59,11 @@ foreach ($groups as $key => $id) {
     $lastMessage = $group->getLastMessage();
     $playerFrom = new Player($lastMessage['player_from']);
     $playerFrom = $playerFrom->getUsername();
-    $lastMessage = $lastMessage['message'];
+    $last = substr($lastMessage['message'], 0, 50);
+    if (strlen($lastMessage['message']) > 50)
+        $last .= "...";
     echo "<div class='group_members'>$groupMembers</div>";
-    echo "<div class='group_last_message'>$playerFrom: $lastMessage</div>";
+    echo "<div class='group_last_message'>$playerFrom: $last</div>";
     echo "</a></td></tr>\n";
 }
 

@@ -556,6 +556,7 @@ a:hover {
 
 .group_message_author_me, .group_message_author_other {
     font-size: .75em;
+    margin-top: 10px;
 }
 
 .group_message_date_me, .group_message_date_other {
