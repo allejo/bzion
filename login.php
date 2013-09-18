@@ -4,7 +4,7 @@ require_once("includes/checkToken.php");
 require_once("bzion-load.php");
 
 if (!isset($_GET["token"]) && !isset($_GET["username"])) {
-    $header->go("home");
+    Header::go("home");
 }
 
 $token = $_GET["token"];
