@@ -6,6 +6,10 @@
     padding: 0;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     background-image: url("imgs/bg.png");
     font-family: "helveticaNeue-light", Helvetica, Sans-Serif;
@@ -144,6 +148,7 @@ a:hover {
  * Content
  */
 .content {
+    height: 100%;
     width: 90%;
     margin: 0 auto;
     padding: 1em 0 1em 0;
@@ -476,9 +481,15 @@ a:hover {
 }
 
 .group_messages {
+    height: 100%;
     width: 70%;
     float: left;
     margin-top: 2.1em;
+}
+
+.group_message_scroll {
+    height: 70%;
+    overflow-y: auto;
 }
 
 .group_message {
@@ -496,8 +507,9 @@ a:hover {
     }
 
 .group_message_toolbar {
-    font-family: HelveticaNeue;
+    font-family: HelveticaNeue, sans-serif;
     background-color: #555555;
+    overflow-y: auto;
 }
 
 .group_message_title {

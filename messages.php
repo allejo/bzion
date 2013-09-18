@@ -119,9 +119,7 @@ if (!$messages) {
 <?php
 } else {
 ?>
-    <table class="group_message">
-
-        <?php
+            <?php
 
         $groupUsernames = array();
         foreach ($currentGroup->getMembers(true) as $key => $value) {
@@ -135,37 +133,42 @@ if (!$messages) {
 
         ?>
 
-        <tr><th class="group_message_toolbar">
-            <div class="group_message_title"><?php echo $currentGroup->getSubject(); ?></div>
-            <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
-            <div class="group_message_title_icon"><i class="icon-remove"></i></div>
-            <div class="group_message_title_icon"><i class="icon-cog"></i></div>
-        </th></tr>
+    <div class="group_message_toolbar">
+        <div class="group_message_title"><?php echo $currentGroup->getSubject(); ?></div>
+        <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
+        <div class="group_message_title_icon"><i class="icon-remove"></i></div>
+        <div class="group_message_title_icon"><i class="icon-cog"></i></div>
+    </div>
 
 
-        <div style="clear: both"></div>
+    <div style="clear: both"></div>
 
+    <div class="group_message_scroll">
 
-        <?php
-        $prev_author = null;
-        foreach($messages as $id) {
-            $msg = new Message($id);
-            $who = "other";
-            if ($msg->getAuthor(true) == $_SESSION['bzid'])
-                $who = "me";
-            echo "<tr><td>";
-            if ($msg->getAuthor()->getBZID() != $prev_author)
-                echo "<div class='group_message_author_$who'>{$msg->getAuthor()->getUsername()}</div>";
-            echo "<div class='group_message_content group_message_from_$who'>";
-            echo $msg->getContent();
-            echo "</div>";
-            echo "<div class='group_message_date_$who'>{$msg->getCreationDate()}</div>";
-            echo "</td></tr>";
-            $prev_author = $msg->getAuthor()->getBZID();
-        }
-        ?>
+        <table class="group_message">
 
-    </table> <!-- end .group_message -->
+            <?php
+            $prev_author = null;
+            foreach($messages as $id) {
+                $msg = new Message($id);
+                $who = "other";
+                if ($msg->getAuthor(true) == $_SESSION['bzid'])
+                    $who = "me";
+                echo "<tr><td>";
+                if ($msg->getAuthor()->getBZID() != $prev_author)
+                    echo "<div class='group_message_author_$who'>{$msg->getAuthor()->getUsername()}</div>";
+                echo "<div class='group_message_content group_message_from_$who'>";
+                echo $msg->getContent();
+                echo "</div>";
+                echo "<div class='group_message_date_$who'>{$msg->getCreationDate()}</div>";
+                echo "</td></tr>";
+                $prev_author = $msg->getAuthor()->getBZID();
+            }
+            ?>
+
+        </table> <!-- end .group_message -->
+
+    </div> <!-- end .group_message_scroll -->
 
     <form class="alt_compose_form">
         <input type="text" id="composeArea" class="input_compose_area" placeholder="Enter your message here..." />
