@@ -488,7 +488,7 @@ a:hover {
 }
 
 .group_message_scroll {
-    height: 70%;
+    max-height: 70%;
     overflow-y: auto;
 }
 
