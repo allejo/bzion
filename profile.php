@@ -3,6 +3,11 @@
 include("bzion-load.php");
 
 $header = new Header();
+
+if (!isset($_SESSION['username'])) {
+    $header->go("home");
+}
+
 $header->draw("Profile");
 
 $me = new Player($_SESSION['bzid']);
