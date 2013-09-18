@@ -18,6 +18,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # if you are experiencing issues with mod_rewrite
 #RewriteBase /
 
+# Rewrite rule for profile
+# Example:
+#       http://example.com/profile.php
+#                   becomes
+#       http://example.com/profile
+RewriteRule ^profile profile.php [QSA,NC,L]
+
 # Rewrite rule for teams
 # Example:
 #       http://example.com/teams.php?alias=bzion
