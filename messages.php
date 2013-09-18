@@ -113,8 +113,7 @@ if (!$messages) {
             <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button" data-style="zoom-out">
                 <span class="ladda-label">Submit</span>
             </button>
-            <button type="reset">Reset</button>
-            <button>Cancel editing</button>
+            <button type="reset" class="ladda-button">Reset</button>
         </form> <!-- end .compose_form -->
     </div> <!-- end .compose_panel -->
 <?php
