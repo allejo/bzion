@@ -67,6 +67,19 @@ class Message extends Controller
     }
 
     /**
+     * Get a shorter, unformatted version of the message
+     * @return string
+     */
+    public function getSummary($maxlength=50) {
+        $message = $this->message;
+
+        if (mb_strlen($this->message) > $maxlength)
+            return mb_substr($message, 0, $maxlength-1) . "...";
+
+        return $message;
+    }
+
+    /**
      * Gets the creator of the message
      * @return Player An object representing the message's author
      */

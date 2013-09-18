@@ -52,9 +52,9 @@ class Group extends Controller {
     }
 
     function getLastMessage() {
-        $result = $this->db->query("SELECT player_from,message FROM `messages` WHERE `group_to` = ? ORDER BY id DESC LIMIT 0,1", "i", array($this->id));
+        $ids = self::getIdsFrom('group_to', array($this->id), 'i', false, 'id', 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
-        return $result[0];
+        return new Message($ids[0]);
     }
 
     /**

@@ -13,4 +13,6 @@ foreach ($classesDir as $dir) {
 
 spl_autoload_register(array("AutoLoader", "loadClass"));
 
+mb_internal_encoding("UTF-8");
+
 $db = new Database();

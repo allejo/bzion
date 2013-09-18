@@ -57,13 +57,11 @@ foreach ($groups as $key => $id) {
         $groupMembers = implode(", ", $groupUsernames);
 
     $lastMessage = $group->getLastMessage();
-    $playerFrom = new Player($lastMessage['player_from']);
-    $playerFrom = $playerFrom->getUsername();
-    $last = substr($lastMessage['message'], 0, 50);
-    if (strlen($lastMessage['message']) > 50)
-        $last .= "...";
+    $playerFrom = $lastMessage->getAuthor()->getUsername();
+    $messageSummary = $lastMessage->getSummary(50);
+    
     echo "<div class='group_members'>$groupMembers</div>";
-    echo "<div class='group_last_message'>$playerFrom: $last</div>";
+    echo "<div class='group_last_message'>$playerFrom: $messageSummary</div>";
     echo "</a></td></tr>\n";
 }
 
