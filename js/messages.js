@@ -18,6 +18,8 @@ function updatePage() {
             $("#groupMessages").load(url + " #groupMessages > *", function() {
                 $(".chosen-select").chosen();
             });
+            var scrollBottom = Math.max($('.group_message').height() - $('.group_message_scroll').height(), 0);
+            $('.group_message_scroll').scrollTop(scrollBottom);
         }
     } else {
         $(".chosen-select").chosen();

@@ -88,7 +88,6 @@ if (!$messages) {
 
                           foreach (Player::getPlayers() as $key => $bzid) {
                               $player = new Player($bzid);
-
                               $selected = "";
                               if ($currentGroup && $currentGroup->isMember($bzid)) {
                                   $selected = 'selected=""';
