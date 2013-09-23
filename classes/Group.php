@@ -58,6 +58,10 @@ class Group extends Controller {
         return new Player($this->creator);
     }
 
+    function isCreator($bzid) {
+        return ($this->creator == $bzid);
+    }
+
     function getLastActivity($human = true) {
         if ($human)
             return $this->last_activity->diffForHumans();
