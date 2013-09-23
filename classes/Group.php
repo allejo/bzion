@@ -143,7 +143,7 @@ class Group extends Controller {
         foreach ($groups as $key => $value) {
             $group = new Group($value);
 
-            if ($group->getLastActivity(false)->diffInSeconds($me->getLastlogin(false)) < 0) {
+            if ($group->getLastActivity(false)->diffInSeconds($me->getLastlogin(false)) > 0) {
                 return true;
             }
         }
