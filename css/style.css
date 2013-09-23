@@ -73,7 +73,7 @@ a:hover {
 }
 
 .navbuttonicon {
-    width: 3em;
+    width: 3%;
     line-height: 3.3em;
     vertical-align: middle;
     text-align: center;
@@ -84,7 +84,7 @@ a:hover {
 }
 
 .navbutton {
-    min-width: 5.4em;
+    min-width: 6%;
     line-height: 3.3em;
     padding-left: 0.4em;
     padding-right: 0.4em;
