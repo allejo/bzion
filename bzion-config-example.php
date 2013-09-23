@@ -27,7 +27,7 @@ $classesDir = array (
  * League specific settings
  */
 DEFINE("DURATION", serialize(array(
-	"20" => (2/3) // 20 minute match is 2/3rds of a normal match's ELO
+    "20" => (2/3) // 20 minute match is 2/3rds of a normal match's ELO
 )));
 
 /*
@@ -41,7 +41,7 @@ DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where error
  * Miscellaneous settings
  */
 DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server
-DEFINE("UPDATE_INTERVAL", "5"); // Server polling interval in minutes
+DEFINE("UPDATE_INTERVAL", 5); // Server polling interval in minutes
 DEFINE("DEVELOPMENT", FALSE); // Whether to enable some functions which make debugging easier
                               // WARNING: Setting this to TRUE might introduce significant security risks
                               // and should NOT be used in a production environment
