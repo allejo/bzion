@@ -42,6 +42,7 @@
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `subject` varchar(50) NOT NULL,
     `last_activity` datetime NOT NULL,
+    `creator` int(10) unsigned NOT NULL,
     `status` set('active', 'disabled', 'deleted', 'reported') NOT NULL DEFAULT 'active',
     PRIMARY KEY (`id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
