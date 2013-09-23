@@ -48,8 +48,13 @@ class Header {
     <div class="navbar">
     <div class="navmenu">
         <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
-        <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left"><i class="icon-comments"></i></a>
+        <?php if (isset($_SESSION['username'])) { 
+        
+        if (Group::hasNewMessage($_SESSION['bzid'])) {
+            $new = "new_message";
+        }
+        ?>
+        <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left <?php echo $new; ?>"><i class="icon-comments"></i></a>
         <?php } ?>
         <a href="<?php echo $baseUrl; ?>/news" class="navbuttonicon left"><i class="icon-pushpin"></i></a>
         <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a>

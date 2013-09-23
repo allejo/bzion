@@ -47,8 +47,11 @@ class Group extends Controller {
         return $this->subject;
     }
 
-    function getLastActivity() {
-        return $this->last_activity->diffForHumans();
+    function getLastActivity($human = true) {
+        if ($human)
+            return $this->last_activity->diffForHumans();
+        else
+            return $this->last_activity;
     }
 
     function getLastMessage() {
@@ -131,6 +134,21 @@ class Group extends Controller {
                                     AND `player` = ?", "ii", array($this->id, $bzid));
 
         return count($result) > 0;
+    }
+
+    public static function hasNewMessage($bzid) {
+        $groups = Group::getGroups($bzid);
+        $me = new Player($bzid);
+
+        foreach ($groups as $key => $value) {
+            $group = new Group($value);
+
+            if ($group->getLastActivity(false)->diffInSeconds($me->getLastlogin(false)) < 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

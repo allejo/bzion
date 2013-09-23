@@ -138,6 +138,13 @@ class Player extends Controller
         return $this->joined->diffForHumans();
     }
 
+    function getLastLogin($human = true) {
+        if ($human)
+            return $this->last_login->diffForHumans();
+        else
+            return $this->last_login;
+    }
+
     /**
      * Enter a new player to the database
      * @param int $bzid The player's bzid
