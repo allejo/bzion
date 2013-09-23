@@ -15,6 +15,12 @@ class Group extends Controller {
     private $last_activity;
 
     /**
+     * The bzid of the creator of the group
+     * @var int
+     */
+    private $creator;
+
+    /**
      * The status of the group
      *
      * Can be 'active', 'disabled', 'deleted' or 'reported'
@@ -28,8 +34,8 @@ class Group extends Controller {
     const TABLE = "groups";
 
     /**
-     * Construct a new message
-     * @param int $id The message's id
+     * Construct a new group
+     * @param int $id The group's id
      */
     function __construct($id) {
 
@@ -40,11 +46,16 @@ class Group extends Controller {
 
         $this->subject = $group['subject'];
         $this->last_activity = TimeDate::parse($group['last_activity']);
+        $this->creator = $group['creator'];
         $this->status = $group['status'];
     }
 
     function getSubject() {
         return $this->subject;
+    }
+
+    function getCreator() {
+        return new Player($this->creator);
     }
 
     function getLastActivity($human = true) {
