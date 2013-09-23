@@ -33,6 +33,12 @@ class Page extends Controller {
     private $author;
 
     /**
+     * Whether the page is the home page
+     * @var int
+     */
+    private $home;
+
+    /**
      * The status of the page
      * @var string
      */
@@ -60,6 +66,7 @@ class Page extends Controller {
         $this->created = new TimeDate($page['created']);
         $this->updated = new TimeDate($page['updated']);
         $this->author = $page['author'];
+        $this->home = $page['home'];
         $this->status = $page['status'];
 
     }
@@ -86,6 +93,10 @@ class Page extends Controller {
 
     function getStatus() {
         return $this->status;
+    }
+
+    function isHomePage() {
+        return $this->home;
     }
 
     /**
@@ -127,6 +138,10 @@ class Page extends Controller {
         }
 
         return $alias;
+    }
+
+    public static function getHomePage() {
+        return new Page(parent::getIdFrom(1, "home"));
     }
 
 }

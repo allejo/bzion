@@ -66,7 +66,8 @@ class Header {
 
         foreach ($pages as $key => $id) {
             $page = new Page($id);
-            echo "<a href='" . $page->getURL() . "' class='navbutton left'>" . $page->getName() . "</a> ";
+            if (!$page->isHomePage())
+                echo "<a href='" . $page->getURL() . "' class='navbutton left'>" . $page->getName() . "</a> ";
         }
 
         ?>
