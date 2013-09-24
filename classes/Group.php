@@ -159,7 +159,7 @@ class Group extends Controller {
             $group = new Group($value);
 
             // THIS DOESNT WORK
-            if ($group->getLastActivity(false)->diffInSeconds($me->getLastlogin(false)) > 0) {
+            if ($group->getLastActivity(false)->gt($me->getLastlogin(false))) {
                 return true;
             }
         }
