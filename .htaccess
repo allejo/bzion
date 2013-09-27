@@ -24,7 +24,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 #                   becomes
 #       http://example.com/profile/edit
 RewriteRule ^profile profile.php [QSA,NC,L]
-RewriteRule ^teams/([0-9a-z\-_]+)$ teams.php?action=$1 [QSA,NC,L]
+RewriteRule ^profile/([0-9a-z\-_]+)$ profile.php?action=$1 [QSA,NC,L]
 
 # Rewrite rule for teams
 # Example:
