@@ -23,8 +23,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 #       http://example.com/profile.php?action=edit
 #                   becomes
 #       http://example.com/profile/edit
+RewriteRule ^profile/(.+)$ profile.php?action=$1 [QSA,NC,L]
 RewriteRule ^profile profile.php [QSA,NC,L]
-RewriteRule ^profile/([0-9a-z\-_]+)$ profile.php?action=$1 [QSA,NC,L]
 
 # Rewrite rule for teams
 # Example:
@@ -32,7 +32,7 @@ RewriteRule ^profile/([0-9a-z\-_]+)$ profile.php?action=$1 [QSA,NC,L]
 #                   becomes
 #       http://example.com/teams/bzion
 RewriteRule ^teams/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
-RewriteRule ^teams/([0-9a-z\-_]+)$ teams.php?alias=$1 [QSA,NC,L]
+RewriteRule ^teams/(.+)$ teams.php?alias=$1 [QSA,NC,L]
 RewriteRule ^teams teams.php [QSA,NC,L]
 
 # Rewrite rule for players
