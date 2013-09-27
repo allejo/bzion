@@ -122,6 +122,14 @@ class Player extends Controller
         return $this->bzid;
     }
 
+    function getAvatar() {
+        return $this->avatar;
+    }
+
+    function getDescription() {
+        return $this->description;
+    }
+
     /**
      * Get the player's team
      * @return Team The object representing the team
