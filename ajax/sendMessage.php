@@ -44,16 +44,34 @@ try {
         throw new Exception("Bad request");
     } else {
         // Create a group and send a message to it
+
+        $subject = htmlspecialchars($_POST['subject']);
         $recipients = explode(',', $_POST['to']);
 
-        if (count($recipients) < 1 || trim($_POST['to']) == ''){
-            throw new Exception("You need to specify at least one recipient!");
+        if (trim($subject) == '')
+            throw new Exception("You need to specify a subject for your message.");
+
+        if (count($recipients) < 1 || trim($_POST['to']) == '') {
+            if (DEVELOPMENT)
+                $recipients = array();
+            else
+                throw new Exception("You need to specify at least one recipient.");
         }
 
-        // Add currently logged-in user to the list of recipients, if they are
-        // not yet there
+        foreach ($recipients as $bzid) {
+            if (!DEVELOPMENT && $bzid == $_SESSION['bzid'] && count($recipients) < 2)
+                throw new Exception("You can't send a message to yourself!");
+
+            $player = new Player($bzid);
+
+            if (!$player->isValid()) {
+                throw new Exception("One of the recipients you specified does not exist.");
+            }
+        }
+
+        // Add the currently logged-in user to the list of recipients, if he isn't there already
         $recipients[] = $_SESSION['bzid'];
-        $group_to = Group::createGroup(htmlspecialchars($_POST['subject']), array_unique($recipients));
+        $group_to = Group::createGroup($subject, array_unique($recipients));
 
         Message::sendMessage($group_to->getId(), $_SESSION['bzid'], $content);
     }

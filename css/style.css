@@ -123,7 +123,7 @@ a:hover {
     padding: 0.4em 1em;
     text-align: center;
     top: -1px;
-    z-index: 10;
+    z-index: 30;
 }
 
     .notification i {

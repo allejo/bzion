@@ -168,7 +168,3 @@ function notify(message, type) {
     });
 }
 
-function hideNotification() {
-
-}
-
