@@ -12,16 +12,14 @@ function updatePage() {
             url += hash;
             $(".groups").load(url + " .groups > *");
             $("#groupMessages").load(url + " #groupMessages > *", function() {
-                $(".chosen-select").chosen();
+                // Scroll message list to the bottom
+                $(".group_message_scroll").each(function() {
+                    this.scrollTop = this.scrollHeight;
+                });
             });
         } else {
             $("#groupMessages").load(url + " #groupMessages > *", function() {
                 $(".chosen-select").chosen();
-            });
-
-            // Scroll message list to the bottom
-            $(".group_message_scroll").each(function() {
-                this.scrollTop = this.scrollHeight;
             });
         }
     } else {
