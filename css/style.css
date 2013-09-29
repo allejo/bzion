@@ -686,7 +686,6 @@ a:hover {
     display: table-cell;
     padding-right: 5px;
     text-align: right;
-    min-width: 250px;
 }
 
 .input_group_main {
@@ -700,10 +699,13 @@ a:hover {
 }
 
 .input_group_main input[type=text] {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
     border: 1px solid rgb(170, 170, 170);
     margin-top: 1px;
-    padding: 5px;
+    padding: 5px 5px 5px 5px;
     font-family: sans-serif;
     font-size: 13px;
     width: 100%;

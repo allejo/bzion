@@ -1,5 +1,11 @@
 var response_group = 0;
 
+function initializeChosen() {
+    $(".chosen-select").chosen();
+    $(".chosen-container, .chosen-container input").css("width", "100%");
+    $(".chosen-container input").css("height", "25px");
+}
+
 function updatePage() {
     // Load the page if just the hash is provided in the URL, example:
     // http://bzion.com/messages#21
@@ -19,11 +25,11 @@ function updatePage() {
             });
         } else {
             $("#groupMessages").load(url + " #groupMessages > *", function() {
-                $(".chosen-select").chosen();
+                initializeChosen()
             });
         }
     } else {
-        $(".chosen-select").chosen();
+        initializeChosen();
     }
 }
 
