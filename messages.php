@@ -171,9 +171,9 @@ if (!$messages) {
 
     </div> <!-- end .group_message_scroll -->
 
-    <form class="alt_compose_form">
+    <form class="alt_compose_form" autocomplete="off">
         <input type="text" id="composeArea" class="input_compose_area" placeholder="Enter your message here..." />
-        <button id="composeButton" onclick="sendResponse()" type="button" class="ladda-button" data-style="zoom-out" data-size="xs">
+        <button id="composeButton" onclick="sendResponse()" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
             <span class="ladda-label">Submit</span>
         </button>
     </form> <!-- end .alt_compose_form -->
