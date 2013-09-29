@@ -18,7 +18,11 @@ function updatePage() {
             $("#groupMessages").load(url + " #groupMessages > *", function() {
                 $(".chosen-select").chosen();
             });
-            $(".group_message_scroll").scrollTop = $(".group_message_scroll").prop("scrollHeight");
+
+            // Scroll message list to the bottom
+            $(".group_message_scroll").each(function() {
+                this.scrollTop = this.scrollHeight;
+            });
         }
     } else {
         $(".chosen-select").chosen();

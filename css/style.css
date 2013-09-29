@@ -673,10 +673,20 @@ a:hover {
     margin-top: 2px;
 }
 
+.input_group {
+    display: table;
+    table-layout: auto;
+}
+
+.input_group_row {
+    display: table-row;
+}
+
 .input_group label {
-    display: inline-block;
+    display: table-cell;
+    padding-right: 5px;
     text-align: right;
-    width: 7%;
+    min-width: 250px;
 }
 
 .input_group_main {
@@ -684,19 +694,22 @@ a:hover {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    display: inline-block;
-    font-family: sans-serif;
-    font-size: 13px;
+    display: table-cell;
     height: 29px;
-    margin: 1px;
-    margin-left: 0.5%;
-    padding: 5px;
-    width: 90%;
+    width: 100%;
 }
 
-.input_group_main[type=text] {
+.input_group_main input[type=text] {
     background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
     border: 1px solid rgb(170, 170, 170);
+    margin-top: 1px;
+    padding: 5px;
+    font-family: sans-serif;
+    font-size: 13px;
+    width: 100%;
+}
+
+.input_group_main .chosen-container {
 }
 
 ::-webkit-input-placeholder {

@@ -59,7 +59,7 @@ foreach ($groups as $key => $id) {
     $lastMessage = $group->getLastMessage();
     $playerFrom = $lastMessage->getAuthor()->getUsername();
     $messageSummary = $lastMessage->getSummary(50);
-    
+
     echo "<div class='group_members'>$groupMembers</div>";
     echo "<div class='group_last_message'>$playerFrom: $messageSummary</div>";
     echo "</a></td></tr>\n";
@@ -79,31 +79,35 @@ if (!$messages) {
         <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
         <form class="compose_form">
             <div class="input_group">
-                <label for="compose_recipients">Recipients:</label>
-                <div class="input_group_main" style="padding: 0">
-                    <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
-                        <option value=""></option>
-                        <optgroup label="Players">
-                          <?php
+                <div class="input_group_row">
+                    <label for="compose_recipients">Recipients:</label>
+                    <div class="input_group_main" style="padding: 0">
+                        <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
+                            <option value=""></option>
+                            <optgroup label="Players">
+                              <?php
 
-                          foreach (Player::getPlayers() as $key => $bzid) {
-                              $player = new Player($bzid);
-                              $selected = "";
-                              if ($currentGroup && $currentGroup->isMember($bzid)) {
-                                  $selected = 'selected=""';
+                              foreach (Player::getPlayers() as $key => $bzid) {
+                                  $player = new Player($bzid);
+                                  $selected = "";
+                                  if ($currentGroup && $currentGroup->isMember($bzid)) {
+                                      $selected = 'selected=""';
+                                  }
+
+                                  echo "<option $selected value=\"$bzid\">", $player->getUsername(), "</option>";
                               }
 
-                              echo "<option $selected value=\"$bzid\">", $player->getUsername(), "</option>";
-                          }
-
-                          ?>
-                        </optgroup>
-                    </select>
+                              ?>
+                            </optgroup>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="input_group">
-                <label for="compose_subject">Subject:</label>
-                <input id="compose_subject" class="input_group_main" name="subject" type="text" placeholder="Enter message subject">
+                <div class="input_group_row">
+                    <label for="compose_subject">Subject:</label>
+                    <div class="input_group_main">
+                        <input id="compose_subject" name="subject" type="text" placeholder="Enter message subject">
+                    </div>
+                </div>
             </div>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <br />
