@@ -88,6 +88,9 @@ if (!$messages) {
                               <?php
 
                               foreach (Player::getPlayers() as $key => $bzid) {
+                                  // Don't add the currently logged in player to the list
+                                  if ($bzid == $_SESSION['bzid']) continue;
+
                                   $player = new Player($bzid);
                                   $selected = "";
                                   if ($currentGroup && $currentGroup->isMember($bzid)) {

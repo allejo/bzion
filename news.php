@@ -2,8 +2,6 @@
 
 include("bzion-load.php");
 
-split(":", "test:test:test", 3);
-
 $header = new Header("News");
 
 $header->draw();
