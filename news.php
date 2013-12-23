@@ -2,6 +2,8 @@
 
 include("bzion-load.php");
 
+split(":", "test:test:test", 3);
+
 $header = new Header("News");
 
 $header->draw();
@@ -10,7 +12,7 @@ $newsArticles = News::getNews();
 
 ?>
 
-<div class="news"> 
+<div class="news">
 <?php
 
 foreach ($newsArticles as $key => $id) {
