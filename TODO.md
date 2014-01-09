@@ -18,6 +18,6 @@ TODO
     - Invites
     - Admin Interface
     - Maintenance
-    - Profile
+    - Profile (Add more editing functionality)
 - Discuss features with admins
 - Bug testing, bug testing and more bug testing
