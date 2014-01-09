@@ -40,28 +40,28 @@ class Header {
         <meta charset="utf-8">
         <title><?php echo $title; ?></title>
 
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-          <script src="<?php echo $baseUrl; ?>/includes/jquery.cookie.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="<?php echo $baseUrl; ?>/includes/jquery-cookie/jquery.cookie.js"></script>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/ladda/dist/ladda.min.css" />
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
     </head>
     <script>
-           on_load_cookie = function(){
-  if ($.cookie('theme') !== null){
-              //console.log( $.cookie("theme") );
-              var theme_name = $.cookie("theme");
-              var nstr = $.trim(theme_name)
-              console.log(nstr);
-             if (nstr == "Colorful"){
-                var css_append_str = "<link rel='stylesheet' href='css/themes/colorful.css'>";
-                $("head").append(css_append_str);
-              }
-            }else{
-              console.log("cookie nicht! NEEIINNNN");
-           }
-    }
+        on_load_cookie = function(){
+            if ($.cookie('theme') !== null) {
+                //console.log( $.cookie("theme") );
+                var theme_name = $.cookie("theme");
+                var nstr = $.trim(theme_name);
+                console.log(nstr);
+                if (nstr == "Colorful") {
+                    var css_append_str = "<link rel='stylesheet' href='css/themes/colorful.css'>";
+                    $("head").append(css_append_str);
+                }
+            } else{
+                console.log("cookie nicht! NEEIINNNN");
+            }
+        }
   </script>
     <body onload="on_load_cookie()">
     <div class="navbar">
