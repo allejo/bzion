@@ -20,14 +20,15 @@ function notify(message, type) {
     // Determine which icon should be used
     switch(type) {
         case "success":
-          icon = "ok"
-          break;
+            icon = "ok";
+            break;
         case "error":
-          icon = "exclamation-sign"
-          break;
+            icon = "exclamation-sign";
+            break;
         default:
-          icon = "question"
-        }
+            icon = "question";
+            break;
+    }
 
     $(".notification i").attr("class", "icon-"+icon);
 
@@ -35,6 +36,7 @@ function notify(message, type) {
 
     not.animate({
         top: "0"
-        }, 500, function() {
-    });
+    }, 500);
+
+    not.delay(2000).fadeOut(1000);
 }
