@@ -14,7 +14,6 @@ TODO
             - Leave a group?
             - Add/Remove members from the group
         - Active and inactive
-        - Scrollable message box so message container isn't huge
     - Notifications
     - Invites
     - Admin Interface
