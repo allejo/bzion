@@ -52,7 +52,7 @@ class Player extends Controller
     private $country;
 
     /**
-     * The player's timezone, in terms of distance from UTC (e.x. -5 for UTC-5)
+     * The player's timezone, in terms of distance from UTC (i.e. -5 for UTC-5)
      * @var int
      */
     private $timezone;
@@ -142,11 +142,43 @@ class Player extends Controller
     }
 
     /**
+     * Set the player's avatar
+     * @param string The URL for the avatar
+     */
+    function setAvatar($avatar) {
+        $results = $this->db->query("UPDATE players SET avatar = ? WHERE bzid = ?", "si", array($avatar, $this->bzid));
+    }
+
+    /**
      * Get the player's description
      * @return string The description
      */
     function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set the player's description
+     * @param string The description
+     */
+    function setDescription($description) {
+        $results = $this->db->query("UPDATE players SET description = ? WHERE bzid = ?", "si", array($description, $this->bzid));
+    }
+
+    /**
+     * Get the player's timezone
+     * @return string The timezone
+     */
+    function getTimezone() {
+        return $this->timezone;
+    }
+
+    /**
+     * Set the player's timezone
+     * @param string The timezone
+     */
+    function setTimezone($timezone) {
+        $results = $this->db->query("UPDATE players SET timezone = ? WHERE bzid = ?", "si", array($timezone, $this->bzid));
     }
 
     /**
