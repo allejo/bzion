@@ -10,16 +10,12 @@ if (!isset($_SESSION['username'])) {
 
 $me = new Player($_SESSION['bzid']);
 
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-}
-
-if (isset($action) && ($action == "edit")) {
+if (isset($_GET['action']) && $_GET['action'] == "edit") {
     $header->draw("Profile :: Edit");
     ?>
 
     <h3>Edit Profile</h3>
-    <form action="edit" method="post">
+    <form>
         Avatar: <input type="text" name="avatar" value="<?php echo $me->getAvatar(); ?>" size="100" class="profile_avatar"><br />
         Country: <select name="country" class="profile_country">
             <?php
@@ -35,13 +31,15 @@ if (isset($action) && ($action == "edit")) {
         Timezone: <select name="timezone" class="profile_timezone">
             <?php
             for ($i=-12; $i <= 12; $i++) { 
-                if ($i >= 0) $plus = "+";
+                $plus = ($i >= 0) ? "+" : "";
                 echo "<option value='$i'>GMT $plus$i</option>";
             }
             ?>
         </select><br />
         Profile comments:<br /><textarea value="description" rows="5" cols="40" name="description" class="profile_description"><?php echo $me->getDescription(); ?></textarea><br />
-        <button type="submit" onclick="updateProfile()" name="submit" value="Update Profile">
+        <button onclick="updateProfile()" type="button" class="ladda-button" data-style="zoom-out">
+                <span class="ladda-label">Update</span>
+            </button>
     </form>
     
     <?php
@@ -61,7 +59,7 @@ if (isset($action) && ($action == "edit")) {
 
     echo "<br />More content coming soon...<br />";
 
-    echo "<br /><a href='profile/edit'>Edit your profile...</a>";
+    echo "<br /><a href='edit'>Edit your profile...</a>";
 
 }
 
