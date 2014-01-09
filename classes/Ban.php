@@ -9,6 +9,12 @@ class Ban extends Controller {
     private $player;
 
     /**
+     * The IP of the banned player if the league would like to implement a global ban list
+     * @var string
+     */
+    private $ipAddress;
+
+    /**
      * The ban expiration date
      * @var TimeDate
      */
@@ -55,6 +61,7 @@ class Ban extends Controller {
         $ban = $this->result;
 
         $this->player = $ban['player'];
+        $this->ipAddress = $ban['ip_address'];
         $this->expiration = new TimeDate($ban['expiration']);
         $this->reason = $ban['reason'];
         $this->created = new TimeDate($ban['created']);
@@ -65,6 +72,10 @@ class Ban extends Controller {
 
     function getPlayer() {
         return $this->player;
+    }
+
+    function getIpAddress() {
+        return $this->ipAddress;
     }
 
     function getExpiration() {

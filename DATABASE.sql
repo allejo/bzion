@@ -11,6 +11,7 @@
   CREATE TABLE IF NOT EXISTS `bans` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `player` int(10) unsigned NOT NULL,
+    `ip_address` varchar(15) NOT NULL,
     `expiration` datetime NOT NULL,
     `reason` varchar(200) NOT NULL,
     `created` datetime NOT NULL,
