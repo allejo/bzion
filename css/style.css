@@ -1,4 +1,10 @@
 /**
+ * Font Imports
+ */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300);
+/**
  * General
  */
 * {
@@ -12,7 +18,7 @@ html, body {
 
 body {
     background-image: url("imgs/bg.png");
-    font-family: "helveticaNeue-light", Helvetica, Sans-Serif;
+    font-family: Open Sans, Sans-Serif;
     font-size: 1em;
 }
 
@@ -227,12 +233,12 @@ a:hover {
 }
 
 .team_name {
-    font-family: HelveticaNeue-CondensedBold;
+    font-family: Oswald;
     font-size: 2.5em;
 }
 
 .team_rating {
-    font-family: HelveticaNeue;
+    font-family: "Open Sans";
     font-size: 1.4em;
 }
 
@@ -417,7 +423,7 @@ a:hover {
 }
 
 .groups_toolbar_option a {
-    font-family: HelveticaNeue;
+    font-family: "Open Sans";
     font-size: .8em;
     color: white;
     text-transform: uppercase;
@@ -473,13 +479,13 @@ a:hover {
 }
 
 .group_members {
-    font-family: HelveticaNeue-light;
+    font-family: "Open Sans"-light;
     font-size: 1em;
     padding: 0 0 0 5px;
 }
 
 .group_last_message {
-    font-family: HelveticaNeue-light;
+    font-family: "Open Sans"-light;
     font-size: .8em;
     padding: 0 0 3px 5px;
 }
@@ -511,7 +517,7 @@ a:hover {
     }
 
 .group_message_toolbar {
-    font-family: HelveticaNeue, sans-serif;
+    font-family: "Open Sans", sans-serif;
     background-color: #555555;
     overflow-y: auto;
 }
