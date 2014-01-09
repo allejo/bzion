@@ -88,7 +88,8 @@ class Ban extends Controller {
     }
 
     /**
-     * Get all the bans in the database that arent disabled or deleted
+     * Get all the bans in the database that aren't disabled or deleted
+     * @param string $select
      * @return array An array of ban IDs
      */
     public static function getBans($select = "id") {

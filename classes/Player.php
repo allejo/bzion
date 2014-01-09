@@ -70,6 +70,12 @@ class Player extends Controller
     private $last_login;
 
     /**
+     * A section for admins to write notes about players
+     * @var string
+     */
+    private $admin_notes;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "players";
@@ -98,6 +104,7 @@ class Player extends Controller
         $this->timezone = $player['timezone'];
         $this->joined = new TimeDate($player['joined']);
         $this->last_login = new TimeDate($player['last_login']);
+        $this->admin_notes = $player['admin_notes'];
 
     }
 
@@ -118,16 +125,36 @@ class Player extends Controller
         return $this->username;
     }
 
+    /**
+     * Get the player's BZID
+     * @return int The BZID
+     */
     function getBZID() {
         return $this->bzid;
     }
 
+    /**
+     * Get the player's avatar
+     * @return string The URL for the avatar
+     */
     function getAvatar() {
         return $this->avatar;
     }
 
+    /**
+     * Get the player's description
+     * @return string The description
+     */
     function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Get the notes admins have left about a player
+     * @return string The notes
+     */
+    function getAdminNotes() {
+        return $this->admin_notes;
     }
 
     /**
@@ -158,14 +185,14 @@ class Player extends Controller
      * @param int $bzid The player's bzid
      * @param string $username The player's username
      * @param int $team The player's team
-     * @param int $status The player's status
+     * @param string $status The player's status
      * @param int $access The player's access level
      * @param string $avatar The player's profile avatar
      * @param string $description The player's profile description
      * @param int $country The player's country
      * @param int $timezone The player's timezone
-     * @param TimeDate $joined The date the player joined
-     * @param TimeDate $last_login The timestamp of the player's last login
+     * @param string|\TimeDate $joined The date the player joined
+     * @param string|\TimeDate $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
     public static function newPlayer($bzid, $username, $team=0, $status="active", $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
@@ -196,6 +223,7 @@ class Player extends Controller
 
     /**
      * Get all the players in the database that have an active status
+     * @param string $select (Optional) The name of the column(s) that should be accessed
      * @return array An array of player BZIDs
      */
     public static function getPlayers($select = "bzid") {
@@ -204,13 +232,15 @@ class Player extends Controller
 
     /**
      * Get a URL that points to the player's page
+     * @param string $dir The virtual directory the URL should point to
+     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string The URL
      */
     function getURL($dir="players", $default="bzid") {
         return parent::getURL($dir, $this->$default);
     }
 
-    /*
+    /**
      * Generate a URL-friendly unique alias for a username
      *
      * @param string $name The original username

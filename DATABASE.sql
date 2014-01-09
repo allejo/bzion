@@ -194,6 +194,7 @@
     `timezone` tinyint(4) NOT NULL,
     `joined` datetime NOT NULL,
     `last_login` datetime NOT NULL,
+    `admin_notes` text NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `bzid` (`bzid`),
     UNIQUE KEY `alias` (`alias`)

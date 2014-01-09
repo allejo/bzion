@@ -126,7 +126,7 @@ abstract class Controller {
         return $this->valid;
     }
 
-    /*
+    /**
      * Get a URL that points to an object's page
      * @param string $dir The virtual directory the URL should point to
      * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified

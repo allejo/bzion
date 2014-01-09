@@ -189,6 +189,7 @@ class Match extends Controller
      * @param int $a_points Team A's match points
      * @param int $b_points Team B's match points
      * @param int $duration The match duration in minutes
+     * @param $entered_by
      * @param string $timestamp When the match was played
      * @return Match An object representing the match that was just entered
      */
@@ -255,7 +256,8 @@ class Match extends Controller
     }
 
     /**
-     * Get all the matches in the database that arent disabled or deleted
+     * Get all the matches in the database that aren't disabled or deleted
+     * @param string $select
      * @return array An array of match IDs
      */
     public static function getMatches($select = "id") {
