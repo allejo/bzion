@@ -4,6 +4,8 @@
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(http://fonts.googleapis.com/css?family=Oswald:400,300);
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,300);
+
 /**
  * General
  */
@@ -172,14 +174,14 @@ a:hover {
 .custom_page_title {
     background-color: #555555;
     color: white;
-    font-family: "helveticaNeue-light";
+    font-family: "Open Sans";
     text-align: center;
     padding: .5em;
     font-size: 1.5em;
  }
 
 .custom_page_content {
-    font-family: "Baskerville";
+    font-family: Merriweather;
     background-color: #fff;
     padding: .8em;
     border: 1px solid #bdbdbd;
@@ -313,11 +315,12 @@ a:hover {
 }
 
 .news_content {
-    font-family: "Baskerville";
+    font-family: Merriweather;
     background-color: #fff;
     padding: .8em .8em 0 .8em;
     border: 1px solid #bdbdbd;
     border-top: none;
+    line-height:1.5em;
 }
 
 /**
@@ -357,7 +360,7 @@ a:hover {
 }
 
 .ban_content {
-    font-family: "Baskerville";
+    font-family: Merriweather;
     background-color: #fff;
     padding: .8em .8em 0 .8em;
     border: 1px solid #bdbdbd;
