@@ -563,11 +563,10 @@ a:hover {
     }
 
 .group_toolbar_text {
-    font-weight: normal;
+    font-weight: 300;
     font-size: 1.3em;
     color: #fff;
     display: inline-block;
-    text-transform: uppercase;
     padding: 5px 0px 5px 10px;
     text-align: center;
     text-decoration: none;
@@ -631,8 +630,7 @@ a:hover {
  */
 .compose_area {
     background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px 4px 4px 4px;
+    border: 1px solid #eee;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -648,6 +646,8 @@ a:hover {
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     vertical-align: middle;
     width: 100%;
+    font-family: Open Sans;
+
 }
 
 .input_compose_area {
@@ -694,7 +694,7 @@ a:hover {
 .input_group label {
     display: table-cell;
     padding-right: 5px;
-    text-align: right;
+    text-align: left;
 }
 
 .input_group_main {
@@ -712,10 +712,10 @@ a:hover {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
-    border: 1px solid rgb(170, 170, 170);
+    border: 1px solid #eee;
     margin-top: 1px;
     padding: 5px 5px 5px 5px;
-    font-family: sans-serif;
+    font-family: O;
     font-size: 13px;
     width: 100%;
 }
@@ -738,4 +738,9 @@ a:hover {
 :-ms-input-placeholder {
     color: rgb(102, 102, 102);
     opacity: 1;
+}
+
+.ladda-button{
+background-color: #0CA7Db;
+padding: 3px 8px 3px 8px;
 }
