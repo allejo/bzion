@@ -11,9 +11,11 @@ if (!isset($_SESSION['username'])) {
 $me = new Player($_SESSION['bzid']);
 
 if (isset($_POST['submit'])) {
-    echo "<pre style='margin-top: 50px'>";
-    print_r($_POST);
-    echo "</pre>";
+    $me->setAvatar($_POST['avatar']);
+    $me->setDescription($_POST['description']);
+    $me->setTimezone($_POST['timezone']);
+
+    echo "<h4>Profile successfully updated!</h4>";
 }
 
 if (isset($_GET['action'])) {
@@ -46,7 +48,7 @@ if (isset($action) && ($action == "edit")) {
             }
             ?>
         </select><br />
-        Profile comments:<br /><textarea value="description" rows="5" cols="40"><?php echo $me->getDescription(); ?></textarea><br />
+        Profile comments:<br /><textarea value="description" rows="5" cols="40" name="description"><?php echo $me->getDescription(); ?></textarea><br />
         <input type="submit" name="submit" value="Update Profile">
     </form>
     
