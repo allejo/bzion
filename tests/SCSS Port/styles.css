@@ -1,12 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(http://fonts.googleapis.com/css?family=Oswald:400,300);
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,300);
-/**
- * Font Imports
- */
-/**
- * HTML Elements
- */
 * {
   margin: 0;
   padding: 0; }
@@ -35,9 +29,6 @@ h4 {
 pre {
   white-space: pre-wrap; }
 
-/**
- * Universal classes
- */
 .float.left {
   float: left; }
 .float.right {
@@ -50,47 +41,40 @@ pre {
 .padding.bottom {
   padding-bottom: 15px; }
 
-/**
- * The header of the website
- */
-header {
-  /**
-   * The navigation bar
-   */ }
-  header nav {
-    background-color: #555555;
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
-    height: 50px;
-    font-size: 14px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 20; }
-    header nav ul {
-      list-style-type: none; }
-      header nav ul li {
-        float: left;
-        display: inline;
-        height: 100%;
-        margin: 0 auto;
-        min-width: 6%;
-        text-align: left; }
-        header nav ul li a {
-          border-right: 1px solid #666666;
-          color: #FFFFFF;
-          display: block;
-          padding: 15px 0;
-          text-align: center;
-          text-decoration: none;
-          width: 100%; }
-          header nav ul li a:hover {
-            background-color: #333333;
-            color: #FFFFFF; }
-        header nav ul li.icon {
-          min-width: 3%; }
-      header nav ul:first-child li {
-        border-left: 1px solid #666666; }
+header nav {
+  background-color: #555555;
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
+  height: 50px;
+  font-size: 14px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 20; }
+  header nav ul {
+    list-style-type: none; }
+    header nav ul li {
+      float: left;
+      display: inline;
+      height: 100%;
+      margin: 0 auto;
+      min-width: 6%;
+      text-align: left; }
+      header nav ul li a {
+        border-right: 1px solid #666666;
+        color: #FFFFFF;
+        display: block;
+        padding: 15px 0;
+        text-align: center;
+        text-decoration: none;
+        width: 100%; }
+        header nav ul li a:hover {
+          background-color: #333333;
+          color: #FFFFFF; }
+      header nav ul li.icon {
+        min-width: 3%; }
+    header nav ul:first-child li {
+      border-left: 1px solid #666666; }
 
 .wrapper {
   margin: 0 auto;

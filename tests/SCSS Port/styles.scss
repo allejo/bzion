@@ -10,17 +10,17 @@
 // - There are general use CSS classes for easy access and universal settings such as floating items and padding
 //
 
-/**
- * Font Imports
- */
+//
+// Font Imports
+//
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(http://fonts.googleapis.com/css?family=Oswald:400,300);
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,300);
 
-/**
- * HTML Elements
- */
+//
+// HTML Elements
+//
 * {
     margin: 0;
     padding: 0;
@@ -58,9 +58,9 @@ pre {
     white-space: pre-wrap;
 }
 
-/**
- * Universal classes
- */
+//
+// Universal classes
+//
 
 .float {
     &.left {
@@ -86,13 +86,13 @@ pre {
     }
 }
 
-/**
- * The header of the website
- */
+//
+// The header of the website
+//
 header {
-    /**
-     * The navigation bar
-     */
+    //
+    // The navigation bar
+    //
 
     // I've put the the nav css inside of the header instead of on its own in the strange case where there are more
     // than one <nav> object.
