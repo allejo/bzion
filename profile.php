@@ -30,7 +30,7 @@ if (isset($_GET['action']) && $_GET['action'] == "edit") {
         </select><br />
         Timezone: <select name="timezone" class="profile_timezone">
             <?php
-            for ($i=-12; $i <= 12; $i++) { 
+            for ($i=-12; $i <= 12; $i++) {
                 $plus = ($i >= 0) ? "+" : "";
                 echo "<option value='$i'>GMT $plus$i</option>";
             }
@@ -43,7 +43,7 @@ if (isset($_GET['action']) && $_GET['action'] == "edit") {
         </select><br />
         <button onclick="updateProfile()" type="button" class="ladda-button" data-style="zoom-out"><span class="ladda-label">Update</span></button>
     </form>
-    
+
     <?php
 } else {
     $header->draw("Profile");
@@ -59,7 +59,7 @@ if (isset($_GET['action']) && $_GET['action'] == "edit") {
     echo "Team: $teamlink<br />";
     echo "Joined: " . $me->getJoinedDate() . "<br />";
 
-    echo "<br />More content coming soon...<br />";
+    echo "<br />", $me->getDescription() ,"<br />";
 
     echo "<br /><a href='" . BASE_URL . "/profile/edit'>Edit your profile...</a>";
 

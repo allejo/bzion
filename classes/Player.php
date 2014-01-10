@@ -150,10 +150,18 @@ class Player extends Controller
     }
 
     /**
-     * Get the player's description
+     * Get the player's sanitized description
      * @return string The description
      */
     function getDescription() {
+        return htmlspecialchars($this->description);
+    }
+
+    /**
+     * Get the player's description, exactly as it is saved in the database
+     * @return string The description
+     */
+    function getUnSanitizedDescription() {
         return $this->description;
     }
 

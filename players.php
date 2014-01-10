@@ -25,6 +25,8 @@ if (isset($player)) {
         echo "<b>" . $player->getUsername() . "</b><br />";
         echo "Team: $teamlink<br />";
         echo "Joined: " . $player->getJoinedDate() . "<br />";
+
+        echo "<br />", $player->getDescription() ,"<br />";
     } else {
         $header->draw("Players");
 
