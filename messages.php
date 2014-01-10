@@ -83,7 +83,7 @@ if (!$messages) {
                     <label for="compose_recipients">Recipients:</label>
                     <div class="input_group_main" style="padding: 0">
                         <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
-                            <option value=""></option>
+                            <option value=""> </option>
                             <optgroup label="Players">
                               <?php
 

@@ -13,7 +13,7 @@ if (isset($_GET['alias'])) {
 
 if (isset($team)) {
     $header->draw("Teams :: " . $team->getName());
-    
+
     echo "<div class='team_name'>" . $team->getName() . "</div> <br />";
     echo "<div class='team_rating'> ELO: " . $team->getElo() . "</div><br />";
     $leader = $team->getLeader();
@@ -44,7 +44,7 @@ if (isset($team)) {
         foreach ($teams as $key => $id) {
             $team = new Team($id);
             echo "<tr>\n";
-            echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</td>\n";
+            echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</a></td>\n";
             echo "<td>" . $team->getElo() . "</td>\n";
             $leader = $team->getLeader();
             echo "<td>" . $leader->getUsername() . "</td>\n";
