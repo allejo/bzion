@@ -35,20 +35,19 @@ class Footer {
      * Draw the footer
      */
     function draw() {
-        $baseUrl = "http://" . rtrim(HTTP_ROOT, '/');
     ?>
         </div> <!-- end .content -->
 
 		<script>
-            var baseURL = "<?php echo $baseUrl; ?>";
+            var baseURL = "<?php echo BASE_URL; ?>";
 		</script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script src="<?php echo $baseUrl; ?>/js/main.js"></script>
+        <script src="<?php echo BASE_URL; ?>/js/main.js"></script>
 
         <?php
             foreach($this->scripts as $url) {
-                echo "<script src=\"$baseUrl/$url\"></script>";
+                echo "<script src=\"" . BASE_URL . "/$url\"></script>";
             }
         ?>
     </body>
