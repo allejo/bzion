@@ -144,7 +144,7 @@ abstract class Controller {
             $alias = $default;
         }
 
-        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . $alias;
+        $url = BASE_URL . '/' . $dir . $alias;
         return $url;
     }
 
@@ -158,7 +158,7 @@ abstract class Controller {
             $dir .= "/";
         }
 
-        $url = "http://" . rtrim(HTTP_ROOT, '/') . '/' . $dir . $this->id;
+        $url = BASE_URL . '/' . $dir . $this->id;
         return $url;
     }
 
