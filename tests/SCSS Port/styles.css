@@ -43,6 +43,7 @@ pre {
 
 header nav {
   background-color: #555555;
+  -webkit-box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
   height: 50px;
   font-size: 14px;
