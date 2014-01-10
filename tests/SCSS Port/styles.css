@@ -36,50 +36,60 @@ pre {
   white-space: pre-wrap; }
 
 /**
- * Floats
+ * Universal classes
  */
 .float.left {
   float: left; }
 .float.right {
   float: right; }
 
+.padding.top {
+  padding-top: 10px; }
+.padding.left, .padding.right {
+  padding-right: 5px; }
+.padding.bottom {
+  padding-bottom: 15px; }
+
 /**
- * Navigation
+ * The header of the website
  */
-nav {
-  background-color: #555555;
-  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
-  height: 50px;
-  font-size: 14px;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 20; }
-  nav ul {
-    list-style-type: none;
-    margin: 0 auto;
-    padding: 0;
-    width: 90%; }
-    nav ul li {
-      border-left: 1px solid #666666;
-      float: left;
-      display: inline;
-      height: 100%;
-      margin: 0 auto;
-      min-width: 6%;
-      text-align: left; }
-      nav ul li a {
-        border-right: 1px solid #666666;
-        color: #FFFFFF;
-        display: block;
-        padding: 15px 0;
-        text-align: center;
-        text-decoration: none;
-        width: 100%; }
-      nav ul li.icon {
-        min-width: 3%; }
-      nav ul li:first-child a {
+header {
+  /**
+   * The navigation bar
+   */ }
+  header nav {
+    background-color: #555555;
+    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
+    height: 50px;
+    font-size: 14px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20; }
+    header nav ul {
+      list-style-type: none; }
+      header nav ul li {
+        float: left;
+        display: inline;
+        height: 100%;
+        margin: 0 auto;
+        min-width: 6%;
+        text-align: left; }
+        header nav ul li a {
+          border-right: 1px solid #666666;
+          color: #FFFFFF;
+          display: block;
+          padding: 15px 0;
+          text-align: center;
+          text-decoration: none;
+          width: 100%; }
+          header nav ul li a:hover {
+            background-color: #333333;
+            color: #FFFFFF; }
+        header nav ul li.icon {
+          min-width: 3%; }
+      header nav ul:first-child li {
         border-left: 1px solid #666666; }
 
 .wrapper {

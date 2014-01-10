@@ -1,3 +1,15 @@
+// SCSS Notes
+// ----------
+// - Comments made with '//' are meant for developers only, they will not appear when this SCSS is compiled to CSS so
+//   feel free to use them to make notes
+//
+// - The style this SCSS file will follow is use the least classes as possible because the more classes there are, the
+//   more HTML we have type or generate and it just looks ugly so simply create one parent CSS class and then use other
+//   classes only if needed
+//
+// - There are general use CSS classes for easy access and universal settings such as floating items and padding
+//
+
 /**
  * Font Imports
  */
@@ -47,7 +59,7 @@ pre {
 }
 
 /**
- * Floats
+ * Universal classes
  */
 
 .float {
@@ -60,51 +72,87 @@ pre {
     }
 }
 
+.padding {
+    &.top {
+        padding-top: 10px;
+    }
+
+    &.left, &.right {
+        padding-right: 5px;
+    }
+
+    &.bottom {
+        padding-bottom: 15px;
+    }
+}
+
 /**
- * Navigation
+ * The header of the website
  */
-nav {
-    background-color: #555555;
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
-    height: 50px;
-    font-size: 14px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 20;
+header {
+    /**
+     * The navigation bar
+     */
 
-    ul {
-        list-style-type: none;
-        margin: 0 auto;
-        padding: 0;
-        width: 90%;
+    // I've put the the nav css inside of the header instead of on its own in the strange case where there are more
+    // than one <nav> object.
+    //
+    // This object is just a container for the actual navigation bar; it will contain the unordered list that contains
+    // the menu items.
+    nav {
+        background-color: #555555;
+        box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.5);
+        height: 50px;
+        font-size: 14px;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 20;
 
-        li {
-            border-left: 1px solid #666666;
-            float: left;
-            display: inline;
-            height: 100%;
-            margin: 0 auto;
-            min-width: 6%;
-            text-align: left;
+        // We need to set up this unordered list to not have any bullet points
+        ul {
+            list-style-type: none;
 
-            a {
-                border-right: 1px solid #666666;
-                color: #FFFFFF;
-                display: block;
-                padding: 15px 0;
-                text-align: center;
-                text-decoration: none;
-                width: 100%;
-            }
+            // Now we need to set each menu item, or list item, to line up nicely next to each other so we can have
+            // be laid out horizontally
+            li {
+                float: left;
+                display: inline;
+                height: 100%;
+                margin: 0 auto;
+                min-width: 6%;
+                text-align: left;
 
-            &.icon {
-                min-width: 3%;
-            }
-
-            &:first-child {
+                // This will be the actual hyper link so we need to format it to be large with padding and a width
+                // or else we will not be able to click the general area of a menu button
                 a {
+                    border-right: 1px solid #666666;
+                    color: #FFFFFF;
+                    display: block;
+                    padding: 15px 0;
+                    text-align: center;
+                    text-decoration: none;
+                    width: 100%;
+
+                    // We're hovering over the menu button so change the background and keep the font color white
+                    &:hover {
+                        background-color: #333333;
+                        color: #FFFFFF;
+                    }
+                }
+
+                // Our icons in the menu bar will have a different height so we need to assign it a different width to
+                // to it
+                &.icon {
+                    min-width: 3%;
+                }
+            }
+
+            // Because are adding a right border on all of the elements, we need have one on the far right, so this
+            // will naturally be the first child of the unordered list
+            &:first-child {
+                li {
                     border-left: 1px solid #666666;
                 }
             }
@@ -112,6 +160,7 @@ nav {
     }
 }
 
+// As of this moment, this is yet to be used but it will be used
 .wrapper {
     margin: 0 auto;
     width: 90%;
