@@ -37,9 +37,11 @@ if (isset($_GET['action']) && $_GET['action'] == "edit") {
             ?>
         </select><br />
         Profile comments:<br /><textarea value="description" rows="5" cols="40" name="description" class="profile_description"><?php echo $me->getDescription(); ?></textarea><br />
-        <button onclick="updateProfile()" type="button" class="ladda-button" data-style="zoom-out">
-                <span class="ladda-label">Update</span>
-            </button>
+        Theme: <select class="themes">
+            <option>Industrial</option>
+            <option>Colorful</option>
+        </select><br />
+        <button onclick="updateProfile()" type="button" class="ladda-button" data-style="zoom-out"><span class="ladda-label">Update</span></button>
     </form>
     
     <?php

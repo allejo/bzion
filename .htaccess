@@ -65,13 +65,7 @@ RewriteRule ^news news.php [QSA,NC,L]
 #       http://example.com/bans.php
 #                   becomes
 #       http://example.com/bans
-RewriteRule ^bans bans.php [QSA,NC,L]
-
-# Rewrite rule for themes                                                                                                                                                                           
-# Example:                                                                                                                                                                                                 #       http://example.com/themes.php                                                                                                                                                                      
-#                   becomes                                                                                                                                                                                
-#       http://example.com/themes                                                                                                                                                                          
-RewriteRule ^themes themes.php [QSA,NC,L]     
+RewriteRule ^bans bans.php [QSA,NC,L] 
 
 # Rewrite rule for servers
 # Example:

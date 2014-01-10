@@ -43,26 +43,9 @@ class Header {
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/ladda/dist/ladda.min.css" />
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
-
-        <script>
-            on_load_cookie = function(){
-                if ($.cookie('theme') !== null) {
-                    //console.log( $.cookie("theme") );
-                    var theme_name = $.cookie("theme");
-                    var nstr = $.trim(theme_name);
-                    console.log(nstr);
-                    if (nstr == "Colorful") {
-                        var css_append_str = "<link rel='stylesheet' href='css/themes/colorful.css'>";
-                        $("head").append(css_append_str);
-                    }
-                } else{
-                    console.log("cookie nicht! NEEIINNNN");
-                }
-            }
-        </script>
     </head>
 
-    <body onload="on_load_cookie()">
+    <body>
     <div class="navbar">
     <div class="navmenu">
         <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
@@ -91,7 +74,6 @@ class Header {
         ?>
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a>
         <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a>
-        <a href="<?php echo $baseUrl; ?>/themes" class="navbutton left"> Themes </a>
     <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a>
