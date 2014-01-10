@@ -61,7 +61,7 @@ if (isset($_GET['action']) && $_GET['action'] == "edit") {
 
     echo "<br />More content coming soon...<br />";
 
-    echo "<br /><a href='http://" . rtrim(HTTP_ROOT, '/') . "/profile/edit'>Edit your profile...</a>";
+    echo "<br /><a href='" . BASE_URL . "/profile/edit'>Edit your profile...</a>";
 
 }
 

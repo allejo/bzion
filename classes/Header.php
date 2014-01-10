@@ -31,7 +31,6 @@ class Header {
      */
     function draw($title="") {
         $title = (empty($title)) ? $this->title : $title;
-        $baseUrl = "http://" . rtrim(HTTP_ROOT, '/');
 
     ?>
 
@@ -40,27 +39,27 @@ class Header {
         <meta charset="utf-8">
         <title><?php echo $title; ?></title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
-        <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/chosen/chosen.min.css">
-        <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/includes/chosen/chosen.min.css">
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/includes/ladda/dist/ladda.min.css" />
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/style.css">
     </head>
 
     <body>
     <div class="navbar">
     <div class="navmenu">
-        <a href="<?php echo $baseUrl; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
+        <a href="<?php echo BASE_URL; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
         <?php if (isset($_SESSION['username'])) {
 
         if (Group::hasNewMessage($_SESSION['bzid'])) {
             $new = "new_message";
         }
         ?>
-        <a href="<?php echo $baseUrl; ?>/messages" class="navbuttonicon left <?php echo $new; ?>"><i class="icon-comments"></i></a>
+        <a href="<?php echo BASE_URL; ?>/messages" class="navbuttonicon left <?php echo $new; ?>"><i class="icon-comments"></i></a>
         <?php } ?>
-        <a href="<?php echo $baseUrl; ?>/news" class="navbuttonicon left"><i class="icon-pushpin"></i></a>
-        <a href="<?php echo $baseUrl; ?>/teams" class="navbutton left">Teams</a>
-        <a href="<?php echo $baseUrl; ?>/players" class="navbutton left">Players</a>
-        <a href="<?php echo $baseUrl; ?>/matches" class="navbutton left">Matches</a>
+        <a href="<?php echo BASE_URL; ?>/news" class="navbuttonicon left"><i class="icon-pushpin"></i></a>
+        <a href="<?php echo BASE_URL; ?>/teams" class="navbutton left">Teams</a>
+        <a href="<?php echo BASE_URL; ?>/players" class="navbutton left">Players</a>
+        <a href="<?php echo BASE_URL; ?>/matches" class="navbutton left">Matches</a>
         <?php
 
         $pages = Page::getPages();
@@ -72,16 +71,16 @@ class Header {
         }
 
         ?>
-        <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a>
-        <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a>
+        <a href="<?php echo BASE_URL; ?>/bans" class="navbutton left">Bans</a>
+        <a href="<?php echo BASE_URL; ?>/servers" class="navbutton left">Servers</a>
     <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
-        <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a>
-        <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a>
+        <a href="<?php echo BASE_URL; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
+        <a href="<?php echo BASE_URL; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a>
+        <a href="<?php echo BASE_URL; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a>
         <?php
     } else {
         $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
-        $url .= urlencode("http://" . rtrim(HTTP_ROOT, '/') . "/login.php?token=%TOKEN%&username=%USERNAME%");
+        $url .= urlencode(BASE_URL . "/login.php?token=%TOKEN%&username=%USERNAME%");
         ?>
         <a href="<?php echo $url; ?>" class="navbuttonicon right"><i class="icon-signin"></i></a>
     <?php } ?>
@@ -104,13 +103,12 @@ class Header {
      * @param string $location The page to redirect to
      */
     public static function go($location = "/", $override = false) {
-        $url = "http://" . rtrim(HTTP_ROOT, '/');
         if ($override) {
             header("Location: $location");
         } else if (strtolower($location) == "default" || strtolower($location) == "home" || strtolower($location) == "index.php" || strtolower($location) == "/") {
-            header("Location: $url");
+            header("Location: " . BASE_URL);
         } else {
-            header("Location: $url" . $location);
+            header("Location: " . BASE_URL . $location);
         }
 
         die();
