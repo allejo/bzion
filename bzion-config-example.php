@@ -34,8 +34,7 @@ DEFINE("DURATION", serialize(array(
  * File, directory and URL settings
  */
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
-DEFINE("HTTP_ROOT", $_SERVER["HTTP_HOST"]); // The root URL of the website
-DEFINE("BASE_URL", "http://" . rtrim(HTTP_ROOT, '/')); // The base URL of the website, including 'http://'. Used mainly for links
+DEFINE("BASE_URL", "http://" . rtrim($_SERVER["HTTP_HOST"], '/')); // The base URL of the website, including 'http://'
 DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where errors will be written
 
 /*
