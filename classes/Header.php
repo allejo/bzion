@@ -39,30 +39,29 @@ class Header {
     <head>
         <meta charset="utf-8">
         <title><?php echo $title; ?></title>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="<?php echo $baseUrl; ?>/includes/jquery-cookie/jquery.cookie.js"></script>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/includes/ladda/dist/ladda.min.css" />
         <link rel="stylesheet" href="<?php echo $baseUrl; ?>/css/style.css">
-    </head>
-    <script>
-        on_load_cookie = function(){
-            if ($.cookie('theme') !== null) {
-                //console.log( $.cookie("theme") );
-                var theme_name = $.cookie("theme");
-                var nstr = $.trim(theme_name);
-                console.log(nstr);
-                if (nstr == "Colorful") {
-                    var css_append_str = "<link rel='stylesheet' href='css/themes/colorful.css'>";
-                    $("head").append(css_append_str);
+
+        <script>
+            on_load_cookie = function(){
+                if ($.cookie('theme') !== null) {
+                    //console.log( $.cookie("theme") );
+                    var theme_name = $.cookie("theme");
+                    var nstr = $.trim(theme_name);
+                    console.log(nstr);
+                    if (nstr == "Colorful") {
+                        var css_append_str = "<link rel='stylesheet' href='css/themes/colorful.css'>";
+                        $("head").append(css_append_str);
+                    }
+                } else{
+                    console.log("cookie nicht! NEEIINNNN");
                 }
-            } else{
-                console.log("cookie nicht! NEEIINNNN");
             }
-        }
-  </script>
+        </script>
+    </head>
+
     <body onload="on_load_cookie()">
     <div class="navbar">
     <div class="navmenu">
@@ -93,7 +92,7 @@ class Header {
         <a href="<?php echo $baseUrl; ?>/bans" class="navbutton left">Bans</a>
         <a href="<?php echo $baseUrl; ?>/servers" class="navbutton left">Servers</a>
         <a href="<?php echo $baseUrl; ?>/themes" class="navbutton left"> Themes </a>
-     <?php if (isset($_SESSION['username'])) { ?>
+    <?php if (isset($_SESSION['username'])) { ?>
         <a href="<?php echo $baseUrl; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
         <a href="<?php echo $baseUrl; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a>
         <a href="<?php echo $baseUrl; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a>
