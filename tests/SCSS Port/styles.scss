@@ -218,6 +218,7 @@ header {
     margin-bottom: 20px;
     margin-top: 35px;
 
+    // This will be our normal page with information
     .page {
         margin: 0 auto;
         width: 900px;
@@ -241,12 +242,17 @@ header {
     }
 }
 
+// Because tables are atrocious for responsive designs, we have our own CSS to give unordered lists the appearance of
+// being in columns and rows
 .table {
     margin: 0 auto;
 
+    // Because different pages will have different tables, here we have set the CSS settings for the matches table
     &.match {
         width: 1000px;
 
+        // Set the width of all the columns based on the nth-child. I will throw a tantrum if IE9 is stupid and doesn't
+        // support nth-child. -allejo
         ul li {
             &:nth-child(1) {
                 width: 23%;
@@ -274,19 +280,23 @@ header {
         }
     }
 
+    // Each unordered list will act as a row of the table
     ul {
         list-style-type: none;
 
+        // Each list item will act as a column of a row, so we need to have them sit next to each other nicely
         li {
             display: inline-block;
             padding: 10px 30px;
             text-align: center;
 
+            // Add a left border for all of the "columns" except for the first one
             &:nth-child(n+2) {
                 border-left: 1px solid $grey_border_color;
             }
         }
 
+        // Color code the rows
         &:nth-child(even) {
            background-color: #F7F7F7;
         }
@@ -295,6 +305,7 @@ header {
            background-color: #D6D6D6;
         }
 
+        // Our first row, or unordered list, will always act as the header so design it respectively
         &:first-child {
             background-color: #FFFFFF;
             border-bottom: 1px solid $grey_border_color;
