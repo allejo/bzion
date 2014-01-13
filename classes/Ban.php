@@ -1,6 +1,6 @@
 <?php
 
-class Ban extends Controller {
+class Ban extends Model {
 
     /**
      * The bzid of the banned player

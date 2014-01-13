@@ -1,6 +1,6 @@
 <?php
 
-class Page extends Controller {
+class Page extends Model {
 
     /**
      * The name of the page

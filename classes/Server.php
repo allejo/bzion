@@ -2,7 +2,7 @@
 
 include_once(DOC_ROOT . "/includes/bzfquery.php");
 
-class Server extends Controller
+class Server extends Model
 {
 
     /**

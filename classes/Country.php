@@ -1,6 +1,6 @@
 <?php
 
-class Country extends Controller {
+class Country extends Model {
 
     /**
      * The name of the country

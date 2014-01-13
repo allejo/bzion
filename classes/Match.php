@@ -1,6 +1,6 @@
 <?php
 
-class Match extends Controller
+class Match extends Model
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class Group extends Controller {
+class Group extends Model {
 
     /**
      * The subject of the group

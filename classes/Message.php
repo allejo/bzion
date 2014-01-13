@@ -1,6 +1,6 @@
 <?php
 
-class Message extends Controller
+class Message extends Model
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class News extends Controller {
+class News extends Model {
 
     /**
      * The subject of the news article

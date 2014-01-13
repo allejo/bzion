@@ -1,6 +1,6 @@
 <?php
 
-class Team extends Controller
+class Team extends Model
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Controller {
+abstract class Model {
 
     /**
      * The Database ID of the object
@@ -47,7 +47,7 @@ abstract class Controller {
     const TABLE = "";
 
     /**
-     * Construct a new Controller
+     * Construct a new Model
      *
      * This method takes the ID of the object to look for and creates a
      * $this->db object which can be used to communicate with the database,
@@ -263,7 +263,7 @@ abstract class Controller {
      *     get_class($object); // Team
      *     $object->isValid(); // false
      * </code>
-     * @return Controller
+     * @return Model
      */
     public static function invalid() {
         return new static(0);

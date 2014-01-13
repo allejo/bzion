@@ -1,6 +1,6 @@
 <?php
 
-class Visit extends Controller
+class Visit extends Model
 {
 
     /**

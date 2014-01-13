@@ -1,6 +1,6 @@
 <?php
 
-class Player extends Controller
+class Player extends Model
 {
 
     /**

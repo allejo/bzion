@@ -1,6 +1,6 @@
 <?php
 
-class Invitation extends Controller
+class Invitation extends Model
 {
 
     /**
