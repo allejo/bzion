@@ -306,27 +306,27 @@ header {
                         float: left;
                         font-size: 20px;
                         font-weight: bold;
-                        padding-left: 5px;
+                        padding: 5px 0 0 10px;
                     }
 
                     .last_activity {
                         float: right;
                         font-size: 12px;
-                        padding: 5px 5px 0 0;
+                        padding: 10px 10px 0 0;
                     }
 
                     .members {
                         color: #99A0A3;
                         font-family: "Open Sans"-light;
                         font-size: 12px;
-                        padding-left: 15px;
+                        padding-left: 25px;
                     }
 
                     .last_message {
                         color: #000000;
                         font-family: Arial;
                         font-size: 16px;
-                        padding: 5px 0 5px 5px;
+                        padding: 5px 0 10px 10px;
                     }
 
                     &:hover {
