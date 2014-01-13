@@ -4,6 +4,7 @@ class MatchTest extends TestCase {
     protected $team_a;
     protected $team_b;
     protected $match;
+    protected $match_b;
 
     protected function setUp() {
         global $db;
@@ -74,7 +75,24 @@ class MatchTest extends TestCase {
         $this->assertEquals(1184, $this->match->getTeamBEloNew());
     }
 
+    public function testMiscMethods() {
+        $old_matches = Match::getMatches('id');
+
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, 49434);
+        $this->match_b = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, 49434);
+
+        $this->assertEquals("now", $this->match->getTimestamp());
+
+        $this->assertEquals(49434, $this->match->getEnteredBy());
+
+        $matches = Match::getMatches('id');
+        $this->assertContains($this->match->getId(), $matches);
+        $this->assertContains($this->match_b->getId(), $matches);
+        $this->assertEquals(2, count($matches) - count($old_matches));
+
+    }
+
     public function tearDown() {
-        $this->wipe($this->team_a, $this->team_b, $this->match);
+        $this->wipe($this->team_a, $this->team_b, $this->match, $this->match_b);
     }
 }
