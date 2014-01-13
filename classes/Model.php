@@ -183,16 +183,16 @@ abstract class Model {
      * Gets an array of object IDs
      * @todo Make this PHPDoc message easier to understand
      * @param string $select The name of the column(s) that the returned array should contain
-     * @param string $additional_params Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
+     * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string $types The types of values that will be passed to Database::query()
      * @param array $params The parameter values that will be passed to Database::query()
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($select='id', $additional_params='', $types='', $params=array(), $table = "") {
+    protected static function getIds($select='id', $additional_query='', $types='', $params=array(), $table = "") {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
-        $results = $db->query("SELECT $select FROM $table $additional_params", $types, $params);
+        $results = $db->query("SELECT $select FROM $table $additional_query", $types, $params);
 
         // If $select specifies multiple columns, just return the $results array
         if (isset($results[0]) && count($results[0]) != 1) {
@@ -223,26 +223,18 @@ abstract class Model {
      * @param string $select The name of the column(s) that the returned array should contain
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params='', $table = "") {
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params="", $table = "") {
         $table = (empty($table)) ? static::TABLE : $table;
-        $conditions = array();
+        $question_marks = array();
         $types = "";
-        $equality = "=";
-        $conjunction = "OR";
-        if ($negate) {
-            $equality = "!=";
-            $conjunction = "AND";
-        }
+        $negation = ($negate) ? "NOT" : "";
 
         foreach ($possible_values as $p) {
-            $conditions[] = "$column $equality ?";
+            $question_marks[] = '?';
             $types .= $type;
         }
-        $conditionString = "WHERE " . implode(" $conjunction ", $conditions);
 
-        if (!empty($additional_params)) {
-            $conditionString .= " " . $additional_params;
-        }
+        $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_params";
 
         return self::getIds($select, $conditionString, $types, $possible_values, $table);
     }
