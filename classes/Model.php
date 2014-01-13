@@ -191,14 +191,8 @@ abstract class Model {
     protected static function getIds($select='id', $additional_params='', $types='', $params=array(), $table = "") {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
-        if (empty($additional_params)) {
-            $results = $db->query("SELECT " . $select . " FROM " . $table . " WHERE 1 = ?", "i", array(1));
-        } else {
-            if (empty($types)) {
-                $results = $db->query("SELECT $select FROM " . $table . " $additional_params");
-            }
-            $results = $db->query("SELECT $select FROM " . $table . " $additional_params", $types, $params);
-        }
+
+        $results = $db->query("SELECT $select FROM $table $additional_params", $types, $params);
 
         // If $select specifies multiple columns, just return the $results array
         if (isset($results[0]) && count($results[0]) != 1) {
