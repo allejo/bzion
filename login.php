@@ -31,6 +31,8 @@ if (isset($info)) {
 
     $player = new Player($info['bzid']);
     $player->updateLastLogin();
+
+    Player::saveUsername($info['bzid'], $info['username']);
     Visit::enterVisit($info['bzid'], $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
 
     Header::go($go);
