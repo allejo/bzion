@@ -255,6 +255,94 @@ header {
     }
 }
 
+.messaging {
+
+    .conversations {
+        display: inline-block;
+        width: 350px;
+
+        .toolbar {
+            background-color: $dark_grey;
+            display: inline-block;
+            width: 100%;
+
+            li {
+                display: inline-block;
+                margin: 5px 5px 5px 15px;
+
+                a {
+                    color: #ffffff;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $orange;
+                    }
+                }
+            }
+        }
+
+        .compose {
+            background-color: #ffffff;
+            display: block;
+            padding: 5px 0;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .chats {
+            li {
+                background-color: #ffffff;
+                display: block;
+                list-style-type: none;
+                margin: 2px 0;
+                width: 100%;
+
+                a {
+                    text-decoration: none;
+
+                    .subject {
+                        float: left;
+                        font-size: 20px;
+                        font-weight: bold;
+                        padding-left: 5px;
+                    }
+
+                    .last_activity {
+                        float: right;
+                        font-size: 12px;
+                        padding: 5px 5px 0 0;
+                    }
+
+                    .members {
+                        font-family: "Open Sans"-light;
+                        font-size: 16px;
+                        padding-left: 5px;
+                    }
+
+                    .last_message {
+                        font-family: "Open Sans"-light;
+                        font-size: 12px;
+                        padding: 0 0 3px 5px;
+                    }
+
+                    &:hover {
+                        color: #000000;
+                    }
+                }
+
+                &:hover {
+                    background-color: #F2FBFF;
+                }
+            }
+        }
+    }
+
+    .chat_area {
+
+    }
+}
+
 // Because tables are atrocious for responsive designs, we have our own CSS to give unordered lists the appearance of
 // being in columns and rows
 .table {
