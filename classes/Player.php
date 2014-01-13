@@ -114,7 +114,7 @@ class Player extends Controller
      */
     function updateLastLogin($when = "now") {
         $last = new TimeDate($when);
-        $results = $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
+        $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
     }
 
     /**
@@ -143,10 +143,10 @@ class Player extends Controller
 
     /**
      * Set the player's avatar
-     * @param string The URL for the avatar
+     * @param string $avatar The URL for the avatar
      */
     function setAvatar($avatar) {
-        $results = $this->db->query("UPDATE players SET avatar = ? WHERE bzid = ?", "si", array($avatar, $this->bzid));
+        $this->db->query("UPDATE players SET avatar = ? WHERE bzid = ?", "si", array($avatar, $this->bzid));
     }
 
     /**
@@ -167,10 +167,10 @@ class Player extends Controller
 
     /**
      * Set the player's description
-     * @param string The description
+     * @param string $description The description
      */
     function setDescription($description) {
-        $results = $this->db->query("UPDATE players SET description = ? WHERE bzid = ?", "si", array($description, $this->bzid));
+        $this->db->query("UPDATE players SET description = ? WHERE bzid = ?", "si", array($description, $this->bzid));
     }
 
     /**
@@ -183,10 +183,10 @@ class Player extends Controller
 
     /**
      * Set the player's timezone
-     * @param string The timezone
+     * @param string $timezone The timezone
      */
     function setTimezone($timezone) {
-        $results = $this->db->query("UPDATE players SET timezone = ? WHERE bzid = ?", "si", array($timezone, $this->bzid));
+        $this->db->query("UPDATE players SET timezone = ? WHERE bzid = ?", "si", array($timezone, $this->bzid));
     }
 
     /**
@@ -254,7 +254,7 @@ class Player extends Controller
         $joined = new TimeDate($joined);
         $last_login = new TimeDate($last_login);
 
-        $results = $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
 
         return new Player($bzid);
@@ -294,7 +294,6 @@ class Player extends Controller
 
     /**
      * Generate a URL-friendly unique alias for a username
-     *
      * @param string $name The original username
      * @return string The generated alias
      */
