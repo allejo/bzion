@@ -21,3 +21,7 @@ Thumbs.db
 *~
 node_modules
 .sass-cache
+
+# IDE files #
+#############
+.idea/
