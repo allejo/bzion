@@ -169,14 +169,13 @@ abstract class Model {
      * @param bool $bzid Whether the function should return a BZID instead of an ID
      * @return int The ID of the object
      */
-    protected static function getIdFrom($value, $column, $bzid=false) {
+    protected static function getIdFrom($value, $column, $bzid=false, $type="s") {
         $bz = ($bzid) ? "bz" : "";
-        $db = Database::getInstance();
-        $results = $db->query("SELECT " . $bz . "id FROM " . static::TABLE . " WHERE " . $column . "=?", "s", array($value));
 
-        if(!isset($results[0]))
-            return 0;
-        return $results[0][$bz.'id'];
+        $results = self::getIdsFrom($column, $value, $type, false, "{$bz}id", "LIMIT 1");
+
+        // Return the id or 0 if nothing was found
+        return (isset($results[0])) ? $results[0] : 0;
     }
 
     /**
@@ -201,7 +200,7 @@ abstract class Model {
 
         $ids = array();
 
-        // Find the correct value if the user specified a table
+        // Find the correct value if the user specified a table.
         // For example, if $select is "groups.id", we should convert it to
         // "id", because that's how MySQLi stores column names in the $results
         // array.
@@ -224,19 +223,33 @@ abstract class Model {
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params="", $table = "") {
-        $table = (empty($table)) ? static::TABLE : $table;
         $question_marks = array();
         $types = "";
         $negation = ($negate) ? "NOT" : "";
+
+        if(!is_array($possible_values)) {
+            $possible_values = array($possible_values);
+        }
 
         foreach ($possible_values as $p) {
             $question_marks[] = '?';
             $types .= $type;
         }
 
-        $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_params";
+        if (empty($possible_values)) {
+            if (!$negate) {
+                // There isn't any value that $column can habe so
+                // that it matches the criteria - return nothing.
+                return array();
+            } else {
+                $conditionString = $additional_params;
+            }
+        } else {
+            $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_params";
+        }
 
         return self::getIds($select, $conditionString, $types, $possible_values, $table);
+
     }
 
     /**
