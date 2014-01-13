@@ -335,4 +335,9 @@ class Player extends Controller
         return new Player(parent::getIdFrom($alias, "alias", true));
     }
 
+    public static function saveUsername($bzid, $username) {
+        $db = Database::getInstance();
+
+        $db->query("INSERT IGNORE INTO `past_callsigns` (id, bzid, username) VALUES (?, ?, ?)", "s", array(NULL, $bzid, $username));
+    }
 }

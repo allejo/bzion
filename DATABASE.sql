@@ -145,6 +145,20 @@
   -- Table structure for table `permissions`
   --
 
+  CREATE TABLE IF NOT EXISTS `past_callsigns` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `bzid` int(10) unsigned NOT NULL,
+    `username` varchar(32) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `username` (`username`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  -- --------------------------------------------------------
+
+  --
+  -- Table structure for table `permissions`
+  --
+
   CREATE TABLE IF NOT EXISTS `permissions` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `name` varchar(50) NOT NULL,
