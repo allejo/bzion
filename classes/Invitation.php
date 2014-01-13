@@ -23,7 +23,7 @@ class Invitation extends Controller
 
     /**
      * The time the invitation will expire (Format: YYYY-MM-DD HH:MM:SS)
-     * @var date
+     * @var DateTime
      */
     private $expiration;
 

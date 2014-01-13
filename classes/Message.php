@@ -68,6 +68,7 @@ class Message extends Controller
 
     /**
      * Get a shorter, unformatted version of the message
+     * @param int $maxlength The maximum characters of the summary
      * @return string
      */
     public function getSummary($maxlength=50) {
@@ -81,6 +82,7 @@ class Message extends Controller
 
     /**
      * Gets the creator of the message
+     * @param bool $bzid Whether to return the BZID of the author or a Player object of the author
      * @return Player An object representing the message's author
      */
     public function getAuthor($bzid = false) {

@@ -77,6 +77,8 @@ class Group extends Controller {
 
     /**
      * Get the URL that points to the group's page
+     * @param string $dir The virtual directory the URL should point to
+     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string The group's URL, without a trailing slash
      */
     function getURL($dir="messages", $default=NULL) {

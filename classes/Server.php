@@ -70,7 +70,7 @@ class Server extends Controller
      * @param string $name The name of the server
      * @param string $address The address of the server (e.g: server.com:5155)
      * @param int $owner The BZID of the server owner
-     * @return Mail An object that represents the sent message
+     * @return Server An object that represents the sent message
      */
     static function addServer($name, $address, $owner) {
         $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW())";

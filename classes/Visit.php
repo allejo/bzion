@@ -35,7 +35,7 @@ class Visit extends Controller
 
     /**
      * The timestamp of the visit
-     * @var date
+     * @var DateTime
      */
     private $timestamp;
 
@@ -46,7 +46,7 @@ class Visit extends Controller
 
     /**
      * Construct a new Visit
-     * @param int $id The visit's id
+     * @param int $id The visitor's id
      */
     function __construct($id) {
 
@@ -69,18 +69,18 @@ class Visit extends Controller
      * @param int $bzid The visitor's bzid
      * @param string $ip The visitor's ip address
      * @param string $host The visitor's host
-     * @param string $referer The HTTP_REFERER of the visit
+     * @param string $user_agent The visitor's user agent
+     * @param string $referrer The HTTP_REFERRER of the visit
      * @param string $timestamp The timestamp of the visit
      * @return Visit An object representing the visit that was just entered
      */
-    public static function enterVisit($bzid, $ip, $host, $user_agent, $referer, $timestamp = "now") {
+    public static function enterVisit($bzid, $ip, $host, $user_agent, $referrer, $timestamp = "now") {
         $db = Database::getInstance();
 
         $timestamp = new DateTime($timestamp);
 
-        $results = $db->query("INSERT INTO visits (bzid, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-        "isssss", array($bzid, $ip, $host, $user_agent, $referer, $timestamp->format(DATE_FORMAT)));
-
+        $db->query("INSERT INTO visits (bzid, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
+        "isssss", array($bzid, $ip, $host, $user_agent, $referrer, $timestamp->format(DATE_FORMAT)));
 
         return new Visit($db->getInsertId());
     }

@@ -84,7 +84,8 @@ class News extends Controller {
     }
 
     /**
-     * Get all the news entries in the database that arent disabled or deleted
+     * Get all the news entries in the database that aren't disabled or deleted
+     * @param string $select The column to retrieve
      * @return array An array of news IDs
      */
     public static function getNews($select = "id") {
