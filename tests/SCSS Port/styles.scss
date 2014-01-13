@@ -182,8 +182,8 @@ header {
     // The notification that will appear on the header for status of requests
     .notification {
         border-radius: 0 0 4px 4px;
-        border-top: none;
         border: 1px solid #222222;
+        border-top: none;
         box-shadow: 0 0 3px #333333;
         color: #FFFFFF;
         display: none;
@@ -261,7 +261,7 @@ header {
     margin: 0 auto;
 
     // Because different pages will have different tables, here we have set the CSS settings for the matches table
-    &.match {
+    &.teams {
         width: 1000px;
 
         // Set the width of all the columns based on the nth-child. I will throw a tantrum if IE9 is stupid and doesn't
@@ -311,11 +311,11 @@ header {
 
         // Color code the rows
         &:nth-child(even) {
-           background-color: #F7F7F7;
+            background-color: #F7F7F7;
         }
 
         &:nth-child(odd) {
-           background-color: #D6D6D6;
+            background-color: #D6D6D6;
         }
 
         // Our first row, or unordered list, will always act as the header so design it respectively
