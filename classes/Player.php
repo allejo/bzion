@@ -213,11 +213,23 @@ class Player extends Controller
         return $this->joined->diffForHumans();
     }
 
+    /**
+     * Get the last login for a player
+     * @param bool $human Whether to get the literal time stamp or a relative time
+     * @return string The date of the last login
+     */
     function getLastLogin($human = true) {
         if ($human)
             return $this->last_login->diffForHumans();
         else
             return $this->last_login;
+    }
+
+    /**
+     * Get all of the callsigns a player has used to log in to the website
+     */
+    function getPastCallsigns() {
+        return Parent::getIds("username", "WHERE bzid = ?", "i", array($this->bzid), "past_callsigns");
     }
 
     /**
@@ -335,9 +347,14 @@ class Player extends Controller
         return new Player(parent::getIdFrom($alias, "alias", true));
     }
 
+    /**
+     * Add a player's callsign to the database if it does not exist as a past callsign
+     * @param string $bzid The BZID for the player whose callsign we're saving
+     * @param string $username The callsign which we are saving if it doesn't exist
+     */
     public static function saveUsername($bzid, $username) {
         $db = Database::getInstance();
 
-        $db->query("INSERT IGNORE INTO `past_callsigns` (id, bzid, username) VALUES (?, ?, ?)", "s", array(NULL, $bzid, $username));
+        $db->query("INSERT IGNORE INTO `past_callsigns` (id, bzid, username) VALUES (?, ?, ?)", "iis", array(NULL, $bzid, $username));
     }
 }
