@@ -7,3 +7,6 @@
 [submodule "includes/jquery-cookie"]
 	path = includes/jquery-cookie
 	url = https://github.com/carhartl/jquery-cookie
+[submodule "tests/protos/includes/medium-editor"]
+	path = tests/protos/includes/medium-editor
+	url = https://github.com/daviferreira/medium-editor.git

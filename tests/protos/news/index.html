@@ -1,0 +1,27 @@
+<html>
+<head>
+<link rel="stylesheet" href="../includes/medium-editor/dist/css/medium-editor.css">
+<link rel="stylesheet" href="style.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../includes/medium-editor/dist/js/medium-editor.js"> </script> 
+</head>
+<body>
+<div class="navbar">
+</div>
+<div class="content">
+<div class="news">
+<div class="news_box"> 
+<div class="news_title_box">
+<div class="news_title" contentEditable="true"> TEST! </div>
+</div>
+<div class="news_content editable"> 
+Hi there, this is a test!
+</div>
+</div>
+</div>
+</div>
+</body> 
+<script> 
+var elements = document.querySelectorAll('.editable'),
+    editor = new MediumEditor(elements);
+</script>
