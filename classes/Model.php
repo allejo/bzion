@@ -41,7 +41,7 @@ abstract class Model {
 
     /**
      * The name of the database table used for queries
-     * You can use this constant in static functions as such:
+     * You can use this constant in static methods as such:
      * static::TABLE
      */
     const TABLE = "";
