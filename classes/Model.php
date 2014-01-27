@@ -86,7 +86,7 @@ abstract class Model {
      * Update a database field
      * @param string $name The name of the column
      * @param mixed $value The value to set the column to
-     * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double), 'b' (blob) or nothing to let the function guess it
+     * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
      */
     public function update($name, $value, $type=NULL) {
         $this->db->query("UPDATE ". static::TABLE . " SET $name = ? WHERE id = ?", $type."i", array($value, $this->id));
@@ -167,6 +167,7 @@ abstract class Model {
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
      * @param bool $bzid Whether the function should return a BZID instead of an ID
+     * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
      * @return int The ID of the object
      */
     protected static function getIdFrom($value, $column, $bzid=false, $type="s") {
@@ -185,6 +186,7 @@ abstract class Model {
      * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string $types The types of values that will be passed to Database::query()
      * @param array $params The parameter values that will be passed to Database::query()
+     * @param string $table The database table that will be searched
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function getIds($select='id', $additional_query='', $types='', $params=array(), $table = "") {
@@ -220,9 +222,11 @@ abstract class Model {
      * @param bool $negate Whether to search if the value of $column does NOT belong to the $possible_values array
      * @param string $type The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
      * @param string $select The name of the column(s) that the returned array should contain
+     * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
+     * @param string $table The database table which will be used for queries
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_params="", $table = "") {
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_query="", $table = "") {
         $question_marks = array();
         $types = "";
         $negation = ($negate) ? "NOT" : "";
@@ -242,10 +246,10 @@ abstract class Model {
                 // that it matches the criteria - return nothing.
                 return array();
             } else {
-                $conditionString = $additional_params;
+                $conditionString = $additional_query;
             }
         } else {
-            $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_params";
+            $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_query";
         }
 
         return self::getIds($select, $conditionString, $types, $possible_values, $table);

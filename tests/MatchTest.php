@@ -81,7 +81,7 @@ class MatchTest extends TestCase {
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, 49434);
         $this->match_b = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, 49434);
 
-        $this->assertEquals("now", $this->match->getTimestamp());
+        $this->assertEquals("nosw", $this->match->getTimestamp());
 
         $this->assertEquals(49434, $this->match->getEnteredBy());
 

@@ -101,6 +101,7 @@ class Header {
     /**
      * Redirect the page using PHP's header() function
      * @param string $location The page to redirect to
+     * @param bool $override True if $location is an absolute path (e.g `http://google.com/`), false to prepend the base URL of the website to the path
      */
     public static function go($location = "/", $override = false) {
         if ($override) {
