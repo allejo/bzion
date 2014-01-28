@@ -134,6 +134,16 @@ class Player extends Model
     }
 
     /**
+     * Get a player's alias
+     * @return string|int The alias (or BZID if the alias doesn't exist)
+     */
+    public function getAlias() {
+        if ($this->alias != null)
+            return $this->alias;
+        return $this->getBZID();
+    }
+
+    /**
      * Get the player's avatar
      * @return string The URL for the avatar
      */

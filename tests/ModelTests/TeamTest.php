@@ -22,7 +22,23 @@ class TeamTest extends TestCase {
         $this->assertEquals($this->player->getId(), $team->getLeader()->getId());
     }
 
+    public function testTeamName() {
+        $this->team = Team::createTeam("Team name test", $this->bzid, "Avatar", "Description");
+
+        $team = new Team($this->team->getId());
+
+        $this->assertEquals("team-name-test", $team->getAlias());
+    }
+
+    public function testIrrationalTeamName() {
+        $this->team = Team::createTeam("-()#*$%!", $this->bzid, "Avatar", "Description");
+
+        $team = new Team($this->team->getId());
+
+        $this->assertEquals($this->team->getId(), $team->getAlias());
+    }
+
     public function tearDown() {
-        $this->wipe($this->player);
+        $this->wipe($this->player, $this->team);
     }
 }

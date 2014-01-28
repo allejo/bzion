@@ -71,7 +71,7 @@ abstract class Model {
             $this->id = $id;
         $this->table = static::TABLE;
 
-        $results = $this->db->query("SELECT * FROM " . $this->table . " WHERE " . $column . " = ?", "i", array($id));
+        $results = $this->db->query("SELECT * FROM " . $this->table . " WHERE " . $column . " = ? LIMIT 1", "i", array($id));
 
         if (count($results) < 1) {
             $this->valid  = false;
@@ -124,6 +124,16 @@ abstract class Model {
      */
     public function isValid() {
         return $this->valid;
+    }
+
+    /**
+     * Get an object's alias
+     * @return string|int The alias (or ID if the alias doesn't exist)
+     */
+    public function getAlias() {
+        if ($this->alias != null)
+            return $this->alias;
+        return $this->getId();
     }
 
     /**
