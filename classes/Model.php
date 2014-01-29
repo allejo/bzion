@@ -192,7 +192,7 @@ abstract class Model {
     /**
      * Gets an array of object IDs
      * @todo Make this PHPDoc message easier to understand
-     * @param string $select The name of the column(s) that the returned array should contain
+     * @param string|array $select The name of the column(s) that the returned array should contain
      * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string $types The types of values that will be passed to Database::query()
      * @param array $params The parameter values that will be passed to Database::query()
@@ -202,6 +202,10 @@ abstract class Model {
     protected static function getIds($select='id', $additional_query='', $types='', $params=array(), $table = "") {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
+
+        // If $select is an array, convert it into a comma-separated list that MySQL will accept
+        if (is_array($select))
+            $select = explode(",", $select);
 
         $results = $db->query("SELECT $select FROM $table $additional_query", $types, $params);
 
@@ -231,7 +235,7 @@ abstract class Model {
      * @param array $possible_values List of acceptable values
      * @param bool $negate Whether to search if the value of $column does NOT belong to the $possible_values array
      * @param string $type The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
-     * @param string $select The name of the column(s) that the returned array should contain
+     * @param string|array $select The name of the column(s) that the returned array should contain
      * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string $table The database table which will be used for queries
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
