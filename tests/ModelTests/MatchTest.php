@@ -32,6 +32,8 @@ class MatchTest extends TestCase {
         $this->assertEquals(30, $this->match->getDuration());
 
         $this->assertEquals(25, $this->match->getEloDiff());
+
+        $this->assertFalse($this->match->isDraw());
     }
 
     public function testTeamBWin() {
@@ -44,12 +46,16 @@ class MatchTest extends TestCase {
         $this->assertEquals(5, $this->match->getTeamBPoints());
 
         $this->assertEquals(25, $this->match->getEloDiff());
+
+        $this->assertFalse($this->match->isDraw());
     }
 
     public function testDraw() {
         $this->team_a->changeElo(+10);
 
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, 49434);
+
+        $this->assertTrue($this->match->isDraw());
 
         $this->assertEquals(1, $this->match->getEloDiff());
 

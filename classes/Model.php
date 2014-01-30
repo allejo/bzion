@@ -89,7 +89,7 @@ abstract class Model {
      * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
      */
     public function update($name, $value, $type=NULL) {
-        $this->db->query("UPDATE ". static::TABLE . " SET $name = ? WHERE id = ?", $type."i", array($value, $this->id));
+        $this->db->query("UPDATE ". static::TABLE . " SET `$name` = ? WHERE id = ?", $type."i", array($value, $this->id));
     }
 
     /**

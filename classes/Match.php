@@ -183,6 +183,14 @@ class Match extends Model
     }
 
     /**
+     * Determine whether the match was a draw
+     * @return bool True if the match ended without any winning teams
+     */
+    function isDraw() {
+        return $this->team_a_points == $this->team_b_points;
+    }
+
+    /**
      * Enter a new match to the database
      * @param int $a Team A's ID
      * @param int $b Team B's ID
