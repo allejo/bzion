@@ -5,78 +5,91 @@ class Team extends Model
 
     /**
      * The name of the team
+     *
      * @var string
      */
     private $name;
 
     /**
      * The description of the team
+     *
      * @var string
      */
     private $description;
 
     /**
      * The url of the team's avatar
+     *
      * @var string
      */
     private $avatar;
 
     /**
      * The creation date of the teamm
+     *
      * @var TimeDate
      */
     private $created;
 
     /**
      * The team's current elo
+     *
      * @var int
      */
     private $elo;
 
     /**
      * The team's activity
+     *
      * @var double
      */
     private $activity;
 
     /**
      * The bzid of the team leader
+     *
      * @var int
      */
     private $leader;
 
     /**
      * The number of matches won
+     *
      * @var int
      */
     private $matches_won;
 
     /**
      * The number of matches lost
+     *
      * @var int
      */
     private $matches_lost;
 
     /**
      * The number of matches tied
+     *
      * @var int
      */
     private $matches_draw;
 
     /**
      * The total number of matches
+     *
      * @var int
      */
     private $matches_total;
 
     /**
      * The number of members
+     *
      * @var int
      */
     private $members;
 
     /**
      * The team's status
+     *
      * @var string
      */
     private $status;
@@ -88,12 +101,13 @@ class Team extends Model
 
     /**
      * Construct a new Team
+     *
      * @param int $id The team's id
      */
     function __construct($id) {
-
         parent::__construct($id);
-        if (!$this->valid) return;
+        if (!$this->valid)
+            return;
 
         $team = $this->result;
 
@@ -112,25 +126,30 @@ class Team extends Model
         $this->status = $team['status'];
 
         $this->matches_total = $this->matches_won + $this->matches_lost + $this->matches_draw;
-
     }
 
     /**
      * Create a new team
+     *
      * @param string $name The name of the team
      * @param int $leader The BZID of the person creating the team, also the leader
      * @param string $avatar The URL to the team's avatar
      * @param string $description The team's description
      * @return Team An object that represents the newly created team
      */
-    public static function createTeam($name, $leader, $avatar, $description)
-    {
+    public static function createTeam($name, $leader, $avatar, $description) {
         $alias = Team::generateAlias($name);
 
         $db = Database::getInstance();
 
-        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 1, 'open')";
-        $params = array($name, $alias ,$description, $avatar, $leader);
+        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 0, 'open')";
+        $params = array(
+            $name,
+            $alias,
+            $description,
+            $avatar,
+            $leader
+        );
 
         $db->query($query, "ssssi", $params);
         $id = $db->getInsertId();
@@ -138,7 +157,9 @@ class Team extends Model
         // If the generateAlias() method couldn't find an appropriate alias,
         // just make it the same as the ID
         if ($alias === null) {
-            $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array($id));
+            $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array(
+                $id
+            ));
         }
 
         $team = new Team($id);
@@ -150,15 +171,19 @@ class Team extends Model
 
     /**
      * Get the members on the team
+     *
      * @param string $select A comma separated list of fields to get
      * @return array The members on the team
      */
-    function getMembers($select="*") {
-        return Player::getIds($select, "WHERE team = ?", "i", array($this->id));
+    function getMembers($select = "*") {
+        return Player::getIds($select, "WHERE team = ?", "i", array(
+            $this->id
+        ));
     }
 
     /**
      * Get the number of members on the team
+     *
      * @return int The number of members on the team
      */
     function getNumMembers() {
@@ -167,6 +192,7 @@ class Team extends Model
 
     /**
      * Get the total number of matches this team has played
+     *
      * @return int The total number of matches this team has played
      */
     function getNumTotalMatches() {
@@ -174,7 +200,51 @@ class Team extends Model
     }
 
     /**
+     * Increment the team's match count by one
+     *
+     * @param string The type of the match. Can be 'win', 'draw' or 'loss'
+     */
+    function incrementMatchCount($type) {
+        $this->changeMatchCount(1, $type);
+    }
+
+    /**
+     * Decrement the team's match count by one
+     *
+     * @param string The type of the match. Can be 'win', 'draw' or 'loss'
+     */
+    function decrementMatchCount($type) {
+        $this->changeMatchCount(-1, $type);
+    }
+
+    /**
+     * Increment the team's match count
+     *
+     * @param int The number to add to the current matches number
+     * @param string The match count that should be changed. Can be 'win', 'draw' or 'loss'
+     */
+    function changeMatchCount($delta, $type) {
+        switch ($type) {
+            case "win":
+            case "won":
+                $this->matches_total += $delta;
+                $this->update("matches_won", $this->matches_won += $delta, "i");
+                return;
+            case "loss":
+            case "lost":
+                $this->matches_total += $delta;
+                $this->update("matches_lost", $this->matches_lost += $delta, "i");
+                return;
+            default:
+                $this->matches_total += $delta;
+                $this->update("matches_draw", $this->matches_draw += $delta, "i");
+                return;
+        }
+    }
+
+    /**
      * Get the current elo of the team
+     *
      * @return int The elo of the team
      */
     function getElo() {
@@ -183,6 +253,7 @@ class Team extends Model
 
     /**
      * Increase or decrease the ELO of the team
+     *
      * @param int $adjust The value to be added to the current ELO (negative to substract)
      */
     function changeElo($adjust) {
@@ -192,6 +263,7 @@ class Team extends Model
 
     /**
      * Get the name of the team
+     *
      * @return string The name of the team
      */
     function getName() {
@@ -202,6 +274,7 @@ class Team extends Model
 
     /**
      * Get the activity of the team
+     *
      * @return double The team's activity formated to two decimal places
      */
     function getActivity() {
@@ -210,26 +283,29 @@ class Team extends Model
 
     /**
      * Get the URL that points to the team's page
+     *
      * @param string $dir The virtual directory the URL should point to
      * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string The team's URL, without a trailing slash
      */
-    function getURL($dir="teams", $default=NULL) {
+    function getURL($dir = "teams", $default = NULL) {
         return parent::getURL($dir, $default);
     }
 
     /**
      * Get the URL that points to the team's list of matches
+     *
      * @param string $dir The virtual directory the URL should point to
      * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string The team's list of matches
      */
-    function getMatchesURL($dir="matches", $default=NULL) {
+    function getMatchesURL($dir = "matches", $default = NULL) {
         return parent::getURL($dir, $default);
     }
 
     /**
      * Get the leader of the team
+     *
      * @return Player The object representing the team leader
      */
     function getLeader() {
@@ -238,6 +314,7 @@ class Team extends Model
 
     /**
      * Get the creation date of the team
+     *
      * @return string The creation date of the team
      */
     function getCreationDate() {
@@ -246,10 +323,14 @@ class Team extends Model
 
     /**
      * Adds a new member to the team
+     *
      * @param int $bzid The bzid of the player to add to the team
      */
     function addMember($bzid) {
-        $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array($this->id, $bzid));
+        $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array(
+            $this->id,
+            $bzid
+        ));
         $this->update('members', ++$this->members, "i");
     }
 
@@ -258,37 +339,48 @@ class Team extends Model
      *
      * *Warning*: This method does not check whether the player is already
      * a member of the team
+     *
      * @param int $bzid The bzid of the player to remove
      */
     function removeMember($bzid) {
-        $this->db->query("UPDATE players SET team=0 WHERE bzid=?", "i", array($bzid));
+        $this->db->query("UPDATE players SET team=0 WHERE bzid=?", "i", array(
+            $bzid
+        ));
         $this->update('members', --$this->members, "i");
     }
 
     /**
      * Get the matches this team has participated in
+     *
      * @return array The array of match IDs this team has participated in
      */
     function getMatches() {
-        return Match::getIds('id', "WHERE team_a=? OR team_b=?", "ii", array($this->id, $this->id));
+        return Match::getIds('id', "WHERE team_a=? OR team_b=?", "ii", array(
+            $this->id,
+            $this->id
+        ));
     }
 
     /**
      * Get all the teams in the database that are not disabled or deleted
+     *
      * @param string $select The column to retrieve from the database
      * @return array An array of Team IDs
      */
     public static function getTeams($select = "id") {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select, "ORDER BY elo DESC");
+        return parent::getIdsFrom("status", array(
+            "disabled",
+            "deleted"
+        ), "s", true, $select, "ORDER BY elo DESC");
     }
 
     /**
      * Gets a team object from the supplied alias
+     *
      * @param string $alias The team's alias
      * @return Team The team's id
      */
     public static function getFromAlias($alias) {
         return new Team(self::getIdFrom($alias, "alias"));
     }
-
 }

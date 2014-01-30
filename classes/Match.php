@@ -226,6 +226,18 @@ class Match extends Model
         $team_a->changeElo($diff);
         $team_b->changeElo(-$diff);
 
+        // Update team match count
+        if ($a_points == $b_points) {
+            $team_a->incrementMatchCount("draw");
+            $team_b->incrementMatchCount("draw");
+        } elseif ($a_points > $b_points) {
+            $team_a->incrementMatchCount("win");
+            $team_b->incrementMatchCount("loss");
+        } else {
+            $team_a->incrementMatchCount("loss");
+            $team_b->incrementMatchCount("win");
+        }
+
         return new Match($id);
     }
 
