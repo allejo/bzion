@@ -33,7 +33,7 @@ class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint {
         if (count($this->value) != count($other))
             return false;
 
-        return empty(array_diff($this->value, $other));
+        return count(array_diff($this->value, $other)) == 0;
     }
 
     /**

@@ -202,7 +202,7 @@ class Team extends Model
     /**
      * Increment the team's match count by one
      *
-     * @param string The type of the match. Can be 'win', 'draw' or 'loss'
+     * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
      */
     function incrementMatchCount($type) {
         $this->changeMatchCount(1, $type);
@@ -211,7 +211,7 @@ class Team extends Model
     /**
      * Decrement the team's match count by one
      *
-     * @param string The type of the match. Can be 'win', 'draw' or 'loss'
+     * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
      */
     function decrementMatchCount($type) {
         $this->changeMatchCount(-1, $type);
@@ -220,24 +220,23 @@ class Team extends Model
     /**
      * Increment the team's match count
      *
-     * @param int The number to add to the current matches number
-     * @param string The match count that should be changed. Can be 'win', 'draw' or 'loss'
+     * @param int $adjust The number to add to the current matches number (negative to substract)
+     * @param string $type The match count that should be changed. Can be 'win', 'draw' or 'loss'
      */
-    function changeMatchCount($delta, $type) {
+    function changeMatchCount($adjust, $type) {
+        $this->matches_total += $adjust;
+
         switch ($type) {
             case "win":
             case "won":
-                $this->matches_total += $delta;
-                $this->update("matches_won", $this->matches_won += $delta, "i");
+                $this->update("matches_won", $this->matches_won += $adjust, "i");
                 return;
             case "loss":
             case "lost":
-                $this->matches_total += $delta;
-                $this->update("matches_lost", $this->matches_lost += $delta, "i");
+                $this->update("matches_lost", $this->matches_lost += $adjust, "i");
                 return;
             default:
-                $this->matches_total += $delta;
-                $this->update("matches_draw", $this->matches_draw += $delta, "i");
+                $this->update("matches_draw", $this->matches_draw += $adjust, "i");
                 return;
         }
     }
