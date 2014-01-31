@@ -50,18 +50,40 @@ class Group extends Model {
         $this->status = $group['status'];
     }
 
+    /**
+     * Get the subject of the discussion
+     * 
+     * @return string
+     **/
     function getSubject() {
         return $this->subject;
     }
 
+    /**
+     * Get the creator of the discussion
+     * 
+     * @return Player
+     */
     function getCreator() {
         return new Player($this->creator);
     }
 
+    /**
+     * Determine whether a player is the one who created the message group
+     * 
+     * @param int $bzid The BZID of the player to test for
+     * @return bool
+     */
     function isCreator($bzid) {
         return ($this->creator == $bzid);
     }
 
+    /**
+     * Get the time when the group was most recently active
+     * 
+     * @param bool $human True to output the last activity in a human-readable string, false to return a TimeDate object
+     * @return string|TimeDate
+     */
     function getLastActivity($human = true) {
         if ($human)
             return $this->last_activity->diffForHumans();
@@ -69,6 +91,11 @@ class Group extends Model {
             return $this->last_activity;
     }
 
+    /**
+     * Get the last message of the group
+     * 
+     * @return Message
+     */
     function getLastMessage() {
         $ids = self::getIdsFrom('group_to', array($this->id), 'i', false, 'id', 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
