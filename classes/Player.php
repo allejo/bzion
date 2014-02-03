@@ -171,7 +171,7 @@ class Player extends Model
      * Get the player's description, exactly as it is saved in the database
      * @return string The description
      */
-    function getUnSanitizedDescription() {
+    function getRawDescription() {
         return $this->description;
     }
 
