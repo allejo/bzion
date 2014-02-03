@@ -99,6 +99,14 @@ class Ban extends Model {
     }
 
     /**
+     * Checks whether the ban has expired
+     * @return boolean True if the ban's expiration time has already passed
+     */
+    function hasExpired() {
+        return TimeDate::now()->gte($this->expiration);
+    }
+
+    /**
      * Get all the bans in the database that aren't disabled or deleted
      * @param string $select
      * @return array An array of ban IDs
