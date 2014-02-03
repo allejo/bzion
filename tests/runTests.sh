@@ -23,7 +23,7 @@ while test $# -gt 0; do
 done
 
 # Run PHPUnit and save its return code
-phpunit $COVERAGE_TYPE --bootstrap bzion-load.php --colors tests
+phpunit $COVERAGE_TYPE
 PHPUNIT=$?
 
 # Find all PHP files on the root directory which do not start with "bzion"
