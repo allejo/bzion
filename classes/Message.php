@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A message between players or teams
+ */
 class Message extends Model
 {
 

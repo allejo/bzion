@@ -2,6 +2,9 @@
 
 include_once(DOC_ROOT . "/includes/bzfquery.php");
 
+/**
+ * A BZFlag server
+ */
 class Server extends Model
 {
 
@@ -151,14 +154,26 @@ class Server extends Model
         return $this->info['ip'];
     }
 
+    /**
+     * Get the server's name
+     * @return string
+     */
     function getName() {
         return $this->name;
     }
 
+    /**
+     * Get the server's IP address or hostname
+     * @return string
+     */
     function getAddress() {
         return $this->address;
     }
 
+    /**
+     * Get when the server information was last updated
+     * @return string
+     */
     function getUpdated() {
         return $this->updated->format(DATE_FORMAT);
     }

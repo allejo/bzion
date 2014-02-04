@@ -2,7 +2,11 @@
 
 session_start();
 
-class Header {
+/**
+ * The header used in HTML pages
+ */
+class Header
+{
 
     /**
      * The title of the page

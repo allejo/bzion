@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A database object (e.g. A player or a team)
+ */
 abstract class Model {
 
     /**

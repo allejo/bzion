@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * An invitation sent to a player asking them to join a team
+ */
 class Invitation extends Model
 {
 

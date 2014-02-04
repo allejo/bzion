@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A custom page
+ */
 class Page extends Model {
 
     /**
@@ -34,7 +37,7 @@ class Page extends Model {
 
     /**
      * Whether the page is the home page
-     * @var int
+     * @var boolean
      */
     private $home;
 
@@ -71,30 +74,58 @@ class Page extends Model {
 
     }
 
+    /**
+     * Get the title of the page
+     * @return string
+     */
     function getName() {
         return $this->name;
     }
 
+    /**
+     * Get the raw content of the page
+     * @return string
+     */
     function getContent() {
         return $this->content;
     }
 
+    /**
+     * Get the page's submission time
+     * @return string The time when the page was created in a human-readable format
+     */
     function getCreated() {
         return $this->created->diffForHumans();
     }
 
+    /**
+     * Get the time when the page was last updated
+     * @return string The page's last update time in a human-readable form
+     */
     function getUpdated() {
         return $this->updated->diffForHumans();
     }
 
+    /**
+     * Get the user who created the page
+     * @return int The BZID of the page's author
+     */
     function getAuthor() {
         return $this->author;
     }
 
+    /**
+     * Get the status of the page
+     * @return string
+     */
     function getStatus() {
         return $this->status;
     }
 
+    /**
+     * Find out whether this is the homepage
+     * @return bool
+     */
     function isHomePage() {
         return $this->home;
     }
@@ -109,6 +140,10 @@ class Page extends Model {
         return parent::getURL($dir, $default);
     }
 
+    /**
+     * Get a list of enabled pages
+     * @return int[] A list of Page IDs
+     */
     public static function getPages() {
         return parent::getIdsFrom("status", array("live"), "s");
     }
@@ -142,6 +177,10 @@ class Page extends Model {
         return $alias;
     }
 
+    /**
+     * Get the home page
+     * @return Page
+     */
     public static function getHomePage() {
         return new Page(parent::getIdFrom(1, "home"));
     }

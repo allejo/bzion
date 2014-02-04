@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A discussion (group of messages)
+ */
 class Group extends Model {
 
     /**
@@ -52,7 +55,7 @@ class Group extends Model {
 
     /**
      * Get the subject of the discussion
-     * 
+     *
      * @return string
      **/
     function getSubject() {
@@ -61,7 +64,7 @@ class Group extends Model {
 
     /**
      * Get the creator of the discussion
-     * 
+     *
      * @return Player
      */
     function getCreator() {
@@ -70,7 +73,7 @@ class Group extends Model {
 
     /**
      * Determine whether a player is the one who created the message group
-     * 
+     *
      * @param int $bzid The BZID of the player to test for
      * @return bool
      */
@@ -80,7 +83,7 @@ class Group extends Model {
 
     /**
      * Get the time when the group was most recently active
-     * 
+     *
      * @param bool $human True to output the last activity in a human-readable string, false to return a TimeDate object
      * @return string|TimeDate
      */
@@ -93,7 +96,7 @@ class Group extends Model {
 
     /**
      * Get the last message of the group
-     * 
+     *
      * @return Message
      */
     function getLastMessage() {
@@ -180,6 +183,13 @@ class Group extends Model {
         return count($result) > 0;
     }
 
+    /**
+     * Checks if a player has a new message in the group
+     *
+     * @todo Make this method work
+     * @param int $bzid The BZID of the player
+     * @return boolean True if the player has a new message
+     */
     public static function hasNewMessage($bzid) {
         $groups = Group::getGroups($bzid);
         $me = new Player($bzid);

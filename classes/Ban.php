@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A ban imposed by an admin on a player
+ */
 class Ban extends Model {
 
     /**
@@ -70,30 +73,58 @@ class Ban extends Model {
 
     }
 
+    /**
+     * Get the player who was banned
+     * @return int The BZID of the banned player
+     */
     function getPlayer() {
         return $this->player;
     }
 
+    /**
+     * Get the IP address of the banned player
+     * @return string
+     */
     function getIpAddress() {
         return $this->ipAddress;
     }
 
+    /**
+     * Get the expiration time of the ban
+     * @return string The expiration time in a human readable form
+     */
     function getExpiration() {
         return $this->expiration->diffForHumans();
     }
 
+    /**
+     * Get the ban's description
+     * @return string
+     */
     function getReason() {
         return $this->reason;
     }
 
+    /**
+     * Get the creation time of the ban
+     * @return string The creation time in a human readable form
+     */
     function getCreated() {
         return $this->created->diffForHumans();
     }
 
+    /**
+     * Get the time when the ban was last updated
+     * @return string
+     */
     function getUpdated() {
         return $this->updated->diffForHumans();
     }
 
+    /**
+     * Get the user who imposed the ban
+     * @return int The BZID of the banner
+     */
     function getAuthor() {
         return $this->author;
     }

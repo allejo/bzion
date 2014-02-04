@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A match played between two teams
+ */
 class Match extends Model
 {
 
@@ -178,8 +181,12 @@ class Match extends Model
         return $this->duration;
     }
 
+    /**
+     * Get the user who entered the match
+     * @return Player
+     */
     function getEnteredBy() {
-        return $this->entered_by;
+        return new Player($this->entered_by);
     }
 
     /**

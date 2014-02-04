@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A news article
+ */
 class News extends Model {
 
     /**
@@ -63,22 +66,42 @@ class News extends Model {
 
     }
 
+    /**
+     * Get the subject of the news article
+     * @return string
+     */
     function getSubject() {
         return $this->subject;
     }
 
+    /**
+     * Get the author of the news article
+     * @return int The BZID of the author
+     */
     function getAuthor() {
         return $this->author;
     }
 
+    /**
+     * Get the content of the article
+     * @return string The raw content of the article
+     */
     function getContent() {
         return $this->content;
     }
 
+    /**
+     * Get the time when the article was last updated
+     * @return string The article's last update time in a human-readable form
+     */
     function getUpdated() {
         return $this->updated->diffForHumans();
     }
 
+    /**
+     * Get the time when the article was submitted
+     * @return string The article's creation time in a human-readable form
+     */
     function getCreated() {
         return $this->created->diffForHumans();
     }

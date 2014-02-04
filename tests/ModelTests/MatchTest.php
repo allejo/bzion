@@ -95,7 +95,7 @@ class MatchTest extends TestCase {
 
         $this->assertEquals("now", $this->match->getTimestamp());
 
-        $this->assertEquals($this->bzid, $this->match->getEnteredBy());
+        $this->assertEquals($this->bzid, $this->match->getEnteredBy()->getBZID());
 
         $matches = Match::getMatches('id');
         $this->assertContains($this->match->getId(), $matches);

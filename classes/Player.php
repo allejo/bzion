@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A league player
+ */
 class Player extends Model
 {
 

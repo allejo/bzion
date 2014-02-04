@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Database interface class
+ */
 class Database
 {
     /**

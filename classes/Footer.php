@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * The footer used for HTML pages
+ */
 class Footer {
 
     /**

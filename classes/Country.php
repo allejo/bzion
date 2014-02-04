@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A country
+ */
 class Country extends Model {
 
     /**
@@ -35,10 +38,18 @@ class Country extends Model {
 
     }
 
+    /**
+     * Get the name of the country in the default language
+     * @return string
+     */
     function getName() {
         return $this->name;
     }
 
+    /**
+     * Get the country's flag
+     * @return string The URL to the country's flag
+     */
     function getFlag() {
         return $this->flag;
     }

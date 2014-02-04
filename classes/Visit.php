@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A player's visit on the website
+ */
 class Visit extends Model
 {
 
