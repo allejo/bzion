@@ -7,7 +7,7 @@ class Database
 {
     /**
      * The database object used inside this class
-     * @var MySQLi
+     * @var mysqli
      */
     private $dbc;
 
