@@ -207,13 +207,37 @@ class Database
 
     /**
     * Outputs the specified string if debugging is enabled
+    * @todo Debug/Error class?
+    *
     * @param string $string The string that will be shown
+    * @param string $type A text representing the type of the error (e.g: "MySQL Error:")
+    * @param numeric $id A number used to identify the error
     */
-    function printDebug($string)
+    function printDebug($string, $type=null, $id=null)
     {
         if (DEVELOPMENT) {
-            echo '<pre style="white-space:pre-wrap;background-color:#EEE;border:1px solid #999;border-radius:3px;padding:9px;margin:10px;">',
-            $string, '</pre>';
+            if (php_sapi_name() == 'cli') {
+                // Running from the command line, don't add fancy HTML styling
+                echo "\n";
+
+                if ($type != null) echo "$type: ";
+                echo $string;
+                if ($id != null) echo " (#$id)";
+
+                echo "\n";
+            } else {
+                echo '<pre style="white-space:pre-wrap;background-color:#EEE;border:1px solid #999;border-radius:3px;padding:9px;margin:10px;">';
+
+                if ($type != null)
+                    echo "<b style=\"color:#300\">$type:</b>" ;
+
+                echo $string;
+
+                if ($id != null)
+                    echo " <i style=\"color:#140\">(#$id)</i>";
+
+                echo '</pre>';
+            }
         }
     }
 
@@ -225,9 +249,7 @@ class Database
     */
     function debug($error, $id=null) {
         $this->writeToDebug("MySQL Error :: " . $error);
-
-        $idstring = ($id != null) ? '<i style="color:#140">(#'.$id.')</i>' : '';
-        $this->printDebug("<b style=\"color:#300\">MySQLi error:</b> $error $idstring");
+        $this->printDebug($error, "MySQL Error", $id);
 
     }
 
