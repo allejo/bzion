@@ -56,11 +56,10 @@ class Country extends Model {
 
     /**
      * Get all the countries in the database
-     * @param string $select The column to retrieve from the database
      * @return array An array of country IDs
      */
-    public static function getCountries($select = "id") {
-        return parent::getIds($select);
+    public static function getCountries() {
+        return parent::getIds();
     }
 
 }

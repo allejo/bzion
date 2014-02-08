@@ -49,7 +49,7 @@ class Team extends Model
     private $activity;
 
     /**
-     * The bzid of the team leader
+     * The id of the team leader
      *
      * @var int
      */
@@ -135,7 +135,7 @@ class Team extends Model
      * Create a new team
      *
      * @param string $name The name of the team
-     * @param int $leader The BZID of the person creating the team, also the leader
+     * @param int $leader The ID of the person creating the team, also the leader
      * @param string $avatar The URL to the team's avatar
      * @param string $description The team's description
      * @return Team An object that represents the newly created team
@@ -175,11 +175,10 @@ class Team extends Model
     /**
      * Get the members on the team
      *
-     * @param string $select A comma separated list of fields to get
      * @return array The members on the team
      */
-    function getMembers($select = "*") {
-        return Player::getIds($select, "WHERE team = ?", "i", array(
+    function getMembers() {
+        return Player::getIds("WHERE team = ?", "i", array(
             $this->id
         ));
     }
@@ -326,12 +325,12 @@ class Team extends Model
     /**
      * Adds a new member to the team
      *
-     * @param int $bzid The bzid of the player to add to the team
+     * @param int $id The id of the player to add to the team
      */
-    function addMember($bzid) {
-        $this->db->query("UPDATE players SET team=? WHERE bzid=?", "ii", array(
+    function addMember($id) {
+        $this->db->query("UPDATE players SET team=? WHERE id=?", "ii", array(
             $this->id,
-            $bzid
+            $id
         ));
         $this->update('members', ++$this->members, "i");
     }
@@ -342,11 +341,11 @@ class Team extends Model
      * *Warning*: This method does not check whether the player is already
      * a member of the team
      *
-     * @param int $bzid The bzid of the player to remove
+     * @param int $id The id of the player to remove
      */
-    function removeMember($bzid) {
-        $this->db->query("UPDATE players SET team=0 WHERE bzid=?", "i", array(
-            $bzid
+    function removeMember($id) {
+        $this->db->query("UPDATE players SET team=0 WHERE id=?", "i", array(
+            $id
         ));
         $this->update('members', --$this->members, "i");
     }
@@ -357,7 +356,7 @@ class Team extends Model
      * @return array The array of match IDs this team has participated in
      */
     function getMatches() {
-        return Match::getIds('id', "WHERE team_a=? OR team_b=?", "ii", array(
+        return Match::getIds("WHERE team_a=? OR team_b=?", "ii", array(
             $this->id,
             $this->id
         ));
@@ -366,14 +365,13 @@ class Team extends Model
     /**
      * Get all the teams in the database that are not disabled or deleted
      *
-     * @param string $select The column to retrieve from the database
      * @return array An array of Team IDs
      */
-    public static function getTeams($select = "id") {
+    public static function getTeams() {
         return parent::getIdsFrom("status", array(
             "disabled",
             "deleted"
-        ), "s", true, $select, "ORDER BY elo DESC");
+        ), "s", true, "ORDER BY elo DESC");
     }
 
     /**

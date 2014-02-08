@@ -85,17 +85,16 @@ class Player extends Model
 
     /**
      * Construct a new Player
-     * @param int $bzid The player's bzid
+     * @param int $id The player's ID
      */
-    function __construct($bzid) {
+    function __construct($id) {
 
-        parent::__construct($bzid, "bzid");
+        parent::__construct($id);
         if (!$this->valid) return;
 
         $player = $this->result;
 
-        $this->bzid = $bzid;
-        $this->id = $player['id'];
+        $this->bzid = $player['bzid'];
         $this->username = $player['username'];
         $this->alias = $player['alias'];
         $this->team = $player['team'];
@@ -117,7 +116,7 @@ class Player extends Model
      */
     function updateLastLogin($when = "now") {
         $last = new TimeDate($when);
-        $this->db->query("UPDATE players SET last_login = ? WHERE bzid = ?", "si", array($last->format(DATE_FORMAT), $this->bzid));
+        $this->db->query("UPDATE players SET last_login = ? WHERE id = ?", "si", array($last->format(DATE_FORMAT), $this->id));
     }
 
     /**
@@ -159,7 +158,7 @@ class Player extends Model
      * @param string $avatar The URL for the avatar
      */
     function setAvatar($avatar) {
-        $this->db->query("UPDATE players SET avatar = ? WHERE bzid = ?", "si", array($avatar, $this->bzid));
+        $this->db->query("UPDATE players SET avatar = ? WHERE id = ?", "si", array($avatar, $this->id));
     }
 
     /**
@@ -183,7 +182,7 @@ class Player extends Model
      * @param string $description The description
      */
     function setDescription($description) {
-        $this->db->query("UPDATE players SET description = ? WHERE bzid = ?", "si", array($description, $this->bzid));
+        $this->db->query("UPDATE players SET description = ? WHERE id = ?", "si", array($description, $this->id));
     }
 
     /**
@@ -199,7 +198,7 @@ class Player extends Model
      * @param string $timezone The timezone
      */
     function setTimezone($timezone) {
-        $this->db->query("UPDATE players SET timezone = ? WHERE bzid = ?", "si", array($timezone, $this->bzid));
+        $this->db->query("UPDATE players SET timezone = ? WHERE id = ?", "si", array($timezone, $this->id));
     }
 
     /**
@@ -240,9 +239,10 @@ class Player extends Model
 
     /**
      * Get all of the callsigns a player has used to log in to the website
+     * @todo Fix for bzids
      */
     function getPastCallsigns() {
-        return Parent::getIds("username", "WHERE bzid = ?", "i", array($this->bzid), "past_callsigns");
+        return Parent::getIds("username", "WHERE player = ?", "i", array($this->id), "past_callsigns");
     }
 
     /**
@@ -270,7 +270,7 @@ class Player extends Model
         $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
 
-        return new Player($bzid);
+        return new Player($db->getInsertId());
     }
 
     /**
@@ -278,21 +278,26 @@ class Player extends Model
      * @param int $bzid The player's bzid
      * @return bool Whether the player exists in the database
      */
-    public static function playerExists($bzid) {
-        $db = Database::getInstance();
+    public static function playerBZIDExists($bzid) {
+        return self::getFromBZID($bzid)->isValid();
+    }
 
-        $results = $db->query("SELECT * FROM players WHERE bzid = ?", "i", array($bzid));
-
-        return (count($results[0]) > 0);
+    /**
+     * Given a player's BZID, get a player object
+     *
+     * @param int $bzid The player's BZID
+     * @return Player
+     */
+    public static function getFromBZID($bzid) {
+        return new Player(self::getIdFrom($bzid, "bzid", "s"));
     }
 
     /**
      * Get all the players in the database that have an active status
-     * @param string $select (Optional) The name of the column(s) that should be accessed
      * @return array An array of player BZIDs
      */
-    public static function getPlayers($select = "bzid") {
-        return parent::getIdsFrom("status", array("active"), "s", false, $select);
+    public static function getPlayers() {
+        return parent::getIdsFrom("status", array("active"), "s", false);
     }
 
     /**
@@ -301,7 +306,7 @@ class Player extends Model
      * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string The URL
      */
-    function getURL($dir="players", $default="bzid") {
+    function getURL($dir="players", $default="id") {
         return parent::getURL($dir, $this->$default);
     }
 
@@ -356,17 +361,17 @@ class Player extends Model
      * @return Player The player
      */
     public static function getFromAlias($alias) {
-        return new Player(parent::getIdFrom($alias, "alias", true));
+        return new Player(parent::getIdFrom($alias, "alias", "s"));
     }
 
     /**
      * Add a player's callsign to the database if it does not exist as a past callsign
-     * @param string $bzid The BZID for the player whose callsign we're saving
+     * @param string $id The ID for the player whose callsign we're saving
      * @param string $username The callsign which we are saving if it doesn't exist
      */
-    public static function saveUsername($bzid, $username) {
+    public static function saveUsername($id, $username) {
         $db = Database::getInstance();
 
-        $db->query("INSERT IGNORE INTO `past_callsigns` (id, bzid, username) VALUES (?, ?, ?)", "iis", array(NULL, $bzid, $username));
+        $db->query("INSERT IGNORE INTO `past_callsigns` (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
     }
 }

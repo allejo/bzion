@@ -18,7 +18,7 @@ class Group extends Model {
     private $last_activity;
 
     /**
-     * The bzid of the creator of the group
+     * The id of the creator of the group
      * @var int
      */
     private $creator;
@@ -74,11 +74,11 @@ class Group extends Model {
     /**
      * Determine whether a player is the one who created the message group
      *
-     * @param int $bzid The BZID of the player to test for
+     * @param int $id The ID of the player to test for
      * @return bool
      */
-    function isCreator($bzid) {
-        return ($this->creator == $bzid);
+    function isCreator($id) {
+        return ($this->creator == $id);
     }
 
     /**
@@ -100,7 +100,7 @@ class Group extends Model {
      * @return Message
      */
     function getLastMessage() {
-        $ids = self::getIdsFrom('group_to', array($this->id), 'i', false, 'id', 'ORDER BY id DESC LIMIT 0,1', 'messages');
+        $ids = self::getIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
         return new Message($ids[0]);
     }
@@ -116,28 +116,28 @@ class Group extends Model {
     }
 
     /**
-     * Get a list containing the BZIDs of each member of the group
+     * Get a list containing the IDs of each member of the group
      * @param bool $hideSelf Whether to hide the currently logged in player
-     * @return array An array of player BZIDs
+     * @return array An array of player IDs
      */
     function getMembers($hideSelf=false) {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
         $params = array($this->id);
 
-        if ($hideSelf && isset($_SESSION['bzid'])) {
+        if ($hideSelf && isset($_SESSION['playerId'])) {
             $additional_query .= " AND `player` != ?";
             $types .= "i";
-            $params[] = $_SESSION['bzid'];
+            $params[] = $_SESSION['playerId'];
         }
-        return parent::getIds("player", $additional_query, $types, $params, "player_groups");
+        return parent::getIds($additional_query, $types, $params, "player_groups", "player");
     }
 
     /**
      * Create a new message group
      *
      * @param string $subject The subject of the group
-     * @param array $members A list of BZIDs representing the group's members
+     * @param array $members A list of IDs representing the group's members
      * @return Group An object that represents the created group
      */
     public static function createGroup($subject, $members=array())
@@ -149,9 +149,9 @@ class Group extends Model {
         $db->query($query, "ss", $params);
         $groupid = $db->getInsertId();
 
-        foreach ($members as $bzid) {
+        foreach ($members as $mid) {
             $query = "INSERT INTO `player_groups` (`player`, `group`) VALUES(?, ?)";
-            $db->query($query, "ii", array($bzid, $groupid));
+            $db->query($query, "ii", array($mid, $groupid));
         }
 
         return new Group($groupid);
@@ -159,26 +159,27 @@ class Group extends Model {
 
     /**
      * Get all the groups in the database a player belongs to that are not disabled or deleted
-     * @param int $bzid The bzid of the player whose groups are being retrieved
+     * @todo Move this to the Player class
+     * @param int $id The id of the player whose groups are being retrieved
      * @return array An array of group IDs
      */
-    public static function getGroups($bzid) {
+    public static function getGroups($id) {
         $additional_query = "LEFT JOIN groups ON player_groups.group=groups.id
                              WHERE player_groups.player = ? AND groups.status
                              NOT IN (?, ?) ORDER BY last_activity DESC";
-        $params = array($bzid, "disabled", "deleted");
+        $params = array($id, "disabled", "deleted");
 
-        return parent::getIds("groups.id", $additional_query, "iss", $params, "player_groups");
+        return parent::getIds($additional_query, "iss", $params, "player_groups", "groups.id");
     }
 
     /**
      * Checks if a player belongs in the group
-     * @param int $bzid The ID of the player
+     * @param int $id The ID of the player
      * @return bool True if the player belongs in the group, false if they don't
      */
-    public function isMember($bzid) {
+    public function isMember($id) {
         $result = $this->db->query("SELECT 1 FROM `player_groups` WHERE `group` = ?
-                                    AND `player` = ?", "ii", array($this->id, $bzid));
+                                    AND `player` = ?", "ii", array($this->id, $id));
 
         return count($result) > 0;
     }
@@ -187,12 +188,12 @@ class Group extends Model {
      * Checks if a player has a new message in the group
      *
      * @todo Make this method work
-     * @param int $bzid The BZID of the player
+     * @param int $id The ID of the player
      * @return boolean True if the player has a new message
      */
-    public static function hasNewMessage($bzid) {
-        $groups = Group::getGroups($bzid);
-        $me = new Player($bzid);
+    public static function hasNewMessage($id) {
+        $groups = Group::getGroups($id);
+        $me = new Player($id);
 
         foreach ($groups as $key => $value) {
             $group = new Group($value);

@@ -14,14 +14,13 @@ class MatchTest extends TestCase {
 
         $this->player_a = $this->getNewPlayer();
         $this->player_b = $this->getNewPlayer();
-        $this->bzid     = $this->player_a->getBZID();
 
-        $this->team_a = Team::createTeam("Team A", $this->player_a->getBZID(), "", "");
-        $this->team_b = Team::createTeam("Team B", $this->player_b->getBZID(), "", "");
+        $this->team_a = Team::createTeam("Team A", $this->player_a->getId(), "", "");
+        $this->team_b = Team::createTeam("Team B", $this->player_b->getId(), "", "");
     }
 
     public function testTeamAWin() {
-        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->bzid);
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->player_a->getId());
 
         $this->assertInstanceOf("Team", $this->match->getTeamA());
         $this->assertInstanceOf("Team", $this->match->getTeamB());
@@ -43,7 +42,7 @@ class MatchTest extends TestCase {
     }
 
     public function testTeamBWin() {
-        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 2, 5, 30, $this->bzid);
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 2, 5, 30, $this->player_a->getId());
 
         $this->assertEquals(1175, $this->match->getTeamAEloNew());
         $this->assertEquals(1225, $this->match->getTeamBEloNew());
@@ -59,7 +58,7 @@ class MatchTest extends TestCase {
     public function testDraw() {
         $this->team_a->changeElo(+10);
 
-        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->bzid);
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
 
         $this->assertTrue($this->match->isDraw());
 
@@ -70,14 +69,14 @@ class MatchTest extends TestCase {
     }
 
     public function testEqualEloDraw() {
-        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->bzid);
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
 
         $this->assertEquals(0, $this->match->getEloDiff());
         $this->assertEquals($this->match->getTeamAEloNew(), $this->match->getTeamBEloNew());
     }
 
     public function testShortMatch() {
-        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->bzid);
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->player_a->getId());
 
         $this->assertEquals(20, $this->match->getDuration());
 
@@ -90,12 +89,12 @@ class MatchTest extends TestCase {
     public function testMiscMethods() {
         $old_matches = Match::getMatches('id');
 
-        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->bzid);
-        $this->match_b = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->bzid);
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->player_a->getId());
+        $this->match_b = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->player_b->getId());
 
         $this->assertEquals("now", $this->match->getTimestamp());
 
-        $this->assertEquals($this->bzid, $this->match->getEnteredBy()->getBZID());
+        $this->assertEquals($this->player_a->getId(), $this->match->getEnteredBy()->getId());
 
         $matches = Match::getMatches('id');
         $this->assertContains($this->match->getId(), $matches);

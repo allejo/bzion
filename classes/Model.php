@@ -62,13 +62,13 @@ abstract class Model {
      * @param string $column The column to use to identify separate database entries
      */
     function __construct($id, $column = "id") {
+        $this->db = Database::getInstance();
+
         if ($id == 0) {
             $this->valid  = false;
             $this->result = array();
             return;
         }
-
-        $this->db = Database::getInstance();
 
         if ($column == "id")
             $this->id = $id;
@@ -110,7 +110,7 @@ abstract class Model {
      * Permanently delete the object from the database
      */
     public function wipe() {
-        $this->db->query("DELETE FROM " . $this->table . " WHERE id = ?", "i", array($this->id));
+        $this->db->query("DELETE FROM " . static::TABLE . " WHERE id = ?", "i", array($this->id));
     }
 
     /**
@@ -179,14 +179,11 @@ abstract class Model {
      * Gets one object's id from the supplied alias
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
-     * @param bool $bzid Whether the function should return a BZID instead of an ID
      * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
      * @return int The ID of the object
      */
-    protected static function getIdFrom($value, $column, $bzid=false, $type="s") {
-        $bz = ($bzid) ? "bz" : "";
-
-        $results = self::getIdsFrom($column, $value, $type, false, "{$bz}id", "LIMIT 1");
+    protected static function getIdFrom($value, $column, $type="s") {
+        $results = self::getIdsFrom($column, $value, $type, false, "LIMIT 1");
 
         // Return the id or 0 if nothing was found
         return (isset($results[0])) ? $results[0] : 0;
@@ -202,7 +199,7 @@ abstract class Model {
      * @param string $table The database table that will be searched
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($select='id', $additional_query='', $types='', $params=array(), $table = "") {
+    protected static function getIds($additional_query='', $types='', $params=array(), $table = "", $select='id') {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
@@ -243,7 +240,7 @@ abstract class Model {
      * @param string $table The database table which will be used for queries
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $select='id', $additional_query="", $table = "") {
+    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id') {
         $question_marks = array();
         $types = "";
         $negation = ($negate) ? "NOT" : "";
@@ -269,7 +266,7 @@ abstract class Model {
             $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_query";
         }
 
-        return self::getIds($select, $conditionString, $types, $possible_values, $table);
+        return self::getIds($conditionString, $types, $possible_values, $table, $select);
 
     }
 

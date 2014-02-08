@@ -53,16 +53,18 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
      * @return Player
      */
     protected function getNewPlayer() {
-        $this->playersCreated[] = ++$this->lastBzid;
-        return Player::newPlayer($this->lastBzid, "Sample player" . $this->lastBzid - 1);
+        ++$this->lastBzid;
+        $player = Player::newPlayer($this->lastBzid, "Sample player" . $this->lastBzid - 1);
+        $this->playersCreated[] = $player->getId();
+        return $player;
     }
 
     /**
      * Clean-up all the database entries added during the test
      */
     public function tearDown() {
-        foreach ($this->playersCreated as $bzid) {
-            self::wipe(new Player($bzid));
+        foreach ($this->playersCreated as $id) {
+            self::wipe(new Player($id));
         }
     }
 }

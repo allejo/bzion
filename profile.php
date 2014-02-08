@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     $header->go("home");
 }
 
-$me = new Player($_SESSION['bzid']);
+$me = new Player($_SESSION['playerId']);
 
 if (isset($_GET['action']) && $_GET['action'] == "edit") {
     $header->draw("Profile :: Edit");

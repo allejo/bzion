@@ -7,13 +7,13 @@ class Invitation extends Model
 {
 
     /**
-     * The BZID of the player receiving the invite
+     * The ID of the player receiving the invite
      * @var int
      */
     private $invited_player;
 
     /**
-     * The BZID of the sender of the invite
+     * The ID of the sender of the invite
      * @var int
      */
     private $sent_by;
@@ -61,8 +61,8 @@ class Invitation extends Model
 
     /**
      * Send an invitation to join a team
-     * @param int $to The BZID of the player who will receive the invitation
-     * @param int $from The BZID of the player who sent it
+     * @param int $to The ID of the player who will receive the invitation
+     * @param int $from The ID of the player who sent it
      * @param int $teamid The team ID to which a player has been invited to
      * @param string $message (Optional) The message that will be displayed to the person receiving the invitation
      * @return Invitation The object of the invitation just sent

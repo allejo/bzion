@@ -16,11 +16,11 @@ $banList = Ban::getBans();
 
 foreach ($banList as $key => $id) {
     $ban = new Ban($id);
-    $bannedPlayer = new Player($ban->getPlayer());
+    $bannedPlayer = $ban->getPlayer();
     echo "<div class=\"ban_box\">\n";
     echo "<div class=\"ban_title_box\">\n";
     echo "<div class=\"ban_title\">" . $bannedPlayer->getUsername() . "</div>\n";
-    $author = new Player($ban->getAuthor());
+    $author = $ban->getAuthor();
     echo "</div>\n";
     echo "<div class=\"ban_content\">". $ban->getReason() . "\n";
     echo "<div class=\"ban_author\">By <a href=\"" . $author->getURL() . "\">" . $author->getUsername() . "</a> " . $ban->getUpdated() . "</div></div>\n";

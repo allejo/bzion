@@ -6,7 +6,7 @@
 class Ban extends Model {
 
     /**
-     * The bzid of the banned player
+     * The id of the banned player
      * @var int
      */
     private $player;
@@ -42,7 +42,7 @@ class Ban extends Model {
     private $updated;
 
     /**
-     * The bzid of the ban author
+     * The id of the ban author
      * @var int
      */
     private $author;
@@ -75,10 +75,10 @@ class Ban extends Model {
 
     /**
      * Get the player who was banned
-     * @return int The BZID of the banned player
+     * @return Player The banned player
      */
     function getPlayer() {
-        return $this->player;
+        return new Player($this->player);
     }
 
     /**
@@ -123,10 +123,10 @@ class Ban extends Model {
 
     /**
      * Get the user who imposed the ban
-     * @return int The BZID of the banner
+     * @return Player The banner
      */
     function getAuthor() {
-        return $this->author;
+        return new Player($this->author);
     }
 
     /**
@@ -139,11 +139,10 @@ class Ban extends Model {
 
     /**
      * Get all the bans in the database that aren't disabled or deleted
-     * @param string $select
      * @return array An array of ban IDs
      */
-    public static function getBans($select = "id") {
-        return parent::getIds($select, "ORDER BY updated DESC");
+    public static function getBans() {
+        return parent::getIds("ORDER BY updated DESC");
     }
 
 }

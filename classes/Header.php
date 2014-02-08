@@ -1,6 +1,10 @@
 <?php
 
-session_start();
+if(session_id() == '') {
+    // Session hasn't started
+    session_start();
+}
+
 
 /**
  * The header used in HTML pages
@@ -54,9 +58,8 @@ class Header
         <a href="<?php echo BASE_URL; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
         <?php if (isset($_SESSION['username'])) {
 
-        if (Group::hasNewMessage($_SESSION['bzid'])) {
-            $new = "new_message";
-        }
+            $new = Group::hasNewMessage($_SESSION['playerId']) ? "new_message" : "";
+
         ?>
         <a href="<?php echo BASE_URL; ?>/messages" class="navbuttonicon left <?php echo $new; ?>"><i class="icon-comments"></i></a>
         <?php } ?>

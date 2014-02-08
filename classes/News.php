@@ -30,7 +30,7 @@ class News extends Model {
     private $updated;
 
     /**
-     * The bzid of the author of the news article
+     * The ID of the author of the news article
      * @var int
      */
     private $author;
@@ -76,10 +76,10 @@ class News extends Model {
 
     /**
      * Get the author of the news article
-     * @return int The BZID of the author
+     * @return Player
      */
     function getAuthor() {
-        return $this->author;
+        return new Player($this->author);
     }
 
     /**
@@ -108,11 +108,10 @@ class News extends Model {
 
     /**
      * Get all the news entries in the database that aren't disabled or deleted
-     * @param string $select The column to retrieve
      * @return array An array of news IDs
      */
-    public static function getNews($select = "id") {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select, "ORDER BY updated DESC");
+    public static function getNews() {
+        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, "ORDER BY updated DESC");
     }
 
 }

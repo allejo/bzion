@@ -30,7 +30,7 @@ class Page extends Model {
     private $updated;
 
     /**
-     * The bzid of the author of the page
+     * The ID of the author of the page
      * @var int
      */
     private $author;
@@ -108,10 +108,10 @@ class Page extends Model {
 
     /**
      * Get the user who created the page
-     * @return int The BZID of the page's author
+     * @return Player The page's author
      */
     function getAuthor() {
-        return $this->author;
+        return new Player($this->author);
     }
 
     /**

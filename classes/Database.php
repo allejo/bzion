@@ -100,10 +100,10 @@ class Database
      * @param mixed|array $params (Optional) The array of values that will be binded to the prepared statement
      * @return mixed Returns an array of the values received from the query or returns false on empty
      */
-    function query($query, $typeDef = FALSE, $params = FALSE)
+    function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
         $multiQuery = true;
-        if ($stmt = $this->dbc->prepare($query))
+        if ($stmt = $this->dbc->prepare($queryText))
         {
             if (!is_array($params)) {
                 $params = array($params);
@@ -171,8 +171,11 @@ class Database
                     else
                         $queryResult[] = mysqli_stmt_affected_rows($stmt);
                 }
-                else
+                else {
+                    $this->debug($this->dbc->error, $this->dbc->errno);
                     $queryResult[] = false;
+                }
+
 
                 $result[$queryKey] = $queryResult;
             }

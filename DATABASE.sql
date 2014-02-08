@@ -147,7 +147,7 @@
 
   CREATE TABLE IF NOT EXISTS `past_callsigns` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `bzid` int(10) unsigned NOT NULL,
+    `player` int(10) unsigned NOT NULL,
     `username` varchar(32) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`)
@@ -197,7 +197,7 @@
 
   CREATE TABLE IF NOT EXISTS `players` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `bzid` int(10) unsigned NOT NULL,
+    `bzid` varchar(255) NOT NULL,
     `team` int(10) unsigned NOT NULL,
     `username` varchar(32) NOT NULL,
     `alias` varchar(32) DEFAULT NULL,
@@ -278,7 +278,7 @@
 
   CREATE TABLE IF NOT EXISTS `visits` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `bzid` int(10) unsigned NOT NULL,
+    `player` int(10) unsigned NOT NULL,
     `ip` varchar(15) NOT NULL,
     `host` varchar(100) NOT NULL,
     `user_agent` text NOT NULL,

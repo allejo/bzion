@@ -21,7 +21,7 @@ class Server extends Model
     private $address;
 
     /**
-     * The bzid of the owner of the server
+     * The id of the owner of the server
      * @var int
      */
     private $owner;
@@ -72,7 +72,7 @@ class Server extends Model
      *
      * @param string $name The name of the server
      * @param string $address The address of the server (e.g: server.com:5155)
-     * @param int $owner The BZID of the server owner
+     * @param int $owner The ID of the server owner
      * @return Server An object that represents the sent message
      */
     static function addServer($name, $address, $owner) {

@@ -12,7 +12,7 @@ try {
     if (!isset($_SESSION['username'])) {
         throw new Exception("You need to be logged in to do this.");
     }
-    $bzid = $_SESSION['bzid'];
+    $playerId = $_SESSION['playerId'];
 
     // Two different POST variable layouts are acceptable:
     //
@@ -35,11 +35,11 @@ try {
             throw new Exception("The message group you specified does not exist.");
         }
 
-        if (!$group_to->isMember($bzid)) {
+        if (!$group_to->isMember($playerId)) {
             throw new Exception("You aren't a member of that message group.");
         }
 
-        Message::sendMessage($group_to->getId(), $_SESSION['bzid'], $content);
+        Message::sendMessage($group_to->getId(), $playerId, $content);
     } elseif (!isset($_POST['to']) || !isset($_POST['subject'])) {
         throw new Exception("Bad request");
     } else {
@@ -58,22 +58,22 @@ try {
                 throw new Exception("You need to specify at least one recipient.");
         }
 
-        foreach ($recipients as $bzid) {
-            if (!DEVELOPMENT && $bzid == $_SESSION['bzid'] && count($recipients) < 2)
+        foreach ($recipients as $rid) {
+            if (!DEVELOPMENT && $rid == $playerId && count($recipients) < 2)
                 throw new Exception("You can't send a message to yourself!");
 
-            $player = new Player($bzid);
+            $recipient = new Player($rid);
 
-            if (!$player->isValid()) {
+            if (!$recipient->isValid()) {
                 throw new Exception("One of the recipients you specified does not exist.");
             }
         }
 
         // Add the currently logged-in user to the list of recipients, if he isn't there already
-        $recipients[] = $_SESSION['bzid'];
+        $recipients[] = $playerId;
         $group_to = Group::createGroup($subject, array_unique($recipients));
 
-        Message::sendMessage($group_to->getId(), $_SESSION['bzid'], $content);
+        Message::sendMessage($group_to->getId(), $playerId, $content);
     }
 
 } catch (Exception $e) {

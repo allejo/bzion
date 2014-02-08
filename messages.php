@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
 
 $header->draw("Messages");
 
-$groups = Group::getGroups($_SESSION['bzid']);
+$groups = Group::getGroups($_SESSION['playerId']);
 
 if (isset($_GET['id'])) {
     $messages = Message::getMessages($_GET['id']);
@@ -87,17 +87,17 @@ if (!$messages) {
                             <optgroup label="Players">
                               <?php
 
-                              foreach (Player::getPlayers() as $key => $bzid) {
-                                  // Don't add the currently logged in player to the list
-                                  if ($bzid == $_SESSION['bzid']) continue;
+                              foreach (Player::getPlayers() as $key => $pid) {
+                                  // Don't add the currently logged in player to the list of possible recipients
+                                  if ($pid == $_SESSION['playerId']) continue;
 
-                                  $player = new Player($bzid);
+                                  $player = new Player($pid);
                                   $selected = "";
-                                  if ($currentGroup && $currentGroup->isMember($bzid)) {
+                                  if ($currentGroup && $currentGroup->isMember($pid)) {
                                       $selected = 'selected=""';
                                   }
 
-                                  echo "<option $selected value=\"$bzid\">", $player->getUsername(), "</option>";
+                                  echo "<option $selected value=\"$pid\">", $player->getUsername(), "</option>";
                               }
 
                               ?>
@@ -156,17 +156,17 @@ if (!$messages) {
             foreach($messages as $id) {
                 $msg = new Message($id);
                 $who = "other";
-                if ($msg->getAuthor(true) == $_SESSION['bzid'])
+                if ($msg->getAuthor()->getId() == $_SESSION['playerId'])
                     $who = "me";
                 echo "<tr><td>";
-                if ($msg->getAuthor()->getBZID() != $prev_author)
+                if ($msg->getAuthor()->getID() != $prev_author)
                     echo "<div class='group_message_author_$who'>{$msg->getAuthor()->getUsername()}</div>";
                 echo "<div class='group_message_content group_message_from_$who'>";
                 echo $msg->getContent();
                 echo "</div>";
                 echo "<div class='group_message_date_$who'>{$msg->getCreationDate()}</div>";
                 echo "</td></tr>";
-                $prev_author = $msg->getAuthor()->getBZID();
+                $prev_author = $msg->getAuthor()->getID();
             }
             ?>
 

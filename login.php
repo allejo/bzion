@@ -15,25 +15,28 @@ $checkIP = !DEVELOPMENT;
 $info = validate_token($token, $username, array(), $checkIP);
 
 if (isset($info)) {
-
-    session_start();
+    if(session_id() == '') {
+        // Session hasn't started
+        session_start();
+    }
 
     $_SESSION['username'] = $info['username'];
-    $_SESSION['bzid'] = $info['bzid'];
     $_SESSION['groups'] = $info['groups'];
 
     $go = "home";
 
-    if (!Player::playerExists($info['bzid'])) {
-        Player::newPlayer($info['bzid'], $info['username']);
+    if (!Player::playerBZIDExists($info['bzid'])) {
+        $player = Player::newPlayer($info['bzid'], $info['username']);
         $go = "/profile"; // If they're new, redirect to their profile page so they can add some info
+    } else {
+        $player = Player::getFromBZID($info['bzid']);
     }
 
-    $player = new Player($info['bzid']);
+    $_SESSION['playerId'] = $player->getId();
     $player->updateLastLogin();
 
-    Player::saveUsername($info['bzid'], $info['username']);
-    Visit::enterVisit($info['bzid'], $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
+    Player::saveUsername($player->getId(), $info['username']);
+    Visit::enterVisit($player->getId(), $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
 
     Header::go($go);
 

@@ -13,7 +13,7 @@ try {
         throw new Exception("You need to be logged in to do this.");
     }
 
-    $me = new Player($_SESSION['bzid']);
+    $me = new Player($_SESSION['playerId']);
 
     $me->setAvatar($_POST['avatar']);
     $me->setDescription($_POST['description']);

@@ -7,13 +7,13 @@ class Message extends Model
 {
 
     /**
-     * The id of the group this message belongs to
+     * The ID of the group this message belongs to
      * @var int
      */
     private $group_to;
 
     /**
-     * The BZID of the player who sent the message
+     * The ID of the player who sent the message
      * @var int
      */
     private $player_from;
@@ -85,14 +85,10 @@ class Message extends Model
 
     /**
      * Gets the creator of the message
-     * @param bool $bzid Whether to return the BZID of the author or a Player object of the author
      * @return Player An object representing the message's author
      */
-    public function getAuthor($bzid = false) {
-        if ($bzid)
-            return $this->player_from;
-        else
-            return new Player($this->player_from);
+    public function getAuthor() {
+        return new Player($this->player_from);
     }
 
     /**
@@ -107,7 +103,7 @@ class Message extends Model
      * Create a new message
      *
      * @param int $to The id of the group the message is sent to
-     * @param int $from The BZID of the sender
+     * @param int $from The ID of the sender
      * @param string $message The body of the message
      * @param string $status The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
@@ -133,7 +129,7 @@ class Message extends Model
      * @return array An array of message IDs
      */
     public static function getMessages($id) {
-        return parent::getIds("id", "WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
+        return parent::getIds("WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
                               "ssi", array("hidden", "deleted", $id));
     }
 

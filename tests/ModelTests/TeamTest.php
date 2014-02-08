@@ -3,7 +3,7 @@
 class TeamTest extends TestCase {
 
     private $player;
-    private $bzid;
+    private $playerid;
     private $team;
 
     protected function setUp() {
@@ -11,11 +11,10 @@ class TeamTest extends TestCase {
         $db = new Database();
 
         $this->player = $this->getNewPlayer();
-        $this->bzid   = $this->player->getBZID();
     }
 
     public function testTeamLeader() {
-        $this->team = Team::createTeam("Sample Team", $this->bzid, "Sample Avatar Text", "Sample Description");
+        $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Sample Avatar Text", "Sample Description");
 
         $team = new Team($this->team->getId());
 
@@ -23,7 +22,7 @@ class TeamTest extends TestCase {
     }
 
     public function testTeamName() {
-        $this->team = Team::createTeam("Team name test", $this->bzid, "Avatar", "Description");
+        $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
 
@@ -34,7 +33,7 @@ class TeamTest extends TestCase {
     }
 
     public function testIrrationalTeamName() {
-        $this->team = Team::createTeam("13435", $this->bzid, "Avatar", "Description");
+        $this->team = Team::createTeam("13435", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
 
@@ -45,7 +44,7 @@ class TeamTest extends TestCase {
     }
 
     public function testIrrationalTeamName2() {
-        $this->team = Team::createTeam("-()#*$%!", $this->bzid, "Avatar", "Description");
+        $this->team = Team::createTeam("-()#*$%!", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
 
@@ -56,18 +55,18 @@ class TeamTest extends TestCase {
     }
 
     public function testMembers() {
-        $this->team = Team::createTeam("Sample Team", $this->bzid, "Avatar", "Description");
+        $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
         $extraMember = $this->getNewPlayer();
         $otherPlayer = $this->getNewPlayer();
 
-        $this->team->addMember($otherPlayer->getBZID());
-        $this->team->addMember($extraMember->getBZID());
-        $this->team->removeMember($otherPlayer->getBZID());
+        $this->team->addMember($otherPlayer->getId());
+        $this->team->addMember($extraMember->getId());
+        $this->team->removeMember($otherPlayer->getId());
 
         $team = new Team($this->team->getId());
 
-        $members = $team->getMembers('bzid');
-        $expectedMembers = array($this->player->getBZID(), $extraMember->getBZID());
+        $members = $team->getMembers('id');
+        $expectedMembers = array($this->player->getId(), $extraMember->getId());
 
         $this->assertEquals(2, $team->getNumMembers());
         $this->assertArraysHaveEqualValues($expectedMembers, $members);
@@ -76,9 +75,9 @@ class TeamTest extends TestCase {
     }
 
     public function testMatches() {
-        $this->team = Team::createTeam("Sample Team", $this->bzid, "Avatar", "Description");
+        $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
         $otherPlayer = $this->getNewPlayer();
-        $otherTeam  = Team::createTeam("Sample Team 2", $otherPlayer->getBZID(), "Avatar", "Description");
+        $otherTeam  = Team::createTeam("Sample Team 2", $otherPlayer->getId(), "Avatar", "Description");
 
         $match_a = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 30, 49434);
         $match_b = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 20, 49434);
@@ -92,7 +91,7 @@ class TeamTest extends TestCase {
     }
 
     public function testMiscMethods() {
-        $this->team = Team::createTeam("Sample Team", $this->bzid, "Avatar", "Description");
+        $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
 

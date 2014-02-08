@@ -7,10 +7,10 @@ class Visit extends Model
 {
 
     /**
-     * The bzid of the visiting user
+     * The id of the visiting user
      * @var int
      */
-    private $bzid;
+    private $player;
 
     /**
      * The ip of the visiting user
@@ -58,7 +58,7 @@ class Visit extends Model
 
         $visit = $this->result;
 
-        $this->bzid = $visit['bzid'];
+        $this->player = $visit['player'];
         $this->ip = $visit['ip'];
         $this->host = $visit['host'];
         $this->user_agent = $visit['user_agent'];
@@ -69,7 +69,7 @@ class Visit extends Model
 
     /**
      * Enter a new visit into the database
-     * @param int $bzid The visitor's bzid
+     * @param int $visitor The visitor's id
      * @param string $ip The visitor's ip address
      * @param string $host The visitor's host
      * @param string $user_agent The visitor's user agent
@@ -77,13 +77,13 @@ class Visit extends Model
      * @param string $timestamp The timestamp of the visit
      * @return Visit An object representing the visit that was just entered
      */
-    public static function enterVisit($bzid, $ip, $host, $user_agent, $referrer, $timestamp = "now") {
+    public static function enterVisit($visitor, $ip, $host, $user_agent, $referrer, $timestamp = "now") {
         $db = Database::getInstance();
 
         $timestamp = new DateTime($timestamp);
 
-        $db->query("INSERT INTO visits (bzid, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-        "isssss", array($bzid, $ip, $host, $user_agent, $referrer, $timestamp->format(DATE_FORMAT)));
+        $db->query("INSERT INTO visits (player, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
+        "isssss", array($visitor, $ip, $host, $user_agent, $referrer, $timestamp->format(DATE_FORMAT)));
 
         return new Visit($db->getInsertId());
     }

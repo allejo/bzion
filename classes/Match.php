@@ -67,7 +67,7 @@ class Match extends Model
     private $duration;
 
     /**
-     * The BZID of the person (i.e. referee) who last updated the match information
+     * The ID of the person (i.e. referee) who last updated the match information
      * @var string
      */
     private $entered_by;
@@ -284,11 +284,10 @@ class Match extends Model
 
     /**
      * Get all the matches in the database that aren't disabled or deleted
-     * @param string $select
      * @return array An array of match IDs
      */
-    public static function getMatches($select = "id") {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, $select, 'ORDER BY timestamp DESC');
+    public static function getMatches() {
+        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, 'ORDER BY timestamp DESC');
     }
 
 }

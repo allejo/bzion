@@ -7,6 +7,8 @@ $header = new Header();
 
 if (isset($_GET['alias'])) {
     $player = Player::getFromAlias($_GET['alias']);
+} else if (isset($_GET['bzid'])) {
+    $player = Player::getFromBZID($_GET['bzid']);
 } else if (isset($_GET['id'])) {
     $player = new Player($_GET['id']);
 }
@@ -31,6 +33,7 @@ if (isset($player)) {
         $header->draw("Players");
 
         echo "The specified player could not be found. <br />";
+
     }
 
 } else {
@@ -48,8 +51,8 @@ if (isset($player)) {
             <th> Joined </th>
         </tr>
     <?php
-    foreach ($players as $key => $bzid) {
-        $player = new Player($bzid);
+    foreach ($players as $key => $pid) {
+        $player = new Player($pid);
         echo "<tr>";
         echo "<td><a href='" . $player->getURL() . "'>" . $player->getUsername() . "</a></td>";
         $teamlink = $player->getTeam()->getName();
