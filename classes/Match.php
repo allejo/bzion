@@ -220,6 +220,11 @@ class Match extends Model
 
         $a_elo += $diff;
         $b_elo -= $diff;
+
+        // Update team ELOs
+        $team_a->changeElo($diff);
+        $team_b->changeElo(-$diff);
+
         $diff = abs($diff);
 
         $timestamp = new TimeDate($timestamp);
@@ -228,10 +233,6 @@ class Match extends Model
         "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format(DATE_FORMAT), $duration, $entered_by, "entered"));
 
         $id = $db->getInsertId();
-
-        // Update team ELOs
-        $team_a->changeElo($diff);
-        $team_b->changeElo(-$diff);
 
         // Update team match count
         if ($a_points == $b_points) {
