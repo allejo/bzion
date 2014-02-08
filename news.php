@@ -18,7 +18,7 @@ foreach ($newsArticles as $key => $id) {
     echo "<div class=\"news_box\">\n";
     echo "<div class=\"news_title_box\">\n";
     echo "<div class=\"news_title\">" . $news->getSubject() . "</div>\n";
-    $author = new Player($news->getAuthor());
+    $author = $news->getAuthor();
     echo "</div>\n";
     echo "<div class=\"news_content\">". $news->getContent() . "\n";
     echo "<div class=\"news_author\">By <a href=\"" . $author->getURL() . "\">" . $author->getUsername() . "</a> " . $news->getUpdated() . "</div></div>\n";

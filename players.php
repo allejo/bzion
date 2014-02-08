@@ -33,7 +33,6 @@ if (isset($player)) {
         $header->draw("Players");
 
         echo "The specified player could not be found. <br />";
-
     }
 
 } else {

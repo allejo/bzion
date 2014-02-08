@@ -76,7 +76,7 @@ class Server extends Model
      * @return Server An object that represents the sent message
      */
     static function addServer($name, $address, $owner) {
-        $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW())";
+        $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW(), 'active')";
         $params = array($name, $address, $owner);
 
         $db = Database::getInstance();
