@@ -129,7 +129,7 @@ class Message extends Model
      * @return array An array of message IDs
      */
     public static function getMessages($id) {
-        return parent::getIds("WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
+        return parent::fetchIds("WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
                               "ssi", array("hidden", "deleted", $id));
     }
 

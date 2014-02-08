@@ -192,7 +192,7 @@ class Server extends Model
      * @return array An array of server IDs
      */
     public static function getServers() {
-        return parent::getIdsFrom("status", array("active"), "s");
+        return parent::fetchIdsFrom("status", array("active"), "s");
     }
 
 }

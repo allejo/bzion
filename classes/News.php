@@ -111,7 +111,7 @@ class News extends Model {
      * @return array An array of news IDs
      */
     public static function getNews() {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, "ORDER BY updated DESC");
+        return parent::fetchIdsFrom("status", array("disabled", "deleted"), "s", true, "ORDER BY updated DESC");
     }
 
 }

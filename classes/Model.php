@@ -176,21 +176,21 @@ abstract class Model {
     }
 
     /**
-     * Gets one object's id from the supplied alias
+     * Gets the id of a database row which has a specific value on a column
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
      * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
      * @return int The ID of the object
      */
-    protected static function getIdFrom($value, $column, $type="s") {
-        $results = self::getIdsFrom($column, $value, $type, false, "LIMIT 1");
+    protected static function fetchIdFrom($value, $column, $type="s") {
+        $results = self::fetchIdsFrom($column, $value, $type, false, "LIMIT 1");
 
         // Return the id or 0 if nothing was found
         return (isset($results[0])) ? $results[0] : 0;
     }
 
     /**
-     * Gets an array of object IDs
+     * Gets an array of object IDs from the database
      * @todo Make this PHPDoc message easier to understand
      * @param string|array $select The name of the column(s) that the returned array should contain
      * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
@@ -199,7 +199,7 @@ abstract class Model {
      * @param string $table The database table that will be searched
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIds($additional_query='', $types='', $params=array(), $table = "", $select='id') {
+    protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id') {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
@@ -230,7 +230,7 @@ abstract class Model {
     }
 
     /**
-     * Gets an array of object IDs that have a column equal to something else
+     * Gets an array of object IDs from the database that have a column equal to something else
      * @param string $column The name of the column that should be tested
      * @param array $possible_values List of acceptable values
      * @param bool $negate Whether to search if the value of $column does NOT belong to the $possible_values array
@@ -240,7 +240,7 @@ abstract class Model {
      * @param string $table The database table which will be used for queries
      * @return array A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function getIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id') {
+    protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id') {
         $question_marks = array();
         $types = "";
         $negation = ($negate) ? "NOT" : "";
@@ -266,7 +266,7 @@ abstract class Model {
             $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_query";
         }
 
-        return self::getIds($conditionString, $types, $possible_values, $table, $select);
+        return self::fetchIds($conditionString, $types, $possible_values, $table, $select);
 
     }
 

@@ -178,7 +178,7 @@ class Team extends Model
      * @return array The members on the team
      */
     function getMembers() {
-        return Player::getIds("WHERE team = ?", "i", array(
+        return Player::fetchIds("WHERE team = ?", "i", array(
             $this->id
         ));
     }
@@ -356,7 +356,7 @@ class Team extends Model
      * @return array The array of match IDs this team has participated in
      */
     function getMatches() {
-        return Match::getIds("WHERE team_a=? OR team_b=?", "ii", array(
+        return Match::fetchIds("WHERE team_a=? OR team_b=?", "ii", array(
             $this->id,
             $this->id
         ));
@@ -368,7 +368,7 @@ class Team extends Model
      * @return array An array of Team IDs
      */
     public static function getTeams() {
-        return parent::getIdsFrom("status", array(
+        return parent::fetchIdsFrom("status", array(
             "disabled",
             "deleted"
         ), "s", true, "ORDER BY elo DESC");
@@ -381,6 +381,6 @@ class Team extends Model
      * @return Team The team's id
      */
     public static function getFromAlias($alias) {
-        return new Team(self::getIdFrom($alias, "alias"));
+        return new Team(self::fetchIdFrom($alias, "alias"));
     }
 }

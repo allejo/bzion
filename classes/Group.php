@@ -100,7 +100,7 @@ class Group extends Model {
      * @return Message
      */
     function getLastMessage() {
-        $ids = self::getIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
+        $ids = self::fetchIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
         return new Message($ids[0]);
     }
@@ -130,7 +130,7 @@ class Group extends Model {
             $types .= "i";
             $params[] = $_SESSION['playerId'];
         }
-        return parent::getIds($additional_query, $types, $params, "player_groups", "player");
+        return parent::fetchIds($additional_query, $types, $params, "player_groups", "player");
     }
 
     /**
@@ -169,7 +169,7 @@ class Group extends Model {
                              NOT IN (?, ?) ORDER BY last_activity DESC";
         $params = array($id, "disabled", "deleted");
 
-        return parent::getIds($additional_query, "iss", $params, "player_groups", "groups.id");
+        return parent::fetchIds($additional_query, "iss", $params, "player_groups", "groups.id");
     }
 
     /**

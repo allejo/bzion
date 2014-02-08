@@ -145,7 +145,7 @@ class Page extends Model {
      * @return int[] A list of Page IDs
      */
     public static function getPages() {
-        return parent::getIdsFrom("status", array("live"), "s");
+        return parent::fetchIdsFrom("status", array("live"), "s");
     }
 
     /**
@@ -154,7 +154,7 @@ class Page extends Model {
      * @return Page The page
      */
     public static function getFromAlias($alias) {
-        return new Page(parent::getIdFrom($alias, "alias"));
+        return new Page(parent::fetchIdFrom($alias, "alias"));
     }
 
      /**
@@ -182,7 +182,7 @@ class Page extends Model {
      * @return Page
      */
     public static function getHomePage() {
-        return new Page(parent::getIdFrom(1, "home"));
+        return new Page(parent::fetchIdFrom(1, "home"));
     }
 
 }

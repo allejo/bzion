@@ -242,7 +242,7 @@ class Player extends Model
      * @todo Fix for bzids
      */
     function getPastCallsigns() {
-        return Parent::getIds("username", "WHERE player = ?", "i", array($this->id), "past_callsigns");
+        return Parent::fetchIds("username", "WHERE player = ?", "i", array($this->id), "past_callsigns");
     }
 
     /**
@@ -289,7 +289,7 @@ class Player extends Model
      * @return Player
      */
     public static function getFromBZID($bzid) {
-        return new Player(self::getIdFrom($bzid, "bzid", "s"));
+        return new Player(self::fetchIdFrom($bzid, "bzid", "s"));
     }
 
     /**
@@ -297,7 +297,7 @@ class Player extends Model
      * @return array An array of player BZIDs
      */
     public static function getPlayers() {
-        return parent::getIdsFrom("status", array("active"), "s", false);
+        return parent::fetchIdsFrom("status", array("active"), "s", false);
     }
 
     /**
@@ -361,7 +361,7 @@ class Player extends Model
      * @return Player The player
      */
     public static function getFromAlias($alias) {
-        return new Player(parent::getIdFrom($alias, "alias", "s"));
+        return new Player(parent::fetchIdFrom($alias, "alias", "s"));
     }
 
     /**

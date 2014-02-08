@@ -288,7 +288,7 @@ class Match extends Model
      * @return array An array of match IDs
      */
     public static function getMatches() {
-        return parent::getIdsFrom("status", array("disabled", "deleted"), "s", true, 'ORDER BY timestamp DESC');
+        return parent::fetchIdsFrom("status", array("disabled", "deleted"), "s", true, 'ORDER BY timestamp DESC');
     }
 
 }

@@ -142,7 +142,7 @@ class Ban extends Model {
      * @return array An array of ban IDs
      */
     public static function getBans() {
-        return parent::getIds("ORDER BY updated DESC");
+        return parent::fetchIds("ORDER BY updated DESC");
     }
 
 }
