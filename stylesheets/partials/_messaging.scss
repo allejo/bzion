@@ -1,0 +1,160 @@
+.messaging {
+    .conversations {
+        display: inline-block;
+        width: 350px;
+
+        .toolbar {
+            background-color: $mainColor;
+            display: inline-block;
+            width: 100%;
+
+            li {
+                display: inline-block;
+                margin: 5px 5px 5px 15px;
+
+                a {
+                    color: #ffffff;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $orange;
+                    }
+                }
+            }
+        }
+
+        .compose {
+            background-color: #ffffff;
+            display: block;
+            padding: 5px 0;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .chats {
+            li {
+                background-color: #ffffff;
+                display: block;
+                list-style-type: none;
+                margin: 2px 0;
+                width: 100%;
+
+                a {
+                    text-decoration: none;
+
+                    .subject {
+                        color: #000000;
+                        float: left;
+                        font-size: 20px;
+                        font-weight: bold;
+                        padding: 5px 0 0 10px;
+                    }
+
+                    .last_activity {
+                        float: right;
+                        font-size: 12px;
+                        padding: 10px 10px 0 0;
+                    }
+
+                    .members {
+                        color: #99A0A3;
+                        font-family: "Open Sans"-light;
+                        font-size: 12px;
+                        padding-left: 25px;
+                    }
+
+                    .last_message {
+                        color: #000000;
+                        font-family: Arial;
+                        font-size: 16px;
+                        padding: 5px 0 10px 10px;
+                    }
+
+                    &:hover {
+                        color: #000000;
+                    }
+                }
+
+                &:hover {
+                    background-color: #F2FBFF;
+                }
+            }
+        }
+    }
+
+    .chat_area {
+        display: inline-block;
+        vertical-align: top;
+        width: 745px;
+
+        .group_message_toolbar {
+            background-color: $mainColor;
+            color: #FFFFFF;
+            padding: 5px 10px;
+        }
+
+        .compose_form {
+            background-color: #FFFFFF;
+
+            .input_group {
+                display: table;
+                padding: 15px 10px;
+                table-layout: auto;
+            }
+
+            .input_group_row {
+                display: table-row;
+            }
+
+            .input_group label {
+                display: table-cell;
+                padding-right: 5px;
+                text-align: left;
+            }
+
+            .input_group_main {
+                @include box-sizing(border-box);
+                @include border-radius(0);
+
+                display: table-cell;
+                height: 29px;
+                width: 100%;
+            }
+
+            .input_group_main input[type=text] {
+                @include box-sizing(border-box);
+
+                background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
+                border: 1px solid #eee;
+                font-family: O;
+                font-size: 13px;
+                margin-top: 1px;
+                padding: 5px 5px 5px 5px;
+                width: 100%;
+            }
+
+            .compose_area {
+                @include box-sizing(border-box);
+                @include box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.075), inset);
+
+                background-color: #fff;
+                border: 1px solid #eee;
+                color: #333333;
+                display: block;
+                font-family: Open Sans;
+                font-size: 1em;
+                height: 100px;
+                line-height: 1.42857;
+                margin: 0 auto;
+                min-height: 70px;
+                padding: 6px 12px;
+                resize: vertical;
+                transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+                vertical-align: middle;
+                width: 97%;
+
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+// SCSS Notes
+// ----------
+// - Comments made with '//' are meant for developers only, they will not appear when this SCSS is compiled to CSS so
+//   feel free to use them to make notes
+//
+// - The style this SCSS file will follow is use the least classes as possible because the more classes there are, the
+//   more HTML we have type or generate and it just looks ugly so simply create one parent CSS class and then use other
+//   classes only if needed
+//
+// - There are general use CSS classes for easy access and universal settings such as floating items and padding
+//
+
+@import "partials/base";
+
+@import "partials/typography";
+@import "partials/mixins";
+@import "partials/header";
+@import "partials/layout";
+@import "partials/messaging";
+@import "partials/buttons";
