@@ -95,7 +95,7 @@ function sendMessage() {
         l.start();
     }
 
-    // Generate a comma-separated of recipients which the AJAX script will read
+    // Generate a comma-separated list of recipients which the AJAX script will read
     recipients = ""
 
     if ($("#compose_recipients").val())
