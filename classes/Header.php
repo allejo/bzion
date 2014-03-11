@@ -130,7 +130,7 @@ class Header
     public static function go($location = "/", $override = false) {
         if ($override) {
             header("Location: $location");
-        } else if (strtolower($location) == "default" || strtolower($location) == "home" || strtolower($location) == "index.php" || strtolower($location) == "/") {
+        } else if (strtolower($location) == "home" || $location == "/") {
             header("Location: " . BASE_URL);
         } else {
             header("Location: " . BASE_URL . $location);
