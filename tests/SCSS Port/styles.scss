@@ -32,6 +32,59 @@ $nav_height: 50px;
 $page_width: 1000px;
 
 //
+// Mixins
+//
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+       -moz-box-sizing: $box-model;
+            box-sizing: $box-model;
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+    background-clip: padding-box;  /* stops bg color from leaking outside the border: */
+}
+
+@mixin border-top-radius($radius) {
+    -webkit-border-top-right-radius: $radius;
+     -webkit-border-top-left-radius: $radius;
+            border-top-right-radius: $radius;
+             border-top-left-radius: $radius;
+                    background-clip: padding-box;
+}
+
+@mixin border-right-radius($radius) {
+    -webkit-border-bottom-right-radius: $radius;
+       -webkit-border-top-right-radius: $radius;
+            border-bottom-right-radius: $radius;
+               border-top-right-radius: $radius;
+                       background-clip: padding-box;
+}
+
+@mixin border-bottom-radius($radius) {
+    -webkit-border-bottom-right-radius: $radius;
+     -webkit-border-bottom-left-radius: $radius;
+            border-bottom-right-radius: $radius;
+             border-bottom-left-radius: $radius;
+                       background-clip: padding-box;
+}
+
+@mixin border-left-radius($radius) {
+    -webkit-border-bottom-left-radius: $radius;
+       -webkit-border-top-left-radius: $radius;
+            border-bottom-left-radius: $radius;
+               border-top-left-radius: $radius;
+                      background-clip: padding-box;
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); // IE8...
+}
+
+//
 // HTML Elements
 //
 * {
@@ -256,7 +309,6 @@ header {
 }
 
 .messaging {
-
     .conversations {
         display: inline-block;
         width: 350px;
@@ -342,7 +394,54 @@ header {
     }
 
     .chat_area {
+        display: inline-block;
+        vertical-align: top;
+        width: 745px;
 
+        .group_message_toolbar {
+            background-color: $mainColor;
+            color: #FFFFFF;
+            padding: 5px 10px;
+        }
+
+        .compose_form {
+            background-color: #FFFFFF;
+
+            .input_group {
+                display: table;
+                padding: 15px 10px;
+                table-layout: auto;
+            }
+
+            .input_group_row {
+                display: table-row;
+            }
+
+            .input_group label {
+                display: table-cell;
+                padding-right: 5px;
+                text-align: left;
+            }
+
+            .input_group_main {
+                @include box-sizing(border-box);
+                @include border-radius(0);
+                display: table-cell;
+                height: 29px;
+                width: 100%;
+            }
+
+            .input_group_main input[type=text] {
+                @include box-sizing(border-box);
+                background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
+                border: 1px solid #eee;
+                font-family: O;
+                font-size: 13px;
+                margin-top: 1px;
+                padding: 5px 5px 5px 5px;
+                width: 100%;
+            }
+        }
     }
 }
 
