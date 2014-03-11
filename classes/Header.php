@@ -108,11 +108,11 @@ class Header
                     <div style="clear: both;"></div>
                 </ul>
             </nav>
-        </header>
 
-        <div class="notification">
-            <i class="icon-ok"></i><span>Your message was sent successfully</span>
-        </div>
+            <div class="notification">
+                <i class="icon-ok"></i><span>Your message was sent successfully</span>
+            </div>
+        </header>
 
         <div class="content wrapper">
 
