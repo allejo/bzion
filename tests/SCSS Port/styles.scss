@@ -84,6 +84,19 @@ $page_width: 1000px;
     filter: alpha(opacity=$opacity-ie); // IE8...
 }
 
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+    @if $inset {
+        -webkit-box-shadow: inset $top $left $blur $color;
+           -moz-box-shadow: inset $top $left $blur $color;
+                box-shadow: inset $top $left $blur $color;
+    }
+    @else {
+        -webkit-box-shadow: $top $left $blur $color;
+           -moz-box-shadow: $top $left $blur $color;
+                box-shadow: $top $left $blur $color;
+    }
+}
+
 //
 // HTML Elements
 //
@@ -426,6 +439,7 @@ header {
             .input_group_main {
                 @include box-sizing(border-box);
                 @include border-radius(0);
+
                 display: table-cell;
                 height: 29px;
                 width: 100%;
@@ -433,6 +447,7 @@ header {
 
             .input_group_main input[type=text] {
                 @include box-sizing(border-box);
+
                 background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
                 border: 1px solid #eee;
                 font-family: O;
@@ -440,6 +455,28 @@ header {
                 margin-top: 1px;
                 padding: 5px 5px 5px 5px;
                 width: 100%;
+            }
+
+            .compose_area {
+                @include box-sizing(border-box);
+                @include box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.075), inset);
+
+                background-color: #fff;
+                border: 1px solid #eee;
+                color: #333333;
+                display: block;
+                font-family: Open Sans;
+                font-size: 1em;
+                height: 100px;
+                line-height: 1.42857;
+                margin: 0 auto;
+                min-height: 70px;
+                padding: 6px 12px;
+                resize: vertical;
+                transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+                vertical-align: middle;
+                width: 97%;
+
             }
         }
     }
@@ -521,4 +558,9 @@ header {
             border-bottom: 1px solid $border_color;
         }
     }
+}
+
+.ladda-button{
+    background-color: #0CA7Db;
+    padding: 3px 8px 3px 8px;
 }
