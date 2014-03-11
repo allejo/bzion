@@ -38,6 +38,8 @@
             text-align: right;
         }
 
+        // Because the News page only uses articles, they all be squeezed together so in order to avoid this, add a top margin
+        // to all of the articles after the first one
         &:nth-child(n+2) {
             margin-top: 30px;
         }
