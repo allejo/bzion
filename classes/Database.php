@@ -8,7 +8,7 @@ class Database
     /**
      * The global database connection object
      *
-     * @var MySQLi
+     * @var Database
      */
     private static $Database;
 
