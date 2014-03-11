@@ -30,39 +30,36 @@ if (isset($team)) {
 
     $teams = Team::getTeams();
 ?>
-<div class="teampage_content">
-    <table class="teams_table">
-        <tr>
-            <th> Name </th>
-            <th> Rating </th>
-            <th> Leader </th>
-            <th> Members </th>
-            <th> Matches </th>
-            <th> Activity </th>
-        </tr>
-    <?php
-        foreach ($teams as $key => $id) {
-            $team = new Team($id);
-            echo "<tr>\n";
-            echo "<td><a href='" . $team->getURL() . "'>" . $team->getName() . "</a></td>\n";
-            echo "<td>" . $team->getElo() . "</td>\n";
-            $leader = $team->getLeader();
-            echo "<td>" . $leader->getUsername() . "</td>\n";
-            echo "<td> " . $team->getNumMembers() . "</td>\n";
-            echo "<td><a href='" . $team->getMatchesURL() . "'>" . $team->getNumTotalMatches() . "</a></td>\n";
-            echo "<td>" . $team->getActivity() . "</td>\n";
-        	echo "</tr>\n";
-        }
+<div class="table teams">
+    <ul>
+        <li>Name</li>
+        <li>Rating</li>
+        <li>Leader</li>
+        <li>Members</li>
+        <li>Matches</li>
+        <li>Activity</li>
+    </ul>
 
+    <?php
+        foreach ($teams as $key => $id)
+        {
+            $team = new Team($id);
+            $leader = $team->getLeader();
+
+            echo '<ul>';
+            echo '    <li><a href="' . $team->getURL() . '">' . $team->getName() . '</a></li>';
+            echo '    <li>' . $team->getElo() . '</li>';
+            echo '    <li>' . $leader->getUsername() . '</li>';
+            echo '    <li>' . $team->getNumMembers() . '</li>';
+            echo '    <li><a href="' . $team->getMatchesURL() . '">' . $team->getNumTotalMatches() . '</a></li>';
+            echo '    <li>' . $team->getActivity() . '</li>';
+            echo '</ul>';
+        }
     }
     ?>
-
-    </table> <!-- end .teams_table -->
-</div> <!-- end .teampage_content -->
+</div>
 
 <?php
 
 $footer = new Footer();
 $footer->draw();
-
-?>

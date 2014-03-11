@@ -40,66 +40,81 @@ class Header
     function draw($title="") {
         $title = (empty($title)) ? $this->title : $title;
 
+        if (isset($_SESSION['username']))
+        {
+            $newMessage = Group::hasNewMessage($_SESSION['playerId']) ? "new_message" : "";
+        }
+        else
+        {
+            $newMessage = "";
+        }
+
     ?>
 
 <!DOCTYPE html>
     <head>
         <meta charset="utf-8">
-        <title><?php echo $title; ?></title>
+        <title><?= $title; ?></title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
-        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/includes/chosen/chosen.min.css">
-        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/style.css">
+        <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/chosen/chosen.min.css">
+        <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/ladda/dist/ladda.min.css" />
+        <link rel="stylesheet" href="<?= BASE_URL; ?>/stylesheets/main.css">
     </head>
 
     <body>
-    <div class="navbar">
-    <div class="navmenu">
-        <a href="<?php echo BASE_URL; ?>/" class="navbuttonicon left"><i class="icon-home"></i></a>
-        <?php if (isset($_SESSION['username'])) {
+        <header>
+            <nav>
+                <ul class="wrapper">
+                    <li class="icon"><a href="<?= BASE_URL; ?>/"><i class="icon-home"></i></a></li>
+                    <li class="icon <?= $newMessage; ?>"><a href="<?= BASE_URL; ?>/messages"><i class="icon-comments"></i></a></li>
+                    <li class="icon"><a href="<?= BASE_URL; ?>/news"><i class="icon-pushpin"></i></a></li>
+                    <li><a href="<?= BASE_URL; ?>/teams">Teams</a></li>
+                    <li><a href="<?= BASE_URL; ?>/players">Players</a></li>
+                    <li><a href="<?= BASE_URL; ?>/matches">Matches</a></li>
 
-            $new = Group::hasNewMessage($_SESSION['playerId']) ? "new_message" : "";
+                    <?php
+                        $pages = Page::getPages();
 
-        ?>
-        <a href="<?php echo BASE_URL; ?>/messages" class="navbuttonicon left <?php echo $new; ?>"><i class="icon-comments"></i></a>
-        <?php } ?>
-        <a href="<?php echo BASE_URL; ?>/news" class="navbuttonicon left"><i class="icon-pushpin"></i></a>
-        <a href="<?php echo BASE_URL; ?>/teams" class="navbutton left">Teams</a>
-        <a href="<?php echo BASE_URL; ?>/players" class="navbutton left">Players</a>
-        <a href="<?php echo BASE_URL; ?>/matches" class="navbutton left">Matches</a>
-        <?php
+                        foreach ($pages as $key => $id)
+                        {
+                            $page = new Page($id);
 
-        $pages = Page::getPages();
+                            if (!$page->isHomePage())
+                            {
+                                echo '<li><a href="' . $page->getURL() . '/matches">' . $page->getName() . '</a></li>';
+                            }
+                        }
+                    ?>
 
-        foreach ($pages as $key => $id) {
-            $page = new Page($id);
-            if (!$page->isHomePage())
-                echo "<a href='" . $page->getURL() . "' class='navbutton left'>" . $page->getName() . "</a> ";
-        }
+                    <li><a href="<?= BASE_URL; ?>/bans">Bans</a></li>
+                    <li><a href="<?= BASE_URL; ?>/servers">Servers</a></li>
 
-        ?>
-        <a href="<?php echo BASE_URL; ?>/bans" class="navbutton left">Bans</a>
-        <a href="<?php echo BASE_URL; ?>/servers" class="navbutton left">Servers</a>
-    <?php if (isset($_SESSION['username'])) { ?>
-        <a href="<?php echo BASE_URL; ?>/logout.php" class="navbuttonicon right"><i class="icon-signout"></i></a>
-        <a href="<?php echo BASE_URL; ?>/profile" class="navbuttonicon right"><i class="icon-user"></i></a>
-        <a href="<?php echo BASE_URL; ?>/notifications" class="navbuttonicon right"><i class="icon-bell-alt"></i></a>
-        <?php
-    } else {
-        $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
-        $url .= urlencode(BASE_URL . "/login.php?token=%TOKEN%&username=%USERNAME%");
-        ?>
-        <a href="<?php echo $url; ?>" class="navbuttonicon right"><i class="icon-signin"></i></a>
-    <?php } ?>
-    </div> <!-- end .navmenu -->
+                    <?php
+                        if (isset($_SESSION['username']))
+                        {
+                            echo '<li class="icon float right"><a href="' . BASE_URL . '/logout.php"><i class="icon-signout"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . BASE_URL . '/profile"><i class="icon-user"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . BASE_URL . '/notifications"><i class="icon-bell-alt"></i></a></li>';
+                        }
+                        else
+                        {
+                            $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
+                            $url .= urlencode(BASE_URL . "/login.php?token=%TOKEN%&username=%USERNAME%");
 
-    </div> <!-- end .navbar -->
+                            echo '<li class="icon float right"><a href="' . $url . '"><i class="icon-signin"></i></a></li>';
+                        }
+                    ?>
 
-    <div class="notification">
-        <i class="icon-ok"></i><span>Your message was sent successfully</span>
-    </div>
+                    <div style="clear: both;"></div>
+                </ul>
+            </nav>
 
-    <div class="content">
+            <div class="notification">
+                <i class="icon-ok"></i><span>Your message was sent successfully</span>
+            </div>
+        </header>
+
+        <div class="content wrapper">
 
     <?php
 

@@ -1,0 +1,85 @@
+//
+// Official colors
+//
+$mainColor: #363D4A;
+$border_color: #BDBDBD;
+$orange: #E69500;
+
+//
+// Global variables
+//
+$nav_height: 50px;
+$page_width: 1000px;
+
+//
+// HTML Elements
+//
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #ECECEC;
+    font-family: Open Sans, Sans-Serif;
+    font-size: 1em;
+}
+
+a {
+    color: $mainColor;
+
+    &:hover {
+        color: $orange;
+    }
+}
+
+button {
+    margin: 5px;
+}
+
+h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 19px;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+//
+// Universal classes
+//
+
+.float {
+    &.left {
+        float: left;
+    }
+
+    &.right {
+        float: right;
+    }
+}
+
+.padding {
+    &.top {
+        padding-top: 10px;
+    }
+
+    &.left, &.right {
+        padding-right: 5px;
+    }
+
+    &.bottom {
+        padding-bottom: 15px;
+    }
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 1100px;
+}

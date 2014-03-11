@@ -6,6 +6,13 @@
 class Database
 {
     /**
+     * The global database connection object
+     *
+     * @var MySQLi
+     */
+    private static $Database;
+
+    /**
      * The database object used inside this class
      * @var MySQLi
      */
@@ -48,8 +55,14 @@ class Database
      * to the database
      * @return Database The Database object
      */
-    static function getInstance() {
-        return $GLOBALS['db'];
+    static function getInstance()
+    {
+        if (!self::$Database)
+        {
+            self::$Database = new Database();
+        }
+
+        return self::$Database;
     }
 
     /**
