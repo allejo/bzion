@@ -81,7 +81,7 @@ class Header
 
                             if (!$page->isHomePage())
                             {
-                                echo '<li><a href="' . $page->getURL() . '/matches">' . $page->getName() . '</a></li>';
+                                echo '<li><a href="' . $page->getURL() . '">' . $page->getName() . '</a></li>';
                             }
                         }
                     ?>
