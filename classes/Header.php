@@ -59,7 +59,6 @@ class Header
         <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/ladda/dist/ladda.min.css" />
         <link rel="stylesheet" href="<?= BASE_URL; ?>/stylesheets/main.css">
-        <!--<link rel="stylesheet" href="<?= BASE_URL; ?>/css/style.css">-->
     </head>
 
     <body>
@@ -115,7 +114,7 @@ class Header
             <i class="icon-ok"></i><span>Your message was sent successfully</span>
         </div>
 
-        <div class="content">
+        <div class="content wrapper">
 
     <?php
 
