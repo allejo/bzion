@@ -66,7 +66,9 @@ class Header
             <nav>
                 <ul class="wrapper">
                     <li class="icon"><a href="<?= BASE_URL; ?>/"><i class="icon-home"></i></a></li>
+                    <?php if (isset($_SESSION['username'])) { ?>
                     <li class="icon <?= $newMessage; ?>"><a href="<?= BASE_URL; ?>/messages"><i class="icon-comments"></i></a></li>
+                    <?php } ?>
                     <li class="icon"><a href="<?= BASE_URL; ?>/news"><i class="icon-pushpin"></i></a></li>
                     <li><a href="<?= BASE_URL; ?>/teams">Teams</a></li>
                     <li><a href="<?= BASE_URL; ?>/players">Players</a></li>
