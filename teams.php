@@ -55,7 +55,6 @@ if (isset($team)) {
             echo '    <li>' . $team->getActivity() . '</li>';
             echo '</ul>';
         }
-
     }
     ?>
 </div>
