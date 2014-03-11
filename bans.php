@@ -3,37 +3,25 @@
 include("bzion-load.php");
 
 $header = new Header("Bans");
-
 $header->draw();
 
 $banList = Ban::getBans();
 
-?>
 
-<div class="bans">
-
-<?php
-
-foreach ($banList as $key => $id) {
+foreach ($banList as $key => $id)
+{
     $ban = new Ban($id);
     $bannedPlayer = $ban->getPlayer();
-    echo "<div class=\"ban_box\">\n";
-    echo "<div class=\"ban_title_box\">\n";
-    echo "<div class=\"ban_title\">" . $bannedPlayer->getUsername() . "</div>\n";
     $author = $ban->getAuthor();
-    echo "</div>\n";
-    echo "<div class=\"ban_content\">". $ban->getReason() . "\n";
-    echo "<div class=\"ban_author\">By <a href=\"" . $author->getURL() . "\">" . $author->getUsername() . "</a> " . $ban->getUpdated() . "</div></div>\n";
-    echo "</div>\n";
+    
+    echo '<article>';
+    echo '       <h1>' . $bannedPlayer->getUsername() . '</h1>';
+    echo '       <p>' . $ban->getReason() '</p>';
+    echo '       <footer>';
+    echo '           Posted by <a href="' . $author->getURL() . '">' . $author->getUsername() . '</a> ' . $ban->getUpdated();
+    echo '       </footer>';
+    echo '   </article>';
 }
-
-?>
-
-</div> <!-- end .bans -->
-
-<?php
 
 $footer = new Footer();
 $footer->draw();
-
-?>
