@@ -16,14 +16,12 @@ $header->draw($page->getName());
 
 ?>
 
-<div class="custom_page">
-    <div class="custom_page_title"><?php echo $page->getName(); ?></div>
-    <div class="custom_page_content"><?php echo $page->getContent(); ?></div>
-</div>
+<article>
+    <h1><?= $page->getName(); ?></h1>
+    <p><?= $page->getContent(); ?></p>
+</article>
 
 <?php
 
 $footer = new Footer();
 $footer->draw();
-
-?>
