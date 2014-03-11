@@ -7,7 +7,6 @@ $header->draw();
 
 $banList = Ban::getBans();
 
-
 foreach ($banList as $key => $id)
 {
     $ban = new Ban($id);
@@ -15,12 +14,12 @@ foreach ($banList as $key => $id)
     $author = $ban->getAuthor();
     
     echo '<article>';
-    echo '       <h1>' . $bannedPlayer->getUsername() . '</h1>';
-    echo '       <p>' . $ban->getReason() '</p>';
-    echo '       <footer>';
-    echo '           Posted by <a href="' . $author->getURL() . '">' . $author->getUsername() . '</a> ' . $ban->getUpdated();
-    echo '       </footer>';
-    echo '   </article>';
+    echo '    <h1>' . $bannedPlayer->getUsername() . '</h1>';
+    echo '    <p>' . $ban->getReason() . '</p>';
+    echo '    <footer>';
+    echo '        Posted by <a href="' . $author->getURL() . '">' . $author->getUsername() . '</a> ' . $ban->getUpdated();
+    echo '    </footer>';
+    echo '</article>';
 }
 
 $footer = new Footer();
