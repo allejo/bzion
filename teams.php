@@ -41,9 +41,8 @@ if (isset($team)) {
     </ul>
 
     <?php
-        foreach ($teams as $key => $id)
+        foreach ($teams as $team)
         {
-            $team = new Team($id);
             $leader = $team->getLeader();
 
             echo '<ul>';
