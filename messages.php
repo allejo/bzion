@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
             <li><a href="#">Inactive</a></li>
             <li><a href="#">Trash</a></li>
         </ul>
-        <a href="#" data-id="new" class="compose">New Message</a>
+        <a href="<?= BASE_URL . "/messages"; ?>" data-id="new" class="compose">New Message</a>
         <ul class="chats">
         <?php
             foreach ($groups as $key => $id)
@@ -77,7 +77,9 @@ if (isset($_GET['id'])) {
         if (!$messages)
         {
     ?>
-        <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
+        <div class="group_message_toolbar">
+            <span class="group_toolbar_text">Compose a new message</span>
+        </div>
         <form class="compose_form">
             <div class="input_group">
                 <div class="input_group_row">
@@ -89,11 +91,16 @@ if (isset($_GET['id'])) {
                                 <?php
                                     foreach (Player::getPlayers() as $key => $pid) {
                                         // Don't add the currently logged in player to the list of possible recipients
-                                        if ($pid == $_SESSION['playerId']) continue;
+                                        if ($pid == $_SESSION['playerId'])
+                                        {
+                                            continue;
+                                        }
 
                                         $player = new Player($pid);
                                         $selected = "";
-                                        if ($currentGroup && $currentGroup->isMember($pid)) {
+
+                                        if ($currentGroup && $currentGroup->isMember($pid))
+                                        {
                                           $selected = 'selected=""';
                                         }
 
