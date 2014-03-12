@@ -45,12 +45,11 @@ header {
                     padding: 10px 0;
                     text-align: center;
                     text-decoration: none;
-                    text-transform: uppercase;
                     width: 100%;
 
                     // We're hovering over the menu button so change the background and keep the font color white
                     &:hover {
-                        background-color: #333333;
+                        background-color: #00BF9E;
                         color: #FFFFFF;
                     }
                 }
