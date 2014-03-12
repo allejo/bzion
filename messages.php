@@ -22,54 +22,56 @@ if (isset($_GET['id'])) {
 
 ?>
 
+<div class="messaging">
+    <section class="conversations">
+        <ul class="toolbar">
+            <li><a href="#">Active</a></li>
+            <li><a href="#">Inactive</a></li>
+            <li><a href="#">Trash</a></li>
+        </ul>
+        <a href="#" data-id="new" class="compose">New Message</a>
+        <ul class="chats">
+        <?php
+            foreach ($groups as $key => $id)
+            {
+                $group = new Group($id);
 
-<div class="groups">
+                echo '<li>';
+                echo '    <a data-id="' . $group->getId() . '" href="' . $group->getURL() . '">';
+                echo '        <div class="subject">' . $group->getSubject() . '</div>';
+                echo '        <div class="last_activity">' . $group->getLastActivity() . '</div>';
+                echo '        <div style="clear:both"></div>';
 
-<table class="group_list">
+                $groupUsernames = array();
 
-    <tr><th class="groups_toolbar">
-        <div class="groups_toolbar_option"><a href="#">Active</a></div>
-        <div class="groups_toolbar_option"><a href="#">Inactive</a></div>
-        <div class="groups_toolbar_option"><a href="#">Trash</a></div>
-    </th></tr>
+                foreach ($group->getMembers(true) as $key => $value)
+                {
+                    $player = new Player($value);
+                    $groupUsernames[] = $player->getUsername();
+                }
 
-    <tr><td><a class='group_link' data-id='new' href='messages'>
-        <div class='group_new'>New Message</div>
-    </a></td></tr>
+                if (count($groupUsernames) == 0)
+                {
+                    $groupMembers = "No other recipients";
+                }
+                else
+                {
+                    $groupMembers = implode(", ", $groupUsernames);
+                }
 
-<?php
+                $lastMessage    = $group->getLastMessage();
+                $playerFrom     = $lastMessage->getAuthor()->getUsername();
+                $messageSummary = $lastMessage->getSummary(50);
 
-foreach ($groups as $key => $id) {
-    $group = new Group($id);
+                echo '        <div class="members">' . $groupMembers . '</div>';
+                echo '        <div class="last_message"><strong>' . $playerFrom . ':</strong> ' . $messageSummary . '</div>';
+                echo '    </a>';
+                echo '</li>';
+            }
+        ?>
+        </ul>
+    </section>
 
-    echo "<tr><td><a class='group_link' data-id='" . $group->getId() . "' href='" . $group->getURL() . "'>";
-    echo "<div class='group_subject'>" . $group->getSubject() . "</div>";
-    echo "<div class='group_last_activity'>" . $group->getLastActivity() . "</div>";
-    echo "<div style='clear:both'></div>";
-    $groupUsernames = array();
-    foreach ($group->getMembers(true) as $key => $value) {
-        $player = new Player($value);
-        $groupUsernames[] = $player->getUsername();
-    }
-    if (count($groupUsernames) == 0)
-        $groupMembers = "No other recipients";
-    else
-        $groupMembers = implode(", ", $groupUsernames);
-
-    $lastMessage = $group->getLastMessage();
-    $playerFrom = $lastMessage->getAuthor()->getUsername();
-    $messageSummary = $lastMessage->getSummary(50);
-
-    echo "<div class='group_members'>$groupMembers</div>";
-    echo "<div class='group_last_message'>$playerFrom: $messageSummary</div>";
-    echo "</a></td></tr>\n";
-}
-
-?>
-
-</table> <!-- end .group_list -->
-
-</div> <!-- end .groups -->
 
 <div id="groupMessages" class="group_messages">
 <?php
