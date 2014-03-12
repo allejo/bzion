@@ -367,11 +367,20 @@ class Team extends Model
      *
      * @return Team[] An array of Team IDs
      */
-    public static function getTeams() {
-        return parent::fetchIdsFrom("status", array(
-            "disabled",
-            "deleted"
-        ), "s", true, "ORDER BY elo DESC");
+    public static function getTeams()
+    {
+        $teams = array();
+        $teamIDs = parent::fetchIdsFrom("status", array(
+                    "disabled",
+                    "deleted"
+                   ), "s", true, "ORDER BY elo DESC");
+
+        foreach ($teamIDs as $teamID)
+        {
+            $teams[] = new Team($teamID);
+        }
+
+        return $teams;
     }
 
     /**
