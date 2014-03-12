@@ -119,11 +119,10 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
-            <br />
-            <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button" data-style="zoom-out">
-                <span class="ladda-label">Submit</span>
-            </button>
-            <button type="reset" class="ladda-button">Reset</button>
+            <div class="buttons">
+                <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Submit</button>
+                <button type="reset" class="ladda-button button normal">Reset</button>
+            </div>
         </form>
     </div>
     <?php
