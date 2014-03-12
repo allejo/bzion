@@ -46,7 +46,7 @@ class Footer {
 		</script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script src="<?php echo BASE_URL; ?>/js/main.js"></script>
+        <script src="<?php echo BASE_URL; ?>/assets/js/main.js"></script>
 
         <?php
             foreach($this->scripts as $url) {

@@ -58,7 +58,7 @@ class Header
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
         <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="<?= BASE_URL; ?>/stylesheets/main.css">
+        <link rel="stylesheet" href="<?= BASE_URL; ?>/assets/css/main.css">
     </head>
 
     <body>
