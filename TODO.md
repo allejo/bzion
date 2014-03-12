@@ -7,13 +7,17 @@ TODO
 - Create necessary classes
     - Notification
 - Implement features & style pages
+    - Pagination or continuous scrolling on all pages with entries (news, matches, etc)
     - Messages
         - Push new messages from others to page without refresh
         - Move message to trash
-        - Group settings
+        - Groups
             - Leave a group?
             - Add/Remove members from the group
         - Active and inactive
+        - Send message to team
+        - Make the recipients and subject input fields have the same style
+        - Remove labels for recipient and subject fields
     - Notifications
     - Invites
     - Admin Interface
