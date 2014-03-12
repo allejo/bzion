@@ -13,10 +13,10 @@ header {
     // This object is just a container for the actual navigation bar; it will contain the unordered list that contains
     // the menu items.
     nav {
-        background-color: $mainColor;
         height: $nav_height;
         font-size: 14px;
         left: 0;
+        margin-top: 15px;
         position: fixed;
         top: 0;
         width: 100%;
@@ -24,6 +24,9 @@ header {
 
         // We need to set up this unordered list to not have any bullet points
         ul {
+            @include border-radius(5px);
+
+            background-color: $mainColor;
             list-style-type: none;
 
             // Now we need to set each menu item, or list item, to line up nicely next to each other so we can have
@@ -39,7 +42,6 @@ header {
                 // This will be the actual hyper link so we need to format it to be large with padding and a width
                 // or else we will not be able to click the general area of a menu button
                 a {
-                    border-right: 1px solid #666666;
                     color: #FFFFFF;
                     display: block;
                     padding: 10px 0;
@@ -59,13 +61,17 @@ header {
                 &.icon {
                     min-width: 3%;
                 }
-            }
 
-            // Because are adding a right border on all of the elements, we need have one on the far right, so this
-            // will naturally be the first child of the unordered list
-            &:first-child {
-                li {
-                    border-left: 1px solid #666666;
+                &:first-child {
+                    a {
+                        @include border-left-radius(5px);
+                    }
+                }
+
+                &:nth-last-child(4) {
+                     a {
+                         @include border-right-radius(5px);
+                     }
                 }
             }
         }
