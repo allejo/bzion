@@ -72,12 +72,11 @@ if (isset($_GET['id'])) {
         </ul>
     </section>
 
-
-<div id="groupMessages" class="group_messages">
-<?php
-if (!$messages) {
-?>
-    <div class="compose_panel">
+    <div id="groupMessages" class="chat_area">
+    <?php
+        if (!$messages)
+        {
+    ?>
         <div class="group_message_toolbar"><span class="group_toolbar_text">Compose a new message</span></div>
         <form class="compose_form">
             <div class="input_group">
@@ -87,22 +86,20 @@ if (!$messages) {
                         <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
                             <option value=""> </option>
                             <optgroup label="Players">
-                              <?php
+                                <?php
+                                    foreach (Player::getPlayers() as $key => $pid) {
+                                        // Don't add the currently logged in player to the list of possible recipients
+                                        if ($pid == $_SESSION['playerId']) continue;
 
-                              foreach (Player::getPlayers() as $key => $pid) {
-                                  // Don't add the currently logged in player to the list of possible recipients
-                                  if ($pid == $_SESSION['playerId']) continue;
+                                        $player = new Player($pid);
+                                        $selected = "";
+                                        if ($currentGroup && $currentGroup->isMember($pid)) {
+                                          $selected = 'selected=""';
+                                        }
 
-                                  $player = new Player($pid);
-                                  $selected = "";
-                                  if ($currentGroup && $currentGroup->isMember($pid)) {
-                                      $selected = 'selected=""';
-                                  }
-
-                                  echo "<option $selected value=\"$pid\">", $player->getUsername(), "</option>";
-                              }
-
-                              ?>
+                                        echo "<option $selected value=\"$pid\">", $player->getUsername(), "</option>";
+                                    }
+                                ?>
                             </optgroup>
                         </select>
                     </div>
@@ -120,24 +117,29 @@ if (!$messages) {
                 <span class="ladda-label">Submit</span>
             </button>
             <button type="reset" class="ladda-button">Reset</button>
-        </form> <!-- end .compose_form -->
-    </div> <!-- end .compose_panel -->
-<?php
-} else {
-?>
-            <?php
-
-        $groupUsernames = array();
-        foreach ($currentGroup->getMembers(true) as $key => $value) {
-            $player = new Player($value);
-            $groupUsernames[] = $player->getUsername();
+        </form>
+    </div>
+    <?php
         }
-        if (count($groupUsernames) == 0)
-            $groupMembers = "No other recipients";
         else
-            $groupMembers = implode(", ", $groupUsernames);
+        {
+            $groupUsernames = array();
 
-        ?>
+            foreach ($currentGroup->getMembers(true) as $key => $value)
+            {
+                $player = new Player($value);
+                $groupUsernames[] = $player->getUsername();
+            }
+
+            if (count($groupUsernames) == 0)
+            {
+                $groupMembers = "No other recipients";
+            }
+            else
+            {
+                $groupMembers = implode(", ", $groupUsernames);
+            }
+    ?>
 
     <div class="group_message_toolbar">
         <div class="group_message_title"><?php echo $currentGroup->getSubject(); ?></div>
