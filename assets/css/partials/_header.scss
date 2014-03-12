@@ -68,7 +68,7 @@ header {
                     }
                 }
 
-                &:nth-last-child(4) {
+                &:last-child, &:nth-last-child(4) {
                      a {
                          @include border-right-radius(5px);
                      }
