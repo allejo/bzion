@@ -4,7 +4,7 @@
 }
 
 .button {
-    .danger {
+    &.danger {
         background-color: #EE4840;
 
         &:hover {
@@ -12,7 +12,7 @@
         }
     }
 
-    .normal {
+    &.normal {
         background-color: #BCC3C7;
 
         &:hover {
@@ -20,7 +20,7 @@
         }
     }
 
-    .submit {
+    &.submit {
         background-color: #009AD7;
 
         &:hover {
@@ -28,7 +28,7 @@
         }
     }
 
-    .warning {
+    &.warning {
         background-color: #F7C238;
 
         &:hover {
