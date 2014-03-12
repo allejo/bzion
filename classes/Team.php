@@ -175,7 +175,7 @@ class Team extends Model
     /**
      * Get the members on the team
      *
-     * @return array The members on the team
+     * @return Player[] The members on the team
      */
     function getMembers() {
         return Player::fetchIds("WHERE team = ?", "i", array(
@@ -365,7 +365,7 @@ class Team extends Model
     /**
      * Get all the teams in the database that are not disabled or deleted
      *
-     * @return array An array of Team IDs
+     * @return Team[] An array of Team IDs
      */
     public static function getTeams() {
         return parent::fetchIdsFrom("status", array(
