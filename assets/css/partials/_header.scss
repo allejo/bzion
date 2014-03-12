@@ -68,7 +68,7 @@ header {
                     }
                 }
 
-                &:last-child, &:nth-last-child(4) {
+                &.login_logout {
                      a {
                          @include border-right-radius(5px);
                      }

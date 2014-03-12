@@ -94,7 +94,7 @@ class Header
                     <?php
                         if (isset($_SESSION['username']))
                         {
-                            echo '<li class="icon float right"><a href="' . BASE_URL . '/logout.php"><i class="icon-signout"></i></a></li>';
+                            echo '<li class="icon float right login_logout"><a href="' . BASE_URL . '/logout.php"><i class="icon-signout"></i></a></li>';
                             echo '<li class="icon float right"><a href="' . BASE_URL . '/profile"><i class="icon-user"></i></a></li>';
                             echo '<li class="icon float right"><a href="' . BASE_URL . '/notifications"><i class="icon-bell-alt"></i></a></li>';
                         }
@@ -103,7 +103,7 @@ class Header
                             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
                             $url .= urlencode(BASE_URL . "/login.php?token=%TOKEN%&username=%USERNAME%");
 
-                            echo '<li class="icon float right"><a href="' . $url . '"><i class="icon-signin"></i></a></li>';
+                            echo '<li class="icon float right login_logout"><a href="' . $url . '"><i class="icon-signin"></i></a></li>';
                         }
                     ?>
 
