@@ -232,7 +232,7 @@ abstract class Model {
     /**
      * Gets an array of object IDs from the database that have a column equal to something else
      * @param string $column The name of the column that should be tested
-     * @param array $possible_values List of acceptable values
+     * @param array|string $possible_values List of acceptable values
      * @param bool $negate Whether to search if the value of $column does NOT belong to the $possible_values array
      * @param string $type The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
      * @param string|array $select The name of the column(s) that the returned array should contain
