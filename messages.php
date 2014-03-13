@@ -5,7 +5,7 @@ include("bzion-load.php");
 $header = new Header();
 
 if (!isset($_SESSION['username'])) {
-    $header->go("home");
+    //$header->go("home");
 }
 
 $header->draw("Messages");
@@ -25,20 +25,26 @@ if (isset($_GET['id'])) {
 <div class="messaging">
     <section class="toolbar">
         <ul>
-            <a href="#"><li>
-                <i class="icon-inbox"></i>
-                <span>Inbox</span>
-            </li></a>
+            <li>
+                <a href="#">
+                    <i class="icon-inbox"></i>
+                    <span>Inbox</span>
+                </a>
+            </li>
 
-            <a href="#"><li>
-                <i class="icon-reply"></i>
-                <span>Sent</span>
-            </li></a>
+            <li>
+                <a href="#">
+                    <i class="icon-reply"></i>
+                    <span>Sent</span>
+                </a>
+            </li>
 
-            <a href="#"><li>
-                <i class="icon-trash"></i>
-                <span>Trash</span>
-            </li></a>
+            <li>
+                <a href="#">
+                    <i class="icon-trash"></i>
+                    <span>Trash</span>
+                </a>
+            </li>
         </ul>
     </section>
     <section class="conversations">
