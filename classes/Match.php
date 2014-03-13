@@ -288,7 +288,18 @@ class Match extends Model
      * @return array An array of match IDs
      */
     public static function getMatches() {
-        return parent::fetchIdsFrom("status", array("disabled", "deleted"), "s", true, 'ORDER BY timestamp DESC');
+        $matches = array();
+        $matchIDs = parent::fetchIdsFrom("status", array(
+                    "disabled",
+                    "deleted"
+                   ), "s", true, "ORDER BY timestamp DESC");
+
+        foreach ($matchIDs as $matchID)
+        {
+            $matches[] = new Match($matchID);
+        }
+
+        return $matches;
     }
 
 }

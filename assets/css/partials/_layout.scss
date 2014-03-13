@@ -119,6 +119,40 @@
         }
     }
 
+    // matches table
+    &.matches {
+        width: 1000px;
+
+        ul {
+            overflow: hidden;
+            width: 100%;
+
+            li {
+                float: left;
+
+                &:nth-child(1) {
+                    width: 15%;
+                }
+
+                &:nth-child(2) {
+                    width: 33%;
+                }
+
+                &:nth-child(3) {
+                    width: 5%;
+                }
+
+                &:nth-child(4) {
+                    width: 5%;
+                }
+
+                &:nth-child(5) {
+                    width: 10%;
+                }
+            }
+        }
+    }
+
     // Each unordered list will act as a row of the table
     ul {
         list-style-type: none;
