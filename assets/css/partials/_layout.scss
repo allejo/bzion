@@ -51,6 +51,7 @@
 // being in columns and rows
 .table {
     margin: 0 auto;
+    margin-top: 30px;
 
     // Because different pages will have different tables, here we have set the CSS settings for the matches table
     &.teams {
