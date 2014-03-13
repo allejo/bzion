@@ -285,7 +285,7 @@ class Match extends Model
 
     /**
      * Get all the matches in the database that aren't disabled or deleted
-     * @return array An array of match IDs
+     * @return Match[] An array of match IDs
      */
     public static function getMatches() {
         $matches = array();

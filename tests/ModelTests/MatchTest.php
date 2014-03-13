@@ -87,7 +87,7 @@ class MatchTest extends TestCase {
     }
 
     public function testMiscMethods() {
-        $old_matches = Match::getMatches('id');
+        $old_matches = Match::getMatches();
 
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->player_a->getId());
         $this->match_b = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->player_b->getId());
@@ -96,7 +96,7 @@ class MatchTest extends TestCase {
 
         $this->assertEquals($this->player_a->getId(), $this->match->getEnteredBy()->getId());
 
-        $matches = Match::getMatches('id');
+        $matches = Match::getMatches();
         $this->assertContains($this->match->getId(), $matches);
         $this->assertContains($this->match_b->getId(), $matches);
         $this->assertEquals(2, count($matches) - count($old_matches));
