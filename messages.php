@@ -121,7 +121,6 @@ if (isset($_GET['id'])) {
             <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
             <div class="buttons">
                 <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Submit</button>
-                <button type="reset" class="ladda-button button normal">Reset</button>
             </div>
         </form>
     </div>
