@@ -353,7 +353,7 @@ class Team extends Model
     /**
      * Get the matches this team has participated in
      *
-     * @return array The array of match IDs this team has participated in
+     * @return Match[] The array of match IDs this team has participated in
      */
     function getMatches() {
         return Match::fetchIds("WHERE team_a=? OR team_b=?", "ii", array(
