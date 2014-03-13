@@ -10,6 +10,7 @@ if (isset($_GET['alias'])) {
     $page = new Page($_GET['id']);
 } else {
     $header->go("home");
+    die();
 }
 
 $header->draw($page->getName());

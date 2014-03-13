@@ -78,6 +78,7 @@ function validate_token($token, $username, $groups = array(), $checkIP = true)
       }
     }
 
+    $return = array();
     if (isset($listserver['bzid']) && is_numeric($listserver['bzid']))
     {
       $return['username'] = $listserver['username'];
