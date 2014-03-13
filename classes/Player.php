@@ -187,7 +187,7 @@ class Player extends Model
 
     /**
      * Get the player's timezone
-     * @return string The timezone
+     * @return integer The timezone
      */
     function getTimezone() {
         return $this->timezone;

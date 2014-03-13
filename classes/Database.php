@@ -108,7 +108,7 @@ class Database
      *      $results = $database->query($query, "i", $params); //execute the prepared query
      * </code>
      *
-     * @param string $query The prepared SQL statement that will be executed
+     * @param string $queryText The prepared SQL statement that will be executed
      * @param string $typeDef (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
      * @param mixed|array $params (Optional) The array of values that will be binded to the prepared statement
      * @return mixed Returns an array of the values received from the query or returns false on empty

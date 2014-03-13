@@ -60,6 +60,9 @@ function readpacket(&$fp) {
   return $return;
 }
 
+/**
+ * @param string $hostport
+ */
 function bzfquery ($hostport) {
   list($server['host'], $server['port']) = explode(":", $hostport, 2);
   $protocol = 'tcp';

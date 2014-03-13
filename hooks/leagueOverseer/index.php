@@ -250,6 +250,7 @@ function getTeamID($_players)
  * Writes the specified string to the log file if logging is enabled
  *
  * @param The string that will written
+ * @param string $string
  */
 function writeToDebug($string)
 {
