@@ -294,7 +294,7 @@ class Player extends Model
 
     /**
      * Get all the players in the database that have an active status
-     * @return array An array of player BZIDs
+     * @return Player[] An array of player BZIDs
      */
     public static function getPlayers() {
         //return parent::fetchIdsFrom("status", array("active"), "s", false);

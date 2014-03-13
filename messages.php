@@ -106,17 +106,17 @@ if (isset($_GET['id'])) {
                             <option value=""> </option>
                             <optgroup label="Players">
                                 <?php
-                                    foreach (Player::getPlayers() as $key => $pid) {
+                                    foreach (Player::getPlayers() as $player)
+                                    {
                                         // Don't add the currently logged in player to the list of possible recipients
-                                        if ($pid == $_SESSION['playerId'])
+                                        if ($player == $_SESSION['playerId'])
                                         {
                                             continue;
                                         }
 
-                                        $player = new Player($pid);
                                         $selected = "";
 
-                                        if ($currentGroup && $currentGroup->isMember($pid))
+                                        if ($currentGroup && $currentGroup->isMember($player->getId()))
                                         {
                                           $selected = 'selected=""';
                                         }
