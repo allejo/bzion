@@ -1,22 +1,33 @@
 <?php
 
-include("bzion-load.php");
+require_once("bzion-load.php");
 
-$header = new Header("Home");
-$header->draw();
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
 
-$page = Page::getHomePage();
+$routes = new RouteCollection();
+$routes->add('index', new Route('/', array('controller' => 'index')));
+$routes->add('bans', new Route('/bans', array('controller' => 'bans')));
+$routes->add('login', new Route('/login', array('controller' => 'login')));
+$routes->add('logout', new Route('/logout', array('controller' => 'logout')));
+$routes->add('matches', new Route('/matches', array('controller' => 'matches')));
+$routes->add('messages', new Route('/messages', array('controller' => 'messages')));
+$routes->add('news', new Route('/news', array('controller' => 'news')));
+$routes->add('players', new Route('/players', array('controller' => 'players')));
+$routes->add('profile', new Route('/profile', array('controller' => 'profile')));
+$routes->add('servers', new Route('/servers', array('controller' => 'servers')));
+$routes->add('teams', new Route('/teams', array('controller' => 'teams')));
 
-?>
 
-<article>
-    <h1><?= $page->getName(); ?></h1>
-    <p><?= $page->getContent(); ?></p>
-</article>
+$context = new RequestContext();
+$context->fromRequest(Request::createFromGlobals());
 
-<?php
+$matcher = new UrlMatcher($routes, $context);
 
-$footer = new Footer();
-$footer->draw();
+$parameters = $matcher->matchRequest(Request::createFromGlobals());
 
-?>
+
+require ("controllers/" . $parameters['controller'] . ".php");

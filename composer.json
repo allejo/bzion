@@ -1,6 +1,8 @@
 {
     "require": {
-        "nesbot/carbon": "1.8.*"
+        "nesbot/carbon": ">=1.8.0",
+        "symfony/routing": "dev-master",
+        "symfony/http-foundation": "dev-master"
     }, 
     "autoload": {
         "classmap": ["classes/", "tests/"]

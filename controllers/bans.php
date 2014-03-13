@@ -1,7 +1,5 @@
 <?php
 
-include("bzion-load.php");
-
 $header = new Header("Bans");
 $header->draw();
 
