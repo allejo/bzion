@@ -34,6 +34,35 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
         self::assertThat($array, $constraint, $message);
     }
+    
+    /**
+     * Asserts that an array contains a Model with a known ID
+     *
+     * @param int|Model $id
+     * @param Model[] $array
+     * @param string $message
+     */
+    public static function assertArrayContainsModel($id, $array, $message = '') {
+	if ($id instanceof Model) {
+	    $id = $id->getId();
+	} else if (!is_int($id)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
+        }
+
+        if (!(is_array($array) || $array instanceof ArrayAccess)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array or ArrayAccess');
+        }
+        
+        foreach ($array as $e) {
+	    if (!$e instanceof Model) {
+	      throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array of models');
+	    }
+        }
+
+        $constraint = new ArrayContainsModelWithIdConstraint($id);
+
+        self::assertThat($array, $constraint, $message);
+    }
 
     /**
      * Wipe all the objects given as parameters

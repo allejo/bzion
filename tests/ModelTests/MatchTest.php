@@ -92,15 +92,13 @@ class MatchTest extends TestCase {
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->player_a->getId());
         $this->match_b = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->player_b->getId());
 
-        $this->markTestIncomplete();
-
         $this->assertEquals("now", $this->match->getTimestamp());
 
         $this->assertEquals($this->player_a->getId(), $this->match->getEnteredBy()->getId());
 
         $matches = Match::getMatches();
-        $this->assertContains($this->match->getId(), $matches);
-        $this->assertContains($this->match_b->getId(), $matches);
+        $this->assertArrayContainsModel($this->match, $matches);
+        $this->assertArrayContainsModel($this->match_b, $matches);
         $this->assertEquals(2, count($matches) - count($old_matches));
 
     }
