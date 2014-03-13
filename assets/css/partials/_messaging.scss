@@ -33,14 +33,14 @@
 
     .conversations {
         background-color: #FFFFFF;
-        border-right: 2px solid #D9EBDC;
+        border-right: 2px solid $contentBackground;
         float: left;
         height: 100%;
         width: 350px;
 
         .compose {
             background-color: #ffffff;
-            border-bottom: 2px solid #D9EBDC;
+            border-bottom: 2px solid $contentBackground;
             display: block;
             padding: 5px 0;
             text-align: center;
@@ -51,7 +51,7 @@
         .chats {
             li {
                 background-color: #ffffff;
-                border-bottom: 2px solid #D9EBDC;
+                border-bottom: 2px solid $contentBackground;
                 display: block;
                 list-style-type: none;
                 width: 100%;
