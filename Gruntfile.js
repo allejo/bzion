@@ -3,7 +3,7 @@ module.exports = function(grunt) {
         autoprefixer : {
             dist : {
                 files : {
-                    'styles.css' : 'styles.css'
+                    'assets/css/main.css' : 'assets/css/main.css'
                 }
             }
         },
@@ -13,13 +13,13 @@ module.exports = function(grunt) {
                     style : 'compressed'
                 },
                 files : {
-                    'styles.css' : 'styles.scss'
+                    'assets/css/main.css' : 'assets/css/main.scss'
                 }
             }
         },
         watch : {
             styles : {
-                files : [ 'styles.scss' ],
+                files : [ 'assets/css/**/*.scss' ],
                 tasks : [ 'css' ]
             }
         }

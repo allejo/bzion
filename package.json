@@ -1,0 +1,14 @@
+{
+  "repository": {
+    "type" : "git",
+    "url"  : "https://github.com/allejo/bzion.git"
+  },
+
+  "dependencies" : {
+    "grunt"               :  "*",
+    "grunt-cli"           :  "*",
+    "grunt-contrib-watch" :  "*",
+    "grunt-contrib-sass"  :  "*",
+    "grunt-autoprefixer"  :  "*"
+  }
+}

@@ -5,7 +5,9 @@ var autoprefixer = require('gulp-autoprefixer');
 var cssminify = require('gulp-minify-css');
 
 var paths = {
-  styles: '*.scss'
+  styleDirectory: 'assets/css',
+  styleWatch: 'assets/css/**/*.scss',
+  styles: 'assets/css/*.scss'
 };
 
 gulp.task('styles', function() {
@@ -13,12 +15,12 @@ gulp.task('styles', function() {
     .pipe(sass({ outputStyle: "compressed" }))
     .pipe(autoprefixer())
     .pipe(cssminify())
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest(paths.styleDirectory));
 });
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.styles, ['styles']);
+  gulp.watch(paths.styleWatch, ['styles']);
 });
 
 // The default task (called when you run `gulp` from cli)
