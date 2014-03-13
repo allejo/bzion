@@ -19,11 +19,11 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
 1. Clone the repository
 
-       git clone https://github.com/allejo/bzion.git league
+         git clone https://github.com/allejo/bzion.git league
 
 2. Change into the directory and get all of the necessary submodules
 
-       git submodule update --init
+         git submodule update --init
 
 3. Use the `DATABASE.sql` file to create the database structuce
 
