@@ -111,7 +111,7 @@ if (isset($_GET['id'])) {
                                     foreach (Player::getPlayers() as $player)
                                     {
                                         // Don't add the currently logged in player to the list of possible recipients
-                                        if ($player == $_SESSION['playerId'])
+                                        if ($player->getId() == $_SESSION['playerId'])
                                         {
                                             continue;
                                         }
@@ -123,7 +123,7 @@ if (isset($_GET['id'])) {
                                           $selected = 'selected=""';
                                         }
 
-                                        echo "<option $selected value=\"$pid\">", $player->getUsername(), "</option>";
+                                        echo "<option $selected value=\"{$player->getId()}\">", $player->getUsername(), "</option>";
                                     }
                                 ?>
                             </optgroup>
