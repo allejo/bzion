@@ -116,7 +116,8 @@ class Header
             </div>
         </header>
 
-        <div class="content wrapper">
+        <div class="page">
+            <div class="content wrapper">
 
     <?php
 

@@ -39,6 +39,7 @@ class Footer {
      */
     function draw() {
     ?>
+            </div>
         </div> <!-- end .content -->
 
 		<script>

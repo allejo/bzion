@@ -1,43 +1,48 @@
 // This will be the class that contains all of a page's contents
-.content {
-    background-color: #D9EBDC;
-    margin-bottom: 20px;
-    overflow: auto;
+.page {
+    display: table-row;
+    height: 100%;
 
-    // This will be our normal page with information
-    article {
-        border-bottom: 1px solid $border_color;
-        margin: 30px auto 0;
-        width: 900px;
+    .content {
+        background-color: #D9EBDC;
+        height: 100%;
+        overflow: auto;
 
-        // This will always be the title of the article or the page
-        h1 {
-            background-color: $mainColor;
-            color: #FFFFFF;
-            font-family: "Open Sans";
-            font-size: 20px;
-            text-align: center;
-            padding: 5px 0;
-        }
+        // This will be our normal page with information
+        article {
+            border-bottom: 1px solid $border_color;
+            margin: 30px auto 0;
+            width: 900px;
 
-        // The content of the page
-        p {
-            background-color: #FFFFFF;
-            border-left: 1px solid $border_color;
-            border-right: 1px solid $border_color;
-            border-top: none;
-            font-family: Merriweather;
-            padding: 12px;
-            line-height: 1.5em;
-        }
+            // This will always be the title of the article or the page
+            h1 {
+                background-color: $mainColor;
+                color: #FFFFFF;
+                font-family: "Open Sans";
+                font-size: 20px;
+                text-align: center;
+                padding: 5px 0;
+            }
 
-        // If the page has an author, such as a news article or a ban announcement, the footer is where the author would go
-        footer {
-            background-color: #FFFFFF;
-            border-left: 1px solid $border_color;
-            border-right: 1px solid $border_color;
-            padding: 0 20px 10px;
-            text-align: right;
+            // The content of the page
+            p {
+                background-color: #FFFFFF;
+                border-left: 1px solid $border_color;
+                border-right: 1px solid $border_color;
+                border-top: none;
+                font-family: Merriweather;
+                padding: 12px;
+                line-height: 1.5em;
+            }
+
+            // If the page has an author, such as a news article or a ban announcement, the footer is where the author would go
+            footer {
+                background-color: #FFFFFF;
+                border-left: 1px solid $border_color;
+                border-right: 1px solid $border_color;
+                padding: 0 20px 10px;
+                text-align: right;
+            }
         }
     }
 }
