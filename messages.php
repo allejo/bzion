@@ -23,12 +23,29 @@ if (isset($_GET['id'])) {
 ?>
 
 <div class="messaging">
-    <section class="conversations">
-        <ul class="toolbar">
-            <li><a href="#">Active</a></li>
-            <li><a href="#">Inactive</a></li>
-            <li><a href="#">Trash</a></li>
+    <section class="toolbar">
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="icon-inbox"></i>
+                    <span>Inbox</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="icon-reply"></i>
+                    <span>Sent</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="icon-trash-o"></i>
+                    <span>Trash</span>
+                </a>
+            </li>
         </ul>
+    </section>
+    <section class="conversations">
         <a href="<?= BASE_URL . "/messages"; ?>" data-id="new" class="compose">New Message</a>
         <ul class="chats">
         <?php

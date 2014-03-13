@@ -45,7 +45,7 @@ header {
 
                     // We're hovering over the menu button so change the background and keep the font color white
                     &:hover {
-                        background-color: #00BF9E;
+                        background-color: $hoverColor;
                         color: #FFFFFF;
                     }
                 }

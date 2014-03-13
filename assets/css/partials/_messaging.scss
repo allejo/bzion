@@ -1,30 +1,42 @@
 .messaging {
-    .conversations {
-        display: inline-block;
-        width: 350px;
+    height: 100%;
 
-        .toolbar {
-            background-color: $mainColor;
+    .toolbar {
+        background-color: $mainColor;
+        height: 100%;
+        float: left;
+        width: 70px;
+
+        li {
             display: inline-block;
-            width: 100%;
+            padding: 15px 10px;
+            text-align: center;
 
-            li {
-                display: inline-block;
-                margin: 5px 5px 5px 15px;
+            a {
+                color: #ffffff;
+                text-decoration: none;
 
-                a {
-                    color: #ffffff;
-                    text-decoration: none;
-
-                    &:hover {
-                        color: $orange;
-                    }
+                &:hover {
+                    color: #FFFFFF;
                 }
             }
+
+            &:hover {
+                background-color: $hoverColor;
+            }
         }
+    }
+
+    .conversations {
+        background-color: #FFFFFF;
+        border-right: 2px solid #D9EBDC;
+        float: left;
+        height: 100%;
+        width: 350px;
 
         .compose {
             background-color: #ffffff;
+            border-bottom: 2px solid #D9EBDC;
             display: block;
             padding: 5px 0;
             text-align: center;
@@ -35,9 +47,9 @@
         .chats {
             li {
                 background-color: #ffffff;
+                border-bottom: 2px solid #D9EBDC;
                 display: block;
                 list-style-type: none;
-                margin: 2px 0;
                 width: 100%;
 
                 a {
@@ -86,7 +98,7 @@
     .chat_area {
         display: inline-block;
         vertical-align: top;
-        width: 745px;
+        width: 675px;
 
         .group_message_toolbar {
             background-color: $mainColor;
