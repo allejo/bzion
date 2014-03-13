@@ -1,12 +1,13 @@
 // This will be the class that contains all of a page's contents
 .content {
+    background-color: #D9EBDC;
     margin-bottom: 20px;
-    margin-top: 35px;
+    overflow: auto;
 
     // This will be our normal page with information
     article {
         border-bottom: 1px solid $border_color;
-        margin: 0 auto;
+        margin: 30px auto 0;
         width: 900px;
 
         // This will always be the title of the article or the page
@@ -37,12 +38,6 @@
             border-right: 1px solid $border_color;
             padding: 0 20px 10px;
             text-align: right;
-        }
-
-        // Because the News page only uses articles, they all be squeezed together so in order to avoid this, add a top margin
-        // to all of the articles after the first one
-        &:nth-child(n+2) {
-            margin-top: 30px;
         }
     }
 }
