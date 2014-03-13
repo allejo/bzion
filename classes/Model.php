@@ -103,7 +103,7 @@ abstract class Model {
      * does not have a 'status' column which can be set to 'deleted'.
      */
     public function delete() {
-        $this->__set('status', 'deleted');
+        $this->update('status', 'deleted');
     }
 
     /**
