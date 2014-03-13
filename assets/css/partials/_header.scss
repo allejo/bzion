@@ -36,9 +36,10 @@ header {
                 // This will be the actual hyper link so we need to format it to be large with padding and a width
                 // or else we will not be able to click the general area of a menu button
                 a {
+                    box-sizing: border-box;
                     color: #FFFFFF;
                     display: block;
-                    padding: 10px 0;
+                    padding: 10px 10px;
                     text-align: center;
                     text-decoration: none;
                     width: 100%;
@@ -47,6 +48,12 @@ header {
                     &:hover {
                         background-color: $hoverColor;
                         color: #FFFFFF;
+                    }
+
+                    // Hide the default outline shown by browsers on links (note that this doesn't affect the outlines
+                    // shown when using the keyboard to navigate)
+                    &:active {
+                        outline: none;
                     }
                 }
 
