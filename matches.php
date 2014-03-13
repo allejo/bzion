@@ -64,33 +64,6 @@ if (isset($team)) {
     </table> <!-- end .matches_table -->
 </div> <!-- end .matchpage_content -->
 
-<div class="table teams">
-    <ul>
-        <li>Date</li>
-        <li>Teams</li>
-        <li>Score</li>
-        <li>Duration</li>
-        <li>Reporter</li>
-    </ul>
-
-    <?php
-        foreach ($matches as $match)
-        {
-            $leader = $team->getLeader();
-
-            echo '<ul>';
-            echo '    <li><a href="' . $team->getURL() . '">' . $team->getName() . '</a></li>';
-            echo '    <li>' . $team->getElo() . '</li>';
-            echo '    <li>' . $leader->getUsername() . '</li>';
-            echo '    <li>' . $team->getNumMembers() . '</li>';
-            echo '    <li><a href="' . $team->getMatchesURL() . '">' . $team->getNumTotalMatches() . '</a></li>';
-            echo '    <li>' . $team->getActivity() . '</li>';
-            echo '</ul>';
-        }
-    }
-    ?>
-</div>
-
 <?php
 
 }
