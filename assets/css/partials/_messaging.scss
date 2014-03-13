@@ -7,18 +7,14 @@
         float: left;
         width: 70px;
 
-        a {
-            color: #ffffff;
-            text-decoration: none;
+        li {
             display: inline-block;
             padding: 15px 10px;
             text-align: center;
-            line-height: auto;
-            
-            li {
-                // display: inline-block;
-                // padding: 15px 10px;
-                // text-align: center;
+
+            a {
+                color: #ffffff;
+                text-decoration: none;
 
                 i {
                     font-size: 30px;
