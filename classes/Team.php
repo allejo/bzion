@@ -276,7 +276,7 @@ class Team extends Model
     /**
      * Get the activity of the team
      *
-     * @return double The team's activity formated to two decimal places
+     * @return string The team's activity formated to two decimal places
      */
     function getActivity() {
         return sprintf("%.2f", $this->activity);
