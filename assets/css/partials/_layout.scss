@@ -92,6 +92,32 @@
         }
     }
 
+    // players table
+    &.players {
+        width: 1000px;
+
+        ul {
+            overflow: hidden;
+            width: 100%;
+
+            li {
+                float: left;
+
+                &:nth-child(1) {
+                    width: 30%;
+                }
+
+                &:nth-child(2) {
+                    width: 30%;
+                }
+
+                &:nth-child(3) {
+                    width: 20%;
+                }
+            }
+        }
+    }
+
     // Each unordered list will act as a row of the table
     ul {
         list-style-type: none;

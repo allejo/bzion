@@ -42,30 +42,28 @@ if (isset($player)) {
 
     ?>
 
-<div class="playerpage_content">
-    <table class="players_table">
-        <tr>
-            <th> Name </th>
-            <th> Team </th>
-            <th> Joined </th>
-        </tr>
-    <?php
-    foreach ($players as $key => $pid) {
-        $player = new Player($pid);
-        echo "<tr>";
-        echo "<td><a href='" . $player->getURL() . "'>" . $player->getUsername() . "</a></td>";
-        $teamlink = $player->getTeam()->getName();
-        if ($player->getTeam()->isValid()) {
-            $teamlink = '<a href="' . $player->getTeam()->getURL() . '">' . $teamlink . '</a>';
-        }
-        echo "<td>$teamlink</td>";
-        echo "<td>" . $player->getJoinedDate() . "</td>";
-        echo "</tr>";
-    }
-    ?>
+<div class="table players">
+    <ul>
+        <li>Name</li>
+        <li>Team</li>
+        <li>Joined</li>
+    </ul>
 
-    </table> <!-- end .players_table -->
-</div> <!-- end .playerspage_content -->
+    <?php
+        foreach ($players as $player)
+        {
+            echo '<ul>';
+            echo '    <li><a href="' . $player->getURL() . '">' . $player->getUsername() . '</a></li>';
+            $teamlink = $player->getTeam()->getName();
+            if ($player->getTeam()->isValid()) {
+                $teamlink = '<a href="' . $player->getTeam()->getURL() . '">' . $teamlink . '</a>';
+            }
+            echo '    <li>' . $teamlink . '</li>';
+            echo '    <li>' . $player->getJoinedDate() . '</li>';
+            echo '</ul>';
+        }
+    ?>
+</div>
 
 <?php
 

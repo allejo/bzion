@@ -297,7 +297,19 @@ class Player extends Model
      * @return array An array of player BZIDs
      */
     public static function getPlayers() {
-        return parent::fetchIdsFrom("status", array("active"), "s", false);
+        //return parent::fetchIdsFrom("status", array("active"), "s", false);
+        $players = array();
+        $playerIDs = parent::fetchIdsFrom("status", array(
+                    "disabled",
+                    "deleted"
+                   ), "s", true, "ORDER BY team DESC");
+
+        foreach ($playerIDs as $playerID)
+        {
+            $players[] = new Player($playerID);
+        }
+
+        return $players;
     }
 
     /**
