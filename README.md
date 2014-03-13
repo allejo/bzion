@@ -4,7 +4,7 @@ A Content Mangement System (CMS) intended for BZFlag leagues to manage players, 
 
 ## Authors
 
-<em>Alphabetical by last name</em>
+_Alphabetical by last name_
 
 Vladimir Jimenez (allejo)  
 Konstantinos Kanavouras (kongr45gpen/alezakos)  
@@ -14,6 +14,20 @@ Ashvala Vinay (ashvala)
 ## Documentation
 
 BZiON's source code is thoroughly documented in order for anyone to be able to jump into the project. All of the phpDoc for the classes can be found on [alezakos' website](http://helit.org/bziondoc/phpdoc/).
+
+## Development Setup
+
+1. Clone the repository
+
+       git clone https://github.com/allejo/bzion.git league
+
+2. Change into the directory and get all of the necessary submodules
+
+       git submodule update --init
+
+3. Use the `DATABASE.sql` file to create the database structuce
+
+4. Duplicate the `bzion-config-example.php` file and configure the settings.
 
 ## License
 GNU Lesser General Public License 3.0<br\>
