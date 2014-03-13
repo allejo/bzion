@@ -39,7 +39,7 @@ if (isset($_GET['id'])) {
             </li>
             <li>
                 <a href="#">
-                    <i class="icon-trash-o"></i>
+                    <i class="icon-trash"></i>
                     <span>Trash</span>
                 </a>
             </li>
