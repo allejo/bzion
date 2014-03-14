@@ -1,0 +1,59 @@
+index:
+    pattern:  /
+    defaults: { _controller: 'index' }
+
+ban_list:
+    pattern:    /bans
+    defaults: { _controller: 'bans' }
+
+login:
+    pattern:    /login
+    defaults: { _controller: 'login' }
+
+logout:
+    pattern:    /logout
+    defaults: { _controller: 'logout' }
+
+match_list:
+    pattern:    /matches
+    defaults: { _controller: 'matches' }
+
+message_index:
+    pattern:    /messages
+    defaults: { _controller: 'messages' }
+
+message_show_discussion:
+    pattern:    /messages/{id}
+    defaults: { _controller: 'messages' }
+
+news_list:
+    pattern:    /news
+    defaults: { _controller: 'news' }
+
+player_list:
+    pattern:    /players
+    defaults: { _controller: 'players' }
+
+player_show:
+    pattern:    /player/{slug}
+    defaults: { _controller: 'players' }
+
+profile:
+    pattern:    /profile
+    defaults: { _controller: 'profile' }
+
+server_list:
+    pattern:    /servers
+    defaults: { _controller: 'servers' }
+
+team_list:
+    pattern:    /teams
+    defaults: { _controller: 'teams' }
+
+team_show:
+    pattern:    /teams/{slug}
+    defaults: { _controller: 'teams' }
+
+custom_page:
+    pattern:    /{slug}
+    defaults: { _controller: 'pages' }

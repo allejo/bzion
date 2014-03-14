@@ -4,6 +4,7 @@ bzion-config.php
 bzion_errors.log
 update.php
 vendor
+cache
 
 # Test files #
 ##############
