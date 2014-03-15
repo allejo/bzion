@@ -5,10 +5,7 @@ require_once("bzion-load.php");
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Router;
 
 $locator = new FileLocator(array(__DIR__));
@@ -26,4 +23,5 @@ $router = new Router(
 
 $parameters = $router->matchRequest($request);
 
-require ("controllers/" . $parameters['_controller'] . ".php");
+$con = Controller::getController($parameters);
+$con->callAction();

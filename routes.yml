@@ -2,6 +2,10 @@ index:
     pattern:  /
     defaults: { _controller: 'index' }
 
+index_fancy:
+    pattern:  /{slug}
+    defaults: { _controller: 'index', _action: 'sample'}
+
 ban_list:
     pattern:    /bans
     defaults: { _controller: 'bans' }
