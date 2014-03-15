@@ -27,7 +27,7 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
 3. Use the `DATABASE.sql` file to create the database structuce
 
-4. Duplicate the `bzion-config-example.php` file and configure the settings.
+4. Rename `bzion-config-example.php` to `bzion-config.php` and configure the settings.
 
 ## License
 GNU Lesser General Public License 3.0<br\>
