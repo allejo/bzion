@@ -227,7 +227,7 @@ class Database
     *
     * @param string $string The string that will be shown
     * @param string $type A text representing the type of the error (e.g: "MySQL Error:")
-    * @param numeric $id A number used to identify the error
+    * @param int $id A number used to identify the error
     */
     function printDebug($string, $type=null, $id=null)
     {
