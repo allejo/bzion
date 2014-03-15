@@ -142,10 +142,18 @@ class Page extends Model {
 
     /**
      * Get a list of enabled pages
-     * @return int[] A list of Page IDs
+     * @return Page[] A list of Page IDs
      */
     public static function getPages() {
-        return parent::fetchIdsFrom("status", array("live"), "s");
+        $pages = array();
+        $pageIDs = parent::fetchIdsFrom("status", array("live"), "s");
+
+        foreach ($pageIDs as $page)
+        {
+            $pages[] = new Page($page);
+        }
+
+        return $pages;
     }
 
      /**

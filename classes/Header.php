@@ -87,10 +87,8 @@ class Header
                     <?php
                         $pages = Page::getPages();
 
-                        foreach ($pages as $key => $id)
+                        foreach ($pages as $page)
                         {
-                            $page = new Page($id);
-
                             if (!$page->isHomePage())
                             {
                                 echo '<li><a href="' . $page->getURL() . '">' . $page->getName() . '</a></li>';
