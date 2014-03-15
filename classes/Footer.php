@@ -42,16 +42,16 @@ class Footer {
             </div>
         </div> <!-- end .content -->
 
-		<script>
-            var baseURL = "<?php echo BASE_URL; ?>";
-		</script>
+                <script>
+            var baseURL = "<?php echo Header::getBasePath(); ?>";
+                </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script src="<?php echo BASE_URL; ?>/assets/js/main.js"></script>
+        <script src="<?php echo Header::getBasePath(); ?>/assets/js/main.js"></script>
 
         <?php
             foreach($this->scripts as $url) {
-                echo "<script src=\"" . BASE_URL . "/$url\"></script>";
+                echo "<script src=\"" .Header::getBasePath() . "/$url\"></script>";
             }
         ?>
     </body>

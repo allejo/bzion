@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-composer install
-
 FILE=bzion-config.php
 
 cp bzion-config-example.php $FILE

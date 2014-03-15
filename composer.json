@@ -4,7 +4,6 @@
         "symfony/config"          : "dev-master",
         "symfony/routing"         : "dev-master",
         "symfony/http-foundation" : "dev-master",
-        "symfony/http-kernel"     : "dev-master",
         "symfony/yaml"            : "dev-master"
     }, 
     "autoload": {
