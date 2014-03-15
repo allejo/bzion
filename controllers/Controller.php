@@ -64,7 +64,7 @@ abstract class Controller {
     */
     protected function callMethod($method, $parameters) {
         $ref = new ReflectionMethod($this, $method);
-        $params = [];
+        $params = array();
 
         foreach ($ref->getParameters() as $p) {
             if ($model = $this->getModelFromParameters($p, $parameters)) {
