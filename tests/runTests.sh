@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-COVERAGE_TYPE="--coverage-text"
+COVERAGE_TYPE="--coverage-text --coverage-clover=coverage.clover"
 
 # Evaluate command-line arguments
 while test $# -gt 0; do

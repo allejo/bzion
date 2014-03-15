@@ -7,6 +7,8 @@ update.php
 # Test files #
 ##############
 coverage-report
+coverage.clover
+ocular.phar
 
 # OS generated files #
 ######################
