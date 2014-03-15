@@ -1,11 +1,18 @@
 <?php
 
+use Symfony\Component\Routing\Router\UrlGeneratorInterface;
+
 abstract class Controller {
 
     /**
      * @var array
      */
     protected $parameters;
+
+    /**
+     * @var UrlGeneratorInterface
+     */
+    protected $generator;
 
     /**
      *
@@ -99,6 +106,25 @@ abstract class Controller {
             return $refClass->newInstance($routeParameters[$modelParameter->getName() . 'Id']);
     }
 
+    /**
+     * Sets the URL Generator.
+     * @param UrlGeneratorInterface $generator
+     * @return void
+     */
+    public function setGenerator($generator) {
+        $this->generator = $generator;
+    }
+
+    /**
+     * Generates a URL from the given parameters.
+     * @param string $name The name of the route
+     * @param mixed $parameters An array of parameters
+     * @param boolean $absolute Whether to generate an absolute URL
+     * @return string The generated URL
+     */
+     public function generate($name, $parameters = array(), $absolute = false) {
+        return $this->generator->generate($name, $parameters, $absolute);
+     }
 }
 
 

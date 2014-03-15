@@ -27,4 +27,6 @@ $router = new Router(
 $parameters = $router->matchRequest($request);
 
 $con = Controller::getController($parameters);
+$con->setGenerator($router->getGenerator());
+
 $con->callAction();
