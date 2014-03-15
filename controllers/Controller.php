@@ -33,7 +33,26 @@ abstract class Controller {
      * @return mixed The return value of the called action
     */
     public function callAction() {
-        return $this->callMethod($this->parameters['_action'] . 'Action', $this->parameters);
+        $this->setup();
+        $ret = $this->callMethod($this->parameters['_action'] . 'Action', $this->parameters);
+        $this->cleanup();
+        return $ret;
+    }
+
+    /**
+     * Method that will be called before any action
+     *
+     * @return void
+     */
+    public function setup() {
+    }
+
+    /**
+     * Method that will be called after all actions
+     *
+     * @return void
+     */
+    public function cleanup() {
     }
 
     /**
@@ -48,20 +67,36 @@ abstract class Controller {
         $params = [];
 
         foreach ($ref->getParameters() as $p) {
-            if ($p->isOptional()) {
-                if(isset($parameters[$p->name])) {
-                    $params[] = $parameters[$p->name];
-                } else {
-                    $params[] = $p->getDefaultValue();
-                }
+            if ($model = $this->getModelFromParameters($p, $parameters)) {
+                // The parameter's class is a Model
+                // Get its slug from the request and send a Model to the method
+                $params[] = $model;
             } else if (isset($parameters[$p->name])) {
                 $params[] = $parameters[$p->name];
+            } else if ($p->isOptional()) {
+                $params[] = $p->getDefaultValue();
             } else {
                 throw new MissingArgumentException("Missing parameter $p->name");
             }
         }
 
         return $ref->invokeArgs($this, $params);
+    }
+
+    private function getModelFromParameters($modelParameter, $routeParameters) {
+        $refClass = $modelParameter->getClass();
+
+        if ($refClass === null)
+            return null;
+        if (!$refClass->isSubclassOf("Model"))
+            return null;
+
+        // Look for the object's ID/slugs in the routeParameters array
+        if (isset($routeParameters[$modelParameter->getName()]))
+            return $refClass->getMethod("fetchFromSlug")->invoke(null, $routeParameters[$modelParameter->getName()]);
+
+        if (isset($routeParameters[$modelParameter->getName() . 'Id']))
+            return $refClass->newInstance($routeParameters[$modelParameter->getName() . 'Id']);
     }
 
 }

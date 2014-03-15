@@ -271,6 +271,30 @@ abstract class Model {
     }
 
     /**
+     * Gets an entity from the supplied alias
+     * @param string $alias The object's alias
+     * @return Model
+     */
+    public static function fetchFromAlias($alias) {
+        return new static(self::fetchIdFrom($alias, "alias"));
+    }
+
+    /**
+     * Gets an entity from the supplied slug, which can either be an alias or an ID
+     * @param string $slug The object's slug
+     * @return Model
+     */
+    public static function fetchFromSlug($slug) {
+        if (ctype_digit((string) $slug)) {
+            // Slug is an integer, we can fetch by ID
+            return new static((int) $slug);
+        } else {
+            // Slug is something else, we can fetch by alias
+            return self::fetchFromAlias($slug);
+        }
+    }
+
+    /**
      * Generate an invalid object
      *
      * <code>

@@ -1,63 +1,67 @@
 index:
     pattern:  /
-    defaults: { _controller: 'index' }
-
-index_fancy:
-    pattern:  /{slug}
-    defaults: { _controller: 'index', _action: 'sample'}
+    defaults: { _controller: 'Page', _action: 'showDefault' }
 
 ban_list:
     pattern:    /bans
-    defaults: { _controller: 'bans' }
+    defaults: { _controller: 'Ban', _action: 'list' }
 
 login:
     pattern:    /login
-    defaults: { _controller: 'login' }
+    defaults: { _controller: 'Login', _action: 'login' }
 
 logout:
     pattern:    /logout
-    defaults: { _controller: 'logout' }
+    defaults: { _controller: 'Login', _action: 'logout' }
 
 match_list:
     pattern:    /matches
-    defaults: { _controller: 'matches' }
+    defaults: { _controller: 'Match', _action: 'list' }
+
+match_by_team_list:
+    pattern:    /matches/{team}
+    defaults: { _controller: 'Match', _action: 'listByTeam' }
 
 message_index:
     pattern:    /messages
-    defaults: { _controller: 'messages' }
+    defaults: { _controller: 'Message', _action: 'list' }
 
 message_show_discussion:
-    pattern:    /messages/{id}
-    defaults: { _controller: 'messages' }
+    pattern:    /messages/{discussion}
+    defaults: { _controller: 'Message', _action: 'list' }
 
 news_list:
     pattern:    /news
-    defaults: { _controller: 'news' }
+    defaults: { _controller: 'News', _action: 'list' }
 
 player_list:
     pattern:    /players
-    defaults: { _controller: 'players' }
+    defaults: { _controller: 'Player', _action: 'list' }
 
 player_show:
-    pattern:    /player/{slug}
-    defaults: { _controller: 'players' }
+    pattern:    /players/{player}
+    defaults: { _controller: 'Player', _action: 'show' }
 
-profile:
+profile_show:
     pattern:    /profile
-    defaults: { _controller: 'profile' }
+    defaults: { _controller: 'Profile', _action: 'show' }
+
+profile_edit:
+    pattern:    /profile/edit
+    defaults: { _controller: 'Profile', _action: 'edit' }
 
 server_list:
     pattern:    /servers
-    defaults: { _controller: 'servers' }
+    defaults: { _controller: 'Server', _action: 'list' }
 
 team_list:
     pattern:    /teams
-    defaults: { _controller: 'teams' }
+    defaults: { _controller: 'Team', _action: 'list' }
 
 team_show:
-    pattern:    /teams/{slug}
-    defaults: { _controller: 'teams' }
+    pattern:    /teams/{team}
+    defaults: { _controller: 'Team', _action: 'show' }
 
 custom_page:
-    pattern:    /{slug}
-    defaults: { _controller: 'pages' }
+    pattern:    /{page}
+    defaults: { _controller: 'Page', _action: 'show' }

@@ -148,15 +148,6 @@ class Page extends Model {
         return parent::fetchIdsFrom("status", array("live"), "s");
     }
 
-    /**
-     * Gets a page object from the supplied alias
-     * @param string $alias The page's alias
-     * @return Page The page
-     */
-    public static function getFromAlias($alias) {
-        return new Page(parent::fetchIdFrom($alias, "alias"));
-    }
-
      /**
      * Generate a URL-friendly unique alias for a page name
      *

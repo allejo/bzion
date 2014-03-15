@@ -14,10 +14,13 @@ $request = Request::createFromGlobals();
 $requestContext = new RequestContext();
 $requestContext->fromRequest($request);
 
+// Disable caching while on the DEVELOPMENT environment
+$cacheDir = DEVELOPMENT ? null : __DIR__.'/cache';
+
 $router = new Router(
     new YamlFileLoader($locator),
     'routes.yml',
-    array('cache_dir' => __DIR__.'/cache'),
+    array('cache_dir' => $cacheDir),
     $requestContext
 );
 

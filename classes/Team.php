@@ -382,14 +382,4 @@ class Team extends Model
 
         return $teams;
     }
-
-    /**
-     * Gets a team object from the supplied alias
-     *
-     * @param string $alias The team's alias
-     * @return Team The team's id
-     */
-    public static function getFromAlias($alias) {
-        return new Team(self::fetchIdFrom($alias, "alias"));
-    }
 }

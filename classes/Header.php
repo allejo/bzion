@@ -111,7 +111,7 @@ class Header
                         else
                         {
                             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
-                            $url .= urlencode(self::getBasePath() . "/login?token=%TOKEN%&username=%USERNAME%");
+                            $url .= urlencode(BASE_URL . "/login?token=%TOKEN%&username=%USERNAME%");
 
                             echo '<li class="icon float right"><a href="' . $url . '"><i class="icon-signin"></i></a></li>';
                         }

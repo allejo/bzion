@@ -368,15 +368,6 @@ class Player extends Model
     }
 
     /**
-     * Gets a player object from the supplied alias
-     * @param string $alias The player's alias
-     * @return Player The player
-     */
-    public static function getFromAlias($alias) {
-        return new Player(parent::fetchIdFrom($alias, "alias", "s"));
-    }
-
-    /**
      * Add a player's callsign to the database if it does not exist as a past callsign
      * @param string $id The ID for the player whose callsign we're saving
      * @param string $username The callsign which we are saving if it doesn't exist
