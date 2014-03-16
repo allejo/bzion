@@ -11,11 +11,19 @@ abstract class AliasModel extends UrlModel {
     protected $alias;
 
     /**
+     * Get an object's alias
+     * @return string|int The alias (or ID if the alias doesn't exist)
+     */
+    public function getAlias() {
+        if ($this->alias !== null && $this->alias != "")
+            return $this->alias;
+        return $this->getId();
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getURL($absolute=false) {
-        if (empty($this->getAlias()))
-            return $this->getPermaLink($absolute);
         return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getAlias()), $absolute);
     }
 

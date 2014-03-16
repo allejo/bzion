@@ -124,16 +124,6 @@ abstract class Model {
     }
 
     /**
-     * Get an object's alias
-     * @return string|int The alias (or ID if the alias doesn't exist)
-     */
-    public function getAlias() {
-        if ($this->alias != null)
-            return $this->alias;
-        return $this->getId();
-    }
-
-    /**
      * Gets the id of a database row which has a specific value on a column
      * @param string $value The value which the column should be equal to
      * @param string $column The name of the database column
