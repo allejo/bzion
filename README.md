@@ -31,7 +31,7 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
 4. Install the required libraries via the Composer file
 
-      `php /path/to/composer.phar install`
+      `php /path/to/composer.phar install --no-dev`
 
 5. Use the `DATABASE.sql` file to create the database structuce
 
