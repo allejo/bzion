@@ -73,7 +73,7 @@ class ProfileController extends HTMLController {
 
         echo "<br />", $this->me->getDescription() ,"<br />";
 
-        echo "<br /><a href='" . BASE_URL . "/profile/edit'>Edit your profile...</a>";
+        echo "<br /><a href='" . $this->generate("profile_edit") ."'>Edit your profile...</a>";
 
     }
 }

@@ -25,7 +25,6 @@ DEFINE("DURATION", serialize(array(
  * File, directory and URL settings
  */
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
-DEFINE("BASE_URL", "http://" . rtrim($_SERVER["HTTP_HOST"], '/')); // The base URL of the website, including 'http://'
 DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where errors will be written
 
 /*

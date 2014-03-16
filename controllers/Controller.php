@@ -1,6 +1,7 @@
 <?php
 
-use Symfony\Component\Routing\Router\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class Controller {
 
@@ -8,11 +9,6 @@ abstract class Controller {
      * @var array
      */
     protected $parameters;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    protected $generator;
 
     /**
      *
@@ -93,9 +89,7 @@ abstract class Controller {
     private function getModelFromParameters($modelParameter, $routeParameters) {
         $refClass = $modelParameter->getClass();
 
-        if ($refClass === null)
-            return null;
-        if (!$refClass->isSubclassOf("Model"))
+        if ($refClass === null || !$refClass->isSubclassOf("Model"))
             return null;
 
         // Look for the object's ID/slugs in the routeParameters array
@@ -107,23 +101,14 @@ abstract class Controller {
     }
 
     /**
-     * Sets the URL Generator.
-     * @param UrlGeneratorInterface $generator
-     * @return void
-     */
-    public function setGenerator($generator) {
-        $this->generator = $generator;
-    }
-
-    /**
      * Generates a URL from the given parameters.
      * @param string $name The name of the route
      * @param mixed $parameters An array of parameters
      * @param boolean $absolute Whether to generate an absolute URL
      * @return string The generated URL
      */
-     public function generate($name, $parameters = array(), $absolute = false) {
-        return $this->generator->generate($name, $parameters, $absolute);
+     public static function generate($name, $parameters = array(), $absolute = false) {
+        return Service::getGenerator()->generate($name, $parameters, $absolute);
      }
 }
 

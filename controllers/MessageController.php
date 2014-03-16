@@ -59,7 +59,7 @@ class MessageController extends HTMLController {
                 </ul>
             </section>
             <section class="conversations">
-                <a href="<?= BASE_URL . "/messages"; ?>" data-id="new" class="compose">New Message</a>
+                <a href="<?= $this->generate("message_list") ?>" data-id="new" class="compose">New Message</a>
                 <ul class="chats">
                 <?php
                     foreach ($groups as $key => $id)

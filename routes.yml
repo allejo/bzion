@@ -22,7 +22,7 @@ match_by_team_list:
     pattern:    /matches/{team}
     defaults: { _controller: 'Match', _action: 'listByTeam' }
 
-message_index:
+message_list:
     pattern:    /messages
     defaults: { _controller: 'Message', _action: 'list' }
 

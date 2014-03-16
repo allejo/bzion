@@ -3,7 +3,7 @@
 /**
  * A league team
  */
-class Team extends Model
+class Team extends AliasModel
 {
 
     /**
@@ -283,25 +283,12 @@ class Team extends Model
     }
 
     /**
-     * Get the URL that points to the team's page
-     *
-     * @param string $dir The virtual directory the URL should point to
-     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
-     * @return string The team's URL, without a trailing slash
-     */
-    function getURL($dir = "teams", $default = NULL) {
-        return parent::getURL($dir, $default);
-    }
-
-    /**
      * Get the URL that points to the team's list of matches
      *
-     * @param string $dir The virtual directory the URL should point to
-     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
      * @return string The team's list of matches
      */
-    function getMatchesURL($dir = "matches", $default = NULL) {
-        return parent::getURL($dir, $default);
+    function getMatchesURL() {
+        return Service::getGenerator()->generate("match_by_team_list", array("team" => $this->getAlias()));
     }
 
     /**

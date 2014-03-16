@@ -3,7 +3,7 @@
 /**
  * A discussion (group of messages)
  */
-class Group extends Model {
+class Group extends UrlModel {
 
     /**
      * The subject of the group
@@ -106,13 +106,17 @@ class Group extends Model {
     }
 
     /**
-     * Get the URL that points to the group's page
-     * @param string $dir The virtual directory the URL should point to
-     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
-     * @return string The group's URL, without a trailing slash
+     * {@inheritDoc}
      */
-    function getURL($dir="messages", $default=NULL) {
-        return parent::getURL($dir, $default);
+    protected static function getRouteName() {
+        return "message_show_discussion";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected static function getParamName() {
+        return "discussion";
     }
 
     /**

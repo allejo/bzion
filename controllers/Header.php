@@ -1,6 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
 
 if(session_id() == '') {
     // Session hasn't started
@@ -11,7 +10,7 @@ if(session_id() == '') {
 /**
  * The header used in HTML pages
  */
-class Header
+class Header extends Controller
 {
 
     /**
@@ -27,20 +26,12 @@ class Header
     private $db;
 
     /**
-     * The browser's request
-     * @var Request
-     */
-    private static $request;
-
-    /**
      * Construct a new Header object
      * @param string $title The page's title
      */
     function __construct($title="") {
         $this->title = $title;
         $this->db = Database::getInstance();
-
-        self::$request = Request::createFromGlobals();
     }
 
     /**
@@ -75,14 +66,14 @@ class Header
         <header>
             <nav>
                 <ul class="wrapper">
-                    <li class="icon"><a href="<?= self::getBasePath(); ?>/"><i class="icon-home"></i></a></li>
+                    <li class="icon"><a href="<?= $this->generate("index") ?>"><i class="icon-home"></i></a></li>
                     <?php if (isset($_SESSION['username'])) { ?>
-                    <li class="icon <?= $newMessage; ?>"><a href="<?= self::getBasePath(); ?>/messages"><i class="icon-comments"></i></a></li>
+                    <li class="icon <?= $newMessage; ?>"><a href="<?= $this->generate("message_list") ?>"><i class="icon-comments"></i></a></li>
                     <?php } ?>
-                    <li class="icon"><a href="<?= self::getBasePath(); ?>/news"><i class="icon-pushpin"></i></a></li>
-                    <li><a href="<?= self::getBasePath(); ?>/teams">Teams</a></li>
-                    <li><a href="<?= self::getBasePath(); ?>/players">Players</a></li>
-                    <li><a href="<?= self::getBasePath(); ?>/matches">Matches</a></li>
+                    <li class="icon"><a href="<?= $this->generate("news_list") ?>"><i class="icon-pushpin"></i></a></li>
+                    <li><a href="<?= $this->generate("team_list") ?>">Teams</a></li>
+                    <li><a href="<?= $this->generate("player_list") ?>">Players</a></li>
+                    <li><a href="<?= $this->generate("match_list") ?>">Matches</a></li>
 
                     <?php
                         $pages = Page::getPages();
@@ -96,20 +87,20 @@ class Header
                         }
                     ?>
 
-                    <li><a href="<?= self::getBasePath(); ?>/bans">Bans</a></li>
-                    <li><a href="<?= self::getBasePath(); ?>/servers">Servers</a></li>
+                    <li><a href="<?= $this->generate("ban_list") ?>">Bans</a></li>
+                    <li><a href="<?= $this->generate("server_list") ?>">Servers</a></li>
 
                     <?php
                         if (isset($_SESSION['username']))
                         {
-                            echo '<li class="icon float right"><a href="' . self::getBasePath() . '/logout"><i class="icon-signout"></i></a></li>';
-                            echo '<li class="icon float right"><a href="' . self::getBasePath() . '/profile"><i class="icon-user"></i></a></li>';
-                            echo '<li class="icon float right"><a href="' . self::getBasePath() . '/notifications"><i class="icon-bell-alt"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . $this->generate("logout") . '"><i class="icon-signout"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . $this->generate("profile_show") . '"><i class="icon-user"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . $this->generate("index") . '"><i class="icon-bell-alt"></i></a></li>';
                         }
                         else
                         {
                             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
-                            $url .= urlencode(BASE_URL . "/login?token=%TOKEN%&username=%USERNAME%");
+                            $url .= urlencode($this->generate("login", array(), true) . "?token=%TOKEN%&username=%USERNAME%");
 
                             echo '<li class="icon float right"><a href="' . $url . '"><i class="icon-signin"></i></a></li>';
                         }
@@ -155,9 +146,6 @@ class Header
      * @return string The raw path
      */
     public static function getBasePath() {
-        if (!self::$request)
-            self::$request = Request::createFromGlobals();
-
-        return self::$request->getBasePath();
+        return Service::getRequest()->getBasePath();
     }
 }

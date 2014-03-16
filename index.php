@@ -14,6 +14,8 @@ $request = Request::createFromGlobals();
 $requestContext = new RequestContext();
 $requestContext->fromRequest($request);
 
+Service::setRequest($request);
+
 // Disable caching while on the DEVELOPMENT environment
 $cacheDir = DEVELOPMENT ? null : __DIR__.'/cache';
 
@@ -24,9 +26,9 @@ $router = new Router(
     $requestContext
 );
 
+Service::setGenerator($router->getGenerator());
+
 $parameters = $router->matchRequest($request);
 
 $con = Controller::getController($parameters);
-$con->setGenerator($router->getGenerator());
-
 $con->callAction();
