@@ -3,7 +3,7 @@
 /**
  * A league player
  */
-class Player extends Model
+class Player extends AliasModel
 {
 
     /**
@@ -133,16 +133,6 @@ class Player extends Model
      */
     function getBZID() {
         return $this->bzid;
-    }
-
-    /**
-     * Get a player's alias
-     * @return string|int The alias (or BZID if the alias doesn't exist)
-     */
-    public function getAlias() {
-        if ($this->alias != null)
-            return $this->alias;
-        return $this->getBZID();
     }
 
     /**
@@ -313,16 +303,6 @@ class Player extends Model
     }
 
     /**
-     * Get a URL that points to the player's page
-     * @param string $dir The virtual directory the URL should point to
-     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
-     * @return string The URL
-     */
-    function getURL($dir="players", $default="id") {
-        return parent::getURL($dir, $this->$default);
-    }
-
-    /**
      * Generate a URL-friendly unique alias for a username
      * @param string $name The original username
      * @return string The generated alias
@@ -365,15 +345,6 @@ class Player extends Model
         }
 
         return $name.$i;
-    }
-
-    /**
-     * Gets a player object from the supplied alias
-     * @param string $alias The player's alias
-     * @return Player The player
-     */
-    public static function getFromAlias($alias) {
-        return new Player(parent::fetchIdFrom($alias, "alias", "s"));
     }
 
     /**

@@ -5,13 +5,7 @@ if (!@include("bzion-config.php")) {
     die();
 }
 
-require("classes/Autoloader.php");
-
-foreach ($classesDir as $dir) {
-    AutoLoader::registerDirectory($dir);
-}
-
-spl_autoload_register(array("AutoLoader", "loadClass"));
+require("vendor/autoload.php");
 
 mb_internal_encoding("UTF-8");
 

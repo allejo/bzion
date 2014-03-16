@@ -3,7 +3,7 @@
 /**
  * A custom page
  */
-class Page extends Model {
+class Page extends AliasModel {
 
     /**
      * The name of the page
@@ -131,30 +131,26 @@ class Page extends Model {
     }
 
     /**
-     * Get the URL that points to the page
-     * @param string $dir The virtual directory the URL should point to
-     * @param string $default The value that should be used if the alias is NULL. The object's ID will be used if a default value is not specified
-     * @return string The page's URL, without a trailing slash
+     * {@inheritdoc}
      */
-    function getURL($dir="", $default=NULL) {
-        return parent::getURL($dir, $default);
+    protected static function getRouteName() {
+        return "custom_page";
     }
 
     /**
      * Get a list of enabled pages
-     * @return int[] A list of Page IDs
+     * @return Page[] A list of Page IDs
      */
     public static function getPages() {
-        return parent::fetchIdsFrom("status", array("live"), "s");
-    }
+        $pages = array();
+        $pageIDs = parent::fetchIdsFrom("status", array("live"), "s");
 
-    /**
-     * Gets a page object from the supplied alias
-     * @param string $alias The page's alias
-     * @return Page The page
-     */
-    public static function getFromAlias($alias) {
-        return new Page(parent::fetchIdFrom($alias, "alias"));
+        foreach ($pageIDs as $page)
+        {
+            $pages[] = new Page($page);
+        }
+
+        return $pages;
     }
 
      /**

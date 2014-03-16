@@ -1,5 +1,6 @@
 <?php
 
+
 if(session_id() == '') {
     // Session hasn't started
     session_start();
@@ -9,7 +10,7 @@ if(session_id() == '') {
 /**
  * The header used in HTML pages
  */
-class Header
+class Header extends Controller
 {
 
     /**
@@ -56,31 +57,29 @@ class Header
         <meta charset="utf-8">
         <title><?= $title; ?></title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
-        <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/chosen/chosen.min.css">
-        <link rel="stylesheet" href="<?= BASE_URL; ?>/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="<?= BASE_URL; ?>/assets/css/main.css">
+        <link rel="stylesheet" href="<?= self::getBasePath(); ?>/includes/chosen/chosen.min.css">
+        <link rel="stylesheet" href="<?= self::getBasePath(); ?>/includes/ladda/dist/ladda.min.css" />
+        <link rel="stylesheet" href="<?= self::getBasePath(); ?>/assets/css/main.css">
     </head>
 
     <body>
         <header>
             <nav>
                 <ul class="wrapper">
-                    <li class="icon"><a href="<?= BASE_URL; ?>/"><i class="icon-home"></i></a></li>
+                    <li class="icon"><a href="<?= $this->generate("index") ?>"><i class="icon-home"></i></a></li>
                     <?php if (isset($_SESSION['username'])) { ?>
-                    <li class="icon <?= $newMessage; ?>"><a href="<?= BASE_URL; ?>/messages"><i class="icon-comments"></i></a></li>
+                    <li class="icon <?= $newMessage; ?>"><a href="<?= $this->generate("message_list") ?>"><i class="icon-comments"></i></a></li>
                     <?php } ?>
-                    <li class="icon"><a href="<?= BASE_URL; ?>/news"><i class="icon-pushpin"></i></a></li>
-                    <li><a href="<?= BASE_URL; ?>/teams">Teams</a></li>
-                    <li><a href="<?= BASE_URL; ?>/players">Players</a></li>
-                    <li><a href="<?= BASE_URL; ?>/matches">Matches</a></li>
+                    <li class="icon"><a href="<?= $this->generate("news_list") ?>"><i class="icon-pushpin"></i></a></li>
+                    <li><a href="<?= $this->generate("team_list") ?>">Teams</a></li>
+                    <li><a href="<?= $this->generate("player_list") ?>">Players</a></li>
+                    <li><a href="<?= $this->generate("match_list") ?>">Matches</a></li>
 
                     <?php
                         $pages = Page::getPages();
 
-                        foreach ($pages as $key => $id)
+                        foreach ($pages as $page)
                         {
-                            $page = new Page($id);
-
                             if (!$page->isHomePage())
                             {
                                 echo '<li><a href="' . $page->getURL() . '">' . $page->getName() . '</a></li>';
@@ -88,20 +87,20 @@ class Header
                         }
                     ?>
 
-                    <li><a href="<?= BASE_URL; ?>/bans">Bans</a></li>
-                    <li><a href="<?= BASE_URL; ?>/servers">Servers</a></li>
+                    <li><a href="<?= $this->generate("ban_list") ?>">Bans</a></li>
+                    <li><a href="<?= $this->generate("server_list") ?>">Servers</a></li>
 
                     <?php
                         if (isset($_SESSION['username']))
                         {
-                            echo '<li class="icon float right"><a href="' . BASE_URL . '/logout.php"><i class="icon-signout"></i></a></li>';
-                            echo '<li class="icon float right"><a href="' . BASE_URL . '/profile"><i class="icon-user"></i></a></li>';
-                            echo '<li class="icon float right"><a href="' . BASE_URL . '/notifications"><i class="icon-bell-alt"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . $this->generate("logout") . '"><i class="icon-signout"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . $this->generate("profile_show") . '"><i class="icon-user"></i></a></li>';
+                            echo '<li class="icon float right"><a href="' . $this->generate("index") . '"><i class="icon-bell-alt"></i></a></li>';
                         }
                         else
                         {
                             $url = "http://my.bzflag.org/weblogin.php?action=weblogin&amp;url=";
-                            $url .= urlencode(BASE_URL . "/login.php?token=%TOKEN%&username=%USERNAME%");
+                            $url .= urlencode($this->generate("login", array(), true) . "?token=%TOKEN%&username=%USERNAME%");
 
                             echo '<li class="icon float right"><a href="' . $url . '"><i class="icon-signin"></i></a></li>';
                         }
@@ -132,11 +131,21 @@ class Header
         if ($override) {
             header("Location: $location");
         } else if (strtolower($location) == "home" || $location == "/") {
-            header("Location: " . BASE_URL);
+            header("Location: " . self::getBasePath());
         } else {
-            header("Location: " . BASE_URL . $location);
+            header("Location: " . self::getBasePath() . $location);
         }
 
         die();
+    }
+
+    /**
+     * Returns the root path from which this request is executed.
+     *
+     * The base path never ends with a `/`.
+     * @return string The raw path
+     */
+    public static function getBasePath() {
+        return Service::getRequest()->getBasePath();
     }
 }

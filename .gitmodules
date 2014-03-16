@@ -1,9 +1,6 @@
 [submodule "includes/ladda"]
 	path = includes/ladda
 	url = https://github.com/hakimel/Ladda.git
-[submodule "includes/Carbon"]
-	path = includes/Carbon
-	url = https://github.com/briannesbitt/Carbon.git
 [submodule "includes/jquery-cookie"]
 	path = includes/jquery-cookie
 	url = https://github.com/carhartl/jquery-cookie

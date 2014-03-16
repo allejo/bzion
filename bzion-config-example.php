@@ -15,15 +15,6 @@ DEFINE("MYSQL_DEBUG", TRUE);  // Whether or not to log MySQL errors on a file
 DEFINE("SITE_TITLE", "BZiON: A League Management System");
 
 /*
- * Directories to be autoloaded in bzion-load.php
- */
-$classesDir = array (
-    "classes/",
-    "includes/Carbon/src/Carbon/",
-    "tests/"
-);
-
-/*
  * League specific settings
  */
 DEFINE("DURATION", serialize(array(
@@ -34,7 +25,6 @@ DEFINE("DURATION", serialize(array(
  * File, directory and URL settings
  */
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
-DEFINE("BASE_URL", "http://" . rtrim($_SERVER["HTTP_HOST"], '/')); // The base URL of the website, including 'http://'
 DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where errors will be written
 
 /*

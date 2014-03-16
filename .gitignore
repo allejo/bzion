@@ -3,6 +3,8 @@
 bzion-config.php
 bzion_errors.log
 update.php
+vendor
+cache
 
 # Test files #
 ##############
@@ -23,6 +25,7 @@ Thumbs.db
 *~
 node_modules
 .sass-cache
+composer.phar
 
 # IDE files #
 #############

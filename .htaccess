@@ -10,87 +10,54 @@
 
 Options -MultiViews
 
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
 # Uncomment this line and set it to bzion's directory
 # if you are experiencing issues with mod_rewrite
 #RewriteBase /
 
-# Rewrite rule for profile
-# Example:
-#       http://example.com/profile.php?action=edit
-#                   becomes
-#       http://example.com/profile/edit
-RewriteRule ^profile/(.+)$ profile.php?action=$1 [QSA,NC,L]
-RewriteRule ^profile profile.php [QSA,NC,L]
+# Source: Symfony's .htaccess file
 
-# Rewrite rule for teams
-# Example:
-#       http://example.com/teams.php?alias=bzion
-#                   becomes
-#       http://example.com/teams/bzion
-RewriteRule ^teams/([0-9]+)$ teams.php?id=$1 [QSA,NC,L]
-RewriteRule ^teams/(.+)$ teams.php?alias=$1 [QSA,NC,L]
-RewriteRule ^teams teams.php [QSA,NC,L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-# Rewrite rule for players
-# Example:
-#       http://example.com/players.php?alias=bzion
-#                   becomes
-#       http://example.com/players/bzion
-RewriteRule ^players/([0-9]+)$ players.php?id=$1 [QSA,NC,L]
-RewriteRule ^players/(.+)$ players.php?alias=$1 [QSA,NC,L]
-RewriteRule ^players players.php [QSA,NC,L]
+    # Determine the RewriteBase automatically and set it as environment variable.
+    # If you are using Apache aliases to do mass virtual hosting or installed the
+    # project in a subdirectory, the base path will be prepended to allow proper
+    # resolution of the index.php file and to redirect to the correct URI. It will
+    # work in environments without path prefix as well, providing a safe, one-size
+    # fits all solution. But as you do not need it in this case, you can comment
+    # the following 2 lines to eliminate the overhead.
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
 
-# Rewrite rule for matches
-# Example:
-#       http://example.com/matches.php?alias=bzion
-#                   becomes
-#       http://example.com/matches/bzion
-RewriteRule ^matches/([0-9]+)$ matches.php?id=$1 [QSA,NC,L]
-RewriteRule ^matches/(.+)$ matches.php?alias=$1 [QSA,NC,L]
-RewriteRule ^matches matches.php [QSA,NC,L]
+    # Redirect to URI without front controller to prevent duplicate content
+    # (with and without `/app.php`). Only do this redirect on the initial
+    # rewrite by Apache and not on subsequent cycles. Otherwise we would get an
+    # endless redirect loop (request -> rewrite to front controller ->
+    # redirect -> request -> ...).
+    # So in case you get a "too many redirects" error or you always get redirected
+    # to the start page because your Apache does not expose the REDIRECT_STATUS
+    # environment variable, you have 2 choices:
+    # - disable this feature by commenting the following 2 lines or
+    # - use Apache >= 2.3.9 and replace all L flags by END flags and remove the
+    #   following RewriteCond (best solution)
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteRule ^index\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
 
-# Rewrite rule for news
-# Example:
-#       http://example.com/news.php
-#                   becomes
-#       http://example.com/news
-RewriteRule ^news news.php [QSA,NC,L]
+    # If the requested filename exists, simply serve it.
+    # We only want to let Apache serve files and not directories.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule .? - [L]
 
-# Rewrite rule for bans
-# Example:
-#       http://example.com/bans.php
-#                   becomes
-#       http://example.com/bans
-RewriteRule ^bans bans.php [QSA,NC,L] 
+    # Rewrite all other queries to the front controller.
+    RewriteRule .? %{ENV:BASE}/index.php [L]
+</IfModule>
 
-# Rewrite rule for servers
-# Example:
-#       http://example.com/servers.php
-#                   becomes
-#       http://example.com/servers
-RewriteRule ^servers servers.php [QSA,NC,L]
-
-# Rewrite rule for messages
-# Example:
-#       http://example.com/messages.php?id=1
-#                   becomes
-#       http://example.com/messages/1
-RewriteRule ^messages/(.+)$ messages.php?id=$1 [QSA,NC,L]
-RewriteRule ^messages messages.php [QSA,NC,L]
-
-# Rewrite rule for pages
-# Example:
-#       http://example.com/pages.php?alias=bzion
-#                   becomes
-#       http://example.com/bzion
-# ************************************
-# * NOTE: THIS RULE MUST BE THE LAST *
-# *       RULE IN THE FILE OTHERWISE *
-# *       THINGS WILL GET REAL WEIRD *
-# ************************************
-RewriteRule ^([0-9]+)$ pages.php?id=$1 [QSA,NC,L]
-RewriteRule ^([a-z\-_]+)$ pages.php?alias=$1 [QSA,NC,L]
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        # When mod_rewrite is not available, we instruct a temporary redirect of
+        # the start page to the front controller explicitly so that the website
+        # and the generated links can still be used.
+        RedirectMatch 302 ^/$ /index.php/
+        # RedirectTemp cannot be used instead
+    </IfModule>
+</IfModule>
