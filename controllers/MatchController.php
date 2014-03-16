@@ -7,9 +7,8 @@ class MatchController extends HTMLController {
 
         $matches = $team->getMatches();
 
-        foreach ($matches as $matchId) {
-            $match = new Match($matchId);
-
+        foreach ($matches as $match)
+        {
             $team_a = $match->getTeamA();
             $team_b = $match->getTeamB();
             echo "<b>" . $team_a->getName() . " (" . $match->getTeamAPoints() . " points) vs " . $team_b->getName() . " (" . $match->getTeamBPoints() . " points) </b><br />";
