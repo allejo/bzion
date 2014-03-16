@@ -1,8 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 abstract class Controller {
 
     /**
@@ -110,6 +107,14 @@ abstract class Controller {
      public static function generate($name, $parameters = array(), $absolute = false) {
         return Service::getGenerator()->generate($name, $parameters, $absolute);
      }
+
+     /**
+      * Gets the browser's request
+      * @return Symfony\Component\HttpFoundation\Request
+      */
+    public static function getRequest() {
+        return Service::getRequest();
+    }
 }
 
 

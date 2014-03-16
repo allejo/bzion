@@ -5,12 +5,14 @@ require_once("includes/checkToken.php");
 class LoginController extends HTMLController {
 
     public function loginAction() {
-        if (!isset($_GET["token"]) && !isset($_GET["username"])) {
+        $query = $this->getRequest()->query;
+
+        if (!$query->has("token") || !$query->has("username")) {
             Header::go("home");
         }
 
-        $token = $_GET["token"];
-        $username = $_GET["username"];
+        $token = $query->get("token");
+        $username = $query->get("username");
 
         // Don't check whether IPs match if we're on a development environment
         $checkIP = !DEVELOPMENT;
