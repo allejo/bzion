@@ -38,21 +38,21 @@ class MessageController extends HTMLController {
                 <ul>
                     <li>
                         <a href="#">
-                            <i class="icon-inbox"></i>
+                            <i class="fa fa-inbox"></i>
                             <span>Inbox</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="#">
-                            <i class="icon-reply"></i>
+                            <i class="fa fa-reply"></i>
                             <span>Sent</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="#">
-                            <i class="icon-trash"></i>
+                            <i class="fa fa-trash-o"></i>
                             <span>Trash</span>
                         </a>
                     </li>
@@ -179,8 +179,8 @@ class MessageController extends HTMLController {
             <div class="group_message_toolbar">
                 <div class="group_message_title"><?php echo $discussion->getSubject(); ?></div>
                 <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
-                <div class="group_message_title_icon"><i class="icon-remove"></i></div>
-                <div class="group_message_title_icon"><i class="icon-cog"></i></div>
+                <div class="group_message_title_icon"><i class="fa fa-times"></i></div>
+                <div class="group_message_title_icon"><i class="fa fa-cog"></i></div>
             </div>
 
 

@@ -111,7 +111,7 @@ class Header extends Controller
             </nav>
 
             <div class="notification">
-                <i class="icon-ok"></i><span>Your message was sent successfully</span>
+                <i class="fa fa-check"></i><span>Your message was sent successfully</span>
             </div>
         </header>
 
