@@ -20,17 +20,17 @@ function notify(message, type) {
     // Determine which icon should be used
     switch(type) {
         case "success":
-            icon = "ok";
+            icon = "check";
             break;
         case "error":
-            icon = "exclamation-sign";
+            icon = "exclamation";
             break;
         default:
             icon = "question";
             break;
     }
 
-    $(".notification i").attr("class", "icon-"+icon);
+    $(".notification i").attr("class", "fa fa-"+icon);
 
     $(".notification span").html(message);
 
