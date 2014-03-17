@@ -64,6 +64,10 @@ header {
                 }
             }
         }
+
+        .active {
+            background-color: $hoverColor;
+        }
     }
 
     // The notification that will appear on the header for status of requests
