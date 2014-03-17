@@ -21,19 +21,19 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
       `git clone https://github.com/allejo/bzion.git league`
 
-2. Change into the directory and get all of the necessary submodules
+2. Change into the `league` directory and get all of the necessary submodules
 
       `git submodule update --init`
 
-3. (Optional) If you do not have PHP Composer installed, install it.
+3. If you do not have PHP Composer installed, install it
 
       `curl -sS https://getcomposer.org/installer | php`
 
-4. Install the required libraries via the Composer file
+4. Install the required libraries using Composer via the `composer.phar` file
 
-      `php /path/to/composer.phar install --no-dev`
+      `php composer.phar install --no-dev`
 
-5. Use the `DATABASE.sql` file to create the database structuce
+5. Use the `DATABASE.sql` file to create the database necessary structuce
 
 6. Rename `bzion-config-example.php` to `bzion-config.php` and configure the settings.
 
