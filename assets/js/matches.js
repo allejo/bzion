@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $( ".more_details" ).click(function() {
-        var currentMatch = $("#match-" + $(this).attr("rel"));
+    $( ".score" ).on("click", function() {
+        var currentMatch = $("#match-" + $(this).find(".more_details").attr("rel"));
         currentMatch.slideToggle();
 
         $(".match_details").not(currentMatch).slideUp();

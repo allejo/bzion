@@ -49,7 +49,6 @@
             }
 
             i {
-                cursor: pointer;
                 float: left;
                 line-height: inherit;
                 width: 10%;
@@ -57,6 +56,7 @@
 
             &:hover {
                 background-color: #F2FBFF;
+                cursor: pointer;
             }
         }
 
