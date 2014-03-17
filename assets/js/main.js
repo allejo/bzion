@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $(".wrapper li").each(function(index, value) {
         var link = baseURL + $(this).find("a").attr("href");
+        alert(document.location + " vs " + link);
         if (document.location == link) {
             $(this).addClass("active");
         }
