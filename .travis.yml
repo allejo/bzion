@@ -4,7 +4,9 @@ php:
   - 5.4
   - 5.3
 
-install: composer install --no-interaction
+install:
+ - curl -sS https://getcomposer.org/installer | php
+ - php composer.phar install --no-interaction
 
 before_script: bash -xe tests/initialize.sh
 
