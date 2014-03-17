@@ -28,7 +28,7 @@ class Database
      * Create a new connection to the database
      * @return Database
      */
-    function __construct()
+    public function __construct()
     {
         $this->dbc = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
 
@@ -43,7 +43,7 @@ class Database
     /**
      * Destroy this connection to the database
      */
-    function __destruct()
+    public function __destruct()
     {
         $this->closeConnection();
     }
@@ -68,7 +68,7 @@ class Database
     /**
      * Close the current connection to the MySQL database
      */
-    function closeConnection()
+    public function closeConnection()
     {
         @mysqli_close($this->dbc);
     }
@@ -77,7 +77,7 @@ class Database
      * Tests whether or not the connection to the database is still active
      * @return bool True if the connection is active
      */
-    function isConnected()
+    public function isConnected()
     {
         return $this->dbc->ping();
     }
@@ -86,7 +86,7 @@ class Database
      * Get the unique row ID of the last row that was inserted
      * @return int The ID of the row
      */
-    function getInsertId()
+    public function getInsertId()
     {
         return $this->last_id;
     }
@@ -113,7 +113,7 @@ class Database
      * @param mixed|array $params (Optional) The array of values that will be binded to the prepared statement
      * @return mixed Returns an array of the values received from the query or returns false on empty
      */
-    function query($queryText, $typeDef = FALSE, $params = FALSE)
+    public function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
         $multiQuery = true;
         if ($stmt = $this->dbc->prepare($queryText))
@@ -211,7 +211,7 @@ class Database
     * Writes the specified string to the log file if logging is enabled
     * @param string $string The string that will be written
     */
-    function writeToDebug($string)
+    public function writeToDebug($string)
     {
         if (MYSQL_DEBUG)
         {
@@ -229,7 +229,7 @@ class Database
     * @param string $type A text representing the type of the error (e.g: "MySQL Error:")
     * @param int $id A number used to identify the error
     */
-    function printDebug($string, $type=null, $id=null)
+    public function printDebug($string, $type=null, $id=null)
     {
         if (DEVELOPMENT) {
             if (php_sapi_name() == 'cli') {
@@ -263,7 +263,7 @@ class Database
     * @param string $error The error string
     * @param int $id The error ID
     */
-    function debug($error, $id=null) {
+    public function debug($error, $id=null) {
         $this->writeToDebug("MySQL Error :: " . $error);
         $this->printDebug($error, "MySQL Error", $id);
 

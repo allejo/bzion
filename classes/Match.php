@@ -129,7 +129,7 @@ class Match extends Model
      * Construct a new Match
      * @param int $id The match's ID
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -162,7 +162,7 @@ class Match extends Model
      * Get the timestamp of the match
      * @return string The match's timestamp
      */
-    function getTimestamp() {
+    public function getTimestamp() {
         return $this->timestamp->diffForHumans();
     }
 
@@ -170,7 +170,7 @@ class Match extends Model
      * Get the first team involved in the match
      * @return Team Team A's id
      */
-    function getTeamA() {
+    public function getTeamA() {
         return new Team($this->team_a);
     }
 
@@ -178,7 +178,7 @@ class Match extends Model
      * Get the second team involved in the match
      * @return Team Team B's id
      */
-    function getTeamB() {
+    public function getTeamB() {
         return new Team($this->team_b);
     }
 
@@ -186,7 +186,7 @@ class Match extends Model
      * Get the list of players on Team A who participated in this match
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
-    function getTeamAPlayers() {
+    public function getTeamAPlayers() {
         $team_A_Players = array();
 
         if ($this->team_a_players == null)
@@ -208,7 +208,7 @@ class Match extends Model
      * Get the list of players on Team B who participated in this match
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
-    function getTeamBPlayers() {
+    public function getTeamBPlayers() {
         $team_B_Players = array();
 
         if ($this->team_b_players == null)
@@ -230,7 +230,7 @@ class Match extends Model
      * Get the first team's points
      * @return int Team A's points
      */
-    function getTeamAPoints() {
+    public function getTeamAPoints() {
         return $this->team_a_points;
     }
 
@@ -238,7 +238,7 @@ class Match extends Model
      * Get the second team's points
      * @return int Team B's points
      */
-    function getTeamBPoints() {
+    public function getTeamBPoints() {
         return $this->team_b_points;
     }
 
@@ -246,7 +246,7 @@ class Match extends Model
      * Get the ELO difference applied to each team's old ELO
      * @return int The ELO difference
      */
-    function getEloDiff() {
+    public function getEloDiff() {
         return $this->elo_diff;
     }
 
@@ -254,7 +254,7 @@ class Match extends Model
      * Get the first team's new ELO
      * @return int Team A's new ELO
      */
-    function getTeamAEloNew() {
+    public function getTeamAEloNew() {
         return $this->team_a_elo_new;
     }
 
@@ -262,7 +262,7 @@ class Match extends Model
      * Get the second team's new ELO
      * @return int Team B's new ELO
      */
-    function getTeamBEloNew() {
+    public function getTeamBEloNew() {
         return $this->team_b_elo_new;
     }
 
@@ -316,7 +316,7 @@ class Match extends Model
      * Get the match duration
      * @return int The duration
      */
-    function getDuration() {
+    public function getDuration() {
         return $this->duration;
     }
 
@@ -324,7 +324,7 @@ class Match extends Model
      * Get the user who entered the match
      * @return Player
      */
-    function getEnteredBy() {
+    public function getEnteredBy() {
         return new Player($this->entered_by);
     }
 
@@ -332,7 +332,7 @@ class Match extends Model
      * Determine whether the match was a draw
      * @return bool True if the match ended without any winning teams
      */
-    function isDraw() {
+    public function isDraw() {
         return $this->team_a_points == $this->team_b_points;
     }
 

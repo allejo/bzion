@@ -46,7 +46,7 @@ class Invitation extends Model
      * Construct a new invite
      * @param int $id The invite's id
      */
-    function __construct($id) {
+    public function __construct($id) {
         parent::__construct($id);
         if (!$this->valid) return;
 

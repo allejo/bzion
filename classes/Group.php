@@ -40,7 +40,7 @@ class Group extends UrlModel {
      * Construct a new group
      * @param int $id The group's id
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -58,7 +58,7 @@ class Group extends UrlModel {
      *
      * @return string
      **/
-    function getSubject() {
+    public function getSubject() {
         return $this->subject;
     }
 
@@ -67,7 +67,7 @@ class Group extends UrlModel {
      *
      * @return Player
      */
-    function getCreator() {
+    public function getCreator() {
         return new Player($this->creator);
     }
 
@@ -77,7 +77,7 @@ class Group extends UrlModel {
      * @param int $id The ID of the player to test for
      * @return bool
      */
-    function isCreator($id) {
+    public function isCreator($id) {
         return ($this->creator == $id);
     }
 
@@ -87,7 +87,7 @@ class Group extends UrlModel {
      * @param bool $human True to output the last activity in a human-readable string, false to return a TimeDate object
      * @return string|TimeDate
      */
-    function getLastActivity($human = true) {
+    public function getLastActivity($human = true) {
         if ($human)
             return $this->last_activity->diffForHumans();
         else
@@ -99,7 +99,7 @@ class Group extends UrlModel {
      *
      * @return Message
      */
-    function getLastMessage() {
+    public function getLastMessage() {
         $ids = self::fetchIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
         return new Message($ids[0]);
@@ -124,7 +124,7 @@ class Group extends UrlModel {
      * @param bool $hideSelf Whether to hide the currently logged in player
      * @return array An array of player IDs
      */
-    function getMembers($hideSelf=false) {
+    public function getMembers($hideSelf=false) {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
         $params = array($this->id);

@@ -29,7 +29,7 @@ class Header extends Controller
      * Construct a new Header object
      * @param string $title The page's title
      */
-    function __construct($title="") {
+    public function __construct($title="") {
         $this->title = $title;
         $this->db = Database::getInstance();
     }
@@ -38,7 +38,7 @@ class Header extends Controller
      * Draw the header
      * @param string $title The page's title
      */
-    function draw($title="") {
+    public function draw($title="") {
         $title = (empty($title)) ? $this->title : $title;
 
         if (isset($_SESSION['username']))

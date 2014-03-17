@@ -50,7 +50,7 @@ class News extends Model {
      * Construct a new News article
      * @param int $id The news article's id
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -70,7 +70,7 @@ class News extends Model {
      * Get the subject of the news article
      * @return string
      */
-    function getSubject() {
+    public function getSubject() {
         return $this->subject;
     }
 
@@ -78,7 +78,7 @@ class News extends Model {
      * Get the author of the news article
      * @return Player
      */
-    function getAuthor() {
+    public function getAuthor() {
         return new Player($this->author);
     }
 
@@ -86,7 +86,7 @@ class News extends Model {
      * Get the content of the article
      * @return string The raw content of the article
      */
-    function getContent() {
+    public function getContent() {
         return $this->content;
     }
 
@@ -94,7 +94,7 @@ class News extends Model {
      * Get the time when the article was last updated
      * @return string The article's last update time in a human-readable form
      */
-    function getUpdated() {
+    public function getUpdated() {
         return $this->updated->diffForHumans();
     }
 
@@ -102,7 +102,7 @@ class News extends Model {
      * Get the time when the article was submitted
      * @return string The article's creation time in a human-readable form
      */
-    function getCreated() {
+    public function getCreated() {
         return $this->created->diffForHumans();
     }
 

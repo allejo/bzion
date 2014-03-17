@@ -56,7 +56,7 @@ class Page extends AliasModel {
      * Construct a new Page
      * @param int $id The page's id
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -78,7 +78,7 @@ class Page extends AliasModel {
      * Get the title of the page
      * @return string
      */
-    function getName() {
+    public function getName() {
         return $this->name;
     }
 
@@ -86,7 +86,7 @@ class Page extends AliasModel {
      * Get the raw content of the page
      * @return string
      */
-    function getContent() {
+    public function getContent() {
         return $this->content;
     }
 
@@ -94,7 +94,7 @@ class Page extends AliasModel {
      * Get the page's submission time
      * @return string The time when the page was created in a human-readable format
      */
-    function getCreated() {
+    public function getCreated() {
         return $this->created->diffForHumans();
     }
 
@@ -102,7 +102,7 @@ class Page extends AliasModel {
      * Get the time when the page was last updated
      * @return string The page's last update time in a human-readable form
      */
-    function getUpdated() {
+    public function getUpdated() {
         return $this->updated->diffForHumans();
     }
 
@@ -110,7 +110,7 @@ class Page extends AliasModel {
      * Get the user who created the page
      * @return Player The page's author
      */
-    function getAuthor() {
+    public function getAuthor() {
         return new Player($this->author);
     }
 
@@ -118,7 +118,7 @@ class Page extends AliasModel {
      * Get the status of the page
      * @return string
      */
-    function getStatus() {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -126,7 +126,7 @@ class Page extends AliasModel {
      * Find out whether this is the homepage
      * @return bool
      */
-    function isHomePage() {
+    public function isHomePage() {
         return $this->home;
     }
 
