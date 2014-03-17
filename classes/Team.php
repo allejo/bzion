@@ -178,9 +178,7 @@ class Team extends AliasModel
      * @return Player[] The members on the team
      */
     function getMembers() {
-        return Player::fetchIds("WHERE team = ?", "i", array(
-            $this->id
-        ));
+        return Player::getTeamMembers($this->id);
     }
 
     /**

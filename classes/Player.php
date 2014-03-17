@@ -357,4 +357,22 @@ class Player extends AliasModel
 
         $db->query("INSERT IGNORE INTO `past_callsigns` (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
     }
+
+    /**
+     * Get all of the members belonging to a team
+     * @param  int $teamID The ID of the team to fetch the members of
+     * @return Player[] An array of Player objects of the team members
+     */
+    public static function getTeamMembers($teamID)
+    {
+        $players = array();
+        $playerIDs = parent::fetchIds("WHERE team = ?", "i", array($teamID));
+
+        foreach ($playerIDs as $playerID)
+        {
+            $players = new Player($playerID);
+        }
+
+        return $players;
+    }
 }
