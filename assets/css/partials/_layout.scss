@@ -1,3 +1,132 @@
+.matches {
+    margin-top: 10px;
+
+    section {
+        border-bottom: 1px solid $border_color;
+        margin: 0 auto;
+        width: 900px;
+
+        &:nth-child(even) {
+            .score {
+                background-color: #FFFBF4;
+            }
+        }
+
+        .score {
+            background-color: #FFFFFF;
+            height: 25px;
+            line-height: 25px;
+            padding: 10px 0;
+            text-align: center;
+
+            .date {
+                float: left;
+                font-size: 12px;
+                width: 10%;
+            }
+
+            .teams {
+                float: left;
+                width: 80%;
+
+                .loser {
+                    text-align: left;
+                }
+
+                .spacer {
+                    float: left;
+                    width: 2%;
+                }
+
+                .winner {
+                    text-align: right;
+                }
+
+                .winner, .loser {
+                    float: left;
+                    width: 48%;
+                }
+            }
+
+            i {
+                cursor: pointer;
+                float: left;
+                line-height: inherit;
+                width: 10%;
+            }
+
+            &:hover {
+                background-color: #F2FBFF;
+            }
+        }
+
+        .match_details {
+            background-color: #efefef;
+            border-top: 1px solid $border_color;
+            display: none;
+            overflow: hidden;
+            padding-bottom: 10px;
+            width: 100%;
+
+            h4 {
+                border-bottom: 1px dotted $mainColor;
+                font-size: 16px;
+            }
+
+            .participants, .information {
+                float: left;
+                padding: 1%;
+                width: 48%;
+            }
+
+            .participants {
+                .team {
+                    float: left;
+                    margin-top: 5px;
+                    width: 50%;
+
+                    span {
+                        font-size: 14px;
+                        font-weight: bold;
+                    }
+
+                    ul {
+                        li {
+                            font-size: 12px;
+                            list-style-type: none;
+                            margin-left: 20px;
+                            text-indent: -5px;
+
+                            &:before {
+                                content: "-";
+                                position: relative;
+                                left: -5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .information {
+                p {
+                    font-size: 14px;
+                }
+
+                .match {
+                    margin-bottom: 10px;
+                    overflow: hidden;
+                    width: 100%;
+
+                    p {
+                        float: left;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
 // This will be the class that contains all of a page's contents
 .page {
     display: table-row;
