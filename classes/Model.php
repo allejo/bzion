@@ -55,7 +55,7 @@ abstract class Model {
      * @param int $id The ID of the object to look for
      * @param string $column The column to use to identify separate database entries
      */
-    function __construct($id, $column = "id") {
+    public function __construct($id, $column = "id") {
         $this->db = Database::getInstance();
 
         if ($id == 0) {

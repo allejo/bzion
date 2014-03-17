@@ -51,7 +51,7 @@ class Visit extends Model
      * Construct a new Visit
      * @param int $id The visitor's id
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;

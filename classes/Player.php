@@ -87,7 +87,7 @@ class Player extends AliasModel
      * Construct a new Player
      * @param int $id The player's ID
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -114,7 +114,7 @@ class Player extends AliasModel
      * Updates this player's last login
      * @param string $when The date of the last login
      */
-    function updateLastLogin($when = "now") {
+    public function updateLastLogin($when = "now") {
         $last = new TimeDate($when);
         $this->db->query("UPDATE players SET last_login = ? WHERE id = ?", "si", array($last->format(DATE_FORMAT), $this->id));
     }
@@ -123,7 +123,7 @@ class Player extends AliasModel
      * Get the player's username
      * @return string The username
      */
-    function getUsername() {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -131,7 +131,7 @@ class Player extends AliasModel
      * Get the player's BZID
      * @return int The BZID
      */
-    function getBZID() {
+    public function getBZID() {
         return $this->bzid;
     }
 
@@ -139,7 +139,7 @@ class Player extends AliasModel
      * Get the player's avatar
      * @return string The URL for the avatar
      */
-    function getAvatar() {
+    public function getAvatar() {
         return $this->avatar;
     }
 
@@ -147,7 +147,7 @@ class Player extends AliasModel
      * Set the player's avatar
      * @param string $avatar The URL for the avatar
      */
-    function setAvatar($avatar) {
+    public function setAvatar($avatar) {
         $this->db->query("UPDATE players SET avatar = ? WHERE id = ?", "si", array($avatar, $this->id));
     }
 
@@ -155,7 +155,7 @@ class Player extends AliasModel
      * Get the player's sanitized description
      * @return string The description
      */
-    function getDescription() {
+    public function getDescription() {
         return htmlspecialchars($this->description);
     }
 
@@ -163,7 +163,7 @@ class Player extends AliasModel
      * Get the player's description, exactly as it is saved in the database
      * @return string The description
      */
-    function getRawDescription() {
+    public function getRawDescription() {
         return $this->description;
     }
 
@@ -171,7 +171,7 @@ class Player extends AliasModel
      * Set the player's description
      * @param string $description The description
      */
-    function setDescription($description) {
+    public function setDescription($description) {
         $this->db->query("UPDATE players SET description = ? WHERE id = ?", "si", array($description, $this->id));
     }
 
@@ -179,7 +179,7 @@ class Player extends AliasModel
      * Get the player's timezone
      * @return integer The timezone
      */
-    function getTimezone() {
+    public function getTimezone() {
         return $this->timezone;
     }
 
@@ -187,7 +187,7 @@ class Player extends AliasModel
      * Set the player's timezone
      * @param string $timezone The timezone
      */
-    function setTimezone($timezone) {
+    public function setTimezone($timezone) {
         $this->db->query("UPDATE players SET timezone = ? WHERE id = ?", "si", array($timezone, $this->id));
     }
 
@@ -195,7 +195,7 @@ class Player extends AliasModel
      * Get the notes admins have left about a player
      * @return string The notes
      */
-    function getAdminNotes() {
+    public function getAdminNotes() {
         return $this->admin_notes;
     }
 
@@ -203,7 +203,7 @@ class Player extends AliasModel
      * Get the player's team
      * @return Team The object representing the team
      */
-    function getTeam() {
+    public function getTeam() {
         return new Team($this->team);
     }
 
@@ -211,7 +211,7 @@ class Player extends AliasModel
      * Get the joined date of the player
      * @return string The joined date of the player
      */
-    function getJoinedDate() {
+    public function getJoinedDate() {
         return $this->joined->diffForHumans();
     }
 
@@ -220,7 +220,7 @@ class Player extends AliasModel
      * @param bool $human Whether to get the literal time stamp or a relative time
      * @return string The date of the last login
      */
-    function getLastLogin($human = true) {
+    public function getLastLogin($human = true) {
         if ($human)
             return $this->last_login->diffForHumans();
         else
@@ -231,7 +231,7 @@ class Player extends AliasModel
      * Get all of the callsigns a player has used to log in to the website
      * @todo Fix for bzids
      */
-    function getPastCallsigns() {
+    public function getPastCallsigns() {
         return Parent::fetchIds("username", "WHERE player = ?", "i", array($this->id), "past_callsigns");
     }
 
@@ -356,5 +356,23 @@ class Player extends AliasModel
         $db = Database::getInstance();
 
         $db->query("INSERT IGNORE INTO `past_callsigns` (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
+    }
+
+    /**
+     * Get all of the members belonging to a team
+     * @param  int $teamID The ID of the team to fetch the members of
+     * @return Player[] An array of Player objects of the team members
+     */
+    public static function getTeamMembers($teamID)
+    {
+        $players = array();
+        $playerIDs = parent::fetchIds("WHERE team = ?", "i", array($teamID));
+
+        foreach ($playerIDs as $playerID)
+        {
+            $players[] = new Player($playerID);
+        }
+
+        return $players;
     }
 }

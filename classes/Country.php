@@ -26,7 +26,7 @@ class Country extends Model {
      * Construct a new Country
      * @param int $id The country's id
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -42,7 +42,7 @@ class Country extends Model {
      * Get the name of the country in the default language
      * @return string
      */
-    function getName() {
+    public function getName() {
         return $this->name;
     }
 
@@ -50,7 +50,7 @@ class Country extends Model {
      * Get the country's flag
      * @return string The URL to the country's flag
      */
-    function getFlag() {
+    public function getFlag() {
         return $this->flag;
     }
 

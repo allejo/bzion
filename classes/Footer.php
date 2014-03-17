@@ -20,7 +20,7 @@ class Footer {
     /**
      * Construct a new Footer object
      */
-    function __construct() {
+    public function __construct() {
         $this->db = Database::getInstance();
         $this->scripts = array();
     }
@@ -37,7 +37,7 @@ class Footer {
     /**
      * Draw the footer
      */
-    function draw() {
+    public function draw() {
     ?>
             </div>
         </div> <!-- end .content -->

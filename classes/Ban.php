@@ -56,7 +56,7 @@ class Ban extends Model {
      * Construct a new Ban
      * @param int $id The ban's id
      */
-    function __construct($id) {
+    public function __construct($id) {
 
         parent::__construct($id);
         if (!$this->valid) return;
@@ -77,7 +77,7 @@ class Ban extends Model {
      * Get the player who was banned
      * @return Player The banned player
      */
-    function getPlayer() {
+    public function getPlayer() {
         return new Player($this->player);
     }
 
@@ -85,7 +85,7 @@ class Ban extends Model {
      * Get the IP address of the banned player
      * @return string
      */
-    function getIpAddress() {
+    public function getIpAddress() {
         return $this->ipAddress;
     }
 
@@ -93,7 +93,7 @@ class Ban extends Model {
      * Get the expiration time of the ban
      * @return string The expiration time in a human readable form
      */
-    function getExpiration() {
+    public function getExpiration() {
         return $this->expiration->diffForHumans();
     }
 
@@ -101,7 +101,7 @@ class Ban extends Model {
      * Get the ban's description
      * @return string
      */
-    function getReason() {
+    public function getReason() {
         return $this->reason;
     }
 
@@ -109,7 +109,7 @@ class Ban extends Model {
      * Get the creation time of the ban
      * @return string The creation time in a human readable form
      */
-    function getCreated() {
+    public function getCreated() {
         return $this->created->diffForHumans();
     }
 
@@ -117,7 +117,7 @@ class Ban extends Model {
      * Get the time when the ban was last updated
      * @return string
      */
-    function getUpdated() {
+    public function getUpdated() {
         return $this->updated->diffForHumans();
     }
 
@@ -125,7 +125,7 @@ class Ban extends Model {
      * Get the user who imposed the ban
      * @return Player The banner
      */
-    function getAuthor() {
+    public function getAuthor() {
         return new Player($this->author);
     }
 
@@ -133,7 +133,7 @@ class Ban extends Model {
      * Checks whether the ban has expired
      * @return boolean True if the ban's expiration time has already passed
      */
-    function hasExpired() {
+    public function hasExpired() {
         return TimeDate::now()->gte($this->expiration);
     }
 
