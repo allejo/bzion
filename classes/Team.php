@@ -341,10 +341,7 @@ class Team extends AliasModel
      * @return Match[] The array of match IDs this team has participated in
      */
     function getMatches() {
-        return Match::fetchIds("WHERE team_a=? OR team_b=?", "ii", array(
-            $this->id,
-            $this->id
-        ));
+        return Match::getMatchesByTeam($this->id);
     }
 
     /**

@@ -370,7 +370,7 @@ class Player extends AliasModel
 
         foreach ($playerIDs as $playerID)
         {
-            $players = new Player($playerID);
+            $players[] = new Player($playerID);
         }
 
         return $players;

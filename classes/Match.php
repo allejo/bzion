@@ -442,4 +442,22 @@ class Match extends Model
 
         return $matches;
     }
+
+    /**
+     * Get the matches that a team took part of
+     * @param int $teamID The team ID of whose matches to search for
+     * @return Match[] An array of matches where the team participated in
+     */
+    public static function getMatchesByTeam($teamID)
+    {
+        $matches = array();
+        $matchIDs = parent::fetchIds("WHERE team_a=? OR team_b=?", "ii", array($teamID, $teamID));
+
+        foreach ($matchIDs as $matchID)
+        {
+            $matches[] = new Match($matchID);
+        }
+
+        return $matches;
+    }
 }
