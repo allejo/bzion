@@ -424,14 +424,16 @@ class Match extends Model
 
     /**
      * Get all the matches in the database that aren't disabled or deleted
+     * @param int $start The offset used when fetching matches, i.e. the starting point
+     * @param int $limit The amount of matches to be retrieved
      * @return Match[] An array of match IDs
      */
-    public static function getMatches() {
+    public static function getMatches($start = 0, $limit = 50) {
         $matches = array();
         $matchIDs = parent::fetchIdsFrom("status", array(
                     "disabled",
                     "deleted"
-                   ), "s", true, "ORDER BY timestamp DESC");
+                   ), "s", true, "ORDER BY timestamp DESC LIMIT $limit OFFSET $start");
 
         foreach ($matchIDs as $matchID)
         {
@@ -440,5 +442,4 @@ class Match extends Model
 
         return $matches;
     }
-
 }
