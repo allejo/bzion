@@ -14,9 +14,8 @@
 
         .score {
             background-color: #FFFFFF;
-            height: 25px;
-            line-height: 25px;
-            padding: 10px 0;
+            height: 45px;
+            line-height: 45px;
             text-align: center;
 
             .date {
@@ -29,22 +28,23 @@
                 float: left;
                 width: 80%;
 
-                .loser {
-                    text-align: left;
-                }
-
-                .spacer {
-                    float: left;
-                    width: 2%;
-                }
-
                 .winner {
                     text-align: right;
+                    border-right: 1px solid #bdbdbd;
+                    overflow: visible;
+                }
+
+                .loser {
+                    text-align: left;
                 }
 
                 .winner, .loser {
                     float: left;
                     width: 48%;
+
+                    .winner_score, .loser_score {
+                        padding: 10px;
+                    }
                 }
             }
 

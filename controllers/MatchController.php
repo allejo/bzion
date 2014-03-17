@@ -44,9 +44,8 @@ class MatchController extends HTMLController {
                     echo '    <div class="score">';
                     echo '        <div class="date">' . $match->getTimestamp() . '</div>';
                     echo '        <div class="teams">';
-                    echo '            <div class="winner"><strong><a href="' . $team_a->getURL() . '">' . $team_a->getName() . '</a></strong> [' . $match->getTeamAPoints() . ']</div>';
-                    echo '            <div class="spacer"> - </div>';
-                    echo '            <div class="loser">[' . $match->getTeamBPoints() . '] <strong><a href="' . $team_b->getURL() . '">' . $team_b->getName() . '</a></strong></div>';
+                    echo '            <div class="winner"><span class="winner_name"><a href="' . $team_a->getURL() . '">' . $team_a->getName() . '</a></span> <span class="winner_score">' . $match->getTeamAPoints() . '</span></div>';
+                    echo '            <div class="loser"><span class="loser_score">' . $match->getTeamBPoints() . '</span> <span class="loser_name"><a href="' . $team_b->getURL() . '">' . $team_b->getName() . '</a></span></div>';
                     echo '        </div>';
                     echo '        <i class="more_details fa fa-plus-square-o" rel="' . $match->getId() . '"></i>';
                     echo '    </div>';
