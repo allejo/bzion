@@ -127,11 +127,6 @@ class MessageController extends HTMLController {
 
                                             $selected = "";
 
-                                            if ($discussion && $discussion->isMember($player->getId()))
-                                            {
-                                                $selected = 'selected=""';
-                                            }
-
                                             echo "<option $selected value=\"{$player->getId()}\">", $player->getUsername(), "</option>";
                                         }
                                     ?>

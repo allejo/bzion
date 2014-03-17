@@ -1,4 +1,9 @@
 {
+    "name": "allejo/bzion",
+    "description": "A new CMS for BZFlag leagues offered as an alternative to the bz-owl project",
+    "type": "project",
+    "license": "LGPL-3.0",
+
     "require": {
         "nesbot/carbon"           : ">=1.8.0",
         "symfony/config"          : "dev-master",
@@ -6,7 +11,18 @@
         "symfony/http-foundation" : "dev-master",
         "symfony/yaml"            : "dev-master"
     },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phpdocumentor/phpdocumentor": "dev-develop"
+    },
+
     "autoload": {
-        "classmap": ["classes/", "tests/", "controllers/"]
+        "classmap": ["classes/", "controllers/"]
+    },
+    "autoload-dev": {
+        "classmap": [ "tests/"]
+    },
+    "archive": {
+        "exclude": ["/bzion-config.php", "bzion_errors.log", ".sass_cache"]
     }
 }
