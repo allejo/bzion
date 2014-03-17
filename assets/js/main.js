@@ -1,3 +1,12 @@
+$(document).ready(function() {
+    $(".wrapper li").each(function(index, value) {
+        var link = baseURL + $(this).find("a").attr("href");
+        if (document.location == link) {
+            $(this).addClass("active");
+        }
+    });
+});
+
 /**
  * Show a notification
  * @todo Convert this to a class

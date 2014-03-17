@@ -53,6 +53,7 @@ class Header extends Controller
     ?>
 
 <!DOCTYPE html>
+<html>
     <head>
         <meta charset="utf-8">
         <title><?= $title; ?></title>
@@ -147,8 +148,12 @@ class Header extends Controller
      * @return string The raw path
      */
     public static function getBasePath($absolute=false) {
-        $host = $absolute ? Service::getRequest()->getSchemeAndHttpHost() : "";
+        //$host = $absolute ? Service::getRequest()->getSchemeAndHttpHost() : "";
 
-        return $host . Service::getRequest()->getBasePath();
+        //return $host . Service::getRequest()->getBasePath();
+        if($absolute) 
+            return Service::getRequest()->getSchemeAndHttpHost();
+        else
+            return Service::getRequest()->getBasePath();
     }
 }
