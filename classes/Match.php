@@ -30,6 +30,18 @@ class Match extends Model
      */
     private $team_b_points;
 
+    /**
+     * The BZIDs of players part of Team A who participated in the match, separated by commas
+     * @var string
+     */
+    private $team_a_players;
+
+    /**
+     * The BZIDs of players part of Team B who participated in the match, separated by commas
+     * @var string
+     */
+    private $team_b_players;
+
      /**
      * The ELO score of Team A after the match
      * @var int
@@ -41,6 +53,36 @@ class Match extends Model
      * @var int
      */
     private $team_b_elo_new;
+
+    /**
+     * The map name used in the match if the league supports more than one map
+     * @var string
+     */
+    private $map_played;
+
+    /**
+     * A JSON string of events that happened during a match, such as captures and substitutions
+     * @var string
+     */
+    private $match_details;
+
+    /**
+     * The port of the server where the match took place
+     * @var int
+     */
+    private $port;
+
+    /**
+     * The server location of there the match took place
+     * @var string
+     */
+    private $server;
+
+    /**
+     * The file name of the replay file of the match
+     * @var string
+     */
+    private $replay_file;
 
     /**
      * The absolute value of the ELO score difference
@@ -98,8 +140,15 @@ class Match extends Model
         $this->team_b = $match['team_b'];
         $this->team_a_points = $match['team_a_points'];
         $this->team_b_points = $match['team_b_points'];
+        $this->team_a_players = $match['team_a_players'];
+        $this->team_b_players = $match['team_b_players'];
         $this->team_a_elo_new = $match['team_a_elo_new'];
         $this->team_b_elo_new = $match['team_b_elo_new'];
+        $this->map_played = $match['map_played'];
+        $this->match_details = $match['match_details'];
+        $this->port = $match['port'];
+        $this->server = $match['server'];
+        $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
         $this->timestamp = new TimeDate($match['timestamp']);
         $this->updated = new TimeDate($match['updated']);
@@ -131,6 +180,50 @@ class Match extends Model
      */
     function getTeamB() {
         return new Team($this->team_b);
+    }
+
+    /**
+     * Get the list of players on Team A who participated in this match
+     * @return Player[]|null Returns null if there were no players recorded for this match
+     */
+    function getTeamAPlayers() {
+        $team_A_Players = array();
+
+        if ($this->team_a_players == null)
+        {
+            return null;
+        }
+
+        $BZIDs = explode(",", $this->team_a_players);
+
+        foreach ($BZIDs as $bzid)
+        {
+            $team_A_Players[] = Player::getFromBZID($bzid);
+        }
+
+        return $team_A_Players;
+    }
+
+    /**
+     * Get the list of players on Team B who participated in this match
+     * @return Player[]|null Returns null if there were no players recorded for this match
+     */
+    function getTeamBPlayers() {
+        $team_B_Players = array();
+
+        if ($this->team_b_players == null)
+        {
+            return null;
+        }
+
+        $BZIDs = explode(",", $this->team_b_players);
+
+        foreach ($BZIDs as $bzid)
+        {
+            $team_B_Players[] = Player::getFromBZID($bzid);
+        }
+
+        return $team_B_Players;
     }
 
     /**
@@ -171,6 +264,52 @@ class Match extends Model
      */
     function getTeamBEloNew() {
         return $this->team_b_elo_new;
+    }
+
+    /**
+     * Get the name of the map where the match was played on
+     * @return string|null Returns null if the league doesn't host multiple maps
+     */
+    public function getMapPlayed()
+    {
+        return $this->map_played;
+    }
+
+    /**
+     * Get a JSON decoded array of events that occurred during the match
+     * @return mixed|null Returns null if there were no events recorded for the match
+     */
+    public function getMatchDetails() {
+        return json_decode($this->match_details);
+    }
+
+    /**
+     * Get the server address of the server where this match took place
+     * @return string|null Returns null if there was no server address recorded
+     */
+    public function getServerAddress()
+    {
+        if ($this->port == null || $this->server = null)
+        {
+            return null;
+        }
+
+        return $this->server . ":" . $this->port;
+    }
+
+    /**
+     * Get the name of the replay file for this specific map
+     * @param int $length The length of the replay file name; it will be truncated
+     * @return string|null Returns null if there was no replay file name recorded
+     */
+    public function getReplayFileName($length = 0)
+    {
+        if ($length > 0)
+        {
+            return substr($this->replay_file, 0, $length);
+        }
+
+        return $this->replay_file;
     }
 
     /**
