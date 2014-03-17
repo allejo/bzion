@@ -3,7 +3,18 @@
 class PageController extends HTMLController {
 
     public function showDefaultAction() {
-        return $this->showAction(Page::getHomePage());
+        $page = Page::getHomePage();
+
+        if ($page->isValid())
+            return $this->showAction(Page::getHomePage());
+
+        $this->drawHeader("Nothing to see here");
+        ?>
+        <article>
+            <h1>Home Page</h1>
+            <p>No one has added content to the home page yet!</p>
+        </article>
+        <?php
     }
 
     /**

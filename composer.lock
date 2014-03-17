@@ -1337,16 +1337,16 @@
         },
         {
             "name": "phpdocumentor/template-clean",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/template.clean.git",
-                "reference": "9b7db5988447f901bfd04b1e2ff1adba951d4374"
+                "reference": "0ab7298fc9a87b062ac88235c4a8395e75caa0c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/template.clean/zipball/9b7db5988447f901bfd04b1e2ff1adba951d4374",
-                "reference": "9b7db5988447f901bfd04b1e2ff1adba951d4374",
+                "url": "https://api.github.com/repos/phpDocumentor/template.clean/zipball/0ab7298fc9a87b062ac88235c4a8395e75caa0c9",
+                "reference": "0ab7298fc9a87b062ac88235c4a8395e75caa0c9",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "responsive",
                 "template"
             ],
-            "time": "2013-11-06 21:30:35"
+            "time": "2014-03-13 16:43:00"
         },
         {
             "name": "phpdocumentor/template-new-black",
