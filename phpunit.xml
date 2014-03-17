@@ -13,6 +13,7 @@
     <blacklist>
       <directory suffix=".php">includes</directory>
       <directory suffix=".php">tests</directory>
+      <directory suffix=".php">vendor</directory>
     </blacklist>
   </filter>
 </phpunit>
