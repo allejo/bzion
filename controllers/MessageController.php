@@ -11,28 +11,11 @@ class MessageController extends HTMLController {
         if (!isset($_SESSION['username'])) {
             $header::go("home");
         }
-    }
 
-    public function cleanup() {
-        $footer = new Footer();
-
-        $footer->addScript("includes/ladda/dist/spin.min.js");
-        $footer->addScript("includes/ladda/dist/ladda.min.js");
-        $footer->addScript("includes/chosen/chosen.jquery.min.js");
-        $footer->addScript("assets/js/messages.js");
-
-        $footer->draw();
-    }
-
-    public function listAction(Group $discussion=null) {
         $this->drawHeader("Messages");
-
         $groups = Group::getGroups($_SESSION['playerId']);
 
-        $messages = $discussion ? Message::getMessages($discussion->getId()) : false;
-
         ?>
-
         <div class="messaging">
             <section class="toolbar">
                 <ul>
@@ -101,63 +84,83 @@ class MessageController extends HTMLController {
                 ?>
                 </ul>
             </section>
+        <?php
+
+
+    }
+
+    public function cleanup() {
+        echo '</div>';
+
+        $footer = new Footer();
+
+        $footer->addScript("includes/ladda/dist/spin.min.js");
+        $footer->addScript("includes/ladda/dist/ladda.min.js");
+        $footer->addScript("includes/chosen/chosen.jquery.min.js");
+        $footer->addScript("assets/js/messages.js");
+
+        $footer->draw();
+    }
+
+    public function composeAction() {
+        ?>
+        <div id="groupMessages" class="chat_area">
+            <div class="group_message_toolbar">
+                <span class="group_toolbar_text">Compose a new message</span>
+            </div>
+            <form class="compose_form">
+                <div class="input_group">
+                    <div class="input_group_row">
+                        <label for="compose_recipients">Recipients:</label>
+                        <div class="input_group_main" style="padding: 0">
+                            <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
+                                <option value=""> </option>
+                                <optgroup label="Players">
+                                    <?php
+                                        foreach (Player::getPlayers() as $player)
+                                        {
+                                            // Don't add the currently logged in player to the list of possible recipients
+                                            if ($player->getId() == $_SESSION['playerId'])
+                                            {
+                                                continue;
+                                            }
+
+                                            $selected = "";
+
+                                            if ($discussion && $discussion->isMember($player->getId()))
+                                            {
+                                                $selected = 'selected=""';
+                                            }
+
+                                            echo "<option $selected value=\"{$player->getId()}\">", $player->getUsername(), "</option>";
+                                        }
+                                    ?>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input_group_row">
+                        <label for="compose_subject">Subject:</label>
+                        <div class="input_group_main">
+                            <input id="compose_subject" name="subject" type="text" placeholder="Enter message subject">
+                        </div>
+                    </div>
+                </div>
+                <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
+                <div class="buttons">
+                    <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Submit</button>
+                </div>
+            </form>
+        </div>
+        <?php
+    }
+
+    public function showAction(Group $discussion) {
+        $messages = Message::getMessages($discussion->getId());
+        ?>
 
             <div id="groupMessages" class="chat_area">
-            <?php
-                if (!$messages)
-                {
-            ?>
-                <div class="group_message_toolbar">
-                    <span class="group_toolbar_text">Compose a new message</span>
-                </div>
-                <form class="compose_form">
-                    <div class="input_group">
-                        <div class="input_group_row">
-                            <label for="compose_recipients">Recipients:</label>
-                            <div class="input_group_main" style="padding: 0">
-                                <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
-                                    <option value=""> </option>
-                                    <optgroup label="Players">
-                                        <?php
-                                            foreach (Player::getPlayers() as $player)
-                                            {
-                                                // Don't add the currently logged in player to the list of possible recipients
-                                                if ($player->getId() == $_SESSION['playerId'])
-                                                {
-                                                    continue;
-                                                }
-
-                                                $selected = "";
-
-                                                if ($discussion && $discussion->isMember($player->getId()))
-                                                {
-                                                    $selected = 'selected=""';
-                                                }
-
-                                                echo "<option $selected value=\"{$player->getId()}\">", $player->getUsername(), "</option>";
-                                            }
-                                        ?>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input_group_row">
-                            <label for="compose_subject">Subject:</label>
-                            <div class="input_group_main">
-                                <input id="compose_subject" name="subject" type="text" placeholder="Enter message subject">
-                            </div>
-                        </div>
-                    </div>
-                    <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
-                    <div class="buttons">
-                        <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <?php
-                }
-                else
-                {
+                <?php
                     $groupUsernames = array();
 
                     foreach ($discussion->getMembers(true) as $key => $value)
@@ -219,11 +222,8 @@ class MessageController extends HTMLController {
                     <span class="ladda-label">Submit</span>
                 </button>
             </form> <!-- end .alt_compose_form -->
+        </div>
 
         <?php
-        }
-
-
-        echo '</div> <!-- end .group_messages -->';
     }
 }

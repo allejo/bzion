@@ -24,11 +24,11 @@ match_by_team_list:
 
 message_list:
     pattern:    /messages
-    defaults: { _controller: 'Message', _action: 'list' }
+    defaults: { _controller: 'Message', _action: 'compose' }
 
 message_show_discussion:
     pattern:    /messages/{discussion}
-    defaults: { _controller: 'Message', _action: 'list' }
+    defaults: { _controller: 'Message', _action: 'show' }
 
 news_list:
     pattern:    /news
