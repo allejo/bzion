@@ -143,9 +143,12 @@ class Header extends Controller
      * Returns the root path from which this request is executed.
      *
      * The base path never ends with a `/`.
+     * @param boolean $absolute Whether to return an absolute path (e.g: http://example.com/bzion as opposed to /bzion)
      * @return string The raw path
      */
-    public static function getBasePath() {
-        return Service::getRequest()->getBasePath();
+    public static function getBasePath($absolute=false) {
+        $host = $absolute ? Service::getRequest()->getSchemeAndHttpHost() : "";
+
+        return $host . Service::getRequest()->getBasePath();
     }
 }
