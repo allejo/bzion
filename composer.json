@@ -17,7 +17,7 @@
     },
 
     "autoload": {
-        "classmap": ["classes/", "controllers/"]
+        "classmap": ["models/", "controllers/"]
     },
     "autoload-dev": {
         "classmap": [ "tests/"]
