@@ -78,7 +78,7 @@ class MatchController extends HTMLController {
 
                     if ($match->getTeamBPlayers() != null)
                     {
-                        foreach ($match->getTeamAPlayers() as $player)
+                        foreach ($match->getTeamBPlayers() as $player)
                         {
                             echo '            <li><a href="' . $player->getURL() . '">' . $player->getUsername() . '</a></li>';
                         }
