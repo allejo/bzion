@@ -258,4 +258,11 @@ abstract class Model {
         return new static(0);
     }
 
+    /**
+     * Generates a string with the object's type and ID
+     */
+    public function __toString() {
+        return get_class($this) . " #" . $this->getId();
+    }
+
 }

@@ -66,7 +66,7 @@ class TeamTest extends TestCase {
         $team = new Team($this->team->getId());
 
         $members = $team->getMembers('id');
-        $expectedMembers = array($this->player->getId(), $extraMember->getId());
+        $expectedMembers = array($this->player, $extraMember);
 
         $this->assertEquals(2, $team->getNumMembers());
         $this->assertArraysHaveEqualValues($expectedMembers, $members);
@@ -85,7 +85,7 @@ class TeamTest extends TestCase {
         $team = new Team($this->team->getId());
 
         $this->assertEquals(2, $team->getNumTotalMatches());
-        $this->assertArraysHaveEqualValues(array($match_a->getId(), $match_b->getId()), $team->getMatches());
+        $this->assertArraysHaveEqualValues(array($match_a, $match_b), $team->getMatches());
 
         $this->wipe($otherPlayer, $otherTeam, $match_a, $match_b);
     }
