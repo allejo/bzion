@@ -289,7 +289,7 @@ class Match extends Model
      */
     public function getServerAddress()
     {
-        if ($this->port == null || $this->server = null)
+        if ($this->port == null || $this->server == null)
         {
             return null;
         }
