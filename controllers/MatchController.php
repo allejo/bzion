@@ -76,7 +76,7 @@ class MatchController extends HTMLController {
                     echo '                <span>' . $team_b->getName() . '</span>';
                     echo '                <ul>';
 
-                    if ($match->getTeamBPlayers() != null)
+                    if (!is_null($match->getTeamAPlayers()) && is_array($match->getTeamAPlayers()))
                     {
                         foreach ($match->getTeamBPlayers() as $player)
                         {
@@ -99,7 +99,7 @@ class MatchController extends HTMLController {
                     echo '            <p><strong>Server:</strong> ' . (($match->getServerAddress() != null) ? $match->getServerAddress() : "<em>No server Recorded</em>");
                     echo '            <p><strong>Replay File:</strong> ';
 
-                    if ($match->getReplayFileName() != null)
+                    if (!is_null($match->getTeamBPlayers()) && is_array($match->getTeamBPlayers()))
                     {
                         echo '<span title="' . $match->getReplayFileName() . '">' . $match->getReplayFileName(40) . '...</span>';
                     }
