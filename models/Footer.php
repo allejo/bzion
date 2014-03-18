@@ -44,6 +44,7 @@ class Footer {
 
         <script>
         var baseURL = "<?php echo Header::getBasePath(true); ?>";
+        var baseURLNoHost = "<?php echo Header::getBasePath(); ?>";
         </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
