@@ -107,7 +107,45 @@
         .group_message_toolbar {
             background-color: $mainColor;
             color: #FFFFFF;
-            padding: 5px 10px;
+
+            .group_toolbar_text {
+                
+            }
+
+            .group_message_title_top {
+
+                .group_message_title {
+                    font-size: 30px;
+                    float: left;
+                    width: 30%;
+                    padding: 5px 10px;
+                }
+
+                .group_message_title_icon {
+                    float: right;
+                    padding: 10px;
+
+                    &:hover {
+                        color: $hoverColor;
+                        cursor: pointer;
+                    }
+
+                    &.close {
+                        &:hover {
+                            color: #e74c3c;
+                        }
+                    }
+                }
+            }
+
+            .group_message_title_bottom {
+                background-color: lighten($mainColor, 5%);
+                padding: 5px 10px;
+
+                .group_message_title_members {
+                    font-size: 13px;
+                }
+            }
         }
 
         .compose_form {

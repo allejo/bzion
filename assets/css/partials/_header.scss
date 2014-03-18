@@ -89,22 +89,22 @@ header {
         i {
             margin-right: 8px;
         }
-    }
+        
+        // Notification types
+        &.success {
+            background-color: #D7FFD7;
+            border-color: #2ecc71;
+            color: #2ecc71;
+            display: block;
+            z-index: 100;
+        }
 
-    // Notification types
-    .success {
-        background-color: #D7FFD7;
-        border-color: #2ecc71;
-        color: #2ecc71;
-        display: block;
-        z-index: 100;
-    }
-
-    .error {
-        background-color: #FFD7D7;
-        border-color: #e74c3c;
-        color: #e74c3c;
-        display: block;
-        z-index: 100;
+        &.error {
+            background-color: #FFD7D7;
+            border-color: #e74c3c;
+            color: #e74c3c;
+            display: block;
+            z-index: 100;
+        }
     }
 }

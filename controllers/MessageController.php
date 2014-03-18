@@ -175,10 +175,15 @@ class MessageController extends HTMLController {
             ?>
 
             <div class="group_message_toolbar">
-                <div class="group_message_title"><?php echo $discussion->getSubject(); ?></div>
-                <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
-                <div class="group_message_title_icon"><i class="fa fa-times"></i></div>
-                <div class="group_message_title_icon"><i class="fa fa-cog"></i></div>
+                <div class="group_message_title_top">
+                    <div class="group_message_title"><?php echo $discussion->getSubject(); ?></div>
+                    <div class="group_message_title_icon close"><i class="fa fa-times"></i></div>
+                    <div class="group_message_title_icon"><i class="fa fa-cog"></i></div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="group_message_title_bottom">
+                    <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
+                </div>
             </div>
 
 
