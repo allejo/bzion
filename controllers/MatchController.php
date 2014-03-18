@@ -57,11 +57,11 @@ class MatchController extends HTMLController {
                     echo '                <span>' . $team_a->getName() . '</span>';
                     echo '                <ul>';
 
-                    if ($match->getTeamAPlayers() != null)
+                    if (!is_null($match->getTeamAPlayers()) && is_array($match->getTeamAPlayers()))
                     {
                         foreach ($match->getTeamAPlayers() as $player)
                         {
-                            echo '            <li><a href="' . $player->getURL() . '">' . $player->getUsername() . '</a></li>';
+                            echo '            <li>' . $player->getLinkLiteral() . '</li>';
                         }
                     }
                     else
@@ -75,11 +75,11 @@ class MatchController extends HTMLController {
                     echo '                <span>' . $team_b->getName() . '</span>';
                     echo '                <ul>';
 
-                    if (!is_null($match->getTeamAPlayers()) && is_array($match->getTeamAPlayers()))
+                    if (!is_null($match->getTeamBPlayers()) && is_array($match->getTeamBPlayers()))
                     {
                         foreach ($match->getTeamBPlayers() as $player)
                         {
-                            echo '            <li><a href="' . $player->getURL() . '">' . $player->getUsername() . '</a></li>';
+                            echo '            <li>' . $player->getLinkLiteral() . '</li>';
                         }
                     }
                     else
