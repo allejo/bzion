@@ -44,8 +44,8 @@ class MatchController extends HTMLController {
                     echo '    <div class="score">';
                     echo '        <div class="date">' . $match->getTimestamp() . '</div>';
                     echo '        <div class="teams">';
-                    echo '            <div class="winner"><span class="winner_name"><a href="' . $team_a->getURL() . '">' . $team_a->getName() . '</a></span> <span class="winner_score">' . $match->getTeamAPoints() . '</span></div>';
-                    echo '            <div class="loser"><span class="loser_score">' . $match->getTeamBPoints() . '</span> <span class="loser_name"><a href="' . $team_b->getURL() . '">' . $team_b->getName() . '</a></span></div>';
+                    echo '            <div class="winner"><span class="winner_name">' . $team_a->getLinkLiteral() . '</span> <span class="winner_score">' . $match->getTeamAPoints() . '</span></div>';
+                    echo '            <div class="loser"><span class="loser_score">' . $match->getTeamBPoints() . '</span> <span class="loser_name">' . $team_b->getLinkLiteral() . '</span></div>';
                     echo '        </div>';
                     echo '        <i class="more_details fa fa-plus-square-o" rel="' . $match->getId() . '"></i>';
                     echo '    </div>';
@@ -57,11 +57,11 @@ class MatchController extends HTMLController {
                     echo '                <span>' . $team_a->getName() . '</span>';
                     echo '                <ul>';
 
-                    if ($match->getTeamAPlayers() != null)
+                    if (!is_null($match->getTeamAPlayers()) && is_array($match->getTeamAPlayers()))
                     {
                         foreach ($match->getTeamAPlayers() as $player)
                         {
-                            echo '            <li><a href="' . $player->getURL() . '">' . $player->getUsername() . '</a></li>';
+                            echo '            <li>' . $player->getLinkLiteral() . '</li>';
                         }
                     }
                     else
@@ -75,11 +75,11 @@ class MatchController extends HTMLController {
                     echo '                <span>' . $team_b->getName() . '</span>';
                     echo '                <ul>';
 
-                    if (!is_null($match->getTeamAPlayers()) && is_array($match->getTeamAPlayers()))
+                    if (!is_null($match->getTeamBPlayers()) && is_array($match->getTeamBPlayers()))
                     {
                         foreach ($match->getTeamBPlayers() as $player)
                         {
-                            echo '            <li><a href="' . $player->getURL() . '">' . $player->getUsername() . '</a></li>';
+                            echo '            <li>' . $player->getLinkLiteral() . '</li>';
                         }
                     }
                     else

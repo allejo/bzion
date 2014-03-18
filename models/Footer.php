@@ -40,11 +40,12 @@ class Footer {
     public function draw() {
     ?>
             </div>
-        </div> <!-- end .content -->
+        </div>
 
-                <script>
-            var baseURL = "<?php echo Header::getBasePath(); ?>";
-                </script>
+        <script>
+        var baseURL = "<?php echo Header::getBasePath(true); ?>";
+        var baseURLNoHost = "<?php echo Header::getBasePath(); ?>";
+        </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="<?php echo Header::getBasePath(); ?>/assets/js/main.js"></script>

@@ -19,17 +19,16 @@ class MessageController extends HTMLController {
         <div class="messaging">
             <section class="toolbar">
                 <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-inbox"></i>
-                            <span>Inbox</span>
+                    <li class="separator-bottom">
+                        <a href="<?= $this->generate("message_list") ?>" class="compose-link">
+                            <i class="fa fa-pencil-square-o"></i>
                         </a>
                     </li>
 
                     <li>
                         <a href="#">
-                            <i class="fa fa-reply"></i>
-                            <span>Sent</span>
+                            <i class="fa fa-inbox"></i>
+                            <span>Inbox</span>
                         </a>
                     </li>
 
@@ -42,7 +41,17 @@ class MessageController extends HTMLController {
                 </ul>
             </section>
             <section class="conversations">
-                <a href="<?= $this->generate("message_list") ?>" data-id="new" class="compose">New Message</a>
+                <form class="compose">
+                    <div class="icon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <input type="text" class="search" name="search" data-id="new" placeholder="Search..." />
+                    <div class="icon">
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div style="clear: both"></div>
+                </form>
+
                 <ul class="chats">
                 <?php
                     foreach ($groups as $key => $id)
@@ -106,7 +115,9 @@ class MessageController extends HTMLController {
         ?>
         <div id="groupMessages" class="chat_area">
             <div class="group_message_toolbar">
-                <span class="group_toolbar_text">Compose a new message</span>
+                <div class="group_message_title_top">
+                    <div class="group_message_compose">Compose a new message</div>
+                </div>
             </div>
             <form class="compose_form">
                 <div class="input_group">
@@ -143,7 +154,7 @@ class MessageController extends HTMLController {
                 </div>
                 <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
                 <div class="buttons">
-                    <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Submit</button>
+                    <button id="composeButton" type="submit" class="ladda-button button submit" data-style="zoom-out">Send</button>
                 </div>
             </form>
         </div>
@@ -154,7 +165,7 @@ class MessageController extends HTMLController {
         $messages = Message::getMessages($discussion->getId());
         ?>
 
-            <div id="groupMessages" class="chat_area">
+            <div id="groupMessages" class="chat_area" data-id="<?php echo $discussion->getId(); ?>">
                 <?php
                     $groupUsernames = array();
 
@@ -175,10 +186,15 @@ class MessageController extends HTMLController {
             ?>
 
             <div class="group_message_toolbar">
-                <div class="group_message_title"><?php echo $discussion->getSubject(); ?></div>
-                <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
-                <div class="group_message_title_icon"><i class="fa fa-times"></i></div>
-                <div class="group_message_title_icon"><i class="fa fa-cog"></i></div>
+                <div class="group_message_title_top">
+                    <div class="group_message_title"><?php echo $discussion->getSubject(); ?></div>
+                    <div class="group_message_title_icon close"><i class="fa fa-times"></i></div>
+                    <div class="group_message_title_icon"><i class="fa fa-cog"></i></div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="group_message_title_bottom">
+                    <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
+                </div>
             </div>
 
 
@@ -213,8 +229,8 @@ class MessageController extends HTMLController {
 
             <form class="alt_compose_form" autocomplete="off">
                 <input type="text" id="composeArea" class="input_compose_area" placeholder="Enter your message here..." />
-                <button id="composeButton" onclick="sendResponse()" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
-                    <span class="ladda-label">Submit</span>
+                <button id="composeButton" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
+                    <span class="ladda-label">Send</span>
                 </button>
             </form> <!-- end .alt_compose_form -->
         </div>

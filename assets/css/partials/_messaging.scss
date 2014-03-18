@@ -7,26 +7,41 @@
         float: left;
         width: 70px;
 
-        li {
-            display: inline-block;
-            padding: 15px 10px;
-            text-align: center;
+        ul {
+            width: 100%;
 
-            a {
-                color: #ffffff;
-                text-decoration: none;
+            li {
+                display: inline-block;
+                padding: 15px 0;
+                text-align: center;
+                vertical-align: middle;
+                width: 100%;
 
-                i {
-                    font-size: 30px;
+                a {
+                    color: #ffffff;
+                    text-decoration: none;
+
+                    i {
+                        font-size: 30px;
+                    }
+
+                    &:hover {
+                        color: #FFFFFF;
+                    }
                 }
 
                 &:hover {
-                    color: #FFFFFF;
+                    background-color: $hoverColor;
                 }
-            }
 
-            &:hover {
-                background-color: $hoverColor;
+                &.separator-bottom {
+                    border-bottom: 4px double #607585;
+
+                    // We're only adding this small margin in order to make the button look more centered
+                    .fa-pencil-square-o {
+                        margin-left: 3px;
+                    }
+                }
             }
         }
     }
@@ -39,13 +54,38 @@
         width: 350px;
 
         .compose {
-            background-color: #ffffff;
+            $searchHeight: 30px;
+
             border-bottom: 2px solid $contentBackground;
-            display: block;
-            padding: 5px 0;
-            text-align: center;
-            text-decoration: none;
-            width: 100%;
+            height: $searchHeight;
+
+            .icon {
+                display: inline-block;
+                float: left;
+                height: $searchHeight;
+                text-align: center;
+                width: 40px;
+
+                i {
+                    line-height: $searchHeight;
+                }
+            }
+
+            .search {
+                background-color: #ffffff;
+                border: none;
+                display: inline-block;
+                float: left;
+                font-size: 16px;
+                margin: 5px 0;
+                text-align: left;
+                text-decoration: none;
+                width: 260px;
+
+                &:focus {
+                    outline: 0;
+                }
+            }
         }
 
         .chats {
@@ -100,6 +140,7 @@
     }
 
     .chat_area {
+        background-color: #FFFFFF;
         display: inline-block;
         vertical-align: top;
         width: 678px;
@@ -107,7 +148,46 @@
         .group_message_toolbar {
             background-color: $mainColor;
             color: #FFFFFF;
-            padding: 5px 10px;
+
+            .group_message_title_top {
+
+                .group_message_compose {
+                    font-size: 20px;
+                    padding: 5px 10px;
+                }
+
+                .group_message_title {
+                    font-size: 20px;
+                    float: left;
+                    width: 30%;
+                    padding: 5px 10px;
+                }
+
+                .group_message_title_icon {
+                    float: right;
+                    padding: 10px;
+
+                    &:hover {
+                        color: $hoverColor;
+                        cursor: pointer;
+                    }
+
+                    &.close {
+                        &:hover {
+                            color: #e74c3c;
+                        }
+                    }
+                }
+            }
+
+            .group_message_title_bottom {
+                background-color: lighten($mainColor, 5%);
+                padding: 5px 10px;
+
+                .group_message_title_members {
+                    font-size: 13px;
+                }
+            }
         }
 
         .compose_form {
@@ -171,6 +251,22 @@
                 width: 97%;
 
             }
+        }
+
+        .alt_compose_form {
+
+            input[type=text] {
+                @include box-sizing(border-box);
+
+                background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
+                border: 1px solid #eee;
+                font-family: Open Sans;
+                font-size: 13px;
+                margin-left: 5px;
+                padding: 5px 5px 5px 5px;
+                width: 90%;
+            }
+
         }
 
         .buttons {

@@ -89,13 +89,14 @@ header {
         i {
             margin-right: 8px;
         }
-
+        
         // Notification types
         &.success {
             background-color: #D7FFD7;
             border-color: #2ecc71;
             color: #2ecc71;
             display: block;
+            z-index: 100;
         }
 
         &.error {
@@ -103,6 +104,7 @@ header {
             border-color: #e74c3c;
             color: #e74c3c;
             display: block;
+            z-index: 100;
         }
     }
 }

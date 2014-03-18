@@ -24,7 +24,32 @@ abstract class AliasModel extends UrlModel {
      * {@inheritDoc}
      */
     public function getURL($absolute=false) {
+        if (!$this->isValid())
+            return "";
         return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getAlias()), $absolute);
+    }
+
+    /**
+     * Gets an entity from the supplied alias
+     * @param string $alias The object's alias
+     * @return AliasModel
+     */
+    public static function fetchFromAlias($alias) {
+        return new static(self::fetchIdFrom($alias, "alias"));
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return AliasModel
+     */
+    public static function fetchFromSlug($slug) {
+        if (ctype_digit((string) $slug)) {
+            // Slug is an integer, we can fetch by ID
+            return new static((int) $slug);
+        } else {
+            // Slug is something else, we can fetch by alias
+            return self::fetchFromAlias($slug);
+        }
     }
 
     /**
