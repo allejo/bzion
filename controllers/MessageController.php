@@ -143,7 +143,7 @@ class MessageController extends HTMLController {
                 </div>
                 <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
                 <div class="buttons">
-                    <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Submit</button>
+                    <button id="composeButton" onclick="sendMessage()" type="button" class="ladda-button button submit" data-style="zoom-out">Send</button>
                 </div>
             </form>
         </div>
@@ -214,7 +214,7 @@ class MessageController extends HTMLController {
             <form class="alt_compose_form" autocomplete="off">
                 <input type="text" id="composeArea" class="input_compose_area" placeholder="Enter your message here..." />
                 <button id="composeButton" onclick="sendResponse()" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
-                    <span class="ladda-label">Submit</span>
+                    <span class="ladda-label">Send</span>
                 </button>
             </form> <!-- end .alt_compose_form -->
         </div>
