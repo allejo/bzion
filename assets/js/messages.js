@@ -13,7 +13,7 @@ function updatePage() {
     // TODO: Fix for IE
     if (document.location.hash) {
         var hash = document.location.hash.substring(1);
-        url = baseURL + "/messages/";
+        url = baseURLNoHost + "/messages/";
         if (hash != "new") {
             url += hash;
             $(".groups").load(url + " .groups > *");
@@ -68,7 +68,7 @@ function sendResponse() {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: baseURL + "/ajax/sendMessage.php",
+        url: baseURLNoHost + "/ajax/sendMessage.php",
         data: {
             group_to: response_group,
             content: $("#composeArea").val()
@@ -104,7 +104,7 @@ function sendMessage() {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: baseURL + "/ajax/sendMessage.php",
+        url: baseURLNoHost + "/ajax/sendMessage.php",
         data: {
             subject: $("#compose_subject").val(),
             to:  recipients,
