@@ -2,6 +2,29 @@
 
 include("../bzion-load.php");
 
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Router;
+
+$locator = new FileLocator(array(__DIR__));
+
+$request = Request::createFromGlobals();
+$requestContext = new RequestContext();
+$requestContext->fromRequest($request);
+
+Service::setRequest($request);
+
+$router = new Router(
+    new YamlFileLoader($locator),
+    __DIR__ . '/../routes.yml',
+    array(),
+    $requestContext
+);
+
+Service::setGenerator($router->getGenerator());
+
 $header = new Header("Home");
 $header->draw();
 
