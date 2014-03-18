@@ -19,17 +19,16 @@ class MessageController extends HTMLController {
         <div class="messaging">
             <section class="toolbar">
                 <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-inbox"></i>
-                            <span>Inbox</span>
+                    <li class="separator-bottom">
+                        <a href="<?= $this->generate("message_list") ?>">
+                            <i class="fa fa-pencil-square-o"></i>
                         </a>
                     </li>
 
                     <li>
                         <a href="#">
-                            <i class="fa fa-reply"></i>
-                            <span>Sent</span>
+                            <i class="fa fa-inbox"></i>
+                            <span>Inbox</span>
                         </a>
                     </li>
 
