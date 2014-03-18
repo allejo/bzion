@@ -100,6 +100,7 @@
     }
 
     .chat_area {
+        background-color: #FFFFFF;
         display: inline-block;
         vertical-align: top;
         width: 678px;
@@ -209,6 +210,22 @@
                 width: 97%;
 
             }
+        }
+
+        .alt_compose_form {
+
+            input[type=text] {
+                @include box-sizing(border-box);
+
+                background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
+                border: 1px solid #eee;
+                font-family: Open Sans;
+                font-size: 13px;
+                margin-left: 5px;
+                padding: 5px 5px 5px 5px;
+                width: 90%;
+            }
+
         }
 
         .buttons {
