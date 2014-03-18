@@ -7,26 +7,41 @@
         float: left;
         width: 70px;
 
-        li {
-            display: inline-block;
-            padding: 15px 10px;
-            text-align: center;
+        ul {
+            width: 100%;
 
-            a {
-                color: #ffffff;
-                text-decoration: none;
+            li {
+                display: inline-block;
+                padding: 15px 0;
+                text-align: center;
+                vertical-align: middle;
+                width: 100%;
 
-                i {
-                    font-size: 30px;
+                a {
+                    color: #ffffff;
+                    text-decoration: none;
+
+                    i {
+                        font-size: 30px;
+                    }
+
+                    &:hover {
+                        color: #FFFFFF;
+                    }
                 }
 
                 &:hover {
-                    color: #FFFFFF;
+                    background-color: $hoverColor;
                 }
-            }
 
-            &:hover {
-                background-color: $hoverColor;
+                &.separator-bottom {
+                    border-bottom: 4px double #607585;
+
+                    // We're only adding this small margin in order to make the button look more centered
+                    .fa-pencil-square-o {
+                        margin-left: 3px;
+                    }
+                }
             }
         }
     }
