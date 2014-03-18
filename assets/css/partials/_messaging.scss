@@ -54,13 +54,38 @@
         width: 350px;
 
         .compose {
-            background-color: #ffffff;
+            $searchHeight: 30px;
+
             border-bottom: 2px solid $contentBackground;
-            display: block;
-            padding: 5px 0;
-            text-align: center;
-            text-decoration: none;
-            width: 100%;
+            height: $searchHeight;
+
+            .icon {
+                display: inline-block;
+                float: left;
+                height: $searchHeight;
+                text-align: center;
+                width: 40px;
+
+                i {
+                    line-height: $searchHeight;
+                }
+            }
+
+            .search {
+                background-color: #ffffff;
+                border: none;
+                display: inline-block;
+                float: left;
+                font-size: 16px;
+                margin: 5px 0;
+                text-align: left;
+                text-decoration: none;
+                width: 260px;
+
+                &:focus {
+                    outline: 0;
+                }
+            }
         }
 
         .chats {

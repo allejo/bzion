@@ -41,7 +41,17 @@ class MessageController extends HTMLController {
                 </ul>
             </section>
             <section class="conversations">
-                <a href="<?= $this->generate("message_list") ?>" data-id="new" class="compose">New Message</a>
+                <form class="compose">
+                    <div class="icon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <input type="text" class="search" name="search" data-id="new" placeholder="Search..." />
+                    <div class="icon">
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div style="clear: both"></div>
+                </form>
+
                 <ul class="chats">
                 <?php
                     foreach ($groups as $key => $id)
