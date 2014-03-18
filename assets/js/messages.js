@@ -25,14 +25,8 @@ $(document).ready(function() {
     initPage();
 });
 
-// Use "on" instead of just "click", so that new elements of that class added
+// Use "on" instead of just "click"/"submit", so that new elements of that class added
 // to the page using $.load() also respond to events
-
-// Discussion create event
-$(".page").on("submit", ".compose_form", function(event) {
-    event.preventDefault();
-    sendMessage();
-});
 
 // Response submit event
 $(".page").on("submit", ".alt_compose_form", function(event) {
@@ -43,6 +37,21 @@ $(".page").on("submit", ".alt_compose_form", function(event) {
     sendResponse();
 });
 
+// Discussion create event
+$(".page").on("submit", ".compose_form", function(event) {
+    event.preventDefault();
+    sendMessage();
+});
+
+// Group click event
+$(".page").on("click", ".chats a", function(event) {
+    event.preventDefault();
+    redirect($(this).attr("data-id"));
+});
+$(".page").on("click", ".compose-link", function(event) {
+    event.preventDefault();
+    redirect();
+});
 
 
 /**
