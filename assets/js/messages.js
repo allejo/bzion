@@ -132,7 +132,7 @@ function redirect(groupId=null) {
     url = baseURLNoHost + "/messages";
     url += (groupId) ? "/"+groupId : "";
 
-    history.pushState(stateObj, "What", url);
+    history.pushState(stateObj, "", url);
 
     updatePage();
 }
