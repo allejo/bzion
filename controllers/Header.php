@@ -96,7 +96,7 @@ class Header extends Controller
                         {
                             echo '<li class="icon float right"><a href="' . $this->generate("logout") . '"><i class="fa fa-sign-out"></i></a></li>';
                             echo '<li class="icon float right"><a href="' . $this->generate("profile_show") . '"><i class="fa fa-user"></i></a></li>';
-                            echo '<li class="icon float right"><a href="' . $this->generate("index") . '"><i class="fa fa-bell"></i></a></li>';
+                            echo '<li class="icon float right"><a href="#"><i class="fa fa-bell"></i></a></li>';
                         }
                         else
                         {
