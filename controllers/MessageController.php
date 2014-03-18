@@ -106,7 +106,9 @@ class MessageController extends HTMLController {
         ?>
         <div id="groupMessages" class="chat_area">
             <div class="group_message_toolbar">
-                <span class="group_toolbar_text">Compose a new message</span>
+                <div class="group_message_title_top">
+                    <div class="group_message_compose">Compose a new message</div>
+                </div>
             </div>
             <form class="compose_form">
                 <div class="input_group">

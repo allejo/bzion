@@ -109,14 +109,15 @@
             background-color: $mainColor;
             color: #FFFFFF;
 
-            .group_toolbar_text {
-                
-            }
-
             .group_message_title_top {
 
+                .group_message_compose {
+                    font-size: 20px;
+                    padding: 5px 10px;
+                }
+
                 .group_message_title {
-                    font-size: 30px;
+                    font-size: 20px;
                     float: left;
                     width: 30%;
                     padding: 5px 10px;
