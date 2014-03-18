@@ -1,76 +1,68 @@
-var response_group = 0;
-
 function initializeChosen() {
     $(".chosen-select").chosen();
     $(".chosen-container, .chosen-container input").css("width", "100%");
     $(".chosen-container input").css("height", "25px");
 }
 
-function updatePage() {
-    // Load the page if just the hash is provided in the URL, example:
-    // http://bzion.com/messages#21
-    //
-    // TODO: Fix for IE
-    if (document.location.hash) {
-        var hash = document.location.hash.substring(1);
-        url = baseURLNoHost + "/messages/";
-        if (hash != "new") {
-            url += hash;
-            $(".groups").load(url + " .groups > *");
-            $("#groupMessages").load(url + " #groupMessages > *", function() {
-                // Scroll message list to the bottom
-                $(".group_message_scroll").each(function() {
-                    this.scrollTop = this.scrollHeight;
-                });
-            });
-        } else {
-            $("#groupMessages").load(url + " #groupMessages > *", function() {
-                initializeChosen()
-            });
-        }
+function initPage() {
+    if ($("#groupMessages").attr("data-id")) {
+        // Scroll message list to the bottom
+        $(".group_message_scroll").each(function() {
+            this.scrollTop = this.scrollHeight;
+        });
     } else {
         initializeChosen();
     }
 }
 
+function updatePage() {
+    $(".messaging").load(window.location.pathname + " .messaging > *", function() {
+        initPage();
+    });
+}
+
 $(document).ready(function() {
-    updatePage();
+    initPage();
 });
 
 // Use "on" instead of just "click", so that new elements of that class added
 // to the page using $.load() also respond to events
-$(".page").on("click", ".chats a", function(event) {
+
+// Discussion create event
+$(".page").on("submit", ".compose_form", function(event) {
+    event.preventDefault();
+    sendMessage();
+});
+
+// Response submit event
+$(".page").on("submit", ".alt_compose_form", function(event) {
     // Don't let the link change the web page,
     // AJAX will handle the click
     event.preventDefault();
 
-    url = $(this).attr("href");
-    id  = $(this).attr("data-id");
-
-    document.location.hash = id;
-    response_group = id;
-
-    updatePage();
-
+    sendResponse();
 });
+
+
 
 /**
  * Perform an AJAX request to send a response to a message group
  */
 function sendResponse() {
-
     // If the Ladda class exists, use it to style the button
     if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( document.querySelector( '#composeButton' ) );
         l.start();
     }
 
+    groupId = $("#groupMessages").attr("data-id");
+
     $.ajax({
         type: "POST",
         dataType: "json",
         url: baseURLNoHost + "/ajax/sendMessage.php",
         data: {
-            group_to: response_group,
+            group_to: groupId,
             content: $("#composeArea").val()
         }
     }).done(function( msg ) {
@@ -81,7 +73,8 @@ function sendResponse() {
         type = msg.success ? "success" : "error";
 
         notify(msg.message, type);
-        updatePage();
+        if (msg.success)
+            updatePage();
     });
 };
 
@@ -89,7 +82,6 @@ function sendResponse() {
  * Perform an AJAX request to create a new message group
  */
 function sendMessage() {
-
     if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( document.querySelector( '#composeButton' ) );
         l.start();
@@ -120,8 +112,18 @@ function sendMessage() {
         notify(msg.message, type);
 
         if (msg.success) {
-            document.location.hash = msg.id;
-            updatePage();
+            redirect(msg.id);
         }
     });
 };
+
+function redirect(groupId=null) {
+    var stateObj = { group: groupId };
+
+    url = baseURLNoHost + "/messages";
+    url += (groupId) ? "/"+groupId : "";
+
+    history.pushState(stateObj, "What", url);
+
+    updatePage();
+}
