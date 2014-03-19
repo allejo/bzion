@@ -10,7 +10,9 @@
         <li><a href="{{ path('match_list') }}">Matches</a></li>
 
         {% for page in pages %}
-            <li><a href="{{ page.url }}"> {{ page.name }} </a></li>
+            {% if not page.isHomePage %}
+                <li><a href="{{ page.url }}"> {{ page.name }} </a></li>
+            {% endif %}
         {% endfor %}
 
         <li><a href="{{ path('ban_list') }}">Bans</a></li>
