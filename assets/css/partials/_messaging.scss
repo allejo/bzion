@@ -115,14 +115,14 @@
 
                     .members {
                         color: #99A0A3;
-                        font-family: "Open Sans"-light;
+                        font-family: $mainFont;
+                        font-weight: 300;
                         font-size: 12px;
                         padding-left: 25px;
                     }
 
                     .last_message {
                         color: #000000;
-                        font-family: Arial;
                         font-size: 16px;
                         padding: 5px 0 10px 10px;
                     }
@@ -279,7 +279,6 @@
 
                 background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
                 border: 1px solid #eee;
-                font-family: Open Sans;
                 font-size: 13px;
                 margin-top: 1px;
                 padding: 5px 5px 5px 5px;
@@ -294,7 +293,6 @@
                 border: 1px solid #eee;
                 color: #333333;
                 display: block;
-                font-family: Open Sans;
                 font-size: 1em;
                 height: 100px;
                 line-height: 1.42857;
@@ -316,7 +314,6 @@
 
                 background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
                 border: 1px solid #eee;
-                font-family: Open Sans;
                 font-size: 13px;
                 margin-left: 5px;
                 padding: 5px 5px 5px 5px;
