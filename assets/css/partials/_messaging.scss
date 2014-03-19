@@ -147,6 +147,15 @@
         vertical-align: top;
         width: 678px;
 
+        button {
+            margin: 5px;
+            background-color: $hoverColor;
+
+            &:hover {
+                background-color: lighten($hoverColor, 10%);
+            }
+        }
+
         .chat_details {
             $detailsHeight: 35px;
 
