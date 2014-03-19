@@ -253,4 +253,17 @@ abstract class Model {
         return get_class($this) . " #" . $this->getId();
     }
 
+    /**
+     * Converts an array of IDs to an array of Models
+     * @param int[] $idArray The list of IDs
+     * @return Model[]
+     */
+    public static function arrayIdToModel($idArray) {
+        $return = array();
+        foreach($idArray as $id) {
+            $return[] = new static($id);
+        }
+        return $return;
+    }
+
 }

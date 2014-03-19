@@ -10,14 +10,4 @@ abstract class HTMLController extends Controller {
         $header = new Header($title);
         $header->draw();
     }
-
-    /**
-     * Shows the HTML page footer
-     *
-     * {@inheritDoc}
-     */
-    public function cleanup() {
-        $footer = new Footer();
-        $footer->draw();
-    }
 }

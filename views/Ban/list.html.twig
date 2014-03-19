@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Bans{% endblock %}
+
+{% block content %}
+    {% for ban in bans %}
+        <article>
+            <h1>{{ ban.player.username }}</h1>
+            <p>{{ ban.reason }}</p>
+            <footer>
+                Posted by <a href="{{ ban.author.url }}">{{ ban.author.username }}</a> {{ ban.updated }}
+            </footer>
+        </article>
+    {% endfor %}
+{% endblock %}
