@@ -30,13 +30,17 @@ abstract class Controller {
     /**
      * Call the controller's action specified by the $parameters array
      *
-     * @return mixed The return value of the called action
+     * @return void
     */
     public function callAction() {
+        $action = $this->parameters['_action'];
+
         $this->setup();
-        $ret = $this->callMethod($this->parameters['_action'] . 'Action', $this->parameters);
+
+        $ret = $this->callMethod($action . 'Action', $this->parameters);
+        $this->handleResponse($ret, $action);
+
         $this->cleanup();
-        return $ret;
     }
 
     /**
@@ -95,6 +99,26 @@ abstract class Controller {
 
         if (isset($routeParameters[$modelParameter->getName() . 'Id']))
             return $refClass->newInstance($routeParameters[$modelParameter->getName() . 'Id']);
+    }
+
+    private function handleResponse($response, $action) {
+        if (is_array($response)) {
+            // The controller is probably expecting us to show a view to the
+            // user, using the array provided to set variables for the template
+
+            $templatePath = $this->getName() . "/$action.html.twig";
+
+            $template = Service::getTemplateEngine();
+            echo $template->render($templatePath, $response);
+        }
+    }
+
+    /**
+     * Returns the name of the controller without the "Controller" part
+     * @return string
+     */
+    private function getName() {
+        return preg_replace('/Controller$/', '', get_called_class());
     }
 
     /**
