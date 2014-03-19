@@ -307,19 +307,32 @@
             }
         }
 
-        .alt_compose_form {
+        .reply_form {
+            background-color: #F4F7FB;
+            bottom: 0;
+            height: 130px;
+            position: absolute;
+            width: 100%;
 
-            input[type=text] {
-                @include box-sizing(border-box);
+            .quick_reply {
+                margin: 20px;
+                overflow: hidden;
 
-                background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
-                border: 1px solid #eee;
-                font-size: 13px;
-                margin-left: 5px;
-                padding: 5px 5px 5px 5px;
-                width: 90%;
+                textarea {
+                    @include box-sizing(border-box);
+
+                    border: 1px solid $borderColor;
+                    font-family: Open Sans;
+                    font-size: 13px;
+                    padding: 5px;
+                    resize: none;
+                    width: 100%;
+                }
+
+                button[type="submit"] {
+                    float: right;
+                }
             }
-
         }
 
         .buttons {
