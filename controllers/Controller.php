@@ -108,8 +108,9 @@ abstract class Controller {
 
             $templatePath = $this->getName() . "/$action.html.twig";
 
-            $template = Service::getTemplateEngine();
-            echo $template->render($templatePath, $response);
+            echo $this->render($templatePath, $response);
+        } else if (is_string($response)) {
+            echo $response;
         }
     }
 
@@ -138,6 +139,17 @@ abstract class Controller {
       */
     public static function getRequest() {
         return Service::getRequest();
+    }
+
+    /**
+     * Renders a view
+     * @param string $view The view name
+     * @param array $parameters An array of parameters to pass to the view
+     * @return string The rendered view
+     */
+    protected function render($view, $parameters) {
+        $template = Service::getTemplateEngine();
+        return $template->render($view, $parameters);
     }
 }
 

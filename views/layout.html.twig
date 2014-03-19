@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}BZIon{% endblock %}</title>
+        <title>{% spaceless %}{% block title %}BZIon{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
         <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/ladda/dist/ladda.min.css" />
