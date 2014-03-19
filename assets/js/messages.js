@@ -126,7 +126,9 @@ function sendMessage() {
     });
 };
 
-function redirect(groupId=null) {
+function redirect(groupId) {
+    groupID = typeof groupId !== 'undefined' ? groupId : null;
+
     var stateObj = { group: groupId };
 
     url = baseURLNoHost + "/messages";
