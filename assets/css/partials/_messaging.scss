@@ -2,7 +2,7 @@
     height: 100%;
 
     .toolbar {
-        background-color: $mainColor;
+        background-color: #57C6D5;
         height: 100%;
         float: left;
         width: 70px;
@@ -35,7 +35,7 @@
                 }
 
                 &.separator-bottom {
-                    border-bottom: 4px double #607585;
+                    border-bottom: 4px double #FFFFFF;
 
                     // We're only adding this small margin in order to make the button look more centered
                     .fa-pencil-square-o {
@@ -48,15 +48,15 @@
 
     .conversations {
         background-color: #FFFFFF;
-        border-right: 2px solid $contentBackground;
+        border-right: 1px solid $borderColorLight;
         float: left;
         height: 100%;
         width: 350px;
 
         .compose {
-            $searchHeight: 30px;
+            $searchHeight: 35px;
 
-            border-bottom: 2px solid $contentBackground;
+            border-bottom: 1px solid $borderColorLight;
             height: $searchHeight;
 
             .icon {
@@ -77,7 +77,7 @@
                 display: inline-block;
                 float: left;
                 font-size: 16px;
-                margin: 5px 0;
+                margin: 10px 0;
                 text-align: left;
                 text-decoration: none;
                 width: 260px;
@@ -91,7 +91,7 @@
         .chats {
             li {
                 background-color: #ffffff;
-                border-bottom: 2px solid $contentBackground;
+                border-bottom: 1px solid $borderColorLight;
                 display: block;
                 list-style-type: none;
                 width: 100%;
@@ -142,30 +142,31 @@
     .chat_area {
         background-color: #FFFFFF;
         display: inline-block;
+        height: 100%;
         vertical-align: top;
         width: 678px;
 
-        .group_message_toolbar {
-            background-color: $mainColor;
-            color: #FFFFFF;
+        .chat_details {
+            $detailsHeight: 35px;
 
-            .group_message_title_top {
+            .chat_options {
+                background-color: #FFFFFF;
+                border-bottom: 1px solid $borderColorLight;
+                color: #000000;
 
-                .group_message_compose {
-                    font-size: 20px;
-                    padding: 5px 10px;
-                }
-
-                .group_message_title {
-                    font-size: 20px;
+                .subject {
                     float: left;
-                    width: 30%;
-                    padding: 5px 10px;
+                    font-size: 20px;
+                    font-weight: 100;
+                    line-height: $detailsHeight;
+                    padding: 0 10px;
+                    width: 70%;
                 }
 
-                .group_message_title_icon {
+                .icon {
                     float: right;
-                    padding: 10px;
+                    line-height: $detailsHeight;
+                    padding: 0 10px;
 
                     &:hover {
                         color: $hoverColor;
@@ -180,12 +181,67 @@
                 }
             }
 
-            .group_message_title_bottom {
-                background-color: lighten($mainColor, 5%);
+            .members {
+                background-color: #F4F7FB;
+                color: #000000;
+                font-size: 13px;
+                font-weight: 100;
                 padding: 5px 10px;
+            }
+        }
 
-                .group_message_title_members {
-                    font-size: 13px;
+        .scrollable_messages {
+            overflow: scroll;
+
+            .messages {
+                li {
+                    display: block;
+                    overflow: hidden;
+                    width: 100%;
+
+                    .bubble {
+                        @include border-radius(5px);
+
+                        background-color: #FBFFFB;
+                        border: 1px solid #B4EBB0;
+                        margin: 20px 10px;
+                        padding: 5px 10px;
+                        float: left;
+                        width: 75%;
+
+                        .details {
+                            border-bottom: 1px solid #B4EBB0;
+                            margin-bottom: 10px;
+                            padding-bottom: 5px;
+                            overflow: hidden;
+                            width: 100%;
+
+                            .author {
+                                color: #515051;
+                                float: left;
+                            }
+
+                            .date {
+                                color: #CCD4DC;
+                                float: right;
+                                font-size: 12px;
+                            }
+                        }
+
+                        p {
+                            margin: 10px;
+                        }
+
+                        &.me {
+                            background-color: #F7FEFF;
+                            border: 1px solid #9DD8E1;
+                            float: right;
+
+                            .details {
+                                border-bottom: 1px solid #9DD8E1;
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -114,9 +114,10 @@ class MessageController extends HTMLController {
     public function composeAction() {
         ?>
         <div id="groupMessages" class="chat_area">
-            <div class="group_message_toolbar">
-                <div class="group_message_title_top">
-                    <div class="group_message_compose">Compose a new message</div>
+            <div class="chat_details">
+                <div class="chat_options">
+                    <div class="subject">Compose a new message</div>
+                    <div style="clear: both"></div>
                 </div>
             </div>
             <form class="compose_form">
@@ -183,49 +184,53 @@ class MessageController extends HTMLController {
                     {
                         $groupMembers = implode(", ", $groupUsernames);
                     }
-            ?>
+                ?>
 
-            <div class="group_message_toolbar">
-                <div class="group_message_title_top">
-                    <div class="group_message_title"><?php echo $discussion->getSubject(); ?></div>
-                    <div class="group_message_title_icon close"><i class="fa fa-times"></i></div>
-                    <div class="group_message_title_icon"><i class="fa fa-cog"></i></div>
-                    <div style="clear: both"></div>
+                <div class="chat_details">
+                    <div class="chat_options">
+                        <div class="subject"><?php echo $discussion->getSubject(); ?></div>
+                        <div class="icon close"><i class="fa fa-times"></i></div>
+                        <div class="icon"><i class="fa fa-cog"></i></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div class="members">
+                        <?php echo $groupMembers; ?>
+                    </div>
                 </div>
-                <div class="group_message_title_bottom">
-                    <div class="group_message_title_members"><?php echo $groupMembers; ?></div>
-                </div>
-            </div>
 
-
-            <div style="clear: both"></div>
-
-            <div class="group_message_scroll">
-
-                <table class="group_message">
+                <div class="scrollable_messages">
+                    <ul class="messages">
 
                     <?php
-                    $prev_author = null;
-                    foreach($messages as $id) {
-                        $msg = new Message($id);
-                        $who = "other";
-                        if ($msg->getAuthor()->getId() == $_SESSION['playerId'])
-                            $who = "me";
-                        echo "<tr><td>";
-                        if ($msg->getAuthor()->getID() != $prev_author)
-                            echo "<div class='group_message_author_$who'>{$msg->getAuthor()->getUsername()}</div>";
-                        echo "<div class='group_message_content group_message_from_$who'>";
-                        echo $msg->getContent();
-                        echo "</div>";
-                        echo "<div class='group_message_date_$who'>{$msg->getCreationDate()}</div>";
-                        echo "</td></tr>";
-                        $prev_author = $msg->getAuthor()->getID();
-                    }
+                        $prev_author = null;
+
+                        foreach($messages as $id)
+                        {
+                            $msg = new Message($id);
+                            $sentByMe = ($msg->getAuthor()->getId() == $_SESSION['playerId']);
+
+                            echo '<li>';
+                            echo '    <div class="bubble' . (($sentByMe) ? " me" : "" ) . '">';
+
+                            // Only display the author details for when the message wasn't sent from the previous user
+                            if ($msg->getAuthor()->getID() != $prev_author)
+                            {
+                                echo '        <div class="details">';
+                                echo "            <div class='author'>{$msg->getAuthor()->getUsername()}</div>";
+                                echo "            <div class='date'>{$msg->getCreationDate()}</div>";
+                                echo '        </div>';
+                            }
+
+                            echo "        <p>{$msg->getContent()}</p>";
+                            echo '    </div>';
+                            echo '</li>';
+
+                            $prev_author = $msg->getAuthor()->getID();
+                        }
                     ?>
 
-                </table> <!-- end .group_message -->
-
-            </div> <!-- end .group_message_scroll -->
+                    </ul>
+                </div>
 
             <form class="alt_compose_form" autocomplete="off">
                 <input type="text" id="composeArea" class="input_compose_area" placeholder="Enter your message here..." />
