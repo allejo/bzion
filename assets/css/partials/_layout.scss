@@ -136,13 +136,13 @@
         background-color: $bodyBackground;
         height: 100%;
         overflow: hidden;
+        font-family: $contentFont;
 
         // This will be our normal page with information
         article {
             border-bottom: 1px solid $borderColor;
             margin: 30px auto 0;
             width: 900px;
-            font-family: $contentFont;
 
             // This will always be the title of the article or the page
             h1 {
@@ -150,6 +150,7 @@
                 color: #FFFFFF;
                 font-size: 20px;
                 text-align: center;
+                font-family: $mainFont;
                 padding: 5px 0;
             }
 
