@@ -2,7 +2,7 @@
     margin-top: 30px;
 
     section {
-        border-bottom: 1px solid $border_color;
+        border-bottom: 1px solid $borderColor;
         margin: 0 auto;
         width: 900px;
 
@@ -30,7 +30,7 @@
 
                 .winner {
                     text-align: right;
-                    border-right: 1px solid $border_color;
+                    border-right: 1px solid $borderColor;
                     overflow: visible;
                 }
 
@@ -62,7 +62,7 @@
 
         .match_details {
             background-color: #efefef;
-            border-top: 1px solid $border_color;
+            border-top: 1px solid $borderColor;
             display: none;
             overflow: hidden;
             padding-bottom: 10px;
@@ -133,13 +133,13 @@
     height: 100%;
 
     .content {
-        background-color: $contentBackground;
         height: 100%;
         overflow: hidden;
+        font-family: $contentFont;
 
         // This will be our normal page with information
         article {
-            border-bottom: 1px solid $border_color;
+            border-bottom: 1px solid $borderColor;
             margin: 30px auto 0;
             width: 900px;
 
@@ -147,19 +147,18 @@
             h1 {
                 background-color: $mainColor;
                 color: #FFFFFF;
-                font-family: "Open Sans";
                 font-size: 20px;
                 text-align: center;
+                font-family: $mainFont;
                 padding: 5px 0;
             }
 
             // The content of the page
             p {
                 background-color: #FFFFFF;
-                border-left: 1px solid $border_color;
-                border-right: 1px solid $border_color;
+                border-left: 1px solid $borderColor;
+                border-right: 1px solid $borderColor;
                 border-top: none;
-                font-family: Merriweather;
                 padding: 12px;
                 line-height: 1.5em;
             }
@@ -167,8 +166,8 @@
             // If the page has an author, such as a news article or a ban announcement, the footer is where the author would go
             footer {
                 background-color: #FFFFFF;
-                border-left: 1px solid $border_color;
-                border-right: 1px solid $border_color;
+                border-left: 1px solid $borderColor;
+                border-right: 1px solid $borderColor;
                 padding: 0 20px 10px;
                 text-align: right;
             }
@@ -260,7 +259,7 @@
 
             // Add a left border for all of the "columns" except for the first one
             &:nth-child(n+2) {
-                border-left: 1px solid $border_color;
+                border-left: 1px solid $borderColor;
             }
         }
 
@@ -276,7 +275,7 @@
         // Our first row, or unordered list, will always act as the header so design it respectively
         &:first-child {
             background-color: #FFFFFF;
-            border-bottom: 1px solid $border_color;
+            border-bottom: 1px solid $borderColor;
         }
     }
 }

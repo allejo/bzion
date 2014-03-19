@@ -2,11 +2,17 @@
 // Official colors
 //
 $mainColor: #3E4D58;
-$hoverColor: #2980b9;
-$bodyBackground: #2c3e50;
-$contentBackground: #2c3e50;
-$border_color: #BDBDBD;
-$orange: #E69500;
+$bodyBackground: #B2D3DF;
+$hoverColor: #e67e22;
+$borderColor: #BDBDBD;
+$borderColorLight: #EEF1F4;
+
+//
+// Fonts
+//
+$mainFont: 'Open Sans', sans-serif;
+$contentFont: 'Merriweather', serif;
+
 
 //
 // Global variables
@@ -28,7 +34,7 @@ html, body {
 body {
     background-color: $bodyBackground;
     display: table;
-    font-family: Open Sans, Sans-Serif;
+    font-family: $mainFont;
     font-size: 1em;
     width: 100%;
 }
@@ -37,7 +43,7 @@ a {
     color: $mainColor;
 
     &:hover {
-        color: $orange;
+        color: $hoverColor;
     }
 }
 
