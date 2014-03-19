@@ -52,7 +52,7 @@ abstract class Service {
     }
 
     /**
-     * @param SessionInterface|null $session
+     * @param SessionInterface $session
      */
     public static function setSession($session) {
         self::getRequest()->setSession($session);

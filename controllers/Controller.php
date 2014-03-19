@@ -30,9 +30,10 @@ abstract class Controller {
     /**
      * Call the controller's action specified by the $parameters array
      *
+     * @param string|null $action The action name to call, null to invoke the default one
      * @return void
-    */
-    public function callAction() {
+     */
+    public function callAction($action=null) {
         $action = $this->parameters['_action'];
 
         $this->setup();
@@ -41,6 +42,21 @@ abstract class Controller {
         $this->handleResponse($ret, $action);
 
         $this->cleanup();
+    }
+
+    /**
+     * Forward the request to another action
+     *
+     * @todo Forward the request to another controller
+     * @param string $action The action to forward the request to
+     * @param array $params An additional associative array of parameters to provide to the action
+     * @return void
+     */
+    protected function forward($action, $params=array()) {
+        $args = array_merge($this->parameters, $params);
+
+        $ret = $this->callMethod($action . 'Action', $args);
+        $this->handleResponse($ret, $action);
     }
 
     /**
@@ -89,23 +105,30 @@ abstract class Controller {
 
     private function getModelFromParameters($modelParameter, $routeParameters) {
         $refClass = $modelParameter->getClass();
+        $paramName  = $modelParameter->getName();
 
         if ($refClass === null || !$refClass->isSubclassOf("Model"))
             return null;
 
-        // Look for the object's ID/slugs in the routeParameters array
-        if (isset($routeParameters[$modelParameter->getName()]))
-            return $refClass->getMethod("fetchFromSlug")->invoke(null, $routeParameters[$modelParameter->getName()]);
+        if (is_object($routeParameters[$paramName]) &&
+            $refClass->getName() === get_class($routeParameters[$paramName])
+           ) {
+            // The model has already been instantiated - we don't need to do anything
+            return $routeParameters[$paramName];
+        }
 
-        if (isset($routeParameters[$modelParameter->getName() . 'Id']))
-            return $refClass->newInstance($routeParameters[$modelParameter->getName() . 'Id']);
+        // Look for the object's ID/slugs in the routeParameters array
+        if (isset($routeParameters[$paramName]))
+            return $refClass->getMethod("fetchFromSlug")->invoke(null, $routeParameters[$paramName]);
+
+        if (isset($routeParameters[$paramName . 'Id']))
+            return $refClass->newInstance($routeParameters[$paramName . 'Id']);
     }
 
     private function handleResponse($response, $action) {
         if (is_array($response)) {
             // The controller is probably expecting us to show a view to the
             // user, using the array provided to set variables for the template
-
             $templatePath = $this->getName() . "/$action.html.twig";
 
             echo $this->render($templatePath, $response);
@@ -147,7 +170,7 @@ abstract class Controller {
      * @param array $parameters An array of parameters to pass to the view
      * @return string The rendered view
      */
-    protected function render($view, $parameters) {
+    protected function render($view, $parameters=array()) {
         $template = Service::getTemplateEngine();
         return $template->render($view, $parameters);
     }
