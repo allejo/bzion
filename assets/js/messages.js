@@ -30,7 +30,7 @@ $(document).ready(function() {
 var pageSelector = $(".page");
 
 // Response submit event
-pageSelector.on("submit", ".alt_compose_form", function(event) {
+pageSelector.on("submit", ".reply_form", function(event) {
     // Don't let the link change the web page,
     // AJAX will handle the click
     event.preventDefault();
