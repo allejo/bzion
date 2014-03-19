@@ -27,9 +27,10 @@ $(document).ready(function() {
 
 // Use "on" instead of just "click"/"submit", so that new elements of that class added
 // to the page using $.load() also respond to events
+var pageSelector = $(".page");
 
 // Response submit event
-$(".page").on("submit", ".alt_compose_form", function(event) {
+pageSelector.on("submit", ".alt_compose_form", function(event) {
     // Don't let the link change the web page,
     // AJAX will handle the click
     event.preventDefault();
@@ -38,17 +39,17 @@ $(".page").on("submit", ".alt_compose_form", function(event) {
 });
 
 // Discussion create event
-$(".page").on("submit", ".compose_form", function(event) {
+pageSelector.on("submit", ".compose_form", function(event) {
     event.preventDefault();
     sendMessage();
 });
 
 // Group click event
-$(".page").on("click", ".chats a", function(event) {
+pageSelector.on("click", ".chats a", function(event) {
     event.preventDefault();
     redirect($(this).attr("data-id"));
 });
-$(".page").on("click", ".compose-link", function(event) {
+pageSelector.on("click", ".compose-link", function(event) {
     event.preventDefault();
     redirect();
 });
@@ -79,13 +80,13 @@ function sendResponse() {
             l.stop();
 
         // Find the notification type
-        type = msg.success ? "success" : "error";
+        var type = msg.success ? "success" : "error";
 
         notify(msg.message, type);
         if (msg.success)
             updatePage();
     });
-};
+}
 
 /**
  * Perform an AJAX request to create a new message group
@@ -97,10 +98,11 @@ function sendMessage() {
     }
 
     // Generate a comma-separated list of recipients which the AJAX script will read
-    recipients = ""
+    var recipients = ""
+    var recipientSelector = $("#compose_recipients");
 
-    if ($("#compose_recipients").val())
-        recipients = $("#compose_recipients").val().join(',')
+    if (recipientSelector.val())
+        recipients = recipientSelector.val().join(',')
 
     $.ajax({
         type: "POST",
@@ -116,7 +118,7 @@ function sendMessage() {
             l.stop();
 
         // Find the notification type
-        type = msg.success ? "success" : "error";
+        var type = msg.success ? "success" : "error";
 
         notify(msg.message, type);
 
@@ -124,14 +126,13 @@ function sendMessage() {
             redirect(msg.id);
         }
     });
-};
+}
 
 function redirect(groupId) {
-    groupID = typeof groupId !== 'undefined' ? groupId : null;
-
+    var groupId = typeof groupId !== 'undefined' ? groupId : null;
     var stateObj = { group: groupId };
+    var url = baseURLNoHost + "/messages";
 
-    url = baseURLNoHost + "/messages";
     url += (groupId) ? "/"+groupId : "";
 
     history.pushState(stateObj, "", url);
