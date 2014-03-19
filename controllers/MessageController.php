@@ -20,8 +20,9 @@ class MessageController extends HTMLController {
             <section class="toolbar">
                 <ul>
                     <li class="separator-bottom">
-                        <a href="<?= $this->generate("message_list") ?>" class="compose-link">
+                        <a href="<?= $this->generate("message_list") ?>">
                             <i class="fa fa-pencil-square-o"></i>
+                            <span>New</span>
                         </a>
                     </li>
 

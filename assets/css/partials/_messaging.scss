@@ -26,6 +26,10 @@
                         font-size: 30px;
                     }
 
+                    span {
+                        display: block;
+                    }
+
                     &:hover {
                         color: #FFFFFF;
                     }
@@ -36,7 +40,7 @@
                 }
 
                 &.separator-bottom {
-                    border-bottom: 4px double #FFFFFF;
+                    border-bottom: 4px solid #FFFFFF;
 
                     // We're only adding this small margin in order to make the button look more centered
                     .fa-pencil-square-o {
