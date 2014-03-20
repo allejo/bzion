@@ -7,9 +7,8 @@ function initializeChosen() {
 function initPage() {
     if ($("#groupMessages").attr("data-id")) {
         // Scroll message list to the bottom
-        $(".group_message_scroll").each(function() {
-            this.scrollTop = this.scrollHeight;
-        });
+        var messageView = $("#messageView");
+        messageView.scrollTop(messageView.height());
     } else {
         initializeChosen();
     }

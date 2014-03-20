@@ -200,7 +200,7 @@ class MessageController extends HTMLController {
                 </div>
 
                 <div class="scrollable_messages">
-                    <ul class="messages">
+                    <ul id="messageView" class="messages">
 
                     <?php
                         $prev_author = null;
