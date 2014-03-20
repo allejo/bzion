@@ -11,6 +11,10 @@ Konstantinos Kanavouras (kongr45gpen/alezakos)
 Matthew Pavia (tw1sted)  
 Ashvala Vinay (ashvala)
 
+## Demo
+
+A demo site is up at http://bzpro.net/bzion/ with the latest version of the master branch.
+
 ## Documentation
 
 BZiON's source code is thoroughly documented in order for anyone to be able to jump into the project. All of the phpDoc for the classes can be found on [alezakos' website](http://helit.org/bziondoc/phpdoc/).
