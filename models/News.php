@@ -108,10 +108,10 @@ class News extends Model {
 
     /**
      * Get all the news entries in the database that aren't disabled or deleted
-     * @return array An array of news IDs
+     * @return News[] An array of news objects
      */
     public static function getNews() {
-        return parent::fetchIdsFrom("status", array("disabled", "deleted"), "s", true, "ORDER BY updated DESC");
+        return self::arrayIdToModel(self::fetchIdsFrom("status", array("disabled", "deleted"), "s", true, "ORDER BY updated DESC"));
     }
 
 }

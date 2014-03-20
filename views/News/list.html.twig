@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block content %}
+    {% for article in news %}
+        <article>
+            <h1>{{ article.subject }}</h1>
+            <p>{{ article.content }}</p>
+            <footer>
+                Posted by <a href="{{ article.author.url }}">{{ article.author.username }}</a> {{ article.updated }}
+            </footer>
+        </article>
+    {% endfor %}
+{% endblock %}
