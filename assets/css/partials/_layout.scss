@@ -176,6 +176,36 @@
     }
 }
 
+.profile_page{
+
+    font-family: $mainFont;
+    font-weight: 300;
+    margin-top: 30px;
+    .avatar_player{
+        float: right; 
+        width: 30%;
+    }
+    .descript_player{ 
+        font-family: $contentFont;
+        width: 43em;
+        font-weight: normal;
+        line-height: 1.5em;
+    }
+}
+.label{
+    margin-bottom: 30px;
+
+    .label_team{
+
+        font-weight: normal;
+    }
+}
+
+.player_name{
+    margin-top: 20px;
+    font-size: 2em;
+}
+
 // Because tables are atrocious for responsive designs, we have our own CSS to give unordered lists the appearance of
 // being in columns and rows
 .table {
