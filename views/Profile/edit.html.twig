@@ -15,8 +15,8 @@
             {% for i in -12..12 %}
                 $plus = ($i >= 0) ? "+" : "";
                 <option value="{{ i }}">GMT
-                {% if i >= 0 %}+{% else %}-{% endif %}
-                {{ i }}</option>
+                {% if i >= 0 %}+{% endif %}
+                {{- i }}</option>
             {% endfor %}
         </select><br />
         Profile comments:<br /><textarea value="description" rows="5" cols="40" name="description" class="profile_description">{{ player.description }}</textarea><br />
@@ -26,4 +26,8 @@
         </select><br />
         <button onclick="updateProfile()" type="button" class="ladda-button" data-style="zoom-out"><span class="ladda-label">Update</span></button>
     </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ request.baseURL }}/assets/js/profile.js"></script>
 {% endblock %}

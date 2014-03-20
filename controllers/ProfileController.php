@@ -15,13 +15,6 @@ class ProfileController extends HTMLController {
         $this->me = new Player($session->get("playerId"));
     }
 
-    public function cleanup() {
-        $footer = new Footer();
-
-        $footer->addScript("assets/js/profile.js");
-        $footer->draw();
-    }
-
     public function editAction() {
         return array("player" => $this->me, "countries" => Country::getCountries());
     }
