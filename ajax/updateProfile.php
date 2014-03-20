@@ -6,18 +6,19 @@ $error = false;
 $message = "Your profile was successfully updated";
 
 try {
+    $request = Service::getRequest();
+    $session = $request->getSession();
+    $post    = $request->request;
 
-    $header = new Header();
-
-    if (!isset($_SESSION['username'])) {
+    if (!$session->has("username")) {
         throw new Exception("You need to be logged in to do this.");
     }
 
-    $me = new Player($_SESSION['playerId']);
+    $me = new Player($session->get("playerId"));
 
-    $me->setAvatar($_POST['avatar']);
-    $me->setDescription($_POST['description']);
-    $me->setTimezone($_POST['timezone']);
+    $me->setAvatar($post->get("avatar"));
+    $me->setDescription($post->get("description"));
+    $me->setTimezone($post->get("timezone"));
 
 } catch (Exception $e) {
     $error = true;

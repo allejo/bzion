@@ -1,12 +1,5 @@
 <?php
 
-
-if(session_id() == '') {
-    // Session hasn't started
-    session_start();
-}
-
-
 /**
  * The header used in HTML pages
  */
@@ -151,7 +144,7 @@ class Header extends Controller
         //$host = $absolute ? Service::getRequest()->getSchemeAndHttpHost() : "";
 
         //return $host . Service::getRequest()->getBasePath();
-        if($absolute) 
+        if($absolute)
             return Service::getRequest()->getSchemeAndHttpHost();
         else
             return Service::getRequest()->getBasePath();

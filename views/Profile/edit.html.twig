@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<h3>Edit Profile</h3>
+    <form>
+        Avatar: <input type="text" name="avatar" value="{{ player.avatar }}" size="100" class="profile_avatar"><br />
+        Country: <select name="country" class="profile_country">
+            {% for country in countries %}
+                <option value="{{ country.id }}">{{ country.name }}</option>
+            {% endfor %}
+        </select><br />
+        Timezone: <select name="timezone" class="profile_timezone">
+            {% for i in -12..12 %}
+                $plus = ($i >= 0) ? "+" : "";
+                <option value="{{ i }}">GMT
+                {% if i >= 0 %}+{% else %}-{% endif %}
+                {{ i }}</option>
+            {% endfor %}
+        </select><br />
+        Profile comments:<br /><textarea value="description" rows="5" cols="40" name="description" class="profile_description">{{ player.description }}</textarea><br />
+        Theme: <select class="themes">
+            <option>Industrial</option>
+            <option>Colorful</option>
+        </select><br />
+        <button onclick="updateProfile()" type="button" class="ladda-button" data-style="zoom-out"><span class="ladda-label">Update</span></button>
+    </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <h2>{{ player.username }}</h2><br />
+
+    Team:
+    {% if player.team.valid %}
+        <a href="{{ player.team.url }}">{{ player.team.name }}</a>
+    {% else %}
+        <em>None</em>
+    {% endif %}
+    <br />
+
+    Joined: {{ player.joinedDate }}<br />
+
+    <br />{{ player.description }}<br />
+
+    <br /><a href='{{ url('profile_edit') }}'>Edit your profile...</a><br />
+{% endblock %}

@@ -59,7 +59,7 @@ class Country extends Model {
      * @return array An array of country IDs
      */
     public static function getCountries() {
-        return parent::fetchIds();
+        return self::arrayIdToModel(self::fetchIds());
     }
 
 }
