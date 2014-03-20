@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Teams{% endblock %}
+
+{% block content %}
+    <div class="table teams">
+        <ul>
+            <li>Name</li>
+            <li>Rating</li>
+            <li>Leader</li>
+            <li>Members</li>
+            <li>Matches</li>
+            <li>Activity</li>
+        </ul>
+
+    {% for team in teams %}
+        <ul>
+            <li><a href="{{ team.url }}">{{ team.name }}</a>
+            <li>{{ team.elo }}</li>
+            <li>{{ team.leader.username }}</li>
+            <li>{{ team.numMembers }}</li>
+            <li><a href="{{ team.matchesURL }}">{{ team.numTotalMatches }}</a></li>
+            <li>{{ team.activity }}
+        </ul>
+    {% endfor %}
+
+    </div>
+{% endblock %}

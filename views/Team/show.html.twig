@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Teams :: {{ team.name }}{% endblock %}
+
+{% block content %}
+    <div class='team_name'>{{ team.name }}</div><br />
+    <div class='team_rating'>ELO: {{ team.elo }}</div><br />
+    <div class='team_leader'>Leader: <a href="{{ team.leader.url }}">{{ team.leader.username }}</a></div><br />
+    Matches: <a href="{{ team.matchesURL }}">{{ team.numTotalMatches }}</a><br />
+    Members: {{ team.numMembers }}<br />
+    Activity: {{ team.activity }}<br />
+    Created: {{ team.created }}<br /><br />
+{% endblock %}
