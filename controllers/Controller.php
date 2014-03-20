@@ -107,7 +107,13 @@ abstract class Controller {
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 
-        if ($refClass === null || !$refClass->isSubclassOf("Model"))
+        if ($refClass === null)
+            return null;
+
+        if ($refClass->getName() == "Symfony\Component\HttpFoundation\Request")
+            return $this->getRequest();
+
+        if (!$refClass->isSubclassOf("Model"))
             return null;
 
         if (is_object($routeParameters[$paramName]) &&
