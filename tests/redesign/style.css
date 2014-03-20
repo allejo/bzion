@@ -74,63 +74,214 @@ a:hover {
 }
 
 .content {
-    width: 75%;
+    width: 82.5%;
     background-color: #ecf0f1;
     margin-left: 9%;
     margin-top: 5%;
     color: #34495e;
     text-align: center;
-    padding: 4%;
 }
 
     .content header {
         font-size: 40px;
+        padding: 4%;
     }
 
     .content article {
         font-family: 'Merriweather', serif;
         font-size: 16px;
-        padding-top: 5%;
     }
 
-    .content article.news .entry {
+.messages {
+}
+
+    .messages article {
+        font-family: 'Montserrat', sans-serif;
+        height: 100%;
+    }
+
+        .messages article .toolbar {
+            background-color: #34495e;
+            color: #ecf0f1;
+        }
+
+        .messages article .toolbar .tool {
+            display: inline-block;
+            background-color: #34495e;
+            color: #ecf0f1;
+            line-height: 140%;
+            font-size: 350%;
+            padding: 0 5%;
+        }
+
+        .messages article .toolbar .tool:hover {
+            cursor: pointer;
+            background-color: #1abc9c;
+        }
+
+        .messages article .groups {
+            float: left;
+            width: 35%;
+        }
+
+            .group {
+                width: 100%;
+                height: 90px;
+                /*background-color: #1abc9c;*/
+                border-bottom: 1px solid #34495e;
+                text-align: left;
+            }
+
+            .group:hover {
+                background-color: #F9FDFE;
+                cursor: pointer;
+            }
+
+                .group .title {
+                    font-size: 150%;
+                    padding: 2% 4% 0 4%;
+                }
+
+                .group .members {
+                    padding: 0 4% 2% 4%;
+                    font-size: 100%;
+                    color: #4E6378;
+                }
+
+                .group .last_message {
+                    padding: 0 4%;
+
+                }
+
+            /*.group:last-child {
+                border-bottom: none;
+            }*/
+
+        .messages article .chat {
+            float: left;
+            width: 64%;
+            border-left: 1px solid #34495e;
+            padding: 3% 0 1% 0;
+        }
+
+            .chat .message {
+                width: 65%;
+                border-radius: 5px;
+                margin: 1% 5%;
+                -webkit-background-clip: padding-box;
+                background-clip: padding-box;
+            }
+
+            .message.right {
+                float: right;
+                background-color: #F7FEFF;
+                border: 1px solid #9DD8E1;
+            }
+
+            .message.left {
+                float: left;
+                background-color: #FBFFFB;
+                border: 1px solid #B4EBB0;
+            }
+
+                .message .author_info {
+                    border-bottom: 1px solid #9DD8E1;
+                    padding: 2% 0 1% 0;
+                    margin: 0 2%;
+                }
+
+                .author_info .author {
+                    float: left;
+                }
+
+                .author_info .time {
+                    float: right;
+                }
+
+            .message .text {
+                padding: 1% 5%;
+            }
+
+                .text .text_entry {
+                    padding: 2% 0;
+                }
+
+            .input {
+                width: 100%;
+                margin-top: 5%;
+            }
+
+                .input .text {
+                    width: 70%;
+                    line-height: 20px;
+                    padding: 10px 10px;
+                    font-size: 20px;
+                }
+
+                .input .submit {
+                    width: 15%;
+                    height: 40px;
+                    background-color: #34495e;
+                    color: #ecf0f1;
+                    border: none;
+                    margin-left: 2%;
+                    font-size: 20px;
+                }
+                    .submit:hover {
+                        cursor: pointer;
+                        background-color: #2c3e50;
+                    }
+
+.news {
+    
+}
+
+    .news article {
+        padding: 4%;
+    }
+
+    .news article .entry {
         text-align: left;
-        padding: 2% 5%;
+        padding: 0 5%;
     }
 
-    .content .news .entry header {
+    .news .entry header {
         color: #34495E;
     }
 
-    .content article.news .entry header {
+    .news article .entry header {
         padding: 1%;
         font-family: 'Montserrat', sans-serif;
     }
 
-        .content article.news .entry header .title {
+        .news article .entry header .title {
             font-size: 30px;
             font-weight: 300;
         }
 
-        .content article.news .entry header .author {
+        .news article .entry header .author {
             font-size: 16px;
             color: #4E6378;
         }
 
-            .content article.news .entry header .author a {
+            .news article .entry header .author a {
                 color: #4E6378;
             }
 
-            .content article.news .entry header .author a:hover {
+            .news article  .entry header .author a:hover {
                 /*color: #{the color of the page}; */
             }
 
-        .content article.news .entry article {
+        .news article  .entry article {
             line-height: 1.6em;
             padding: 1% 5% 2% 1%;
         }
 
-    .content article.players ul {
+.players article {
+    padding: 4%;
+}
+
+    .players article ul {
         list-style: none;
         width: 100%;
         text-align: center;
@@ -138,30 +289,38 @@ a:hover {
 
     }
 
-        .content article.players ul li {
+        .players article ul li {
             /*text-align: left;*/
             /*padding: 1%;*/
         }
 
-        .content article.players ul li.table_header {
-            background-color: #34495e;
+        .players article ul li ul {
+            background-color: #bdc3c7;
+        }
+
+        .players article ul li.table_header {
             font-family: 'Montserrat', sans-serif;
         }
 
-        .content article.players ul li.table_header ul li {
+        .players article ul li.table_header ul {
+            background-color: #34495e;
+        }
+
+        .players article ul li.table_header ul li {
             color: #ecf0f1;
         }
 
-            .content article.players ul li ul {
-            }
+        .players article ul li ul li {
+            display: inline-block;
+            width: 20%;
+            padding: 1%;
+        }
 
-                .content article.players ul li ul li {
-                    display: inline-block;
-                    width: 20%;
-                    padding: 1%;
-                }
+.teams article {
+    padding: 4%;
+}
 
-    .content article.teams ul {
+    .teams article ul {
         list-style: none;
         width: 100%;
         text-align: center;
@@ -169,30 +328,37 @@ a:hover {
 
     }
 
-        .content article.teams ul li {
+        .teams article ul li {
             /*text-align: left;*/
             /*padding: 1%;*/
         }
 
-        .content article.teams ul li.table_header {
-            background-color: #34495e;
+        .teams article ul li ul {
+            background-color: #bdc3c7;
+        }
+
+        .teams article ul li.table_header {
             font-family: 'Montserrat', sans-serif;
         }
 
-        .content article.teams ul li.table_header ul li {
+        .teams article ul li.table_header ul {
+            background-color: #34495e;
+        }
+
+        .teams article ul li.table_header ul li {
             color: #ecf0f1;
         }
 
-            .content article.teams ul li ul {
+            .teams article ul li ul {
             }
 
-                .content article.teams ul li ul li {
+                .teams article ul li ul li {
                     display: inline-block;
                     width: 13%;
                     padding: 1%;
                 }
 
-                .content article.teams ul li ul li:first-child {
+                .teams article ul li ul li:first-child {
                     width: 20%;
                 }
 
