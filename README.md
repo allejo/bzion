@@ -13,7 +13,7 @@ Ashvala Vinay (ashvala)
 
 ## Demo
 
-A demo BZiON instillation is set up at http://bzpro.net/bzion/ with the latest version of the master branch.
+A demo BZiON installation is set up at http://bzpro.net/bzion/ with the latest version of the master branch.
 
 ## Documentation
 
