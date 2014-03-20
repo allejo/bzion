@@ -44,7 +44,7 @@
          -moz-border-radius-bottomleft: $radius;
             border-bottom-right-radius: $radius;
              border-bottom-left-radius: $radius;
-    
+
     background-clip: padding-box;
 }
 
@@ -55,7 +55,7 @@
            -moz-border-radius-topleft: $radius;
             border-bottom-left-radius: $radius;
                border-top-left-radius: $radius;
-    
+
     background-clip: padding-box;
 }
 
@@ -63,7 +63,7 @@
        -webkit-border-top-left-radius: $radius;
            -moz-border-radius-topleft: $radius;
                border-top-left-radius: $radius;
-    
+
     background-clip: padding-box;
 }
 
@@ -79,7 +79,7 @@
     -webkit-border-bottom-left-radius: $radius;
         -moz-border-radius-bottomleft: $radius;
             border-bottom-left-radius: $radius;
-    
+
     background-clip: padding-box;
 }
 
@@ -108,4 +108,11 @@
            -moz-box-shadow: $top $left $blur $color;
                 box-shadow: $top $left $blur $color;
     }
+}
+
+//
+// Functions
+//
+@function strip-units($number) {
+    @return $number / ($number * 0 + 1);
 }

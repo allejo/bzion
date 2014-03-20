@@ -64,10 +64,10 @@ function readpacket(&$fp) {
  * @param string $hostport
  */
 function bzfquery ($hostport) {
+  $server = array();
   list($server['host'], $server['port']) = explode(":", $hostport, 2);
   $protocol = 'tcp';
   $get_prot = getprotobyname($protocol);
-  $server = array();
   if ($get_prot == -1) {
      // if nothing found, returns -1
      echo 'Invalid Protocol';

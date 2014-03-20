@@ -1,4 +1,5 @@
 .messaging {
+    display: table-cell;
     font-family: $mainFont;
     height: 100%;
 
@@ -56,6 +57,8 @@
         border-right: 1px solid $borderColorLight;
         float: left;
         height: 100%;
+        max-height: 100%;
+        overflow: scroll;
         width: 350px;
 
         .compose {
@@ -145,6 +148,10 @@
     }
 
     .chat_area {
+        $detailsHeight: 64px;
+        $detailsLineHeight: 35px;
+        $composerHeight: 130px;
+
         background-color: #FFFFFF;
         display: inline-block;
         height: 100%;
@@ -162,7 +169,7 @@
         }
 
         .chat_details {
-            $detailsHeight: 35px;
+            height: $detailsHeight;
 
             .chat_options {
                 background-color: #FFFFFF;
@@ -173,14 +180,14 @@
                     float: left;
                     font-size: 20px;
                     font-weight: 100;
-                    line-height: $detailsHeight;
+                    line-height: $detailsLineHeight;
                     padding: 0 10px;
                     width: 70%;
                 }
 
                 .icon {
                     float: right;
-                    line-height: $detailsHeight;
+                    line-height: $detailsLineHeight;
                     padding: 0 10px;
 
                     &:hover {
@@ -206,9 +213,14 @@
         }
 
         .scrollable_messages {
-            overflow: scroll;
+            display: table;
+            height: calc(100% - #{$detailsHeight + $composerHeight});
+            width: 100%;
 
             .messages {
+                height: 100%;
+                overflow: scroll;
+
                 li {
                     display: block;
                     overflow: hidden;
@@ -325,7 +337,7 @@
         .reply_form {
             background-color: #F4F7FB;
             bottom: 0;
-            height: 130px;
+            height: $composerHeight;
             position: absolute;
             width: 100%;
 
