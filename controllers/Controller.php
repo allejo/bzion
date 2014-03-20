@@ -113,6 +113,9 @@ abstract class Controller {
         if ($refClass->getName() == "Symfony\Component\HttpFoundation\Request")
             return $this->getRequest();
 
+        if ($refClass->getName() == "Symfony\Component\HttpFoundation\Session\Session")
+            return $this->getRequest()->getSession();
+
         if (!$refClass->isSubclassOf("Model"))
             return null;
 

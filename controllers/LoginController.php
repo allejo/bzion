@@ -1,11 +1,14 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 require_once("includes/checkToken.php");
 
 class LoginController extends HTMLController {
 
-    public function loginAction() {
-        $query = $this->getRequest()->query;
+    public function loginAction(Request $request) {
+        $query = $request->query;
+        $session = $request->getSession();
 
         if (!$query->has("token") || !$query->has("username")) {
             Header::go("home");
@@ -19,13 +22,8 @@ class LoginController extends HTMLController {
         $info = validate_token($token, $username, array(), $checkIP);
 
         if (isset($info)) {
-            if(session_id() == '') {
-                // Session hasn't started
-                session_start();
-            }
-
-            $_SESSION['username'] = $info['username'];
-            $_SESSION['groups'] = $info['groups'];
+            $session->set("username", $info['username']);
+            $session->set("groups", $info['groups']);
 
             $go = "home";
 
@@ -36,31 +34,31 @@ class LoginController extends HTMLController {
                 $player = Player::getFromBZID($info['bzid']);
             }
 
-            $_SESSION['playerId'] = $player->getId();
+            $session->set("playerId", $player->getId());
             $player->updateLastLogin();
 
             Player::saveUsername($player->getId(), $info['username']);
-            Visit::enterVisit($player->getId(), $_SERVER['REMOTE_ADDR'], gethostbyaddr($_SERVER['REMOTE_ADDR']), $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER']);
+            Visit::enterVisit($player->getId(),
+                              $request->getClientIp(),
+                              gethostbyaddr($request->getClientIp()),
+                              $request->server->get('HTTP_USER_AGENT'),
+                              $request->server->get('HTTP_REFERER'));
 
             Header::go($go);
 
         } else {
-            echo "There was an error processing your login. Please go back and try again.";
+            return "There was an error processing your login. Please go back and try again.";
         }
     }
 
-    public function logoutAction() {
-        // destroy the session and redirect to the previous page
-        // or to index.php if the page was loaded directly
-        $header = new Header();
-
-        session_destroy();
+    public function logoutAction(Request $request) {
+        $request->getSession()->invalidate();
 
         $loc = "/";
         $override = false;
 
-        if (isset($_SERVER["HTTP_REFERER"])) {
-            $loc = $_SERVER["HTTP_REFERER"];
+        if ($request->server->has('HTTP_REFERER')) {
+            $loc = $request->server->get('HTTP_REFERER');
             $override = true;
         }
 
