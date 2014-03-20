@@ -13,11 +13,11 @@ class PlayerController extends HTMLController {
                 $teamlink = '<a href="' . $playerTeam->getURL() . '">' . $teamlink . '</a>';
             }
 
-            echo "<b>" . $player->getUsername() . "</b><br />";
-            echo "Team: $teamlink<br />";
-            echo "Joined: " . $player->getJoinedDate() . "<br />";
-
-            echo "<br />", $player->getDescription() ,"<br />";
+            echo "<div class='label'>" . $player->getUsername() . "</div><br />";
+            echo "<div class='label label_team'> Team:" .  $teamlink . "</div>";
+            echo "<div class='label'> Joined: " . $player->getJoinedDate() . "</div>";
+            echo "<img class='avatar_player' src='".$player->getAvatar() . "'</div>";
+            echo "<div class='descript_player'>", $player->getDescription() ,"</div>";
         } else {
             $this->drawHeader("Players");
 
