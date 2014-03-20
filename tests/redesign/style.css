@@ -1,0 +1,241 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #ecf0f1;
+    color: #ecf0f1;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+.sidebar {
+    height: 100%;
+    width: 15%;
+    background-color: #34495e;
+    position: fixed;
+}
+
+.nav {
+    margin-top: 95%;
+}
+
+.link {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    color: #ecf0f1;
+    font-size: 18px;
+    text-align: center;
+}
+
+.link:hover {
+    cursor: pointer;
+}
+
+.link i {
+    font-size: 130%;
+    width: 15%;
+    float: left;
+    line-height: 250%;
+    margin: 0 15%;
+    text-align: center;
+}
+
+.link span {
+    float: left;
+    width: 45%;
+    text-align: left;
+}
+
+.pages {
+    width: 100%;
+    float: left;
+    height: 100%;
+}
+
+.page {
+    width: 85%;
+    height: 100%;
+    margin-left: 15%;
+    overflow: auto;
+}
+
+.content {
+    width: 75%;
+    background-color: #ecf0f1;
+    margin-left: 9%;
+    margin-top: 5%;
+    color: #34495e;
+    text-align: center;
+    padding: 4%;
+}
+
+    .content header {
+        font-size: 40px;
+    }
+
+    .content article {
+        font-family: 'Merriweather', serif;
+        font-size: 16px;
+        padding-top: 5%;
+    }
+
+    .content article.news .entry {
+        text-align: left;
+        padding: 2% 5%;
+    }
+
+    .content .news .entry header {
+        color: #34495E;
+    }
+
+    .content article.news .entry header {
+        padding: 1%;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+        .content article.news .entry header .title {
+            font-size: 30px;
+            font-weight: 300;
+        }
+
+        .content article.news .entry header .author {
+            font-size: 16px;
+            color: #4E6378;
+        }
+
+            .content article.news .entry header .author a {
+                color: #4E6378;
+            }
+
+            .content article.news .entry header .author a:hover {
+                /*color: #{the color of the page}; */
+            }
+
+        .content article.news .entry article {
+            line-height: 1.6em;
+            padding: 1% 5% 2% 1%;
+        }
+
+    .content article.players ul {
+        list-style: none;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+
+    }
+
+        .content article.players ul li {
+            /*text-align: left;*/
+            /*padding: 1%;*/
+        }
+
+        .content article.players ul li.table_header {
+            background-color: #34495e;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .content article.players ul li.table_header ul li {
+            color: #ecf0f1;
+        }
+
+            .content article.players ul li ul {
+            }
+
+                .content article.players ul li ul li {
+                    display: inline-block;
+                    width: 20%;
+                    padding: 1%;
+                }
+
+    .content article.teams ul {
+        list-style: none;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+
+    }
+
+        .content article.teams ul li {
+            /*text-align: left;*/
+            /*padding: 1%;*/
+        }
+
+        .content article.teams ul li.table_header {
+            background-color: #34495e;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .content article.teams ul li.table_header ul li {
+            color: #ecf0f1;
+        }
+
+            .content article.teams ul li ul {
+            }
+
+                .content article.teams ul li ul li {
+                    display: inline-block;
+                    width: 13%;
+                    padding: 1%;
+                }
+
+                .content article.teams ul li ul li:first-child {
+                    width: 20%;
+                }
+
+.yellow, .yellow_hover:hover, .yellow_hover.active {
+    background-color: #f1c40f;
+}
+
+.orange, .orange_hover:hover, .orange_hover.active {
+    background-color: #e67e22;
+}
+
+.red, .red_hover:hover, .red_hover.active {
+    background-color: #e74c3c;
+}
+
+.teal, .teal_hover:hover, .teal_hover.active {
+    background-color: #1abc9c;
+}
+
+.green, .green_hover:hover, .green_hover.active {
+    background-color: #2ecc71;
+}
+
+.blue, .blue_hover:hover, .blue_hover.active {
+    background-color: #3498db;
+}
+
+.purple, .purple_hover:hover, .purple_hover.active {
+    background-color: #9b59b6;
+}
+
+.silver {
+    background-color: #bdc3c7;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
