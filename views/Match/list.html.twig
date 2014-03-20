@@ -78,3 +78,7 @@
     {% endfor %}
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ request.getBaseURL() }}/assets/js/matches.js"></script>
+{% endblock %}

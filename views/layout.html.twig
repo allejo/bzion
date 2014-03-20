@@ -26,11 +26,16 @@
             </div>
         </div>
     <script>
-        var baseURL = "{{ request.getBaseURL()|e('js')  }}";
+        var baseURLNoHost = "{{ request.getBaseURL()|e('js')  }}";
+        var baseURL = "{{ request.getSchemeAndHTTPHost()|e('js') }}";
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="{{ request.getBaseURL() }}/assets/js/main.js"></script>
+
+    {% block javascripts %}
+
+    {% endblock %}
 
     </body>
 </html>
