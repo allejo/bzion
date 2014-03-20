@@ -213,6 +213,7 @@
         }
 
         .scrollable_messages {
+            display: table;
             height: calc(100% - #{$detailsHeight + $composerHeight});
             width: 100%;
 
