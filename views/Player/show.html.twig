@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Players :: {{ player.username }}{% endblock %}
+
+{% block content %}
+    <div class='profile_page'>
+        <img class='avatar_player' src='{{ player.avatar }}'>
+        <div class='label player_name'>{{ player.username }}</div>
+        <div class='label label_team'>Team:
+            {% if player.team.valid %}
+                <a href="{{ player.team.url }}">{{ player.team.name }}</a>
+            {% else %}
+                <em>None</em>
+            {% endif %}
+        </div>
+        <div class='label'>Joined: {{ player.joinedDate }}</div>
+        <div class='descript_player'>{{ player.description }}</div>
+    </div>
+{% endblock %}

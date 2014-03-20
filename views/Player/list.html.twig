@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Players{% endblock %}
+
+{% block content %}
+    <div class="table players">
+        <ul>
+            <li>Name</li>
+            <li>Team</li>
+            <li>Joined</li>
+        </ul>
+        
+    {% for player in players %}
+        <ul>
+            <li><a href="{{ player.url }}">{{ player.username }}</a>
+            <li>
+                {% if player.team.valid %}
+                    <a href="{{ player.team.link }}">{{ player.team.name }}</a>
+                {% endif %}
+            </li>
+            <li>{{ player.joinedDate }}</li>
+        </ul>
+    {% endfor %}
+    
+    </div>
+{% endblock %}
