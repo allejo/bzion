@@ -111,7 +111,7 @@ class Message extends Model
     public static function sendMessage($to, $from, $message, $status='sent')
     {
         $query = "INSERT INTO messages VALUES(NULL, ?, ?, NOW(), ?, ?)";
-        $params = array($to, $from, $message, $status);
+        $params = array($to, $from, htmlentities($message), $status);
 
         $db = Database::getInstance();
         $db->query($query, "iiss", $params);
