@@ -133,6 +133,7 @@
     height: 100%;
 
     .content {
+        display: table;
         height: 100%;
         overflow: hidden;
         font-family: $contentFont;
