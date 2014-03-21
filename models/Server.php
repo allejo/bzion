@@ -133,7 +133,10 @@ class Server extends Model
      * @return array The players on the server
      */
     public function getPlayers() {
-        return $this->info['player'];
+        if (isset($this->info['player']))
+            return $this->info['player'];
+
+        return array();
     }
 
     /**
@@ -192,7 +195,7 @@ class Server extends Model
      * @return array An array of server IDs
      */
     public static function getServers() {
-        return parent::fetchIdsFrom("status", array("active"), "s");
+        return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s"));
     }
 
 }
