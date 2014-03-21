@@ -56,7 +56,7 @@ class Country extends Model {
 
     /**
      * Get all the countries in the database
-     * @return array An array of country IDs
+     * @return Country[] An array of country objects
      */
     public static function getCountries() {
         return self::arrayIdToModel(self::fetchIds());

@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Session\Session;
-
 class ProfileController extends HTMLController {
     private $me;
 
@@ -9,7 +7,7 @@ class ProfileController extends HTMLController {
         $session = $this->getRequest()->getSession();
 
         if (!$session->has("username")) {
-            $header->go("home");
+            Header::go("home");
         }
 
         $this->me = new Player($session->get("playerId"));

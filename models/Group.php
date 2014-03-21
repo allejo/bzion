@@ -199,8 +199,7 @@ class Group extends UrlModel {
         $groups = Group::getGroups($id);
         $me = new Player($id);
 
-        foreach ($groups as $key => $value) {
-            $group = new Group($value);
+        foreach ($groups as $group) {
 
             // THIS DOESNT WORK
             if ($me->getLastlogin(false)->gt($group->getLastActivity(false))) {

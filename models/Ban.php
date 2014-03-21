@@ -139,7 +139,7 @@ class Ban extends Model {
 
     /**
      * Get all the bans in the database that aren't disabled or deleted
-     * @return array An array of ban IDs
+     * @return Ban[] An array of ban objects
      */
     public static function getBans() {
         return self::arrayIdToModel(self::fetchIds("ORDER BY updated DESC"));

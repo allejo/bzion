@@ -192,7 +192,7 @@ class Server extends Model
 
     /**
      * Get all the servers in the database that have an active status
-     * @return array An array of server IDs
+     * @return Server[] An array of server objects
      */
     public static function getServers() {
         return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s"));
