@@ -176,6 +176,7 @@ a:hover {
                 float: right;
                 background-color: #F7FEFF;
                 border: 1px solid #9DD8E1;
+                text-align: left;
             }
 
             .message.left {
