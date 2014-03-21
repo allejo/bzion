@@ -58,7 +58,7 @@
                     <p>
                         <strong>Server:</strong>
                         {% if match.serverAddress %}
-                            match.serverAddress
+                            {{ match.serverAddress }}
                         {% else %}
                             <em>No server Recorded</em>
                         {% endif %}
@@ -66,7 +66,7 @@
                     <p>
                         <strong>Replay File:</strong>
                         {% if match.replayFileName %}
-                            match.replayFileName
+                            {{ match.replayFileName }}
                         {% else %}
                             <em>No replay filename recorded</em>
                         {% endif %}
