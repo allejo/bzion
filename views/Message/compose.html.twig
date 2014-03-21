@@ -1,0 +1,41 @@
+{% extends 'Message/layout.html.twig' %}
+
+{% block messages %}
+    <div id="groupMessages" class="chat_area">
+            <div class="chat_details">
+                <div class="chat_options">
+                    <div class="subject">Compose a new message</div>
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+            <form class="compose_form">
+                <div class="input_group">
+                    <div class="input_group_row">
+                        <label for="compose_recipients">Recipients:</label>
+                        <div class="input_group_main" style="padding: 0">
+                            <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
+                                <option value=""> </option>
+                                <optgroup label="Players">
+                                    {% for player in players %}
+                                        {% if player.id != session.get('playerId') %}
+                                            <option value="{{ player.id }}">{{ player.username }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input_group_row">
+                        <label for="compose_subject">Subject:</label>
+                        <div class="input_group_main">
+                            <input id="compose_subject" name="subject" type="text" placeholder="Enter message subject">
+                        </div>
+                    </div>
+                </div>
+                <textarea id="composeArea" class="compose_area" placeholder="Enter your message here..."></textarea>
+                <div class="buttons">
+                    <button id="composeButton" type="submit" class="ladda-button button submit" data-style="zoom-out">Send</button>
+                </div>
+            </form>
+        </div>
+{% endblock %}

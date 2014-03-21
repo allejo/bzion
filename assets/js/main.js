@@ -10,7 +10,6 @@ $(document).ready(function() {
 /**
  * Show a notification
  * @todo Convert this to a class
- * @todo Style the notification
  * @param message string The message to display
  * @param type string Can be "success" or "error"
  */

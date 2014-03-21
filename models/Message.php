@@ -111,7 +111,7 @@ class Message extends Model
     public static function sendMessage($to, $from, $message, $status='sent')
     {
         $query = "INSERT INTO messages VALUES(NULL, ?, ?, NOW(), ?, ?)";
-        $params = array($to, $from, htmlentities($message), $status);
+        $params = array($to, $from, $message, $status);
 
         $db = Database::getInstance();
         $db->query($query, "iiss", $params);
@@ -126,11 +126,11 @@ class Message extends Model
     /**
      * Get all the messages in the database that are not disabled or deleted
      * @param int $id The id of the group whose messages are being retrieved
-     * @return array An array of message IDs
+     * @return Message[] An array of message IDs
      */
     public static function getMessages($id) {
-        return parent::fetchIds("WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
-                              "ssi", array("hidden", "deleted", $id));
+        return self::arrayIdToModel(self::fetchIds("WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
+                              "ssi", array("hidden", "deleted", $id)));
     }
 
 }

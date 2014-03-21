@@ -6,30 +6,34 @@ $error = false;
 $message = "Your message was sent successfully";
 
 try {
+    $request = Service::getRequest();
+    $session = $request->getSession();
+    $post    = $request->request;
 
-    $header = new Header();
-
-    if (!isset($_SESSION['username'])) {
+    if (!$session->has("username")) {
         throw new Exception("You need to be logged in to do this.");
     }
-    $playerId = $_SESSION['playerId'];
+    $playerId = $session->get("playerId");
 
     // Two different POST variable layouts are acceptable:
     //
     // 1. ?content=foo&group_to=123 (To send a response to an already existing group)
     // 2. ?content=foo&to=123,456,789&subject=bar (To create a new message group)
-    if (!isset($_POST['content'])) {
+    $content = $post->get("content");
+    if (!$content)
         throw new Exception("Bad request");
-    }
-    $content = $_POST['content'];
 
     if (trim($content) == "") {
         throw new Exception("You can't send an empty message!");
     }
 
-    if (isset($_POST['group_to'])) {
+    $group = $post->getInt("group_to");
+    $players_to = $post->get("to");
+    $rawSubject = $post->get("subject");
+
+    if ($group) {
         // Send a message to a group
-        $group_to = new Group($_POST['group_to']);
+        $group_to = new Group($group);
 
         if (!$group_to->isValid()) {
             throw new Exception("The message group you specified does not exist.");
@@ -40,18 +44,16 @@ try {
         }
 
         Message::sendMessage($group_to->getId(), $playerId, $content);
-    } elseif (!isset($_POST['to']) || !isset($_POST['subject'])) {
-        throw new Exception("Bad request");
-    } else {
+    } elseif ($players_to && $rawSubject) {
         // Create a group and send a message to it
 
-        $subject = htmlspecialchars($_POST['subject']);
-        $recipients = explode(',', $_POST['to']);
+        $subject = htmlspecialchars($rawSubject);
+        $recipients = explode(',', $players_to);
 
         if (trim($subject) == '')
             throw new Exception("You need to specify a subject for your message.");
 
-        if (count($recipients) < 1 || trim($_POST['to']) == '') {
+        if (count($recipients) < 1 || trim($players_to) == '') {
             if (DEVELOPMENT)
                 $recipients = array();
             else
@@ -74,6 +76,8 @@ try {
         $group_to = Group::createGroup($subject, array_unique($recipients));
 
         Message::sendMessage($group_to->getId(), $playerId, $content);
+    } else {
+        throw new Exception("Bad request");
     }
 
 } catch (Exception $e) {

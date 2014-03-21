@@ -122,19 +122,19 @@ class Group extends UrlModel {
     /**
      * Get a list containing the IDs of each member of the group
      * @param bool $hideSelf Whether to hide the currently logged in player
-     * @return array An array of player IDs
+     * @return Player[] An array of player IDs
      */
     public function getMembers($hideSelf=false) {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
         $params = array($this->id);
 
-        if ($hideSelf && isset($_SESSION['playerId'])) {
+        if ($hideSelf && Service::getSession()->has('playerId')) {
             $additional_query .= " AND `player` != ?";
             $types .= "i";
-            $params[] = $_SESSION['playerId'];
+            $params[] = Service::getSession()->get('playerId');
         }
-        return parent::fetchIds($additional_query, $types, $params, "player_groups", "player");
+        return Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
     }
 
     /**
@@ -165,7 +165,7 @@ class Group extends UrlModel {
      * Get all the groups in the database a player belongs to that are not disabled or deleted
      * @todo Move this to the Player class
      * @param int $id The id of the player whose groups are being retrieved
-     * @return array An array of group IDs
+     * @return Group[] An array of group objects
      */
     public static function getGroups($id) {
         $additional_query = "LEFT JOIN groups ON player_groups.group=groups.id
@@ -173,7 +173,7 @@ class Group extends UrlModel {
                              NOT IN (?, ?) ORDER BY last_activity DESC";
         $params = array($id, "disabled", "deleted");
 
-        return parent::fetchIds($additional_query, "iss", $params, "player_groups", "groups.id");
+        return self::arrayIdToModel(self::fetchIds($additional_query, "iss", $params, "player_groups", "groups.id"));
     }
 
     /**

@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+    <div class="messaging">
+        <section class="toolbar">
+            <ul>
+                <li class="separator-bottom">
+                    <a href="{{ url("message_list") }}">
+                        <i class="fa fa-pencil-square-o"></i>
+                        <span>New</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-inbox"></i>
+                        <span>Inbox</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-trash-o"></i>
+                        <span>Trash</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="conversations">
+            <form class="compose">
+                <div class="icon">
+                    <i class="fa fa-search"></i>
+                </div>
+                <input type="text" class="search" name="search" data-id="new" placeholder="Search..." />
+                <div class="icon">
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div style="clear: both"></div>
+            </form>
+
+            <ul class="chats">
+                {% for group in groups %}
+
+                    <li>
+                        <a data-id="{{ group.id }}" href="{{ group.url }}">
+                            <div class="subject">{{ group.subject }}</div>
+                            <div class="last_activity">{{ group.lastActivity }}</div>
+                            <div style="clear:both"></div>
+
+                            <div class="members">
+                                {% if group.members is not empty %}
+                                    {% for member in group.members %}
+                                            {{- member.username -}}
+                                            {% if not loop.last %}
+                                                {{- ', ' -}}
+                                            {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    No other recipients
+                                {% endif %}
+                            </div>
+                            <div class="last_message">
+                                <strong>{{ group.lastmessage.author.username }}:</strong>
+                                {{ group.lastmessage.summary(50) }}
+                            </div>
+                        </a>
+                    </li>
+
+                {% endfor %}
+            </ul>
+        </section>
+
+        {% block messages %}
+
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ request.baseURL }}/includes/ladda/dist/spin.min.js"></script>
+    <script src="{{ request.baseURL }}/includes/ladda/dist/ladda.min.js"></script>
+    <script src="{{ request.baseURL }}/includes/chosen/chosen.jquery.min.js"></script>
+    <script src="{{ request.baseURL }}/assets/js/messages.js"></script>
+{% endblock %}

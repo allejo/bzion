@@ -1,0 +1,62 @@
+{% extends 'Message/layout.html.twig' %}
+
+{% block messages %}
+    <div id="groupMessages" class="chat_area" data-id="{{ group.id }}">
+        <div class="chat_details">
+            <div class="chat_options">
+                <div class="subject">{{ group.subject }}</div>
+                <div class="icon close"><i class="fa fa-times"></i></div>
+                <div class="icon"><i class="fa fa-cog"></i></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="members">
+                {% if group.members is not empty %}
+                    {% for member in group.members %}
+                            {{- member.username -}}
+                            {% if not loop.last %}
+                                {{- ', ' -}}
+                            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    No other recipients
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="scrollable_messages">
+            <ul id="messageView" class="messages">
+                {% for message in messages %}
+                    <li>
+                        {% if message.author.id == session.get('playerId') %}
+                            <div class="bubble me">
+                        {% else %}
+                            <div class="bubble">
+                        {% endif %}
+                                {# Only display the author details for when the message wasn't sent from the previous user #}
+
+                                {% if message.author.id != previousAuthor %}
+                                    <div class="details">
+                                        <div class='author'>{{ message.author.username }}</div>
+                                        <div class='date'>{{ message.creationDate }}</div>
+                                    </div>
+                                {% endif %}
+
+                                <p>{{ message.content }}</p>
+                            </div>
+                    </li>
+
+                    {% set previousAuthor = message.author.id %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <form class="reply_form" autocomplete="off">
+            <div class="quick_reply">
+                <textarea id="composeArea" class="input_compose_area" placeholder="Enter your message here..." ></textarea>
+                <button id="composeButton" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
+                    <span class="ladda-label">Send</span>
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
