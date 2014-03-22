@@ -145,7 +145,7 @@ abstract class Model {
      * @param string $types The types of values that will be passed to Database::query()
      * @param array $params The parameter values that will be passed to Database::query()
      * @param string $table The database table that will be searched
-     * @return integer[] A list of values, if $select was only one column, or the return array of $db->query if it was more
+     * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id') {
         $table = (empty($table)) ? static::TABLE : $table;
