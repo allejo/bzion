@@ -355,7 +355,7 @@ class Match extends Model
         $a_elo = $team_a->getElo();
         $b_elo = $team_b->getElo();
 
-        $diff = Match::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
+        $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
 
         $a_elo += $diff;
         $b_elo -= $diff;

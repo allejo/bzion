@@ -159,7 +159,7 @@ class Page extends AliasModel {
      * @param string $name The original page name
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    static function generateAlias($name) {
+    public static function generateAlias($name) {
         $alias = parent::generateAlias($name);
 
         $disallowed_aliases = array("bans", "index", "login", "logout", "matches",
