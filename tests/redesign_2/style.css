@@ -259,6 +259,11 @@
     width: 100%;   
 }
 
+.teams_wrapper{
+    display: none;
+    padding-top: 1px;
+    margin-left: 2%;
+}
 .team_wrapper{
     display: none;
     padding-top: 1px;
@@ -287,7 +292,65 @@
 
 .team_descript{
     margin-bottom: 20px; 
-    font-family: "Roboto Slab"; 
-    
+    font-family: "Roboto Slab";     
+}
 
+
+.teams_wrapper{
+    padding-top: 10px; 
+    margin-left: 10px; 
+}
+
+.team_button{
+    width: 315px;
+    padding-top: 10px;
+    padding-left: 10px; 
+    padding-right: 10px; 
+    padding-bottom: 10px; 
+    display: inline-block; 
+    background: #ddd;
+    margin-bottom: 20px
+
+}
+.team_button .team_name {
+    font-family: "Roboto Condensed"; 
+    font-size: 2em;
+    margin-bottom: 4px; 
+}
+
+.team_button .team_leader{
+    font-family: "Roboto Slab";
+    margin-bottom: 4px; 
+}
+
+.team_button .team_created{
+    font-family: "Roboto Slab";
+    margin-bottom: 4px; 
+}
+
+.team_button .team_activity{
+    font-family: "Roboto Slab";
+    margin-bottom: 4px; 
+}
+
+
+.team_button:hover{
+    background: #ccc;
+}
+
+.teampage{
+    background: none;
+}
+.divider2{ 
+}
+
+.team_wrapper{
+    position: absolute;
+    top: 0;
+    left: 30%;
+    height: 100%;
+    display: none;
+    padding-top: 10px; 
+    margin-left: 10px; 
+    
 }

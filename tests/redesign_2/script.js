@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $("#news").click(function(){
 	$(".team_wrapper").hide();
+	$(".teams_wrapper").hide();
 	$(".home_wrapper").hide();
 	$(".profile_wrapper").hide();
 	$(".messages_wrapper").hide();
@@ -8,6 +9,7 @@ $(document).ready(function(){
     });
     $("#home").click(function(){
 	$(".team_wrapper").hide();
+	$(".teams_wrapper").hide();
 	$(".messages_wrapper").hide();
 	$(".news_wrapper").hide();
 	$(".profile_wrapper").hide();
@@ -15,6 +17,7 @@ $(document).ready(function(){
     });
     $("#profile").click(function(){
 	$(".team_wrapper").hide();
+	$(".teams_wrapper").hide();
 	$(".news_wrapper").hide();
 	$(".home_wrapper").hide();
 	$(".messages_wrapper").hide();
@@ -22,6 +25,7 @@ $(document).ready(function(){
     });
     $("#messaging").click(function(){
 	$(".team_wrapper").hide();
+	$(".teams_wrapper").hide();
 	$(".news_wrapper").hide();
 	$(".home_wrapper").hide();
 	$(".profile_wrapper").hide();
@@ -32,6 +36,10 @@ $(document).ready(function(){
 	$(".profile_wrapper").hide();
 	$(".messages_wrapper").hide();
 	$(".news_wrapper").hide();
-	$(".team_wrapper").show();
-	});
+	$(".team_wrapper").hide();
+	$(".teams_wrapper").show();
+    });
+    $("#fractious").click(function(){
+	$(".team_wrapper").fadeIn("slow");
+    });
 });
