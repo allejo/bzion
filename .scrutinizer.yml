@@ -1,8 +1,9 @@
 imports:
     - php
-    - js
+    - javascript
 
 tools:
+    external_code_coverage: true
     php_mess_detector: true
     php_code_sniffer: true
     php_cs_fixer: true
