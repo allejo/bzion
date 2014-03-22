@@ -182,10 +182,10 @@
     font-weight: 300;
     margin-top: 30px;
     .avatar_player{
-        float: right; 
+        float: right;
         width: 30%;
     }
-    .descript_player{ 
+    .descript_player{
         font-family: $contentFont;
         width: 43em;
         font-weight: normal;
@@ -224,6 +224,7 @@
 
             li {
                 float: left;
+                height: 20px;
 
                 &:nth-child(1) {
                     width: 23%;
@@ -261,6 +262,7 @@
             width: 100%;
 
             li {
+                height: 20px;
                 float: left;
 
                 &:nth-child(1) {
