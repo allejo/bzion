@@ -34,7 +34,8 @@ abstract class Controller {
      * @return void
      */
     public function callAction($action=null) {
-        $action = $this->parameters['_action'];
+        if (!$action)
+            $action = $this->parameters['_action'];
 
         $this->setup();
 

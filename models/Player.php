@@ -266,7 +266,7 @@ class Player extends AliasModel
         $last_login = new TimeDate($last_login);
 
         $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iisssissiiss", array($bzid, $team, $username, Player::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
+        "iisssissiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
 
         return new Player($db->getInsertId());
     }
@@ -315,7 +315,7 @@ class Player extends AliasModel
      * @param string $name The original username
      * @return string The generated alias
      */
-    static function generateAlias($name) {
+    public static function generateAlias($name) {
         $name = strtolower($name);
         $name = str_replace(' ', '-', $name);
 

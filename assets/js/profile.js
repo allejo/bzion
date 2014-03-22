@@ -19,4 +19,4 @@ function updateProfile() {
         notify(msg.message, type);
     });
 
-};
+}

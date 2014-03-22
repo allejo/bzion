@@ -55,7 +55,7 @@ class Database
      * to the database
      * @return Database The Database object
      */
-    static function getInstance()
+    public static function getInstance()
     {
         if (!self::$Database)
         {

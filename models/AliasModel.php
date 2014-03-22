@@ -58,7 +58,7 @@ abstract class AliasModel extends UrlModel {
      * @param string $name The original object name
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    static function generateAlias($name) {
+    public static function generateAlias($name) {
         // Convert name to lowercase
         $name = strtolower($name);
 

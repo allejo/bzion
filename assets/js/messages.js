@@ -97,11 +97,11 @@ function sendMessage() {
     }
 
     // Generate a comma-separated list of recipients which the AJAX script will read
-    var recipients = ""
+    var recipients = "";
     var recipientSelector = $("#compose_recipients");
 
     if (recipientSelector.val())
-        recipients = recipientSelector.val().join(',')
+        recipients = recipientSelector.val().join(',');
 
     $.ajax({
         type: "POST",
@@ -127,8 +127,8 @@ function sendMessage() {
     });
 }
 
-function redirect(groupId) {
-    var groupId = typeof groupId !== 'undefined' ? groupId : null;
+function redirect(groupTo) {
+    var groupId = typeof groupTo !== 'undefined' ? groupTo : null;
     var stateObj = { group: groupId };
     var url = baseURLNoHost + "/messages";
 

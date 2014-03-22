@@ -141,7 +141,7 @@ class Team extends AliasModel
      * @return Team An object that represents the newly created team
      */
     public static function createTeam($name, $leader, $avatar, $description) {
-        $alias = Team::generateAlias($name);
+        $alias = self::generateAlias($name);
 
         $db = Database::getInstance();
 

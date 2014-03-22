@@ -75,7 +75,7 @@ class Server extends Model
      * @param int $owner The ID of the server owner
      * @return Server An object that represents the sent message
      */
-    static function addServer($name, $address, $owner) {
+    public static function addServer($name, $address, $owner) {
         $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW(), 'active')";
         $params = array($name, $address, $owner);
 

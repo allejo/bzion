@@ -196,7 +196,7 @@ class Group extends UrlModel {
      * @return boolean True if the player has a new message
      */
     public static function hasNewMessage($id) {
-        $groups = Group::getGroups($id);
+        $groups = self::getGroups($id);
         $me = new Player($id);
 
         foreach ($groups as $group) {
