@@ -37,7 +37,7 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
       `php composer.phar install --no-dev`
 
-5. Use the `DATABASE.sql` file to create the necessary database structuce
+5. Use the `DATABASE.sql` file to create the necessary database structure
 
 6. Create a `cache` directory and make sure that it's writable by your web server user
 
