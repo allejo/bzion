@@ -174,8 +174,15 @@ a:hover {
                 border: 1px solid #B4EBB0;
             }
 
-                .message .author_info {
+                .message.left .author_info {
+                    border-bottom: 1px solid #B4EBB0;
+                }
+
+                .message.right .author_info {
                     border-bottom: 1px solid #9DD8E1;
+                }
+
+                .message .author_info {
                     padding: 2% 0 1% 0;
                     margin: 0 2%;
                 }
