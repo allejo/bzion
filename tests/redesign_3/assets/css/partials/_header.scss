@@ -1,0 +1,41 @@
+header {
+    border-top: 5px solid $lightGreen;
+
+    .container {
+        text-align: center;
+
+        .user {
+            font-family: 'Raleway', sans-serif;
+            font-size: 18px;
+            margin-top: 10px;
+            text-align: right;
+
+            li {
+                display: inline-block;
+                list-style: none;
+            }
+        }
+
+        img {
+            margin-bottom: 20px;
+        }
+    }
+
+    nav {
+        background-color: #555656;
+        color: #FFFFFF;
+
+        ul {
+            text-align: center;
+
+            li {
+                display: inline-block;
+                font-family: 'Raleway', sans-serif;
+                font-size: 18px;
+                font-weight: 200;
+                list-style: none;
+                padding: 5px 10px;
+            }
+        }
+    }   
+}

@@ -1,0 +1,39 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200|Pathway+Gothic+One);
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  background-image: url(../imgs/sos.png);
+  background-repeat: repeat; }
+
+.wrapper {
+  margin: 0 auto;
+  width: 1000px; }
+
+header {
+  border-top: 5px solid #00d0af; }
+  header .container {
+    text-align: center; }
+    header .container .user {
+      font-family: 'Raleway', sans-serif;
+      font-size: 18px;
+      margin-top: 10px;
+      text-align: right; }
+      header .container .user li {
+        display: inline-block;
+        list-style: none; }
+    header .container img {
+      margin-bottom: 20px; }
+  header nav {
+    background-color: #555656;
+    color: #FFFFFF; }
+    header nav ul {
+      text-align: center; }
+      header nav ul li {
+        display: inline-block;
+        font-family: 'Raleway', sans-serif;
+        font-size: 18px;
+        font-weight: 200;
+        list-style: none;
+        padding: 5px 10px; }
