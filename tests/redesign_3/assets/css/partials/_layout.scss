@@ -1,0 +1,23 @@
+.content {
+    padding: 20px;
+
+    &.column {
+        float: left;
+        width: calc(70% - 40px);
+    }
+}
+
+aside {
+    float: left;
+    padding: 10px;
+    width: calc(30% - 20px);
+
+    h1, h2, h3 {
+        border-bottom: 1px solid #000000;
+        color: #000000;
+        font-family: 'Raleway', sans-serif;
+        font-size: 24px;
+        font-weight: 200;
+        padding-bottom: 10px;
+    }
+}

@@ -1,4 +1,5 @@
 $lightGreen: #00D0AF;
+$orange: #FF7257;
 
 * {
     margin: 0;
@@ -8,6 +9,27 @@ $lightGreen: #00D0AF;
 body {
     background-image: url(../imgs/sos.png);
     background-repeat: repeat;
+}
+
+h1, h2, h3 {
+    font-family: 'Pathway Gothic One', sans-serif;
+    margin: 10px 0;
+}
+
+h1 {
+    color: $lightGreen;
+    font-size: 36px;
+}
+
+h2 {
+    color: $orange;
+    font-size: 24px;
+}
+
+ol, ul {
+    li {
+        margin-left: 40px;
+    }
 }
 
 .wrapper {

@@ -7,6 +7,21 @@ body {
   background-image: url(../imgs/sos.png);
   background-repeat: repeat; }
 
+h1, h2, h3 {
+  font-family: 'Pathway Gothic One', sans-serif;
+  margin: 10px 0; }
+
+h1 {
+  color: #00d0af;
+  font-size: 36px; }
+
+h2 {
+  color: #ff7257;
+  font-size: 24px; }
+
+ol li, ul li {
+  margin-left: 40px; }
+
 .wrapper {
   margin: 0 auto;
   width: 1000px; }
@@ -36,4 +51,23 @@ header {
         font-size: 18px;
         font-weight: 200;
         list-style: none;
+        margin: 0;
         padding: 5px 10px; }
+
+.content {
+  padding: 20px; }
+  .content.column {
+    float: left;
+    width: calc(70% - 40px); }
+
+aside {
+  float: left;
+  padding: 10px;
+  width: calc(30% - 20px); }
+  aside h1, aside h2, aside h3 {
+    border-bottom: 1px solid #000000;
+    color: #000000;
+    font-family: 'Raleway', sans-serif;
+    font-size: 24px;
+    font-weight: 200;
+    padding-bottom: 10px; }
