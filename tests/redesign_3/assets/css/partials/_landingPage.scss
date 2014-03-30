@@ -56,9 +56,10 @@ section {
         width: 55%;
 
         .matches_table {
-            $cellSize: 180px;
+            $cellSize: 170px;
 
-            margin: 10px 0 20px;
+            float: right;
+            margin: 10px 10px 20px;
 
             .row {
                 .column {
