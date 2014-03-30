@@ -8,6 +8,8 @@ tools:
     php_code_sniffer: true
     php_cs_fixer: true
     sensiolabs_security_checker: true
+    php_sim: true
+    php_cpd: false
     js_hint: true
 
 filter:
