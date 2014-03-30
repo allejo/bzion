@@ -33,6 +33,7 @@ header {
             font-family: $sanSerifFont;
             height: calc(100% - 20px);
             padding: 10px;
+            position: relative;
             width: 275px;
 
             // This is the avatar for the person
@@ -44,11 +45,15 @@ header {
             // The actual link to edit your profile and display of your callsign
             .options {
                 float: left;
-                overflow: auto;
+                overflow: hidden;
 
                 // The user's username
                 h2 {
+                    font-size: 22px;
                     font-weight: 300;
+                    height: 30px;
+                    max-width: 200px;
+                    overflow: hidden;
                 }
 
                 // All hyperlinks in the profile widget
@@ -66,14 +71,25 @@ header {
             }
 
             // The logout button
-            .icon {
-                color: #FFFFFF;
-                float: right;
-                font-size: 20px;
-                padding: 15px 10px;
+            .icons {
+                bottom: 10px;
+                list-style-type: none;
+                overflow: auto;
+                position: absolute;
+                right: 10px;
 
-                &:hover {
-                    color: $orange;
+                li {
+                    float: right;
+                    font-size: 18px;
+                    padding: 0 5px;
+
+                    a {
+                        color: #FFFFFF;
+
+                        &:hover {
+                            color: $orange;
+                        }
+                    }
                 }
             }
         }
@@ -128,6 +144,10 @@ header {
                         padding: 5px;
                         text-align: center;
                         width: $iconSize;
+
+                        &.fa-users {
+                            padding: 5px 6px 5px 4px;
+                        }
                     }
                 }
             }
