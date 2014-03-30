@@ -9,6 +9,11 @@ a:hover { color: #afc1cc; }
 
 body { background-image: url("../imgs/background.png"); display: table; font-family: "Merriweather", serif; font-size: 1em; width: 100%; }
 
+.circle_points { font-family: "Open Sans", sans-serif; margin: 30px 0; text-align: center; }
+.circle_points li { display: inline-block; margin: 0 50px; width: 200px; }
+.circle_points li i { -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; background-clip: padding-box; border: 1px solid #000000; height: 70px; font-size: 70px; padding: 20px; width: 70px; }
+.circle_points li h3 { font-size: 24px; font-weight: 300; margin: 5px 0; }
+
 .page { display: table-row; height: 100%; }
 .page .content { display: table; overflow: hidden; }
 
@@ -40,6 +45,14 @@ header nav ul li.active a, header nav ul li:hover a { color: white; }
 header nav ul li.active a i, header nav ul li:hover a i { background-color: #f68d5c; border-color: white; }
 header nav ul li a { color: #f4d27a; display: block; padding: 10px; text-decoration: none; width: 100%; }
 header nav ul li a i { -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; background-clip: padding-box; border: 1px solid #f4d27a; font-size: 12px; height: 12px; padding: 5px; text-align: center; width: 12px; }
+
+footer { background-color: #afc1cc; font-family: "Open Sans", sans-serif; height: 80px; line-height: 80px; width: 100%; }
+footer section { overflow: auto; }
+footer section .copyright { float: left; }
+footer section .links { float: right; }
+footer section .links ul li { display: inline-block; }
+footer section .links ul li a { color: #517281; padding: 0 10px; }
+footer section .links ul li:nth-child(n+2):before { color: #517281; content: "|"; position: relative; }
 
 .banner { background-color: #f68d5c; margin: 0 auto; overflow: auto; }
 .banner img { float: left; }
