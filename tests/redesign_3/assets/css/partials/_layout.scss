@@ -26,7 +26,6 @@ body {
 
 .circle_points {
     font-family: $sanSerifFont;
-    margin: 30px 0;
     text-align: center;
 
     li {
@@ -68,7 +67,7 @@ body {
         .column {
             @include box-sizing(border-box);
 
-            border: 1px solid #878787;
+            border: 1px solid #BBBBBB;
             display: table-cell;
             height: 20px;
             width: 120px;
@@ -82,6 +81,7 @@ body {
 
     .content {
         display: table;
+        margin-top: 20px;
         overflow: hidden;
     }
 }

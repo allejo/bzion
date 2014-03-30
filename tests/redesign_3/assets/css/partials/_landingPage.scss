@@ -9,36 +9,84 @@
     }
 }
 
-.recent_matches {
-    $cellSize: 180px;
+.key_points {
+    background-color: #FFFFFF;
+    padding: 30px 0;
+}
 
+section {
     font-family: $sanSerifFont;
+    overflow: auto;
 
-    .row {
-        .column {
-            $paddingSize: 20px;
+    h2 {
+        font-weight: 300;
+    }
 
-            height: $cellSize;
-            padding: $paddingSize;
-            position: relative;
-            text-align: center;
-            width: $cellSize;
+    aside {
+        float: left;
+        width: 45%;
 
-            .team {
-                display: inline-block;
+        .news {
+            list-style-type: none;
+            margin-left: 20px;
+            margin-top: 10px;
 
-                strong {
-                    display: block;
-                    text-align: center;
+            li {
+                margin: 10px 0;
+
+                h3 {
+                    font-family: $sanSerifFont;
+                    font-weight: 700;
+
+                    a {
+                        color: $darkBlue;
+                    }
+                }
+
+                p {
+                    font-family: $serifFont;
+                    margin-left: 10px;
                 }
             }
+        }
+    }
 
-            .stats {
-                bottom: $paddingSize;
-                font-size: 14px;
-                left: $paddingSize;
-                position: absolute;
-                text-transform: uppercase;
+    .recent_matches {
+        float: right;
+        width: 55%;
+
+        .matches_table {
+            $cellSize: 180px;
+
+            margin: 10px 0 20px;
+
+            .row {
+                .column {
+                    $paddingSize: 20px;
+
+                    height: $cellSize;
+                    padding: $paddingSize;
+                    position: relative;
+                    text-align: center;
+                    width: $cellSize;
+
+                    .team {
+                        display: inline-block;
+
+                        strong {
+                            display: block;
+                            text-align: center;
+                        }
+                    }
+
+                    .stats {
+                        bottom: $paddingSize;
+                        font-size: 14px;
+                        left: $paddingSize;
+                        position: absolute;
+                        text-transform: uppercase;
+                    }
+                }
             }
         }
     }

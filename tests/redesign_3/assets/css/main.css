@@ -9,17 +9,17 @@ a:hover { color: #afc1cc; }
 
 body { background-image: url("../imgs/background.png"); display: table; font-family: "Merriweather", serif; font-size: 1em; width: 100%; }
 
-.circle_points { font-family: "Open Sans", sans-serif; margin: 30px 0; text-align: center; }
+.circle_points { font-family: "Open Sans", sans-serif; text-align: center; }
 .circle_points li { display: inline-block; margin: 0 50px; width: 200px; }
 .circle_points li i { -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; background-clip: padding-box; border: 1px solid #000000; height: 70px; font-size: 70px; padding: 20px; width: 70px; }
 .circle_points li h3 { font-size: 24px; font-weight: 300; margin: 5px 0; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
-.css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #878787; display: table-cell; height: 20px; width: 120px; }
+.css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #BBBBBB; display: table-cell; height: 20px; width: 120px; }
 
 .page { display: table-row; height: 100%; }
-.page .content { display: table; overflow: hidden; }
+.page .content { display: table; margin-top: 20px; overflow: hidden; }
 
 .float.left { float: left; }
 .float.right { float: right; }
@@ -61,8 +61,19 @@ footer section .links ul li:nth-child(n+2):before { color: #517281; content: "|"
 .banner { background-color: #f68d5c; margin: 0 auto; overflow: auto; }
 .banner img { float: left; }
 
-.recent_matches { font-family: "Open Sans", sans-serif; }
-.recent_matches .row .column { height: 180px; padding: 20px; position: relative; text-align: center; width: 180px; }
-.recent_matches .row .column .team { display: inline-block; }
-.recent_matches .row .column .team strong { display: block; text-align: center; }
-.recent_matches .row .column .stats { bottom: 20px; font-size: 14px; left: 20px; position: absolute; text-transform: uppercase; }
+.key_points { background-color: #FFFFFF; padding: 30px 0; }
+
+section { font-family: "Open Sans", sans-serif; overflow: auto; }
+section h2 { font-weight: 300; }
+section aside { float: left; width: 45%; }
+section aside .news { list-style-type: none; margin-left: 20px; margin-top: 10px; }
+section aside .news li { margin: 10px 0; }
+section aside .news li h3 { font-family: "Open Sans", sans-serif; font-weight: 700; }
+section aside .news li h3 a { color: #517281; }
+section aside .news li p { font-family: "Merriweather", serif; margin-left: 10px; }
+section .recent_matches { float: right; width: 55%; }
+section .recent_matches .matches_table { margin: 10px 0 20px; }
+section .recent_matches .matches_table .row .column { height: 180px; padding: 20px; position: relative; text-align: center; width: 180px; }
+section .recent_matches .matches_table .row .column .team { display: inline-block; }
+section .recent_matches .matches_table .row .column .team strong { display: block; text-align: center; }
+section .recent_matches .matches_table .row .column .stats { bottom: 20px; font-size: 14px; left: 20px; position: absolute; text-transform: uppercase; }
