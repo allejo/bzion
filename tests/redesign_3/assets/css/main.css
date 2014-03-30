@@ -40,8 +40,8 @@ header section .profile .options { float: left; overflow: auto; }
 header section .profile .options h2 { font-weight: 300; }
 header section .profile .options a { color: #FFFFFF; display: block; font-size: 12px; font-weight: 300; text-decoration: none; }
 header section .profile .options a:hover { color: #f68d5c; }
-header section .profile .logout { color: #FFFFFF; float: right; font-size: 20px; padding: 15px; }
-header section .profile .logout:hover { color: #f68d5c; }
+header section .profile .icon { color: #FFFFFF; float: right; font-size: 20px; padding: 15px 10px; }
+header section .profile .icon:hover { color: #f68d5c; }
 header nav { background-color: #517281; border-bottom: 5px solid #afc1cc; list-style-type: none; overflow: auto; }
 header nav ul li { display: inline; float: left; height: 100%; text-align: left; }
 header nav ul li.active, header nav ul li:hover { background-color: #afc1cc; }
