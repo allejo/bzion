@@ -58,6 +58,24 @@ body {
     }
 }
 
+.css-table {
+    border-collapse: collapse;
+    display: table;
+
+    .row {
+        display: table-row;
+
+        .column {
+            @include box-sizing(border-box);
+
+            border: 1px solid #878787;
+            display: table-cell;
+            height: 20px;
+            width: 120px;
+        }
+    }
+}
+
 .page {
     display: table-row;
     height: 100%;
