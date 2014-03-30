@@ -1,0 +1,10 @@
+.banner {
+    background-color: $orange;
+    margin: 0 auto;
+    overflow: auto;
+
+    // Our banner will always be an image
+    img {
+        float: left; // Float the image or else they'll be some weird gap at the bottom of the .banner div
+    }
+}

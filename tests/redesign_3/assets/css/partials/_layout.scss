@@ -1,23 +1,65 @@
-.content {
-    padding: 20px;
+* {
+    margin: 0;
+    padding: 0;
+}
 
-    &.column {
-        float: left;
-        width: calc(70% - 40px);
+html, body {
+    height: 100%;
+}
+
+a {
+    color: $redOrange;
+    text-decoration: none;
+
+    &:hover {
+        color: $lightBlue;
     }
 }
 
-aside {
-    float: left;
-    padding: 10px;
-    width: calc(30% - 20px);
+body {
+    background-image: url("../imgs/background.png");
+    display: table;
+    font-family: $serifFont;
+    font-size: 1em;
+    width: 100%;
+}
 
-    h1, h2, h3 {
-        border-bottom: 1px solid #000000;
-        color: #000000;
-        font-family: 'Raleway', sans-serif;
-        font-size: 24px;
-        font-weight: 200;
-        padding-bottom: 10px;
+.page {
+    display: table-row;
+    height: 100%;
+
+    .content {
+        display: table;
+        height: 100%;
+        overflow: hidden;
     }
+}
+
+.float {
+    &.left {
+        float: left;
+    }
+
+    &.right {
+        float: right;
+    }
+}
+
+.padding {
+    &.top {
+        padding-top: 10px;
+    }
+
+    &.left, &.right {
+        padding-right: 5px;
+    }
+
+    &.bottom {
+        padding-bottom: 15px;
+    }
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 1000px;
 }

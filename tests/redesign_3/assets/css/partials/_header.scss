@@ -1,42 +1,124 @@
+// The header of the page where the logo, account info, and navigation will go
 header {
-    border-top: 5px solid $lightGreen;
+    background-color: #FFFFFF;
+    display: table-row;
+    overflow: auto;
 
-    .container {
-        text-align: center;
+    // The logo and account information will go in this section
+    section {
+        height: 80px;
+        overflow: auto;
 
-        .user {
-            font-family: 'Raleway', sans-serif;
-            font-size: 18px;
-            margin-top: 10px;
-            text-align: right;
-
-            li {
-                display: inline-block;
-                list-style: none;
-            }
+        .logo {
+            float: left;
         }
 
-        img {
-            margin-bottom: 20px;
+        // The upper right profile widget with edit profile and log out options
+        .profile {
+            background-color: $darkBlue;
+            color: #FFFFFF;
+            float: right;
+            font-family: $sanSerifFont;
+            height: calc(100% - 20px);
+            padding: 10px;
+            width: 275px;
+
+            // This is the avatar for the person
+            img {
+                float: left;
+                margin-right: 10px;
+            }
+
+            // The actual link to edit your profile and display of your callsign
+            .options {
+                float: left;
+                overflow: auto;
+
+                // The user's username
+                h2 {
+                    font-weight: 300;
+                }
+
+                // All hyperlinks in the profile widget
+                a {
+                    color: #FFFFFF;
+                    display: block;
+                    font-size: 12px;
+                    font-weight: 300;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $orange;
+                    }
+                }
+            }
+
+            // The logout button
+            .logout {
+                color: #FFFFFF;
+                float: right;
+                font-size: 20px;
+                padding: 15px;
+
+                &:hover {
+                    color: $orange;
+                }
+            }
         }
     }
 
+    // The navigation bar section
     nav {
-        background-color: #555656;
-        color: #FFFFFF;
+        background-color: $darkBlue;
+        border-bottom: 5px solid $lightBlue;
+        list-style-type: none;
+        overflow: auto;
 
+        // The actual navigation bar
         ul {
-            text-align: center;
-
+            // All of the navigation elements
             li {
-                display: inline-block;
-                font-family: 'Raleway', sans-serif;
-                font-size: 18px;
-                font-weight: 200;
-                list-style: none;
-                margin: 0;
-                padding: 5px 10px;
+                display: inline;
+                float: left;
+                height: 100%;
+                text-align: left;
+
+                &.active, &:hover {
+                    $activeTextColor: #FFFFFF;
+
+                    background-color: $lightBlue;
+
+                    a {
+                        color: $activeTextColor;
+
+                        i {
+                            background-color: $orange;
+                            border-color: $activeTextColor;
+                        }
+                    }
+                }
+
+                a {
+                    color: $yellow;
+                    display: block;
+                    padding: 10px; // Use padding in order to expand the hyperlink to expand the <li> where the link is stored
+                    text-decoration: none;
+                    width: 100%;
+
+                    i {
+                        $iconSize: 12px; // Set a static size for the icon
+
+                        @include border-radius(50%); // To make a perfect circle with CSS, make the border radius 50% of the height/width
+
+                        border: 1px solid $yellow;
+                        font-size: $iconSize;
+                        height: $iconSize;
+                        padding: 5px;
+                        text-align: center;
+                        width: $iconSize;
+                    }
+                }
             }
         }
-    }   
+    }
 }

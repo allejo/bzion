@@ -1,5 +1,23 @@
-@import "partials/base";
+//
+// Modules and Variables
+//    (things that won't actually output CSS)
+//
 
+@import "partials/base";
+@import "modules/borders";
+@import "modules/functions";
+@import "modules/mixins";
+
+
+//
+// Partials
+//    (everything that will actually output CSS)
+//
+
+// CSS concerning the layout of the entire website in general
+@import "partials/layout";
 @import "partials/typography";
 @import "partials/header";
-@import "partials/layout";
+
+// CSS for specific pages on the website
+@import "partials/landingPage";

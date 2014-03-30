@@ -1,38 +1,9 @@
-$lightGreen: #00D0AF;
-$orange: #FF7257;
+$darkBlue: #517281;
+$normalBlue: #7895A2;
+$lightBlue: #AFC1CC;
+$redOrange: #F37257;
+$orange: #F68D5C;
+$yellow: #F4D27A;
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-image: url(../imgs/sos.png);
-    background-repeat: repeat;
-}
-
-h1, h2, h3 {
-    font-family: 'Pathway Gothic One', sans-serif;
-    margin: 10px 0;
-}
-
-h1 {
-    color: $lightGreen;
-    font-size: 36px;
-}
-
-h2 {
-    color: $orange;
-    font-size: 24px;
-}
-
-ol, ul {
-    li {
-        margin-left: 40px;
-    }
-}
-
-.wrapper {
-    margin: 0 auto;
-    width: 1000px;
-}
+$sanSerifFont: 'Open Sans', sans-serif;
+$serifFont: 'Merriweather', serif;

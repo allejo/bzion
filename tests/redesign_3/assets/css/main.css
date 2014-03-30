@@ -1,73 +1,44 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,200|Pathway+Gothic+One);
-* {
-  margin: 0;
-  padding: 0; }
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,700);
+* { margin: 0; padding: 0; }
 
-body {
-  background-image: url(../imgs/sos.png);
-  background-repeat: repeat; }
+html, body { height: 100%; }
 
-h1, h2, h3 {
-  font-family: 'Pathway Gothic One', sans-serif;
-  margin: 10px 0; }
+a { color: #f37257; text-decoration: none; }
+a:hover { color: #afc1cc; }
 
-h1 {
-  color: #00d0af;
-  font-size: 36px; }
+body { background-image: url("../imgs/background.png"); display: table; font-family: "Merriweather", serif; font-size: 1em; width: 100%; }
 
-h2 {
-  color: #ff7257;
-  font-size: 24px; }
+.page { display: table-row; height: 100%; }
+.page .content { display: table; height: 100%; overflow: hidden; }
 
-ol li, ul li {
-  margin-left: 40px; }
+.float.left { float: left; }
+.float.right { float: right; }
 
-.wrapper {
-  margin: 0 auto;
-  width: 1000px; }
+.padding.top { padding-top: 10px; }
+.padding.left, .padding.right { padding-right: 5px; }
+.padding.bottom { padding-bottom: 15px; }
 
-header {
-  border-top: 5px solid #00d0af; }
-  header .container {
-    text-align: center; }
-    header .container .user {
-      font-family: 'Raleway', sans-serif;
-      font-size: 18px;
-      margin-top: 10px;
-      text-align: right; }
-      header .container .user li {
-        display: inline-block;
-        list-style: none; }
-    header .container img {
-      margin-bottom: 20px; }
-  header nav {
-    background-color: #555656;
-    color: #FFFFFF; }
-    header nav ul {
-      text-align: center; }
-      header nav ul li {
-        display: inline-block;
-        font-family: 'Raleway', sans-serif;
-        font-size: 18px;
-        font-weight: 200;
-        list-style: none;
-        margin: 0;
-        padding: 5px 10px; }
+.wrapper { margin: 0 auto; width: 1000px; }
 
-.content {
-  padding: 20px; }
-  .content.column {
-    float: left;
-    width: calc(70% - 40px); }
+header { background-color: #FFFFFF; display: table-row; overflow: auto; }
+header section { height: 80px; overflow: auto; }
+header section .logo { float: left; }
+header section .profile { background-color: #517281; color: #FFFFFF; float: right; font-family: "Open Sans", sans-serif; height: calc(100% - 20px); padding: 10px; width: 275px; }
+header section .profile img { float: left; margin-right: 10px; }
+header section .profile .options { float: left; overflow: auto; }
+header section .profile .options h2 { font-weight: 300; }
+header section .profile .options a { color: #FFFFFF; display: block; font-size: 12px; font-weight: 300; text-decoration: none; }
+header section .profile .options a:hover { color: #f68d5c; }
+header section .profile .logout { color: #FFFFFF; float: right; font-size: 20px; padding: 15px; }
+header section .profile .logout:hover { color: #f68d5c; }
+header nav { background-color: #517281; border-bottom: 5px solid #afc1cc; list-style-type: none; overflow: auto; }
+header nav ul li { display: inline; float: left; height: 100%; text-align: left; }
+header nav ul li.active, header nav ul li:hover { background-color: #afc1cc; }
+header nav ul li.active a, header nav ul li:hover a { color: white; }
+header nav ul li.active a i, header nav ul li:hover a i { background-color: #f68d5c; border-color: white; }
+header nav ul li a { color: #f4d27a; display: block; padding: 10px; text-decoration: none; width: 100%; }
+header nav ul li a i { -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; background-clip: padding-box; border: 1px solid #f4d27a; font-size: 12px; height: 12px; padding: 5px; text-align: center; width: 12px; }
 
-aside {
-  float: left;
-  padding: 10px;
-  width: calc(30% - 20px); }
-  aside h1, aside h2, aside h3 {
-    border-bottom: 1px solid #000000;
-    color: #000000;
-    font-family: 'Raleway', sans-serif;
-    font-size: 24px;
-    font-weight: 200;
-    padding-bottom: 10px; }
+.banner { background-color: #f68d5c; margin: 0 auto; overflow: auto; }
+.banner img { float: left; }
