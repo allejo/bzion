@@ -11,6 +11,18 @@ header {
 
         .logo {
             float: left;
+            height: 100%;
+            position: relative;
+            width: 200px;
+
+            img {
+                bottom: 0;
+                left: 0;
+                margin: auto;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
         }
 
         // The upper right profile widget with edit profile and log out options

@@ -10,7 +10,7 @@ a:hover { color: #afc1cc; }
 body { background-image: url("../imgs/background.png"); display: table; font-family: "Merriweather", serif; font-size: 1em; width: 100%; }
 
 .page { display: table-row; height: 100%; }
-.page .content { display: table; height: 100%; overflow: hidden; }
+.page .content { display: table; overflow: hidden; }
 
 .float.left { float: left; }
 .float.right { float: right; }
@@ -23,7 +23,8 @@ body { background-image: url("../imgs/background.png"); display: table; font-fam
 
 header { background-color: #FFFFFF; display: table-row; overflow: auto; }
 header section { height: 80px; overflow: auto; }
-header section .logo { float: left; }
+header section .logo { float: left; height: 100%; position: relative; width: 200px; }
+header section .logo img { bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; }
 header section .profile { background-color: #517281; color: #FFFFFF; float: right; font-family: "Open Sans", sans-serif; height: calc(100% - 20px); padding: 10px; width: 275px; }
 header section .profile img { float: left; margin-right: 10px; }
 header section .profile .options { float: left; overflow: auto; }
