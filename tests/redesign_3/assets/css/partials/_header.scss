@@ -32,7 +32,7 @@ header {
             float: right;
             font-family: $sanSerifFont;
             height: calc(100% - 20px);
-            padding: 10px;
+            padding: 10px 15px;
             position: relative;
             width: 275px;
 
@@ -98,7 +98,6 @@ header {
     // The navigation bar section
     nav {
         background-color: $darkBlue;
-        border-bottom: 5px solid $lightBlue;
         list-style-type: none;
         overflow: auto;
 
@@ -108,13 +107,13 @@ header {
             li {
                 display: inline;
                 float: left;
-                height: 100%;
                 text-align: left;
+                width: 75px;
 
                 &.active, &:hover {
                     $activeTextColor: #FFFFFF;
 
-                    background-color: $lightBlue;
+                    background-color: $orange;
 
                     a {
                         color: $activeTextColor;
@@ -127,23 +126,15 @@ header {
                 }
 
                 a {
-                    color: $yellow;
+                    color: #FFFFFF;
                     display: block;
                     padding: 10px; // Use padding in order to expand the hyperlink to expand the <li> where the link is stored
-                    text-decoration: none;
-                    width: 100%;
+                    text-align: center;
 
                     i {
-                        $iconSize: 12px; // Set a static size for the icon
-
-                        @include border-radius(50%); // To make a perfect circle with CSS, make the border radius 50% of the height/width
-
-                        border: 1px solid $yellow;
-                        font-size: $iconSize;
-                        height: $iconSize;
+                        font-size: 25px;
                         padding: 5px;
                         text-align: center;
-                        width: $iconSize;
 
                         &.fa-users {
                             padding: 5px 6px 5px 4px;
