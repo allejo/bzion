@@ -19,7 +19,9 @@ header {
 }
 
 main {
+    height: 100%;
     min-height: 300px;
+    overflow: hidden;
 
     .content {
         display: table;

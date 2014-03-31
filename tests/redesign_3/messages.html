@@ -7,407 +7,411 @@
     </head>
 
     <body>
-        <header>
-            <section class="wrapper">
-                <div class="logo">
-                    <img src="assets/imgs/logo.png" />
-                </div>
+        <div class="container">
+            <header>
+                <section>
+                    <div class="wrapper">
+                        <div class="logo">
+                            <img src="assets/imgs/logo.png" />
+                        </div>
 
-                <div class="profile">
-                    <img src="http://placehold.it/60x60" />
+                        <div class="profile">
+                            <img src="http://placehold.it/60x60" />
 
-                    <div class="options">
-                        <h2>Some Really Long Callsign</h2>
-                        <a href="#" title="Edit your profile">Edit Profile</a>
+                            <div class="options">
+                                <h2>Some Really Long Callsign</h2>
+                                <a href="#" title="Edit your profile">Edit Profile</a>
+                            </div>
+
+                            <ul class="icons">
+                                <li>
+                                    <a href="#" title="Log out of your account">
+                                        <i class="fa fa-sign-in"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="messages.html" title="View your messages">
+                                        <i class="fa fa-comments"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="View your notifications">
+                                        <i class="fa fa-bell"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-
-                    <ul class="icons">
-                        <li>
-                            <a href="#" title="Log out of your account">
-                                <i class="fa fa-sign-in"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" title="View your messages">
-                                <i class="fa fa-comments"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" title="View your notifications">
-                                <i class="fa fa-bell"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <nav>
-                <ul class="wrapper">
-                    <li>
-                        <a href="index.html">
-                            <i class="fa fa-home"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-thumb-tack"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-users"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-user"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-trophy"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-info-circle"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-
-        <section class="page">
-            <div class="title">
-                <div class="description wrapper">
-                    <i class="fa fa-comments"></i>
-                    <div>
-                        <h3>Talk to the people you like</h3>
-                        <h1>Messages</h1>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messaging wrapper">
-                <section class="toolbar">
-                    <ul>
-                        <li class="separator-bottom">
-                            <a href="http://bzpro.net/bzion/messages">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <span>New</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-inbox"></i>
-                                <span>Inbox</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-trash-o"></i>
-                                <span>Trash</span>
-                            </a>
-                        </li>
-                    </ul>
                 </section>
 
-                <section class="conversations">
-                    <form class="compose">
-                        <div class="icon">
-                            <i class="fa fa-search"></i>
-                        </div>
-                        <input type="text" class="search" name="search" data-id="new" placeholder="Search..." />
-                        <div class="icon">
-                            <i class="fa fa-cog"></i>
-                        </div>
-                        <div style="clear: both"></div>
-                    </form>
-
-                    <ul class="chats">
-                        <li>
-                            <a data-id="12" href="/bzion/messages/12">
-                                <div class="subject">nab</div>
-                                <div class="last_activity">1 minute ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    allejo,                                     brad                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    &lt;h1&gt;test&lt;/h1&gt;
-                                </div>
+                <nav>
+                    <ul class="wrapper">
+                        <li class="active">
+                            <a href="#">
+                                <i class="fa fa-home"></i>
                             </a>
                         </li>
-
                         <li>
-                            <a data-id="6" href="/bzion/messages/6">
-                                <div class="subject">Dev Group</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    alezakos, ashvala, allejo, tw1sted                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>ashvala:</strong>
-                                    Baptize, Motherfucker!
-                                </div>
+                            <a href="#">
+                                <i class="fa fa-thumb-tack"></i>
                             </a>
                         </li>
-
                         <li>
-                            <a data-id="9" href="/bzion/messages/9">
-                                <div class="subject">Another message</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    tw1sted,                                     allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    test
-                                </div>
+                            <a href="#">
+                                <i class="fa fa-users"></i>
                             </a>
                         </li>
-
                         <li>
-                            <a data-id="13" href="/bzion/messages/13">
-                                <div class="subject">HAI!!!</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    kierra,                                     allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    I&#039;m a message!
-                                </div>
+                            <a href="#">
+                                <i class="fa fa-user"></i>
                             </a>
                         </li>
-
                         <li>
-                            <a data-id="11" href="/bzion/messages/11">
-                                <div class="subject">Roar</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    brad,                                     allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    rawr
-                                </div>
+                            <a href="#">
+                                <i class="fa fa-trophy"></i>
                             </a>
                         </li>
-
                         <li>
-                            <a data-id="10" href="/bzion/messages/10">
-                                <div class="subject">test 2</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    ashvala,                                     allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    meh
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a data-id="8" href="/bzion/messages/8">
-                                <div class="subject">test</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    ashvala,                                     allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    test
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a data-id="3" href="/bzion/messages/3">
-                                <div class="subject">Test</div>
-                                <div class="last_activity">1 week ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    alezakos,                                     blast,                                     tw1sted,                                     allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>tw1sted:</strong>
-                                    test
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a data-id="5" href="/bzion/messages/5">
-                                <div class="subject">hai</div>
-                                <div class="last_activity">2 weeks ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    allejo                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>allejo:</strong>
-                                    haiiiii
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a data-id="4" href="/bzion/messages/4">
-                                <div class="subject">Hi!</div>
-                                <div class="last_activity">2 weeks ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    allejo,                                     Snake12534-                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>Snake12534-:</strong>
-                                    Sup dawg. Bro, do you even debug?
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a data-id="2" href="/bzion/messages/2">
-                                <div class="subject">Whatever</div>
-                                <div class="last_activity">1 month ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    allejo,                                     ashvala                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>ashvala:</strong>
-                                    Wtr, mate.
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a data-id="1" href="/bzion/messages/1">
-                                <div class="subject">New blog</div>
-                                <div class="last_activity">1 month ago</div>
-                                <div style="clear:both"></div>
-
-                                <div class="members">
-                                    alezakos,                                     allejo,                                     ashvala,                                     AutoReport,                                     blast,                                     kierra,                                     mdskpr,                                     Snake12534,                                     tw1sted                                                                                                </div>
-                                <div class="last_message">
-                                    <strong>Snake12534:</strong>
-                                    Check out my new blog!
-                                </div>
+                            <a href="#">
+                                <i class="fa fa-info-circle"></i>
                             </a>
                         </li>
                     </ul>
-                </section>
+                </nav>
+            </header>
 
-                <!--<div id="groupMessages" class="chat_area" data-id="12">
-                    <div class="chat_details">
-                        <div class="chat_options">
-                            <div class="subject">nab</div>
-                            <div class="icon close"><i class="fa fa-times"></i></div>
-                            <div class="icon"><i class="fa fa-cog"></i></div>
+            <main>
+                <div class="title">
+                    <div class="description wrapper">
+                        <i class="fa fa-comments"></i>
+                        <div>
+                            <h3>Talk to the people you like</h3>
+                            <h1>Messages</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messaging wrapper">
+                    <section class="toolbar">
+                        <ul>
+                            <li class="separator-bottom">
+                                <a href="http://bzpro.net/bzion/messages">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                    <span>New</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-inbox"></i>
+                                    <span>Inbox</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span>Trash</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="conversations">
+                        <form class="compose">
+                            <div class="icon">
+                                <i class="fa fa-search"></i>
+                            </div>
+                            <input type="text" class="search" name="search" data-id="new" placeholder="Search..." />
+                            <div class="icon">
+                                <i class="fa fa-cog"></i>
+                            </div>
                             <div style="clear: both"></div>
+                        </form>
+
+                        <ul class="chats">
+                            <li>
+                                <a data-id="12" href="/bzion/messages/12">
+                                    <div class="subject">nab</div>
+                                    <div class="last_activity">1 minute ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        allejo,                                     brad                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        &lt;h1&gt;test&lt;/h1&gt;
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="6" href="/bzion/messages/6">
+                                    <div class="subject">Dev Group</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        alezakos, ashvala, allejo, tw1sted                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>ashvala:</strong>
+                                        Baptize, Motherfucker!
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="9" href="/bzion/messages/9">
+                                    <div class="subject">Another message</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        tw1sted,                                     allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        test
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="13" href="/bzion/messages/13">
+                                    <div class="subject">HAI!!!</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        kierra,                                     allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        I&#039;m a message!
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="11" href="/bzion/messages/11">
+                                    <div class="subject">Roar</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        brad,                                     allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        rawr
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="10" href="/bzion/messages/10">
+                                    <div class="subject">test 2</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        ashvala,                                     allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        meh
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="8" href="/bzion/messages/8">
+                                    <div class="subject">test</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        ashvala,                                     allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        test
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="3" href="/bzion/messages/3">
+                                    <div class="subject">Test</div>
+                                    <div class="last_activity">1 week ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        alezakos,                                     blast,                                     tw1sted,                                     allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>tw1sted:</strong>
+                                        test
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="5" href="/bzion/messages/5">
+                                    <div class="subject">hai</div>
+                                    <div class="last_activity">2 weeks ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        allejo                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>allejo:</strong>
+                                        haiiiii
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="4" href="/bzion/messages/4">
+                                    <div class="subject">Hi!</div>
+                                    <div class="last_activity">2 weeks ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        allejo,                                     Snake12534-                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>Snake12534-:</strong>
+                                        Sup dawg. Bro, do you even debug?
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="2" href="/bzion/messages/2">
+                                    <div class="subject">Whatever</div>
+                                    <div class="last_activity">1 month ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        allejo,                                     ashvala                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>ashvala:</strong>
+                                        Wtr, mate.
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-id="1" href="/bzion/messages/1">
+                                    <div class="subject">New blog</div>
+                                    <div class="last_activity">1 month ago</div>
+                                    <div style="clear:both"></div>
+
+                                    <div class="members">
+                                        alezakos,                                     allejo,                                     ashvala,                                     AutoReport,                                     blast,                                     kierra,                                     mdskpr,                                     Snake12534,                                     tw1sted                                                                                                </div>
+                                    <div class="last_message">
+                                        <strong>Snake12534:</strong>
+                                        Check out my new blog!
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!--<div id="groupMessages" class="chat_area" data-id="12">
+                        <div class="chat_details">
+                            <div class="chat_options">
+                                <div class="subject">nab</div>
+                                <div class="icon close"><i class="fa fa-times"></i></div>
+                                <div class="icon"><i class="fa fa-cog"></i></div>
+                                <div style="clear: both"></div>
+                            </div>
+                            <div class="members">
+                                allejo,                     brad                                                </div>
                         </div>
-                        <div class="members">
-                            allejo,                     brad                                                </div>
+
+                        <div class="scrollable_messages">
+                            <ul id="messageView" class="messages">
+                                <li>
+                                    <div class="bubble">
+
+                                        <div class="details">
+                                            <div class='author'>brad</div>
+                                            <div class='date'>1 week ago</div>
+                                        </div>
+
+                                        <p>sadasdasd</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="bubble me">
+
+                                        <div class="details">
+                                            <div class='author'>allejo</div>
+                                            <div class='date'>1 week ago</div>
+                                        </div>
+
+                                        <p>noob</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="bubble me">
+
+
+                                        <p>&lt;strong&gt;will this be bold?&lt;/strong&gt;</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="bubble me">
+
+
+                                        <p>&lt;h1&gt;damn....&lt;/h1&gt;</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="bubble me">
+
+
+                                        <p>&amp;lt;h1&amp;gt;hurray and fixed!&amp;lt;/h1&amp;gt;</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="bubble me">
+
+
+                                        <p>&lt;h1&gt;test&lt;/h1&gt;</p>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <form class="reply_form" autocomplete="off">
+                            <div class="quick_reply">
+                                <textarea id="composeArea" class="input_compose_area" placeholder="Enter your message here..." ></textarea>
+                                <button id="composeButton" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
+                                    <span class="ladda-label">Send</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>-->
+                </div>
+            </main>
+
+            <footer>
+                <div class="wrapper">
+                    <div class="copyright">
+                        Copyright &copy; 2014
                     </div>
 
-                    <div class="scrollable_messages">
-                        <ul id="messageView" class="messages">
-                            <li>
-                                <div class="bubble">
-
-                                    <div class="details">
-                                        <div class='author'>brad</div>
-                                        <div class='date'>1 week ago</div>
-                                    </div>
-
-                                    <p>sadasdasd</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="bubble me">
-
-                                    <div class="details">
-                                        <div class='author'>allejo</div>
-                                        <div class='date'>1 week ago</div>
-                                    </div>
-
-                                    <p>noob</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="bubble me">
-
-
-                                    <p>&lt;strong&gt;will this be bold?&lt;/strong&gt;</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="bubble me">
-
-
-                                    <p>&lt;h1&gt;damn....&lt;/h1&gt;</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="bubble me">
-
-
-                                    <p>&amp;lt;h1&amp;gt;hurray and fixed!&amp;lt;/h1&amp;gt;</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="bubble me">
-
-
-                                    <p>&lt;h1&gt;test&lt;/h1&gt;</p>
-                                </div>
-                            </li>
-
+                    <div class="links">
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Admins</a></li>
+                            <li><a href="#">Banned Players</a></li>
                         </ul>
                     </div>
-
-                    <form class="reply_form" autocomplete="off">
-                        <div class="quick_reply">
-                            <textarea id="composeArea" class="input_compose_area" placeholder="Enter your message here..." ></textarea>
-                            <button id="composeButton" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
-                                <span class="ladda-label">Send</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>-->
-            </div>
-        </section>
-
-        <footer>
-            <section class="wrapper">
-                <div class="copyright">
-                    Copyright &copy; 2014
                 </div>
-
-                <div class="links">
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Admins</a></li>
-                        <li><a href="#">Banned Players</a></li>
-                    </ul>
-                </div>
-            </section>
-        </footer>
+            </footer>
+        </div>
     </body>
 </html>
