@@ -20,6 +20,9 @@ main .title .description div h1 { color: #7895a2; font-family: "Open Sans", sans
 
 footer { margin-bottom: -60px; height: 60px; background-color: red; }
 
+a { color: #f37257; text-decoration: none; }
+a:hover { color: #afc1cc; }
+
 .clearfix, header section .wrapper .logo { zoom: 1; }
 .clearfix:before, header section .wrapper .logo:before, .clearfix:after, header section .wrapper .logo:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after, header section .wrapper .logo:after { clear: both; }

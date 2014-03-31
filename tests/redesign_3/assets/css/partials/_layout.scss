@@ -74,6 +74,15 @@ footer {
     background-color:red;
 }
 
+a {
+    color: $redOrange;
+    text-decoration: none;
+
+    &:hover {
+        color: $lightBlue;
+    }
+}
+
 .clearfix {
     zoom:1;
 
