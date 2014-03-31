@@ -4,68 +4,98 @@
 }
 
 html, body {
-    height: 100%;
-}
-
-a {
-    color: $redOrange;
-    text-decoration: none;
-
-    &:hover {
-        color: $lightBlue;
-    }
+    height:100%;
 }
 
 body {
     background-image: url("../imgs/background.png");
-    display: table;
     font-family: $serifFont;
-    font-size: 1em;
-    width: 100%;
 }
 
-.circle_points {
-    font-family: $sanSerifFont;
-    text-align: center;
+header {
+    margin-top: -$headerHeight;
+    height: $headerHeight;
+    background-color:red;
+}
 
-    li {
-        display: inline-block;
-        margin: 0 50px;
-        width: 200px;
+main {
+    min-height: 300px;
 
-        i {
-            $iconSize: 70px;
+    .content {
+        display: table;
+        margin-top: 20px;
+        overflow: hidden;
+    }
 
-            @include border-radius(50%);
+    .title {
+        background-color: #FFFFFF;
+        overflow: auto;
 
-            border: 1px solid #000000;
-            height: $iconSize;
-            font-size: $iconSize - 10px;
-            width: $iconSize;
+        .description {
+            height: 60px;
+            position: relative;
 
-            //
-            // Because the icons aren't always perfectly centered, there are some custom padding rules in order to center them as perfectly as possible
-            //    (all of these icons will end up being 110px by 110px)
-            //
-            &.fa-gamepad {
-                padding: 21px 19px 17px 19px;
+            i, span {
+                color: $normalBlue;
+                float: left;
+                font-size: 50px;
+                margin: 0 10px;
             }
 
-            &.fa-info {
-                padding: 27px 19px 11px 19px;
+            span {
+                line-height: 50px;
             }
 
-            &.fa-list-ul {
-                padding: 25px 19px 13px 19px;
-            }
-        }
+            div {
+                bottom: 15px;
+                left: 70px;
+                position: absolute;
 
-        h3 {
-            font-size: 24px;
-            font-weight: 300;
-            margin: 5px 0;
+                h3 {
+                    color: $grey;
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+
+                h1 {
+                    color: $normalBlue;
+                    font-family: $sanSerifFont;
+                    font-weight: 300;
+                    line-height: 20px;
+                }
+            }
         }
     }
+}
+
+footer {
+    margin-bottom: -$footerHeight;
+    height: $footerHeight;
+    background-color:red;
+}
+
+.clearfix {
+    zoom:1;
+
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+.container {
+    bottom: 0;
+    left: 0;
+    padding: $headerHeight 0 $footerHeight;
+    position: absolute;
+    right: 0;
+    top:0;
 }
 
 .css-table {
@@ -83,17 +113,6 @@ body {
             height: 20px;
             width: 120px;
         }
-    }
-}
-
-.page {
-    display: table-row;
-    height: 100%;
-
-    .content {
-        display: table;
-        margin-top: 20px;
-        overflow: hidden;
     }
 }
 

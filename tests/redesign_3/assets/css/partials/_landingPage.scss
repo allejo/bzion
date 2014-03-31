@@ -9,6 +9,50 @@
     }
 }
 
+.circle_points {
+    font-family: $sanSerifFont;
+    text-align: center;
+
+    li {
+        display: inline-block;
+        margin: 0 50px;
+        width: 200px;
+
+        i {
+            $iconSize: 70px;
+
+            @include border-radius(50%);
+
+            border: 1px solid #000000;
+            height: $iconSize;
+            font-size: $iconSize - 10px;
+            width: $iconSize;
+
+            //
+            // Because the icons aren't always perfectly centered, there are some custom padding rules in order to center them as perfectly as possible
+            //    (all of these icons will end up being 110px by 110px)
+            //
+            &.fa-gamepad {
+                padding: 21px 19px 17px 19px;
+            }
+
+            &.fa-info {
+                padding: 27px 19px 11px 19px;
+            }
+
+            &.fa-list-ul {
+                padding: 25px 19px 13px 19px;
+            }
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 300;
+            margin: 5px 0;
+        }
+    }
+}
+
 .key_points {
     background-color: #FFFFFF;
     padding: 30px 0;

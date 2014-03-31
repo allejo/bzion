@@ -1,11 +1,10 @@
 footer {
     background-color: $lightBlue;
     font-family: $sanSerifFont;
-    height: 80px;
-    line-height: 80px;
+    line-height: $footerHeight;
     width: 100%;
 
-    section {
+    .wrapper {
         overflow: auto;
 
         .copyright {
