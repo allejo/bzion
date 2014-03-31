@@ -2,13 +2,13 @@
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700);
 * { margin: 0; padding: 0; }
 
-html, body { height: 100%; }
-
+/*html, body { height:100%;
+}*/
 body { background-image: url("../imgs/background.png"); font-family: "Merriweather", serif; }
 
 header { margin-top: -135px; height: 135px; background-color: red; }
 
-main { height: 100%; min-height: 300px; overflow: hidden; }
+main { height: 100%; min-height: 400px; overflow: hidden; }
 main .content { display: table; margin-top: 20px; overflow: hidden; }
 main .title { background-color: #FFFFFF; overflow: auto; }
 main .title .description { height: 60px; position: relative; }
@@ -23,11 +23,11 @@ footer { margin-bottom: -60px; height: 60px; background-color: red; }
 a { color: #f37257; text-decoration: none; }
 a:hover { color: #afc1cc; }
 
-.clearfix, header section .wrapper .logo { zoom: 1; }
-.clearfix:before, header section .wrapper .logo:before, .clearfix:after, header section .wrapper .logo:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after, header section .wrapper .logo:after { clear: both; }
+.clearfix, header section .wrapper .logo, .messaging .conversations .search, .messaging .conversations .chats li a .meta-data { zoom: 1; }
+.clearfix:before, header section .wrapper .logo:before, .messaging .conversations .search:before, .messaging .conversations .chats li a .meta-data:before, .clearfix:after, header section .wrapper .logo:after, .messaging .conversations .search:after, .messaging .conversations .chats li a .meta-data:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after, header section .wrapper .logo:after, .messaging .conversations .search:after, .messaging .conversations .chats li a .meta-data:after { clear: both; }
 
-.container { bottom: 0; left: 0; padding: 135px 0 60px; position: absolute; right: 0; top: 0; }
+.container { padding: 135px 0 60px; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
@@ -103,26 +103,26 @@ section .recent_matches .matches_table .row .column .team strong { display: bloc
 section .recent_matches .matches_table .row .column .stats { bottom: 20px; font-size: 14px; left: 20px; position: absolute; text-transform: uppercase; }
 
 .messaging { font-family: "Merriweather", serif; height: calc(100% - 60px); min-height: 400px; overflow: auto; }
-.messaging .toolbar { background-color: #517281; height: 100%; float: left; width: 70px; }
+.messaging .toolbar { background-color: #FFFFFF; float: left; width: 100%; }
 .messaging .toolbar ul { width: 100%; }
-.messaging .toolbar ul li { display: inline-block; padding: 15px 0; text-align: center; vertical-align: middle; width: 100%; }
-.messaging .toolbar ul li a { color: #ffffff; text-decoration: none; }
+.messaging .toolbar ul li { display: inline-block; padding: 15px 0; text-align: center; vertical-align: middle; }
+.messaging .toolbar ul li a { color: #517281; text-decoration: none; }
 .messaging .toolbar ul li a i { font-size: 30px; }
 .messaging .toolbar ul li a span { display: block; }
 .messaging .toolbar ul li a:hover { color: #FFFFFF; }
 .messaging .toolbar ul li:hover { background-color: #f68d5c; }
 .messaging .toolbar ul li.separator-bottom { border-bottom: 4px solid #FFFFFF; }
 .messaging .toolbar ul li.separator-bottom .fa-pencil-square-o { margin-left: 3px; }
-.messaging .conversations { background-color: #FFFFFF; border-right: 1px solid #a1a1a1; float: left; height: 100%; max-height: 100%; overflow: scroll; width: 350px; }
-.messaging .conversations .compose { border-bottom: 1px solid #a1a1a1; height: 35px; }
-.messaging .conversations .compose .icon { display: inline-block; float: left; height: 35px; text-align: center; width: 40px; }
-.messaging .conversations .compose .icon i { line-height: 35px; }
-.messaging .conversations .compose .search { background-color: #ffffff; border: none; display: inline-block; float: left; font-size: 16px; margin: 10px 0; text-align: left; text-decoration: none; width: 260px; }
-.messaging .conversations .compose .search:focus { outline: 0; }
+.messaging .conversations { background-color: #FFFFFF; border-right: 1px solid #a1a1a1; float: left; overflow: scroll; width: 35%; }
+.messaging .conversations .search { border-bottom: 1px solid #a1a1a1; height: 35px; }
+.messaging .conversations .search .icon { display: inline-block; float: left; height: 35px; text-align: center; width: 40px; }
+.messaging .conversations .search .icon i { line-height: 35px; }
+.messaging .conversations .search .field { background-color: #ffffff; border: none; display: inline-block; float: left; font-size: 16px; margin: 10px 0; text-align: left; text-decoration: none; width: 260px; }
+.messaging .conversations .search .field:focus { outline: 0; }
 .messaging .conversations .chats li { background-color: #ffffff; border-bottom: 1px solid #a1a1a1; display: block; list-style-type: none; width: 100%; }
 .messaging .conversations .chats li a { text-decoration: none; }
-.messaging .conversations .chats li a .subject { color: #000000; float: left; font-size: 20px; font-weight: bold; padding: 5px 0 0 10px; }
-.messaging .conversations .chats li a .last_activity { float: right; font-size: 12px; padding: 10px 10px 0 0; }
+.messaging .conversations .chats li a .meta-data .subject { color: #000000; float: left; font-size: 20px; font-weight: bold; padding: 5px 0 0 10px; }
+.messaging .conversations .chats li a .meta-data .last_activity { float: right; font-size: 12px; padding: 10px 10px 0 0; }
 .messaging .conversations .chats li a .members { color: #99A0A3; font-family: "Merriweather", serif; font-weight: 300; font-size: 12px; padding-left: 25px; }
 .messaging .conversations .chats li a .last_message { color: #000000; font-size: 16px; padding: 5px 0 10px 10px; }
 .messaging .conversations .chats li a:hover { color: #000000; }

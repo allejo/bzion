@@ -5,10 +5,9 @@
     overflow: auto;
 
     .toolbar {
-        background-color: $darkBlue;
-        height: 100%;
+        background-color: #FFFFFF;
         float: left;
-        width: 70px;
+        width: 100%;
 
         ul {
             width: 100%;
@@ -18,10 +17,9 @@
                 padding: 15px 0;
                 text-align: center;
                 vertical-align: middle;
-                width: 100%;
 
                 a {
-                    color: #ffffff;
+                    color: $darkBlue;
                     text-decoration: none;
 
                     i {
@@ -57,13 +55,12 @@
         background-color: #FFFFFF;
         border-right: 1px solid $grey;
         float: left;
-        height: 100%;
-        max-height: 100%;
         overflow: scroll;
-        width: 350px;
+        width: 35%;
 
-        .compose {
+        .search {
             $searchHeight: 35px;
+            @extend .clearfix;
 
             border-bottom: 1px solid $grey;
             height: $searchHeight;
@@ -80,7 +77,7 @@
                 }
             }
 
-            .search {
+            .field {
                 background-color: #ffffff;
                 border: none;
                 display: inline-block;
@@ -108,18 +105,22 @@
                 a {
                     text-decoration: none;
 
-                    .subject {
-                        color: #000000;
-                        float: left;
-                        font-size: 20px;
-                        font-weight: bold;
-                        padding: 5px 0 0 10px;
-                    }
+                    .meta-data {
+                        @extend .clearfix;
 
-                    .last_activity {
-                        float: right;
-                        font-size: 12px;
-                        padding: 10px 10px 0 0;
+                        .subject {
+                            color: #000000;
+                            float: left;
+                            font-size: 20px;
+                            font-weight: bold;
+                            padding: 5px 0 0 10px;
+                        }
+
+                        .last_activity {
+                            float: right;
+                            font-size: 12px;
+                            padding: 10px 10px 0 0;
+                        }
                     }
 
                     .members {

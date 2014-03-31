@@ -3,9 +3,9 @@
     padding: 0;
 }
 
-html, body {
+/*html, body {
     height:100%;
-}
+}*/
 
 body {
     background-image: url("../imgs/background.png");
@@ -20,7 +20,7 @@ header {
 
 main {
     height: 100%;
-    min-height: 300px;
+    min-height: 400px;
     overflow: hidden;
 
     .content {
@@ -101,12 +101,7 @@ a {
 }
 
 .container {
-    bottom: 0;
-    left: 0;
     padding: $headerHeight 0 $footerHeight;
-    position: absolute;
-    right: 0;
-    top:0;
 }
 
 .css-table {
