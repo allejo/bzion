@@ -167,7 +167,7 @@ class Player extends AliasModel
      * @return string The player's access level presented as human readable word
      */
     public function getAccessLiteral() {
-        return ucfirst(self::$access_level_literals[$this->getAccess()]);
+        return ucfirst(self::$access_level_literals[$this->getAccessLiteral()]);
     }
 
     /**
