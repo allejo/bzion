@@ -16,6 +16,11 @@ class Player extends AliasModel
     const REFEREE   = 1;
     const PLAYER    = 0;
 
+    /**
+     * The literal values of access levels a player can have
+     *
+     * @var string[]
+     */
     static public $access_level_literals = array(
         self::DEVELOPER => 'developer',
         self::ADMIN => 'admin',
