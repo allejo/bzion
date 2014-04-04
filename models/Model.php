@@ -207,7 +207,7 @@ abstract class Model {
 
         if (empty($possible_values)) {
             if (!$negate) {
-                // There isn't any value that $column can habe so
+                // There isn't any value that $column can have so
                 // that it matches the criteria - return nothing.
                 return array();
             } else {

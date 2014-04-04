@@ -5,6 +5,17 @@
  */
 class Player extends AliasModel
 {
+    const DEVELOPER = 3;
+    const ADMIN     = 2;
+    const REFEREE   = 1;
+    const PLAYER    = 0;
+
+    static public $access_level_literals = array(
+        self::DEVELOPER => 'developer',
+        self::ADMIN => 'admin',
+        self::REFEREE => 'referee',
+        self::PLAYER => 'player'
+    );
 
     /**
      * The bzid of the player
@@ -144,6 +155,22 @@ class Player extends AliasModel
     }
 
     /**
+     * Get the player's access level used to check what players have access to
+     * @return int The player's access level represented as an integer
+     */
+    public function getAccessLevel() {
+        return $this->access;
+    }
+
+    /**
+     * Get the player's access level as a string to display access levels in a user friendly manner
+     * @return string The player's access level presented as human readable word
+     */
+    public function getAccessLiteral() {
+        return ucfirst(self::$access_level_literals[$this->getAccess()]);
+    }
+
+    /**
      * Set the player's avatar
      * @param string $avatar The URL for the avatar
      */
@@ -237,10 +264,10 @@ class Player extends AliasModel
 
     /**
      * Get all of the callsigns a player has used to log in to the website
-     * @todo Fix for bzids
+     * @return string[] An array containing all of the past callsigns recorded for a player
      */
     public function getPastCallsigns() {
-        return Parent::fetchIds("username", "WHERE player = ?", "i", array($this->id), "past_callsigns");
+        return parent::fetchIds("WHERE player = ?", "i", array($this->id), "past_callsigns", "username");
     }
 
     /**
@@ -295,19 +322,9 @@ class Player extends AliasModel
      * @return Player[] An array of player BZIDs
      */
     public static function getPlayers() {
-        //return parent::fetchIdsFrom("status", array("active"), "s", false);
-        $players = array();
-        $playerIDs = parent::fetchIdsFrom("status", array(
-                    "disabled",
-                    "deleted"
-                   ), "s", true, "ORDER BY team DESC");
-
-        foreach ($playerIDs as $playerID)
-        {
-            $players[] = new Player($playerID);
-        }
-
-        return $players;
+        return self::arrayIdToModel(
+            parent::fetchIdsFrom("status", array("active"), "s", false)
+        );
     }
 
     /**
@@ -373,14 +390,8 @@ class Player extends AliasModel
      */
     public static function getTeamMembers($teamID)
     {
-        $players = array();
-        $playerIDs = parent::fetchIds("WHERE team = ?", "i", array($teamID));
-
-        foreach ($playerIDs as $playerID)
-        {
-            $players[] = new Player($playerID);
-        }
-
-        return $players;
+        return self::arrayIdToModel(
+            parent::fetchIds("WHERE team = ?", "i", array($teamID))
+        );
     }
 }

@@ -142,15 +142,9 @@ class Page extends AliasModel {
      * @return Page[] A list of Page IDs
      */
     public static function getPages() {
-        $pages = array();
-        $pageIDs = parent::fetchIdsFrom("status", array("live"), "s");
-
-        foreach ($pageIDs as $page)
-        {
-            $pages[] = new Page($page);
-        }
-
-        return $pages;
+        return self::arrayIdToModel(
+            parent::fetchIdsFrom("status", array("live"), "s")
+        );
     }
 
      /**
