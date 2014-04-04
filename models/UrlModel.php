@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality linking database objects' aliases with Symfony2's URL routing component
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A Model that has a URL
@@ -23,7 +29,10 @@ abstract class UrlModel extends Model {
 
     /**
      * Get an object's url
+     *
      * @param boolean $absolute Whether to return an absolute URL
+     *
+     * @return string A permanent link
      */
     public function getURL($absolute=false) {
         return static::getPermaLink($absolute);
@@ -31,7 +40,10 @@ abstract class UrlModel extends Model {
 
     /**
      * Get an object's permanent url
+     *
      * @param boolean $absolute Whether to return an absolute URL
+     *
+     * @return string A permanent link
      */
     public function getPermaLink($absolute=false) {
         return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getId()), $absolute);

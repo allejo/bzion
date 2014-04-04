@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to the countries players are allowed to set in their profiles as their location
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A country

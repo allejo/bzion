@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to database objects that have a custom URL such as teams and players
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A Model that has a URL and an alias

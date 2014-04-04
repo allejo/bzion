@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to the participants of a group message
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A discussion (group of messages)

@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to the invitation of players to join teams
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * An invitation sent to a player asking them to join a team

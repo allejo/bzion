@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to a league player
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A league player

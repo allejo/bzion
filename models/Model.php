@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains the skeleton for all of the database objects
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A database object (e.g. A player or a team)

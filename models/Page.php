@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to the custom pages that admins can great
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A custom page

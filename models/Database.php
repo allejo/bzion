@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality related to interacting with the database this CMS uses
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * Database interface class

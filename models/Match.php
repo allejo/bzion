@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to the official matches played in the league
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A match played between two teams

@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality to keep track of visitor sessions of registered users
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A player's visit on the website

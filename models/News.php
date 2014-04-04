@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating to the news articles admins can post
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 /**
  * A news article

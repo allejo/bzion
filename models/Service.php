@@ -1,4 +1,10 @@
 <?php
+/**
+ * This file contains functionality relating Symfony2 componenets such as the template engine, requests, and sessions
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
