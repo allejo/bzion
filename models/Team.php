@@ -28,7 +28,7 @@ class Team extends AliasModel
     private $avatar;
 
     /**
-     * The creation date of the teamm
+     * The creation date of the team
      *
      * @var TimeDate
      */
