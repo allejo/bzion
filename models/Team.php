@@ -359,17 +359,11 @@ class Team extends AliasModel
      */
     public static function getTeams()
     {
-        $teams = array();
-        $teamIDs = parent::fetchIdsFrom("status", array(
-                    "disabled",
-                    "deleted"
-                   ), "s", true, "ORDER BY elo DESC");
-
-        foreach ($teamIDs as $teamID)
-        {
-            $teams[] = new Team($teamID);
-        }
-
-        return $teams;
+        return self::arrayIdToModel(
+            parent::fetchIdsFrom(
+                "status", array("disabled", "deleted"),
+                "s", true, "ORDER BY elo DESC"
+            )
+        );
     }
 }
