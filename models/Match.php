@@ -429,18 +429,12 @@ class Match extends Model
      * @return Match[] An array of match IDs
      */
     public static function getMatches($start = 0, $limit = 50) {
-        $matches = array();
-        $matchIDs = parent::fetchIdsFrom("status", array(
-                    "disabled",
-                    "deleted"
-                   ), "s", true, "ORDER BY timestamp DESC LIMIT $limit OFFSET $start");
-
-        foreach ($matchIDs as $matchID)
-        {
-            $matches[] = new Match($matchID);
-        }
-
-        return $matches;
+        return self::arrayIdToModel(
+            parent::fetchIdsFrom(
+                "status", array("disabled", "deleted"), "s", true,
+                "ORDER BY timestamp DESC LIMIT $limit OFFSET $start"
+            )
+        );
     }
 
     /**
@@ -450,14 +444,10 @@ class Match extends Model
      */
     public static function getMatchesByTeam($teamID)
     {
-        $matches = array();
-        $matchIDs = parent::fetchIds("WHERE team_a=? OR team_b=?", "ii", array($teamID, $teamID));
-
-        foreach ($matchIDs as $matchID)
-        {
-            $matches[] = new Match($matchID);
-        }
-
-        return $matches;
+        return self::arrayIdToModel(
+            parent::fetchIds("WHERE team_a=? OR team_b=?",
+                "ii", array($teamID, $teamID)
+            )
+        );
     }
 }

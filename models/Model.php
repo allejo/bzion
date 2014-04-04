@@ -189,7 +189,7 @@ abstract class Model {
      * @param string|array $select The name of the column(s) that the returned array should contain
      * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string $table The database table which will be used for queries
-     * @return integer[] A list of values, if $select was only one column, or the return array of $db->query if it was more
+     * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id') {
         $question_marks = array();
