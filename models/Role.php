@@ -11,17 +11,41 @@
  */
 class Role extends Model
 {
+    /**
+     * The name of the role
+     * @var string
+     */
     private $name;
+
+    /**
+     * Whether or not a role is reusable, when a player has a unique role, they will have their own role that isn't
+     * reusable by other players
+     * @var bool
+     */
     private $reusable;
+
+    /**
+     * Whether or not the role is protected from being deleted from the web interface
+     * @var bool
+     */
     private $protected;
+
+    /**
+     * An array of permissions a role has
+     * @var bool[]
+     */
     private $permissions;
-    private $permissions_desc;
 
     /**
      * The name of the database table used for queries
      */
     const TABLE = "roles";
 
+    /**
+     * Create a new Role object
+     *
+     * @param int $id The role ID
+     */
     public function __construct($id)
     {
         parent::__construct($id);
@@ -32,17 +56,15 @@ class Role extends Model
         $this->name        = $role['name'];
         $this->reusable    = $role['reusable'];
         $this->protected   = $role['protected'];
-        $this->permissions = array(array(), array());
+        $this->permissions = array();
 
-        $query = "SELECT permissions.name, permissions.description FROM permissions
-                  JOIN role_permission ON role_permission.perm_id = permissions.id
-                  WHERE role_permission.role_id = ?";
-        $permissions = $this->db->query($query, "i", array($id));
+        $permissions = parent::fetchIds(
+            "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?", "i",
+            array($id), "permissions", "name");
 
         foreach ($permissions as $permission)
         {
-            $this->permissions[$permission['name']] = true;
-            $this->permissions_desc[$permission['name']] = $permission['desc'];
+            $this->permissions[$permission] = true;
         }
     }
 
@@ -56,6 +78,16 @@ class Role extends Model
     public function addPerm($perm_name)
     {
         return $this->modifyPerm($perm_name, "add");
+    }
+
+    /**
+     * Get the permissions a role has
+     *
+     * @return bool[] An array of permissions
+     */
+    public function getPerms()
+    {
+        return $this->permissions;
     }
 
     /**
@@ -134,5 +166,21 @@ class Role extends Model
         $db->query("INSERT INTO roles (name, reusable, protected) VALUES (?, ?, ?)", "sii", array($name, $reusable, 0));
 
         return new Role($db->getInsertId());
+    }
+
+    /**
+     * Get the roles a player has
+     *
+     * @param int $user_id The user ID to get the roles for
+     *
+     * @return Role[] An array of Roles a player belongs to
+     */
+    public static function getRoles($user_id)
+    {
+        return parent::arrayIdToModel(
+            parent::fetchIds(
+                "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.user_id = ?", "i",
+                array($user_id), "roles", "id")
+        );
     }
 }

@@ -84,6 +84,18 @@ class Player extends AliasModel
     private $last_login;
 
     /**
+     * The roles a player belongs to
+     * @var Role[]
+     */
+    private $roles;
+
+    /**
+     * The permissions a player has
+     * @var Permission[]
+     */
+    private $permissions;
+
+    /**
      * A section for admins to write notes about players
      * @var string
      */
@@ -98,8 +110,8 @@ class Player extends AliasModel
      * Construct a new Player
      * @param int $id The player's ID
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -118,6 +130,13 @@ class Player extends AliasModel
         $this->last_login = new TimeDate($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
 
+        $this->roles = Role::getRoles($this->getId());
+        $this->permissions = array();
+
+        foreach ($this->roles as $role)
+        {
+            $this->permissions = array_merge($this->permissions, $role->getPerms());
+        }
     }
 
     /**
@@ -127,6 +146,10 @@ class Player extends AliasModel
     public function updateLastLogin($when = "now") {
         $last = new TimeDate($when);
         $this->db->query("UPDATE players SET last_login = ? WHERE id = ?", "si", array($last->format(DATE_FORMAT), $this->id));
+    }
+
+    public function hasPermission($permission) {
+        return isset($this->permissions[$permission]);
     }
 
     /**
