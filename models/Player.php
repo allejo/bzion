@@ -11,23 +11,6 @@
  */
 class Player extends AliasModel
 {
-    const DEVELOPER = 3;
-    const ADMIN     = 2;
-    const REFEREE   = 1;
-    const PLAYER    = 0;
-
-    /**
-     * The literal values of access levels a player can have
-     *
-     * @var string[]
-     */
-    static public $access_level_literals = array(
-        self::DEVELOPER => 'developer',
-        self::ADMIN => 'admin',
-        self::REFEREE => 'referee',
-        self::PLAYER => 'player'
-    );
-
     /**
      * The bzid of the player
      * @var int
@@ -51,12 +34,6 @@ class Player extends AliasModel
      * @var string
      */
     private $status;
-
-    /**
-     * The access level of the player
-     * @var int
-     */
-    private $access;
 
     /**
      * The url of the player's profile avatar
@@ -121,7 +98,6 @@ class Player extends AliasModel
         $this->alias = $player['alias'];
         $this->team = $player['team'];
         $this->status = $player['status'];
-        $this->access = $player['access'];
         $this->avatar = $player['avatar'];
         $this->description = $player['description'];
         $this->country = $player['country'];
@@ -163,22 +139,6 @@ class Player extends AliasModel
      */
     public function getAvatar() {
         return $this->avatar;
-    }
-
-    /**
-     * Get the player's access level used to check what players have access to
-     * @return int The player's access level represented as an integer
-     */
-    public function getAccessLevel() {
-        return $this->access;
-    }
-
-    /**
-     * Get the player's access level as a string to display access levels in a user friendly manner
-     * @return string The player's access level presented as human readable word
-     */
-    public function getAccessLiteral() {
-        return ucfirst(self::$access_level_literals[$this->getAccessLiteral()]);
     }
 
     /**
@@ -287,7 +247,6 @@ class Player extends AliasModel
      * @param string $username The player's username
      * @param int $team The player's team
      * @param string $status The player's status
-     * @param int $access The player's access level
      * @param string $avatar The player's profile avatar
      * @param string $description The player's profile description
      * @param int $country The player's country
@@ -296,15 +255,15 @@ class Player extends AliasModel
      * @param string|\TimeDate $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
-    public static function newPlayer($bzid, $username, $team=0, $status="active", $access=0, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
+    public static function newPlayer($bzid, $username, $team=0, $status="active", $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
 
         $db = Database::getInstance();
 
         $joined = new TimeDate($joined);
         $last_login = new TimeDate($last_login);
 
-        $db->query("INSERT INTO players (bzid, team, username, alias, status, access, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iisssissiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $access, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
+        $db->query("INSERT INTO players (bzid, team, username, alias, status, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "iisssissiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
 
         return new Player($db->getInsertId());
     }

@@ -15,7 +15,7 @@
         </div>
         <div class='label'>Joined: {{ player.joinedDate }}</div>
         <div class='descript_player'>{{ player.description }}</div>
-        {% if player.accessLevel >= constant('Player::ADMIN') %}
+        {% if false %}
             <div class='past_callsigns'>
                 <h3>Previous Callsigns</h3>
                 {% for callsign in player.pastCallsigns %}
