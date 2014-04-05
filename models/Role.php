@@ -55,22 +55,7 @@ class Role extends Model
      */
     public function addPerm($perm_name)
     {
-        if ($this->hasPerm($perm_name))
-        {
-            return false;
-        }
-
-        $permission = new Permission($perm_name);
-
-        if ($permission->isValid())
-        {
-            $this->db->query("INSERT INTO role_permissions (role_id, perm_id) VALUES (?, ?)", "ii",
-                array($this->getId(), $permission->getId()));
-
-            return true;
-        }
-
-        return false;
+        return $this->modifyPerm($perm_name, "add");
     }
 
     /**
@@ -94,7 +79,21 @@ class Role extends Model
      */
     public function removePerm($perm_name)
     {
-        if (!$this->hasPerm($perm_name))
+        return $this->modifyPerm($perm_name, "remove");
+    }
+
+    /**
+     * Modify a permission a role has by either adding a new one or removing an old one
+     *
+     * @param string $perm_name The permission to add or remove
+     * @param string $action Whether to "add" or "remove" a permission
+     *
+     * @return bool
+     */
+    private function modifyPerm($perm_name, $action)
+    {
+        if (($action == "remove" && !$this->hasPerm($perm_name)) ||
+            ($action == "add" && $this->hasPerm($perm_name)))
         {
             return false;
         }
@@ -103,8 +102,16 @@ class Role extends Model
 
         if ($permission->isValid())
         {
-            $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
-                array($this->getId(), $permission->getId()));
+            if ($action == "add")
+            {
+                $this->db->query("INSERT INTO role_permissions (role_id, perm_id) VALUES (?, ?)", "ii",
+                    array($this->getId(), $permission->getId()));
+            }
+            else if ($action == "remove")
+            {
+                $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
+                    array($this->getId(), $permission->getId()));
+            }
 
             return true;
         }
