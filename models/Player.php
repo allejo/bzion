@@ -12,6 +12,18 @@
 class Player extends AliasModel
 {
     /**
+     * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
+     * constant variables. Hopefully, a user won't be silly enough to delete them manually from the database.
+     */
+    const DEVELOPER    = 1;
+    const ADMIN        = 2;
+    const COP          = 3;
+    const REFEREE      = 4;
+    const S_ADMIN      = 5;
+    const PLAYER       = 6;
+    const PLAYER_NO_PM = 7;
+
+    /**
      * The bzid of the player
      * @var int
      */
@@ -247,6 +259,7 @@ class Player extends AliasModel
      * @param string $username The player's username
      * @param int $team The player's team
      * @param string $status The player's status
+     * @param int $role_id The player's role when they are first created
      * @param string $avatar The player's profile avatar
      * @param string $description The player's profile description
      * @param int $country The player's country
@@ -255,8 +268,8 @@ class Player extends AliasModel
      * @param string|\TimeDate $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
-    public static function newPlayer($bzid, $username, $team=0, $status="active", $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now") {
-
+    public static function newPlayer($bzid, $username, $team=0, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now")
+    {
         $db = Database::getInstance();
 
         $joined = new TimeDate($joined);
