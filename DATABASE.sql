@@ -402,21 +402,22 @@ CREATE TABLE `roles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `reusable` tinyint(1) NOT NULL DEFAULT '0',
+  `default` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 
-INSERT INTO `roles` (`id`, `name`, `reusable`)
+INSERT INTO `roles` (`id`, `name`, `reusable`, `default`)
 VALUES
-	(1,'Developer',1),
-	(2,'Administrator',1),
-	(3,'Cop',1),
-	(4,'Referee',1),
-	(5,'System Administrator',1),
-	(6,'Player',1),
-	(7,'Player - No Private Messages',1);
+    (1,'Developer',1,1),
+    (2,'Administrator',1,1),
+    (3,'Cop',1,1),
+    (4,'Referee',1,1),
+    (5,'System Administrator',1,1),
+    (6,'Player',1,1),
+    (7,'Player - No Private Messages',1,1);
 
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
