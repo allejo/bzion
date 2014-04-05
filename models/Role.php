@@ -116,7 +116,7 @@ class Role extends Model
             return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
