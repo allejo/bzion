@@ -61,4 +61,15 @@ class Permission extends Model
     {
         return $this->name;
     }
+
+    /**
+     * Get all of the existing permissions in the database
+     * @return Permission[] An array of permissions
+     */
+    public static function getPerms()
+    {
+        return parent::arrayIdToModel(
+            parent::fetchIds()
+        );
+    }
 }

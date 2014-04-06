@@ -145,13 +145,14 @@ abstract class Model {
 
     /**
      * Gets an array of object IDs from the database
-     * @todo Make this PHPDoc message easier to understand
-     * @param string|array $select The name of the column(s) that the returned array should contain
-     * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
+     *
+     * @param string $additional_query Additional query snippet passed to the MySQL query after the SELECT statement (e.g. `WHERE id = ?`)
      * @param string $types The types of values that will be passed to Database::query()
-     * @param array $params The parameter values that will be passed to Database::query()
+     * @param array $params The parameter values that will be passed to Database::query() corresponding to $types
      * @param string $table The database table that will be searched
-     * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
+     * @param string $select The column that will be returned
+     *
+     * @return int[]
      */
     protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id') {
         $table = (empty($table)) ? static::TABLE : $table;
