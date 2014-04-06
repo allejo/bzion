@@ -277,6 +277,59 @@ class Player extends AliasModel
     }
 
     /**
+     * Add a player a new role
+     *
+     * @param int $role_id The role ID to add a player to
+     *
+     * @return bool Whether the operation was successful or not
+     */
+    public function addRole($role_id)
+    {
+        return $this->modifyRole($role_id, "add");
+    }
+
+    /**
+     * Give or remove a role to/form a player
+     *
+     * @param int $role_id The role ID to add or remove
+     * @param string $action Whether to "add" or "remove" a role for a player
+     *
+     * @return bool Whether the operation was successful or not
+     */
+    private function modifyRole($role_id, $action)
+    {
+        $role = new Role($role_id);
+
+        if ($role->isValid())
+        {
+            if ($action == "add")
+            {
+                $this->db->query("INSERT INTO player_roles (user_id, role_id) VALUES (?, ?)", "ii", array($this->getId(), $role_id));
+            }
+            else if ($action == "remove")
+            {
+                $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove a player from a role
+     *
+     * @param int $role_id The role ID to add or remove
+     *
+     * @return bool Whether the operation was successful or not
+     */
+    public function removeRole($role_id)
+    {
+        return $this->modifyRole($role_id, "remove");
+    }
+
+    /**
      * Enter a new player to the database
      * @param int $bzid The player's bzid
      * @param string $username The player's username
@@ -301,7 +354,10 @@ class Player extends AliasModel
         $db->query("INSERT INTO players (bzid, team, username, alias, status, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         "iisssssiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
 
-        return new Player($db->getInsertId());
+        $player = new Player($db->getInsertId());
+        $player->addRole($role_id);
+
+        return $player;
     }
 
     /**
