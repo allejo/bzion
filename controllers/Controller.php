@@ -104,6 +104,9 @@ abstract class Controller {
         return $ref->invokeArgs($this, $params);
     }
 
+    /**
+     * @param ReflectionParameter $modelParameter
+     */
     private function getModelFromParameters($modelParameter, $routeParameters) {
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();

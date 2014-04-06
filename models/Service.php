@@ -31,6 +31,9 @@ abstract class Service {
      */
     private static $templateEngine;
 
+    /**
+     * @param Request $request
+     */
     public static function setRequest($request) {
         self::$request = $request;
     }
@@ -65,7 +68,7 @@ abstract class Service {
     }
 
     /**
-     * @return SessionInterface|null
+     * @return SessionInterface
      */
     public static function getSession() {
         return self::getRequest()->getSession();
