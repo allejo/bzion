@@ -1,6 +1,6 @@
 <?php
 
-include("../bzion-load.php");
+require_once(__DIR__ . "/../bzion-load.php");
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
@@ -8,55 +8,27 @@ use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Router;
 
-$locator = new FileLocator(array(__DIR__));
-
-$request = Request::createFromGlobals();
-$requestContext = new RequestContext();
-$requestContext->fromRequest($request);
-
-Service::setRequest($request);
-
-$router = new Router(
-    new YamlFileLoader($locator),
-    __DIR__ . '/../routes.yml',
-    array(),
-    $requestContext
-);
-
-Service::setGenerator($router->getGenerator());
-
-$header = new Header("Home");
-$header->draw();
-
-$page = Page::getHomePage();
-
 if (!DEVELOPMENT) {
-    echo "Populating the database with sample data isn't allowed in Production mode.";
-    $footer = new Footer();
-    $footer->draw();
-    die();
+    die("Populating the database with sample data isn't allowed in Production mode.\n");
 }
 
 $testPlayer = Player::getFromBZID(55976);
 if ($testPlayer->isValid()) {
-    echo "Please clean your current data in the database, or you might end up with unwanted results.";
-    $footer = new Footer();
-    $footer->draw();
-    die();
+    die("Please clean your current data in the database, or you might end up with unwanted results.\n");
 }
 
 
 $db = Database::getInstance();
 
-$alezakos   = Player::newPlayer(49434, "alezakos", 0, "active", 0, "", "Sample description");
-$allejo     = Player::newPlayer(31098, "allejo");
-$ashvala    = Player::newPlayer(34353, "ashvala");
+$alezakos   = Player::newPlayer(49434, "alezakos", 0, "active", Player::DEVELOPER, "", "Sample description");
+$allejo     = Player::newPlayer(31098, "allejo", 0, "active", Player::DEVELOPER);
+$ashvala    = Player::newPlayer(34353, "ashvala", 0, "active", Player::DEVELOPER);
 $autoreport = Player::newPlayer(55976, "AutoReport");
-$blast      = Player::newPlayer(180, "blast");
-$kierra     = Player::newPlayer(2229, "kierra");
+$blast      = Player::newPlayer(180, "blast", 0, "active", Player::S_ADMIN);
+$kierra     = Player::newPlayer(2229, "kierra", 0, "active", Player::ADMIN);
 $mdskpr     = Player::newPlayer(8312, "mdskpr");
 $snake      = Player::newPlayer(54497, "Snake12534");
-$tw1sted    = Player::newPlayer(9736, "tw1sted");
+$tw1sted    = Player::newPlayer(9736, "tw1sted", 0, "active", Player::DEVELOPER);
 
 $olfm     = Team::createTeam("OpenLeague FM?", $kierra->getId(), "", "");
 $reptiles = Team::createTeam("Reptitles", $snake->getId(), "", "");
@@ -114,11 +86,9 @@ $db->query("INSERT INTO `news` (`id`, `subject`, `content`, `created`, `updated`
     'Very important Announcement', NOW(), NOW(), '{$mdskpr->getId()}', 'live')");
 $db->query("INSERT INTO .`news` (`id`, `subject`, `content`, `created`, `updated`, `author`, `status`) VALUES
     (NULL, 'Cats think we are bigger cats',
-    'In order for your indess recognizes where this whole mistake has come, and why one accuses the pleasure and praise the pain , and I will open to you all and set apart, what those founders of the truth and, as builders of the happy life himself has said about it. No one , he says, despise , or hate , or flee the desire as such , but because great pain to follow, if you do not pursue pleasure rationally . Similarly, the pain was loved as such by no one or pursues or desires , but because occasionally circumstances occur that one means of toil and pain can procure him some great pleasure to look verschaften be . To stay here are a trivial , so none of us would ever undertakes laborious physical exercise, except to obtain some advantage from it. But who is probably the blame , which requires an appetite , has no annoying consequences , or one who avoids a pain , which shows no desire ? In contrast, blames and you hate with the law , which can soften and seduced by the allurements of present pleasure , without seeing in his blind desire which pain and inconvenience wait his reason . Same debt meet Those who from mental weakness , ie to escape the work and the pain , neglect their duties. A person can easily and quickly make the real difference , to a quiet time where the choice of the decision is completely free and nothing prevents them from doing what we like best , you have to grasp every pleasure and every pain avoided , but to times it hits in succession of duties or guilty of factual necessity that you reject the desire and complaints must not reject . Why then the way will make a selection so that it Achieve a greater rejection by a desire for it or by taking over some pains to spare larger .'
-    , NOW(), NOW(), '{$alezakos->getId()}', 'live')");
+    'In order for your indess recognizes where this whole mistake has come, and why one accuses the pleasure and praise the pain, and I will open to you all and set apart, what those founders of the truth and, as builders of the happy life himself has said about it. No one, he says, despise, or hate, or flee the desire as such, but because great pain to follow, if you do not pursue pleasure rationally. Similarly, the pain was loved as such by no one or pursues or desires, but because occasionally circumstances occur that one means of toil and pain can procure him some great pleasure to look verschaften be. To stay here are a trivial, so none of us would ever undertakes laborious physical exercise, except to obtain some advantage from it. But who is probably the blame, which requires an appetite, has no annoying consequences, or one who avoids a pain, which shows no desire? In contrast, blames and you hate with the law, which can soften and seduced by the allurements of present pleasure, without seeing in his blind desire which pain and inconvenience wait his reason. Same debt meet Those who from weakness, i.e to escape the work and the pain, neglect their duties. A person can easily and quickly make the real difference, to a quiet time where the choice of the decision is completely free and nothing prevents them from doing what we like best, you have to grasp every pleasure and every pain avoided, but to times it hits in succession of duties or guilty of factual necessity that you reject the desire and complaints must not reject. Why then the way will make a selection so that it Achieve a greater rejection by a desire for it or by taking over some pains to spare larger.'
+   , NOW(), NOW(), '{$alezakos->getId()}', 'live')");
 
-
-$footer = new Footer();
-$footer->draw();
+echo "The database has been populated successfully.";
 
 ?>
