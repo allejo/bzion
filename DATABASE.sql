@@ -234,7 +234,7 @@ CREATE TABLE `player_roles` (
   `role_id` int(10) unsigned NOT NULL,
   KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `player_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `players` (`id`),
+  CONSTRAINT `player_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
   CONSTRAINT `player_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
