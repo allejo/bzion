@@ -4,7 +4,9 @@
 
 {% block content %}
     <div class='profile_page'>
-        <img class='avatar_player' src='{{ player.avatar }}'>
+        {% if player.avatar %}
+            <img class='avatar_player' src='{{ player.avatar }}'>
+        {% endif %}
         <div class='label player_name'>{{ player.username }}</div>
         <div class='label label_team'>Team:
             {% if player.team.valid %}
