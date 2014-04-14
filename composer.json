@@ -8,19 +8,21 @@
         "nesbot/carbon"           : ">=1.8.0",
         "symfony/config"          : "dev-master",
         "symfony/routing"         : "dev-master",
+        "symfony/http-kernel"     : "dev-master",
         "symfony/http-foundation" : "dev-master",
-        "symfony/templating"      : "dev-master",
         "symfony/twig-bridge"     : "dev-master",
         "symfony/yaml"            : "dev-master",
         "twig/twig"               : "dev-master"
     },
     "require-dev": {
+        "symfony/browser-kit": "2.4.*@dev",
+        "symfony/framework-bundle": "2.4.*@dev",
         "phpunit/phpunit": "3.7.*",
         "phpdocumentor/phpdocumentor": "dev-develop"
     },
 
     "autoload": {
-        "classmap": ["models/", "controllers/"]
+        "classmap": ["app", "models/", "controllers/"]
     },
     "autoload-dev": {
         "classmap": [ "tests/"]

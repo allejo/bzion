@@ -1,12 +1,11 @@
 <?php
 /**
- * This file contains functionality relating Symfony2 componenets such as the template engine, requests, and sessions
+ * This file contains functionality relating Symfony2 components such as the template engine, requests, and sessions
  *
  * @package    BZiON
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -27,7 +26,7 @@ abstract class Service {
 
     /**
      * Twig Template engine
-     * @var EngineInterface
+     * @var Twig_Environment
      */
     private static $templateEngine;
 
@@ -78,7 +77,7 @@ abstract class Service {
      * Create a new session
      * @return Session
      */
-    private static function getNewSession() {
+    public static function getNewSession() {
         $newSession = new Session();
         $newSession->start();
         return $newSession;
