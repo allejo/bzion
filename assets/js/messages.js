@@ -53,6 +53,14 @@ pageSelector.on("click", ".compose-link", function(event) {
     redirect();
 });
 
+// Response Ctrl+Enter event
+pageSelector.on("keydown", ".input_compose_area", function(event) {
+    if ((event.keyCode === 10 || event.keyCode === 13) && event.ctrlKey) {
+        console.log(event);
+        $(this).trigger('submit');
+    }
+});
+
 
 /**
  * Perform an AJAX request to send a response to a message group
