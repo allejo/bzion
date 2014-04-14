@@ -20,6 +20,7 @@ function notify(message, type) {
 
     var not = $(".notification");
 
+    not.show();
     not.css("top", "-" + not.outerHeight( true ) + "px");
     not.attr("class", "notification " + type);
     // Position element in the center
