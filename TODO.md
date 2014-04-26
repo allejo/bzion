@@ -26,4 +26,4 @@ TODO
     - Themes
 - Discuss features with admins
 - Bug testing, bug testing and more bug testing
-- Make things look pretty and not overly grey(less than 50 shades of said colour, preferably).
+- Make things look pretty and not overly grey (less than 50 shades of said colour, preferably).
