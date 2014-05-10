@@ -1,33 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: $serifFont;
     line-height: 1.3em;
-}
-
-a {
-    color: #009EFF;
-    text-decoration: none;
-
-    &:hover {
-        color: darken(#009EFF, 15%);
-    }
-
-    // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
-    // of our internal links are relative so this is a safe move.
-    &[href^="http"] {
-        &:after {
-            content: "\F08E";
-            font-family: FontAwesome;
-            font-size: 0.6em;
-            margin-left: 5px;
-            text-decoration: none;
-            vertical-align: top;
-        }
-    }
 }
 
 main {
@@ -67,7 +40,7 @@ main {
 }
 
 .clearfix {
-    zoom:1;
+    zoom: 1;
 
     &:before, &:after {
         content: "\0020";
@@ -95,30 +68,6 @@ main {
             display: table-cell;
             height: 20px;
         }
-    }
-}
-
-.float {
-    &.left {
-        float: left;
-    }
-
-    &.right {
-        float: right;
-    }
-}
-
-.padding {
-    &.top {
-        padding-top: 10px;
-    }
-
-    &.left, &.right {
-        padding-right: 5px;
-    }
-
-    &.bottom {
-        padding-bottom: 15px;
     }
 }
 
