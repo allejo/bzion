@@ -32,10 +32,11 @@ main .content_header p { float: left; font-size: 42px; font-weight: bold; margin
 
 .wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments { margin: 0 auto; width: 1000px; }
 
-blockquote { margin-bottom: 10px; margin-left: 30px; margin-top: 20px; padding-right: 30px; vertical-align: top; }
-blockquote span { color: #8B8B8B; font-family: "Open Sans", sans-serif; font-size: 16px; font-style: italic; }
-blockquote article { clear: both; color: #727272; display: block; font-family: "Merriweather", serif; margin-left: 45px; }
-blockquote article > p { margin: 10px 0; }
+blockquote { font-family: "Open Sans", sans-serif; margin-bottom: 10px; margin-left: 30px; margin-top: 20px; padding-right: 30px; vertical-align: top; }
+blockquote span { color: #8B8B8B; font-size: 16px; font-style: italic; }
+blockquote span:before { content: '\2014'; margin-left: 45px; margin-right: 5px; }
+blockquote article { color: #727272; display: inline; }
+blockquote article > p { margin: 10px 0 10px 45px; }
 blockquote:before { content: '\f10d'; color: #656565; float: left; font-family: FontAwesome; font-size: 30px; margin-bottom: 10px; padding-right: 15px; vertical-align: top; }
 
 em { font-style: italic; }
@@ -138,7 +139,7 @@ main.administration .admins ul { margin-left: 20px; }
 main.administration .admins ul li { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding: 20px; width: 33%; }
 main.administration .admins ul li img { margin-right: 10px; vertical-align: middle; }
 
-main.news { font-family: "Open Sans", sans-serif; padding: 20px 0; }
+main.news { font-family: "Open Sans", sans-serif; text-align: justify; padding: 20px 0; }
 main.news .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; }
 main.news .content_header h1 { font-size: 24px; }
 main.news .articles section > article { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding-right: 60px; width: 750px; }

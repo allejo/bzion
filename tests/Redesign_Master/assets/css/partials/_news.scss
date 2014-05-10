@@ -3,6 +3,7 @@ main {
         @extend .clearfix;
 
         font-family: $sanSerifFont;
+        text-align: justify;
         padding: 20px 0;
 
         .content_header {
