@@ -147,8 +147,8 @@ main.news .content_header h1 { font-size: 24px; }
 main.news .articles section > article { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding-right: 60px; width: 750px; }
 main.news .articles section > article h1 { color: #0088DB; font-weight: bold; }
 main.news .articles section > article .post > p { margin: 15px 0; }
-main.news .articles section > article .meta { border-bottom: 1px solid #D4D4D4; font-size: 14px; padding: 10px; }
-main.news .articles section > article .meta li { color: #A1A1A1; display: inline-block; margin: 0 10px; }
+main.news .articles section > article .meta { border-bottom: 1px solid #D4D4D4; font-size: 14px; padding: 10px 0; }
+main.news .articles section > article .meta li { color: #A1A1A1; display: inline-block; margin-left: 3px; margin-right: 10px; }
 main.news .articles aside { float: left; width: 250px; }
 main.news .articles aside h2 { margin-bottom: 15px; }
 main.news .articles aside ul li { font-size: 14px; padding: 7px 10px; }
