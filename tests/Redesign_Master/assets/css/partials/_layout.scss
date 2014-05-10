@@ -55,7 +55,13 @@ main {
     .content_header {
         @extend .clearfix;
 
+        border-bottom: 1px solid #E9E9E9;
+        padding-bottom: 20px;
         margin: 0 0 30px;
+
+        h1 {
+            font-size: 24px;
+        }
 
         div {
             float: left;

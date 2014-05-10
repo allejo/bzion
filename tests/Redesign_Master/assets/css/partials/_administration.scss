@@ -1,14 +1,11 @@
 main {
     &.administration {
-        @extend .wrapper;
-
         font-family: $sanSerifFont;
         padding: 20px 0;
 
-        section {
+        .admins {
             @extend .clearfix;
-
-            margin-left: 20px;
+            @extend .wrapper;
 
             .button {
                 i {
