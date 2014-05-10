@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700);
 body { font-family: "Merriweather", serif; line-height: 1.4em; }
 
@@ -9,21 +9,21 @@ main .content_header div h1 { color: #258EC9; font-size: 24px; }
 main .content_header div h2 { color: #CACACA; font-size: 16px; }
 main .content_header p { float: left; font-size: 42px; font-weight: bold; margin-right: 5px; margin-top: 10px; }
 
-.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration .admins, main.administration .admins ul, main.administration .admins ul li, main.news, main.bans { zoom: 1; }
-.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration .admins:before, main.administration .admins ul:before, main.administration .admins ul li:before, main.news:before, main.bans:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after { clear: both; }
+.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration .admins, main.administration .admins ul, main.administration .admins ul li, main.news, main.bans, main.messaging, main.messaging .messages, main.messaging .messages .conversations .search, main.messaging .messages .conversations .chats li a .meta { zoom: 1; }
+.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration .admins:before, main.administration .admins ul:before, main.administration .admins ul li:before, main.news:before, main.bans:before, main.messaging:before, main.messaging .messages:before, main.messaging .messages .conversations .search:before, main.messaging .messages .conversations .chats li a .meta:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chats li a .meta:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chats li a .meta:after { clear: both; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
 .css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #EFEFEF; display: table-cell; height: 20px; }
 
-.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments, main.bans .summary { margin: 0 auto; width: 1000px; }
+.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments, main.bans .summary, main.messaging .messages { margin: 0 auto; width: 1000px; }
 
 a { color: #009EFF; text-decoration: none; }
 a:hover { color: #006fb3; }
 a[href^="http"]:after { content: "\F08E"; font-family: FontAwesome; font-size: 0.6em; margin-left: 5px; text-decoration: none; vertical-align: top; }
 
-blockquote { font-family: "Open Sans", sans-serif; margin-bottom: 10px; margin-left: 30px; margin-top: 20px; padding-right: 30px; vertical-align: top; }
+blockquote { font-family: "Lato", sans-serif; margin-bottom: 10px; margin-left: 30px; margin-top: 20px; padding-right: 30px; vertical-align: top; }
 blockquote span { color: #8B8B8B; font-size: 16px; font-style: italic; }
 blockquote span:before { content: '\2014'; margin-left: 45px; margin-right: 5px; }
 blockquote article { color: #727272; display: inline; }
@@ -34,11 +34,11 @@ code { background-color: #EFEFEF; border: 1px dotted; display: block; font-famil
 
 em { font-style: italic; }
 
-h1 { font-family: "Open Sans", sans-serif; font-size: 30px; }
+h1 { font-family: "Lato", sans-serif; font-size: 30px; }
 
-h2 { font-family: "Open Sans", sans-serif; font-size: 24px; }
+h2 { font-family: "Lato", sans-serif; font-size: 24px; }
 
-h3 { font-family: "Open Sans", sans-serif; font-size: 20px; }
+h3 { font-family: "Lato", sans-serif; font-size: 20px; }
 
 hr { background-image: -webkit-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -moz-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -ms-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -o-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); border: 0; height: 1px; margin: 10px auto 30px; width: 1000px; }
 
@@ -95,7 +95,7 @@ body header section h1 a { color: #000000; }
 body header section h1 a img { vertical-align: middle; }
 body header section nav { overflow: hidden; }
 body header section nav ul { padding-left: 0; }
-body header section nav ul li { float: left; font-family: "Open Sans", sans-serif; list-style: none; }
+body header section nav ul li { float: left; font-family: "Lato", sans-serif; list-style: none; }
 body header section nav ul li a { color: #666; display: block; padding: 17px 15px; }
 body header section nav ul li a:hover { color: #000; }
 body header section nav ul li.active { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); }
@@ -103,26 +103,26 @@ body header section nav ul li:hover { -webkit-box-shadow: inset 0 2px 15px rgba(
 body header section nav ul.pages { float: left; }
 body header section nav ul.user { float: right; }
 
-body footer { border-top: 1px solid #E9E9E9; font-family: "Open Sans", sans-serif; margin: 20px auto 0; padding: 20px 10px; }
+body footer { border-top: 1px solid #E9E9E9; font-family: "Lato", sans-serif; margin: 20px auto 0; padding: 20px 10px; }
 body footer span { float: left; }
 body footer ul { float: right; }
 body footer ul li { display: inline-block; margin-left: 20px; }
 
 main.landing .cover { background: url("../imgs/cover_photo.png") no-repeat center center fixed; background-position: 0 -225px; background-size: cover; display: table; height: 350px; width: 100%; }
 main.landing .cover article { height: 100%; display: table-cell; vertical-align: middle; text-align: center; }
-main.landing .cover article h1, main.landing .cover article h2 { color: #fff; font-family: "Open Sans", sans-serif; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.9); }
+main.landing .cover article h1, main.landing .cover article h2 { color: #fff; font-family: "Lato", sans-serif; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.9); }
 main.landing .cover article h1 { font-size: 48px; margin-bottom: 20px; }
 main.landing .cover article h2 { font-size: 24px; }
 main.landing .cover article .button { margin-top: 40px; }
 main.landing .key_points { padding: 30px 0; }
-main.landing .key_points ul { font-family: "Open Sans", sans-serif; text-align: center; }
+main.landing .key_points ul { font-family: "Lato", sans-serif; text-align: center; }
 main.landing .key_points ul li { display: inline-block; margin: 0 50px; width: 200px; }
 main.landing .key_points ul li i { -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; background-clip: padding-box; border: 1px solid #000000; height: 70px; font-size: 60px; width: 70px; }
 main.landing .key_points ul li i.fa-gamepad { padding: 21px 19px 17px 19px; }
 main.landing .key_points ul li i.fa-info { padding: 27px 19px 11px 19px; }
 main.landing .key_points ul li i.fa-list-ul { padding: 25px 19px 13px 19px; }
 main.landing .key_points ul li h3 { font-size: 24px; font-weight: 400; margin: 10px 0; }
-main.landing .content { font-family: "Open Sans", sans-serif; }
+main.landing .content { font-family: "Lato", sans-serif; }
 main.landing .content aside { float: left; width: 400px; }
 main.landing .content aside h2 { margin-bottom: 10px; }
 main.landing .content aside .news { padding-left: 20px; }
@@ -138,12 +138,12 @@ main.landing .content section article .row .column .team { display: inline-block
 main.landing .content section article .row .column .team strong { display: block; text-align: center; }
 main.landing .content section article .row .column .stats { bottom: 20px; font-size: 14px; left: 20px; position: absolute; text-transform: uppercase; }
 
-main.administration { font-family: "Open Sans", sans-serif; padding: 20px 0; }
+main.administration { font-family: "Lato", sans-serif; padding: 20px 0; }
 main.administration .admins .button i { margin-right: 10px; }
 main.administration .admins ul li { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding: 20px 10px; width: 25%; }
 main.administration .admins ul li img { margin-right: 10px; vertical-align: middle; }
 
-main.news { font-family: "Open Sans", sans-serif; text-align: justify; padding: 20px 0; }
+main.news { font-family: "Lato", sans-serif; text-align: justify; padding: 20px 0; }
 main.news .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; }
 main.news .content_header h1 { font-size: 24px; }
 main.news .articles section > article { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding-right: 60px; width: 750px; }
@@ -157,7 +157,7 @@ main.news .articles aside ul li { font-size: 14px; padding: 7px 10px; }
 main.news .articles aside ul li.active { background-color: #F7F7F7; border-right: 2px solid #ff6700; }
 main.news .articles aside ul li:hover { background-color: #FAFAFA; border-right: 2px solid #ff6700; }
 
-main.bans { font-family: "Open Sans", sans-serif; padding: 20px 0; }
+main.bans { font-family: "Lato", sans-serif; padding: 20px 0; }
 main.bans .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; }
 main.bans .content_header h1 { font-size: 24px; }
 main.bans .punishments .ban_list { width: 100%; }
@@ -165,3 +165,21 @@ main.bans .punishments .ban_list .row.header { border-bottom: 1px dotted #EFEFEF
 main.bans .punishments .ban_list .row .column { border: none; padding: 10px; }
 main.bans .summary h2, main.bans .summary h3 { margin-bottom: 10px; }
 main.bans .summary > article, main.bans .summary > p, main.bans .summary > ul { margin: 10px 20px; }
+
+main.messaging { font-family: "Lato", sans-serif; padding: 20px 0; }
+main.messaging .content_header { margin-bottom: 0; }
+main.messaging .messages .conversations { background-color: #FFFFFF; border-left: 1px solid #EFEFEF; border-right: 1px solid #EFEFEF; float: left; overflow: scroll; width: 35%; }
+main.messaging .messages .conversations .search { border-bottom: 1px solid #EFEFEF; height: 35px; padding: 5px; }
+main.messaging .messages .conversations .search .icon { display: inline-block; float: left; margin: 0 10px; text-align: center; vertical-align: middle; }
+main.messaging .messages .conversations .search .icon i { line-height: 35px; }
+main.messaging .messages .conversations .search .field { background-color: #ffffff; border: none; display: inline-block; float: left; font-size: 16px; height: 100%; text-align: left; text-decoration: none; vertical-align: middle; width: 265px; }
+main.messaging .messages .conversations .search .field:focus { outline: 0; }
+main.messaging .messages .conversations .chats { padding-left: 0; }
+main.messaging .messages .conversations .chats li { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; background-color: #ffffff; border-bottom: 1px solid #EFEFEF; display: block; list-style-type: none; padding: 10px; width: 100%; }
+main.messaging .messages .conversations .chats li a { text-decoration: none; }
+main.messaging .messages .conversations .chats li a .meta .subject { color: #000000; float: left; font-size: 20px; }
+main.messaging .messages .conversations .chats li a .meta .timestamp { color: #009EFF; float: right; font-size: 12px; }
+main.messaging .messages .conversations .chats li a .members { color: #99A0A3; font-family: "Merriweather", serif; font-weight: 300; font-size: 12px; }
+main.messaging .messages .conversations .chats li a .last_message { color: #000000; font-size: 16px; padding: 5px 10px; }
+main.messaging .messages .conversations .chats li a:hover { color: #000000; }
+main.messaging .messages .conversations .chats li:hover { background-color: #F2FBFF; }

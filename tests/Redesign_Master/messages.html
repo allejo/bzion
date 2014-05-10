@@ -4,20 +4,167 @@
         <title>BZiON Design</title>
         <link rel="stylesheet" href="assets/css/reset.css">
         <link rel="stylesheet" href="assets/css/styles.css">
-        <link rel="stylesheet" href="://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     </head>
 
     <body>
         <header>
+            <section>
+                <h1>
+                    <a href="index.html">
+                        <img src="assets/imgs/bzflag_icon.png" />
+                        <span>gu league</span>
+                    </a>
+                </h1>
 
+                <nav>
+                    <ul class="pages">
+                        <li>
+                            <a href="news.html">
+                                <i class="fa fa-thumb-tack"></i> News
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-users"></i> Teams
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i> Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-trophy"></i> Matches
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="user">
+                        <!--
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-thumb-tack"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-comments-o"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+                        -->
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-sign-in"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
         </header>
 
-        <main>
+        <main class="messaging">
+            <section class="content_header">
+                <article class="wrapper">
+                    <h1>Messages</h1>
+                </article>
+            </section>
 
+            <section class="messages">
+                <section class="conversations">
+                    <form class="search">
+                        <div class="icon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <input type="text" class="field" name="search" data-id="new" placeholder="Search..." />
+                        <div class="icon">
+                            <i class="fa fa-cog"></i>
+                        </div>
+                    </form>
+
+                    <ul class="chats">
+                        <li>
+                            <a data-id="12" href="/bzion/messages/12">
+                                <section class="meta">
+                                    <p class="subject">nab</p>
+                                    <p class="timestamp">now</p>
+                                </section>
+
+                                <p class="members">allejo, brad</p>
+
+                                <article class="last_message">
+                                    <strong>allejo:</strong> &lt;h1&gt;
+                                </article>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a data-id="6" href="/bzion/messages/6">
+                                <section class="meta">
+                                    <p class="subject">Dev Group</p>
+                                    <p class="timestamp">1 month ago</p>
+                                </section>
+
+                                <p class="members">alezakos, ashvala, allejo, tw1sted</p>
+
+                                <article class="last_message">
+                                    <strong>ashvala:</strong> Baptize, Motherfucker!
+                                </article>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a data-id="9" href="/bzion/messages/9">
+                                <section class="meta">
+                                    <p class="subject">Another message</p>
+                                    <p class="timestamp">1 month ago</p>
+                                </section>
+
+                                <p class="members">tw1sted, allejo</p>
+
+                                <article class="last_message">
+                                    <strong>allejo:</strong> test
+                                </article>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a data-id="13" href="/bzion/messages/13">
+                                <section class="meta">
+                                    <p class="subject">HAI!!!</p>
+                                    <p class="timestamp">1 month ago</p>
+                                </section>
+
+                                <p class="members">kierra, allejo</p>
+
+                                <article class="last_message">
+                                    <strong>allejo:</strong> I&#039;m a message!
+                                </article>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+
+                </section>
+            </section>
         </main>
 
         <footer>
+            <span>Copyright &copy; 2014</span>
 
+            <ul>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="admins.html">Admins</a></li>
+                <li><a href="bans.html">Banned Players</a></li>
+            </ul>
         </footer>
     </body>
 </html>

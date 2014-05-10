@@ -1,0 +1,120 @@
+main {
+    &.messaging {
+        @extend .clearfix;
+
+        font-family: $sanSerifFont;
+        padding: 20px 0;
+
+        .content_header {
+            margin-bottom: 0;
+        }
+
+        .messages {
+            @extend .clearfix;
+            @extend .wrapper;
+
+            .conversations {
+                background-color: #FFFFFF;
+                border-left: 1px solid #EFEFEF;
+                border-right: 1px solid #EFEFEF;
+                float: left;
+                overflow: scroll;
+                width: 35%;
+
+                .search {
+                    $searchHeight: 35px;
+                    @extend .clearfix;
+
+                    border-bottom: 1px solid #EFEFEF;
+                    height: $searchHeight;
+                    padding: 5px;
+
+                    .icon {
+                        display: inline-block;
+                        float: left;
+                        margin: 0 10px;
+                        text-align: center;
+                        vertical-align: middle;
+
+                        i {
+                            line-height: $searchHeight;
+                        }
+                    }
+
+                    .field {
+                        background-color: #ffffff;
+                        border: none;
+                        display: inline-block;
+                        float: left;
+                        font-size: 16px;
+                        height: 100%;
+                        text-align: left;
+                        text-decoration: none;
+                        vertical-align: middle;
+                        width: 265px;
+
+                        &:focus {
+                            outline: 0;
+                        }
+                    }
+                }
+
+                .chats {
+                    padding-left: 0;
+
+                    li {
+                        @include box-sizing(border-box);
+
+                        background-color: #ffffff;
+                        border-bottom: 1px solid #EFEFEF;
+                        display: block;
+                        list-style-type: none;
+                        padding: 10px;
+                        width: 100%;
+
+                        a {
+                            text-decoration: none;
+
+                            .meta {
+                                @extend .clearfix;
+
+                                .subject {
+                                    color: #000000;
+                                    float: left;
+                                    font-size: 20px;
+                                }
+
+                                .timestamp {
+                                    color: #009EFF;
+                                    float: right;
+                                    font-size: 12px;
+                                }
+                            }
+
+                            .members {
+                                color: #99A0A3;
+                                font-family: $serifFont;
+                                font-weight: 300;
+                                font-size: 12px;
+                            }
+
+                            .last_message {
+                                color: #000000;
+                                font-size: 16px;
+                                padding: 5px 10px;
+                            }
+
+                            &:hover {
+                                color: #000000;
+                            }
+                        }
+
+                        &:hover {
+                            background-color: #F2FBFF;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
