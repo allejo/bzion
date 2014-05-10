@@ -102,11 +102,12 @@ main {
                 }
 
                 .news {
-                    margin-left: 20px;
+                    padding-left: 20px;
 
                     li {
                         border-bottom: 1px solid #EFEFEF;
                         margin: 5px 0;
+                        list-style: none;
                         padding: 10px 0 15px;
 
                         h3 {
