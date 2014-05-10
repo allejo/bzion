@@ -30,11 +30,12 @@ body {
                 overflow: hidden;
 
                 ul {
-                    list-style: none;
+                    padding-left: 0;
 
                     li {
                         float: left;
                         font-family: $sanSerifFont;
+                        list-style: none;
 
                         a {
                             color: #666;
