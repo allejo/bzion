@@ -138,8 +138,7 @@ main.landing .content section article .row .column .stats { bottom: 20px; font-s
 
 main.administration { font-family: "Open Sans", sans-serif; padding: 20px 0; }
 main.administration .admins .button i { margin-right: 10px; }
-main.administration .admins ul { margin-left: 20px; }
-main.administration .admins ul li { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding: 20px; width: 33%; }
+main.administration .admins ul li { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding: 20px 10px; width: 25%; }
 main.administration .admins ul li img { margin-right: 10px; vertical-align: middle; }
 
 main.news { font-family: "Open Sans", sans-serif; text-align: justify; padding: 20px 0; }

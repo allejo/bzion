@@ -16,15 +16,13 @@ main {
             ul {
                 @extend .clearfix;
 
-                margin-left: 20px;
-
                 li {
                     @extend .clearfix;
                     @include box-sizing(border-box);
 
                     float: left;
-                    padding: 20px;
-                    width: 33%;
+                    padding: 20px 10px;
+                    width: 25%;
 
                     img {
                         margin-right: 10px;
