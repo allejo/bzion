@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700);
-body { font-family: "Merriweather", serif; line-height: 1.3em; }
+body { font-family: "Merriweather", serif; line-height: 1.4em; }
 
 main .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; margin: 0 0 30px; }
 main .content_header h1 { font-size: 24px; }
@@ -159,4 +159,5 @@ main.bans { font-family: "Open Sans", sans-serif; padding: 20px 0; }
 main.bans .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; }
 main.bans .content_header h1 { font-size: 24px; }
 main.bans .punishments .ban_list { width: 100%; }
+main.bans .punishments .ban_list .row.header { border-bottom: 1px dotted #EFEFEF; }
 main.bans .punishments .ban_list .row .column { border: none; padding: 10px; }

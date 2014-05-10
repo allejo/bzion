@@ -21,6 +21,10 @@ main {
                 width: 100%;
 
                 .row {
+                    &.header {
+                        border-bottom: 1px dotted #EFEFEF;
+                    }
+
                     .column {
                         border: none;
                         padding: 10px;
