@@ -1,0 +1,32 @@
+main {
+    &.bans {
+        @extend .clearfix;
+
+        font-family: $sanSerifFont;
+        padding: 20px 0;
+
+        .content_header {
+            border-bottom: 1px solid #E9E9E9;
+            padding-bottom: 20px;
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        .punishments {
+            @extend .wrapper;
+
+            .ban_list {
+                width: 100%;
+
+                .row {
+                    .column {
+                        border: none;
+                        padding: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

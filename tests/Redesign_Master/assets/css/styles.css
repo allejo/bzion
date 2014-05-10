@@ -20,13 +20,13 @@ main .content_header div h1 { color: #258EC9; font-size: 24px; }
 main .content_header div h2 { color: #CACACA; font-size: 16px; }
 main .content_header p { float: left; font-size: 42px; font-weight: bold; margin-right: 5px; margin-top: 10px; }
 
-.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration section, main.administration section ul, main.administration section ul li, main.news { zoom: 1; }
-.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration section:before, main.administration section ul:before, main.administration section ul li:before, main.news:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after, main.news:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after, main.news:after { clear: both; }
+.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration section, main.administration section ul, main.administration section ul li, main.news, main.bans { zoom: 1; }
+.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration section:before, main.administration section ul:before, main.administration section ul li:before, main.news:before, main.bans:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after, main.news:after, main.bans:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after, main.news:after, main.bans:after { clear: both; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
-.css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #EFEFEF; display: table-cell; height: 20px; width: 120px; }
+.css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #EFEFEF; display: table-cell; height: 20px; }
 
 .float.left { float: left; }
 .float.right { float: right; }
@@ -35,7 +35,7 @@ main .content_header p { float: left; font-size: 42px; font-weight: bold; margin
 .padding.left, .padding.right { padding-right: 5px; }
 .padding.bottom { padding-bottom: 15px; }
 
-.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration, main.news .articles, main.news .articles aside { margin: 0 auto; width: 1000px; }
+.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration, main.news .articles, main.news .articles aside, main.bans .punishments { margin: 0 auto; width: 1000px; }
 
 @font-face { font-family: "Collegia"; src: url("../typography/COLLEGIA.otf") format("opentype"); }
 .button.red { display: inline-block; outline: none; cursor: pointer; text-align: center; text-decoration: none; font: 14px/100% Arial, Helvetica, sans-serif; padding: .5em 2em .55em; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3); -webkit-border-radius: 0.5em; -moz-border-radius: 0.5em; border-radius: 0.5em; background-clip: padding-box; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); color: white !important; font-weight: bold; border: solid 1px #a30000; background: red; background: -webkit-gradient(linear, left top, left bottom, from(red), to(#b30000)); background: -moz-linear-gradient(top, red, #b30000); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='red', endColorstr='#b30000'); }
@@ -136,3 +136,9 @@ main.news .articles aside ul { margin-left: 20px; }
 main.news .articles aside ul li { padding: 10px; }
 main.news .articles aside ul li.active { background-color: #F7F7F7; border-right: 2px solid #ff6700; }
 main.news .articles aside ul li:hover { background-color: #FAFAFA; border-right: 2px solid #ff6700; }
+
+main.bans { font-family: "Open Sans", sans-serif; padding: 20px 0; }
+main.bans .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; }
+main.bans .content_header h1 { font-size: 24px; }
+main.bans .punishments .ban_list { width: 100%; }
+main.bans .punishments .ban_list .row .column { border: none; padding: 10px; }
