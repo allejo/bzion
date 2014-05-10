@@ -1,0 +1,62 @@
+blockquote {
+    margin-bottom: 10px;
+    margin-left: 30px;
+    margin-top: 20px;
+    padding-right: 30px;
+    vertical-align: top;
+
+    span {
+        color: #8B8B8B;
+        font-family: $sanSerifFont;
+        font-size: 16px;
+        font-style: italic;
+    }
+
+    article {
+        clear: both;
+        color: darken(#8B8B8B, 10%);
+        display: block;
+        font-family: $serifFont;
+        margin-left: 45px;
+    }
+
+    &:before {
+        content: '\f10d';
+        color: #656565;
+        float: left;
+        font-family: FontAwesome;
+        font-size: 30px;
+        margin-bottom: 10px;
+        padding-right: 15px;
+        vertical-align: top;
+    }
+}
+
+em {
+    font-style: italic;
+}
+
+h1 {
+    font-family: $sanSerifFont;
+    font-size: 30px;
+}
+
+h2 {
+    font-family: $sanSerifFont;
+    font-size: 24px;
+}
+
+hr {
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
+    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    border: 0;
+    height: 1px;
+    margin: 10px auto 30px;
+    width: $global_width;
+}
+
+strong {
+    font-weight: bold;
+}

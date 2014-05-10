@@ -18,7 +18,7 @@ main {
             @extend .wrapper;
 
             section {
-                article {
+                > article {
                     @include box-sizing(border-box);
 
                     float: left;
@@ -31,7 +31,7 @@ main {
                     }
 
                     .post {
-                        p {
+                        > p {
                             margin: 15px 0;
                         }
                     }
