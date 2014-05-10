@@ -133,7 +133,7 @@ main.news .articles section article .meta li { color: #A1A1A1; display: inline-b
 main.news .articles aside { float: left; width: 250px; }
 main.news .articles aside h2 { margin-bottom: 15px; }
 main.news .articles aside ul { margin-left: 20px; }
-main.news .articles aside ul li { padding: 10px; }
+main.news .articles aside ul li { font-size: 14px; padding: 7px 10px; }
 main.news .articles aside ul li.active { background-color: #F7F7F7; border-right: 2px solid #ff6700; }
 main.news .articles aside ul li:hover { background-color: #FAFAFA; border-right: 2px solid #ff6700; }
 
