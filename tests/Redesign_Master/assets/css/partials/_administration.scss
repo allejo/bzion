@@ -1,0 +1,40 @@
+main {
+    &.administration {
+        @extend .wrapper;
+
+        font-family: $sanSerifFont;
+        padding: 20px 0;
+
+        section {
+            @extend .clearfix;
+
+            margin-left: 20px;
+
+            .button {
+                i {
+                    margin-right: 10px;
+                }
+            }
+
+            ul {
+                @extend .clearfix;
+
+                margin-left: 20px;
+
+                li {
+                    @extend .clearfix;
+                    @include box-sizing(border-box);
+
+                    float: left;
+                    padding: 20px;
+                    width: 33%;
+
+                    img {
+                        margin-right: 10px;
+                        vertical-align: middle;
+                    }
+                }
+            }
+        }
+    }
+}

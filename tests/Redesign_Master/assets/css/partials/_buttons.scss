@@ -1,0 +1,46 @@
+@mixin createButton($bgColor, $fontColor) {
+    @include button($bgColor, $fontColor);
+
+    &.flat {
+        @include remove_gradient($bgColor);
+    }
+}
+
+.button {
+    &.red {
+        @include createButton(#FF0000, #FFFFFF);
+    }
+
+    &.green {
+        @include createButton(#00d319, #FFFFFF);
+    }
+
+    &.blue {
+        @include createButton(#0036ff, #FFFFFF);
+    }
+
+    &.yellow {
+        @include createButton(#fff400, #FFFFFF);
+    }
+
+    &.orange {
+        @include createButton(#ff6700, #FFFFFF);
+    }
+
+    &.grey {
+        @include createButton(#ececec, #000000);
+    }
+
+    &.skinny {
+        padding: 0.3em 2em .35em;
+    }
+
+    &.square {
+        @include border-radius(0);
+    }
+
+    &.noshadow {
+        @include box-shadow(0, 0, 0, 0);
+        text-shadow: none;
+    }
+}
