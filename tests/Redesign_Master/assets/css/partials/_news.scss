@@ -63,7 +63,17 @@ main {
                     margin-left: 20px;
 
                     li {
-                        margin: 10px 0;
+                        padding: 10px;
+
+                        &.active {
+                            background-color: #F7F7F7;
+                            border-right: 2px solid #ff6700;
+                        }
+
+                        &:hover {
+                            background-color: #FAFAFA;
+                            border-right: 2px solid #ff6700;
+                        }
                     }
                 }
             }
