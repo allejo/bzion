@@ -20,9 +20,9 @@ main .content_header div h1 { color: #258EC9; font-size: 24px; }
 main .content_header div h2 { color: #CACACA; font-size: 16px; }
 main .content_header p { float: left; font-size: 42px; font-weight: bold; margin-right: 5px; margin-top: 10px; }
 
-.clearfix, main .content_header, header section, footer, main.landing .content, main.administration section, main.administration section ul, main.administration section ul li { zoom: 1; }
-.clearfix:before, main .content_header:before, header section:before, footer:before, main.landing .content:before, main.administration section:before, main.administration section ul:before, main.administration section ul li:before, .clearfix:after, main .content_header:after, header section:after, footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after, main .content_header:after, header section:after, footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after { clear: both; }
+.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration section, main.administration section ul, main.administration section ul li, main.news { zoom: 1; }
+.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration section:before, main.administration section ul:before, main.administration section ul li:before, main.news:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after, main.news:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration section:after, main.administration section ul:after, main.administration section ul li:after, main.news:after { clear: both; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
@@ -35,7 +35,7 @@ main .content_header p { float: left; font-size: 42px; font-weight: bold; margin
 .padding.left, .padding.right { padding-right: 5px; }
 .padding.bottom { padding-bottom: 15px; }
 
-.wrapper, header section, footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration { margin: 0 auto; width: 1000px; }
+.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration, main.news .articles, main.news .articles aside { margin: 0 auto; width: 1000px; }
 
 @font-face { font-family: "Collegia"; src: url("../typography/COLLEGIA.otf") format("opentype"); }
 .button.red { display: inline-block; outline: none; cursor: pointer; text-align: center; text-decoration: none; font: 14px/100% Arial, Helvetica, sans-serif; padding: .5em 2em .55em; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3); -webkit-border-radius: 0.5em; -moz-border-radius: 0.5em; border-radius: 0.5em; background-clip: padding-box; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); color: white !important; font-weight: bold; border: solid 1px #a30000; background: red; background: -webkit-gradient(linear, left top, left bottom, from(red), to(#b30000)); background: -moz-linear-gradient(top, red, #b30000); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='red', endColorstr='#b30000'); }
@@ -66,24 +66,24 @@ main .content_header p { float: left; font-size: 42px; font-weight: bold; margin
 .button.square { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; background-clip: padding-box; }
 .button.noshadow { -webkit-box-shadow: 0 0 0 0; -moz-box-shadow: 0 0 0 0; box-shadow: 0 0 0 0; text-shadow: none; }
 
-header { background: -webkit-gradient(linear, left top, left bottom, from(white), to(#f2f2f2)); background: -moz-linear-gradient(top, white, #f2f2f2); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#f2f2f2'); -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); border-bottom: 1px solid #D4D4D4; }
-header section h1 { float: left; font-family: "Collegia", san-serif; font-size: 36px; margin: 10px 20px 10px 0; }
-header section h1 a { color: #000000; }
-header section h1 a img { vertical-align: middle; }
-header section nav { overflow: hidden; }
-header section nav ul { list-style: none; }
-header section nav ul li { float: left; font-family: "Open Sans", sans-serif; }
-header section nav ul li a { color: #666; display: block; padding: 17px 15px; }
-header section nav ul li a:hover { color: #000; }
-header section nav ul li.active { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); }
-header section nav ul li:hover { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); }
-header section nav ul.pages { float: left; }
-header section nav ul.user { float: right; }
+body header { background: -webkit-gradient(linear, left top, left bottom, from(white), to(#f2f2f2)); background: -moz-linear-gradient(top, white, #f2f2f2); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#f2f2f2'); -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); border-bottom: 1px solid #D4D4D4; }
+body header section h1 { float: left; font-family: "Collegia", san-serif; font-size: 36px; margin: 10px 20px 10px 0; }
+body header section h1 a { color: #000000; }
+body header section h1 a img { vertical-align: middle; }
+body header section nav { overflow: hidden; }
+body header section nav ul { list-style: none; }
+body header section nav ul li { float: left; font-family: "Open Sans", sans-serif; }
+body header section nav ul li a { color: #666; display: block; padding: 17px 15px; }
+body header section nav ul li a:hover { color: #000; }
+body header section nav ul li.active { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); }
+body header section nav ul li:hover { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); }
+body header section nav ul.pages { float: left; }
+body header section nav ul.user { float: right; }
 
-footer { border-top: 1px solid #E9E9E9; font-family: "Open Sans", sans-serif; margin: 20px auto 0; padding: 20px 10px; }
-footer span { float: left; }
-footer ul { float: right; }
-footer ul li { display: inline-block; margin-left: 20px; }
+body footer { border-top: 1px solid #E9E9E9; font-family: "Open Sans", sans-serif; margin: 20px auto 0; padding: 20px 10px; }
+body footer span { float: left; }
+body footer ul { float: right; }
+body footer ul li { display: inline-block; margin-left: 20px; }
 
 main.landing .cover { background: url("../imgs/cover_photo.png") no-repeat center center fixed; background-position: 0 -225px; background-size: cover; display: table; height: 350px; width: 100%; }
 main.landing .cover article { height: 100%; display: table-cell; vertical-align: middle; text-align: center; }
@@ -121,3 +121,16 @@ main.administration section .button i { margin-right: 10px; }
 main.administration section ul { margin-left: 20px; }
 main.administration section ul li { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding: 20px; width: 33%; }
 main.administration section ul li img { margin-right: 10px; vertical-align: middle; }
+
+main.news { font-family: "Open Sans", sans-serif; padding: 20px 0; }
+main.news .content_header { border-bottom: 1px solid #E9E9E9; padding-bottom: 20px; }
+main.news .content_header h1 { font-size: 24px; }
+main.news .articles section article { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left; padding-right: 60px; width: 750px; }
+main.news .articles section article h1 { color: #0088DB; font-weight: bold; }
+main.news .articles section article .post p { margin: 15px 0; }
+main.news .articles section article .meta { border-bottom: 1px solid #D4D4D4; font-size: 14px; padding: 10px; }
+main.news .articles section article .meta li { color: #A1A1A1; display: inline-block; margin: 0 10px; }
+main.news .articles aside { float: left; width: 250px; }
+main.news .articles aside h2 { margin-bottom: 15px; }
+main.news .articles aside ul { margin-left: 20px; }
+main.news .articles aside ul li { margin: 10px 0; }

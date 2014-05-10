@@ -1,22 +1,24 @@
-footer {
-    @extend .clearfix;
-    @extend .wrapper;
+body {
+    footer {
+        @extend .clearfix;
+        @extend .wrapper;
 
-    border-top: 1px solid #E9E9E9;
-    font-family: $sanSerifFont;
-    margin: 20px auto 0;
-    padding: 20px 10px;
+        border-top: 1px solid #E9E9E9;
+        font-family: $sanSerifFont;
+        margin: 20px auto 0;
+        padding: 20px 10px;
 
-    span {
-        float: left;
-    }
+        span {
+            float: left;
+        }
 
-    ul {
-        float: right;
+        ul {
+            float: right;
 
-        li {
-            display: inline-block;
-            margin-left: 20px;
+            li {
+                display: inline-block;
+                margin-left: 20px;
+            }
         }
     }
 }

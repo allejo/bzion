@@ -1,65 +1,67 @@
-header {
-    @include gradient(#FFFFFF, #F2F2F2);
-    @include box-shadow(0, 2px, 5px, rgba(50, 50, 50, 0.075));
+body {
+    header {
+        @include gradient(#FFFFFF, #F2F2F2);
+        @include box-shadow(0, 2px, 5px, rgba(50, 50, 50, 0.075));
 
-    border-bottom: 1px solid #D4D4D4;
+        border-bottom: 1px solid #D4D4D4;
 
-    section {
-        @extend .clearfix;
-        @extend .wrapper;
+        section {
+            @extend .clearfix;
+            @extend .wrapper;
 
-        h1 {
-            float: left;
-            font-family: $collegia;
-            font-size: 36px;
-            margin: 10px 20px 10px 0;
+            h1 {
+                float: left;
+                font-family: $collegia;
+                font-size: 36px;
+                margin: 10px 20px 10px 0;
 
-            a {
-                color: #000000;
+                a {
+                    color: #000000;
 
-                img {
-                    vertical-align: middle;
+                    img {
+                        vertical-align: middle;
+                    }
                 }
             }
-        }
 
-        nav {
-            // CSS hack to tame the floated <h1>. This will allow us to take up the reset of the <header> without
-            // having to calculate the remaining width with either JavaScript or CSS' calc().
-            overflow: hidden;
+            nav {
+                // CSS hack to tame the floated <h1>. This will allow us to take up the reset of the <header> without
+                // having to calculate the remaining width with either JavaScript or CSS' calc().
+                overflow: hidden;
 
-            ul {
-                list-style: none;
+                ul {
+                    list-style: none;
 
-                li {
-                    float: left;
-                    font-family: $sanSerifFont;
+                    li {
+                        float: left;
+                        font-family: $sanSerifFont;
 
-                    a {
-                        color: #666;
-                        display: block;
-                        padding: 17px 15px;
+                        a {
+                            color: #666;
+                            display: block;
+                            padding: 17px 15px;
+
+                            &:hover {
+                                color: #000;
+                            }
+                        }
+
+                        &.active {
+                            @include box-shadow(0, 2px, 15px, rgba(0, 0, 0, 0.25), true);
+                        }
 
                         &:hover {
-                            color: #000;
+                            @include box-shadow(0, 2px, 15px, rgba(0, 0, 0, 0.1), true);
                         }
                     }
 
-                    &.active {
-                        @include box-shadow(0, 2px, 15px, rgba(0, 0, 0, 0.25), true);
+                    &.pages {
+                        float: left;
                     }
 
-                    &:hover {
-                        @include box-shadow(0, 2px, 15px, rgba(0, 0, 0, 0.1), true);
+                    &.user {
+                        float: right;
                     }
-                }
-
-                &.pages {
-                    float: left;
-                }
-
-                &.user {
-                    float: right;
                 }
             }
         }
