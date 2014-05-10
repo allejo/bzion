@@ -18,6 +18,10 @@ blockquote {
         display: block;
         font-family: $serifFont;
         margin-left: 45px;
+
+        > p {
+            margin: 10px 0;
+        }
     }
 
     &:before {
