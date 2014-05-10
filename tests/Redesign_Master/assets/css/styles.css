@@ -17,7 +17,7 @@ main .content_header p { float: left; font-size: 42px; font-weight: bold; margin
 .css-table .row { display: table-row; }
 .css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #EFEFEF; display: table-cell; height: 20px; }
 
-.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments { margin: 0 auto; width: 1000px; }
+.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments, main.bans .summary { margin: 0 auto; width: 1000px; }
 
 a { color: #009EFF; text-decoration: none; }
 a:hover { color: #006fb3; }
@@ -37,6 +37,8 @@ em { font-style: italic; }
 h1 { font-family: "Open Sans", sans-serif; font-size: 30px; }
 
 h2 { font-family: "Open Sans", sans-serif; font-size: 24px; }
+
+h3 { font-family: "Open Sans", sans-serif; font-size: 20px; }
 
 hr { background-image: -webkit-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -moz-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -ms-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -o-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); border: 0; height: 1px; margin: 10px auto 30px; width: 1000px; }
 
@@ -161,3 +163,5 @@ main.bans .content_header h1 { font-size: 24px; }
 main.bans .punishments .ban_list { width: 100%; }
 main.bans .punishments .ban_list .row.header { border-bottom: 1px dotted #EFEFEF; }
 main.bans .punishments .ban_list .row .column { border: none; padding: 10px; }
+main.bans .summary h2, main.bans .summary h3 { margin-bottom: 10px; }
+main.bans .summary > article, main.bans .summary > p, main.bans .summary > ul { margin: 10px 20px; }
