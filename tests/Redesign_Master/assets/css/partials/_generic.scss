@@ -61,6 +61,17 @@ blockquote {
     }
 }
 
+code {
+    background-color: #EFEFEF;
+    border: 1px dotted;
+    display: block;
+    font-family: monospace;
+    font-size: 13px;
+    margin: 10px 0;
+    padding: 0 20px;
+    white-space: pre-wrap;
+}
+
 em {
     font-style: italic;
 }
@@ -84,6 +95,37 @@ hr {
     height: 1px;
     margin: 10px auto 30px;
     width: $global_width;
+}
+
+ol {
+    padding: 30px;
+
+    li {
+        list-style-type: decimal;
+        padding-left: 0;
+    }
+}
+
+pre {
+    display: block;
+    font-family: monospace;
+    font-size: 13px;
+    margin: 10px 0;
+    padding: 0 20px;
+    white-space: pre-wrap;
+}
+
+ul {
+    padding-left: 30px;
+
+    li {
+        padding-left: 0;
+        list-style-type: circle;
+    }
+}
+
+small {
+    font-size: 14px;
 }
 
 strong {

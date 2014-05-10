@@ -30,6 +30,8 @@ blockquote article { color: #727272; display: inline; }
 blockquote article > p { margin: 10px 0 10px 45px; }
 blockquote:before { content: '\f10d'; color: #656565; float: left; font-family: FontAwesome; font-size: 30px; margin-bottom: 10px; padding-right: 15px; vertical-align: top; }
 
+code { background-color: #EFEFEF; border: 1px dotted; display: block; font-family: monospace; font-size: 13px; margin: 10px 0; padding: 0 20px; white-space: pre-wrap; }
+
 em { font-style: italic; }
 
 h1 { font-family: "Open Sans", sans-serif; font-size: 30px; }
@@ -37,6 +39,16 @@ h1 { font-family: "Open Sans", sans-serif; font-size: 30px; }
 h2 { font-family: "Open Sans", sans-serif; font-size: 24px; }
 
 hr { background-image: -webkit-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -moz-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -ms-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -o-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); border: 0; height: 1px; margin: 10px auto 30px; width: 1000px; }
+
+ol { padding: 30px; }
+ol li { list-style-type: decimal; padding-left: 0; }
+
+pre { display: block; font-family: monospace; font-size: 13px; margin: 10px 0; padding: 0 20px; white-space: pre-wrap; }
+
+ul { padding-left: 30px; }
+ul li { padding-left: 0; list-style-type: circle; }
+
+small { font-size: 14px; }
 
 strong { font-weight: bold; }
 
@@ -140,7 +152,6 @@ main.news .articles section > article .meta { border-bottom: 1px solid #D4D4D4; 
 main.news .articles section > article .meta li { color: #A1A1A1; display: inline-block; margin: 0 10px; }
 main.news .articles aside { float: left; width: 250px; }
 main.news .articles aside h2 { margin-bottom: 15px; }
-main.news .articles aside ul { margin-left: 20px; }
 main.news .articles aside ul li { font-size: 14px; padding: 7px 10px; }
 main.news .articles aside ul li.active { background-color: #F7F7F7; border-right: 2px solid #ff6700; }
 main.news .articles aside ul li:hover { background-color: #FAFAFA; border-right: 2px solid #ff6700; }
