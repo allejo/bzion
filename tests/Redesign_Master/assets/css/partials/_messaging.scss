@@ -165,18 +165,19 @@ main {
                 }
 
                 >.scrollable_messages {
-                    display: table;
-                    width: 75%;
+                    display: block;
+                    width: 100%;
 
                     .messages {
+                        display: block;
                         height: 100%;
                         overflow: scroll;
                         padding-left: 0;
+                        width: 100%;
 
                         li {
                             display: block;
                             overflow: hidden;
-                            width: 65%;
 
                             .bubble {
                                 @include border-radius(5px);

@@ -191,9 +191,9 @@ main.messaging .messages .chat_area > .details .meta .tools { float: right; }
 main.messaging .messages .chat_area > .details .meta .tools i { margin: 0 5px; }
 main.messaging .messages .chat_area > .details .meta .tools i.close:hover { color: #e74c3c; }
 main.messaging .messages .chat_area > .details .members { border-top: 1px solid #FFFFFF; }
-main.messaging .messages .chat_area > .scrollable_messages { display: table; width: 75%; }
-main.messaging .messages .chat_area > .scrollable_messages .messages { height: 100%; overflow: scroll; padding-left: 0; }
-main.messaging .messages .chat_area > .scrollable_messages .messages li { display: block; overflow: hidden; width: 65%; }
+main.messaging .messages .chat_area > .scrollable_messages { display: block; width: 100%; }
+main.messaging .messages .chat_area > .scrollable_messages .messages { display: block; height: 100%; overflow: scroll; padding-left: 0; width: 100%; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li { display: block; overflow: hidden; }
 main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-clip: padding-box; background-color: #FBFFFB; border: 1px solid #B4EBB0; margin: 10px 15px; padding: 5px 10px; float: left; width: 75%; }
 main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble .details { border-bottom: 1px solid #B4EBB0; margin-bottom: 10px; padding-bottom: 5px; overflow: hidden; width: 100%; }
 main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble .details .author { color: #515051; float: left; }
