@@ -19,4 +19,4 @@ after_script:
 notifications:
   webhooks:
     - http://helit.org:8093/++alezakos/showSuccessfulBuildMessages=always
-    - http://helit.org:8093/++sujevo/showSuccessfulBuildMessages=on_change
+    - http://helit.org:8093/+sujevo/showSuccessfulBuildMessages=on_change
