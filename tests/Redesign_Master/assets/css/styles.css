@@ -9,9 +9,9 @@ main .content_header div h1 { color: #258EC9; font-size: 24px; }
 main .content_header div h2 { color: #CACACA; font-size: 16px; }
 main .content_header p { float: left; font-size: 42px; font-weight: bold; margin-right: 5px; margin-top: 10px; }
 
-.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration .admins, main.administration .admins ul, main.administration .admins ul li, main.news, main.bans, main.messaging, main.messaging .messages, main.messaging .messages .conversations .search, main.messaging .messages .conversations .chats li a .meta { zoom: 1; }
-.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration .admins:before, main.administration .admins ul:before, main.administration .admins ul li:before, main.news:before, main.bans:before, main.messaging:before, main.messaging .messages:before, main.messaging .messages .conversations .search:before, main.messaging .messages .conversations .chats li a .meta:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chats li a .meta:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chats li a .meta:after { clear: both; }
+.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration .admins, main.administration .admins ul, main.administration .admins ul li, main.news, main.bans, main.messaging, main.messaging .messages, main.messaging .messages .conversations .search, main.messaging .messages .conversations .chats li a .meta, main.messaging .messages .chat_area > .details .meta { zoom: 1; }
+.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration .admins:before, main.administration .admins ul:before, main.administration .admins ul li:before, main.news:before, main.bans:before, main.messaging:before, main.messaging .messages:before, main.messaging .messages .conversations .search:before, main.messaging .messages .conversations .chats li a .meta:before, main.messaging .messages .chat_area > .details .meta:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chats li a .meta:after, main.messaging .messages .chat_area > .details .meta:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chats li a .meta:after, main.messaging .messages .chat_area > .details .meta:after { clear: both; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
@@ -168,7 +168,7 @@ main.bans .summary > article, main.bans .summary > p, main.bans .summary > ul { 
 
 main.messaging { font-family: "Lato", sans-serif; padding: 20px 0; }
 main.messaging .content_header { margin-bottom: 0; }
-main.messaging .messages .conversations { background-color: #FFFFFF; border-left: 1px solid #EFEFEF; border-right: 1px solid #EFEFEF; float: left; overflow: scroll; width: 35%; }
+main.messaging .messages .conversations { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; background-color: #FFFFFF; border-left: 1px solid #EFEFEF; border-right: 1px solid #EFEFEF; float: left; overflow: scroll; width: 35%; }
 main.messaging .messages .conversations .search { border-bottom: 1px solid #EFEFEF; height: 35px; padding: 5px; }
 main.messaging .messages .conversations .search .icon { display: inline-block; float: left; margin: 0 10px; text-align: center; vertical-align: middle; }
 main.messaging .messages .conversations .search .icon i { line-height: 35px; }
@@ -183,3 +183,21 @@ main.messaging .messages .conversations .chats li a .members { color: #99A0A3; f
 main.messaging .messages .conversations .chats li a .last_message { color: #000000; font-size: 16px; padding: 5px 10px; }
 main.messaging .messages .conversations .chats li a:hover { color: #000000; }
 main.messaging .messages .conversations .chats li:hover { background-color: #F2FBFF; }
+main.messaging .messages .chat_area { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border-right: 1px solid #EFEFEF; float: left; width: 65%; }
+main.messaging .messages .chat_area > .details { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; background-color: #00AFF0; color: #FFFFFF; padding: 10px; width: 100%; }
+main.messaging .messages .chat_area > .details .meta { padding-bottom: 10px; }
+main.messaging .messages .chat_area > .details .meta .subject { float: left; font-size: 24px; font-weight: 300; }
+main.messaging .messages .chat_area > .details .meta .tools { float: right; }
+main.messaging .messages .chat_area > .details .meta .tools i { margin: 0 5px; }
+main.messaging .messages .chat_area > .details .meta .tools i.close:hover { color: #e74c3c; }
+main.messaging .messages .chat_area > .details .members { border-top: 1px solid #FFFFFF; }
+main.messaging .messages .chat_area > .scrollable_messages { display: table; width: 75%; }
+main.messaging .messages .chat_area > .scrollable_messages .messages { height: 100%; overflow: scroll; padding-left: 0; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li { display: block; overflow: hidden; width: 65%; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-clip: padding-box; background-color: #FBFFFB; border: 1px solid #B4EBB0; margin: 10px 15px; padding: 5px 10px; float: left; width: 75%; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble .details { border-bottom: 1px solid #B4EBB0; margin-bottom: 10px; padding-bottom: 5px; overflow: hidden; width: 100%; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble .details .author { color: #515051; float: left; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble .details .date { color: #CCD4DC; float: right; font-size: 12px; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble p { margin: 10px; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble.me { background-color: #F7FEFF; border: 1px solid #9DD8E1; float: right; }
+main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble.me .details { border-bottom: 1px solid #9DD8E1; }

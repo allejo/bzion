@@ -14,6 +14,8 @@ main {
             @extend .wrapper;
 
             .conversations {
+                @include box-sizing(border-box);
+
                 background-color: #FFFFFF;
                 border-left: 1px solid #EFEFEF;
                 border-right: 1px solid #EFEFEF;
@@ -111,6 +113,114 @@ main {
 
                         &:hover {
                             background-color: #F2FBFF;
+                        }
+                    }
+                }
+            }
+
+            .chat_area {
+                @include box-sizing(border-box);
+
+                border-right: 1px solid #EFEFEF;
+                float: left;
+                width: 65%;
+
+                >.details {
+                    @include box-sizing(border-box);
+
+                    background-color: #00AFF0;
+                    color: #FFFFFF;
+                    padding: 10px;
+                    width: 100%;
+
+                    .meta {
+                        @extend .clearfix;
+
+                        padding-bottom: 10px;
+
+                        .subject {
+                            float: left;
+                            font-size: 24px;
+                            font-weight: 300;
+                        }
+
+                        .tools {
+                            float: right;
+
+                            i {
+                                margin: 0 5px;
+
+                                &.close {
+                                    &:hover {
+                                        color: #e74c3c;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .members {
+                        border-top: 1px solid #FFFFFF;
+                    }
+                }
+
+                >.scrollable_messages {
+                    display: table;
+                    width: 75%;
+
+                    .messages {
+                        height: 100%;
+                        overflow: scroll;
+                        padding-left: 0;
+
+                        li {
+                            display: block;
+                            overflow: hidden;
+                            width: 65%;
+
+                            .bubble {
+                                @include border-radius(5px);
+
+                                background-color: #FBFFFB;
+                                border: 1px solid #B4EBB0;
+                                margin: 10px 15px;
+                                padding: 5px 10px;
+                                float: left;
+                                width: 75%;
+
+                                .details {
+                                    border-bottom: 1px solid #B4EBB0;
+                                    margin-bottom: 10px;
+                                    padding-bottom: 5px;
+                                    overflow: hidden;
+                                    width: 100%;
+
+                                    .author {
+                                        color: #515051;
+                                        float: left;
+                                    }
+
+                                    .date {
+                                        color: #CCD4DC;
+                                        float: right;
+                                        font-size: 12px;
+                                    }
+                                }
+
+                                p {
+                                    margin: 10px;
+                                }
+
+                                &.me {
+                                    background-color: #F7FEFF;
+                                    border: 1px solid #9DD8E1;
+                                    float: right;
+
+                                    .details {
+                                        border-bottom: 1px solid #9DD8E1;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
