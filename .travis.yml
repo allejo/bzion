@@ -17,4 +17,6 @@ after_script:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:
-  irc: "irc.freenode.org##alezakos"
+  webhooks:
+    - http://helit.org:8093/++alezakos/showSuccessfulBuildMessages=always
+    - http://helit.org:8093/++sujevo/showSuccessfulBuildMessages=on_change
