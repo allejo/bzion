@@ -201,3 +201,15 @@ main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble 
 main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble p { margin: 10px; }
 main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble.me { background-color: #F7FEFF; border: 1px solid #9DD8E1; float: right; }
 main.messaging .messages .chat_area > .scrollable_messages .messages li .bubble.me .details { border-bottom: 1px solid #9DD8E1; }
+main.messaging .messages .chat_area .compose_form { background-color: #FFFFFF; }
+main.messaging .messages .chat_area .compose_form .input_group { display: table; padding: 15px 10px; table-layout: auto; }
+main.messaging .messages .chat_area .compose_form .input_group_row { display: table-row; }
+main.messaging .messages .chat_area .compose_form .input_group label { display: table-cell; padding-right: 5px; text-align: left; }
+main.messaging .messages .chat_area .compose_form .input_group_main { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; background-clip: padding-box; display: table-cell; height: 29px; width: 100%; }
+main.messaging .messages .chat_area .compose_form .input_group_main input[type=text] { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; background-image: linear-gradient(#eeeeee 1%, white 15%); border: 1px solid #eee; font-size: 13px; margin-top: 1px; padding: 5px 5px 5px 5px; width: 100%; }
+main.messaging .messages .chat_area .compose_form .compose_area { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); background-color: #fff; border: 1px solid #eee; color: #333333; display: block; font-size: 1em; height: 100px; line-height: 1.42857; margin: 0 auto; min-height: 70px; padding: 6px 12px; resize: vertical; transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; vertical-align: middle; width: 97%; }
+main.messaging .messages .chat_area .reply_form { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; background-color: #F4F7FB; bottom: 0; height: 150px; padding: 20px; width: 100%; }
+main.messaging .messages .chat_area .reply_form .quick_reply { overflow: hidden; }
+main.messaging .messages .chat_area .reply_form .quick_reply textarea { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #a1a1a1; font-family: Open Sans; font-size: 13px; padding: 5px; resize: none; width: 100%; }
+main.messaging .messages .chat_area .reply_form .quick_reply button[type="submit"] { float: right; }
+main.messaging .messages .chat_area .buttons { padding: 10px; }
