@@ -38,6 +38,10 @@ news_list:
     pattern:    /news
     defaults: { _controller: 'News', _action: 'list' }
 
+news_show:
+    pattern:    /news/{id}
+    defaults: { _controller: 'News', _action: 'show' }
+
 player_list:
     pattern:    /players
     defaults: { _controller: 'Player', _action: 'list' }

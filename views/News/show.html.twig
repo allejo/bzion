@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block content %}
+    <main class="news">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>League News</h1>
+            </article>
+        </section>
+
+        <section class="articles">
+            <section>
+                <article>
+                    <h1>{{ article.subject }}</h1>
+
+                    <ul class="meta">
+                        <li>
+                            <i class="fa fa-calendar"></i> {{ article.created }}
+                        </li>
+                        <li>
+                            <i class="fa fa-user"></i> {{ article.author.linkLiteral | raw }}
+                        </li>
+                        {# @TODO Handle the category properly here #}
+                        <li>
+                            <i class="fa fa-tag"></i> <a href="#">placeholder</a>
+                        </li>
+                    </ul>
+
+                    <section class="post">
+                        {{ article.content }}
+                    </section>
+                </article>
+            </section>
+
+            <aside>
+                <h2>Categories</h2>
+
+                {# @TODO Added loop to handle actual categories from the database #}
+                <ul>
+                    <li class="active"><a href="#">All Posts</a></li>
+                    <li><a href="#">Announcements</a></li>
+                    <li><a href="#">Administration</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">New Features</a></li>
+                </ul>
+            </aside>
+        </section>
+    </main>
+{% endblock %}
