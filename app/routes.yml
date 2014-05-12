@@ -39,7 +39,7 @@ news_list:
     defaults: { _controller: 'News', _action: 'list' }
 
 news_show:
-    pattern:    /news/{id}
+    pattern:    /news/{article}
     defaults: { _controller: 'News', _action: 'show' }
 
 player_list:

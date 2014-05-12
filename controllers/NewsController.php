@@ -2,8 +2,8 @@
 
 class NewsController extends HTMLController
 {
-    public function showAction($id) {
-        return array("article" => new News($id));
+    public function showAction(News $article) {
+        return array("article" => $article);
     }
 
     public function listAction() {
