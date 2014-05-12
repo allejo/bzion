@@ -40,10 +40,12 @@
     @include gradient(saturate($color, 15%), darken($color, 15%));
 
     &:active {
-        position: relative;
-        top: 1px;
-        color: saturate($color, 15%);
-        @include gradient(saturate($color, 15%), lighten($color, 15%));
+        &:not(.noclick) {
+            position: relative;
+            top: 1px;
+            color: saturate($color, 15%);
+            @include gradient(saturate($color, 15%), lighten($color, 15%));
+        }
     }
 
     &:hover {
@@ -58,6 +60,10 @@
 
     &.flat {
         @include remove_gradient($color);
+    }
+
+    &.noclick {
+        cursor: default;
     }
 }
 
