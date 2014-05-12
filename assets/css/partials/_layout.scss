@@ -1,314 +1,77 @@
-.matches {
-    margin-top: 30px;
+body {
+    font-family: $serifFont;
+    line-height: 1.4em;
+}
 
-    section {
-        border-bottom: 1px solid $borderColor;
-        margin: 0 auto;
-        width: 900px;
+main {
+    .content_header {
+        @extend .clearfix;
 
-        &:nth-child(even) {
-            .score {
-                background-color: #FFFBF4;
-            }
+        border-bottom: 1px solid #E9E9E9;
+        padding-bottom: 20px;
+        margin: 0 0 30px;
+
+        h1 {
+            font-size: 24px;
         }
 
-        .score {
-            background-color: #FFFFFF;
-            height: 45px;
-            line-height: 45px;
-            text-align: center;
+        div {
+            float: left;
 
-            .date {
-                float: left;
-                font-size: 12px;
-                width: 10%;
+            h1 {
+                color: #258EC9;
+                font-size: 24px;
             }
 
-            .teams {
-                float: left;
-                width: 80%;
-
-                .winner {
-                    text-align: right;
-                    border-right: 1px solid $borderColor;
-                    overflow: visible;
-                }
-
-                .loser {
-                    text-align: left;
-                }
-
-                .winner, .loser {
-                    float: left;
-                    width: 48%;
-
-                    .winner_score, .loser_score {
-                        padding: 10px;
-                    }
-                }
-            }
-
-            i {
-                float: left;
-                line-height: inherit;
-                width: 10%;
-            }
-
-            &:hover {
-                background-color: #F2FBFF;
-                cursor: pointer;
-            }
-        }
-
-        .match_details {
-            background-color: #efefef;
-            border-top: 1px solid $borderColor;
-            display: none;
-            overflow: hidden;
-            padding-bottom: 10px;
-            width: 100%;
-
-            h4 {
-                border-bottom: 1px dotted $mainColor;
+            h2 {
+                color: #CACACA;
                 font-size: 16px;
             }
+        }
 
-            .participants, .information {
-                float: left;
-                padding: 1%;
-                width: 48%;
-            }
-
-            .participants {
-                .team {
-                    float: left;
-                    margin-top: 5px;
-                    width: 50%;
-
-                    span {
-                        font-size: 14px;
-                        font-weight: bold;
-                    }
-
-                    ul {
-                        li {
-                            font-size: 12px;
-                            list-style-type: none;
-                            margin-left: 20px;
-                            text-indent: -5px;
-
-                            &:before {
-                                content: "-";
-                                position: relative;
-                                left: -5px;
-                            }
-                        }
-                    }
-                }
-            }
-
-            .information {
-                p {
-                    font-size: 14px;
-                }
-
-                .match {
-                    margin-bottom: 10px;
-                    overflow: hidden;
-                    width: 100%;
-
-                    p {
-                        float: left;
-                        width: 50%;
-                    }
-                }
-            }
+        p {
+            float: left;
+            font-size: 42px;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-top: 10px;
         }
     }
 }
 
-// This will be the class that contains all of a page's contents
-.page {
-    display: table-row;
-    height: 100%;
+.clearfix {
+    zoom: 1;
 
-    .content {
-        display: table;
-        height: 100%;
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
         overflow: hidden;
-        font-family: $contentFont;
+    }
 
-        // This will be our normal page with information
-        article {
-            border-bottom: 1px solid $borderColor;
-            margin: 30px auto 0;
-            width: 900px;
+    &:after {
+        clear: both;
+    }
+}
 
-            // This will always be the title of the article or the page
-            h1 {
-                background-color: $mainColor;
-                color: #FFFFFF;
-                font-size: 20px;
-                text-align: center;
-                font-family: $mainFont;
-                padding: 5px 0;
-            }
+.css-table {
+    border-collapse: collapse;
+    display: table;
 
-            // The content of the page
-            p {
-                background-color: #FFFFFF;
-                border-left: 1px solid $borderColor;
-                border-right: 1px solid $borderColor;
-                border-top: none;
-                padding: 12px;
-                line-height: 1.5em;
-            }
+    .row {
+        display: table-row;
 
-            // If the page has an author, such as a news article or a ban announcement, the footer is where the author would go
-            footer {
-                background-color: #FFFFFF;
-                border-left: 1px solid $borderColor;
-                border-right: 1px solid $borderColor;
-                padding: 0 20px 10px;
-                text-align: right;
-            }
+        .column {
+            @include box-sizing(border-box);
+
+            border: 1px solid #EFEFEF;
+            display: table-cell;
+            height: 20px;
         }
     }
 }
 
-.profile_page{
-
-    font-family: $mainFont;
-    font-weight: 300;
-    margin-top: 30px;
-    .avatar_player{
-        float: right;
-        width: 30%;
-    }
-    .descript_player{
-        font-family: $contentFont;
-        width: 43em;
-        font-weight: normal;
-        line-height: 1.5em;
-    }
-}
-.label{
-    margin-bottom: 30px;
-
-    .label_team{
-
-        font-weight: normal;
-    }
-}
-
-.player_name{
-    margin-top: 20px;
-    font-size: 2em;
-}
-
-// Because tables are atrocious for responsive designs, we have our own CSS to give unordered lists the appearance of
-// being in columns and rows
-.table {
+.wrapper {
     margin: 0 auto;
-    margin-top: 30px;
-
-    // Because different pages will have different tables, here we have set the CSS settings for the matches table
-    &.teams {
-        width: 1000px;
-
-        // Set the width of all the columns based on the nth-child. I will throw a tantrum if IE9 is stupid and doesn't
-        // support nth-child. -allejo
-        ul {
-            overflow: hidden;
-            width: 100%;
-
-            li {
-                float: left;
-                height: 20px;
-
-                &:nth-child(1) {
-                    width: 23%;
-                }
-
-                &:nth-child(2) {
-                    width: 5%;
-                }
-
-                &:nth-child(3) {
-                    width: 10%;
-                }
-
-                &:nth-child(4) {
-                    width: 7%;
-                }
-
-                &:nth-child(5) {
-                    width: 8%;
-                }
-
-                &:nth-child(6) {
-                    width: 10%;
-                }
-            }
-        }
-    }
-
-    // players table
-    &.players {
-        width: 1000px;
-
-        ul {
-            overflow: hidden;
-            width: 100%;
-
-            li {
-                height: 20px;
-                float: left;
-
-                &:nth-child(1) {
-                    width: 30%;
-                }
-
-                &:nth-child(2) {
-                    width: 30%;
-                }
-
-                &:nth-child(3) {
-                    width: 20%;
-                }
-            }
-        }
-    }
-
-    // Each unordered list will act as a row of the table
-    ul {
-        list-style-type: none;
-
-        // Each list item will act as a column of a row, so we need to have them sit next to each other nicely
-        li {
-            display: inline-block;
-            padding: 10px 30px;
-            text-align: center;
-
-            // Add a left border for all of the "columns" except for the first one
-            &:nth-child(n+2) {
-                border-left: 1px solid $borderColor;
-            }
-        }
-
-        // Color code the rows
-        &:nth-child(even) {
-            background-color: #F7F7F7;
-        }
-
-        &:nth-child(odd) {
-            background-color: #D6D6D6;
-        }
-
-        // Our first row, or unordered list, will always act as the header so design it respectively
-        &:first-child {
-            background-color: #FFFFFF;
-            border-bottom: 1px solid $borderColor;
-        }
-    }
+    width: $global_width;
 }

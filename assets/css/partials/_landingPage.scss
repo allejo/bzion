@@ -1,0 +1,175 @@
+main {
+    &.landing {
+        .cover {
+            background: url("../imgs/cover_photo.png") no-repeat center center fixed;
+            background-position: 0 -225px;
+            background-size: cover;
+            display: table;
+            height: 350px;
+            width: 100%;
+
+            article {
+                @extend .wrapper;
+
+                height: 100%;
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+
+                h1, h2 {
+                    color: #fff;
+                    font-family: $sanSerifFont;
+                    text-shadow: 0 1px 10px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.9);
+                }
+
+                h1 {
+                    font-size: 48px;
+                    margin-bottom: 20px;
+                }
+
+                h2 {
+                    font-size: 24px;
+                }
+
+                .button {
+                    margin-top: 40px;
+                }
+            }
+        }
+
+        .key_points {
+            padding: 30px 0;
+
+            ul {
+                @extend .wrapper;
+
+                font-family: $sanSerifFont;
+                text-align: center;
+
+                li {
+                    display: inline-block;
+                    margin: 0 50px;
+                    width: 200px;
+
+                    i {
+                        $iconSize: 70px;
+
+                        @include border-radius(50%);
+
+                        border: 1px solid #000000;
+                        height: $iconSize;
+                        font-size: $iconSize - 10px;
+                        width: $iconSize;
+
+                        //
+                        // Because the icons aren't always perfectly centered, there are some custom padding rules in order to center them as perfectly as possible
+                        //    (all of these icons will end up being 110px by 110px)
+                        //
+                        &.fa-gamepad {
+                            padding: 21px 19px 17px 19px;
+                        }
+
+                        &.fa-info {
+                            padding: 27px 19px 11px 19px;
+                        }
+
+                        &.fa-list-ul {
+                            padding: 25px 19px 13px 19px;
+                        }
+                    }
+
+                    h3 {
+                        font-size: 24px;
+                        font-weight: 400;
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+
+        .content {
+            @extend .clearfix;
+            @extend .wrapper;
+
+            font-family: $sanSerifFont;
+
+            aside {
+                float: left;
+                width: 400px;
+
+                h2 {
+                    margin-bottom: 10px;
+                }
+
+                .news {
+                    padding-left: 20px;
+
+                    li {
+                        border-bottom: 1px solid #EFEFEF;
+                        margin: 5px 0;
+                        list-style: none;
+                        padding: 10px 0 15px;
+
+                        h3 {
+                            font-size: 18px;
+                            margin-bottom: 5px;
+                        }
+
+                        p {
+                            margin-left: 20px;
+                        }
+
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+
+            section {
+                float: right;
+                width: 55%;
+
+                h2 {
+                    margin-bottom: 10px;
+                }
+
+                article {
+                    $cellSize: 170px;
+
+                    float: right;
+                    margin: 10px 10px 20px;
+
+                    .row {
+                        .column {
+                            $paddingSize: 20px;
+
+                            height: $cellSize;
+                            padding: $paddingSize;
+                            position: relative;
+                            text-align: center;
+                            width: $cellSize;
+
+                            .team {
+                                display: inline-block;
+
+                                strong {
+                                    display: block;
+                                    text-align: center;
+                                }
+                            }
+
+                            .stats {
+                                bottom: $paddingSize;
+                                font-size: 14px;
+                                left: $paddingSize;
+                                position: absolute;
+                                text-transform: uppercase;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

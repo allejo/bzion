@@ -1,0 +1,138 @@
+a {
+    color: #009EFF;
+    text-decoration: none;
+
+    &:hover {
+        color: darken(#009EFF, 15%);
+    }
+
+    // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
+    // of our internal links are relative so this is a safe move.
+    &[href^="http"] {
+        &:after {
+            content: "\F08E";
+            font-family: FontAwesome;
+            font-size: 0.6em;
+            margin-left: 5px;
+            text-decoration: none;
+            vertical-align: top;
+        }
+    }
+}
+
+blockquote {
+    font-family: $sanSerifFont;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    margin-top: 20px;
+    padding-right: 30px;
+    vertical-align: top;
+
+    span {
+        color: #8B8B8B;
+        font-size: 16px;
+        font-style: italic;
+
+        &:before {
+            content: '\2014';
+            margin-left: 45px;
+            margin-right: 5px;
+        }
+    }
+
+    article {
+        color: darken(#8B8B8B, 10%);
+        display: inline;
+
+        > p {
+            margin: 10px 0 10px 45px;
+        }
+    }
+
+    &:before {
+        content: '\f10d';
+        color: #656565;
+        float: left;
+        font-family: FontAwesome;
+        font-size: 30px;
+        margin-bottom: 10px;
+        padding-right: 15px;
+        vertical-align: top;
+    }
+}
+
+code {
+    background-color: #EFEFEF;
+    border: 1px dotted;
+    display: block;
+    font-family: monospace;
+    font-size: 13px;
+    margin: 10px 0;
+    padding: 0 20px;
+    white-space: pre-wrap;
+}
+
+em {
+    font-style: italic;
+}
+
+h1 {
+    font-family: $sanSerifFont;
+    font-size: 30px;
+}
+
+h2 {
+    font-family: $sanSerifFont;
+    font-size: 24px;
+}
+
+h3 {
+    font-family: $sanSerifFont;
+    font-size: 20px;
+}
+
+hr {
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
+    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    border: 0;
+    height: 1px;
+    margin: 10px auto 30px;
+    width: $global_width;
+}
+
+ol {
+    padding: 30px;
+
+    li {
+        list-style-type: decimal;
+        padding-left: 0;
+    }
+}
+
+pre {
+    display: block;
+    font-family: monospace;
+    font-size: 13px;
+    margin: 10px 0;
+    padding: 0 20px;
+    white-space: pre-wrap;
+}
+
+ul {
+    padding-left: 30px;
+
+    li {
+        padding-left: 0;
+        list-style-type: circle;
+    }
+}
+
+small {
+    font-size: 14px;
+}
+
+strong {
+    font-weight: bold;
+}

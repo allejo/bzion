@@ -1,110 +1,70 @@
-//
-// The header of the website
-//
-header {
-    display: table-row;
-    overflow: auto;
+body {
+    header {
+        @include gradient(#FFFFFF, #F2F2F2);
+        @include box-shadow(0, 2px, 5px, rgba(50, 50, 50, 0.075));
 
-    //
-    // The navigation bar
-    //
-    // I've put the the nav css inside of the header instead of on its own in the strange case where there are more
-    // than one <nav> object.
-    //
-    // This object is just a container for the actual navigation bar; it will contain the unordered list that contains
-    // the menu items.
-    nav {
-        background-color: $mainColor;
-        font-size: 14px;
-        width: 100%;
-        z-index: 20;
+        border-bottom: 1px solid #D4D4D4;
 
-        // We need to set up this unordered list to not have any bullet points
-        ul {
-            list-style-type: none;
+        section {
+            @extend .clearfix;
+            @extend .wrapper;
 
-            // Now we need to set each menu item, or list item, to line up nicely next to each other so we can have
-            // be laid out horizontally
-            li {
+            h1 {
                 float: left;
-                display: inline;
-                height: 100%;
-                margin: 0 auto;
-                min-width: 9%;
-                text-align: left;
+                font-family: $collegia;
+                font-size: 36px;
+                margin: 10px 20px 10px 0;
 
-                // This will be the actual hyper link so we need to format it to be large with padding and a width
-                // or else we will not be able to click the general area of a menu button
                 a {
-                    box-sizing: border-box;
-                    color: #FFFFFF;
-                    display: block;
-                    padding: 10px 10px;
-                    text-align: center;
-                    text-decoration: none;
-                    width: 100%;
+                    color: #000000;
 
-                    // We're hovering over the menu button so change the background and keep the font color white
-                    &:hover {
-                        background-color: $hoverColor;
-                        color: #FFFFFF;
+                    img {
+                        vertical-align: middle;
                     }
-
-                    // Hide the default outline shown by browsers on links (note that this doesn't affect the outlines
-                    // shown when using the keyboard to navigate)
-                    &:active {
-                        outline: none;
-                    }
-                }
-
-                // Our icons in the menu bar will have a different height so we need to assign it a different width to
-                // to it
-                &.icon {
-                    min-width: 3%;
                 }
             }
-        }
 
-        .active {
-            background-color: $hoverColor;
-        }
-    }
+            nav {
+                // CSS hack to tame the floated <h1>. This will allow us to take up the reset of the <header> without
+                // having to calculate the remaining width with either JavaScript or CSS' calc().
+                overflow: hidden;
 
-    // The notification that will appear on the header for status of requests
-    .notification {
-        @include border-bottom-radius(5px);
+                ul {
+                    padding-left: 0;
 
-        background-color: #FFFFFF;
-        border: 2px solid #222222;
-        border-top: none;
-        display: none;
-        left: 25em;
-        min-width: 256px;
-        padding: 6px 16px;
-        position: fixed;
-        text-align: center;
-        top: 0px;
-        z-index: 30;
+                    li {
+                        float: left;
+                        font-family: $sanSerifFont;
+                        list-style: none;
 
-        i {
-            margin-right: 8px;
-        }
-        
-        // Notification types
-        &.success {
-            background-color: #D7FFD7;
-            border-color: #2ecc71;
-            color: #2ecc71;
-            display: block;
-            z-index: 100;
-        }
+                        a {
+                            color: #666;
+                            display: block;
+                            padding: 17px 15px;
 
-        &.error {
-            background-color: #FFD7D7;
-            border-color: #e74c3c;
-            color: #e74c3c;
-            display: block;
-            z-index: 100;
+                            &:hover {
+                                color: #000;
+                            }
+                        }
+
+                        &.active {
+                            @include box-shadow(0, 2px, 15px, rgba(0, 0, 0, 0.25), true);
+                        }
+
+                        &:hover {
+                            @include box-shadow(0, 2px, 15px, rgba(0, 0, 0, 0.1), true);
+                        }
+                    }
+
+                    &.pages {
+                        float: left;
+                    }
+
+                    &.user {
+                        float: right;
+                    }
+                }
+            }
         }
     }
 }

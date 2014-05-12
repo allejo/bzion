@@ -1,95 +1,13 @@
-//
-// Official colors
-//
-$mainColor: #3E4D58;
-$bodyBackground: #B2D3DF;
-$hoverColor: #e67e22;
-$borderColor: #BDBDBD;
-$borderColorLight: #EEF1F4;
+$global_width: 1000px;
 
-//
-// Fonts
-//
-$mainFont: 'Open Sans', sans-serif;
-$contentFont: 'Merriweather', serif;
+$darkBlue: #517281;
+$normalBlue: #7895A2;
+$lightBlue: #AFC1CC;
+$redOrange: #F37257;
+$orange: #F68D5C;
+$yellow: #F4D27A;
+$grey: #A1A1A1;
 
-
-//
-// Global variables
-//
-$page_width: 1000px;
-
-//
-// HTML Elements
-//
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    height: 100%;
-}
-
-body {
-    background-color: $bodyBackground;
-    display: table;
-    font-family: $mainFont;
-    font-size: 1em;
-    width: 100%;
-}
-
-a {
-    color: $mainColor;
-
-    &:hover {
-        color: $hoverColor;
-    }
-}
-
-button {
-    margin: 5px;
-}
-
-h4 {
-    margin: 0;
-    padding: 0;
-    font-size: 19px;
-}
-
-pre {
-    white-space: pre-wrap;
-}
-
-//
-// Universal classes
-//
-
-.float {
-    &.left {
-        float: left;
-    }
-
-    &.right {
-        float: right;
-    }
-}
-
-.padding {
-    &.top {
-        padding-top: 10px;
-    }
-
-    &.left, &.right {
-        padding-right: 5px;
-    }
-
-    &.bottom {
-        padding-bottom: 15px;
-    }
-}
-
-.wrapper {
-    margin: 0 auto;
-    width: 1100px;
-}
+$collegia: 'Collegia', san-serif;
+$sanSerifFont: 'Lato', sans-serif;
+$serifFont: 'Merriweather', serif;

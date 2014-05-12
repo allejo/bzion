@@ -1,38 +1,38 @@
-.ladda-button {
-    background-color: #0CA7Db;
-    padding: 3px 8px 3px 8px;
-}
-
 .button {
-    &.danger {
-        background-color: #EE4840;
-
-        &:hover {
-            background-color: #F36E65;
-        }
+    &.red {
+        @include button(#FF0000, #FFFFFF);
     }
 
-    &.normal {
-        background-color: #BCC3C7;
-
-        &:hover {
-            background-color: #C9CFD2;
-        }
+    &.green {
+        @include button(#00d319, #FFFFFF);
     }
 
-    &.submit {
-        background-color: #009AD7;
-
-        &:hover {
-            background-color: #4BAEDF;
-        }
+    &.blue {
+        @include button(#2f79ff, #FFFFFF);
     }
 
-    &.warning {
-        background-color: #F7C238;
+    &.yellow {
+        @include button(#fff400, #FFFFFF);
+    }
 
-        &:hover {
-            background-color: #FBD13E;
-        }
+    &.orange {
+        @include button(#ff6700, #FFFFFF);
+    }
+
+    &.grey {
+        @include button(#ececec, #000000);
+    }
+
+    &.skinny {
+        padding: 0.3em 2em .35em;
+    }
+
+    &.square {
+        @include border-radius(0);
+    }
+
+    &.noshadow {
+        @include box-shadow(0, 0, 0, 0);
+        text-shadow: none;
     }
 }

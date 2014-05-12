@@ -1,0 +1,105 @@
+//
+// Mixins
+//
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+    @if $inset {
+        -webkit-box-shadow: inset $top $left $blur $color;
+           -moz-box-shadow: inset $top $left $blur $color;
+                box-shadow: inset $top $left $blur $color;
+    }
+    @else {
+        -webkit-box-shadow: $top $left $blur $color;
+           -moz-box-shadow: $top $left $blur $color;
+                box-shadow: $top $left $blur $color;
+    }
+}
+
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+       -moz-box-sizing: $box-model;
+            box-sizing: $box-model;
+}
+
+@mixin button($color: red, $text_color: white) {
+    border: solid 1px darken($color, 18%);
+    color: $text_color !important;
+    cursor: pointer;
+    display: inline-block;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    outline: none;
+    padding: .5em 2em .55em;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+
+    @include border-radius(0.5em);
+    @include box-shadow(0, 1px, 2px, rgba(0, 0, 0, 0.2));
+    @include gradient(saturate($color, 15%), darken($color, 15%), $color);
+
+    &:active {
+        &:not(.noclick) {
+            @include gradient(saturate($color, 15%), lighten($color, 15%), $color);
+
+            color: saturate($color, 15%);
+            position: relative;
+            top: 1px;
+        }
+    }
+
+    &:hover {
+        text-decoration: none;
+
+        &:not(.nohover) {
+            @include gradient(saturate($color, 5%), darken($color, 5%), $color);
+
+            background: saturate($color, 10%);
+        }
+    }
+
+    &.flat {
+        @include remove_gradient($color);
+    }
+
+    &.noclick {
+        cursor: default;
+    }
+}
+
+@mixin gradient($from, $to, $default: $from) {
+    background: $default;
+    background: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+    background: -moz-linear-gradient(top,  $from, $to);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$from}', endColorstr='#{$to}');
+}
+
+@mixin remove_gradient($color: transparent) {
+    background-color: $color;
+    background-image: none;
+    background-repeat: no-repeat;
+    filter: none;
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); // IE8...
+}
+
+@mixin respond-to($media) {
+    @if $media == phones {
+        @media only screen and (max-width: 30em) { @content; }
+    }
+    @else if $media == tablets {
+        @media only screen and (max-width: 60em) { @content; }
+    }
+}
+
+@mixin transition($transition-property, $transition-time, $method) {
+    -webkit-transition: $transition-property $transition-time $method;
+       -moz-transition: $transition-property $transition-time $method;
+        -ms-transition: $transition-property $transition-time $method;
+         -o-transition: $transition-property $transition-time $method;
+            transition: $transition-property $transition-time $method;
+}
