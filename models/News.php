@@ -114,10 +114,19 @@ class News extends Model {
 
     /**
      * Get all the news entries in the database that aren't disabled or deleted
+     *
+     * @param int $start The offset used when fetching matches, i.e. the starting point
+     * @param int $limit The amount of matches to be retrieved
+     *
      * @return News[] An array of news objects
      */
-    public static function getNews() {
-        return self::arrayIdToModel(self::fetchIdsFrom("status", array("disabled", "deleted"), "s", true, "ORDER BY updated DESC"));
+    public static function getNews($start = 0, $limit = 5) {
+        return self::arrayIdToModel(
+            self::fetchIdsFrom(
+                "status", array("disabled", "deleted"), "s", true,
+                "ORDER BY created DESC LIMIT $limit OFFSET $start"
+            )
+        );
     }
 
 }
