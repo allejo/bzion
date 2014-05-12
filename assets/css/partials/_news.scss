@@ -16,13 +16,18 @@ main {
         }
 
         .articles {
+            @extend .clearfix;
             @extend .wrapper;
 
-            section {
+            > section {
+                float: left;
+                width: 750px;
+
                 > article {
                     @include box-sizing(border-box);
 
                     float: left;
+                    margin-bottom: 50px;
                     padding-right: 60px;
                     width: 750px;
 
