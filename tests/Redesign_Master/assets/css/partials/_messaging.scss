@@ -3,7 +3,7 @@ main {
         @extend .clearfix;
 
         font-family: $sanSerifFont;
-        padding: 20px 0;
+        padding: 20px 0 0;
 
         .content_header {
             margin-bottom: 0;
@@ -13,23 +13,29 @@ main {
             @extend .clearfix;
             @extend .wrapper;
 
+            display: table;
+
             .conversations {
                 @include box-sizing(border-box);
 
                 background-color: #FFFFFF;
                 border-left: 1px solid #EFEFEF;
                 border-right: 1px solid #EFEFEF;
-                float: left;
-                overflow: scroll;
+                display: table-cell;
+                height: 335px;
+                position: relative;
+                vertical-align: top;
                 width: 35%;
 
                 .search {
                     $searchHeight: 35px;
                     @extend .clearfix;
 
+                    background-color: #FFFFFF;
                     border-bottom: 1px solid #EFEFEF;
                     height: $searchHeight;
                     padding: 5px;
+                    position: absolute;
 
                     .icon {
                         display: inline-block;
@@ -61,58 +67,68 @@ main {
                     }
                 }
 
-                .chats {
-                    padding-left: 0;
+                .chat_messages {
+                    height: 560px;
+                    overflow: scroll;
 
-                    li {
-                        @include box-sizing(border-box);
+                    .chats {
+                        padding-left: 0;
+                        padding-top: 45px;
 
-                        background-color: #ffffff;
-                        border-bottom: 1px solid #EFEFEF;
-                        display: block;
-                        list-style-type: none;
-                        padding: 10px;
-                        width: 100%;
+                        li {
+                            @include box-sizing(border-box);
 
-                        a {
-                            text-decoration: none;
+                            background-color: #ffffff;
+                            border-bottom: 1px solid #EFEFEF;
+                            display: block;
+                            list-style-type: none;
+                            padding: 10px;
+                            width: 100%;
 
-                            .meta {
-                                @extend .clearfix;
+                            a {
+                                text-decoration: none;
 
-                                .subject {
-                                    color: #000000;
-                                    float: left;
-                                    font-size: 20px;
+                                .meta {
+                                    @extend .clearfix;
+
+                                    .subject {
+                                        color: #000000;
+                                        float: left;
+                                        font-size: 20px;
+                                    }
+
+                                    .timestamp {
+                                        color: #009EFF;
+                                        float: right;
+                                        font-size: 12px;
+                                    }
                                 }
 
-                                .timestamp {
-                                    color: #009EFF;
-                                    float: right;
+                                .members {
+                                    color: #99A0A3;
+                                    font-family: $serifFont;
+                                    font-weight: 300;
                                     font-size: 12px;
                                 }
-                            }
 
-                            .members {
-                                color: #99A0A3;
-                                font-family: $serifFont;
-                                font-weight: 300;
-                                font-size: 12px;
-                            }
+                                .last_message {
+                                    color: #000000;
+                                    font-size: 16px;
+                                    padding: 5px 10px;
+                                }
 
-                            .last_message {
-                                color: #000000;
-                                font-size: 16px;
-                                padding: 5px 10px;
+                                &:hover {
+                                    color: #000000;
+                                }
                             }
 
                             &:hover {
-                                color: #000000;
+                                background-color: #F2FBFF;
                             }
-                        }
 
-                        &:hover {
-                            background-color: #F2FBFF;
+                            &:last-child {
+                                border-bottom: none;
+                            }
                         }
                     }
                 }
@@ -122,8 +138,8 @@ main {
                 @include box-sizing(border-box);
 
                 border-right: 1px solid #EFEFEF;
-                float: left;
-                width: 65%;
+                display: table-cell;
+                width: 100%;
 
                 >.details {
                     @include box-sizing(border-box);
@@ -166,6 +182,8 @@ main {
 
                 >.scrollable_messages {
                     display: block;
+                    height: 335px;
+                    overflow: scroll;
                     width: 100%;
 
                     .messages {
