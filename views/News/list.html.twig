@@ -23,6 +23,7 @@
                             <li>
                                 <i class="fa fa-user"></i> {{ article.author.linkLiteral | raw }}
                             </li>
+                            {# @TODO Handle the category properly here #}
                             <li>
                                 <i class="fa fa-tag"></i> <a href="#">placeholder</a>
                             </li>
@@ -38,6 +39,7 @@
             <aside>
                 <h2>Categories</h2>
 
+                {# @TODO Added loop to handle actual categories from the database #}
                 <ul>
                     <li class="active"><a href="#">All Posts</a></li>
                     <li><a href="#">Announcements</a></li>
@@ -48,14 +50,4 @@
             </aside>
         </section>
     </main>
-
-    {#{% for article in news %}
-        <article>
-            <h1>{{ article.subject }}</h1>
-            <p>{{ article.content }}</p>
-            <footer>
-                Posted by <a href="{{ article.author.url }}">{{ article.author.username }}</a> {{ article.updated }}
-            </footer>
-        </article>
-    {% endfor %}#}
 {% endblock %}
