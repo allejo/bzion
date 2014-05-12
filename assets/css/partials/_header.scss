@@ -1,5 +1,5 @@
 body {
-    header {
+    >header {
         @include gradient(#FFFFFF, #F2F2F2);
         @include box-shadow(0, 2px, 5px, rgba(50, 50, 50, 0.075));
 
@@ -42,6 +42,12 @@ body {
                             display: block;
                             padding: 17px 15px;
 
+                            // This rule exists because all outgoing links automatically have an external link symbol added
+                            // so we need to hide it in the navigation for the login button
+                            &:after {
+                                display: none;
+                            }
+
                             &:hover {
                                 color: #000;
                             }
@@ -64,6 +70,44 @@ body {
                         float: right;
                     }
                 }
+            }
+        }
+
+        // The notification that will appear on the header for status of requests
+        .notification {
+            @include border-bottom-radius(5px);
+
+            background-color: #FFFFFF;
+            border: 2px solid #222222;
+            border-top: none;
+            display: none;
+            left: 25em;
+            min-width: 256px;
+            padding: 6px 16px;
+            position: fixed;
+            text-align: center;
+            top: 0px;
+            z-index: 30;
+
+            i {
+                margin-right: 8px;
+            }
+
+            // Notification types
+            &.success {
+                background-color: #D7FFD7;
+                border-color: #2ecc71;
+                color: #2ecc71;
+                display: block;
+                z-index: 100;
+            }
+
+            &.error {
+                background-color: #FFD7D7;
+                border-color: #e74c3c;
+                color: #e74c3c;
+                display: block;
+                z-index: 100;
             }
         }
     }

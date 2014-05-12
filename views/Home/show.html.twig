@@ -1,0 +1,87 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}GU League{% endblock %}
+
+{% block content %}
+    <main class="landing">
+        <section class="cover">
+            <article>
+                <h1>Welcome to Games United</h1>
+                <h2>Good clean fun... sorta</h2>
+                <a class="button green" href="#">Register</a>
+            </article>
+        </section>
+
+        <section class="key_points">
+            <ul>
+                <li>
+                    <i class="fa fa-gamepad"></i>
+                    <h3>Servers</h3>
+                    <p>Where can I play official matches?</p>
+                </li>
+                <li>
+                    <i class="fa fa-list-ul"></i>
+                    <h3>Matches</h3>
+                    <p>Match against the best of the best</p>
+                </li>
+                <li>
+                    <i class="fa fa-info"></i>
+                    <h3>Getting Started</h3>
+                    <p>Need help getting started? Join the spawn list!</p>
+                </li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section class="content">
+            <aside>
+                <h2>Latest News</h2>
+                <ul class="news">
+                    <li>
+                        <h3><a href="#">BZiON beats bz-owl to release!</a></h3>
+                        <p>by <a href="#">allejo</a></p>
+                    </li>
+                    <li>
+                        <h3><a href="#">Snake12534 banned ...again</a></h3>
+                        <p>by <a href="#">tw1sted</a></p>
+                    </li>
+                    <li>
+                        <h3><a href="#">kierra announces "let there be color!"</a></h3>
+                        <p>by <a href="#">kierra</a></p>
+                    </li>
+                </ul>
+            </aside>
+
+            <section>
+                <h2>Recent Matches</h2>
+                <article class="css-table">
+                    {# We want two rows of match data, so loop twice #}
+                    {% for i in 0..1 %}
+                        <div class="row">
+                            {# We want to slice our 'matches' array from 0,3 and 3,6; so let's do some math #}
+                            {% set startIndex = loop.index0 * 3 %}
+                            {% set endIndex = (loop.index0 + 1) * 3 %}
+
+                            {# Generate the three columns in the current row #}
+                            {% for match in matches|slice(startIndex, endIndex) %}
+                                <div class="column">
+                                    <div class="team">
+                                        <img src="http://placehold.it/60x60" />
+                                        <strong>{{ match.teamAPoints }}</strong>
+                                    </div>
+                                    <div class="team">
+                                        <img src="http://placehold.it/60x60" />
+                                        <strong>{{ match.teamBPoints }}</strong>
+                                    </div>
+
+                                    <a class="stats" href="#">Match Stats &raquo;</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </article>
+            </section>
+        </section>
+    </main>
+{% endblock %}

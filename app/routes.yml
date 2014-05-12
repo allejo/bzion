@@ -1,6 +1,10 @@
 index:
     pattern:  /
-    defaults: { _controller: 'Page', _action: 'showDefault' }
+    defaults: { _controller: 'Home', _action: 'show' }
+
+admin_list:
+    pattern:    /admins
+    defaults: { _controller: 'Admin', _action: 'list' }
 
 ban_list:
     pattern:    /bans

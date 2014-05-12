@@ -9,15 +9,15 @@ main .content_header div h1 { color: #258EC9; font-size: 24px; }
 main .content_header div h2 { color: #CACACA; font-size: 16px; }
 main .content_header p { float: left; font-size: 42px; font-weight: bold; margin-right: 5px; margin-top: 10px; }
 
-.clearfix, main .content_header, body header section, body footer, main.landing .content, main.administration .admins, main.administration .admins ul, main.administration .admins ul li, main.news, main.bans, main.messaging, main.messaging .messages, main.messaging .messages .conversations .search, main.messaging .messages .conversations .chat_messages .chats li a .meta, main.messaging .messages .chat_area > .details .meta, main.teams .list li, main.teams .list li > section .team_stats, main.teams .list li > section .meta { zoom: 1; }
-.clearfix:before, main .content_header:before, body header section:before, body footer:before, main.landing .content:before, main.administration .admins:before, main.administration .admins ul:before, main.administration .admins ul li:before, main.news:before, main.bans:before, main.messaging:before, main.messaging .messages:before, main.messaging .messages .conversations .search:before, main.messaging .messages .conversations .chat_messages .chats li a .meta:before, main.messaging .messages .chat_area > .details .meta:before, main.teams .list li:before, main.teams .list li > section .team_stats:before, main.teams .list li > section .meta:before, .clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chat_messages .chats li a .meta:after, main.messaging .messages .chat_area > .details .meta:after, main.teams .list li:after, main.teams .list li > section .team_stats:after, main.teams .list li > section .meta:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after, main .content_header:after, body header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chat_messages .chats li a .meta:after, main.messaging .messages .chat_area > .details .meta:after, main.teams .list li:after, main.teams .list li > section .team_stats:after, main.teams .list li > section .meta:after { clear: both; }
+.clearfix, main .content_header, body > header section, body footer, main.landing .content, main.administration .admins, main.administration .admins ul, main.administration .admins ul li, main.news, main.bans, main.messaging, main.messaging .messages, main.messaging .messages .conversations .search, main.messaging .messages .conversations .chat_messages .chats li a .meta, main.messaging .messages .chat_area > .details .meta, main.teams .list li, main.teams .list li > section .team_stats, main.teams .list li > section .meta { zoom: 1; }
+.clearfix:before, main .content_header:before, body > header section:before, body footer:before, main.landing .content:before, main.administration .admins:before, main.administration .admins ul:before, main.administration .admins ul li:before, main.news:before, main.bans:before, main.messaging:before, main.messaging .messages:before, main.messaging .messages .conversations .search:before, main.messaging .messages .conversations .chat_messages .chats li a .meta:before, main.messaging .messages .chat_area > .details .meta:before, main.teams .list li:before, main.teams .list li > section .team_stats:before, main.teams .list li > section .meta:before, .clearfix:after, main .content_header:after, body > header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chat_messages .chats li a .meta:after, main.messaging .messages .chat_area > .details .meta:after, main.teams .list li:after, main.teams .list li > section .team_stats:after, main.teams .list li > section .meta:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after, main .content_header:after, body > header section:after, body footer:after, main.landing .content:after, main.administration .admins:after, main.administration .admins ul:after, main.administration .admins ul li:after, main.news:after, main.bans:after, main.messaging:after, main.messaging .messages:after, main.messaging .messages .conversations .search:after, main.messaging .messages .conversations .chat_messages .chats li a .meta:after, main.messaging .messages .chat_area > .details .meta:after, main.teams .list li:after, main.teams .list li > section .team_stats:after, main.teams .list li > section .meta:after { clear: both; }
 
 .css-table { border-collapse: collapse; display: table; }
 .css-table .row { display: table-row; }
 .css-table .row .column { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #EFEFEF; display: table-cell; height: 20px; }
 
-.wrapper, body header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments, main.bans .summary, main.messaging .messages, main.teams .list { margin: 0 auto; width: 1000px; }
+.wrapper, body > header section, body footer, main.landing .cover article, main.landing .key_points ul, main.landing .content, main.administration .admins, main.news .articles, main.news .articles aside, main.bans .punishments, main.bans .summary, main.messaging .messages, main.teams .list { margin: 0 auto; width: 1000px; }
 
 a { color: #009EFF; text-decoration: none; }
 a:hover { color: #006fb3; }
@@ -40,7 +40,7 @@ h2 { font-family: "Lato", sans-serif; font-size: 24px; }
 
 h3 { font-family: "Lato", sans-serif; font-size: 20px; }
 
-hr { background-image: -webkit-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -moz-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -ms-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); background-image: -o-linear-gradient(left, transparent, rgba(201, 201, 201, 0.75), transparent); border: 0; height: 1px; margin: 10px auto 30px; width: 1000px; }
+hr { background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(201, 201, 201, 0.75), rgba(0, 0, 0, 0)); background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(201, 201, 201, 0.75), rgba(0, 0, 0, 0)); background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(201, 201, 201, 0.75), rgba(0, 0, 0, 0)); background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(201, 201, 201, 0.75), rgba(0, 0, 0, 0)); border: 0; height: 1px; margin: 10px auto 30px; width: 1000px; }
 
 ol { padding: 30px; }
 ol li { list-style-type: decimal; padding-left: 0; }
@@ -55,6 +55,7 @@ small { font-size: 14px; }
 strong { font-weight: bold; }
 
 @font-face { font-family: "Collegia"; src: url("../typography/COLLEGIA.otf") format("opentype"); }
+
 .button.red { border: solid 1px #a30000; color: white !important; cursor: pointer; display: inline-block; font: 14px/100% Arial, Helvetica, sans-serif; font-weight: bold; outline: none; padding: .5em 2em .55em; text-align: center; text-decoration: none; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3); -webkit-border-radius: 0.5em; -moz-border-radius: 0.5em; border-radius: 0.5em; background-clip: padding-box; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); background: red; background: -webkit-gradient(linear, left top, left bottom, from(red), to(#b30000)); background: -moz-linear-gradient(top, red, #b30000); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='red', endColorstr='#b30000'); }
 .button.red:active:not(.noclick) { background: red; background: -webkit-gradient(linear, left top, left bottom, from(red), to(#ff4d4d)); background: -moz-linear-gradient(top, red, #ff4d4d); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='red', endColorstr='#ff4d4d'); color: red; position: relative; top: 1px; }
 .button.red:hover { text-decoration: none; }
@@ -95,19 +96,24 @@ strong { font-weight: bold; }
 .button.square { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; background-clip: padding-box; }
 .button.noshadow { -webkit-box-shadow: 0 0 0 0; -moz-box-shadow: 0 0 0 0; box-shadow: 0 0 0 0; text-shadow: none; }
 
-body header { background: white; background: -webkit-gradient(linear, left top, left bottom, from(white), to(#f2f2f2)); background: -moz-linear-gradient(top, white, #f2f2f2); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#f2f2f2'); -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); border-bottom: 1px solid #D4D4D4; }
-body header section h1 { float: left; font-family: "Collegia", san-serif; font-size: 36px; margin: 10px 20px 10px 0; }
-body header section h1 a { color: #000000; }
-body header section h1 a img { vertical-align: middle; }
-body header section nav { overflow: hidden; }
-body header section nav ul { padding-left: 0; }
-body header section nav ul li { float: left; font-family: "Lato", sans-serif; list-style: none; }
-body header section nav ul li a { color: #666; display: block; padding: 17px 15px; }
-body header section nav ul li a:hover { color: #000; }
-body header section nav ul li.active { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); }
-body header section nav ul li:hover { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); }
-body header section nav ul.pages { float: left; }
-body header section nav ul.user { float: right; }
+body > header { background: white; background: -webkit-gradient(linear, left top, left bottom, from(white), to(#f2f2f2)); background: -moz-linear-gradient(top, white, #f2f2f2); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#f2f2f2'); -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075); border-bottom: 1px solid #D4D4D4; }
+body > header section h1 { float: left; font-family: "Collegia", san-serif; font-size: 36px; margin: 10px 20px 10px 0; }
+body > header section h1 a { color: #000000; }
+body > header section h1 a img { vertical-align: middle; }
+body > header section nav { overflow: hidden; }
+body > header section nav ul { padding-left: 0; }
+body > header section nav ul li { float: left; font-family: "Lato", sans-serif; list-style: none; }
+body > header section nav ul li a { color: #666; display: block; padding: 17px 15px; }
+body > header section nav ul li a:after { display: none; }
+body > header section nav ul li a:hover { color: #000; }
+body > header section nav ul li.active { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25); }
+body > header section nav ul li:hover { -webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); }
+body > header section nav ul.pages { float: left; }
+body > header section nav ul.user { float: right; }
+body > header .notification { -webkit-border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomright: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-clip: padding-box; background-color: #FFFFFF; border: 2px solid #222222; border-top: none; display: none; left: 25em; min-width: 256px; padding: 6px 16px; position: fixed; text-align: center; top: 0px; z-index: 30; }
+body > header .notification i { margin-right: 8px; }
+body > header .notification.success { background-color: #D7FFD7; border-color: #2ecc71; color: #2ecc71; display: block; z-index: 100; }
+body > header .notification.error { background-color: #FFD7D7; border-color: #e74c3c; color: #e74c3c; display: block; z-index: 100; }
 
 body footer { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border-top: 1px solid #E9E9E9; font-family: "Lato", sans-serif; margin: 0 auto; padding: 20px 10px; }
 body footer span { float: left; }

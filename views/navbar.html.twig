@@ -1,35 +1,50 @@
 <nav>
-    <ul class="wrapper">
-        <li class="icon"><a href="{{ path('index') }}"><i class="fa fa-home"></i></a></li>
+    <ul class="pages">
+        <li>
+            <a href="{{ path('news_list') }}">
+                <i class="fa fa-thumb-tack"></i> News
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('team_list') }}">
+                <i class="fa fa-users"></i> Teams
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('player_list') }}">
+                <i class="fa fa-user"></i> Players
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('match_list') }}">
+                <i class="fa fa-trophy"></i> Matches
+            </a>
+        </li>
+    </ul>
+
+    <ul class="user">
         {% if session.get('username') %}
-            <li class="icon {{ path('index') }}"><a href="{{ path('message_list') }}"><i class="fa fa-comments"></i></a></li>
-        {% endif %}
-        <li class="icon"><a href="{{ path('news_list') }}"><i class="fa fa-thumb-tack"></i></a></li>
-        <li><a href="{{ path('team_list') }}">Teams</a></li>
-        <li><a href="{{ path('player_list') }}">Players</a></li>
-        <li><a href="{{ path('match_list') }}">Matches</a></li>
-
-        {% for page in pages %}
-            {% if not page.isHomePage %}
-                <li><a href="{{ page.url }}"> {{ page.name }} </a></li>
-            {% endif %}
-        {% endfor %}
-
-        <li><a href="{{ path('ban_list') }}">Bans</a></li>
-        <li><a href="{{ path('server_list') }}">Servers</a></li>
-
-        {% if session.get('username') %}
-            <li class="icon float right"><a href="{{ path('logout') }}"><i class="fa fa-sign-out"></i></a></li>
-            <li class="icon float right"><a href="{{ path('profile_show') }}"><i class="fa fa-user"></i></a></li>
-            <li class="icon float right"><a href="#"><i class="fa fa-bell"></i></a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-bell"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('message_list') }}">
+                    <i class="fa fa-comments-o"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('logout') }}">
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </li>
         {% else %}
-            <li class="icon float right">
+            <li>
                 <a href="http://my.bzflag.org/weblogin.php?action=weblogin&amp;url={{ url('login') ~ '?token=%TOKEN%&username=%USERNAME%'|e('url') }}">
                     <i class="fa fa-sign-in"></i>
                 </a>
             </li>
         {% endif %}
-
-        <div style="clear: both;"></div>
     </ul>
 </nav>

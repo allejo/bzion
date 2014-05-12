@@ -2,40 +2,61 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% spaceless %}{% block title %}BZIon{% endblock %}{% endspaceless %}</title>
+        <title>{% spaceless %}{% block title %}BZiON{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
         <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/chosen/chosen.min.css">
         <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="{{ request.getBaseURL() }}/assets/css_old/main.css">
+        <link rel="stylesheet" href="{{ request.getBaseURL() }}/assets/css/reset.css">
+        <link rel="stylesheet" href="{{ request.getBaseURL() }}/assets/css/styles.css">
     </head>
 
     <body>
         <header>
-            {% include "navbar.html.twig" %}
+            <section>
+                <h1>
+                    <a href="{{ path('index') }}">
+                        <img src="assets/imgs/bzflag_icon.png" />
+                        <span>gu league</span>
+                    </a>
+                </h1>
 
-            <div class="notification">
-                <i class="fa fa-check"></i><span>Your message was sent successfully</span>
-            </div>
+                {% include "navbar.html.twig" %}
+
+                <div class="notification">
+                    <i class="fa fa-check"></i><span>Your message was sent successfully</span>
+                </div>
+            </section>
         </header>
 
-        <div class="page">
-            <div class="content wrapper">
-                {% block content %}
+        {% block content %}
 
-                {% endblock %}
-            </div>
-        </div>
-    <script>
-        var baseURLNoHost = "{{ request.getBaseURL()|e('js')  }}";
-        var baseURL = "{{ request.getSchemeAndHTTPHost()|e('js') }}";
-    </script>
+        {% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="{{ request.getBaseURL() }}/assets/js/main.js"></script>
+        <footer>
+            <span>BZiON &copy; 2014</span>
 
-    {% block javascripts %}
+            <ul>
+                {% for page in pages %}
+                    {% if not page.isHomePage %}
+                        <li><a href="{{ page.url }}"> {{ page.name }} </a></li>
+                    {% endif %}
+                {% endfor %}
 
-    {% endblock %}
+                <li><a href="{{ path('admin_list') }}">Admins</a></li>
+                <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
+            </ul>
+        </footer>
 
+        <script>
+            var baseURLNoHost = "{{ request.getBaseURL()|e('js')  }}";
+            var baseURL = "{{ request.getSchemeAndHTTPHost()|e('js') }}";
+        </script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="{{ request.getBaseURL() }}/assets/js/main.js"></script>
+
+        {% block javascripts %}
+
+        {% endblock %}
     </body>
 </html>
