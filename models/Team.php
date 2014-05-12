@@ -138,6 +138,266 @@ class Team extends AliasModel
     }
 
     /**
+     * Adds a new member to the team
+     *
+     * @param int $id The id of the player to add to the team
+     */
+    public function addMember($id) {
+        $this->db->query("UPDATE players SET team=? WHERE id=?", "ii", array(
+                $this->id,
+                $id
+            ));
+        $this->update('members', ++$this->members, "i");
+    }
+
+    /**
+     * Increase or decrease the ELO of the team
+     *
+     * @param int $adjust The value to be added to the current ELO (negative to substract)
+     */
+    public function changeElo($adjust) {
+        $this->elo += $adjust;
+        $this->update("elo", $this->elo, "i");
+    }
+
+    /**
+     * Increment the team's match count
+     *
+     * @param int $adjust The number to add to the current matches number (negative to substract)
+     * @param string $type The match count that should be changed. Can be 'win', 'draw' or 'loss'
+     */
+    public function changeMatchCount($adjust, $type) {
+        $this->matches_total += $adjust;
+
+        switch ($type) {
+            case "win":
+            case "won":
+                $this->update("matches_won", $this->matches_won += $adjust, "i");
+                return;
+            case "loss":
+            case "lost":
+                $this->update("matches_lost", $this->matches_lost += $adjust, "i");
+                return;
+            default:
+                $this->update("matches_draw", $this->matches_draw += $adjust, "i");
+                return;
+        }
+    }
+
+    /**
+     * Decrement the team's match count by one
+     *
+     * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
+     */
+    public function decrementMatchCount($type) {
+        $this->changeMatchCount(-1, $type);
+    }
+
+    /**
+     * Get the activity of the team
+     *
+     * @return string The team's activity formated to two decimal places
+     */
+    public function getActivity() {
+        return sprintf("%.2f", $this->activity);
+    }
+
+    /**
+     * Get URL for the image used as the team avatar
+     *
+     * @return string The URL for the avatar
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Get the team's avatar as an HTML image element
+     *
+     * @return string The HTML for the image
+     */
+    public function getAvatarLiteral()
+    {
+        return '<img class="team_avatar" src="' . $this->getAvatar() . '">';
+    }
+
+    /**
+     * Get the creation date of the team
+     *
+     * @return string The creation date of the team
+     */
+    public function getCreationDate() {
+        return $this->created->diffForHumans();
+    }
+
+    /**
+     * Get the current elo of the team
+     *
+     * @return int The elo of the team
+     */
+    public function getElo() {
+        return $this->elo;
+    }
+
+    /**
+     * Get the leader of the team
+     *
+     * @return Player The object representing the team leader
+     */
+    public function getLeader() {
+        return new Player($this->leader);
+    }
+
+    /**
+     * Generate the HTML for a hyperlink to link to a team's profile
+     * @return string The HTML hyperlink to a team's profile
+     */
+    public function getLinkLiteral() {
+        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
+    }
+
+    /**
+     * Get the matches this team has participated in
+     *
+     * @return Match[] The array of match IDs this team has participated in
+     */
+    public function getMatches() {
+        return Match::getMatchesByTeam($this->id);
+    }
+
+    /**
+     * Get the number of matches that resulted as a draw
+     *
+     * @return int The number of matches, respectively
+     */
+    public function getMatchesDraw()
+    {
+        return $this->matches_draw;
+    }
+
+    /**
+     * Get the number of matches that the team has lost
+     *
+     * @return int The number of matches, respectively
+     */
+    public function getMatchesLost()
+    {
+        return $this->matches_lost;
+    }
+
+    /**
+     * Get the URL that points to the team's list of matches
+     *
+     * @return string The team's list of matches
+     */
+    public function getMatchesURL() {
+        return Service::getGenerator()->generate("match_by_team_list", array("team" => $this->getAlias()));
+    }
+
+    /**
+     * Get the number of matches that the team has won
+     *
+     * @return int The number of matches, respectively
+     */
+    public function getMatchesWon()
+    {
+        return $this->matches_won;
+    }
+
+    /**
+     * Get the members on the team
+     *
+     * @return Player[] The members on the team
+     */
+    public function getMembers() {
+        return Player::getTeamMembers($this->id);
+    }
+
+    /**
+     * Get the name of the team
+     *
+     * @return string The name of the team
+     */
+    public function getName() {
+        if (!$this->valid)
+            return "<em>None</em>";
+        return $this->name;
+    }
+
+    /**
+     * Get the number of members on the team
+     *
+     * @return int The number of members on the team
+     */
+    public function getNumMembers() {
+        return $this->members;
+    }
+
+    /**
+     * Get the total number of matches this team has played
+     *
+     * @return int The total number of matches this team has played
+     */
+    public function getNumTotalMatches() {
+        return $this->matches_total;
+    }
+
+    /**
+     * Get the rank category a team belongs too based on their ELO> This value is always a multiple of 100
+     *
+     * @return int The rank category a team belongs to
+     */
+    public function getRankValue()
+    {
+        return floor($this->getElo() / 100) * 100;
+    }
+
+    /**
+     * Get the image associated with
+     *
+     * @return string
+     */
+    public function getRankImage()
+    {
+        return 'assets/imgs/ranks/' . $this->getRankValue() . '.png';
+    }
+
+    /**
+     * Get the HTML for an image with the rank symbol
+     *
+     * @return string The HTML for a rank image
+     */
+    public function getRankImageLiteral()
+    {
+        return '<img class="rank_image" src="' . $this->getRankImage() . '" >';
+    }
+
+    /**
+     * Increment the team's match count by one
+     *
+     * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
+     */
+    public function incrementMatchCount($type) {
+        $this->changeMatchCount(1, $type);
+    }
+
+    /**
+     * Removes a member from the team
+     *
+     * *Warning*: This method does not check whether the player is already
+     * a member of the team
+     *
+     * @param int $id The id of the player to remove
+     */
+    public function removeMember($id) {
+        $this->db->query("UPDATE players SET team=0 WHERE id=?", "i", array(
+            $id
+        ));
+        $this->update('members', --$this->members, "i");
+    }
+
+    /**
      * Create a new team
      *
      * @param string $name The name of the team
@@ -167,8 +427,8 @@ class Team extends AliasModel
         // just make it the same as the ID
         if ($alias === null) {
             $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array(
-                $id
-            ));
+                    $id
+                ));
         }
 
         $team = new Team($id);
@@ -176,186 +436,6 @@ class Team extends AliasModel
         $team->addMember($leader);
 
         return $team;
-    }
-
-    /**
-     * Get the members on the team
-     *
-     * @return Player[] The members on the team
-     */
-    public function getMembers() {
-        return Player::getTeamMembers($this->id);
-    }
-
-    /**
-     * Get the number of members on the team
-     *
-     * @return int The number of members on the team
-     */
-    public function getNumMembers() {
-        return $this->members;
-    }
-
-    /**
-     * Get the total number of matches this team has played
-     *
-     * @return int The total number of matches this team has played
-     */
-    public function getNumTotalMatches() {
-        return $this->matches_total;
-    }
-
-    /**
-     * Increment the team's match count by one
-     *
-     * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
-     */
-    public function incrementMatchCount($type) {
-        $this->changeMatchCount(1, $type);
-    }
-
-    /**
-     * Decrement the team's match count by one
-     *
-     * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
-     */
-    public function decrementMatchCount($type) {
-        $this->changeMatchCount(-1, $type);
-    }
-
-    /**
-     * Increment the team's match count
-     *
-     * @param int $adjust The number to add to the current matches number (negative to substract)
-     * @param string $type The match count that should be changed. Can be 'win', 'draw' or 'loss'
-     */
-    public function changeMatchCount($adjust, $type) {
-        $this->matches_total += $adjust;
-
-        switch ($type) {
-            case "win":
-            case "won":
-                $this->update("matches_won", $this->matches_won += $adjust, "i");
-                return;
-            case "loss":
-            case "lost":
-                $this->update("matches_lost", $this->matches_lost += $adjust, "i");
-                return;
-            default:
-                $this->update("matches_draw", $this->matches_draw += $adjust, "i");
-                return;
-        }
-    }
-
-    /**
-     * Get the current elo of the team
-     *
-     * @return int The elo of the team
-     */
-    public function getElo() {
-        return $this->elo;
-    }
-
-    /**
-     * Increase or decrease the ELO of the team
-     *
-     * @param int $adjust The value to be added to the current ELO (negative to substract)
-     */
-    public function changeElo($adjust) {
-        $this->elo += $adjust;
-        $this->update("elo", $this->elo, "i");
-    }
-
-    /**
-     * Get the name of the team
-     *
-     * @return string The name of the team
-     */
-    public function getName() {
-        if (!$this->valid)
-            return "<em>None</em>";
-        return $this->name;
-    }
-
-    /**
-     * Get the activity of the team
-     *
-     * @return string The team's activity formated to two decimal places
-     */
-    public function getActivity() {
-        return sprintf("%.2f", $this->activity);
-    }
-
-    /**
-     * Get the URL that points to the team's list of matches
-     *
-     * @return string The team's list of matches
-     */
-    public function getMatchesURL() {
-        return Service::getGenerator()->generate("match_by_team_list", array("team" => $this->getAlias()));
-    }
-
-    /**
-     * Get the leader of the team
-     *
-     * @return Player The object representing the team leader
-     */
-    public function getLeader() {
-        return new Player($this->leader);
-    }
-
-    /**
-     * Get the creation date of the team
-     *
-     * @return string The creation date of the team
-     */
-    public function getCreationDate() {
-        return $this->created->diffForHumans();
-    }
-
-    /**
-     * Generate the HTML for a hyperlink to link to a team's profile
-     * @return string The HTML hyperlink to a team's profile
-     */
-    public function getLinkLiteral() {
-        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
-    }
-
-    /**
-     * Adds a new member to the team
-     *
-     * @param int $id The id of the player to add to the team
-     */
-    public function addMember($id) {
-        $this->db->query("UPDATE players SET team=? WHERE id=?", "ii", array(
-            $this->id,
-            $id
-        ));
-        $this->update('members', ++$this->members, "i");
-    }
-
-    /**
-     * Removes a member from the team
-     *
-     * *Warning*: This method does not check whether the player is already
-     * a member of the team
-     *
-     * @param int $id The id of the player to remove
-     */
-    public function removeMember($id) {
-        $this->db->query("UPDATE players SET team=0 WHERE id=?", "i", array(
-            $id
-        ));
-        $this->update('members', --$this->members, "i");
-    }
-
-    /**
-     * Get the matches this team has participated in
-     *
-     * @return Match[] The array of match IDs this team has participated in
-     */
-    public function getMatches() {
-        return Match::getMatchesByTeam($this->id);
     }
 
     /**

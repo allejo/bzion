@@ -3,26 +3,42 @@
 {% block title %}Teams{% endblock %}
 
 {% block content %}
-    <div class="table teams">
-        <ul>
-            <li>Name</li>
-            <li>Rating</li>
-            <li>Leader</li>
-            <li>Members</li>
-            <li>Matches</li>
-            <li>Activity</li>
-        </ul>
+    <main class="teams">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>Active Teams</h1>
+            </article>
+        </section>
 
-    {% for team in teams %}
-        <ul>
-            <li><a href="{{ team.url }}">{{ team.name }}</a>
-            <li>{{ team.elo }}</li>
-            <li>{{ team.leader.username }}</li>
-            <li>{{ team.numMembers }}</li>
-            <li><a href="{{ team.matchesURL }}">{{ team.numTotalMatches }}</a></li>
-            <li>{{ team.activity }}
-        </ul>
-    {% endfor %}
+        <ul class="list">
+            {% for team in teams %}
+                <li>
+                    {{  team.rankImageLiteral | raw }}
+                    <section>
+                        <article class="team_stats">
+                            <section class="team">
+                                <p class="name">{{ team.linkLiteral | raw }}</p>
+                                <p class="elo">{{ team.elo }}</p>
+                            </section>
 
-    </div>
+                            <section class="stats">
+                                <p class="match_stats">
+                                    {# @TODO Generate URL for specific match types (wins, draws, losses) #}
+                                    <a href="#">{{ team.matchesWon }}</a> -
+                                    <a href="#">{{ team.matchesDraw }}</a> -
+                                    <a href="#">{{ team.matchesLost }}</a>
+                                </p>
+                            </section>
+                        </article>
+
+                        <article class="meta">
+                            <p><i class="fa fa-star"></i> {{ team.leader.linkLiteral | raw }}</p>
+                            <p><i class="fa fa-users"></i> {{ team.numMembers }} members</p>
+                            <p><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</p>
+                        </article>
+                    </section>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
 {% endblock %}
