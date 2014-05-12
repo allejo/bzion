@@ -14,48 +14,59 @@ main {
                 list-style: none;
                 margin: 30px 10px;
 
-                .team_stats {
-                    @extend .clearfix;
-
-                    .team {
-                        .name {
-                            float: left;
-                            font-size: 24px;
-                        }
-
-                        .elo {
-                            float: left;
-                            margin-left: 10px;
-
-                            &:before {
-                                content: '(';
-                            }
-
-                            &:after {
-                                content: ')';
-                            }
-                        }
-                    }
-
-                    .stats {
-                        float: right;
-
-                        a {
-                            color: darkgrey;
-                        }
-                    }
+                img {
+                    float: left;
+                    margin: 3px 10px 0 0;
                 }
 
-                .meta {
-                    margin-top: 5px;
+                > section {
+                    overflow: hidden;
 
-                    p {
-                        float: left;
-                        font-size: 14px;
-                        margin-right: 25px;
+                    .team_stats {
+                        @extend .clearfix;
 
-                        a {
-                            color: darkgrey;
+                        .team {
+                            .name {
+                                float: left;
+                                font-size: 24px;
+                            }
+
+                            .elo {
+                                float: left;
+                                margin-left: 10px;
+
+                                &:before {
+                                    content: '(';
+                                }
+
+                                &:after {
+                                    content: ')';
+                                }
+                            }
+                        }
+
+                        .stats {
+                            float: right;
+
+                            a {
+                                color: darkgrey;
+                            }
+                        }
+                    }
+
+                    .meta {
+                        @extend .clearfix;
+
+                        margin-top: 5px;
+
+                        p {
+                            float: left;
+                            font-size: 14px;
+                            margin-right: 25px;
+
+                            a {
+                                color: darkgrey;
+                            }
                         }
                     }
                 }
