@@ -37,12 +37,18 @@ $lweak    = Team::createTeam("[LakeWeakness]", $mdskpr->getId(), "", "");
 $gsepar   = Team::createTeam("Good Separation", $tw1sted->getId(), "", "");
 $fradis   = Team::createTeam("Fractious disinclination", $ashvala->getId(), "", "");
 
-Match::enterMatch($reptiles->getId(), $gsepar->getId(), 1, 9000, 17, $kierra->getId());
-Match::enterMatch($olfm->getId(), $lweak->getId(), 0, 0, 20, $blast->getId());
-
 $lweak->addMember($autoreport->getId());
 $fflood->addMember($blast->getId());
 $fradis->addMember($alezakos->getId());
+
+Match::enterMatch($reptiles->getId(), $gsepar->getId(), 1, 9000, 17, $kierra->getId());
+Match::enterMatch($olfm->getId(), $lweak->getId(), 0, 0, 20, $blast->getId());
+Match::enterMatch($fflood->getId(), $lweak->getId(), 1, 15, 20, $autoreport->getId());
+Match::enterMatch($gsepar->getId(), $fradis->getId(), 8, 23, 30, $kierra->getId());
+Match::enterMatch($olfm->getId(), $lweak->getId(), 5, 4, 20, $kierra->getId());
+Match::enterMatch($reptiles->getId(), $gsepar->getId(), 1, 1500, 20, $autoreport->getId());
+Match::enterMatch($olfm->getId(), $lweak->getId(), 1, 1, 30, $autoreport->getId());
+Match::enterMatch($fradis->getId(), $gsepar->getId(), 1, 2, 20, $kierra->getId());
 
 $reptiles->update("activity", 9000, "i");
 $fflood->update("activity", -18, "i");
@@ -52,7 +58,7 @@ Server::addServer("BZPro Public HiX FFA", "bzpro.net:5154", $tw1sted->getId());
 Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net:5155", $tw1sted->getId());
 
 $group_to = Group::createGroup("New blog", array(
-	$alezakos->getId(),
+    $alezakos->getId(),
     $allejo->getId(),
     $ashvala->getId(),
     $autoreport->getId(),
@@ -89,6 +95,6 @@ $db->query("INSERT INTO .`news` (`id`, `subject`, `content`, `created`, `updated
     'In order for your indess recognizes where this whole mistake has come, and why one accuses the pleasure and praise the pain, and I will open to you all and set apart, what those founders of the truth and, as builders of the happy life himself has said about it. No one, he says, despise, or hate, or flee the desire as such, but because great pain to follow, if you do not pursue pleasure rationally. Similarly, the pain was loved as such by no one or pursues or desires, but because occasionally circumstances occur that one means of toil and pain can procure him some great pleasure to look verschaften be. To stay here are a trivial, so none of us would ever undertakes laborious physical exercise, except to obtain some advantage from it. But who is probably the blame, which requires an appetite, has no annoying consequences, or one who avoids a pain, which shows no desire? In contrast, blames and you hate with the law, which can soften and seduced by the allurements of present pleasure, without seeing in his blind desire which pain and inconvenience wait his reason. Same debt meet Those who from weakness, i.e to escape the work and the pain, neglect their duties. A person can easily and quickly make the real difference, to a quiet time where the choice of the decision is completely free and nothing prevents them from doing what we like best, you have to grasp every pleasure and every pain avoided, but to times it hits in succession of duties or guilty of factual necessity that you reject the desire and complaints must not reject. Why then the way will make a selection so that it Achieve a greater rejection by a desire for it or by taking over some pains to spare larger.'
    , NOW(), NOW(), '{$alezakos->getId()}', 'live')");
 
-echo "The database has been populated successfully.";
+echo "The database has been populated successfully.\n";
 
 ?>
