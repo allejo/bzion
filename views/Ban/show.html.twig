@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Bans{% endblock %}
+
+{% block content %}
+    <main class="bans">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>{{ ban.player.username }}'s Ban</h1>
+            </article>
+        </section>
+
+        <section class="summary">
+            <strong>Date</strong>
+            <p>{{ ban.created }}</p>
+
+            <strong>Expiration</strong>
+            <p>{{ ban.expiration }}</p>
+
+            <strong>Reason</strong>
+            <article>
+                {{ ban.description }}
+            </article>
+
+            <strong>Server Ban Message</strong>
+            <p>placeholder</p>
+            {# @TODO fix the placeholder #}
+
+            <strong>Allow Server Join</strong>
+            <p>placeholder</p>
+            {# @TODO fix the placeholder #}
+
+            <strong>Banned IP Addresses</strong>
+            {# @TODO fix the IP list #}
+            <ul>
+                <li>127.0.0.1</li>
+                <li>127.0.0.2</li>
+                <li>127.0.0.3</li>
+                <li>127.0.0.4</li>
+            </ul>
+        </section>
+    </main>
+{% endblock %}

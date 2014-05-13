@@ -3,13 +3,50 @@
 {% block title %}Bans{% endblock %}
 
 {% block content %}
-    {% for ban in bans %}
-        <article>
-            <h1>{{ ban.player.username }}</h1>
-            <p>{{ ban.reason }}</p>
-            <footer>
-                Posted by <a href="{{ ban.author.url }}">{{ ban.author.username }}</a> {{ ban.updated }}
-            </footer>
-        </article>
-    {% endfor %}
+    <main class="bans">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>League Bans</h1>
+            </article>
+        </section>
+
+        <section class="punishments">
+            <article class="css-table ban_list">
+                <div class="row header">
+                    <div class="column">
+                        <strong>Date</strong>
+                    </div>
+                    <div class="column">
+                        <strong>Victim</strong>
+                    </div>
+                    <div class="column">
+                        <strong>Banner</strong>
+                    </div>
+                    <div class="column">
+                        <strong>Expires</strong>
+                    </div>
+                    <div class="column"></div>
+                </div>
+                {% for ban in bans %}
+                    <div class="row">
+                        <div class="column">
+                            {{ ban.created }}
+                        </div>
+                        <div class="column">
+                            {{ ban.player.linkLiteral | raw }}
+                        </div>
+                        <div class="column">
+                            {{ ban.author.linkLiteral | raw }}
+                        </div>
+                        <div class="column">
+                            {{ ban.expiration }}
+                        </div>
+                        <div class="column">
+                            <a href="{{ request.getBaseURL ~ "/bans/" ~ ban.ID }}"><i class="fa fa-info-circle"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </article>
+        </section>
+    </main>
 {% endblock %}

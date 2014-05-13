@@ -10,6 +10,10 @@ ban_list:
     pattern:    /bans
     defaults: { _controller: 'Ban', _action: 'list' }
 
+ban_show:
+    pattern:    /bans/{ban}
+    defaults: { _controller: 'Ban', _action: 'show' }
+
 login:
     pattern:    /login
     defaults: { _controller: 'Login', _action: 'login' }
