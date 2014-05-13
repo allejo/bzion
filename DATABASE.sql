@@ -28,7 +28,7 @@ CREATE TABLE `banned_ips` (
   `ban_id` int(11) NOT NULL,
   `ip_address` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -191,7 +191,7 @@ CREATE TABLE `permissions` (
   `description` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -217,7 +217,7 @@ CREATE TABLE `player_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `player_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `players` (`id`),
   CONSTRAINT `player_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -255,7 +255,7 @@ CREATE TABLE `role_permission` (
   KEY `perm_id` (`perm_id`),
   CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
   CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`perm_id`) REFERENCES `permissions` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -268,7 +268,7 @@ CREATE TABLE `roles` (
   `reusable` tinyint(1) NOT NULL DEFAULT '0',
   `protected` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
