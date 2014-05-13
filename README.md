@@ -19,7 +19,7 @@ A demo BZiON installation is set up at http://bzpro.net/bzion/ with the latest v
 
 BZiON's source code is thoroughly documented in order for anyone to be able to jump into the project. All of the phpDoc for the classes can be found on [alezakos' website](http://helit.org/bziondoc/phpdoc/).
 
-## Development Setup
+## Installation
 
 1. Clone the repository
 
@@ -27,7 +27,7 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
 2. Change into the `league` directory and get all of the necessary submodules
 
-      `git submodule update --init`
+      `cd league; git submodule update --init`
 
 3. If you do not have PHP Composer installed, install it
 
