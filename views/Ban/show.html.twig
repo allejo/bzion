@@ -19,25 +19,23 @@
 
             <strong>Reason</strong>
             <article>
-                {{ ban.description }}
+                {{ ban.reason }}
             </article>
 
-            <strong>Server Ban Message</strong>
-            <p>placeholder</p>
-            {# @TODO fix the placeholder #}
+            {% if player.hasPermission("edit_ban") %}
+                <strong>Server Ban Message</strong>
+                <p>{{ ban.serverMessage | raw }}</p>
 
-            <strong>Allow Server Join</strong>
-            <p>placeholder</p>
-            {# @TODO fix the placeholder #}
+                <strong>Allow Server Join</strong>
+                <p>{{ ban.allowedServerJoinLiteral }}</p>
 
-            <strong>Banned IP Addresses</strong>
-            {# @TODO fix the IP list #}
-            <ul>
-                <li>127.0.0.1</li>
-                <li>127.0.0.2</li>
-                <li>127.0.0.3</li>
-                <li>127.0.0.4</li>
-            </ul>
+                <strong>Banned IP Addresses</strong>
+                <ul>
+                    {% for ip in ban.ipAddresses %}
+                        <li>{{ ip }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </section>
     </main>
 {% endblock %}
