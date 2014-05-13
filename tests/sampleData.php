@@ -70,15 +70,10 @@ $group_to = Group::createGroup("New blog", array(
 ));
 Message::sendMessage($group_to->getId(), $snake->getId(), "Check out my new blog!");
 
-// We don't have any methods to create these objects yet, so just access the database directly for the time being
-$db->query("INSERT INTO `bans` (`id`, `player`, `ip_address`, `expiration`, `reason`, `created`, `updated`, `author`)
-    VALUES (NULL, '{$snake->getId()}', '256.512.1024.1', '16384-02-20', 'Snarke 12534 has been barned again, expiration in 14370 years', NOW(), NOW(), '{$alezakos->getId()}')");
-$db->query("INSERT INTO `bans` (`id`, `player`, `ip_address`, `expiration`, `reason`, `created`, `updated`, `author`)
-    VALUES (NULL, '{$snake->getId()}', '256.512.1024.1', '8192-02-20', 'Snarke 12534 has been barned.', NOW(), NOW(), '{$alezakos->getId()}')");
-$db->query("INSERT INTO `bans` (`id`, `player`, `ip_address`, `expiration`, `reason`, `created`, `updated`, `author`)
-    VALUES (NULL, '{$tw1sted->getId()}', '256.512.1024.2', '2014-02-20', 'tw1sted banned for being too awesome', NOW(), NOW(), '{$tw1sted->getId()}')");
-$db->query("INSERT INTO `bans` (`id`, `player`, `ip_address`, `expiration`, `reason`, `created`, `updated`, `author`)
-    VALUES (NULL, '{$alezakos->getId()}', '256.512.1024.3', '2014-02-20', 'alezakos banned for breaking the build', NOW(), NOW(), '{$allejo->getId()}')");
+Ban::addBan($snake->getId(), $alezakos->getId(), "2014-09-15", "Snarke 12534 has been barned again", "Cuz you're snake", "256.512.104.1");
+Ban::addBan($allejo->getId(), $tw1sted->getId(), "2014-05-17", "for using 'dope'", "dope", array("127.0.2.1", "128.0.3.2"));
+Ban::addBan($tw1sted->getId(), $alezakos->getId(), "2014-06-12", "tw1sted banned for being too awesome");
+Ban::addBan($alezakos->getId(), $tw1sted->getId(), "2014-11-01", "alezakos banned for breaking the build", "For breaking the build", array("256.512.124.1", "256.512.124.3"));
 
 $db->query("INSERT INTO `pages` (`id`, `name`, `alias`, `content`, `created`, `updated`, `author`, `home`, `status`)
     VALUES (NULL, 'Home page', NULL, '<p>Welcome to BZiON. <b>This website is still under heavy construction.</b></p>', NOW(), NOW(), '{$kierra->getId()}', '1', 'live'); ");

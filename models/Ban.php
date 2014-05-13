@@ -93,6 +93,11 @@ class Ban extends Model {
         $this->ipAddresses = parent::fetchIds("WHERE ban_id = ?", 'i', array($this->getId()), "banned_ips", "ip_address");
     }
 
+    public function addIP ($ipAddress)
+    {
+        $this->db->query("INSERT INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
+    }
+
     /**
      * Check whether or not a player is allowed to join a server when they've been banned
      * @return bool Whether or not a player is allowed to join
@@ -185,6 +190,53 @@ class Ban extends Model {
      */
     public function hasExpired() {
         return TimeDate::now()->gte($this->expiration);
+    }
+
+    /**
+     * Add a new ban
+     *
+     * @param int $playerID The ID of the victim of the ban
+     * @param int $authorID The ID of the player responsible for the ban
+     * @param string|\TimeDate $expiration The expiration of the ban
+     * @param string $reason The full reason for the ban
+     * @param string $srvmsg A summary of the ban to be displayed on server banlists (max 150 characters)
+     * @param string[] $ipAddresses An array of IPs that have been banned
+     * @param bool $allowServerJoin Whether or not
+     *
+     * @return Ban An object representing the ban that was just entered
+     */
+    public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
+    {
+        $db = Database::getInstance();
+
+        $expiration = new TimeDate($expiration);
+
+        // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
+        if (empty($srvmsg) || empty($ipAddresses))
+        {
+            $allowServerJoin = true;
+        }
+
+        $db->query(
+            "INSERT INTO bans (id, player, expiration, server_message, reason, allow_server_join, created, updated, author) VALUES (NULL, ?, ?, ?, ?, ?, NOW(), NOW(), ?)",
+            "isssii", array($playerID, $expiration->format(DATE_FORMAT), $srvmsg, $reason, $allowServerJoin, $authorID)
+        );
+
+        $ban = new Ban($db->getInsertId());
+
+        if (is_array($ipAddresses))
+        {
+            foreach ($ipAddresses as $ip)
+            {
+                $ban->addIP($ip);
+            }
+        }
+        else
+        {
+            $ban->addIP($ipAddresses);
+        }
+
+        return $ban;
     }
 
     /**
