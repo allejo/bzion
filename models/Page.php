@@ -137,6 +137,30 @@ class Page extends AliasModel {
     }
 
     /**
+     * Create a new Page
+     *
+     * @param string $title    The title of the page
+     * @param string $content  The content of page
+     * @param int    $authorID The ID of the author
+     * @param string $status   Page status: 'live','disabled',or 'deleted'
+     *
+     * @return Page An object representing the page that was just created
+     */
+    public static function addPage($title, $content, $authorID, $status = "live")
+    {
+        $db = Database::getInstance();
+
+        $db->query(
+            "INSERT INTO pages (id, name, alias, content, created, updated, author, home, status) VALUES (NULL, ?, ?, ?, NOW(), NOW(), ?, 0, ?)",
+            "sssis", array($title, parent::generateAlias($title), $content, $authorID, $status)
+        );
+
+        $page = new Page($db->getInsertId());
+
+        return $page;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected static function getRouteName() {
