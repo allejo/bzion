@@ -2,9 +2,60 @@
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * The Controller class represents a bunch of pages relating to the same
+ * subject (Model in most cases) - for example, there is a PlayerController,
+ * a TeamController and a HomeController.
+ *
+ * Controllers contain special methods called 'actions', which are essentially
+ * different pages performing different actions - for example, the
+ * TeamController might contain a 'show' action, which renders the team's page,
+ * and a 'new' action, which renders the page that is shown to the user when
+ * they want to create a new team.
+ *
+ * Actions have some unique characteristics. Take a look at this sample action:
+ *
+ * <pre><code>public function showAction(Request $request, Team $team) {
+ *   return array('team' => $team);
+ * }
+ * </code></pre>
+ *
+ * The following route will make sure that `showAction()` handles the request:
+ *
+ * <pre><code>team_show:
+ *   pattern:    /teams/{team}
+ *   defaults: { _controller: 'Team', _action: 'show' }
+ * </code></pre>
+ *
+ * First of all, the method's name should end with `Action`. The parameters
+ * are passed dynamically, and the order is insignificant.
+ *
+ * You can request Symfony's Request or Session class, or even a model, which
+ * will be generated based on the route parameters. For example, the route
+ * pattern `/posts/{post}/comments/{commentId}` (note how you can use both
+ * `comment` and `commentId` as parameters - just make sure to use the correct
+ * variable name on the method later) and can be used with actions like these:
+ *
+ * <code>
+ * public function sampleAction
+ *   (Request $request, NewsArticle $post, Comment $comment)
+ * </code>
+ *
+ * <code>
+ * public function sampleAction
+ *   (NewsArticle $post, Session $session, Request $request, Comment $comment)
+ * </code>
+ *
+ * A method's return value can be:
+ * - Symfony's Response Class
+ * - A string representing the text you want the user to see
+ * - An array representing the variables you want to pass to the controller's
+ *   view, so that it can be rendered
+ */
 abstract class Controller {
 
     /**
+     * Parameters specified by the route
      * @var array
      */
     protected $parameters;
@@ -33,7 +84,7 @@ abstract class Controller {
      * Call the controller's action specified by the $parameters array
      *
      * @param string|null $action The action name to call, null to invoke the default one
-     * @return void
+     * @return Response The action's response
      */
     public function callAction($action=null) {
         if (!$action)
@@ -52,16 +103,19 @@ abstract class Controller {
     /**
      * Forward the request to another action
      *
+     * Please note that this doesn't generate an HTTP redirect, but an
+     * internal one - the user sees the original URL, but a different page
+     *
      * @todo Forward the request to another controller
      * @param string $action The action to forward the request to
      * @param array $params An additional associative array of parameters to provide to the action
-     * @return void
+     * @return Response
      */
     protected function forward($action, $params=array()) {
         $args = array_merge($this->parameters, $params);
 
         $ret = $this->callMethod($action . 'Action', $args);
-        $this->handleResponse($ret, $action);
+        return $this->handleReturnValue($ret, $action);
     }
 
     /**
@@ -82,6 +136,10 @@ abstract class Controller {
 
     /**
      * Call one of the controller's methods
+     *
+     * The arguments are passed dynamically to the method, based on its
+     * definition - check the description of the Controller class for more
+     * information
      *
      * @param string $method The name of the method
      * @param array $parameters An associative array representing the method's parameters
@@ -109,7 +167,10 @@ abstract class Controller {
     }
 
     /**
-     * @param ReflectionParameter $modelParameter
+     * Find what to pass as an argument on an action
+     *
+     * @param ReflectionParameter $modelParameter The model's parameter we want to investigate
+     * @param array $routeParameters The route's parameters
      */
     private function getModelFromParameters($modelParameter, $routeParameters) {
         $refClass = $modelParameter->getClass();
@@ -143,7 +204,7 @@ abstract class Controller {
     }
 
     /**
-     * Handle the return value of an action
+     * Get a Response from the return value of an action
      * @param mixed $return Whatever the method returned
      * @param string $action The name of the action
      * @return Response The response that the controller wants us to send to the client
@@ -152,6 +213,7 @@ abstract class Controller {
         if ($return instanceof Response)
             return $return;
 
+        $content = null;
         if (is_array($return)) {
             // The controller is probably expecting us to show a view to the
             // user, using the array provided to set variables for the template

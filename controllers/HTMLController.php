@@ -12,6 +12,7 @@ abstract class HTMLController extends Controller {
         if ($model->isValid())
             return true;
 
+        throw new Exception("Validations are broken for the time being");
         $this->forward("notFound", array("type" => $this->getName()));
         return false;
     }
