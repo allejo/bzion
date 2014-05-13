@@ -1,9 +1,6 @@
 [submodule "includes/ladda"]
 	path = includes/ladda
 	url = https://github.com/hakimel/Ladda.git
-[submodule "tests/protos/includes/medium-editor"]
-	path = tests/protos/includes/medium-editor
-	url = https://github.com/daviferreira/medium-editor.git
 [submodule "includes/chartjs"]
 	path = includes/chartjs
 	url = https://github.com/nnnick/Chart.js.git
