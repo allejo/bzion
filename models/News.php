@@ -113,6 +113,30 @@ class News extends Model {
     }
 
     /**
+     * Add a new news article
+     *
+     * @param string $subject The subject of the article
+     * @param string $content The content of the article
+     * @param int $authorID The ID of the author
+     * @param string $status The status of the article: 'live', 'disabled', or 'deleted'
+     *
+     * @return News An object representing the article that was just posted
+     */
+    public static function addNews($subject, $content, $authorID, $status = 'live')
+    {
+        $db = Database::getInstance();
+
+        $db->query(
+            "INSERT INTO news (id, subject, content, created, updated, author, status) VALUES (NULL, ?, ?, NOW(), NOW(), ?, ?)",
+            "ssis", array($subject, $content, $authorID, $status)
+        );
+
+        $article = new News($db->getInsertId());
+
+        return $article;
+    }
+
+    /**
      * Get all the news entries in the database that aren't disabled or deleted
      *
      * @param int $start The offset used when fetching matches, i.e. the starting point
