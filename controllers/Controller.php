@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Response;
+
 abstract class Controller {
 
     /**
@@ -40,9 +42,11 @@ abstract class Controller {
         $this->setup();
 
         $ret = $this->callMethod($action . 'Action', $this->parameters);
-        $this->handleResponse($ret, $action);
+        $response = $this->handleReturnValue($ret, $action);
 
         $this->cleanup();
+
+        return $response;
     }
 
     /**
@@ -138,16 +142,26 @@ abstract class Controller {
             return $refClass->newInstance($routeParameters[$paramName . 'Id']);
     }
 
-    private function handleResponse($response, $action) {
-        if (is_array($response)) {
+    /**
+     * Handle the return value of an action
+     * @param mixed $return Whatever the method returned
+     * @param string $action The name of the action
+     * @return Response The response that the controller wants us to send to the client
+     */
+    private function handleReturnValue($return, $action) {
+        if ($return instanceof Response)
+            return $return;
+
+        if (is_array($return)) {
             // The controller is probably expecting us to show a view to the
             // user, using the array provided to set variables for the template
             $templatePath = $this->getName() . "/$action.html.twig";
-
-            echo $this->render($templatePath, $response);
-        } else if (is_string($response)) {
-            echo $response;
+            $content = $this->render($templatePath, $return);
+        } else if (is_string($return)) {
+            $content = $return;
         }
+
+        return new Response($content);
     }
 
     /**

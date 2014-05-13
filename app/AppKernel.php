@@ -76,6 +76,9 @@ class AppKernel extends Kernel {
                  new Player($request->getSession()->get('playerId')));
 
         $con = Controller::getController($parameters);
-        $con->callAction();
+        $response = $con->callAction();
+
+        $response->sendHeaders();
+        $response->sendContent();
     }
 }
