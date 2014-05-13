@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 // Use "on" instead of just "click"/"submit", so that new elements of that class added
 // to the page using $.load() also respond to events
-var pageSelector = $(".page");
+var pageSelector = $(".messaging");
 
 // Response submit event
 pageSelector.on("submit", ".reply_form", function(event) {
