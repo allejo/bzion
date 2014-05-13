@@ -72,7 +72,7 @@ class AppKernel extends Kernel {
         Service::setRequest($request);
         Service::getTemplateEngine()->addGlobal("request", $request);
         Service::getTemplateEngine()->addGlobal("session", $request->getSession());
-        Service::getTemplateEngine()->addGlobal("currentUser",
+        Service::getTemplateEngine()->addGlobal("me",
                  new Player($request->getSession()->get('playerId')));
 
         $con = Controller::getController($parameters);
