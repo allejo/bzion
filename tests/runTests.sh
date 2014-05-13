@@ -23,7 +23,7 @@ while test $# -gt 0; do
 done
 
 # Run PHPUnit and save its return code
-vendor/phpunit/phpunit/phpunit.php $COVERAGE_TYPE
+vendor/phpunit/phpunit/phpunit $COVERAGE_TYPE
 PHPUNIT=$?
 
 # Find all PHP files on the root directory which do not start with "bzion"

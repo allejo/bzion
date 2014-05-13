@@ -6,18 +6,18 @@
 
     "require": {
         "nesbot/carbon"           : ">=1.8.0",
-        "symfony/config"          : "dev-master",
-        "symfony/routing"         : "dev-master",
-        "symfony/http-kernel"     : "dev-master",
-        "symfony/http-foundation" : "dev-master",
-        "symfony/twig-bridge"     : "dev-master",
-        "symfony/yaml"            : "dev-master",
+        "symfony/config"          : ">=2.4.0",
+        "symfony/routing"         : ">=2.4.0",
+        "symfony/http-kernel"     : ">=2.4.0",
+        "symfony/http-foundation" : ">=2.4.0",
+        "symfony/twig-bridge"     : ">=2.4.0",
+        "symfony/yaml"            : ">=2.4.0",
         "twig/twig"               : "dev-master"
     },
     "require-dev": {
-        "symfony/browser-kit": "2.4.*@dev",
-        "symfony/framework-bundle": "2.4.*@dev",
-        "phpunit/phpunit": "3.7.*",
+        "symfony/browser-kit": ">=2.4.0",
+        "symfony/framework-bundle": ">=2.4.0",
+        "phpunit/phpunit": "4.1.*",
         "phpdocumentor/phpdocumentor": "dev-develop"
     },
 
