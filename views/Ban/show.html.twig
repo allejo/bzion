@@ -22,7 +22,7 @@
                 {{ ban.reason }}
             </article>
 
-            {% if player.hasPermission("edit_ban") %}
+            {% if currentUser.hasPermission("edit_ban") %}
                 <strong>Server Ban Message</strong>
                 <p>{{ ban.serverMessage | raw }}</p>
 
