@@ -24,7 +24,7 @@ class NewsCategory extends AliasModel
     private $protected;
 
     /**
-     * The status of the category: 'enabled' or 'deleted'
+     * The status of the category: 'enabled', 'disabled', or 'deleted'
      * @var string
      */
     private $status;
@@ -67,6 +67,36 @@ class NewsCategory extends AliasModel
     }
 
     /**
+     * Disable the category
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function disableCategory()
+    {
+        if ($this->getStatus() != "disabled")
+        {
+            return $this->update("status", "disabled");
+        }
+
+        return true;
+    }
+
+    /**
+     * Enable the category
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function enableCategory()
+    {
+        if ($this->getStatus() != "enabled")
+        {
+            return $this->update("status", "enabled");
+        }
+
+        return true;
+    }
+
+    /**
      * Get the name of the category
      *
      * @return string The name
@@ -79,7 +109,7 @@ class NewsCategory extends AliasModel
     /**
      * Get the status of the category
      *
-     * @return string Either 'enabled' or 'deleted'
+     * @return string Either 'enabled', 'disabled', or 'deleted'
      */
     public function getStatus()
     {
