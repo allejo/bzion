@@ -37,14 +37,7 @@
             <aside>
                 <h2>Categories</h2>
 
-                {# @TODO Added loop to handle actual categories from the database #}
-                <ul>
-                    <li class="active"><a href="#">All Posts</a></li>
-                    <li><a href="#">Announcements</a></li>
-                    <li><a href="#">Administration</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">New Features</a></li>
-                </ul>
+                {% include "News/categories.html.twig" %}
             </aside>
         </section>
     </main>
