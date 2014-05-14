@@ -42,6 +42,12 @@ class News extends Model {
     private $author;
 
     /**
+     * The ID of the last person to edit the news article
+     * @var int
+     */
+    private $editor;
+
+    /**
      * The status of the news article
      * @var string
      */
