@@ -140,6 +140,7 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category` int(11) NOT NULL DEFAULT '1',
   `subject` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `created` datetime NOT NULL,
@@ -149,6 +150,30 @@ CREATE TABLE `news` (
   `status` set('live','disabled','deleted') NOT NULL DEFAULT 'live',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table news_categories
+# ------------------------------------------------------------
+
+CREATE TABLE `news_categories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(50) NOT NULL DEFAULT '',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `protected` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `news_categories` WRITE;
+/*!40000 ALTER TABLE `news_categories` DISABLE KEYS */;
+
+INSERT INTO `news_categories` (`id`, `slug`, `name`, `protected`)
+VALUES
+  (1,'uncategorized','Uncategorized',1);
+
+/*!40000 ALTER TABLE `news_categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
