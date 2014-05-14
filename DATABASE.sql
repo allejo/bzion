@@ -39,6 +39,7 @@ CREATE TABLE `bans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player` int(10) unsigned NOT NULL,
   `expiration` datetime NOT NULL,
+  `expired` tinyint(1) NOT NULL DEFAULT '0',
   `server_message` varchar(150) DEFAULT '',
   `reason` text NOT NULL,
   `allow_server_join` tinyint(1) NOT NULL DEFAULT '0',

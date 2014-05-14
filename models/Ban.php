@@ -24,6 +24,12 @@ class Ban extends Model {
     private $expiration;
 
     /**
+     * Either manually or automatically, whether or not a ban has expired
+     * @var bool
+     */
+    private $expired;
+
+    /**
      * The message that will appear when a player is denied connecting to a game server
      * @var string
      */
@@ -134,24 +140,14 @@ class Ban extends Model {
      * Get the expiration time of the ban
      * @return string The expiration time in a human readable form
      */
-    public function getExpiration() {
+    public function getExpiration()
+    {
+        if ($this->hasExpired())
+        {
+            return "Expired";
+        }
+
         return $this->expiration->diffForHumans();
-    }
-
-    /**
-     * Get the IP address of the banned player
-     * @return string
-     */
-    public function getIpAddresses() {
-        return $this->ipAddresses;
-    }
-
-    /**
-     * Get the player who was banned
-     * @return Player The banned player
-     */
-    public function getPlayer() {
-        return new Player($this->player);
     }
 
     /**
@@ -177,6 +173,14 @@ class Ban extends Model {
     }
 
     /**
+     * Get the IP address of the banned player
+     * @return string
+     */
+    public function getIpAddresses() {
+        return $this->ipAddresses;
+    }
+
+    /**
      * Get the time when the ban was last updated
      * @return string
      */
@@ -185,11 +189,50 @@ class Ban extends Model {
     }
 
     /**
-     * Checks whether the ban has expired
-     * @return boolean True if the ban's expiration time has already passed
+     * Get the player who was banned
+     * @return Player The banned player
      */
-    public function hasExpired() {
+    public function getVictim() {
+        return new Player($this->player);
+    }
+
+    /**
+     * Get the ID of the player who was banned
+     * @return int The ID of the victim of the ban
+     */
+    public function getVictimID() {
+        return $this->player;
+    }
+
+    /**
+     * Calculate whether a ban has expired or not. If there is no need to calculate, then use isExpired() instead.
+     *
+     * @return bool True if the ban's expiration time has already passed
+     */
+    public function hasExpired()
+    {
+        if ($this->isExpired())
+        {
+            return true;
+        }
+
         return TimeDate::now()->gte($this->expiration);
+    }
+
+    /**
+     * Check whether or not a ban has expired either manually or automatically
+     *
+     * @return bool Whether or not the ban has expired
+     */
+    public function isExpired() {
+        return $this->expired;
+    }
+
+    /**
+     * Unban a player
+     */
+    public function unban() {
+        $this->update("expired", 1);
     }
 
     /**
@@ -209,7 +252,10 @@ class Ban extends Model {
     {
         $db = Database::getInstance();
 
+        $player     = new Player($playerID);
         $expiration = new TimeDate($expiration);
+
+        $player->markAsBanned();
 
         // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
         if (empty($srvmsg) || empty($ipAddresses))

@@ -140,32 +140,15 @@ class Player extends AliasModel
     }
 
     /**
-     * Updates this player's last login
-     * @param string $when The date of the last login
+     * Add a player a new role
+     *
+     * @param int $role_id The role ID to add a player to
+     *
+     * @return bool Whether the operation was successful or not
      */
-    public function updateLastLogin($when = "now") {
-        $last = new TimeDate($when);
-        $this->db->query("UPDATE players SET last_login = ? WHERE id = ?", "si", array($last->format(DATE_FORMAT), $this->id));
-    }
-
-    public function hasPermission($permission) {
-        return isset($this->permissions[$permission]);
-    }
-
-    /**
-     * Get the player's username
-     * @return string The username
-     */
-    public function getUsername() {
-        return $this->username;
-    }
-
-    /**
-     * Get the player's BZID
-     * @return int The BZID
-     */
-    public function getBZID() {
-        return $this->bzid;
+    public function addRole($role_id)
+    {
+        return $this->modifyRole($role_id, "add");
     }
 
     /**
@@ -177,54 +160,6 @@ class Player extends AliasModel
     }
 
     /**
-     * Set the player's avatar
-     * @param string $avatar The URL for the avatar
-     */
-    public function setAvatar($avatar) {
-        $this->db->query("UPDATE players SET avatar = ? WHERE id = ?", "si", array($avatar, $this->id));
-    }
-
-    /**
-     * Get the player's sanitized description
-     * @return string The description
-     */
-    public function getDescription() {
-        return htmlspecialchars($this->description);
-    }
-
-    /**
-     * Get the player's description, exactly as it is saved in the database
-     * @return string The description
-     */
-    public function getRawDescription() {
-        return $this->description;
-    }
-
-    /**
-     * Set the player's description
-     * @param string $description The description
-     */
-    public function setDescription($description) {
-        $this->db->query("UPDATE players SET description = ? WHERE id = ?", "si", array($description, $this->id));
-    }
-
-    /**
-     * Get the player's timezone
-     * @return integer The timezone
-     */
-    public function getTimezone() {
-        return $this->timezone;
-    }
-
-    /**
-     * Set the player's timezone
-     * @param string $timezone The timezone
-     */
-    public function setTimezone($timezone) {
-        $this->db->query("UPDATE players SET timezone = ? WHERE id = ?", "si", array($timezone, $this->id));
-    }
-
-    /**
      * Get the notes admins have left about a player
      * @return string The notes
      */
@@ -233,11 +168,19 @@ class Player extends AliasModel
     }
 
     /**
-     * Get the player's team
-     * @return Team The object representing the team
+     * Get the player's BZID
+     * @return int The BZID
      */
-    public function getTeam() {
-        return new Team($this->team);
+    public function getBZID() {
+        return $this->bzid;
+    }
+
+    /**
+     * Get the player's sanitized description
+     * @return string The description
+     */
+    public function getDescription() {
+        return htmlspecialchars($this->description);
     }
 
     /**
@@ -264,7 +207,13 @@ class Player extends AliasModel
      * Generate the HTML for a hyperlink to link to a player's profile
      * @return string The HTML hyperlink to a player's profile
      */
-    public function getLinkLiteral() {
+    public function getLinkLiteral()
+    {
+        if ($this->isDisabled())
+        {
+            return '<span>' . $this->getUsername() . '</span>';
+        }
+
         return '<a href="' . $this->getURL() . '">' . $this->getUsername() . '</a>';
     }
 
@@ -277,15 +226,107 @@ class Player extends AliasModel
     }
 
     /**
-     * Add a player a new role
+     * Get the player's description, exactly as it is saved in the database
+     * @return string The description
+     */
+    public function getRawDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Get the player's team
+     * @return Team The object representing the team
+     */
+    public function getTeam() {
+        return new Team($this->team);
+    }
+
+    /**
+     * Get the player's timezone
+     * @return integer The timezone
+     */
+    public function getTimezone() {
+        return $this->timezone;
+    }
+
+    /**
+     * Check if a player has a specific permission
      *
-     * @param int $role_id The role ID to add a player to
+     * @param string $permission The permission to check for
+     *
+     * @return bool Whether or not the player has the permission
+     */
+    public function hasPermission($permission) {
+        return isset($this->permissions[$permission]);
+    }
+
+    /**
+     * Check if a player's account has been disabled
+     *
+     * @return bool Whether or not the player is disabled
+     */
+    public function isDisabled() {
+        return ($this->status == "disabled");
+    }
+
+    /**
+     * Mark a player's account as banned
+     */
+    public function markAsBanned() {
+        $this->update("status", "banned");
+    }
+
+    /**
+     * Remove a player from a role
+     *
+     * @param int $role_id The role ID to add or remove
      *
      * @return bool Whether the operation was successful or not
      */
-    public function addRole($role_id)
+    public function removeRole($role_id)
     {
-        return $this->modifyRole($role_id, "add");
+        return $this->modifyRole($role_id, "remove");
+    }
+
+    /**
+     * Set the player's avatar
+     * @param string $avatar The URL for the avatar
+     */
+    public function setAvatar($avatar) {
+        $this->db->query("UPDATE players SET avatar = ? WHERE id = ?", "si", array($avatar, $this->id));
+    }
+
+    /**
+     * Set the player's description
+     * @param string $description The description
+     */
+    public function setDescription($description) {
+        $this->db->query("UPDATE players SET description = ? WHERE id = ?", "si", array($description, $this->id));
+    }
+
+    /**
+     * Set the player's timezone
+     * @param string $timezone The timezone
+     */
+    public function setTimezone($timezone) {
+        $this->db->query("UPDATE players SET timezone = ? WHERE id = ?", "si", array($timezone, $this->id));
+    }
+
+    /**
+     * Updates this player's last login
+     * @param string $when The date of the last login
+     */
+    public function updateLastLogin($when = "now") {
+        $last = new TimeDate($when);
+        $this->db->query("UPDATE players SET last_login = ? WHERE id = ?", "si", array($last->format(DATE_FORMAT), $this->id));
+    }
+
+    /**
+     * Get the player's username
+     * @return string The username
+     */
+    public function getUsername() {
+        return $this->username;
     }
 
     /**
@@ -318,15 +359,35 @@ class Player extends AliasModel
     }
 
     /**
-     * Remove a player from a role
+     * Given a player's BZID, get a player object
      *
-     * @param int $role_id The role ID to add or remove
-     *
-     * @return bool Whether the operation was successful or not
+     * @param int $bzid The player's BZID
+     * @return Player
      */
-    public function removeRole($role_id)
+    public static function getFromBZID($bzid) {
+        return new Player(self::fetchIdFrom($bzid, "bzid", "s"));
+    }
+
+    /**
+     * Get all the players in the database that have an active status
+     * @return Player[] An array of player BZIDs
+     */
+    public static function getPlayers() {
+        return self::arrayIdToModel(
+            parent::fetchIdsFrom("status", array("active"), "s", false)
+        );
+    }
+
+    /**
+     * Get all of the members belonging to a team
+     * @param  int $teamID The ID of the team to fetch the members of
+     * @return Player[] An array of Player objects of the team members
+     */
+    public static function getTeamMembers($teamID)
     {
-        return $this->modifyRole($role_id, "remove");
+        return self::arrayIdToModel(
+            parent::fetchIds("WHERE team = ?", "i", array($teamID))
+        );
     }
 
     /**
@@ -370,26 +431,6 @@ class Player extends AliasModel
     }
 
     /**
-     * Given a player's BZID, get a player object
-     *
-     * @param int $bzid The player's BZID
-     * @return Player
-     */
-    public static function getFromBZID($bzid) {
-        return new Player(self::fetchIdFrom($bzid, "bzid", "s"));
-    }
-
-    /**
-     * Get all the players in the database that have an active status
-     * @return Player[] An array of player BZIDs
-     */
-    public static function getPlayers() {
-        return self::arrayIdToModel(
-            parent::fetchIdsFrom("status", array("active"), "s", false)
-        );
-    }
-
-    /**
      * Add a player's callsign to the database if it does not exist as a past callsign
      * @param string $id The ID for the player whose callsign we're saving
      * @param string $username The callsign which we are saving if it doesn't exist
@@ -398,17 +439,5 @@ class Player extends AliasModel
         $db = Database::getInstance();
 
         $db->query("INSERT IGNORE INTO `past_callsigns` (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
-    }
-
-    /**
-     * Get all of the members belonging to a team
-     * @param  int $teamID The ID of the team to fetch the members of
-     * @return Player[] An array of Player objects of the team members
-     */
-    public static function getTeamMembers($teamID)
-    {
-        return self::arrayIdToModel(
-            parent::fetchIds("WHERE team = ?", "i", array($teamID))
-        );
     }
 }
