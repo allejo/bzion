@@ -278,7 +278,7 @@ class News extends Model {
         {
             $db->query(
                 "INSERT INTO news (id, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, NOW(), NOW(), ?, ?, ?)",
-                "ssis", array($subject, $content, $authorID, $authorID, $status)
+                "ssiis", array($subject, $content, $authorID, $authorID, $status)
             );
 
             $article = new News($db->getInsertId());

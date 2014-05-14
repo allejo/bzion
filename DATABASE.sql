@@ -158,18 +158,18 @@ CREATE TABLE `news` (
 
 CREATE TABLE `news_categories` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `slug` varchar(50) NOT NULL DEFAULT '',
+  `alias` varchar(50) DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `protected` tinyint(1) NOT NULL,
   `status` set('live','deleted') NOT NULL DEFAULT 'live',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  UNIQUE KEY `alias` (`alias`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `news_categories` WRITE;
 /*!40000 ALTER TABLE `news_categories` DISABLE KEYS */;
 
-INSERT INTO `news_categories` (`id`, `slug`, `name`, `protected`, `status`)
+INSERT INTO `news_categories` (`id`, `alias`, `name`, `protected`, `status`)
 VALUES
   (1,'uncategorized','Uncategorized',1,'live');
 

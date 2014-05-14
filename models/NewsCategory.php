@@ -12,12 +12,6 @@
 class NewsCategory extends AliasModel
 {
     /**
-     * The slug used for the category
-     * @var string
-     */
-    private $slug;
-
-    /**
      * The name of the category
      * @var string
      */
@@ -51,7 +45,7 @@ class NewsCategory extends AliasModel
 
         $category = $this->result;
 
-        $this->slug = $category['slug'];
+        $this->alias = $category['alias'];
         $this->name = $category['name'];
         $this->protected = $category['protected'];
         $this->status = $category['status'];
@@ -63,23 +57,13 @@ class NewsCategory extends AliasModel
     public function delete()
     {
         // Get any articles using this category
-        $results = $this->db->query("SELECT * FROM news_categories WHERE category = ?", "i", array($this->getId()));
+        $articles = News::fetchIdsFrom("category", $this->getId(), 'i');
 
         // Only delete a category if it is not protected and is not being used
-        if (!$this->isProtected() && count($results) == 0)
+        if (!$this->isProtected() && count($articles) == 0)
         {
             parent::delete();
         }
-    }
-
-    /**
-     * Get the slug of the category
-     *
-     * @return string The slug
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**
@@ -124,7 +108,7 @@ class NewsCategory extends AliasModel
         $db = Database::getInstance();
 
         $db->query(
-            "INSERT INTO news_categories (id, slug, name, protected, status) VALUES (NULL, ?, ?, 0, 'live')",
+            "INSERT INTO news_categories (id, alias, name, protected, status) VALUES (NULL, ?, ?, 0, 'live')",
             "ss", array(parent::generateAlias($name), $name)
         );
 
@@ -147,4 +131,4 @@ class NewsCategory extends AliasModel
             )
         );
     }
-} 
+}

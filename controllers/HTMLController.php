@@ -5,6 +5,7 @@ abstract class HTMLController extends Controller {
     /**
      * Shows an error page if the parameter is invalid
      * @todo 404 error code
+     * @todo Make this actually work
      * @param Model $model The model to validate
      * @return boolean True if the model is valid, false if not
      */
