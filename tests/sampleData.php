@@ -14,7 +14,7 @@ if (!DEVELOPMENT) {
 
 $testPlayer = Player::getFromBZID(55976);
 if ($testPlayer->isValid()) {
-    die("Please clean your current data in the database, or you might end up with unwanted results.\n");
+    die("Please clear your current data in the database or you'll end up with duplicate entries.\n");
 }
 
 
