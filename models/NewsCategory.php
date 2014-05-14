@@ -62,7 +62,11 @@ class NewsCategory extends AliasModel
      */
     public function delete()
     {
-        if ($this->isProtected())
+        // Get any articles using this category
+        $results = $this->db->query("SELECT * FROM news_categories WHERE category = ?", "i", array($this->getId()));
+
+        // Only delete a category if it is not protected and is not being used
+        if (!$this->isProtected() && count($results) == 0)
         {
             parent::delete();
         }
