@@ -390,51 +390,6 @@ class Player extends AliasModel
     }
 
     /**
-     * Generate a URL-friendly unique alias for a username
-     * @param string $name The original username
-     * @return string The generated alias
-     */
-    public static function generateAlias($name) {
-        $name = strtolower($name);
-        $name = str_replace(' ', '-', $name);
-
-        // An alias name can't only contain numbers, because it will be
-        // indistinguishable from an ID. If it does, add a dash in the end.
-        if (preg_match("/^[0-9]+$/", $name)) {
-            $name = $name . '-';
-        }
-
-        // Try to find duplicates
-        $db = Database::getInstance();
-        $result = $db->query("SELECT alias FROM players WHERE alias REGEXP ?", 's',
-                  array("^". preg_quote($name) ."[0-9]*$"));
-
-        // The functionality of the following code block is provided in PHP 5.5's
-        // array_column function. What is does is convert the multi-dimensional
-        // array that $db->query() gave us into a single-dimensional one.
-        $aliases = array();
-        if (is_array($result)) {
-            foreach ($result as $r) {
-                $aliases[] = $r['alias'];
-            }
-        }
-
-        // No duplicates found
-        if (!in_array($name, $aliases))
-            return $name;
-
-        // If there's already an entry with the alias we generated, put a number
-        // in the end of it and keep incrementing it until there is we find
-        // an open spot.
-        $i = 2;
-        while(in_array($name.$i, $aliases)) {
-            $i++;
-        }
-
-        return $name.$i;
-    }
-
-    /**
      * Add a player's callsign to the database if it does not exist as a past callsign
      * @param string $id The ID for the player whose callsign we're saving
      * @param string $username The callsign which we are saving if it doesn't exist

@@ -10,7 +10,6 @@ abstract class HTMLController extends Controller {
 
         if (!$model instanceof Model || $model->isValid())
             return $model;
-
         else
             throw new ModelNotFoundException($model->getParamName());
     }
