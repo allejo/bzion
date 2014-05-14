@@ -117,6 +117,40 @@ class NewsCategory extends AliasModel
     }
 
     /**
+     * Generate the HTML for a hyperlink to link to a categorys's page
+     * @return string The HTML hyperlink to the category
+     */
+    public function getLinkLiteral() {
+        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
+    }
+
+    /**
+     * Get all the news entries in the category that aren't disabled or deleted
+     *
+     * @param int $start The offset used when fetching matches, i.e. the starting point
+     * @param int $limit The amount of matches to be retrieved
+     * @param bool $getDrafts Whether or not to fetch drafts
+     *
+     * @return News[] An array of news objects
+     */
+    public function getNews($start = 0, $limit = 5, $getDrafts = false)
+    {
+        $ignoredStatuses = "";
+
+        if (!$getDrafts)
+        {
+            $ignoredStatuses = "'draft', ";
+        }
+
+        $ignoredStatuses .= "'deleted'";
+
+        $query  = "WHERE status NOT IN ($ignoredStatuses) AND category = ? ";
+        $query .= "ORDER BY created DESC LIMIT $limit OFFSET $start";
+
+        return News::arrayIdToModel(News::fetchIds($query, 'i', $this->getId()));
+    }
+
+    /**
      * Check if the category is protected from being deleted
      *
      * @return bool Whether or not the category is protected
@@ -124,14 +158,6 @@ class NewsCategory extends AliasModel
     public function isProtected()
     {
         return $this->protected;
-    }
-
-    /**
-     * Generate the HTML for a hyperlink to link to a categorys's page
-     * @return string The HTML hyperlink to the category
-     */
-    public function getLinkLiteral() {
-        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
     }
 
     /**
@@ -168,32 +194,6 @@ class NewsCategory extends AliasModel
                 "ORDER BY name DESC"
             )
         );
-    }
-
-    /**
-     * Get all the news entries in the category that aren't disabled or deleted
-     *
-     * @param int $start The offset used when fetching matches, i.e. the starting point
-     * @param int $limit The amount of matches to be retrieved
-     * @param bool $getDrafts Whether or not to fetch drafts
-     *
-     * @return News[] An array of news objects
-     */
-    public function getNews($start = 0, $limit = 5, $getDrafts = false)
-    {
-        $ignoredStatuses = "";
-
-        if (!$getDrafts)
-        {
-            $ignoredStatuses = "'draft', ";
-        }
-
-        $ignoredStatuses .= "'deleted'";
-
-        $query  = "WHERE status NOT IN ($ignoredStatuses) AND category = ? ";
-        $query .= "ORDER BY created DESC LIMIT $limit OFFSET $start";
-
-        return News::arrayIdToModel(News::fetchIds($query, 'i', $this->getId()));
     }
 
     /**
