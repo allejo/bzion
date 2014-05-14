@@ -241,7 +241,7 @@ class News extends Model {
     {
         $author = new Player($editorID);
 
-        if ($author->isValid() && $author->hasPermission("edit_news"))
+        if ($author->isValid() && $author->hasPermission(Permission::EDIT_NEWS))
         {
             $errorCount = 0;
 
@@ -274,7 +274,7 @@ class News extends Model {
         $author = new Player($authorID);
 
         // Only allow real players to post news articles and if the player posting has permissions to create new posts
-        if ($author->isValid() && $author->hasPermission("add_news"))
+        if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS))
         {
             $db->query(
                 "INSERT INTO news (id, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, NOW(), NOW(), ?, ?, ?)",
