@@ -12,19 +12,35 @@
 abstract class UrlModel extends Model {
 
     /**
-        * Get the name of the route that shows the object
-        * @return string
-        */
+     * Get the name of the route that shows the object
+     * @return string
+     */
     static protected function getRouteName() {
-        return strtolower(get_called_class()) . "_show";
+        return self::toSnakeCase(get_called_class()) . "_show";
     }
 
     /**
-        * Get the name of the object's parameter in the route
-        * @return string
-        */
+     * Get the name of the object's parameter in the route
+     * @return string
+     */
     static protected function getParamName() {
-        return strtolower(get_called_class());
+        return self::toSnakeCase(get_called_class());
+    }
+
+    /**
+     * Takes a CamelCase string and converts it to a snake_case one
+     * @param $input The string to convert
+     * @return string
+     */
+    static private function toSnakeCase($input) {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        return implode('_', $ret);
     }
 
     /**

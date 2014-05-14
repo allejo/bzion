@@ -97,6 +97,14 @@ class NewsCategory extends AliasModel
     }
 
     /**
+     * Generate the HTML for a hyperlink to link to a categorys's page
+     * @return string The HTML hyperlink to the category
+     */
+    public function getLinkLiteral() {
+        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
+    }
+
+    /**
      * Create a new category
      *
      * @param string $name The name of the category
@@ -130,5 +138,12 @@ class NewsCategory extends AliasModel
                 "ORDER BY name DESC"
             )
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getParamName() {
+        return "category";
     }
 }

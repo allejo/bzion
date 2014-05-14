@@ -10,6 +10,11 @@
  * A news article
  */
 class News extends Model {
+    /**
+     * The category of the article
+     * @var int
+     */
+    private $category;
 
     /**
      * The subject of the news article
@@ -69,6 +74,7 @@ class News extends Model {
 
         $news = $this->result;
 
+        $this->category = $news['category'];
         $this->subject = $news['subject'];
         $this->content = $news['content'];
         $this->created = new TimeDate($news['created']);
@@ -93,6 +99,23 @@ class News extends Model {
     public function getAuthorID() {
         return $this->author;
     }
+
+    /**
+     * Get the category of the news article
+     * @return NewsCategory The category of the post
+     */
+    public function getCategory() {
+        return new NewsCategory($this->category);
+    }
+
+    /**
+     * Get the database ID from the category the article belongs into
+     * @return int The category ID
+     */
+    public function getCategoryID() {
+        return $this->category;
+    }
+
 
     /**
      * Get the content of the article
@@ -264,11 +287,12 @@ class News extends Model {
      * @param string $subject The subject of the article
      * @param string $content The content of the article
      * @param int $authorID The ID of the author
+     * @param int $categoryID The ID of the category
      * @param string $status The status of the article: 'live', 'disabled', or 'deleted'
      *
      * @return News|bool An object representing the article that was just created or false if the article was not created
      */
-    public static function addNews($subject, $content, $authorID, $status = 'live')
+    public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'live')
     {
         $db = Database::getInstance();
         $author = new Player($authorID);
@@ -277,8 +301,8 @@ class News extends Model {
         if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS))
         {
             $db->query(
-                "INSERT INTO news (id, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, NOW(), NOW(), ?, ?, ?)",
-                "ssiis", array($subject, $content, $authorID, $authorID, $status)
+                "INSERT INTO news (id, category, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, ?, NOW(), NOW(), ?, ?, ?)",
+                "issiis", array($categoryId, $subject, $content, $authorID, $authorID, $status)
             );
 
             $article = new News($db->getInsertId());
