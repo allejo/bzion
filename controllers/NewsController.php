@@ -6,7 +6,12 @@ class NewsController extends HTMLController
         return array("article" => $article, "categories" => NewsCategory::getCategories());
     }
 
-    public function listAction() {
-        return array("news" => News::getNews(), "categories" => NewsCategory::getCategories());
+    public function listAction(NewsCategory $category = null) {
+        if ($category)
+            $news = $category->getNews();
+        else
+            $news = News::getNews();
+
+        return array("news" => $news, "categories" => NewsCategory::getCategories(), "category" => $category);
     }
 }

@@ -141,6 +141,21 @@ class NewsCategory extends AliasModel
     }
 
     /**
+     * Get all the news entries in the categpry that aren't disabled or deleted
+     *
+     * @param int $start The offset used when fetching matches, i.e. the starting point
+     * @param int $limit The amount of matches to be retrieved
+     *
+     * @return News[] An array of news objects
+     */
+    public function getNews($start = 0, $limit = 5) {
+        $query  = "WHERE status NOT IN ('disabled', 'deleted') AND category = ? ";
+        $query .= "ORDER BY created DESC LIMIT $limit OFFSET $start";
+
+        return News::arrayIdToModel(News::fetchIds($query, 'i', $this->getId()));
+    }
+
+    /**
      * {@inheritDoc}
      */
     public static function getParamName() {

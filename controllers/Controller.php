@@ -188,16 +188,14 @@ abstract class Controller {
         if (!$refClass->isSubclassOf("Model"))
             return null;
 
-        if (is_object($routeParameters[$paramName]) &&
-            $refClass->getName() === get_class($routeParameters[$paramName])
-           ) {
-            // The model has already been instantiated - we don't need to do anything
-            return $routeParameters[$paramName];
-        }
-
         // Look for the object's ID/slugs in the routeParameters array
-        if (isset($routeParameters[$paramName]))
+        if (isset($routeParameters[$paramName])) {
+            if (is_object($routeParameters[$paramName]) &&
+                $refClass->getName() === get_class($routeParameters[$paramName])
+            ) return $routeParameters[$paramName]; // The model has already been instantiated - we don't need to do anything
+
             return $refClass->getMethod("fetchFromSlug")->invoke(null, $routeParameters[$paramName]);
+        }
 
         if (isset($routeParameters[$paramName . 'Id']))
             return $refClass->newInstance($routeParameters[$paramName . 'Id']);

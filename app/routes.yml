@@ -48,7 +48,7 @@ news_show:
 
 news_category_show:
     pattern:    /news/category/{category}
-    defaults: { _controller: 'News', _action: 'showCategory' }
+    defaults: { _controller: 'News', _action: 'list' }
 
 player_list:
     pattern:    /players

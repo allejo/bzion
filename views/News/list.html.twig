@@ -1,12 +1,23 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}News{% endblock %}
+{% block title %}
+    {% if category %}
+        News :: {{ category.name }}
+    {% else %}
+        News
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <main class="news">
         <section class="content_header">
             <article class="wrapper">
-                <h1>League News</h1>
+                <h1>
+                    League News
+                    {% if category %}
+                        in '{{ category.name }}' category
+                    {% endif %}
+                </h1>
             </article>
         </section>
 
@@ -23,7 +34,6 @@
                             <li>
                                 <i class="fa fa-user"></i> {{ article.author.linkLiteral | raw }}
                             </li>
-                            {# @TODO Handle the category properly here #}
                             <li>
                                 <i class="fa fa-tag"></i> {{ article.category.linkLiteral | raw }}
                             </li>
