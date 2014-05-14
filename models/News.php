@@ -116,7 +116,6 @@ class News extends Model {
         return $this->category;
     }
 
-
     /**
      * Get the content of the article
      * @return string The raw content of the article
@@ -174,20 +173,34 @@ class News extends Model {
     }
 
     /**
-     * Update the editor of the post
+     * Update an existing news article
      *
-     * @param int $editorID The ID of the editor
+     * @param string $subject The new or current subject of the post
+     * @param string $content The new or current content of the post
+     * @param int $editorID The ID of the person editing the post
+     * @param string $status The new or current status of the post
      *
-     * @return bool Will only return false if there was an error when updating the database
+     * @return bool Whether or not the update was successful
      */
-    public function updateLastEditor($editorID)
+    public function updateAll($subject, $content, $editorID, $status = 'published')
     {
-        if ($this->getLastEditorID() != $editorID)
+        $author = new Player($editorID);
+
+        if ($author->isValid() && $author->hasPermission(Permission::EDIT_NEWS))
         {
-            return $this->update("author", $editorID);
+            $errorCount = 0;
+
+            if ($this->updateSubject($subject))     $errorCount++;
+            if ($this->updateContent($content))     $errorCount++;
+            if ($this->updateStatus($status))       $errorCount++;
+            if ($this->updateLastEditor($editorID)) $errorCount++;
+            if ($this->updateEditTimestamp())       $errorCount++;
+
+            // Only return true if there were no errors in updating the post
+            return ($errorCount == 0);
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -202,6 +215,32 @@ class News extends Model {
         if ($this->getContent() != $content)
         {
             return $this->update("content", $content);
+        }
+
+        return true;
+    }
+
+    /**
+     * Update the last edit timestamp
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function updateEditTimestamp() {
+        return $this->update("updated", "NOW()");
+    }
+
+    /**
+     * Update the editor of the post
+     *
+     * @param int $editorID The ID of the editor
+     *
+     * @return bool Will only return false if there was an error when updating the database
+     */
+    public function updateLastEditor($editorID)
+    {
+        if ($this->getLastEditorID() != $editorID)
+        {
+            return $this->update("author", $editorID);
         }
 
         return true;
@@ -239,46 +278,6 @@ class News extends Model {
         }
 
         return true;
-    }
-
-    /**
-     * Update the last edit timestamp
-     *
-     * @return bool Will only return false if there was error when updating the database
-     */
-    public function updateEditTimestamp() {
-        return $this->update("updated", "NOW()");
-    }
-
-    /**
-     * Update an existing news article
-     *
-     * @param string $subject The new or current subject of the post
-     * @param string $content The new or current content of the post
-     * @param int $editorID The ID of the person editing the post
-     * @param string $status The new or current status of the post
-     *
-     * @return bool Whether or not the update was successful
-     */
-    public function updateAll($subject, $content, $editorID, $status = 'published')
-    {
-        $author = new Player($editorID);
-
-        if ($author->isValid() && $author->hasPermission(Permission::EDIT_NEWS))
-        {
-            $errorCount = 0;
-
-            if ($this->updateSubject($subject))     $errorCount++;
-            if ($this->updateContent($content))     $errorCount++;
-            if ($this->updateStatus($status))       $errorCount++;
-            if ($this->updateLastEditor($editorID)) $errorCount++;
-            if ($this->updateEditTimestamp())       $errorCount++;
-
-            // Only return true if there were no errors in updating the post
-            return ($errorCount == 0);
-        }
-
-        return false;
     }
 
     /**
