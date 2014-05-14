@@ -23,7 +23,7 @@ abstract class UrlModel extends Model {
      * Get the name of the object's parameter in the route
      * @return string
      */
-    static protected function getParamName() {
+    static public function getParamName() {
         return self::toSnakeCase(get_called_class());
     }
 

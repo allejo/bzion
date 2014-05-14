@@ -1,21 +1,26 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Response;
+
+
 abstract class HTMLController extends Controller {
 
-    /**
-     * Shows an error page if the parameter is invalid
-     * @todo 404 error code
-     * @todo Make this actually work
-     * @param Model $model The model to validate
-     * @return boolean True if the model is valid, false if not
-     */
-    protected function validate($model) {
-        if ($model->isValid())
-            return true;
+    protected function getModelFromParameters($modelParameter, $routeParameters) {
+        $model = parent::getModelFromParameters($modelParameter, $routeParameters);
 
-        throw new Exception("Validations are broken for the time being");
-        $this->forward("notFound", array("type" => $this->getName()));
-        return false;
+        if (!$model instanceof Model || $model->isValid())
+            return $model;
+
+        else
+            throw new ModelNotFoundException($model->getParamName());
+    }
+
+    public function callAction($action=null) {
+        try {
+            return parent::callAction($action);
+        } catch (ModelNotFoundException $e) {
+            return $this->forward("NotFound", array("type" => $e->getMessage()));
+        }
     }
 
     /**
@@ -23,7 +28,11 @@ abstract class HTMLController extends Controller {
      * @param string type The type of the object (e.g Player)
      */
     public function notFoundAction($type) {
-        return $this->render("notfound.html.twig",
-               array ("type" => $type));
+        return new Response(
+            $this->render("notfound.html.twig", array("type" => $type)),
+            404);
     }
+}
+
+class ModelNotFoundException extends Exception {
 }

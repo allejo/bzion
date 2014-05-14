@@ -91,10 +91,7 @@ abstract class Controller {
             $action = $this->parameters['_action'];
 
         $this->setup();
-
-        $ret = $this->callMethod($action . 'Action', $this->parameters);
-        $response = $this->handleReturnValue($ret, $action);
-
+        $response = $this->forward($action);
         $this->cleanup();
 
         return $response;
@@ -172,7 +169,7 @@ abstract class Controller {
      * @param ReflectionParameter $modelParameter The model's parameter we want to investigate
      * @param array $routeParameters The route's parameters
      */
-    private function getModelFromParameters($modelParameter, $routeParameters) {
+    protected function getModelFromParameters($modelParameter, $routeParameters) {
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 
