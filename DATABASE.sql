@@ -147,7 +147,7 @@ CREATE TABLE `news` (
   `updated` datetime NOT NULL,
   `author` int(10) unsigned NOT NULL,
   `editor` int(10) unsigned NOT NULL,
-  `status` set('live','disabled','deleted') NOT NULL DEFAULT 'live',
+  `status` set('published','draft','deleted') NOT NULL DEFAULT 'published',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -161,7 +161,7 @@ CREATE TABLE `news_categories` (
   `alias` varchar(50) DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `protected` tinyint(1) NOT NULL,
-  `status` set('live','deleted') NOT NULL DEFAULT 'live',
+  `status` set('enabled','deleted') NOT NULL DEFAULT 'enabled',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -24,7 +24,7 @@ class NewsCategory extends AliasModel
     private $protected;
 
     /**
-     * The status of the category: 'live' or 'deleted'
+     * The status of the category: 'enabled' or 'deleted'
      * @var string
      */
     private $status;
@@ -79,7 +79,7 @@ class NewsCategory extends AliasModel
     /**
      * Get the status of the category
      *
-     * @return string Either 'live' or 'deleted'
+     * @return string Either 'enabled' or 'deleted'
      */
     public function getStatus()
     {
@@ -116,7 +116,7 @@ class NewsCategory extends AliasModel
         $db = Database::getInstance();
 
         $db->query(
-            "INSERT INTO news_categories (id, alias, name, protected, status) VALUES (NULL, ?, ?, 0, 'live')",
+            "INSERT INTO news_categories (id, alias, name, protected, status) VALUES (NULL, ?, ?, 0, 'enabled')",
             "ss", array(parent::generateAlias($name), $name)
         );
 

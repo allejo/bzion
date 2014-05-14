@@ -214,7 +214,7 @@ class News extends Model {
      *
      * @return bool Will only return false if there was error when updating the database
      */
-    public function updateStatus($status = 'live')
+    public function updateStatus($status = 'published')
     {
         if ($this->getStatus() != $status)
         {
@@ -260,7 +260,7 @@ class News extends Model {
      *
      * @return bool Whether or not the update was successful
      */
-    public function updateAll($subject, $content, $editorID, $status = 'live')
+    public function updateAll($subject, $content, $editorID, $status = 'published')
     {
         $author = new Player($editorID);
 
@@ -287,12 +287,13 @@ class News extends Model {
      * @param string $subject The subject of the article
      * @param string $content The content of the article
      * @param int $authorID The ID of the author
-     * @param int $categoryID The ID of the category
-     * @param string $status The status of the article: 'live', 'disabled', or 'deleted'
+     * @param int $categoryId The ID of the category this article will be published under
+     * @param string $status The status of the article: 'published', 'disabled', or 'deleted'
      *
+     * @internal param int $categoryID The ID of the category
      * @return News|bool An object representing the article that was just created or false if the article was not created
      */
-    public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'live')
+    public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'published')
     {
         $db = Database::getInstance();
         $author = new Player($authorID);
@@ -318,13 +319,22 @@ class News extends Model {
      *
      * @param int $start The offset used when fetching matches, i.e. the starting point
      * @param int $limit The amount of matches to be retrieved
+     * @param bool $getDrafts Whether or not to fetch drafts
      *
      * @return News[] An array of news objects
      */
-    public static function getNews($start = 0, $limit = 5) {
+    public static function getNews($start = 0, $limit = 5, $getDrafts = false)
+    {
+        $ignoredStatuses[] = "deleted";
+
+        if (!$getDrafts)
+        {
+            $ignoredStatuses[] = "draft";
+        }
+
         return self::arrayIdToModel(
             self::fetchIdsFrom(
-                "status", array("disabled", "deleted"), "s", true,
+                "status", $ignoredStatuses, "s", true,
                 "ORDER BY created DESC LIMIT $limit OFFSET $start"
             )
         );
