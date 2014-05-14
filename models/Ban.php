@@ -246,43 +246,54 @@ class Ban extends Model {
      * @param string[] $ipAddresses An array of IPs that have been banned
      * @param bool $allowServerJoin Whether or not
      *
-     * @return Ban An object representing the ban that was just entered
+     * @return Ban|bool An object representing the ban that was just entered or false if the ban was not created
      */
     public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
     {
         $db = Database::getInstance();
+        $author = new Player($authorID);
 
-        $player     = new Player($playerID);
-        $expiration = new TimeDate($expiration);
-
-        $player->markAsBanned();
-
-        // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
-        if (empty($srvmsg) || empty($ipAddresses))
+        // Only add the ban if the author is valid and has the permission to add a ban
+        if ($author->isValid() && $author->hasPermission(Permission::ADD_BAN))
         {
-            $allowServerJoin = true;
-        }
+            $player     = new Player($playerID);
+            $expiration = new TimeDate($expiration);
 
-        $db->query(
-            "INSERT INTO bans (id, player, expiration, server_message, reason, allow_server_join, created, updated, author) VALUES (NULL, ?, ?, ?, ?, ?, NOW(), NOW(), ?)",
-            "isssii", array($playerID, $expiration->format(DATE_FORMAT), $srvmsg, $reason, $allowServerJoin, $authorID)
-        );
-
-        $ban = new Ban($db->getInsertId());
-
-        if (is_array($ipAddresses))
-        {
-            foreach ($ipAddresses as $ip)
+            // Only ban valid players
+            if ($player->isValid())
             {
-                $ban->addIP($ip);
+                $player->markAsBanned();
+
+                // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
+                if (empty($srvmsg) || empty($ipAddresses))
+                {
+                    $allowServerJoin = true;
+                }
+
+                $db->query(
+                    "INSERT INTO bans (id, player, expiration, server_message, reason, allow_server_join, created, updated, author) VALUES (NULL, ?, ?, ?, ?, ?, NOW(), NOW(), ?)",
+                    "isssii", array($playerID, $expiration->format(DATE_FORMAT), $srvmsg, $reason, $allowServerJoin, $authorID)
+                );
+
+                $ban = new Ban($db->getInsertId());
+
+                if (is_array($ipAddresses))
+                {
+                    foreach ($ipAddresses as $ip)
+                    {
+                        $ban->addIP($ip);
+                    }
+                }
+                else
+                {
+                    $ban->addIP($ipAddresses);
+                }
+
+                return $ban;
             }
         }
-        else
-        {
-            $ban->addIP($ipAddresses);
-        }
 
-        return $ban;
+        return false;
     }
 
     /**
