@@ -98,6 +98,16 @@ class Database
     }
 
     /**
+     * Check whether the last query was successful or not
+     *
+     * @return bool Returns whether or not the query was successful
+     */
+    public function getQuerySuccess()
+    {
+        return $this->dbc->errno;
+    }
+
+    /**
      * Prepares and executes a MySQL prepared statement. <em>Second two parameters are optional when using this function to execute a query with no placeholders.</em>
      *
      * <code>

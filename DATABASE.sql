@@ -145,6 +145,7 @@ CREATE TABLE `news` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `author` int(10) unsigned NOT NULL,
+  `editor` int(10) unsigned NOT NULL,
   `status` set('live','disabled','deleted') NOT NULL DEFAULT 'live',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

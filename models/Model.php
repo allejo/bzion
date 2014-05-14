@@ -87,12 +87,17 @@ abstract class Model {
 
     /**
      * Update a database field
+     *
      * @param string $name The name of the column
      * @param mixed $value The value to set the column to
      * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
+     *
+     * @return bool Whether or not the query was successful
      */
     public function update($name, $value, $type=NULL) {
         $this->db->query("UPDATE ". static::TABLE . " SET `$name` = ? WHERE id = ?", $type."i", array($value, $this->id));
+
+        return $this->db->getQuerySuccess();
     }
 
     /**

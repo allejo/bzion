@@ -56,8 +56,8 @@ class News extends Model {
      * Construct a new News article
      * @param int $id The news article's id
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -68,24 +68,24 @@ class News extends Model {
         $this->created = new TimeDate($news['created']);
         $this->updated = new TimeDate($news['updated']);
         $this->author = $news['author'];
+        $this->editor = $news['editor'];
         $this->status = $news['status'];
-
-    }
-
-    /**
-     * Get the subject of the news article
-     * @return string
-     */
-    public function getSubject() {
-        return $this->subject;
     }
 
     /**
      * Get the author of the news article
-     * @return Player
+     * @return Player The author of the post
      */
     public function getAuthor() {
         return new Player($this->author);
+    }
+
+    /**
+     * Get the user ID of the author who wrote this article
+     * @return int The author ID
+     */
+    public function getAuthorID() {
+        return $this->author;
     }
 
     /**
@@ -97,19 +97,159 @@ class News extends Model {
     }
 
     /**
-     * Get the time when the article was last updated
-     * @return string The article's last update time in a human-readable form
-     */
-    public function getUpdated() {
-        return $this->updated->diffForHumans();
-    }
-
-    /**
      * Get the time when the article was submitted
      * @return string The article's creation time in a human-readable form
      */
     public function getCreated() {
         return $this->created->diffForHumans();
+    }
+
+    /**
+     * Get the time when the article was last updated
+     * @return string The article's last update time in a human-readable form
+     */
+    public function getLastEdit() {
+        return $this->updated->diffForHumans();
+    }
+
+    /**
+     * Get the last editor of the post
+     * @return Player A Player object of the last editor
+     */
+    public function getLastEditor() {
+        return new Player($this->editor);
+    }
+
+    /**
+     * Get the ID of the person who last edited the article
+     * @return int The ID of the last editor
+     */
+    public function getLastEditorID() {
+        return $this->editor;
+    }
+
+    /**
+     * Get the status of the post
+     * @return string The string representation of the post's status
+     */
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * Get the subject of the news article
+     * @return string
+     */
+    public function getSubject() {
+        return $this->subject;
+    }
+
+    /**
+     * Update the editor of the post
+     *
+     * @param int $editorID The ID of the editor
+     *
+     * @return bool Will only return false if there was an error when updating the database
+     */
+    public function updateLastEditor($editorID)
+    {
+        if ($this->getLastEditorID() != $editorID)
+        {
+            return $this->update("author", $editorID);
+        }
+
+        return true;
+    }
+
+    /**
+     * Update the content of a post
+     *
+     * @param string $content The new content of the post
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function updateContent($content)
+    {
+        if ($this->getContent() != $content)
+        {
+            return $this->update("content", $content);
+        }
+
+        return true;
+    }
+
+    /**
+     * Update the status of a post
+     *
+     * @param string $status The new status of a post
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function updateStatus($status = 'live')
+    {
+        if ($this->getStatus() != $status)
+        {
+            return $this->update("status", $status);
+        }
+
+        return true;
+    }
+
+    /**
+     * Update the subject of a post
+     *
+     * @param string $subject The new subject of a post
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function updateSubject($subject)
+    {
+        if ($this->getSubject() != $subject)
+        {
+            return $this->update("subject", $subject);
+        }
+
+        return true;
+    }
+
+    /**
+     * Update the last edit timestamp
+     *
+     * @return bool Will only return false if there was error when updating the database
+     */
+    public function updateEditTimestamp() {
+        return $this->update("updated", "NOW()");
+    }
+
+    /**
+     * Update an existing news article
+     *
+     * @param string $subject The new or current subject of the post
+     * @param string $content The new or current content of the post
+     * @param int $editorID The ID of the person editing the post
+     * @param string $status The new or current status of the post
+     *
+     * @return bool Whether or not the update was successful
+     */
+    public function updateAll($subject, $content, $editorID, $status = 'live')
+    {
+        $author = new Player($editorID);
+
+        if ($author->isValid() && $author->hasPermission("edit_news"))
+        {
+            $errorCount = 0;
+
+            if ($this->updateSubject($subject))     $errorCount++;
+            if ($this->updateContent($content))     $errorCount++;
+            if ($this->updateStatus($status))       $errorCount++;
+            if ($this->updateLastEditor($editorID)) $errorCount++;
+            if ($this->updateEditTimestamp())       $errorCount++;
+
+            // Only return true if there were no errors in updating the post
+            return ($errorCount == 0);
+        }
+
+        return false;
     }
 
     /**
@@ -120,20 +260,27 @@ class News extends Model {
      * @param int $authorID The ID of the author
      * @param string $status The status of the article: 'live', 'disabled', or 'deleted'
      *
-     * @return News An object representing the article that was just posted
+     * @return News|bool An object representing the article that was just created or false if the article was not created
      */
     public static function addNews($subject, $content, $authorID, $status = 'live')
     {
         $db = Database::getInstance();
+        $author = new Player($authorID);
 
-        $db->query(
-            "INSERT INTO news (id, subject, content, created, updated, author, status) VALUES (NULL, ?, ?, NOW(), NOW(), ?, ?)",
-            "ssis", array($subject, $content, $authorID, $status)
-        );
+        // Only allow real players to post news articles and if the player posting has permissions to create new posts
+        if ($author->isValid() && $author->hasPermission("add_news"))
+        {
+            $db->query(
+                "INSERT INTO news (id, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, NOW(), NOW(), ?, ?, ?)",
+                "ssis", array($subject, $content, $authorID, $authorID, $status)
+            );
 
-        $article = new News($db->getInsertId());
+            $article = new News($db->getInsertId());
 
-        return $article;
+            return $article;
+        }
+
+        return false;
     }
 
     /**
