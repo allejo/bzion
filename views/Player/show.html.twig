@@ -17,7 +17,7 @@
         </div>
         <div class='label'>Joined: {{ player.joinedDate }}</div>
         <div class='descript_player'>{{ player.description }}</div>
-        {% if player.hasPermission("view_visitor_log") %}
+        {% if me.hasPermission("view_visitor_log") %}
             <div class='past_callsigns'>
                 <h3>Previous Callsigns</h3>
                 {% for callsign in player.pastCallsigns %}
@@ -25,6 +25,15 @@
                         <li>{{ callsign }}</li>
                     </ul>
                 {% endfor %}
+            </div>
+
+            <div class="known_ips">
+                <h3>Known IP Address</h3>
+                <ul>
+                    {% for address in player.knownIPs %}
+                        <li>{{ address.ip }} - {{ address.host }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         {% endif %}
     </div>
