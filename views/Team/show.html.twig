@@ -13,11 +13,11 @@
                 </div>
 
                 <div class="buttons">
-                    {% if me.hasPermission("del_team") or me.team.id == team.id %}
+                    {% if me.hasPermission(constant('Permission::SOFT_DELETE_TEAM')) or me.team.id == team.id %}
                         <a class="button red" href="#"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
 
-                    {% if me.hasPermission("edit_team") or me.team.id == team.leader.id %}
+                    {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.team.id == team.leader.id %}
                         <a class="button grey notextshadow" href="#"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 

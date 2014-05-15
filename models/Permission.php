@@ -31,7 +31,7 @@ class Permission extends Model
     const HARD_DELETE_MATCH  = "wipe_match";
     const HARD_DELETE_NEWS   = "wipe_news";
     const HARD_DELETE_PAGE   = "wipe_page";
-    const HARD_DELETE_ROLW   = "wipe_role";
+    const HARD_DELETE_ROLE   = "wipe_role";
     const HARD_DELETE_SERVER = "wipe_server";
     const HARD_DELETE_TEAM   = "wipe_team";
     const HARD_DELETE_USER   = "wipe_user";
