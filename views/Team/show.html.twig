@@ -3,6 +3,18 @@
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
 {% block content %}
+    <main class="team_profile">
+        <section class="content_header">
+            <article class="wrapper">
+                {{ team.rankImageLiteral | raw }}
+                <div>
+                    <h1>{{ team.name }}</h1>
+                    <small>{{ team.elo }}</small>
+                </div>
+            </article>
+        </section>
+    </main>
+
     <div class='team_name'>{{ team.name }}</div><br />
     <div class='team_rating'>ELO: {{ team.elo }}</div><br />
     <div class='team_leader'>Leader: <a href="{{ team.leader.url }}">{{ team.leader.username }}</a></div><br />

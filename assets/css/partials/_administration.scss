@@ -1,8 +1,5 @@
 main {
     &.administration {
-        font-family: $sanSerifFont;
-        padding: 20px 0;
-
         .admins {
             @extend .clearfix;
             @extend .wrapper;

@@ -360,7 +360,7 @@ class Team extends AliasModel
      */
     public function getRankImage()
     {
-        return 'assets/imgs/ranks/' . $this->getRankValue() . '.png';
+        return Service::getRequest()->getBaseUrl() . '/assets/imgs/ranks/' . $this->getRankValue() . '.png';
     }
 
     /**

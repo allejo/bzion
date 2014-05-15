@@ -74,3 +74,18 @@ main {
         }
     }
 }
+
+main {
+    &.team_profile {
+        .content_header {
+            .rank_image {
+                float: left;
+                margin-right: 5px;
+            }
+
+            div {
+                float: left;
+            }
+        }
+    }
+}
