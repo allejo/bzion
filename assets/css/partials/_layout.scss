@@ -7,7 +7,7 @@ main {
     .content_header {
         @extend .clearfix;
 
-        border-bottom: 1px solid #E9E9E9;
+        border-bottom: 1px solid $Off_White;
         font-family: $sanSerifFont;
         margin: 0 0 30px;
         padding: 20px 0;
@@ -20,7 +20,7 @@ main {
             float: left;
 
             h1 {
-                color: #258EC9;
+                color: $Blue;
                 font-size: 24px;
             }
 

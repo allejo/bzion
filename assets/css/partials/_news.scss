@@ -21,7 +21,7 @@ main {
                     width: 750px;
 
                     h1 {
-                        color: #0088DB;
+                        color: $Blue;
                         font-weight: bold;
                     }
 
@@ -34,12 +34,12 @@ main {
                     }
 
                     .meta {
-                        border-bottom: 1px solid #D4D4D4;
+                        border-bottom: 1px solid $Off_White;
                         font-size: 14px;
                         padding: 10px 0;
 
                         li {
-                            color: #A1A1A1;
+                            color: $Light_Grey;
                             display: inline-block;
                             margin-left: 3px;
                             margin-right: 10px;
@@ -63,13 +63,13 @@ main {
                         padding: 7px 10px;
 
                         &.active {
-                            background-color: #F7F7F7;
-                            border-right: 2px solid #ff6700;
+                            background-color: $Almost_White;
+                            border-right: 2px solid $Orange;
                         }
 
                         &:hover {
-                            background-color: #FAFAFA;
-                            border-right: 2px solid #ff6700;
+                            background-color: lighten($Almost_White, 1%);
+                            border-right: 2px solid $Orange;
                         }
                     }
                 }

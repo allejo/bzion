@@ -1,9 +1,9 @@
 a {
-    color: #009EFF;
+    color: $Sky_Blue;
     text-decoration: none;
 
     &:hover {
-        color: darken(#009EFF, 15%);
+        color: darken($Sky_Blue, 15%);
     }
 
     // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
@@ -29,7 +29,7 @@ blockquote {
     vertical-align: top;
 
     span {
-        color: #8B8B8B;
+        color: $Light_Grey;
         font-size: 16px;
         font-style: italic;
 
@@ -41,7 +41,7 @@ blockquote {
     }
 
     article {
-        color: darken(#8B8B8B, 10%);
+        color: darken($Light_Grey, 10%);
         display: inline;
 
         > p {
@@ -51,7 +51,7 @@ blockquote {
 
     &:before {
         content: '\f10d';
-        color: #656565;
+        color: $Medium_Grey;
         float: left;
         font-family: FontAwesome;
         font-size: 30px;
@@ -62,7 +62,7 @@ blockquote {
 }
 
 code {
-    background-color: #EFEFEF;
+    background-color: $Off_White;
     border: 1px dotted;
     display: block;
     font-family: monospace;
@@ -93,9 +93,9 @@ h3 {
 
 hr {
     background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
-    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
-    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
-    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201,0.75), rgba(0,0,0,0));
+    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
     border: 0;
     height: 1px;
     margin: 10px auto 30px;

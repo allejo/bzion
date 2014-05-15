@@ -1,6 +1,6 @@
 body {
     >header {
-        @include gradient(#FFFFFF, #F2F2F2);
+        @include gradient($White, #F2F2F2);
         @include box-shadow(0, 2px, 5px, rgba(50, 50, 50, 0.075));
 
         border-bottom: 1px solid #D4D4D4;
@@ -38,7 +38,7 @@ body {
                         list-style: none;
 
                         a {
-                            color: #666;
+                            color: $Medium_Grey;
                             display: block;
                             padding: 17px 15px;
 
@@ -49,7 +49,7 @@ body {
                             }
 
                             &:hover {
-                                color: #000;
+                                color: $Black;
                             }
                         }
 
@@ -77,8 +77,8 @@ body {
         .notification {
             @include border-bottom-radius(5px);
 
-            background-color: #FFFFFF;
-            border: 2px solid #222222;
+            background-color: $White;
+            border: 2px solid $Black;
             border-top: none;
             display: none;
             left: 25em;

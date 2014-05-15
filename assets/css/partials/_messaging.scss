@@ -144,7 +144,7 @@ main {
                 >.details {
                     @include box-sizing(border-box);
 
-                    background-color: #00AFF0;
+                    background-color: $Sky_Blue;
                     color: #FFFFFF;
                     padding: 10px;
                     width: 100%;
@@ -215,7 +215,7 @@ main {
                                     width: 100%;
 
                                     .author {
-                                        color: #515051;
+                                        color: $Grey;
                                         float: left;
                                     }
 
@@ -289,7 +289,7 @@ main {
 
                         background-color: #fff;
                         border: 1px solid #eee;
-                        color: #333333;
+                        color: $Dark_Grey;
                         display: block;
                         font-size: 1em;
                         height: 100px;
@@ -301,14 +301,13 @@ main {
                         transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
                         vertical-align: middle;
                         width: 97%;
-
                     }
                 }
 
                 .reply_form {
                     @include box-sizing(border-box);
 
-                    background-color: #F4F7FB;
+                    background-color: $Blue_Grey;
                     bottom: 0;
                     height: 150px;
                     padding: 20px;
@@ -320,7 +319,7 @@ main {
                         textarea {
                             @include box-sizing(border-box);
 
-                            border: 1px solid $grey;
+                            border: 1px solid $Light_Grey;
                             font-family: Open Sans;
                             font-size: 13px;
                             padding: 5px;
