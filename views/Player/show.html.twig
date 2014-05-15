@@ -20,11 +20,11 @@
         {% if me.hasPermission("view_visitor_log") %}
             <div class='past_callsigns'>
                 <h3>Previous Callsigns</h3>
-                {% for callsign in player.pastCallsigns %}
-                    <ul>
+                <ul>
+                    {% for callsign in player.pastCallsigns %}
                         <li>{{ callsign }}</li>
-                    </ul>
-                {% endfor %}
+                    {% endfor %}
+                </ul>
             </div>
 
             <div class="known_ips">
