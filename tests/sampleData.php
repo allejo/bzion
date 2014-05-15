@@ -22,15 +22,15 @@ if ($testPlayer->isValid()) {
 $db = Database::getInstance();
 
 echo "Adding players...";
-$alezakos   = Player::newPlayer(49434, "alezakos", 0, "active", Player::DEVELOPER, "", "Sample description");
-$allejo     = Player::newPlayer(31098, "allejo", 0, "active", Player::DEVELOPER);
-$ashvala    = Player::newPlayer(34353, "ashvala", 0, "active", Player::DEVELOPER);
+$alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description");
+$allejo     = Player::newPlayer(31098, "allejo", null, "active", Player::DEVELOPER);
+$ashvala    = Player::newPlayer(34353, "ashvala", null, "active", Player::DEVELOPER);
 $autoreport = Player::newPlayer(55976, "AutoReport");
-$blast      = Player::newPlayer(180, "blast", 0, "active", Player::S_ADMIN);
-$kierra     = Player::newPlayer(2229, "kierra", 0, "active", Player::ADMIN);
+$blast      = Player::newPlayer(180, "blast", null, "active", Player::S_ADMIN);
+$kierra     = Player::newPlayer(2229, "kierra", null, "active", Player::ADMIN);
 $mdskpr     = Player::newPlayer(8312, "mdskpr");
 $snake      = Player::newPlayer(54497, "Snake12534");
-$tw1sted    = Player::newPlayer(9736, "tw1sted", 0, "active", Player::DEVELOPER);
+$tw1sted    = Player::newPlayer(9736, "tw1sted", null, "active", Player::DEVELOPER);
 echo " done!";
 
 echo "\nAdding teams...";
@@ -71,7 +71,7 @@ Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net:5155", $tw1sted->g
 echo " done!";
 
 echo "\nAdding messages...";
-$group_to = Group::createGroup("New blog", array(
+$group_to = Group::createGroup("New blog", $snake->getId(), array(
     $alezakos->getId(),
     $allejo->getId(),
     $ashvala->getId(),

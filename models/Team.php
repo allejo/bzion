@@ -391,7 +391,7 @@ class Team extends AliasModel
      * @param int $id The id of the player to remove
      */
     public function removeMember($id) {
-        $this->db->query("UPDATE players SET team=0 WHERE id=?", "i", array(
+        $this->db->query("UPDATE players SET team=NULL WHERE id=?", "i", array(
             $id
         ));
         $this->update('members', --$this->members, "i");

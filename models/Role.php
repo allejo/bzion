@@ -180,7 +180,7 @@ class Role extends Model
         return parent::arrayIdToModel(
             parent::fetchIds(
                 "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.user_id = ?", "i",
-                array($user_id), "roles", "id")
+                array($user_id), "roles", "roles.id")
         );
     }
 }

@@ -94,7 +94,7 @@ abstract class Model {
      *
      * @return bool Whether or not the query was successful
      */
-    public function update($name, $value, $type=NULL) {
+    public function update($name, $value, $type='i') {
         $this->db->query("UPDATE ". static::TABLE . " SET `$name` = ? WHERE id = ?", $type."i", array($value, $this->id));
 
         return $this->db->getQuerySuccess();

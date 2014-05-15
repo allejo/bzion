@@ -8,7 +8,7 @@ abstract class HTMLController extends Controller {
     protected function getModelFromParameters($modelParameter, $routeParameters) {
         $model = parent::getModelFromParameters($modelParameter, $routeParameters);
 
-        if (!$model instanceof Model || $model->isValid())
+        if (!$model instanceof UrlModel || $model->isValid())
             return $model;
         else
             throw new ModelNotFoundException($model->getParamName());

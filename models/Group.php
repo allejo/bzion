@@ -147,16 +147,17 @@ class Group extends UrlModel {
      * Create a new message group
      *
      * @param string $subject The subject of the group
+     * @param int $creatorId The ID of the player who created the group
      * @param array $members A list of IDs representing the group's members
      * @return Group An object that represents the created group
      */
-    public static function createGroup($subject, $members=array())
+    public static function createGroup($subject, $creatorId, $members=array())
     {
-        $query = "INSERT INTO groups(subject, last_activity, status) VALUES(?, NOW(), ?)";
-        $params = array($subject, "active");
+        $query = "INSERT INTO groups(subject, creator, last_activity, status) VALUES(?, ?, NOW(), ?)";
+        $params = array($subject, $creatorId, "active");
 
         $db = Database::getInstance();
-        $db->query($query, "ss", $params);
+        $db->query($query, "sis", $params);
         $groupid = $db->getInsertId();
 
         foreach ($members as $mid) {

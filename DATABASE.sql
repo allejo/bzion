@@ -16,7 +16,7 @@ CREATE TABLE `banned_ips` (
   `ip_address` varchar(15) NOT NULL DEFAULT '' COMMENT 'The IP address that was banned, only IPv4 due to BZFlag only supporting IPv4',
   PRIMARY KEY (`id`),
   KEY `ban_id` (`ban_id`),
-  CONSTRAINT `banned_ips_ibfk_1` FOREIGN KEY (`ban_id`) REFERENCES `bans` (`id`)
+  CONSTRAINT `banned_ips_ibfk_1` FOREIGN KEY (`ban_id`) REFERENCES `bans` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -37,7 +37,7 @@ CREATE TABLE `bans` (
   PRIMARY KEY (`id`),
   KEY `author` (`author`),
   KEY `player` (`player`),
-  CONSTRAINT `bans_ibfk_3` FOREIGN KEY (`player`) REFERENCES `players` (`id`),
+  CONSTRAINT `bans_ibfk_3` FOREIGN KEY (`player`) REFERENCES `players` (`id`) ON DELETE CASCADE,
   CONSTRAINT `bans_ibfk_2` FOREIGN KEY (`author`) REFERENCES `players` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -185,12 +185,12 @@ CREATE TABLE `news` (
 
 CREATE TABLE `news_categories` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `slug` varchar(50) NOT NULL DEFAULT '' COMMENT 'The URL slug of the category',
+  `alias` varchar(50) NOT NULL DEFAULT '' COMMENT 'The URL slug of the category',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'The name of the category to be used on the website',
   `protected` tinyint(1) NOT NULL COMMENT 'Whether or not the category is protected from being deleted from the database via PHP',
   `status` set('enabled','deleted') NOT NULL DEFAULT 'enabled' COMMENT 'The status of the category',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`)
+  UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -282,7 +282,7 @@ VALUES
 	(33,'del_role','The ability to mark a role as deleted'),
 	(34,'wipe_role','The ability to wipe a role from the database'),
 	(35,'send_pm','The ability to send private messages'),
-	(36,'view_visitor_log','The ability to see a player\'s visits and their IP addresses'),
+	(36,'view_visitor_log','The ability to see a player''s visits and their IP addresses'),
 	(37,'view_server_list','The ability to view the available official league servers');
 
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
@@ -313,8 +313,8 @@ CREATE TABLE `player_roles` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `player_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `players` (`id`),
-  CONSTRAINT `player_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+  CONSTRAINT `player_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `player_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -342,7 +342,7 @@ CREATE TABLE `players` (
   KEY `team` (`team`),
   KEY `country` (`country`),
   CONSTRAINT `players_ibfk_2` FOREIGN KEY (`country`) REFERENCES `countries` (`id`),
-  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`team`) REFERENCES `teams` (`id`)
+  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`team`) REFERENCES `teams` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -357,8 +357,8 @@ CREATE TABLE `role_permission` (
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
   KEY `perm_id` (`perm_id`),
-  CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
-  CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`perm_id`) REFERENCES `permissions` (`id`)
+  CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`perm_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `role_permission` WRITE;
@@ -565,7 +565,7 @@ CREATE TABLE `visits` (
   `timestamp` datetime NOT NULL COMMENT 'The timestamp this host was used to visit the website',
   PRIMARY KEY (`id`),
   KEY `player` (`player`),
-  CONSTRAINT `visits_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`)
+  CONSTRAINT `visits_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

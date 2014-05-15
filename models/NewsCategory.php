@@ -75,7 +75,7 @@ class NewsCategory extends AliasModel
     {
         if ($this->getStatus() != "disabled")
         {
-            return $this->update("status", "disabled");
+            return $this->update("status", "disabled", 's');
         }
 
         return true;
@@ -90,7 +90,7 @@ class NewsCategory extends AliasModel
     {
         if ($this->getStatus() != "enabled")
         {
-            return $this->update("status", "enabled");
+            return $this->update("status", "enabled", 's');
         }
 
         return true;

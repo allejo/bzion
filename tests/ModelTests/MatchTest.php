@@ -104,8 +104,7 @@ class MatchTest extends TestCase {
     }
 
     public function tearDown() {
+        $this->wipe($this->match, $this->match_b, $this->team_a, $this->team_b);
         parent::tearDown();
-
-        $this->wipe($this->team_a, $this->team_b, $this->match, $this->match_b);
     }
 }

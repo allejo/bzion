@@ -79,15 +79,15 @@ class TeamTest extends TestCase {
         $otherPlayer = $this->getNewPlayer();
         $otherTeam  = Team::createTeam("Sample Team 2", $otherPlayer->getId(), "Avatar", "Description");
 
-        $match_a = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 30, 49434);
-        $match_b = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 20, 49434);
+        $match_a = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 30, $this->player->getId());
+        $match_b = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 20, $this->player->getId());
 
         $team = new Team($this->team->getId());
 
         $this->assertEquals(2, $team->getNumTotalMatches());
         $this->assertArraysHaveEqualValues(array($match_a, $match_b), $team->getMatches());
 
-        $this->wipe($otherPlayer, $otherTeam, $match_a, $match_b);
+        $this->wipe($match_a, $match_b, $otherTeam, $otherPlayer);
     }
 
     public function testMiscMethods() {
@@ -99,8 +99,7 @@ class TeamTest extends TestCase {
     }
 
     public function tearDown() {
-        parent::tearDown();
-
         $this->wipe($this->team);
+        parent::tearDown();
     }
 }

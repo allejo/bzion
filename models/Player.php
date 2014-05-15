@@ -283,7 +283,7 @@ class Player extends AliasModel
      * Mark a player's account as banned
      */
     public function markAsBanned() {
-        $this->update("status", "banned");
+        $this->update("status", "banned", 's');
     }
 
     /**
@@ -303,7 +303,7 @@ class Player extends AliasModel
      * @param string $avatar The URL for the avatar
      */
     public function setAvatar($avatar) {
-        $this->update("avatar", $avatar);
+        $this->update("avatar", $avatar, 's');
     }
 
     /**
@@ -311,7 +311,7 @@ class Player extends AliasModel
      * @param string $description The description
      */
     public function setDescription($description) {
-        $this->update("description", $description);
+        $this->update("description", $description, 's');
     }
 
     /**
@@ -319,14 +319,14 @@ class Player extends AliasModel
      * @param string $timezone The timezone
      */
     public function setTimezone($timezone) {
-        $this->update("timezone", $timezone);
+        $this->update("timezone", $timezone, 's');
     }
 
     /**
      * Updates this player's last login
      */
     public function updateLastLogin() {
-        $this->update("last_login", "now");
+        $this->update("last_login", "now", 's');
     }
 
     /**
@@ -413,7 +413,7 @@ class Player extends AliasModel
      * @param string|\TimeDate $last_login The timestamp of the player's last login
      * @return Player An object representing the player that was just entered
      */
-    public static function newPlayer($bzid, $username, $team=0, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=0, $timezone=0, $joined="now", $last_login="now")
+    public static function newPlayer($bzid, $username, $team=null, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=1, $timezone=0, $joined="now", $last_login="now")
     {
         $db = Database::getInstance();
 

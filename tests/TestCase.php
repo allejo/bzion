@@ -6,7 +6,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
      * The BZID of the last player created, used to prevent conflicts when creating new players
      * @var int
      */
-    private $lastBzid = 180;
+    private $lastBzid = 200;
 
     /**
      * A list of all the players created, used to wipe them on the tearDown() method
@@ -34,7 +34,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
         self::assertThat($array, $constraint, $message);
     }
-    
+
     /**
      * Asserts that an array contains a Model with a known ID
      *
@@ -52,7 +52,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
         if (!(is_array($array) || $array instanceof ArrayAccess)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array or ArrayAccess');
         }
-        
+
         foreach ($array as $e) {
 	    if (!$e instanceof Model) {
 	      throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array of models');
