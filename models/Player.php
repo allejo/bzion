@@ -293,7 +293,7 @@ class Player extends AliasModel
      * @param string $avatar The URL for the avatar
      */
     public function setAvatar($avatar) {
-        $this->db->query("UPDATE players SET avatar = ? WHERE id = ?", "si", array($avatar, $this->id));
+        $this->update("avatar", $avatar);
     }
 
     /**
@@ -301,7 +301,7 @@ class Player extends AliasModel
      * @param string $description The description
      */
     public function setDescription($description) {
-        $this->db->query("UPDATE players SET description = ? WHERE id = ?", "si", array($description, $this->id));
+        $this->update("description", $description);
     }
 
     /**
@@ -309,16 +309,14 @@ class Player extends AliasModel
      * @param string $timezone The timezone
      */
     public function setTimezone($timezone) {
-        $this->db->query("UPDATE players SET timezone = ? WHERE id = ?", "si", array($timezone, $this->id));
+        $this->update("timezone", $timezone);
     }
 
     /**
      * Updates this player's last login
-     * @param string $when The date of the last login
      */
-    public function updateLastLogin($when = "now") {
-        $last = new TimeDate($when);
-        $this->db->query("UPDATE players SET last_login = ? WHERE id = ?", "si", array($last->format(DATE_FORMAT), $this->id));
+    public function updateLastLogin() {
+        $this->update("last_login", "now");
     }
 
     /**
