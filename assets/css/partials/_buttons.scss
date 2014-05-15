@@ -1,26 +1,26 @@
 .button {
     &.red {
-        @include button(#FF0000, #FFFFFF);
+        @include button(#FF0000, $White);
     }
 
     &.green {
-        @include button(#00d319, #FFFFFF);
+        @include button(#00d319, $White);
     }
 
     &.blue {
-        @include button(#2f79ff, #FFFFFF);
+        @include button(#2f79ff, $White);
     }
 
     &.yellow {
-        @include button(#fff400, #FFFFFF);
+        @include button(#fff400, $White);
     }
 
     &.orange {
-        @include button(#ff6700, #FFFFFF);
+        @include button(#ff6700, $White);
     }
 
     &.grey {
-        @include button(#ececec, #000000);
+        @include button(#fafafa, $Medium_Grey);
     }
 
     &.skinny {

@@ -12,30 +12,41 @@ main {
         margin: 0 0 30px;
         padding: 20px 0;
 
-        h1 {
-            font-size: 24px;
-        }
-
-        div {
-            float: left;
+        >article {
+            @extend .clearfix;
+            @extend .wrapper;
 
             h1 {
-                color: $Blue;
                 font-size: 24px;
             }
 
-            h2 {
-                color: #CACACA;
-                font-size: 16px;
-            }
-        }
+            div {
+                float: left;
 
-        p {
-            float: left;
-            font-size: 42px;
-            font-weight: bold;
-            margin-right: 5px;
-            margin-top: 10px;
+                h2 {
+                    color: #CACACA;
+                    font-size: 16px;
+                }
+
+                &.buttons {
+                    float: right;
+                    margin: 6px 0;
+
+                    .button {
+                        margin-left: 10px;
+                        padding-left: 1em;
+                        padding-right: 1em;
+                    }
+                }
+            }
+
+            p {
+                float: left;
+                font-size: 42px;
+                font-weight: bold;
+                margin-right: 5px;
+                margin-top: 10px;
+            }
         }
     }
 }

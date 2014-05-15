@@ -65,6 +65,10 @@
     &.noclick {
         cursor: default;
     }
+
+    &.notextshadow {
+        text-shadow: none;
+    }
 }
 
 @mixin gradient($from, $to, $default: $from) {

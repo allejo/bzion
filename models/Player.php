@@ -280,6 +280,15 @@ class Player extends AliasModel
     }
 
     /**
+     * Check if a player is teamless
+     *
+     * @return bool True if the player is teamless
+     */
+    public function isTeamless() {
+        return (empty($this->status));
+    }
+
+    /**
      * Mark a player's account as banned
      */
     public function markAsBanned() {
