@@ -198,19 +198,7 @@ class Player extends AliasModel
      */
     public function getKnownIPs()
     {
-        $addresses[] = array();
-
-        $results = $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player_id = ?", "i", array($this->getId()));
-
-        foreach ($results as $result)
-        {
-            $addresses[] = array(
-                "ip"   => $result['ip'],
-                "host" => $result['host']
-            );
-        }
-
-        return $addresses;
+        return $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player_id = ?", "i", array($this->getId()));
     }
 
     /**
