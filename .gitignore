@@ -5,6 +5,7 @@ bzion_errors.log
 update.php
 vendor
 cache
+reDB.sh
 
 # Test files #
 ##############
