@@ -121,7 +121,7 @@ class Group extends UrlModel {
     /**
      * {@inheritDoc}
      */
-    protected static function getParamName() {
+    public static function getParamName() {
         return "discussion";
     }
 
