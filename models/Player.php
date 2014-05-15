@@ -192,6 +192,28 @@ class Player extends AliasModel
     }
 
     /**
+     * Get all of the known IPs used by the player
+     *
+     * @return string[][] An array containing IPs and hosts
+     */
+    public function getKnownIPs()
+    {
+        $addresses[] = array();
+
+        $results = $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player_id = ?", "i", array($this->getId()));
+
+        foreach ($results as $result)
+        {
+            $addresses[] = array(
+                "ip"   => $result['ip'],
+                "host" => $result['host']
+            );
+        }
+
+        return $addresses;
+    }
+
+    /**
      * Get the last login for a player
      * @param bool $human Whether to get the literal time stamp or a relative time
      * @return string The date of the last login
