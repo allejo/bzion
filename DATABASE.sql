@@ -168,7 +168,7 @@ CREATE TABLE `news` (
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the post was last updated',
   `author` int(10) unsigned NOT NULL COMMENT 'The ID of the author',
   `editor` int(10) unsigned NOT NULL COMMENT 'The ID of the last editor',
-  `status` set('live','revision','disabled','deleted') NOT NULL DEFAULT 'live' COMMENT 'The status of the post',
+  `status` set('published','revision','draft','disabled','deleted') NOT NULL DEFAULT 'published' COMMENT 'The status of the post',
   PRIMARY KEY (`id`),
   KEY `category` (`category`),
   KEY `author` (`author`),
