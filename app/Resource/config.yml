@@ -12,3 +12,7 @@ services:
         class: TwigCacheWarmer
         tags:
             - { name: kernel.cache_warmer, priority: 0 }
+    bzion.command.install_command:
+        class: Command\InstallCommand
+        tags:
+            -  { name: console.command }

@@ -13,7 +13,7 @@ class AppKernel extends Kernel
 {
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/resources/config_'. $this->getEnvironment() . '.yml');
+        $loader->load(__DIR__.'/Resource/config_'. $this->getEnvironment() . '.yml');
     }
 
     public function registerBundles()
@@ -37,6 +37,14 @@ class AppKernel extends Kernel
 
         Service::setGenerator($this->container->get('router')->getGenerator());
         $this->setUpTwig();
+    }
+
+    static public function guessEnvironment() {
+        switch (DEVELOPMENT) {
+        case 1: return "dev"; break;
+        case 2: return "profile"; break;
+        default: return "prod"; break;
+        }
     }
 
     private function setUpTwig()

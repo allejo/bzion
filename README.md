@@ -6,9 +6,9 @@ A Content Mangement System (CMS) intended for BZFlag leagues to manage players, 
 
 _Alphabetical by last name_
 
-Vladimir Jimenez (allejo)  
-Konstantinos Kanavouras (kongr45gpen/alezakos)  
-Matthew Pavia (tw1sted)  
+Vladimir Jimenez (allejo)
+Konstantinos Kanavouras (kongr45gpen/alezakos)
+Matthew Pavia (tw1sted)
 Ashvala Vinay (ashvala)
 
 ## Demo
@@ -37,13 +37,9 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
       `php composer.phar install --no-dev`
 
-5. Use the `DATABASE.sql` file to create the necessary database structure
+5. `app/console bzion:install`
 
-6. Make sure that the `app/logs` directory is writable by your web server user
-
-7. Create the necessary cache files:
-
-       `app/console cache:warmup`
+6. Use the `DATABASE.sql` file to create the necessary database structure
 
 7. Rename `bzion-config-example.php` to `bzion-config.php` and configure the settings.
 
