@@ -75,6 +75,7 @@ abstract class Controller {
      * @return Controller The controller
      */
     public static function getController($parameters) {
+        $parameters = $parameters->all();
         $ref = new ReflectionClass($parameters['_controller'] . 'Controller');
 
         return $ref->newInstance($parameters);
