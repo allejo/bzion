@@ -1,7 +1,7 @@
 <?php
 
-abstract class TestCase extends PHPUnit_Framework_TestCase {
-
+abstract class TestCase extends PHPUnit_Framework_TestCase
+{
     /**
      * The BZID of the last player created, used to prevent conflicts when creating new players
      * @var int
@@ -19,9 +19,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
      *
      * @param array|ArrayAccess $expectedArray
      * @param array|ArrayAccess $array
-     * @param string $message
+     * @param string            $message
      */
-    public static function assertArraysHaveEqualValues($expectedArray, $array, $message = '') {
+    public static function assertArraysHaveEqualValues($expectedArray, $array, $message = '')
+    {
         if (!(is_array($expectedArray) || $expectedArray instanceof ArrayAccess)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'array or ArrayAccess');
         }
@@ -39,13 +40,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
      * Asserts that an array contains a Model with a known ID
      *
      * @param int|Model $id
-     * @param Model[] $array
-     * @param string $message
+     * @param Model[]   $array
+     * @param string    $message
      */
-    public static function assertArrayContainsModel($id, $array, $message = '') {
-	if ($id instanceof Model) {
-	    $id = $id->getId();
-	} else if (!is_int($id)) {
+    public static function assertArrayContainsModel($id, $array, $message = '')
+    {
+    if ($id instanceof Model) {
+        $id = $id->getId();
+    } elseif (!is_int($id)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
         }
 
@@ -54,9 +56,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
         }
 
         foreach ($array as $e) {
-	    if (!$e instanceof Model) {
-	      throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array of models');
-	    }
+        if (!$e instanceof Model) {
+          throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array of models');
+        }
         }
 
         $constraint = new ArrayContainsModelWithIdConstraint($id);
@@ -69,7 +71,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
      *
      * @param Model $c,... The object(s) to call the wipe() method on
      */
-    protected static function wipe() {
+    protected static function wipe()
+    {
         foreach (func_get_args() as $a) {
             if ($a)
                 $a->wipe();
@@ -81,17 +84,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
      *
      * @return Player
      */
-    protected function getNewPlayer() {
+    protected function getNewPlayer()
+    {
         ++$this->lastBzid;
         $player = Player::newPlayer($this->lastBzid, "Sample player" . $this->lastBzid - 1);
         $this->playersCreated[] = $player->getId();
+
         return $player;
     }
 
     /**
      * Clean-up all the database entries added during the test
      */
-    public function tearDown() {
+    public function tearDown()
+    {
         foreach ($this->playersCreated as $id) {
             self::wipe(new Player($id));
         }

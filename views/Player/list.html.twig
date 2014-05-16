@@ -9,7 +9,7 @@
             <li>Team</li>
             <li>Joined</li>
         </ul>
-        
+
     {% for player in players %}
         <ul>
             <li><a href="{{ player.url }}">{{ player.username }}</a>
@@ -21,6 +21,6 @@
             <li>{{ player.joinedDate }}</li>
         </ul>
     {% endfor %}
-    
+
     </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 <?php
 
-class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint {
-
+class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint
+{
     /**
      *
      * @var array|ArrayAccess
@@ -10,10 +10,11 @@ class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint {
 
     /**
      *
-     * @param array|ArrayAccess $value
+     * @param  array|ArrayAccess           $value
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct($value) {
+    public function __construct($value)
+    {
         if (!(is_array($value) || $value instanceof ArrayAccess)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'array or ArrayAccess');
         }
@@ -25,11 +26,12 @@ class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint {
      * Evaluates the constraint for parameter $other.
      * Returns TRUE if the constraint is met, FALSE otherwise.
      *
-     * @param mixed $other
-     *            Value or object to evaluate.
+     * @param  mixed $other
+     *                      Value or object to evaluate.
      * @return bool
      */
-    public function matches($other) {
+    public function matches($other)
+    {
         if (count($this->value) != count($other))
             return false;
 
@@ -41,7 +43,8 @@ class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint {
      *
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return 'has the same values with ' .
                    PHPUnit_Util_Type::export($this->value);
     }

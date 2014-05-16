@@ -1,19 +1,21 @@
 <?php
 
-class TeamTest extends TestCase {
-
+class TeamTest extends TestCase
+{
     private $player;
     private $playerid;
     private $team;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         global $db;
         $db = new Database();
 
         $this->player = $this->getNewPlayer();
     }
 
-    public function testTeamLeader() {
+    public function testTeamLeader()
+    {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Sample Avatar Text", "Sample Description");
 
         $team = new Team($this->team->getId());
@@ -21,7 +23,8 @@ class TeamTest extends TestCase {
         $this->assertEquals($this->player->getId(), $team->getLeader()->getId());
     }
 
-    public function testTeamName() {
+    public function testTeamName()
+    {
         $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
@@ -32,7 +35,8 @@ class TeamTest extends TestCase {
         $this->assertEquals($this->team->getId(), Team::fetchFromAlias("team-name-test")->getId());
     }
 
-    public function testIrrationalTeamName() {
+    public function testIrrationalTeamName()
+    {
         $this->team = Team::createTeam("13435", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
@@ -43,7 +47,8 @@ class TeamTest extends TestCase {
         $this->assertEquals($this->team->getId(), Team::fetchFromAlias("13435-")->getId());
     }
 
-    public function testIrrationalTeamName2() {
+    public function testIrrationalTeamName2()
+    {
         $this->team = Team::createTeam("-()#*$%!", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
@@ -54,7 +59,8 @@ class TeamTest extends TestCase {
         $this->assertEquals($this->team->getId(), Team::fetchFromAlias($team->getId())->getId());
     }
 
-    public function testMembers() {
+    public function testMembers()
+    {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
         $extraMember = $this->getNewPlayer();
         $otherPlayer = $this->getNewPlayer();
@@ -74,7 +80,8 @@ class TeamTest extends TestCase {
         $this->wipe($extraMember, $otherPlayer);
     }
 
-    public function testMatches() {
+    public function testMatches()
+    {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
         $otherPlayer = $this->getNewPlayer();
         $otherTeam  = Team::createTeam("Sample Team 2", $otherPlayer->getId(), "Avatar", "Description");
@@ -90,7 +97,8 @@ class TeamTest extends TestCase {
         $this->wipe($match_a, $match_b, $otherTeam, $otherPlayer);
     }
 
-    public function testMiscMethods() {
+    public function testMiscMethods()
+    {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
 
         $team = new Team($this->team->getId());
@@ -98,7 +106,8 @@ class TeamTest extends TestCase {
         $this->assertEquals("now", $team->getCreationDate());
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->wipe($this->team);
         parent::tearDown();
     }

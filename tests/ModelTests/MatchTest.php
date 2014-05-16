@@ -1,6 +1,7 @@
 <?php
 
-class MatchTest extends TestCase {
+class MatchTest extends TestCase
+{
     protected $team_a;
     protected $team_b;
     protected $match;
@@ -8,7 +9,8 @@ class MatchTest extends TestCase {
     protected $player_a;
     protected $player_b;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         global $db;
         $db = new Database();
 
@@ -19,7 +21,8 @@ class MatchTest extends TestCase {
         $this->team_b = Team::createTeam("Team B", $this->player_b->getId(), "", "");
     }
 
-    public function testTeamAWin() {
+    public function testTeamAWin()
+    {
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->player_a->getId());
 
         $this->assertInstanceOf("Team", $this->match->getTeamA());
@@ -41,7 +44,8 @@ class MatchTest extends TestCase {
         $this->assertFalse($this->match->isDraw());
     }
 
-    public function testTeamBWin() {
+    public function testTeamBWin()
+    {
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 2, 5, 30, $this->player_a->getId());
 
         $this->assertEquals(1175, $this->match->getTeamAEloNew());
@@ -55,7 +59,8 @@ class MatchTest extends TestCase {
         $this->assertFalse($this->match->isDraw());
     }
 
-    public function testDraw() {
+    public function testDraw()
+    {
         $this->team_a->changeElo(+10);
 
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
@@ -68,14 +73,16 @@ class MatchTest extends TestCase {
         $this->assertEquals(1201, $this->match->getTeamBEloNew());
     }
 
-    public function testEqualEloDraw() {
+    public function testEqualEloDraw()
+    {
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
 
         $this->assertEquals(0, $this->match->getEloDiff());
         $this->assertEquals($this->match->getTeamAEloNew(), $this->match->getTeamBEloNew());
     }
 
-    public function testShortMatch() {
+    public function testShortMatch()
+    {
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 20, $this->player_a->getId());
 
         $this->assertEquals(20, $this->match->getDuration());
@@ -86,7 +93,8 @@ class MatchTest extends TestCase {
         $this->assertEquals(1184, $this->match->getTeamBEloNew());
     }
 
-    public function testMiscMethods() {
+    public function testMiscMethods()
+    {
         $old_matches = Match::getMatches();
 
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 5, 2, 30, $this->player_a->getId());
@@ -103,7 +111,8 @@ class MatchTest extends TestCase {
 
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->wipe($this->match, $this->match_b, $this->team_a, $this->team_b);
         parent::tearDown();
     }
