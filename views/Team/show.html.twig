@@ -72,6 +72,17 @@
                     {% endfor %}
                 </article>
             </section>
+
+            <section class="matches">
+                <h4>Recent Matches</h4>
+                <ul>
+                    {% for match in team.matches %}
+                        <li>
+                            {{ match.teamA.name }} vs {{ match.teamB.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
         </section>
     </main>
 

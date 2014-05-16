@@ -445,13 +445,17 @@ class Match extends Model
 
     /**
      * Get the matches that a team took part of
+     *
      * @param int $teamID The team ID of whose matches to search for
+     * @param int $start The offset used when fetching matches, i.e. the starting point
+     * @param int $limit The amount of matches to be retrieved
+     *
      * @return Match[] An array of matches where the team participated in
      */
-    public static function getMatchesByTeam($teamID)
+    public static function getMatchesByTeam($teamID, $start = 0, $limit = 5)
     {
         return self::arrayIdToModel(
-            parent::fetchIds("WHERE team_a=? OR team_b=?",
+            parent::fetchIds("WHERE team_a = ? OR team_b = ? ORDER BY timestamp DESC LIMIT $limit OFFSET $start",
                 "ii", array($teamID, $teamID)
             )
         );
