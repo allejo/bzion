@@ -1,0 +1,8 @@
+framework:
+    secret: "toast"
+    router:
+        resource: "%kernel.root_dir%/routes.yml"
+        strict_requirements: ~
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme

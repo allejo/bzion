@@ -19,11 +19,14 @@ class AppKernel extends Kernel {
     private $twig;
 
     public function registerContainerConfiguration(LoaderInterface $loader) {
-        return array();
+        $loader->load(__DIR__.'/config.yml');
     }
 
     public function registerBundles() {
-        return array();
+        return array(
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+        );
     }
 
     public function __construct($environment, $debug) {

@@ -7,12 +7,14 @@
     "require": {
         "nesbot/carbon"           : ">=1.8.0",
         "symfony/config"          : ">=2.4.0",
+        "symfony/event-dispatcher": ">=2.4.0",
         "symfony/routing"         : ">=2.4.0",
         "symfony/http-kernel"     : ">=2.4.0",
         "symfony/http-foundation" : ">=2.4.0",
         "symfony/twig-bridge"     : ">=2.4.0",
         "symfony/yaml"            : ">=2.4.0",
-        "twig/twig"               : "dev-master"
+        "twig/twig"               : "dev-master",
+        "symfony/twig-bundle": ">=2.4.0"
     },
     "require-dev": {
         "symfony/browser-kit": ">=2.4.0",
