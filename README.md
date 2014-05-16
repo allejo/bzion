@@ -7,8 +7,11 @@ A Content Mangement System (CMS) intended for BZFlag leagues to manage players, 
 _Alphabetical by last name_
 
 Vladimir Jimenez (allejo)
+
 Konstantinos Kanavouras (kongr45gpen/alezakos)
+
 Matthew Pavia (tw1sted)
+
 Ashvala Vinay (ashvala)
 
 ## Demo
