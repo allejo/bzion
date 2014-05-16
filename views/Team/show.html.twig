@@ -24,8 +24,54 @@
                     {% if me.isValid and me.team.id != team.id and me.isTeamless %}
                         <a class="button grey notextshadow" href="#"><i class="fa fa-plus"></i> Join</a>
                     {% endif %}
+
+                    {% if me.isValid and me.team.id == team.id %}
+                        <a class="button grey notextshadow" href="#"><i class="fa fa-sign-out"></i> Abandon</a>
+                    {% endif %}
                 </div>
             </article>
+        </section>
+
+        <section class="profile">
+            <section class="graphs">
+                <h4>Match Statistics</h4>
+                <canvas id="teamMatchStats" class="teamMatchStats"></canvas>
+                <article class="legend">
+                    <div class="item">
+                        <div class="block wins"></div> {{ team.matchesWon }} wins
+                    </div>
+                    <div class="item">
+                        <div class="block losses"></div> {{ team.matchesLost }} losses
+                    </div>
+                    <div class="item">
+                        <div class="block draws"></div> {{ team.matchesDraw }} draws
+                    </div>
+                </article>
+            </section>
+
+            <section class="members">
+                <h4>Team Members</h4>
+                <article class="css-table team_members">
+                    {% for player in team.members %}
+                        <div class="row">
+                            <div class="column">
+                                {% if player.id == team.leader.id %}
+                                    <i class="fa fa-star"></i>
+                                {% endif %}
+                            </div>
+                            <div class="column">
+                                {{ player.username }}
+                            </div>
+
+                            {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
+                                <div class="column">
+                                    <a href="#"><i class="fa fa-eject"></i></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </article>
+            </section>
         </section>
     </main>
 
@@ -36,4 +82,33 @@
     Members: {{ team.numMembers }}<br />
     Activity: {{ team.activity }}<br />
     Created: {{ team.created }}<br /><br />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ request.getBaseURL() }}/includes/chartjs/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("teamMatchStats").getContext("2d");
+
+        var data = [
+            {
+                value: {{ team.matchesWon }},
+                color: "#EBEBEB"
+            },
+            {
+                value: {{ team.matchesLost }},
+                color: "#B6D1D8"
+            },
+            {
+                value: {{ team.matchesDraw }},
+                color: "#8FDC00"
+            }
+        ];
+
+        var options = {
+            segmentStrokeWidth : 1,
+            animation : false
+        }
+
+        var matchStats = new Chart(ctx).Pie(data, options);
+    </script>
 {% endblock %}

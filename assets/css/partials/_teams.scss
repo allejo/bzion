@@ -80,7 +80,7 @@ main {
         .content_header {
             .rank_image {
                 float: left;
-                margin-right: 5px;
+                margin-right: 10px;
             }
 
             div {
@@ -88,6 +88,91 @@ main {
 
                 h1 {
                     color: #000000;
+                }
+            }
+        }
+
+        .profile {
+            @extend .clearfix;
+            @extend .wrapper;
+
+            h4 {
+                margin-bottom: 5px;
+                padding-bottom: 5px;
+            }
+
+            > section {
+                @include box-sizing(border-box);
+
+                float: left;
+                padding: 10px 20px;
+                width: 50%;
+            }
+
+            .graphs {
+                .teamMatchStats {
+                    $size: 150px;
+
+                    float: left;
+                    height: $size;
+                    width: $size;
+                }
+
+                .legend {
+                    font-family: $sanSerifFont;
+                    float: left;
+                    margin: 40px 0;
+
+                    .item {
+                        display: block;
+
+                        .block {
+                            $block_size: 10px;
+
+                            border: 1px solid $Off_White;
+                            float: left;
+                            height: $block_size;
+                            margin: 5px 10px;
+                            width: $block_size;
+
+                            &.wins {
+                                background-color: #EBEBEB;
+                            }
+
+                            &.losses {
+                                background-color: #B6D1D8;
+                            }
+
+                            &.draws {
+                                background-color: #8FDC00;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .members {
+                .team_members {
+                    margin-left: 20px;
+
+                    .row {
+                        border: none;
+
+                        .column {
+                            border: none;
+                            padding: 5px 10px;
+
+                            i {
+                                &.fa-eject {
+                                    color: $Medium_Grey;
+                                }
+
+                                &.fa-star {
+                                    color: #FDCE46;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
