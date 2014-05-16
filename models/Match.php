@@ -135,8 +135,8 @@ class Match extends Model
      * Construct a new Match
      * @param int $id The match's ID
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -161,7 +161,78 @@ class Match extends Model
         $this->duration = $match['duration'];
         $this->entered_by = $match['entered_by'];
         $this->status = $match['status'];
+    }
 
+    /**
+     * Get a one word description of a match relative to a team (i.e. win, loss, or draw)
+     *
+     * @param int $teamID The team ID we want the noun for
+     *
+     * @return string Either "win", "loss", or "draw" relative to the team
+     */
+    public function getMatchDescription($teamID)
+    {
+        if ($this->getScore($teamID) > $this->getOpponentScore($teamID))
+        {
+            return "win";
+        }
+        else if ($this->getScore($teamID) < $this->getOpponentScore($teamID))
+        {
+            return "loss";
+        }
+
+        return "draw";
+    }
+
+    /**
+     * Get the score of a specific team
+     *
+     * @param int $teamID The team we want the score for
+     *
+     * @return int The score that team received
+     */
+    public function getScore($teamID)
+    {
+        if ($this->getTeamA()->getId() == $teamID)
+        {
+            return $this->getTeamAPoints();
+        }
+
+        return $this->getTeamBPoints();
+    }
+
+    /**
+     * Get the score of the opponent relative to a team
+     *
+     * @param int $teamID The opponent of the team we want the score for
+     *
+     * @return int The score of the opponent
+     */
+    public function getOpponentScore($teamID)
+    {
+        if ($this->getTeamA()->getId() != $teamID)
+        {
+            return $this->getTeamAPoints();
+        }
+
+        return $this->getTeamBPoints();
+    }
+
+    /**
+     * Get the opponent of a match relative to a team ID
+     *
+     * @param int $teamID The team who is known in a match
+     *
+     * @return Team The opponent team
+     */
+    public function getOpponent($teamID)
+    {
+        if ($this->getTeamA()->getId() == $teamID)
+        {
+            return $this->getTeamB();
+        }
+
+        return $this->getTeamA();
     }
 
     /**

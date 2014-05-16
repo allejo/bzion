@@ -33,66 +33,66 @@
         </section>
 
         <section class="profile">
-            <section class="graphs">
-                <h4>Match Statistics</h4>
-                <canvas id="teamMatchStats" class="teamMatchStats"></canvas>
-                <article class="legend">
-                    <div class="item">
-                        <div class="block wins"></div> {{ team.matchesWon }} wins
-                    </div>
-                    <div class="item">
-                        <div class="block losses"></div> {{ team.matchesLost }} losses
-                    </div>
-                    <div class="item">
-                        <div class="block draws"></div> {{ team.matchesDraw }} draws
-                    </div>
-                </article>
+            <section class="team_row">
+                <section class="match_stats">
+                    <h4>Match Statistics</h4>
+                    <canvas id="teamMatchStats" class="teamMatchStats"></canvas>
+                    <article class="legend">
+                        <div class="item">
+                            <div class="block wins"></div> {{ team.matchesWon }} wins
+                        </div>
+                        <div class="item">
+                            <div class="block losses"></div> {{ team.matchesLost }} losses
+                        </div>
+                        <div class="item">
+                            <div class="block draws"></div> {{ team.matchesDraw }} draws
+                        </div>
+                    </article>
+                </section>
+
+                <section class="activity">
+                    <h4>Team Activity</h4>
+                </section>
             </section>
 
-            <section class="members">
-                <h4>Team Members</h4>
-                <article class="css-table team_members">
-                    {% for player in team.members %}
-                        <div class="row">
-                            <div class="column">
-                                {% if player.id == team.leader.id %}
-                                    <i class="fa fa-star"></i>
+            <section class="team_row">
+                <section class="members">
+                    <h4>Team Members</h4>
+                    <article class="css-table team_members">
+                        {% for player in team.members %}
+                            <div class="row">
+                                <div class="column">
+                                    {% if player.id == team.leader.id %}
+                                        <i class="fa fa-star"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="column">
+                                    {{ player.username }}
+                                </div>
+
+                                {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
+                                    <div class="column">
+                                        <a href="#"><i class="fa fa-eject"></i></a>
+                                    </div>
                                 {% endif %}
                             </div>
-                            <div class="column">
-                                {{ player.username }}
-                            </div>
+                        {% endfor %}
+                    </article>
+                </section>
 
-                            {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
-                                <div class="column">
-                                    <a href="#"><i class="fa fa-eject"></i></a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                </article>
-            </section>
-
-            <section class="matches">
-                <h4>Recent Matches</h4>
-                <ul>
-                    {% for match in team.matches %}
-                        <li>
-                            {{ match.teamA.name }} vs {{ match.teamB.name }}
-                        </li>
-                    {% endfor %}
-                </ul>
+                <section class="matches">
+                    <h4>Recent Matches</h4>
+                    <ul>
+                        {% for match in team.matches %}
+                            <li>
+                                {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }} {{ match.matchDescription(team.id) }} against {{ match.opponent(team.id).linkLiteral | raw }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
             </section>
         </section>
     </main>
-
-    <div class='team_name'>{{ team.name }}</div><br />
-    <div class='team_rating'>ELO: {{ team.elo }}</div><br />
-    <div class='team_leader'>Leader: <a href="{{ team.leader.url }}">{{ team.leader.username }}</a></div><br />
-    Matches: <a href="{{ team.matchesURL }}">{{ team.numTotalMatches }}</a><br />
-    Members: {{ team.numMembers }}<br />
-    Activity: {{ team.activity }}<br />
-    Created: {{ team.created }}<br /><br />
 {% endblock %}
 
 {% block javascripts %}

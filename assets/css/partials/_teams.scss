@@ -77,6 +77,8 @@ main {
 
 main {
     &.team_profile {
+        font-family: $sanSerifFont;
+
         .content_header {
             .rank_image {
                 float: left;
@@ -96,20 +98,28 @@ main {
             @extend .clearfix;
             @extend .wrapper;
 
+            margin-bottom: 20px;
+
             h4 {
                 margin-bottom: 5px;
                 padding-bottom: 5px;
             }
 
-            > section {
-                @include box-sizing(border-box);
+            .team_row {
+                @extend .clearfix;
 
-                float: left;
-                padding: 10px 20px;
-                width: 50%;
+                width: 100%;
+
+                > section {
+                    @include box-sizing(border-box);
+
+                    float: left;
+                    padding: 10px 20px;
+                    width: 50%;
+                }
             }
 
-            .graphs {
+            .match_stats {
                 .teamMatchStats {
                     $size: 150px;
 
@@ -119,7 +129,6 @@ main {
                 }
 
                 .legend {
-                    font-family: $sanSerifFont;
                     float: left;
                     margin: 40px 0;
 
