@@ -191,7 +191,7 @@ class NewsCategory extends AliasModel
         return self::arrayIdToModel(
             self::fetchIdsFrom(
                 "status", array("deleted"), "s", true,
-                "ORDER BY name DESC"
+                "ORDER BY name ASC"
             )
         );
     }
