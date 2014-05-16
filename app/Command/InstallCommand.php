@@ -27,35 +27,17 @@ class InstallCommand extends ContainerAwareCommand
     {
 //         $name = $input->getArgument('name');
         $output->writeln('<bg=green;options=bold>Welcome to BZiON!</bg=green;options=bold>');
-        $output->writeln('<bg=red;options=bold>Note:</bg=red;options=bold> <fg=red>this script may require root access in order to properly set up permissions for the app folders</fg=red>');
         $progress = $this->getHelperSet()->get('progress');
 
         // the finished part of the bar
         $progress->setBarCharacter('<comment>=</comment>');
-        $progress->start($output, 5);
+        $progress->start($output, 3);
 
         $git = new Process('git submodule update --init');
         $git->run();
 
         if (!$git->isSuccessful()) {
             throw new \RuntimeException($git->getErrorOutput());
-        }
-        $progress->advance();
-
-        $webUser = new Process("ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1");
-        $webUser->run();
-
-        if (!$webUser->isSuccessful()) {
-            throw new \RuntimeException($webUser->getErrorOutput());
-        }
-        $webUser = trim($webUser->getOutput());
-        $progress->advance();
-
-        $setPerms = new Process("sudo sh -c \"setfacl -R -m u:$webUser:rwX -m u:`whoami`:rwX app/cache app/logs && setfacl -dR -m u:$webUser:rwX -m u:`whoami`:rwX app/cache app/logs\"");
-        $setPerms->run();
-
-        if (!$setPerms->isSuccessful()) {
-            throw new \RuntimeException($setPerms->getErrorOutput());
         }
         $progress->advance();
 

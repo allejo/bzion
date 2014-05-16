@@ -23,21 +23,25 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
 1. Clone the repository
 
-      `git clone https://github.com/allejo/bzion.git league`
+      `git clone https://github.com/allejo/bzion.git league; cd league`
 
-2. Change into the `league` directory and get all of the necessary submodules
-
-      `cd league; git submodule update --init`
-
-3. If you do not have PHP Composer installed, install it
+2. If you do not have PHP Composer installed, install it
 
       `curl -sS https://getcomposer.org/installer | php`
 
-4. Install the required libraries using Composer via the `composer.phar` file
+3. Install the required libraries using Composer via the `composer.phar` file
 
       `php composer.phar install --no-dev`
 
-5. `app/console bzion:install`
+4. `app/console bzion:install`
+
+5. Make sure that the app/cache directory is writeable by you and the web server:
+
+   <sub>_Example for Apache2 on Ubuntu_</sub>
+   ```
+   sudo setfacl -R  -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
+   sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
+   ```
 
 6. Use the `DATABASE.sql` file to create the necessary database structure
 
