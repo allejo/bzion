@@ -6,21 +6,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AppKernel extends Kernel
 {
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config.yml');
+        $loader->load(__DIR__.'/resources/config_'. $this->getEnvironment() . '.yml');
     }
 
     public function registerBundles()
     {
-        return array(
+        $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
         );
+
+        if ($this->getEnvironment() == 'profile') {
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+        }
+
+        return $bundles;
     }
 
     public function boot()
@@ -38,11 +46,10 @@ class AppKernel extends Kernel
         // Set up the twig templating environment to parse views
         $loader = new Twig_Loader_Filesystem(__DIR__.'/../views');
 
-        $this->container->set('twig.loader', $loader);
-
-        $twig = $this->container->get('twig');
-        if ($this->isDebug())
-            $twig->setCache(false);
+        $twig = new Twig_Environment($loader, array(
+            'cache' => $cacheDir,
+            'debug' => $this->isDebug()
+        ));
 
         // Load the routing extension to twig, which adds functions such as path()
         $twig->addExtension(new RoutingExtension(Service::getGenerator()));
@@ -64,6 +71,10 @@ class AppKernel extends Kernel
         $event = new GetResponseEvent($this, $request, $type);
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::REQUEST, $event);
 
+        if ($request->attributes->get('_defaultHandler')) {
+            return parent::handle($request, $type, $catch);
+        }
+
         $request->setSession(Service::getNewSession());
 
         Service::setRequest($request);
@@ -74,6 +85,9 @@ class AppKernel extends Kernel
 
         $con = Controller::getController($request->attributes);
         $response = $con->callAction();
+
+        $event = new FilterResponseEvent($this, $request, $type, $response);
+        $this->container->get('event_dispatcher')->dispatch(KernelEvents::RESPONSE, $event);
 
         return $response;
     }

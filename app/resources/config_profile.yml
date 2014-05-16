@@ -1,0 +1,12 @@
+imports:
+    - { resource: config_dev.yml }
+
+web_profiler:
+    toolbar:              true
+    position:             bottom
+    intercept_redirects:  false
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/resources/routes_dev.yml"
+    profiler: { only_exceptions: false }
