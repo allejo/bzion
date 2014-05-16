@@ -52,8 +52,8 @@ use Symfony\Component\HttpFoundation\Response;
  * - An array representing the variables you want to pass to the controller's
  *   view, so that it can be rendered
  */
-abstract class Controller {
-
+abstract class Controller
+{
     /**
      * Parameters specified by the route
      * @var array
@@ -64,17 +64,19 @@ abstract class Controller {
      *
      * @param array $parameters The array returned by $router->matchRequest()
      */
-    public function __construct($parameters) {
+    public function __construct($parameters)
+    {
         $this->parameters = $parameters;
     }
 
     /**
      * Returns the controller that is assigned to a route
      *
-     * @param array $parameters The array returned by $router->matchRequest()
+     * @param  array      $parameters The array returned by $router->matchRequest()
      * @return Controller The controller
      */
-    public static function getController($parameters) {
+    public static function getController($parameters)
+    {
         $parameters = $parameters->all();
         $ref = new ReflectionClass($parameters['_controller'] . 'Controller');
 
@@ -84,10 +86,11 @@ abstract class Controller {
     /**
      * Call the controller's action specified by the $parameters array
      *
-     * @param string|null $action The action name to call, null to invoke the default one
-     * @return Response The action's response
+     * @param  string|null $action The action name to call, null to invoke the default one
+     * @return Response    The action's response
      */
-    public function callAction($action=null) {
+    public function callAction($action=null)
+    {
         if (!$action)
             $action = $this->parameters['_action'];
 
@@ -105,14 +108,16 @@ abstract class Controller {
      * internal one - the user sees the original URL, but a different page
      *
      * @todo Forward the request to another controller
-     * @param string $action The action to forward the request to
-     * @param array $params An additional associative array of parameters to provide to the action
+     * @param  string   $action The action to forward the request to
+     * @param  array    $params An additional associative array of parameters to provide to the action
      * @return Response
      */
-    protected function forward($action, $params=array()) {
+    protected function forward($action, $params=array())
+    {
         $args = array_merge($this->parameters, $params);
 
         $ret = $this->callMethod($action . 'Action', $args);
+
         return $this->handleReturnValue($ret, $action);
     }
 
@@ -121,7 +126,8 @@ abstract class Controller {
      *
      * @return void
      */
-    public function setup() {
+    public function setup()
+    {
     }
 
     /**
@@ -129,7 +135,8 @@ abstract class Controller {
      *
      * @return void
      */
-    public function cleanup() {
+    public function cleanup()
+    {
     }
 
     /**
@@ -139,11 +146,12 @@ abstract class Controller {
      * definition - check the description of the Controller class for more
      * information
      *
-     * @param string $method The name of the method
-     * @param array $parameters An associative array representing the method's parameters
-     * @return mixed The return value of the called method
+     * @param  string $method     The name of the method
+     * @param  array  $parameters An associative array representing the method's parameters
+     * @return mixed  The return value of the called method
     */
-    protected function callMethod($method, $parameters) {
+    protected function callMethod($method, $parameters)
+    {
         $ref = new ReflectionMethod($this, $method);
         $params = array();
 
@@ -152,9 +160,9 @@ abstract class Controller {
                 // The parameter's class is a Model
                 // Get its slug from the request and send a Model to the method
                 $params[] = $model;
-            } else if (isset($parameters[$p->name])) {
+            } elseif (isset($parameters[$p->name])) {
                 $params[] = $parameters[$p->name];
-            } else if ($p->isOptional()) {
+            } elseif ($p->isOptional()) {
                 $params[] = $p->getDefaultValue();
             } else {
                 throw new MissingArgumentException("Missing parameter $p->name");
@@ -167,10 +175,11 @@ abstract class Controller {
     /**
      * Find what to pass as an argument on an action
      *
-     * @param ReflectionParameter $modelParameter The model's parameter we want to investigate
-     * @param array $routeParameters The route's parameters
+     * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
+     * @param array               $routeParameters The route's parameters
      */
-    protected function getModelFromParameters($modelParameter, $routeParameters) {
+    protected function getModelFromParameters($modelParameter, $routeParameters)
+    {
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 
@@ -201,11 +210,12 @@ abstract class Controller {
 
     /**
      * Get a Response from the return value of an action
-     * @param mixed $return Whatever the method returned
-     * @param string $action The name of the action
+     * @param  mixed    $return Whatever the method returned
+     * @param  string   $action The name of the action
      * @return Response The response that the controller wants us to send to the client
      */
-    private function handleReturnValue($return, $action) {
+    private function handleReturnValue($return, $action)
+    {
         if ($return instanceof Response)
             return $return;
 
@@ -215,7 +225,7 @@ abstract class Controller {
             // user, using the array provided to set variables for the template
             $templatePath = $this->getName() . "/$action.html.twig";
             $content = $this->render($templatePath, $return);
-        } else if (is_string($return)) {
+        } elseif (is_string($return)) {
             $content = $return;
         }
 
@@ -226,18 +236,20 @@ abstract class Controller {
      * Returns the name of the controller without the "Controller" part
      * @return string
      */
-    protected function getName() {
+    protected function getName()
+    {
         return preg_replace('/Controller$/', '', get_called_class());
     }
 
     /**
      * Generates a URL from the given parameters.
-     * @param string $name The name of the route
-     * @param mixed $parameters An array of parameters
-     * @param boolean $absolute Whether to generate an absolute URL
-     * @return string The generated URL
+     * @param  string  $name       The name of the route
+     * @param  mixed   $parameters An array of parameters
+     * @param  boolean $absolute   Whether to generate an absolute URL
+     * @return string  The generated URL
      */
-     public static function generate($name, $parameters = array(), $absolute = false) {
+     public static function generate($name, $parameters = array(), $absolute = false)
+     {
         return Service::getGenerator()->generate($name, $parameters, $absolute);
      }
 
@@ -245,22 +257,25 @@ abstract class Controller {
       * Gets the browser's request
       * @return Symfony\Component\HttpFoundation\Request
       */
-    public static function getRequest() {
+    public static function getRequest()
+    {
         return Service::getRequest();
     }
 
     /**
      * Renders a view
-     * @param string $view The view name
-     * @param array $parameters An array of parameters to pass to the view
+     * @param  string $view       The view name
+     * @param  array  $parameters An array of parameters to pass to the view
      * @return string The rendered view
      */
-    protected function render($view, $parameters=array()) {
+    protected function render($view, $parameters=array())
+    {
         $template = Service::getTemplateEngine();
+
         return $template->render($view, $parameters);
     }
 }
 
-
-class MissingArgumentException extends Exception {
+class MissingArgumentException extends Exception
+{
 }

@@ -62,8 +62,7 @@ class Role extends Model
             "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?", "i",
             array($id), "permissions", "name");
 
-        foreach ($permissions as $permission)
-        {
+        foreach ($permissions as $permission) {
             $this->permissions[$permission] = true;
         }
     }
@@ -118,7 +117,7 @@ class Role extends Model
      * Modify a permission a role has by either adding a new one or removing an old one
      *
      * @param string $perm_name The permission to add or remove
-     * @param string $action Whether to "add" or "remove" a permission
+     * @param string $action    Whether to "add" or "remove" a permission
      *
      * @return bool
      */
@@ -132,15 +131,11 @@ class Role extends Model
 
         $permission = new Permission($perm_name);
 
-        if ($permission->isValid())
-        {
-            if ($action == "add")
-            {
+        if ($permission->isValid()) {
+            if ($action == "add") {
                 $this->db->query("INSERT INTO role_permissions (role_id, perm_id) VALUES (?, ?)", "ii",
                     array($this->getId(), $permission->getId()));
-            }
-            else if ($action == "remove")
-            {
+            } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
                     array($this->getId(), $permission->getId()));
             }
@@ -154,8 +149,8 @@ class Role extends Model
     /**
      * Create a new role
      *
-     * @param string $name The name of new role to be created
-     * @param bool $reusable Whether or not to have the role
+     * @param string $name     The name of new role to be created
+     * @param bool   $reusable Whether or not to have the role
      *
      * @return \Role
      */

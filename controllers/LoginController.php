@@ -2,11 +2,12 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-require_once("includes/checkToken.php");
+require_once 'includes/checkToken.php';
 
-class LoginController extends HTMLController {
-
-    public function loginAction(Request $request) {
+class LoginController extends HTMLController
+{
+    public function loginAction(Request $request)
+    {
         $query = $request->query;
         $session = $request->getSession();
 
@@ -51,7 +52,8 @@ class LoginController extends HTMLController {
         }
     }
 
-    public function logoutAction(Request $request) {
+    public function logoutAction(Request $request)
+    {
         $request->getSession()->invalidate();
 
         $loc = "/";

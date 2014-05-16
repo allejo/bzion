@@ -53,8 +53,8 @@ class Message extends Model
      * Construct a new message
      * @param int $id The message's id
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -71,16 +71,18 @@ class Message extends Model
      * Get the content of the message
      * @return string The message itself
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->message;
     }
 
     /**
      * Get a shorter, unformatted version of the message
-     * @param int $maxlength The maximum characters of the summary
+     * @param  int    $maxlength The maximum characters of the summary
      * @return string
      */
-    public function getSummary($maxlength=50) {
+    public function getSummary($maxlength=50)
+    {
         $message = $this->message;
 
         if (mb_strlen($this->message) > $maxlength)
@@ -93,7 +95,8 @@ class Message extends Model
      * Gets the creator of the message
      * @return Player An object representing the message's author
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return new Player($this->player_from);
     }
 
@@ -101,17 +104,18 @@ class Message extends Model
      * Gets a human-readable representation of the time when the message was sent
      * @return string
      */
-    public function getCreationDate() {
+    public function getCreationDate()
+    {
         return $this->timestamp->diffForHumans();
     }
 
     /**
      * Create a new message
      *
-     * @param int $to The id of the group the message is sent to
-     * @param int $from The ID of the sender
-     * @param string $message The body of the message
-     * @param string $status The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
+     * @param  int     $to      The id of the group the message is sent to
+     * @param  int     $from    The ID of the sender
+     * @param  string  $message The body of the message
+     * @param  string  $status  The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
      */
     public static function sendMessage($to, $from, $message, $status='sent')
@@ -131,10 +135,11 @@ class Message extends Model
 
     /**
      * Get all the messages in the database that are not disabled or deleted
-     * @param int $id The id of the group whose messages are being retrieved
+     * @param  int       $id The id of the group whose messages are being retrieved
      * @return Message[] An array of message IDs
      */
-    public static function getMessages($id) {
+    public static function getMessages($id)
+    {
         return self::arrayIdToModel(self::fetchIds("WHERE status NOT IN (?,?) AND group_to = ? ORDER BY timestamp ASC",
                               "ssi", array("hidden", "deleted", $id)));
     }

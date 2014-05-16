@@ -9,8 +9,8 @@
 /**
  * A custom page
  */
-class Page extends AliasModel {
-
+class Page extends AliasModel
+{
     /**
      * The name of the page
      * @var string
@@ -62,8 +62,8 @@ class Page extends AliasModel {
      * Construct a new Page
      * @param int $id The page's id
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -84,7 +84,8 @@ class Page extends AliasModel {
      * Get the title of the page
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -92,7 +93,8 @@ class Page extends AliasModel {
      * Get the raw content of the page
      * @return string
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
@@ -100,7 +102,8 @@ class Page extends AliasModel {
      * Get the page's submission time
      * @return string The time when the page was created in a human-readable format
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created->diffForHumans();
     }
 
@@ -108,7 +111,8 @@ class Page extends AliasModel {
      * Get the time when the page was last updated
      * @return string The page's last update time in a human-readable form
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated->diffForHumans();
     }
 
@@ -116,7 +120,8 @@ class Page extends AliasModel {
      * Get the user who created the page
      * @return Player The page's author
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return new Player($this->author);
     }
 
@@ -124,7 +129,8 @@ class Page extends AliasModel {
      * Get the status of the page
      * @return string
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->status;
     }
 
@@ -132,7 +138,8 @@ class Page extends AliasModel {
      * Find out whether this is the homepage
      * @return bool
      */
-    public function isHomePage() {
+    public function isHomePage()
+    {
         return $this->home;
     }
 
@@ -163,7 +170,8 @@ class Page extends AliasModel {
     /**
      * {@inheritdoc}
      */
-    protected static function getRouteName() {
+    protected static function getRouteName()
+    {
         return "custom_page";
     }
 
@@ -171,7 +179,8 @@ class Page extends AliasModel {
      * Get a list of enabled pages
      * @return Page[] A list of Page IDs
      */
-    public static function getPages() {
+    public static function getPages()
+    {
         return self::arrayIdToModel(
             parent::fetchIdsFrom("status", array("live"), "s")
         );
@@ -180,10 +189,11 @@ class Page extends AliasModel {
      /**
      * Generate a URL-friendly unique alias for a page name
      *
-     * @param string $name The original page name
+     * @param  string      $name The original page name
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    public static function generateAlias($name) {
+    public static function generateAlias($name)
+    {
         $alias = parent::generateAlias($name);
 
         $disallowed_aliases = array("bans", "index", "login", "logout", "matches",
@@ -201,7 +211,8 @@ class Page extends AliasModel {
      * Get the home page
      * @return Page
      */
-    public static function getHomePage() {
+    public static function getHomePage()
+    {
         return new Page(parent::fetchIdFrom(1, "home"));
     }
 

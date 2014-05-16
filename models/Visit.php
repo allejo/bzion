@@ -57,8 +57,8 @@ class Visit extends Model
      * Construct a new Visit
      * @param int $id The visitor's id
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -75,15 +75,16 @@ class Visit extends Model
 
     /**
      * Enter a new visit into the database
-     * @param int $visitor The visitor's id
-     * @param string $ip The visitor's ip address
-     * @param string $host The visitor's host
-     * @param string $user_agent The visitor's user agent
-     * @param string $referrer The HTTP_REFERRER of the visit
-     * @param string $timestamp The timestamp of the visit
-     * @return Visit An object representing the visit that was just entered
+     * @param  int    $visitor    The visitor's id
+     * @param  string $ip         The visitor's ip address
+     * @param  string $host       The visitor's host
+     * @param  string $user_agent The visitor's user agent
+     * @param  string $referrer   The HTTP_REFERRER of the visit
+     * @param  string $timestamp  The timestamp of the visit
+     * @return Visit  An object representing the visit that was just entered
      */
-    public static function enterVisit($visitor, $ip, $host, $user_agent, $referrer, $timestamp = "now") {
+    public static function enterVisit($visitor, $ip, $host, $user_agent, $referrer, $timestamp = "now")
+    {
         $db = Database::getInstance();
 
         $timestamp = new DateTime($timestamp);

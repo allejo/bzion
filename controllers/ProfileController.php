@@ -1,9 +1,11 @@
 <?php
 
-class ProfileController extends HTMLController {
+class ProfileController extends HTMLController
+{
     private $me;
 
-    public function setup() {
+    public function setup()
+    {
         $session = $this->getRequest()->getSession();
 
         if (!$session->has("username")) {
@@ -13,11 +15,13 @@ class ProfileController extends HTMLController {
         $this->me = new Player($session->get("playerId"));
     }
 
-    public function editAction() {
+    public function editAction()
+    {
         return array("player" => $this->me, "countries" => Country::getCountries());
     }
 
-    public function showAction() {
+    public function showAction()
+    {
         return array("player" => $this->me);
     }
 }

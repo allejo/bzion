@@ -9,8 +9,8 @@
 /**
  * A ban imposed by an admin on a player
  */
-class Ban extends Model {
-
+class Ban extends Model
+{
     /**
      * The id of the banned player
      * @var int
@@ -108,7 +108,8 @@ class Ban extends Model {
      * Check whether or not a player is allowed to join a server when they've been banned
      * @return bool Whether or not a player is allowed to join
      */
-    public function allowedServerJoin() {
+    public function allowedServerJoin()
+    {
         return $this->allow_server_join;
     }
 
@@ -116,7 +117,8 @@ class Ban extends Model {
      * Get a literal value to whether or not a player can join the server
      * @return string "Yes" or "No" response
      */
-    public function allowedServerJoinLiteral() {
+    public function allowedServerJoinLiteral()
+    {
         return ($this->allowedServerJoin()) ? "Yes" : "No";
     }
 
@@ -124,7 +126,8 @@ class Ban extends Model {
      * Get the user who imposed the ban
      * @return Player The banner
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return new Player($this->author);
     }
 
@@ -132,7 +135,8 @@ class Ban extends Model {
      * Get the creation time of the ban
      * @return string The creation time in a human readable form
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created->diffForHumans();
     }
 
@@ -142,8 +146,7 @@ class Ban extends Model {
      */
     public function getExpiration()
     {
-        if ($this->hasExpired())
-        {
+        if ($this->hasExpired()) {
             return "Expired";
         }
 
@@ -154,7 +157,8 @@ class Ban extends Model {
      * Get the ban's description
      * @return string
      */
-    public function getReason() {
+    public function getReason()
+    {
         return $this->reason;
     }
 
@@ -164,8 +168,7 @@ class Ban extends Model {
      */
     public function getServerMessage()
     {
-        if ($this->allowedServerJoin())
-        {
+        if ($this->allowedServerJoin()) {
             return "<em>No message available because the player is allowed to join servers to observe.</em>";
         }
 
@@ -176,7 +179,8 @@ class Ban extends Model {
      * Get the IP address of the banned player
      * @return string
      */
-    public function getIpAddresses() {
+    public function getIpAddresses()
+    {
         return $this->ipAddresses;
     }
 
@@ -184,7 +188,8 @@ class Ban extends Model {
      * Get the time when the ban was last updated
      * @return string
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated->diffForHumans();
     }
 
@@ -192,7 +197,8 @@ class Ban extends Model {
      * Get the player who was banned
      * @return Player The banned player
      */
-    public function getVictim() {
+    public function getVictim()
+    {
         return new Player($this->player);
     }
 
@@ -200,7 +206,8 @@ class Ban extends Model {
      * Get the ID of the player who was banned
      * @return int The ID of the victim of the ban
      */
-    public function getVictimID() {
+    public function getVictimID()
+    {
         return $this->player;
     }
 
@@ -211,8 +218,7 @@ class Ban extends Model {
      */
     public function hasExpired()
     {
-        if ($this->isExpired())
-        {
+        if ($this->isExpired()) {
             return true;
         }
 
@@ -224,27 +230,29 @@ class Ban extends Model {
      *
      * @return bool Whether or not the ban has expired
      */
-    public function isExpired() {
+    public function isExpired()
+    {
         return $this->expired;
     }
 
     /**
      * Unban a player
      */
-    public function unban() {
+    public function unban()
+    {
         $this->update("expired", 1);
     }
 
     /**
      * Add a new ban
      *
-     * @param int $playerID The ID of the victim of the ban
-     * @param int $authorID The ID of the player responsible for the ban
-     * @param string|\TimeDate $expiration The expiration of the ban
-     * @param string $reason The full reason for the ban
-     * @param string $srvmsg A summary of the ban to be displayed on server banlists (max 150 characters)
-     * @param string[] $ipAddresses An array of IPs that have been banned
-     * @param bool $allowServerJoin Whether or not
+     * @param int              $playerID        The ID of the victim of the ban
+     * @param int              $authorID        The ID of the player responsible for the ban
+     * @param string|\TimeDate $expiration      The expiration of the ban
+     * @param string           $reason          The full reason for the ban
+     * @param string           $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
+     * @param string[]         $ipAddresses     An array of IPs that have been banned
+     * @param bool             $allowServerJoin Whether or not
      *
      * @return Ban|bool An object representing the ban that was just entered or false if the ban was not created
      */
@@ -254,19 +262,16 @@ class Ban extends Model {
         $author = new Player($authorID);
 
         // Only add the ban if the author is valid and has the permission to add a ban
-        if ($author->isValid() && $author->hasPermission(Permission::ADD_BAN))
-        {
+        if ($author->isValid() && $author->hasPermission(Permission::ADD_BAN)) {
             $player     = new Player($playerID);
             $expiration = new TimeDate($expiration);
 
             // Only ban valid players
-            if ($player->isValid())
-            {
+            if ($player->isValid()) {
                 $player->markAsBanned();
 
                 // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
-                if (empty($srvmsg) || empty($ipAddresses))
-                {
+                if (empty($srvmsg) || empty($ipAddresses)) {
                     $allowServerJoin = true;
                 }
 
@@ -277,15 +282,11 @@ class Ban extends Model {
 
                 $ban = new Ban($db->getInsertId());
 
-                if (is_array($ipAddresses))
-                {
-                    foreach ($ipAddresses as $ip)
-                    {
+                if (is_array($ipAddresses)) {
+                    foreach ($ipAddresses as $ip) {
                         $ban->addIP($ip);
                     }
-                }
-                else
-                {
+                } else {
                     $ban->addIP($ipAddresses);
                 }
 
@@ -300,7 +301,8 @@ class Ban extends Model {
      * Get all the bans in the database that aren't disabled or deleted
      * @return Ban[] An array of ban objects
      */
-    public static function getBans() {
+    public static function getBans()
+    {
         return self::arrayIdToModel(self::fetchIds("ORDER BY updated DESC"));
     }
 

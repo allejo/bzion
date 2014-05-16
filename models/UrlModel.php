@@ -9,13 +9,14 @@
 /**
  * A Model that has a URL
  */
-abstract class UrlModel extends Model {
-
+abstract class UrlModel extends Model
+{
     /**
      * Get the name of the route that shows the object
      * @return string
      */
-    static protected function getRouteName() {
+    protected static function getRouteName()
+    {
         return self::toSnakeCase(get_called_class()) . "_show";
     }
 
@@ -23,7 +24,8 @@ abstract class UrlModel extends Model {
      * Get the name of the object's parameter in the route
      * @return string
      */
-    static public function getParamName() {
+    public static function getParamName()
+    {
         return self::toSnakeCase(get_called_class());
     }
 
@@ -32,7 +34,8 @@ abstract class UrlModel extends Model {
      * @param $input The string to convert
      * @return string
      */
-    static private function toSnakeCase($input) {
+    private static function toSnakeCase($input)
+    {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
 
@@ -50,7 +53,8 @@ abstract class UrlModel extends Model {
      *
      * @return string A permanent link
      */
-    public function getURL($absolute=false) {
+    public function getURL($absolute=false)
+    {
         return static::getPermaLink($absolute);
     }
 
@@ -61,7 +65,8 @@ abstract class UrlModel extends Model {
      *
      * @return string A permanent link
      */
-    public function getPermaLink($absolute=false) {
+    public function getPermaLink($absolute=false)
+    {
         return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getId()), $absolute);
     }
 }

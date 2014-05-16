@@ -52,7 +52,8 @@ class Invitation extends Model
      * Construct a new invite
      * @param int $id The invite's id
      */
-    public function __construct($id) {
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -67,13 +68,14 @@ class Invitation extends Model
 
     /**
      * Send an invitation to join a team
-     * @param int $to The ID of the player who will receive the invitation
-     * @param int $from The ID of the player who sent it
-     * @param int $teamid The team ID to which a player has been invited to
-     * @param string $message (Optional) The message that will be displayed to the person receiving the invitation
+     * @param  int        $to      The ID of the player who will receive the invitation
+     * @param  int        $from    The ID of the player who sent it
+     * @param  int        $teamid  The team ID to which a player has been invited to
+     * @param  string     $message (Optional) The message that will be displayed to the person receiving the invitation
      * @return Invitation The object of the invitation just sent
      */
-    public static function sendInvite($to, $from, $teamid, $message = "") {
+    public static function sendInvite($to, $from, $teamid, $message = "")
+    {
         $db = Database::getInstance();
         $db->query("INSERT INTO invitations VALUES (NULL, ?, ?, ?, ADDDATE(NOW(), INTERVAL 7 DAY), ?)", "iis", array($to, $from, $teamid, $message));
 

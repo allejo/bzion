@@ -172,12 +172,9 @@ class Match extends Model
      */
     public function getMatchDescription($teamID)
     {
-        if ($this->getScore($teamID) > $this->getOpponentScore($teamID))
-        {
+        if ($this->getScore($teamID) > $this->getOpponentScore($teamID)) {
             return "win";
-        }
-        else if ($this->getScore($teamID) < $this->getOpponentScore($teamID))
-        {
+        } elseif ($this->getScore($teamID) < $this->getOpponentScore($teamID)) {
             return "loss";
         }
 
@@ -193,8 +190,7 @@ class Match extends Model
      */
     public function getScore($teamID)
     {
-        if ($this->getTeamA()->getId() == $teamID)
-        {
+        if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamAPoints();
         }
 
@@ -210,8 +206,7 @@ class Match extends Model
      */
     public function getOpponentScore($teamID)
     {
-        if ($this->getTeamA()->getId() != $teamID)
-        {
+        if ($this->getTeamA()->getId() != $teamID) {
             return $this->getTeamAPoints();
         }
 
@@ -227,8 +222,7 @@ class Match extends Model
      */
     public function getOpponent($teamID)
     {
-        if ($this->getTeamA()->getId() == $teamID)
-        {
+        if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamB();
         }
 
@@ -239,7 +233,8 @@ class Match extends Model
      * Get the timestamp of the match
      * @return string The match's timestamp
      */
-    public function getTimestamp() {
+    public function getTimestamp()
+    {
         return $this->timestamp->diffForHumans();
     }
 
@@ -247,7 +242,8 @@ class Match extends Model
      * Get the first team involved in the match
      * @return Team Team A's id
      */
-    public function getTeamA() {
+    public function getTeamA()
+    {
         return new Team($this->team_a);
     }
 
@@ -255,7 +251,8 @@ class Match extends Model
      * Get the second team involved in the match
      * @return Team Team B's id
      */
-    public function getTeamB() {
+    public function getTeamB()
+    {
         return new Team($this->team_b);
     }
 
@@ -263,18 +260,17 @@ class Match extends Model
      * Get the list of players on Team A who participated in this match
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
-    public function getTeamAPlayers() {
+    public function getTeamAPlayers()
+    {
         $team_A_Players = array();
 
-        if ($this->team_a_players == null)
-        {
+        if ($this->team_a_players == null) {
             return null;
         }
 
         $BZIDs = explode(",", $this->team_a_players);
 
-        foreach ($BZIDs as $bzid)
-        {
+        foreach ($BZIDs as $bzid) {
             $team_A_Players[] = Player::getFromBZID($bzid);
         }
 
@@ -285,18 +281,17 @@ class Match extends Model
      * Get the list of players on Team B who participated in this match
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
-    public function getTeamBPlayers() {
+    public function getTeamBPlayers()
+    {
         $team_B_Players = array();
 
-        if ($this->team_b_players == null)
-        {
+        if ($this->team_b_players == null) {
             return null;
         }
 
         $BZIDs = explode(",", $this->team_b_players);
 
-        foreach ($BZIDs as $bzid)
-        {
+        foreach ($BZIDs as $bzid) {
             $team_B_Players[] = Player::getFromBZID($bzid);
         }
 
@@ -307,7 +302,8 @@ class Match extends Model
      * Get the first team's points
      * @return int Team A's points
      */
-    public function getTeamAPoints() {
+    public function getTeamAPoints()
+    {
         return $this->team_a_points;
     }
 
@@ -315,7 +311,8 @@ class Match extends Model
      * Get the second team's points
      * @return int Team B's points
      */
-    public function getTeamBPoints() {
+    public function getTeamBPoints()
+    {
         return $this->team_b_points;
     }
 
@@ -323,7 +320,8 @@ class Match extends Model
      * Get the ELO difference applied to each team's old ELO
      * @return int The ELO difference
      */
-    public function getEloDiff() {
+    public function getEloDiff()
+    {
         return $this->elo_diff;
     }
 
@@ -331,7 +329,8 @@ class Match extends Model
      * Get the first team's new ELO
      * @return int Team A's new ELO
      */
-    public function getTeamAEloNew() {
+    public function getTeamAEloNew()
+    {
         return $this->team_a_elo_new;
     }
 
@@ -339,7 +338,8 @@ class Match extends Model
      * Get the second team's new ELO
      * @return int Team B's new ELO
      */
-    public function getTeamBEloNew() {
+    public function getTeamBEloNew()
+    {
         return $this->team_b_elo_new;
     }
 
@@ -356,7 +356,8 @@ class Match extends Model
      * Get a JSON decoded array of events that occurred during the match
      * @return mixed|null Returns null if there were no events recorded for the match
      */
-    public function getMatchDetails() {
+    public function getMatchDetails()
+    {
         return json_decode($this->match_details);
     }
 
@@ -366,8 +367,7 @@ class Match extends Model
      */
     public function getServerAddress()
     {
-        if ($this->port == null || $this->server == null)
-        {
+        if ($this->port == null || $this->server == null) {
             return null;
         }
 
@@ -376,13 +376,12 @@ class Match extends Model
 
     /**
      * Get the name of the replay file for this specific map
-     * @param int $length The length of the replay file name; it will be truncated
+     * @param  int         $length The length of the replay file name; it will be truncated
      * @return string|null Returns null if there was no replay file name recorded
      */
     public function getReplayFileName($length = 0)
     {
-        if ($length > 0)
-        {
+        if ($length > 0) {
             return substr($this->replay_file, 0, $length);
         }
 
@@ -393,7 +392,8 @@ class Match extends Model
      * Get the match duration
      * @return int The duration
      */
-    public function getDuration() {
+    public function getDuration()
+    {
         return $this->duration;
     }
 
@@ -401,7 +401,8 @@ class Match extends Model
      * Get the user who entered the match
      * @return Player
      */
-    public function getEnteredBy() {
+    public function getEnteredBy()
+    {
         return new Player($this->entered_by);
     }
 
@@ -409,22 +410,24 @@ class Match extends Model
      * Determine whether the match was a draw
      * @return bool True if the match ended without any winning teams
      */
-    public function isDraw() {
+    public function isDraw()
+    {
         return $this->team_a_points == $this->team_b_points;
     }
 
     /**
      * Enter a new match to the database
-     * @param int $a Team A's ID
-     * @param int $b Team B's ID
-     * @param int $a_points Team A's match points
-     * @param int $b_points Team B's match points
-     * @param int $duration The match duration in minutes
+     * @param  int    $a         Team A's ID
+     * @param  int    $b         Team B's ID
+     * @param  int    $a_points  Team A's match points
+     * @param  int    $b_points  Team B's match points
+     * @param  int    $duration  The match duration in minutes
      * @param $entered_by
-     * @param string $timestamp When the match was played
-     * @return Match An object representing the match that was just entered
+     * @param  string $timestamp When the match was played
+     * @return Match  An object representing the match that was just entered
      */
-    public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now") {
+    public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now")
+    {
         $db = Database::getInstance();
 
         $team_a = new Team($a);
@@ -471,18 +474,19 @@ class Match extends Model
      * Computes the absolute value of the ELO score difference on each team
      * after a match, based on GU League's rules.
      *
-     * @param int $a_elo Team A's current ELO score
-     * @param int $b_elo Team B's current ELO score
-     * @param int $a_points Team A's match points
-     * @param int $b_points Team B's match points
-     * @param int $duration The match duration in minutes
+     * @param  int $a_elo    Team A's current ELO score
+     * @param  int $b_elo    Team B's current ELO score
+     * @param  int $a_points Team A's match points
+     * @param  int $b_points Team B's match points
+     * @param  int $duration The match duration in minutes
      * @return int The ELO score difference
      */
-    public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration) {
+    public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration)
+    {
         $prob = 1.0 / (1 + pow(10, (($b_elo-$a_elo)/400.0)));
         if ($a_points > $b_points) {
            $diff = 50*(1-$prob);
-        } else if ($a_points == $b_points) {
+        } elseif ($a_points == $b_points) {
             $diff = 50*(0.5-$prob);
         } else {
             $diff = 50*(0-$prob);
@@ -501,11 +505,12 @@ class Match extends Model
 
     /**
      * Get all the matches in the database that aren't disabled or deleted
-     * @param int $start The offset used when fetching matches, i.e. the starting point
-     * @param int $limit The amount of matches to be retrieved
+     * @param  int     $start The offset used when fetching matches, i.e. the starting point
+     * @param  int     $limit The amount of matches to be retrieved
      * @return Match[] An array of match IDs
      */
-    public static function getMatches($start = 0, $limit = 50) {
+    public static function getMatches($start = 0, $limit = 50)
+    {
         return self::arrayIdToModel(
             parent::fetchIdsFrom(
                 "status", array("disabled", "deleted"), "s", true,
@@ -518,8 +523,8 @@ class Match extends Model
      * Get the matches that a team took part of
      *
      * @param int $teamID The team ID of whose matches to search for
-     * @param int $start The offset used when fetching matches, i.e. the starting point
-     * @param int $limit The amount of matches to be retrieved
+     * @param int $start  The offset used when fetching matches, i.e. the starting point
+     * @param int $limit  The amount of matches to be retrieved
      *
      * @return Match[] An array of matches where the team participated in
      */

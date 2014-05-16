@@ -113,7 +113,8 @@ class Team extends AliasModel
      *
      * @param int $id The team's id
      */
-    public function __construct($id) {
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid)
             return;
@@ -142,7 +143,8 @@ class Team extends AliasModel
      *
      * @param int $id The id of the player to add to the team
      */
-    public function addMember($id) {
+    public function addMember($id)
+    {
         $this->db->query("UPDATE players SET team=? WHERE id=?", "ii", array(
                 $this->id,
                 $id
@@ -155,7 +157,8 @@ class Team extends AliasModel
      *
      * @param int $adjust The value to be added to the current ELO (negative to substract)
      */
-    public function changeElo($adjust) {
+    public function changeElo($adjust)
+    {
         $this->elo += $adjust;
         $this->update("elo", $this->elo, "i");
     }
@@ -163,23 +166,27 @@ class Team extends AliasModel
     /**
      * Increment the team's match count
      *
-     * @param int $adjust The number to add to the current matches number (negative to substract)
-     * @param string $type The match count that should be changed. Can be 'win', 'draw' or 'loss'
+     * @param int    $adjust The number to add to the current matches number (negative to substract)
+     * @param string $type   The match count that should be changed. Can be 'win', 'draw' or 'loss'
      */
-    public function changeMatchCount($adjust, $type) {
+    public function changeMatchCount($adjust, $type)
+    {
         $this->matches_total += $adjust;
 
         switch ($type) {
             case "win":
             case "won":
                 $this->update("matches_won", $this->matches_won += $adjust, "i");
+
                 return;
             case "loss":
             case "lost":
                 $this->update("matches_lost", $this->matches_lost += $adjust, "i");
+
                 return;
             default:
                 $this->update("matches_draw", $this->matches_draw += $adjust, "i");
+
                 return;
         }
     }
@@ -189,7 +196,8 @@ class Team extends AliasModel
      *
      * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
      */
-    public function decrementMatchCount($type) {
+    public function decrementMatchCount($type)
+    {
         $this->changeMatchCount(-1, $type);
     }
 
@@ -198,7 +206,8 @@ class Team extends AliasModel
      *
      * @return string The team's activity formated to two decimal places
      */
-    public function getActivity() {
+    public function getActivity()
+    {
         return sprintf("%.2f", $this->activity);
     }
 
@@ -227,7 +236,8 @@ class Team extends AliasModel
      *
      * @return string The creation date of the team
      */
-    public function getCreationDate() {
+    public function getCreationDate()
+    {
         return $this->created->diffForHumans();
     }
 
@@ -236,7 +246,8 @@ class Team extends AliasModel
      *
      * @return int The elo of the team
      */
-    public function getElo() {
+    public function getElo()
+    {
         return $this->elo;
     }
 
@@ -245,7 +256,8 @@ class Team extends AliasModel
      *
      * @return Player The object representing the team leader
      */
-    public function getLeader() {
+    public function getLeader()
+    {
         return new Player($this->leader);
     }
 
@@ -253,7 +265,8 @@ class Team extends AliasModel
      * Generate the HTML for a hyperlink to link to a team's profile
      * @return string The HTML hyperlink to a team's profile
      */
-    public function getLinkLiteral() {
+    public function getLinkLiteral()
+    {
         return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
     }
 
@@ -265,7 +278,8 @@ class Team extends AliasModel
      *
      * @return Match[] The array of match IDs this team has participated in
      */
-    public function getMatches($count = 5, $offset = 0) {
+    public function getMatches($count = 5, $offset = 0)
+    {
         return Match::getMatchesByTeam($this->id, $offset, $count);
     }
 
@@ -294,7 +308,8 @@ class Team extends AliasModel
      *
      * @return string The team's list of matches
      */
-    public function getMatchesURL() {
+    public function getMatchesURL()
+    {
         return Service::getGenerator()->generate("match_by_team_list", array("team" => $this->getAlias()));
     }
 
@@ -313,7 +328,8 @@ class Team extends AliasModel
      *
      * @return Player[] The members on the team
      */
-    public function getMembers() {
+    public function getMembers()
+    {
         return Player::getTeamMembers($this->id);
     }
 
@@ -322,7 +338,8 @@ class Team extends AliasModel
      *
      * @return string The name of the team
      */
-    public function getName() {
+    public function getName()
+    {
         if (!$this->valid)
             return "<em>None</em>";
         return $this->name;
@@ -333,7 +350,8 @@ class Team extends AliasModel
      *
      * @return int The number of members on the team
      */
-    public function getNumMembers() {
+    public function getNumMembers()
+    {
         return $this->members;
     }
 
@@ -342,7 +360,8 @@ class Team extends AliasModel
      *
      * @return int The total number of matches this team has played
      */
-    public function getNumTotalMatches() {
+    public function getNumTotalMatches()
+    {
         return $this->matches_total;
     }
 
@@ -381,7 +400,8 @@ class Team extends AliasModel
      *
      * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
      */
-    public function incrementMatchCount($type) {
+    public function incrementMatchCount($type)
+    {
         $this->changeMatchCount(1, $type);
     }
 
@@ -393,7 +413,8 @@ class Team extends AliasModel
      *
      * @param int $id The id of the player to remove
      */
-    public function removeMember($id) {
+    public function removeMember($id)
+    {
         $this->db->query("UPDATE players SET team=NULL WHERE id=?", "i", array(
             $id
         ));
@@ -403,13 +424,14 @@ class Team extends AliasModel
     /**
      * Create a new team
      *
-     * @param string $name The name of the team
-     * @param int $leader The ID of the person creating the team, also the leader
-     * @param string $avatar The URL to the team's avatar
-     * @param string $description The team's description
-     * @return Team An object that represents the newly created team
+     * @param  string $name        The name of the team
+     * @param  int    $leader      The ID of the person creating the team, also the leader
+     * @param  string $avatar      The URL to the team's avatar
+     * @param  string $description The team's description
+     * @return Team   An object that represents the newly created team
      */
-    public static function createTeam($name, $leader, $avatar, $description) {
+    public static function createTeam($name, $leader, $avatar, $description)
+    {
         $alias = self::generateAlias($name);
 
         $db = Database::getInstance();

@@ -59,8 +59,8 @@ class Server extends Model
      * Construct a new Server
      * @param int $id The server's id
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -76,12 +76,13 @@ class Server extends Model
     /**
      * Add a new server
      *
-     * @param string $name The name of the server
-     * @param string $address The address of the server (e.g: server.com:5155)
-     * @param int $owner The ID of the server owner
+     * @param  string $name    The name of the server
+     * @param  string $address The address of the server (e.g: server.com:5155)
+     * @param  int    $owner   The ID of the server owner
      * @return Server An object that represents the sent message
      */
-    public static function addServer($name, $address, $owner) {
+    public static function addServer($name, $address, $owner)
+    {
         $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW(), 'active')";
         $params = array($name, $address, $owner);
 
@@ -97,7 +98,8 @@ class Server extends Model
     /**
      * Update the server with current bzfquery information
      */
-    public function forceUpdate() {
+    public function forceUpdate()
+    {
         $this->info = bzfquery($this->address);
         $this->updated = TimeDate::now();
         $this->db->query("UPDATE servers SET info = ?, updated = NOW() WHERE id = ?", "si", array(serialize($this->info), $this->id));
@@ -107,7 +109,8 @@ class Server extends Model
      * Checks if the server is online (listed on the public list server)
      * @return bool Whether the server is online
      */
-    public function isOnline() {
+    public function isOnline()
+    {
         $servers = file(LIST_SERVER);
         foreach ($servers as $server) {
             list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
@@ -115,6 +118,7 @@ class Server extends Model
                 return true;
             }
         }
+
         return false;
     }
 
@@ -122,7 +126,8 @@ class Server extends Model
      * Checks if the server has players
      * @return bool Whether the server has any players
      */
-    public function hasPlayers() {
+    public function hasPlayers()
+    {
         return $this->info['numPlayers'] > 0;
     }
 
@@ -130,7 +135,8 @@ class Server extends Model
      * Gets the number of players on the server
      * @return int The number of players
      */
-    public function numPlayers() {
+    public function numPlayers()
+    {
         return $this->info['numPlayers'];
     }
 
@@ -138,7 +144,8 @@ class Server extends Model
      * Gets the players on the server
      * @return array The players on the server
      */
-    public function getPlayers() {
+    public function getPlayers()
+    {
         if (isset($this->info['player']))
             return $this->info['player'];
 
@@ -149,9 +156,11 @@ class Server extends Model
      * Checks if the last update is older than or equal to the update interval
      * @return bool Whether the information is older than the update interval
      */
-    public function staleInfo() {
+    public function staleInfo()
+    {
         $update_time = $this->updated->copy();
         $update_time->addMinutes(UPDATE_INTERVAL);
+
         return TimeDate::now()->gte($update_time);
     }
 
@@ -159,7 +168,8 @@ class Server extends Model
      * Gets the server's ip address
      * @return string The server's ip address
      */
-    public function getServerIp() {
+    public function getServerIp()
+    {
         return $this->info['ip'];
     }
 
@@ -167,7 +177,8 @@ class Server extends Model
      * Get the server's name
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -175,7 +186,8 @@ class Server extends Model
      * Get the server's IP address or hostname
      * @return string
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
@@ -183,7 +195,8 @@ class Server extends Model
      * Get when the server information was last updated
      * @return string
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated->format(DATE_FORMAT);
     }
 
@@ -192,7 +205,8 @@ class Server extends Model
      * last updated in a human-readable form
      * @return string
      */
-    public function lastUpdate() {
+    public function lastUpdate()
+    {
         return $this->updated->diffForHumans();
     }
 
@@ -200,7 +214,8 @@ class Server extends Model
      * Get all the servers in the database that have an active status
      * @return Server[] An array of server objects
      */
-    public static function getServers() {
+    public static function getServers()
+    {
         return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s"));
     }
 

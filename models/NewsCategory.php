@@ -60,8 +60,7 @@ class NewsCategory extends AliasModel
         $articles = News::fetchIdsFrom("category", $this->getId(), 'i');
 
         // Only delete a category if it is not protected and is not being used
-        if (!$this->isProtected() && count($articles) == 0)
-        {
+        if (!$this->isProtected() && count($articles) == 0) {
             parent::delete();
         }
     }
@@ -73,8 +72,7 @@ class NewsCategory extends AliasModel
      */
     public function disableCategory()
     {
-        if ($this->getStatus() != "disabled")
-        {
+        if ($this->getStatus() != "disabled") {
             return $this->update("status", "disabled", 's');
         }
 
@@ -88,8 +86,7 @@ class NewsCategory extends AliasModel
      */
     public function enableCategory()
     {
-        if ($this->getStatus() != "enabled")
-        {
+        if ($this->getStatus() != "enabled") {
             return $this->update("status", "enabled", 's');
         }
 
@@ -120,15 +117,16 @@ class NewsCategory extends AliasModel
      * Generate the HTML for a hyperlink to link to a categorys's page
      * @return string The HTML hyperlink to the category
      */
-    public function getLinkLiteral() {
+    public function getLinkLiteral()
+    {
         return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
     }
 
     /**
      * Get all the news entries in the category that aren't disabled or deleted
      *
-     * @param int $start The offset used when fetching matches, i.e. the starting point
-     * @param int $limit The amount of matches to be retrieved
+     * @param int  $start     The offset used when fetching matches, i.e. the starting point
+     * @param int  $limit     The amount of matches to be retrieved
      * @param bool $getDrafts Whether or not to fetch drafts
      *
      * @return News[] An array of news objects
@@ -137,8 +135,7 @@ class NewsCategory extends AliasModel
     {
         $ignoredStatuses = "";
 
-        if (!$getDrafts)
-        {
+        if (!$getDrafts) {
             $ignoredStatuses = "'draft', ";
         }
 
@@ -199,7 +196,8 @@ class NewsCategory extends AliasModel
     /**
      * {@inheritDoc}
      */
-    public static function getParamName() {
+    public static function getParamName()
+    {
         return "category";
     }
 }

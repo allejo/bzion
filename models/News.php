@@ -9,7 +9,8 @@
 /**
  * A news article
  */
-class News extends Model {
+class News extends Model
+{
     /**
      * The category of the article
      * @var int
@@ -88,7 +89,8 @@ class News extends Model {
      * Get the author of the news article
      * @return Player The author of the post
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return new Player($this->author);
     }
 
@@ -96,7 +98,8 @@ class News extends Model {
      * Get the user ID of the author who wrote this article
      * @return int The author ID
      */
-    public function getAuthorID() {
+    public function getAuthorID()
+    {
         return $this->author;
     }
 
@@ -104,7 +107,8 @@ class News extends Model {
      * Get the category of the news article
      * @return NewsCategory The category of the post
      */
-    public function getCategory() {
+    public function getCategory()
+    {
         return new NewsCategory($this->category);
     }
 
@@ -112,7 +116,8 @@ class News extends Model {
      * Get the database ID from the category the article belongs into
      * @return int The category ID
      */
-    public function getCategoryID() {
+    public function getCategoryID()
+    {
         return $this->category;
     }
 
@@ -120,7 +125,8 @@ class News extends Model {
      * Get the content of the article
      * @return string The raw content of the article
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
@@ -128,7 +134,8 @@ class News extends Model {
      * Get the time when the article was submitted
      * @return string The article's creation time in a human-readable form
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created->diffForHumans();
     }
 
@@ -136,7 +143,8 @@ class News extends Model {
      * Get the time when the article was last updated
      * @return string The article's last update time in a human-readable form
      */
-    public function getLastEdit() {
+    public function getLastEdit()
+    {
         return $this->updated->diffForHumans();
     }
 
@@ -144,7 +152,8 @@ class News extends Model {
      * Get the last editor of the post
      * @return Player A Player object of the last editor
      */
-    public function getLastEditor() {
+    public function getLastEditor()
+    {
         return new Player($this->editor);
     }
 
@@ -152,7 +161,8 @@ class News extends Model {
      * Get the ID of the person who last edited the article
      * @return int The ID of the last editor
      */
-    public function getLastEditorID() {
+    public function getLastEditorID()
+    {
         return $this->editor;
     }
 
@@ -160,7 +170,8 @@ class News extends Model {
      * Get the status of the post
      * @return string The string representation of the post's status
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->status;
     }
 
@@ -168,17 +179,18 @@ class News extends Model {
      * Get the subject of the news article
      * @return string
      */
-    public function getSubject() {
+    public function getSubject()
+    {
         return $this->subject;
     }
 
     /**
      * Update an existing news article
      *
-     * @param string $subject The new or current subject of the post
-     * @param string $content The new or current content of the post
-     * @param int $editorID The ID of the person editing the post
-     * @param string $status The new or current status of the post
+     * @param string $subject  The new or current subject of the post
+     * @param string $content  The new or current content of the post
+     * @param int    $editorID The ID of the person editing the post
+     * @param string $status   The new or current status of the post
      *
      * @return bool Whether or not the update was successful
      */
@@ -186,8 +198,7 @@ class News extends Model {
     {
         $author = new Player($editorID);
 
-        if ($author->isValid() && $author->hasPermission(Permission::EDIT_NEWS))
-        {
+        if ($author->isValid() && $author->hasPermission(Permission::EDIT_NEWS)) {
             $errorCount = 0;
 
             if ($this->updateSubject($subject))     $errorCount++;
@@ -212,8 +223,7 @@ class News extends Model {
      */
     public function updateContent($content)
     {
-        if ($this->getContent() != $content)
-        {
+        if ($this->getContent() != $content) {
             return $this->update("content", $content);
         }
 
@@ -225,7 +235,8 @@ class News extends Model {
      *
      * @return bool Will only return false if there was error when updating the database
      */
-    public function updateEditTimestamp() {
+    public function updateEditTimestamp()
+    {
         return $this->update("updated", "NOW()");
     }
 
@@ -238,8 +249,7 @@ class News extends Model {
      */
     public function updateLastEditor($editorID)
     {
-        if ($this->getLastEditorID() != $editorID)
-        {
+        if ($this->getLastEditorID() != $editorID) {
             return $this->update("author", $editorID);
         }
 
@@ -255,8 +265,7 @@ class News extends Model {
      */
     public function updateStatus($status = 'published')
     {
-        if ($this->getStatus() != $status)
-        {
+        if ($this->getStatus() != $status) {
             return $this->update("status", $status);
         }
 
@@ -272,8 +281,7 @@ class News extends Model {
      */
     public function updateSubject($subject)
     {
-        if ($this->getSubject() != $subject)
-        {
+        if ($this->getSubject() != $subject) {
             return $this->update("subject", $subject);
         }
 
@@ -283,11 +291,11 @@ class News extends Model {
     /**
      * Add a new news article
      *
-     * @param string $subject The subject of the article
-     * @param string $content The content of the article
-     * @param int $authorID The ID of the author
-     * @param int $categoryId The ID of the category this article will be published under
-     * @param string $status The status of the article: 'published', 'disabled', or 'deleted'
+     * @param string $subject    The subject of the article
+     * @param string $content    The content of the article
+     * @param int    $authorID   The ID of the author
+     * @param int    $categoryId The ID of the category this article will be published under
+     * @param string $status     The status of the article: 'published', 'disabled', or 'deleted'
      *
      * @internal param int $categoryID The ID of the category
      * @return News|bool An object representing the article that was just created or false if the article was not created
@@ -298,8 +306,7 @@ class News extends Model {
         $author = new Player($authorID);
 
         // Only allow real players to post news articles and if the player posting has permissions to create new posts
-        if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS))
-        {
+        if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS)) {
             $db->query(
                 "INSERT INTO news (id, category, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, ?, NOW(), NOW(), ?, ?, ?)",
                 "issiis", array($categoryId, $subject, $content, $authorID, $authorID, $status)
@@ -316,8 +323,8 @@ class News extends Model {
     /**
      * Get all the news entries in the database that aren't disabled or deleted
      *
-     * @param int $start The offset used when fetching matches, i.e. the starting point
-     * @param int $limit The amount of matches to be retrieved
+     * @param int  $start     The offset used when fetching matches, i.e. the starting point
+     * @param int  $limit     The amount of matches to be retrieved
      * @param bool $getDrafts Whether or not to fetch drafts
      *
      * @return News[] An array of news objects
@@ -326,8 +333,7 @@ class News extends Model {
     {
         $ignoredStatuses[] = "deleted";
 
-        if (!$getDrafts)
-        {
+        if (!$getDrafts) {
             $ignoredStatuses[] = "draft";
         }
 

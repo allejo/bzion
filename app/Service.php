@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-abstract class Service {
+abstract class Service
+{
     /**
      * Symfony's URL Generator
      * @var UrlGeneratorInterface;
@@ -33,43 +34,50 @@ abstract class Service {
     /**
      * @param Request $request
      */
-    public static function setRequest($request) {
+    public static function setRequest($request)
+    {
         self::$request = $request;
     }
 
-    public static function getRequest() {
+    public static function getRequest()
+    {
         if (!self::$request) {
             $request = Request::createFromGlobals();
             $request->setSession(self::getNewSession());
             self::setRequest($request);
         }
+
         return self::$request;
     }
 
     /**
      * Sets the URL Generator.
-     * @param UrlGeneratorInterface $generator
+     * @param  UrlGeneratorInterface $generator
      * @return void
      */
-    public static function setGenerator($generator) {
+    public static function setGenerator($generator)
+    {
         self::$generator = $generator;
     }
 
-    public static function getGenerator() {
+    public static function getGenerator()
+    {
         return self::$generator;
     }
 
     /**
      * @param SessionInterface $session
      */
-    public static function setSession($session) {
+    public static function setSession($session)
+    {
         self::getRequest()->setSession($session);
     }
 
     /**
      * @return SessionInterface
      */
-    public static function getSession() {
+    public static function getSession()
+    {
         return self::getRequest()->getSession();
     }
 
@@ -77,17 +85,21 @@ abstract class Service {
      * Create a new session
      * @return Session
      */
-    public static function getNewSession() {
+    public static function getNewSession()
+    {
         $newSession = new Session();
         $newSession->start();
+
         return $newSession;
     }
 
-    public static function getTemplateEngine() {
+    public static function getTemplateEngine()
+    {
         return self::$templateEngine;
     }
 
-    public static function setTemplateEngine($templateEngine) {
+    public static function setTemplateEngine($templateEngine)
+    {
         self::$templateEngine = $templateEngine;
     }
 }

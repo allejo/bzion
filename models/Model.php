@@ -9,8 +9,8 @@
 /**
  * A database object (e.g. A player or a team)
  */
-abstract class Model {
-
+abstract class Model
+{
     /**
      * The Database ID of the object
      * @var int
@@ -58,15 +58,17 @@ abstract class Model {
      * $this->db->query function. If the $id is specified as 0, then an
      * invalid object will be returned
      *
-     * @param int $id The ID of the object to look for
+     * @param int    $id     The ID of the object to look for
      * @param string $column The column to use to identify separate database entries
      */
-    public function __construct($id, $column = "id") {
+    public function __construct($id, $column = "id")
+    {
         $this->db = Database::getInstance();
 
         if ($id == 0) {
             $this->valid  = false;
             $this->result = array();
+
             return;
         }
 
@@ -88,13 +90,14 @@ abstract class Model {
     /**
      * Update a database field
      *
-     * @param string $name The name of the column
-     * @param mixed $value The value to set the column to
-     * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
+     * @param string $name  The name of the column
+     * @param mixed  $value The value to set the column to
+     * @param string $type  The type of the value, can be 's' (string) , 'i' (integer) , 'd' (double) or 'b' (blob)
      *
      * @return bool Whether or not the query was successful
      */
-    public function update($name, $value, $type='i') {
+    public function update($name, $value, $type='i')
+    {
         $this->db->query("UPDATE ". static::TABLE . " SET `$name` = ? WHERE id = ?", $type."i", array($value, $this->id));
 
         return $this->db->getQuerySuccess();
@@ -107,14 +110,16 @@ abstract class Model {
      * it only hides it from users. You should overload this function if your object
      * does not have a 'status' column which can be set to 'deleted'.
      */
-    public function delete() {
+    public function delete()
+    {
         $this->update('status', 'deleted');
     }
 
     /**
      * Permanently delete the object from the database
      */
-    public function wipe() {
+    public function wipe()
+    {
         $this->db->query("DELETE FROM " . static::TABLE . " WHERE id = ?", "i", array($this->id));
     }
 
@@ -122,7 +127,8 @@ abstract class Model {
      * Get an object's database ID
      * @return int The ID
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -130,18 +136,20 @@ abstract class Model {
      * See if an object is valid
      * @return bool
      */
-    public function isValid() {
+    public function isValid()
+    {
         return $this->valid;
     }
 
     /**
      * Gets the id of a database row which has a specific value on a column
-     * @param string $value The value which the column should be equal to
-     * @param string $column The name of the database column
-     * @param string $type The type of the value, can be 's' (string), 'i' (integer), 'd' (double) or 'b' (blob)
-     * @return int The ID of the object
+     * @param  string $value  The value which the column should be equal to
+     * @param  string $column The name of the database column
+     * @param  string $type   The type of the value, can be 's' (string) , 'i' (integer) , 'd' (double) or 'b' (blob)
+     * @return int    The ID of the object
      */
-    protected static function fetchIdFrom($value, $column, $type="s") {
+    protected static function fetchIdFrom($value, $column, $type="s")
+    {
         $results = self::fetchIdsFrom($column, $value, $type, false, "LIMIT 1");
 
         // Return the id or 0 if nothing was found
@@ -152,14 +160,15 @@ abstract class Model {
      * Gets an array of object IDs from the database
      *
      * @param string $additional_query Additional query snippet passed to the MySQL query after the SELECT statement (e.g. `WHERE id = ?`)
-     * @param string $types The types of values that will be passed to Database::query()
-     * @param array $params The parameter values that will be passed to Database::query() corresponding to $types
-     * @param string $table The database table that will be searched
-     * @param string $select The column that will be returned
+     * @param string $types            The types of values that will be passed to Database::query()
+     * @param array  $params           The parameter values that will be passed to Database::query() corresponding to $types
+     * @param string $table            The database table that will be searched
+     * @param string $select           The column that will be returned
      *
      * @return int[]
      */
-    protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id') {
+    protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id')
+    {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
@@ -189,26 +198,28 @@ abstract class Model {
         foreach ($results as $r) {
             $ids[] = $r[$select];
         }
+
         return $ids;
     }
 
     /**
      * Gets an array of object IDs from the database that have a column equal to something else
-     * @param string $column The name of the column that should be tested
-     * @param array|string $possible_values List of acceptable values
-     * @param bool $negate Whether to search if the value of $column does NOT belong to the $possible_values array
-     * @param string $type The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
-     * @param string|array $select The name of the column(s) that the returned array should contain
-     * @param string $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
-     * @param string $table The database table which will be used for queries
-     * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
+     * @param  string       $column           The name of the column that should be tested
+     * @param  array|string $possible_values  List of acceptable values
+     * @param  bool         $negate           Whether to search if the value of $column does NOT belong to the $possible_values array
+     * @param  string       $type             The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
+     * @param  string|array $select           The name of the column(s) that the returned array should contain
+     * @param  string       $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
+     * @param  string       $table            The database table which will be used for queries
+     * @return int[]        A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id') {
+    protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id')
+    {
         $question_marks = array();
         $types = "";
         $negation = ($negate) ? "NOT" : "";
 
-        if(!is_array($possible_values)) {
+        if (!is_array($possible_values)) {
             $possible_values = array($possible_values);
         }
 
@@ -235,10 +246,11 @@ abstract class Model {
 
     /**
      * Gets an entity from the supplied slug, which can either be an alias or an ID
-     * @param string|int $slug The object's slug
+     * @param  string|int $slug The object's slug
      * @return Model
      */
-    public static function fetchFromSlug($slug) {
+    public static function fetchFromSlug($slug)
+    {
         return new static((int) $slug);
     }
 
@@ -254,27 +266,31 @@ abstract class Model {
      * </code>
      * @return Model
      */
-    public static function invalid() {
+    public static function invalid()
+    {
         return new static(0);
     }
 
     /**
      * Generates a string with the object's type and ID
      */
-    public function __toString() {
+    public function __toString()
+    {
         return get_class($this) . " #" . $this->getId();
     }
 
     /**
      * Converts an array of IDs to an array of Models
-     * @param int[] $idArray The list of IDs
+     * @param  int[]   $idArray The list of IDs
      * @return Model[]
      */
-    public static function arrayIdToModel($idArray) {
+    public static function arrayIdToModel($idArray)
+    {
         $return = array();
-        foreach($idArray as $id) {
+        foreach ($idArray as $id) {
             $return[] = new static($id);
         }
+
         return $return;
     }
 

@@ -9,7 +9,8 @@
 /**
  * A Model that has a URL and an alias
  */
-abstract class AliasModel extends UrlModel {
+abstract class AliasModel extends UrlModel
+{
     /**
      * A unique URL-friendly identifier for the object
      * @var string
@@ -20,7 +21,8 @@ abstract class AliasModel extends UrlModel {
      * Get an object's alias
      * @return string|int The alias (or ID if the alias doesn't exist)
      */
-    public function getAlias() {
+    public function getAlias()
+    {
         if ($this->alias !== null && $this->alias != "")
             return $this->alias;
         return $this->getId();
@@ -29,7 +31,8 @@ abstract class AliasModel extends UrlModel {
     /**
      * {@inheritDoc}
      */
-    public function getURL($absolute=false) {
+    public function getURL($absolute=false)
+    {
         if (!$this->isValid())
             return "";
         return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getAlias()), $absolute);
@@ -37,10 +40,11 @@ abstract class AliasModel extends UrlModel {
 
     /**
      * Gets an entity from the supplied alias
-     * @param string $alias The object's alias
+     * @param  string     $alias The object's alias
      * @return AliasModel
      */
-    public static function fetchFromAlias($alias) {
+    public static function fetchFromAlias($alias)
+    {
         return new static(self::fetchIdFrom($alias, "alias"));
     }
 
@@ -48,7 +52,8 @@ abstract class AliasModel extends UrlModel {
      * {@inheritDoc}
      * @return AliasModel
      */
-    public static function fetchFromSlug($slug) {
+    public static function fetchFromSlug($slug)
+    {
         if (ctype_digit((string) $slug)) {
             // Slug is an integer, we can fetch by ID
             return new static((int) $slug);
@@ -61,10 +66,11 @@ abstract class AliasModel extends UrlModel {
     /**
      * Generate a URL-friendly unique alias for an object name
      *
-     * @param string $name The original object name
+     * @param  string      $name The original object name
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    public static function generateAlias($name) {
+    public static function generateAlias($name)
+    {
         // Convert name to lowercase
         $name = strtolower($name);
 

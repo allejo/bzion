@@ -41,8 +41,7 @@ class Database
         if ($this->dbc->connect_errno) {
             if (!DEVELOPMENT) echo "Something went wrong with the database connection.";
             $this->debug($this->dbc->connect_error, $this->dbc->connect_errno);
-        }
-        else
+        } else
             $this->dbc->set_charset("utf8");
     }
 
@@ -63,8 +62,7 @@ class Database
      */
     public static function getInstance()
     {
-        if (!self::$Database)
-        {
+        if (!self::$Database) {
             self::$Database = new Database();
         }
 
@@ -124,16 +122,15 @@ class Database
      *      $results = $database->query($query, "i", $params); //execute the prepared query
      * </code>
      *
-     * @param string $queryText The prepared SQL statement that will be executed
-     * @param bool|string $typeDef (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
-     * @param mixed|array $params (Optional) The array of values that will be binded to the prepared statement
-     * @return mixed Returns an array of the values received from the query or returns false on empty
+     * @param  string      $queryText The prepared SQL statement that will be executed
+     * @param  bool|string $typeDef   (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
+     * @param  mixed|array $params    (Optional) The array of values that will be binded to the prepared statement
+     * @return mixed       Returns an array of the values received from the query or returns false on empty
      */
     public function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
         $multiQuery = true;
-        if ($stmt = $this->dbc->prepare($queryText))
-        {
+        if ($stmt = $this->dbc->prepare($queryText)) {
             if (!is_array($params)) {
                 $params = array($params);
             }
@@ -142,8 +139,7 @@ class Database
                 $multiQuery = false;
             }
 
-            if ($typeDef)
-            {
+            if ($typeDef) {
                 $bindParams = array();
                 $bindParamsReferences = array();
                 $bindParams = array_pad($bindParams, (count($params, 1) - count($params))/count($params), "");
@@ -157,26 +153,22 @@ class Database
             }
 
             $result = array();
-            foreach ($params as $queryKey => $query)
-            {
+            foreach ($params as $queryKey => $query) {
                 if ($typeDef) {
                     foreach ($bindParams as $paramKey => $value)
                         $bindParams[$paramKey] = $query[$paramKey];
                 }
 
                 $queryResult = array();
-                if ($stmt->execute())
-                {
+                if ($stmt->execute()) {
                     $resultMetaData = $stmt->result_metadata();
                     $this->last_id = $stmt->insert_id;
 
-                    if ($resultMetaData)
-                    {
+                    if ($resultMetaData) {
                         $stmtRow = array();
                         $rowReferences = array();
 
-                        while ($field = $resultMetaData->fetch_field())
-                        {
+                        while ($field = $resultMetaData->fetch_field()) {
                             $rowReferences[] = &$stmtRow[$field->name];
                         }
 
@@ -184,11 +176,9 @@ class Database
                         $bindResultMethod = new ReflectionMethod('mysqli_stmt', 'bind_result');
                         $bindResultMethod->invokeArgs($stmt, $rowReferences);
 
-                        while (mysqli_stmt_fetch($stmt))
-                        {
+                        while (mysqli_stmt_fetch($stmt)) {
                             $row = array();
-                            foreach ($stmtRow as $key => $value)
-                            {
+                            foreach ($stmtRow as $key => $value) {
                                 $row[$key] = $value;
                             }
 
@@ -196,22 +186,18 @@ class Database
                         }
 
                         mysqli_stmt_free_result($stmt);
-                    }
-                    else
+                    } else
                         $queryResult[] = mysqli_stmt_affected_rows($stmt);
-                }
-                else {
+                } else {
                     $this->debug($this->dbc->error, $this->dbc->errno);
                     $queryResult[] = false;
                 }
-
 
                 $result[$queryKey] = $queryResult;
             }
 
             mysqli_stmt_close($stmt);
-        }
-        else
+        } else
             $result = false;
 
         if ($this->dbc->error)
@@ -229,8 +215,7 @@ class Database
     */
     public function writeToDebug($string)
     {
-        if (MYSQL_DEBUG)
-        {
+        if (MYSQL_DEBUG) {
             $file_handler = fopen(ERROR_LOG, 'a');
             fwrite($file_handler, date("Y-m-d H:i:s") . " :: " . $string . "\n");
             fclose($file_handler);
@@ -282,7 +267,8 @@ class Database
      *
      * @throws Exception
      */
-    public function debug($error, $id=null) {
+    public function debug($error, $id=null)
+    {
         if (empty($error))
             $error = "Unknown error - check for warnings generated by PHP";
 

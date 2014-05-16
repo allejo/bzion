@@ -1,8 +1,9 @@
 <?php
 
-class ServerController extends HTMLController {
-
-    public function listAction() {
+class ServerController extends HTMLController
+{
+    public function listAction()
+    {
         $servers = Server::getServers();
 
         foreach ($servers as $server) {

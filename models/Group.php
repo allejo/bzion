@@ -9,8 +9,8 @@
 /**
  * A discussion (group of messages)
  */
-class Group extends UrlModel {
-
+class Group extends UrlModel
+{
     /**
      * The subject of the group
      * @var string
@@ -46,8 +46,8 @@ class Group extends UrlModel {
      * Construct a new group
      * @param int $id The group's id
      */
-    public function __construct($id) {
-
+    public function __construct($id)
+    {
         parent::__construct($id);
         if (!$this->valid) return;
 
@@ -64,7 +64,8 @@ class Group extends UrlModel {
      *
      * @return string
      **/
-    public function getSubject() {
+    public function getSubject()
+    {
         return $this->subject;
     }
 
@@ -73,27 +74,30 @@ class Group extends UrlModel {
      *
      * @return Player
      */
-    public function getCreator() {
+    public function getCreator()
+    {
         return new Player($this->creator);
     }
 
     /**
      * Determine whether a player is the one who created the message group
      *
-     * @param int $id The ID of the player to test for
+     * @param  int  $id The ID of the player to test for
      * @return bool
      */
-    public function isCreator($id) {
+    public function isCreator($id)
+    {
         return ($this->creator == $id);
     }
 
     /**
      * Get the time when the group was most recently active
      *
-     * @param bool $human True to output the last activity in a human-readable string, false to return a TimeDate object
+     * @param  bool            $human True to output the last activity in a human-readable string, false to return a TimeDate object
      * @return string|TimeDate
      */
-    public function getLastActivity($human = true) {
+    public function getLastActivity($human = true)
+    {
         if ($human)
             return $this->last_activity->diffForHumans();
         else
@@ -105,7 +109,8 @@ class Group extends UrlModel {
      *
      * @return Message
      */
-    public function getLastMessage() {
+    public function getLastMessage()
+    {
         $ids = self::fetchIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
         return new Message($ids[0]);
@@ -114,23 +119,26 @@ class Group extends UrlModel {
     /**
      * {@inheritDoc}
      */
-    protected static function getRouteName() {
+    protected static function getRouteName()
+    {
         return "message_show_discussion";
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function getParamName() {
+    public static function getParamName()
+    {
         return "discussion";
     }
 
     /**
      * Get a list containing the IDs of each member of the group
-     * @param bool $hideSelf Whether to hide the currently logged in player
+     * @param  bool     $hideSelf Whether to hide the currently logged in player
      * @return Player[] An array of player IDs
      */
-    public function getMembers($hideSelf=false) {
+    public function getMembers($hideSelf=false)
+    {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
         $params = array($this->id);
@@ -140,16 +148,17 @@ class Group extends UrlModel {
             $types .= "i";
             $params[] = Service::getSession()->get('playerId');
         }
+
         return Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
     }
 
     /**
      * Create a new message group
      *
-     * @param string $subject The subject of the group
-     * @param int $creatorId The ID of the player who created the group
-     * @param array $members A list of IDs representing the group's members
-     * @return Group An object that represents the created group
+     * @param  string $subject   The subject of the group
+     * @param  int    $creatorId The ID of the player who created the group
+     * @param  array  $members   A list of IDs representing the group's members
+     * @return Group  An object that represents the created group
      */
     public static function createGroup($subject, $creatorId, $members=array())
     {
@@ -171,10 +180,11 @@ class Group extends UrlModel {
     /**
      * Get all the groups in the database a player belongs to that are not disabled or deleted
      * @todo Move this to the Player class
-     * @param int $id The id of the player whose groups are being retrieved
+     * @param  int     $id The id of the player whose groups are being retrieved
      * @return Group[] An array of group objects
      */
-    public static function getGroups($id) {
+    public static function getGroups($id)
+    {
         $additional_query = "LEFT JOIN groups ON player_groups.group=groups.id
                              WHERE player_groups.player = ? AND groups.status
                              NOT IN (?, ?) ORDER BY last_activity DESC";
@@ -185,10 +195,11 @@ class Group extends UrlModel {
 
     /**
      * Checks if a player belongs in the group
-     * @param int $id The ID of the player
+     * @param  int  $id The ID of the player
      * @return bool True if the player belongs in the group, false if they don't
      */
-    public function isMember($id) {
+    public function isMember($id)
+    {
         $result = $this->db->query("SELECT 1 FROM `player_groups` WHERE `group` = ?
                                     AND `player` = ?", "ii", array($this->id, $id));
 
@@ -199,10 +210,11 @@ class Group extends UrlModel {
      * Checks if a player has a new message in the group
      *
      * @todo Make this method work
-     * @param int $id The ID of the player
+     * @param  int     $id The ID of the player
      * @return boolean True if the player has a new message
      */
-    public static function hasNewMessage($id) {
+    public static function hasNewMessage($id)
+    {
         $groups = self::getGroups($id);
         $me = new Player($id);
 
