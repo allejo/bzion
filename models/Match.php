@@ -523,7 +523,7 @@ class Match extends Model
      * Get the matches that a team took part of
      *
      * @param int    $teamID    The team ID of whose matches to search for
-     * @param string $matchType The filter for match types: "all", "win", "loss", or "draw"
+     * @param string $matchType The filter for match types: "all", "wins", "losses", or "draws"
      * @param int    $start     The offset used when fetching matches, i.e. the starting point
      * @param int    $limit     The amount of matches to be retrieved
      *
@@ -533,15 +533,15 @@ class Match extends Model
     {
         $query = "WHERE ";
 
-        if ($matchType == "win")
+        if ($matchType == "wins")
         {
             $query .= "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
         }
-        else if ($matchType == "loss")
+        else if ($matchType == "losses")
         {
             $query .= "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
         }
-        else if ($matchType == "draw")
+        else if ($matchType == "draws")
         {
             $query .= "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
         }

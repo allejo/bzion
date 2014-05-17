@@ -317,7 +317,7 @@ class Team extends AliasModel
     /**
      * Get the matches this team has participated in
      *
-     * @param string $matchType The filter for match types: "all", "win", "loss", or "draw"
+     * @param string $matchType The filter for match types: "all", "wins", "losses", or "draws"
      * @param int    $count     The offset used when fetching matches, i.e. the starting point
      * @param int    $offset    The amount of matches to be retrieved
      *
@@ -572,6 +572,18 @@ class Team extends AliasModel
         $team->addMember($leader);
 
         return $team;
+    }
+
+    /**
+     * Get a Team object from an alias
+     *
+     * @param string $alias The team's alias used in URLs
+     *
+     * @return Team The team with the corresponding alias
+     */
+    public static function getTeamByAlias($alias)
+    {
+        return new Team(self::fetchIdFrom($alias, "alias", "s"));
     }
 
     /**
