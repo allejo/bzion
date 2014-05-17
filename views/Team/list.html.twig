@@ -23,10 +23,9 @@
 
                             <section class="stats">
                                 <p class="match_stats">
-                                    {# @TODO Generate URL for specific match types (wins, draws, losses) #}
-                                    <a href="#">{{ team.matchesWon }}</a> -
-                                    <a href="#">{{ team.matchesLost }}</a> -
-                                    <a href="#">{{ team.matchesDraw }}</a>
+                                    <a href="matches/{{ team.alias }}/wins">{{ team.matchesWon }}</a> -
+                                    <a href="matches/{{ team.alias }}/losses">{{ team.matchesLost }}</a> -
+                                    <a href="matches/{{ team.alias }}/draws">{{ team.matchesDraw }}</a>
                                 </p>
                             </section>
                         </article>
