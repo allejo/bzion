@@ -157,14 +157,22 @@ class Team extends AliasModel
      * Adds a new member to the team
      *
      * @param int $id The id of the player to add to the team
+     *
+     * @return bool True if both the player was added to the team AND the team member count was incremented
      */
     public function addMember($id)
     {
-        $this->db->query("UPDATE players SET team=? WHERE id=?", "ii", array(
-                $this->id,
-                $id
-            ));
-        $this->update('members', ++$this->members, "i");
+        $player = new Player($id);
+
+        if ($player->isTeamless())
+        {
+            $playerUpdate = $player->update("team", $this->getId());
+            $teamUpdate   = $this->update('members', ++$this->members, "i");
+
+            return ($playerUpdate && $teamUpdate);
+        }
+
+        return false;
     }
 
     /**
@@ -468,19 +476,39 @@ class Team extends AliasModel
     }
 
     /**
+     * Check if a player is part of this team
+     *
+     * @param string $playerID The player to check
+     *
+     * @return bool True if the player belongs to this team
+     */
+    public function isMember($playerID)
+    {
+        $player = new Player($playerID);
+
+        return ($player->getTeam()->getId() == $this->getId());
+    }
+
+    /**
      * Removes a member from the team
      *
-     * *Warning*: This method does not check whether the player is already
-     * a member of the team
-     *
      * @param int $id The id of the player to remove
+     *
+     * @return bool True if both the player was marked as teamless AND the team member count was decremented
      */
     public function removeMember($id)
     {
-        $this->db->query("UPDATE players SET team=NULL WHERE id=?", "i", array(
-            $id
-        ));
-        $this->update('members', --$this->members, "i");
+        if ($this->isMember($id))
+        {
+            $player = new Player($id);
+
+            $playerUpdate = $player->update("team", NULL, "s");
+            $teamUpdate   = $this->update('members', --$this->members, "i");
+
+            return ($playerUpdate && $teamUpdate);
+        }
+
+        return false;
     }
 
     /**
