@@ -6,6 +6,8 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use \Michelf\Markdown;
+
 /**
  * A league team
  */
@@ -247,7 +249,7 @@ class Team extends AliasModel
      * @return string The description of the team
      */
     public function getDescription() {
-        return $this->description;
+        return Markdown::defaultTransform($this->description);
     }
 
     /**
