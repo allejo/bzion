@@ -6,6 +6,7 @@ update.php
 vendor
 cache
 reDB.sh
+assets/imgs/identicons
 
 # Test files #
 ##############
