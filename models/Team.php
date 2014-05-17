@@ -502,10 +502,10 @@ class Team extends AliasModel
         $oldIdenticon = $this->getIdenticonPath();
 
         $this->name = $newName;
-        $this->update("name", $newName);
+        $this->update("name", $newName, "s");
 
         $this->alias = parent::generateAlias($newName);
-        $this->update("alias", $this->alias);
+        $this->update("alias", $this->alias, "s");
 
         rename($oldIdenticon, $this->getIdenticonPath());
     }
