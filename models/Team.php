@@ -470,16 +470,17 @@ class Team extends AliasModel
 
         $db = Database::getInstance();
 
-        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 0, 'open')";
+        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 0, 'open')";
         $params = array(
             $name,
             $alias,
             $description,
+            Markdown::defaultTransform($description),
             $avatar,
             $leader
         );
 
-        $db->query($query, "ssssi", $params);
+        $db->query($query, "sssssi", $params);
         $id = $db->getInsertId();
 
         // If the generateAlias() method couldn't find an appropriate alias,
