@@ -114,7 +114,7 @@ abstract class Model
      */
     public function delete()
     {
-        $this->update('status', 'deleted');
+        $this->update('status', 'deleted', 's');
     }
 
     /**

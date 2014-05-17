@@ -10,8 +10,10 @@ abstract class HTMLController extends Controller
 
         if (!$model instanceof UrlModel || $model->isValid())
             return $model;
-        else
+        elseif ($modelParameter->getName() !== "me")
             throw new ModelNotFoundException($model->getParamName());
+
+        return $model;
     }
 
     public function callAction($action=null)

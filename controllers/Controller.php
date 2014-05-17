@@ -183,6 +183,10 @@ abstract class Controller
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 
+        // $me -> currently logged in user
+        if ($paramName == "me")
+            return $refClass->newInstance(Service::getSession()->get('playerId'));
+
         if ($refClass === null)
             return null;
 

@@ -78,6 +78,11 @@ team_show:
     pattern:    /teams/{team}
     defaults: { _controller: 'Team', _action: 'show' }
 
+team_remove:
+    pattern:    /teams/{team}/remove
+    defaults: { _controller: 'Team', _action: 'remove' }
+    #methods:  [POST]
+
 custom_page:
     pattern:    /{page}
     defaults: { _controller: 'Page', _action: 'show' }
