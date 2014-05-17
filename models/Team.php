@@ -575,18 +575,6 @@ class Team extends AliasModel
     }
 
     /**
-     * Get a Team object from an alias
-     *
-     * @param string $alias The team's alias used in URLs
-     *
-     * @return Team The team with the corresponding alias
-     */
-    public static function getTeamByAlias($alias)
-    {
-        return new Team(self::fetchIdFrom($alias, "alias", "s"));
-    }
-
-    /**
      * Get all the teams in the database that are not disabled or deleted
      *
      * @return Team[] An array of Team IDs

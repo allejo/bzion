@@ -2,18 +2,14 @@
 
 class MatchController extends HTMLController
 {
-    public function listByTeamAction($alias)
+    public function listByTeamAction(Team $team)
     {
-        $team = Team::getTeamByAlias($alias);
-
         return $this->render("Match/list.html.twig",
                array ("matches" => $team->getMatches(), "team" => $team));
     }
 
-    public function listByTeamSortAction($alias, $type)
+    public function listByTeamSortAction(Team $team, $type)
     {
-        $team = Team::getTeamByAlias($alias);
-
         return $this->render("Match/list.html.twig",
             array ("matches" => $team->getMatches($type, 50), "team" => $team));
     }
