@@ -493,6 +493,24 @@ class Team extends AliasModel
     }
 
     /**
+     * Change the name for team
+     *
+     * @param string $newName The new name of the team
+     */
+    public function setName($newName)
+    {
+        $oldIdenticon = $this->getIdenticonPath();
+
+        $this->name = $newName;
+        $this->update("name", $newName);
+
+        $this->alias = parent::generateAlias($newName);
+        $this->update("alias", $this->alias);
+
+        rename($oldIdenticon, $this->getIdenticonPath());
+    }
+
+    /**
      * Get the file name of the identicon
      *
      * @return string The file name of the saved identicon
