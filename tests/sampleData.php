@@ -24,6 +24,7 @@ $kierra     = Player::newPlayer(2229, "kierra", null, "active", Player::ADMIN);
 $mdskpr     = Player::newPlayer(8312, "mdskpr");
 $snake      = Player::newPlayer(54497, "Snake12534");
 $tw1sted    = Player::newPlayer(9736, "tw1sted", null, "active", Player::DEVELOPER);
+$brad       = Player::newPlayer(3030, "brad", null, "active", Player::S_ADMIN, "", "I keep nagging about when this project will be done");
 echo " done!";
 
 echo "\nAdding teams...";
@@ -40,6 +41,7 @@ echo "\nAdding members to teams...";
 $lweak->addMember($autoreport->getId());
 $fflood->addMember($blast->getId());
 $fradis->addMember($alezakos->getId());
+$reptiles->addMember($brad->getId());
 echo " done!";
 
 echo "\nAdding matches...";
