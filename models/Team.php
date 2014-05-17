@@ -118,6 +118,11 @@ class Team extends AliasModel
     const TABLE = "teams";
 
     /**
+     * The location of identicons will stored in
+     */
+    const IDENTICON_LOCATION = "/assets/imgs/identicons/teams/";
+
+    /**
      * Construct a new Team
      *
      * @param int $id The team's id
@@ -270,12 +275,26 @@ class Team extends AliasModel
         return $this->elo;
     }
 
+    /**
+     * Get the identicon for a player. This function will create one if it does not already exist
+     *
+     * @return string The URL to the generated identicon
+     */
     public function getIdenticon()
     {
-        $identicon = new Identicon();
-        $imageDataUri = $identicon->getImageDataUri('bar');
+        $fileName = $this->getIdenticonPath();
 
-        return $imageDataUri;
+        if (!$this->hasIdenticon())
+        {
+            $identicon = new Identicon();
+            $imageDataUri = $identicon->getImageDataUri($this->getName(), 250);
+
+            $file_handler = fopen($fileName, 'w');
+            fwrite($file_handler, $imageDataUri);
+            fclose($file_handler);
+        }
+
+        return Service::getRequest()->getBaseUrl() . $fileName;
     }
 
     /**
@@ -423,6 +442,16 @@ class Team extends AliasModel
     }
 
     /**
+     * Check if the team has an identicon already made
+     *
+     * @return bool True if the identicon already exists
+     */
+    public function hasIdenticon()
+    {
+        return file_exists(self::IDENTICON_LOCATION . $this->getAlias());
+    }
+
+    /**
      * Increment the team's match count by one
      *
      * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
@@ -461,6 +490,16 @@ class Team extends AliasModel
         $htmlUpdate = $this->update("description_html", parent::mdTransform($description_md), "s");
 
         return ($mdUpdate && $htmlUpdate);
+    }
+
+    /**
+     * Get the path to the identicon
+     *
+     * @return string The path to the image
+     */
+    private function getIdenticonPath()
+    {
+        return DOC_ROOT . self::IDENTICON_LOCATION . $this->getAlias() . ".png";
     }
 
     /**
