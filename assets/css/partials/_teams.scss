@@ -116,6 +116,14 @@ main {
                     float: left;
                     padding: 10px 20px;
                     width: 50%;
+
+                    &.description {
+                        width: 75%;
+                    }
+
+                    &.profile_picture {
+                        width: 25%;
+                    }
                 }
             }
 

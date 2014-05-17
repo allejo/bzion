@@ -6,7 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use \Michelf\Markdown;
+use \Identicon\Identicon;
 
 /**
  * A league team
@@ -270,6 +270,14 @@ class Team extends AliasModel
         return $this->elo;
     }
 
+    public function getIdenticon()
+    {
+        $identicon = new Identicon();
+        $imageDataUri = $identicon->getImageDataUri('bar');
+
+        return $imageDataUri;
+    }
+
     /**
      * Get the leader of the team
      *
@@ -450,7 +458,7 @@ class Team extends AliasModel
     public function setDescription($description_md)
     {
         $mdUpdate = $this->update("description_md", $description_md, "s");
-        $htmlUpdate = $this->update("description_html", Markdown::defaultTransform($description_md), "s");
+        $htmlUpdate = $this->update("description_html", parent::mdTransform($description_md), "s");
 
         return ($mdUpdate && $htmlUpdate);
     }
@@ -475,7 +483,7 @@ class Team extends AliasModel
             $name,
             $alias,
             $description,
-            Markdown::defaultTransform($description),
+            parent::mdTransform($description),
             $avatar,
             $leader
         );
