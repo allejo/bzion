@@ -22,11 +22,18 @@ class Team extends AliasModel
     private $name;
 
     /**
-     * The description of the team
+     * The description of the team written in markdown
      *
      * @var string
      */
-    private $description;
+    private $description_md;
+
+    /**
+     * The description of the team parsed to HTML
+     *
+     * @var string
+     */
+    private $description_html;
 
     /**
      * The url of the team's avatar
@@ -125,7 +132,8 @@ class Team extends AliasModel
 
         $this->name = $team['name'];
         $this->alias = $team['alias'];
-        $this->description = $team['description'];
+        $this->description_md = $team['description_md'];
+        $this->description_html = $team['description_html'];
         $this->avatar = $team['avatar'];
         $this->created = new TimeDate($team['created']);
         $this->elo = $team['elo'];
@@ -249,7 +257,7 @@ class Team extends AliasModel
      * @return string The description of the team
      */
     public function getDescription() {
-        return Markdown::defaultTransform($this->description);
+        return $this->description_html;
     }
 
     /**
@@ -430,6 +438,21 @@ class Team extends AliasModel
             $id
         ));
         $this->update('members', --$this->members, "i");
+    }
+
+    /**
+     * Update the description of the team
+     *
+     * @param string $description_md The description of the team written as markdown
+     *
+     * @return bool Whether or not both the HTML and MD entries in the database were updated
+     */
+    public function setDescription($description_md)
+    {
+        $mdUpdate = $this->update("description_md", $description_md, "s");
+        $htmlUpdate = $this->update("description_html", Markdown::defaultTransform($description_md), "s");
+
+        return ($mdUpdate && $htmlUpdate);
     }
 
     /**
