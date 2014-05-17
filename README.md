@@ -48,10 +48,6 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
    sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs assets/imgs/identicons/
    ```
 
-6. Use the `DATABASE.sql` file to create the necessary database structure
-
-7. Rename `bzion-config-example.php` to `bzion-config.php` and configure the settings.
-
 ## License
 GNU Lesser General Public License 3.0<br\>
 http://www.gnu.org/licenses/lgpl.txt
