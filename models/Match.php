@@ -522,18 +522,38 @@ class Match extends Model
     /**
      * Get the matches that a team took part of
      *
-     * @param int $teamID The team ID of whose matches to search for
-     * @param int $start  The offset used when fetching matches, i.e. the starting point
-     * @param int $limit  The amount of matches to be retrieved
+     * @param int    $teamID    The team ID of whose matches to search for
+     * @param string $matchType The filter for match types: "all", "win", "loss", or "draw"
+     * @param int    $start     The offset used when fetching matches, i.e. the starting point
+     * @param int    $limit     The amount of matches to be retrieved
      *
      * @return Match[] An array of matches where the team participated in
      */
-    public static function getMatchesByTeam($teamID, $start = 0, $limit = 5)
+    public static function getMatchesByTeam($teamID, $matchType = "all", $start = 0, $limit = 5)
     {
+        $query = "WHERE ";
+
+        if ($matchType == "win")
+        {
+            $query .= "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
+        }
+        else if ($matchType == "loss")
+        {
+            $query .= "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
+        }
+        else if ($matchType == "draw")
+        {
+            $query .= "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
+        }
+        else
+        {
+            $query .= "team_a = ? OR team_b = ?";
+        }
+
+        $query .= " ORDER BY timestamp DESC LIMIT $limit OFFSET $start";
+
         return self::arrayIdToModel(
-            parent::fetchIds("WHERE team_a = ? OR team_b = ? ORDER BY timestamp DESC LIMIT $limit OFFSET $start",
-                "ii", array($teamID, $teamID)
-            )
+            parent::fetchIds($query, "ii", array($teamID, $teamID))
         );
     }
 }

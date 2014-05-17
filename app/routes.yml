@@ -30,6 +30,10 @@ match_by_team_list:
     pattern:    /matches/{team}
     defaults: { _controller: 'Match', _action: 'listByTeam' }
 
+match_by_team_list_sort:
+    pattern:    /matches/{team}/{type}
+    defaults: { _controller: 'Match', _action: 'listByTeamSort' }
+
 message_list:
     pattern:    /messages
     defaults: { _controller: 'Message', _action: 'compose' }

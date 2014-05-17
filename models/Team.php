@@ -317,14 +317,15 @@ class Team extends AliasModel
     /**
      * Get the matches this team has participated in
      *
-     * @param int $count  The offset used when fetching matches, i.e. the starting point
-     * @param int $offset The amount of matches to be retrieved
+     * @param string $matchType The filter for match types: "all", "win", "loss", or "draw"
+     * @param int    $count     The offset used when fetching matches, i.e. the starting point
+     * @param int    $offset    The amount of matches to be retrieved
      *
      * @return Match[] The array of match IDs this team has participated in
      */
-    public function getMatches($count = 5, $offset = 0)
+    public function getMatches($matchType = "all", $count = 5, $offset = 0)
     {
-        return Match::getMatchesByTeam($this->id, $offset, $count);
+        return Match::getMatchesByTeam($this->id, $matchType, $offset, $count);
     }
 
     /**
