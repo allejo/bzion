@@ -289,7 +289,7 @@ class Team extends AliasModel
             $identicon = new Identicon();
             $imageDataUri = $identicon->getImageDataUri($this->getName(), 250);
 
-            file_put_contents($fileName, $imageDataUri);
+            file_put_contents($fileName, file_get_contents($imageDataUri));
         }
 
         return Service::getRequest()->getBaseUrl() . self::IDENTICON_LOCATION . $this->getIdenticonName();
