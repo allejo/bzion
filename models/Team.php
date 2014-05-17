@@ -242,6 +242,15 @@ class Team extends AliasModel
     }
 
     /**
+     * Get the description of the team
+     *
+     * @return string The description of the team
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
      * Get the current elo of the team
      *
      * @return int The elo of the team
