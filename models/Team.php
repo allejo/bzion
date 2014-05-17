@@ -412,13 +412,15 @@ class Team extends AliasModel
     }
 
     /**
-     * Get the rank category a team belongs too based on their ELO> This value is always a multiple of 100
+     * Get the rank category a team belongs too based on their ELO
+     *
+     * This value is always a multiple of 100 and less than or equal to 2000
      *
      * @return int The rank category a team belongs to
      */
     public function getRankValue()
     {
-        return floor($this->getElo() / 100) * 100;
+        return min(2000, floor($this->getElo() / 100) * 100);
     }
 
     /**

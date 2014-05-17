@@ -39,13 +39,18 @@ BZiON's source code is thoroughly documented in order for anyone to be able to j
 
 6. `app/console bzion:install`
 
-7. Make sure that the app/cache directory is writeable by you and the web server:
+7. Make sure that the app/cache, app/logs and assets/imgs/identicons/ directories
+   are writeable by you and the web server:
 
    <sub>_Example for Apache2 on Ubuntu_</sub>
    ```
-   sudo setfacl -R  -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
-   sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
+   sudo setfacl -R  -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs assets/imgs/identicons/
+   sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs assets/imgs/identicons/
    ```
+
+6. Use the `DATABASE.sql` file to create the necessary database structure
+
+7. Rename `bzion-config-example.php` to `bzion-config.php` and configure the settings.
 
 ## License
 GNU Lesser General Public License 3.0<br\>

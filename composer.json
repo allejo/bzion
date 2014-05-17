@@ -8,11 +8,13 @@
         "ext-gd"                  : "*",
         "michelf/php-markdown"    : ">=1.4.1",
         "nesbot/carbon"           : ">=1.8.0",
+        "symfony/class-loader"    : ">=2.4.0",
         "symfony/config"          : ">=2.4.0",
         "symfony/console"         : ">=2.4.0",
         "symfony/event-dispatcher": ">=2.4.0",
         "symfony/framework-bundle": ">=2.4.0",
         "symfony/finder"          : ">=2.4.0",
+        "symfony/icu"             : "1.0.*",
         "symfony/process"         : ">=2.4.0",
         "symfony/routing"         : ">=2.4.0",
         "symfony/http-kernel"     : ">=2.4.0",
@@ -21,8 +23,7 @@
         "symfony/twig-bundle"     : ">=2.4.0",
         "symfony/yaml"            : ">=2.4.0",
         "twig/twig"               : "dev-master",
-        "symfony/class-loader"    : ">=2.4.0",
-        "yzalis/identicon"        : "1.0.*@dev"
+        "yzalis/identicon"        : "1.0.*@dev",
     },
     "require-dev": {
         "symfony/browser-kit": ">=2.4.0",
