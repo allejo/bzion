@@ -73,7 +73,7 @@
                             <div class="row">
                                 <div class="column">
                                     {% if player.id == team.leader.id %}
-                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star" title="Team Leader"></i>
                                     {% endif %}
                                 </div>
                                 <div class="column">
@@ -82,7 +82,7 @@
 
                                 {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
                                     <div class="column">
-                                        <a href="#"><i class="fa fa-eject"></i></a>
+                                        <a href="#"><i class="fa fa-eject" title="Kick {{ player.username }} from team"></i></a>
                                     </div>
                                 {% endif %}
                             </div>
