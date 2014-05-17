@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ccd176e09170b527a9bb6b9b54deaa96",
+    "hash": "e93b9f4c6479f2d871854d44e5567cfd",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1527,6 +1527,56 @@
                 "templating"
             ],
             "time": "2014-05-15 19:43:48"
+        },
+        {
+            "name": "yzalis/identicon",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yzalis/Identicon.git",
+                "reference": "0ecb24810136b8bdfe23ba04e29e7cedc273f747"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yzalis/Identicon/zipball/0ecb24810136b8bdfe23ba04e29e7cedc273f747",
+                "reference": "0ecb24810136b8bdfe23ba04e29e7cedc273f747",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "1.2.*@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Identicon": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Laugueux",
+                    "email": "benjamin@yzalis.com"
+                }
+            ],
+            "description": "Create awesome unique avatar.",
+            "homepage": "http://identicon-php.org",
+            "keywords": [
+                "avatar",
+                "identicon",
+                "image"
+            ],
+            "time": "2013-08-16 11:56:30"
         }
     ],
     "packages-dev": [
@@ -4686,6 +4736,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "twig/twig": 20,
+        "yzalis/identicon": 20,
         "phpdocumentor/phpdocumentor": 20,
         "sensio/distribution-bundle": 20
     },
