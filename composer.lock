@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e93b9f4c6479f2d871854d44e5567cfd",
+    "hash": "ff370a1ef6e109aeb933dcb0d58987cd",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -4740,9 +4740,9 @@
         "phpdocumentor/phpdocumentor": 20,
         "sensio/distribution-bundle": 20
     },
-    "platform": [
-
-    ],
+    "platform": {
+        "ext-gd": "*"
+    },
     "platform-dev": [
 
     ]

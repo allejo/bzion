@@ -5,6 +5,7 @@
     "license": "LGPL-3.0",
 
     "require": {
+        "ext-gd"                  : "*",
         "michelf/php-markdown"    : ">=1.4.1",
         "nesbot/carbon"           : ">=1.8.0",
         "symfony/config"          : ">=2.4.0",
