@@ -114,6 +114,7 @@ abstract class Model
      */
     public function delete()
     {
+        $this->status = 'deleted';
         $this->update('status', 'deleted', 's');
     }
 
@@ -141,6 +142,17 @@ abstract class Model
     public function isValid()
     {
         return $this->valid;
+    }
+
+    /**
+     * Check if a status of the object is 'deleted'
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        if (isset($this->status))
+            return $this->status == "deleted";
+        return false;
     }
 
     /**
