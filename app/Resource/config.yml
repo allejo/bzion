@@ -16,3 +16,7 @@ services:
         class: Command\InstallCommand
         tags:
             -  { name: console.command }
+    bzion.command.update_command:
+        class: Command\UpdateCommand
+        tags:
+            -  { name: console.command }
