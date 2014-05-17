@@ -26,6 +26,8 @@
         "yzalis/identicon"        : "1.0.*@dev"
     },
     "require-dev": {
+        "behat/behat": "2.5.*@stable",
+        "behat/symfony2-extension": "*",
         "symfony/browser-kit": ">=2.4.0",
         "symfony/form"       : ">=2.4.0",
         "symfony/web-profiler-bundle": ">=2.4.0",
