@@ -28,35 +28,35 @@ $brad       = Player::newPlayer(3030, "brad", null, "active", Player::S_ADMIN, "
 echo " done!";
 
 echo "\nAdding teams...";
-$olfm     = Team::createTeam("OpenLeague FM?", $kierra->getId(), "", "");
-$reptiles = Team::createTeam("Reptitles", $snake->getId(), "", "");
-$fflood   = Team::createTeam("Formal Flood", $allejo->getId(), "", "");
-$lweak    = Team::createTeam("[LakeWeakness]", $mdskpr->getId(), "", "");
-$gsepar   = Team::createTeam("Good Separation", $tw1sted->getId(), "", "");
+$olfm      = Team::createTeam("OpenLeague FM?", $kierra->getId(), "", "");
+$reptitles = Team::createTeam("Reptitles", $snake->getId(), "", "");
+$fflood    = Team::createTeam("Formal Flood", $allejo->getId(), "", "");
+$lweak     = Team::createTeam("[LakeWeakness]", $mdskpr->getId(), "", "");
+$gsepar    = Team::createTeam("Good Separation", $tw1sted->getId(), "", "");
 $gsepar->changeElo('100');
-$fradis   = Team::createTeam("Fractious disinclination", $ashvala->getId(), "", "");
+$fradis    = Team::createTeam("Fractious disinclination", $ashvala->getId(), "", "");
 echo " done!";
 
 echo "\nAdding members to teams...";
 $lweak->addMember($autoreport->getId());
 $fflood->addMember($blast->getId());
 $fradis->addMember($alezakos->getId());
-$reptiles->addMember($brad->getId());
+$reptitles->addMember($brad->getId());
 echo " done!";
 
 echo "\nAdding matches...";
-Match::enterMatch($reptiles->getId(), $gsepar->getId(), 1, 9000, 17, $kierra->getId());
+Match::enterMatch($reptitles->getId(), $gsepar->getId(), 1, 9000, 17, $kierra->getId());
 Match::enterMatch($olfm->getId(), $lweak->getId(), 0, 0, 20, $blast->getId());
 Match::enterMatch($fflood->getId(), $lweak->getId(), 1, 15, 20, $autoreport->getId());
 Match::enterMatch($gsepar->getId(), $fradis->getId(), 8, 23, 30, $kierra->getId());
 Match::enterMatch($olfm->getId(), $lweak->getId(), 5, 4, 20, $kierra->getId());
-Match::enterMatch($reptiles->getId(), $gsepar->getId(), 1, 1500, 20, $autoreport->getId());
+Match::enterMatch($reptitles->getId(), $gsepar->getId(), 1, 1500, 20, $autoreport->getId());
 Match::enterMatch($olfm->getId(), $lweak->getId(), 1, 1, 30, $autoreport->getId());
 Match::enterMatch($fradis->getId(), $gsepar->getId(), 1, 2, 20, $kierra->getId());
 echo " done!";
 
 echo "\nUpdating teams...";
-$reptiles->update("activity", 9000, "i");
+$reptitles->update("activity", 9000, "i");
 $fflood->update("activity", -18, "i");
 $fradis->update("activity", 3.14159265358979323846, "d");
 echo " done!";
