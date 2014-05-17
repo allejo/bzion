@@ -233,7 +233,12 @@ class Team extends AliasModel
      */
     public function getAvatar()
     {
-        return $this->avatar;
+        if (!empty($this->avatar))
+        {
+            return $this->avatar;
+        }
+
+        return $this->getIdenticon();
     }
 
     /**
