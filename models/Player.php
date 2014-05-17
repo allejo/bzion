@@ -296,7 +296,7 @@ class Player extends AliasModel
      */
     public function isTeamless()
     {
-        return (empty($this->status));
+        return (empty($this->team));
     }
 
     /**
