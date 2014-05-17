@@ -289,12 +289,10 @@ class Team extends AliasModel
             $identicon = new Identicon();
             $imageDataUri = $identicon->getImageDataUri($this->getName(), 250);
 
-            $file_handler = fopen($fileName, 'w');
-            fwrite($file_handler, $imageDataUri);
-            fclose($file_handler);
+            file_put_contents($fileName, $imageDataUri);
         }
 
-        return Service::getRequest()->getBaseUrl() . $fileName;
+        return Service::getRequest()->getBaseUrl() . self::IDENTICON_LOCATION . $this->getIdenticonName();
     }
 
     /**
@@ -495,13 +493,23 @@ class Team extends AliasModel
     }
 
     /**
+     * Get the file name of the identicon
+     *
+     * @return string The file name of the saved identicon
+     */
+    private function getIdenticonName()
+    {
+        return $this->getAlias() . ".png";
+    }
+
+    /**
      * Get the path to the identicon
      *
      * @return string The path to the image
      */
     private function getIdenticonPath()
     {
-        return DOC_ROOT . self::IDENTICON_LOCATION . $this->getAlias() . ".png";
+        return DOC_ROOT . self::IDENTICON_LOCATION . $this->getIdenticonName();
     }
 
     /**
