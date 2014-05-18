@@ -7,6 +7,7 @@ vendor
 cache
 reDB.sh
 assets/imgs/identicons
+!assets/css/vendor
 
 # Test files #
 ##############

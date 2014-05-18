@@ -1,5 +1,5 @@
 .flag {
-    background: url(../imgs/flags.png) no-repeat;
+    background: url(../../imgs/flags.png) no-repeat;
     display: inline-block;
     height: 11px;
     width: 16px;
@@ -936,6 +936,10 @@
         background-position: -144px -154px;
     }
 
+    &.flag-uu {
+        border: 1px dashed $Light_Grey;
+    }
+
     &.flag-uy {
         background-position: -160px -154px;
     }
@@ -994,10 +998,6 @@
 
     &.flag-za {
         background-position: -128px -165px;
-    }
-
-    &.flag-zanzibar {
-        background-position: -144px -165px;
     }
 
     &.flag-zm {
