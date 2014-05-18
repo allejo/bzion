@@ -12,7 +12,7 @@ class MatchTest extends TestCase
     protected function setUp()
     {
         global $db;
-        $db = new Database();
+        $db = new Database(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
 
         $this->player_a = $this->getNewPlayer();
         $this->player_b = $this->getNewPlayer();

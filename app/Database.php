@@ -63,7 +63,7 @@ class Database
      * Get an instance of the Database object
      *
      * This should be the main way to acquire access to the database
-     * 
+     *
      * @return Database The Database object
      */
     public static function getInstance()
