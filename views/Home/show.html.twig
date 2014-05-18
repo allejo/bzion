@@ -8,7 +8,10 @@
             <article>
                 <h1>Welcome to Games United</h1>
                 <h2>Good clean fun... sorta</h2>
-                <a class="button green" href="#">Register</a>
+
+                {% if not session.get('username') %}
+                    <a class="button green" href="#">Register</a>
+                {% endif %}
             </article>
         </section>
 
