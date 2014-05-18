@@ -18,14 +18,14 @@ class ConfigCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('bzion:update')
+            ->setName('bzion:config')
             ->setDescription('Update bzion to the latest commit')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<bg=green;options=bold>Welcome to the BZiON congifurator!</bg=green;options=bold>');
+        $output->writeln('<bg=green;options=bold>Welcome to the BZiON configurator!</bg=green;options=bold>');
 
         $dialog = $this->getHelperSet()->get('dialog');
 
