@@ -40,6 +40,9 @@ class AppKernel extends Kernel
     }
 
     static public function guessEnvironment() {
+        if (!defined('DEVELOPMENT'))
+            return false;
+
         switch (DEVELOPMENT) {
         case 1: return "dev"; break;
         case 2: return "profile"; break;

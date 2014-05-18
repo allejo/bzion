@@ -15,7 +15,9 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
+
+$defaultEnvironment = AppKernel::guessEnvironment()?: 'dev';
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: $defaultEnvironment);
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 if ($debug) {

@@ -1,8 +1,7 @@
 <?php
 
 if (!@include("bzion-config.php")) {
-    header("Location: install.php");
-    die();
+    define('NO_CONFIG', true);
 }
 
 require("vendor/autoload.php");
