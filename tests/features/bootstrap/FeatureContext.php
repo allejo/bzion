@@ -34,10 +34,10 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function __construct()
     {
-        $this->genericPlayer = $this->getNewUser();
+        $this->genericPlayer = $this->getNewUser("admin", Player::DEVELOPER);
     }
 
-    protected function getNewUser($username="Sam") {
+    protected function getNewUser($username="Sam", $role=Player::PLAYER) {
         // Try to find a valid bzid
         $bzid = 300;
         while (Player::getFromBZID($bzid)->isValid()) {
@@ -47,7 +47,7 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
                 throw new Exception("bzid too big");
         }
 
-        return Player::newPlayer($bzid, $username);
+        return Player::newPlayer($bzid, $username, null, "active", $role);
     }
 
     /**
