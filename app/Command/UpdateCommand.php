@@ -4,13 +4,9 @@ namespace Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Process\Process;
 
 class UpdateCommand extends ContainerAwareCommand
@@ -39,7 +35,6 @@ class UpdateCommand extends ContainerAwareCommand
             throw new \RuntimeException($process->getErrorOutput());
         $changeCount = substr_count( $changeCount->getOutput(), "\n" );
         $progress->advance();
-
 
         if (file_exists('composer.phar')) {
             $composerLocation = 'php composer.phar';

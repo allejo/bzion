@@ -164,8 +164,7 @@ class Team extends AliasModel
     {
         $player = new Player($id);
 
-        if ($player->isTeamless())
-        {
+        if ($player->isTeamless()) {
             $playerUpdate = $player->update("team", $this->getId());
             $teamUpdate   = $this->update('members', ++$this->members, "i");
 
@@ -241,8 +240,7 @@ class Team extends AliasModel
      */
     public function getAvatar()
     {
-        if (!empty($this->avatar))
-        {
+        if (!empty($this->avatar)) {
             return $this->avatar;
         }
 
@@ -274,7 +272,8 @@ class Team extends AliasModel
      *
      * @return string The description of the team
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description_html;
     }
 
@@ -297,8 +296,7 @@ class Team extends AliasModel
     {
         $fileName = $this->getIdenticonPath();
 
-        if (!$this->hasIdenticon())
-        {
+        if (!$this->hasIdenticon()) {
             $identicon = new Identicon();
             $imageDataUri = $identicon->getImageDataUri($this->getName(), 250);
 
@@ -498,8 +496,7 @@ class Team extends AliasModel
      */
     public function removeMember($id)
     {
-        if ($this->isMember($id))
-        {
+        if ($this->isMember($id)) {
             $player = new Player($id);
 
             $playerUpdate = $player->update("team", NULL, "s");

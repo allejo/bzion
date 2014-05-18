@@ -533,20 +533,13 @@ class Match extends Model
     {
         $query = "WHERE ";
 
-        if ($matchType == "wins")
-        {
+        if ($matchType == "wins") {
             $query .= "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
-        }
-        else if ($matchType == "losses")
-        {
+        } elseif ($matchType == "losses") {
             $query .= "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
-        }
-        else if ($matchType == "draws")
-        {
+        } elseif ($matchType == "draws") {
             $query .= "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
-        }
-        else
-        {
+        } else {
             $query .= "team_a = ? OR team_b = ?";
         }
 

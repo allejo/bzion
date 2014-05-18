@@ -1,9 +1,6 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
@@ -37,7 +34,8 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
         $this->genericPlayer = $this->getNewUser("admin", Player::DEVELOPER);
     }
 
-    protected function getNewUser($username="Sam", $role=Player::PLAYER) {
+    protected function getNewUser($username="Sam", $role=Player::PLAYER)
+    {
         // Try to find a valid bzid
         $bzid = 300;
         while (Player::getFromBZID($bzid)->isValid()) {

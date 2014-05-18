@@ -21,6 +21,7 @@ class TeamController extends HTMLController
         }
 
         $team->delete();
+
         return new RedirectResponse(Service::getGenerator()->generate('team_list'));
     }
 }

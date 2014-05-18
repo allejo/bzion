@@ -41,7 +41,8 @@ class AppKernel extends Kernel
         $this->setUpTwig();
     }
 
-    static public function guessEnvironment() {
+    public static function guessEnvironment()
+    {
         if (!defined('DEVELOPMENT'))
             return false;
 
