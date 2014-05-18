@@ -112,7 +112,7 @@ VALUES
   (NULL,'CD','Congo, the Democratic Republic of the'),
   (NULL,'CK','Cook Islands'),
   (NULL,'CR','Costa Rica'),
-  (NULL,'CI','Cote D\'Ivoire'),
+  (NULL,'CI','Cote D''Ivoire'),
   (NULL,'HR','Croatia'),
   (NULL,'CU','Cuba'),
   (NULL,'CY','Cyprus'),
@@ -433,6 +433,15 @@ CREATE TABLE `news_categories` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `news_categories` WRITE;
+/*!40000 ALTER TABLE `news_categories` DISABLE KEYS */;
+
+INSERT INTO `news_categories` (`id`, `alias`, `name`, `protected`, `status`)
+VALUES
+  (1,'uncategorized','Uncategorized',1,'live');
+
+/*!40000 ALTER TABLE `news_categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table pages
