@@ -30,7 +30,16 @@ class UpdateCommand extends ContainerAwareCommand
 
         // the finished part of the bar
         $progress->setBarCharacter('<comment>=</comment>');
-        $progress->start($output, 7);
+        $progress->start($output, 9);
+
+        // Get number of changes to see if we need to stash anything
+        $changeCount = new Process("git status --porcelain --untracked-files=no");
+        $changeCount->run();
+        if (!$changeCount->isSuccessful())
+            throw new \RuntimeException($process->getErrorOutput());
+        $changeCount = substr_count( $changeCount->getOutput(), "\n" );
+        $progress->advance();
+
 
         if (file_exists('composer.phar')) {
             $composerLocation = 'php composer.phar';
@@ -39,13 +48,18 @@ class UpdateCommand extends ContainerAwareCommand
         }
 
         $commands = array(
-                    "git submodule update --init",
                     "git stash", // Save any changes that have been made so
                                  // that git doesn't complain
                     "git pull origin master",
+                    "git submodule sync",
+                    "git submodule update --init",
                     "git stash pop",
                     "$composerLocation install --no-dev"
                     );
+
+        if ($changeCount < 1) {
+            $commands[0] = $commands[4] = null;
+        }
 
         foreach ($commands as $cn => $c) {
             $process = new Process($c);
