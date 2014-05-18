@@ -7,9 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class HTMLController extends Controller
 {
-    protected function getModelFromParameters($modelParameter, $routeParameters)
+    /**
+     * {@inheritDoc}
+     *
+     * @throws ModelNotFoundException
+     */
+    protected function findModelInParameters($modelParameter, $routeParameters)
     {
-        $model = parent::getModelFromParameters($modelParameter, $routeParameters);
+        $model = parent::findModelInParameters($modelParameter, $routeParameters);
 
         if (!$model instanceof UrlModel || $model->isValid())
             return $model;

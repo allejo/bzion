@@ -158,9 +158,7 @@ abstract class Controller
         $params = array();
 
         foreach ($ref->getParameters() as $p) {
-            if ($model = $this->getModelFromParameters($p, $parameters)) {
-                // The parameter's class is a Model
-                // Get its slug from the request and send a Model to the method
+            if ($model = $this->getObjectFromParameters($p, $parameters)) {
                 $params[] = $model;
             } elseif (isset($parameters[$p->name])) {
                 $params[] = $parameters[$p->name];
@@ -180,7 +178,7 @@ abstract class Controller
      * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
      * @param array               $routeParameters The route's parameters
      */
-    protected function getModelFromParameters($modelParameter, $routeParameters)
+    protected function getObjectFromParameters($modelParameter, $routeParameters)
     {
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
@@ -190,6 +188,8 @@ abstract class Controller
             return $refClass->newInstance(Service::getSession()->get('playerId'));
 
         if ($refClass === null)
+            // No class provived by the method's definition, we don't know
+            // what we should pass
             return null;
 
         if ($refClass->getName() == "Symfony\Component\HttpFoundation\Request")
@@ -198,10 +198,24 @@ abstract class Controller
         if ($refClass->getName() == "Symfony\Component\HttpFoundation\Session\Session")
             return $this->getRequest()->getSession();
 
-        if (!$refClass->isSubclassOf("Model"))
-            return null;
+        if ($refClass->isSubclassOf("Model"))
+            // Look for the object's ID/slugs in the routeParameters array
+            return $this->findModelInParameters($modelParameter, $routeParameters);
 
-        // Look for the object's ID/slugs in the routeParameters array
+        return null;
+    }
+
+    /**
+     * Try locating a method's parameter in an array
+     *
+     * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
+     * @param array               $routeParameters The route's parameters
+     * @return Model|null A Model or null if it couldn't be found
+     */
+    protected function findModelInParameters($modelParameter, $routeParameters) {
+        $refClass = $modelParameter->getClass();
+        $paramName  = $modelParameter->getName();
+
         if (isset($routeParameters[$paramName])) {
             if (is_object($routeParameters[$paramName]) &&
                 $refClass->getName() === get_class($routeParameters[$paramName])
