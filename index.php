@@ -1,5 +1,5 @@
 <?php
-require_once 'bzion-load.php';
+require_once __DIR__ . '/bzion-load.php';
 
 use Symfony\Component\HttpFoundation\Request;
 

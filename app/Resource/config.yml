@@ -5,7 +5,8 @@ framework:
         strict_requirements: ~
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
+    session:
+        handler_id: ~
 
 services:
     main.warmer.twig_warmer:

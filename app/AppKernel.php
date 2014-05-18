@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+require_once 'bzion-load.php';
+
 class AppKernel extends Kernel
 {
     public function registerContainerConfiguration(LoaderInterface $loader)
@@ -86,7 +88,7 @@ class AppKernel extends Kernel
             return parent::handle($request, $type, $catch);
         }
 
-        $request->setSession(Service::getNewSession());
+        $request->setSession($this->container->get('session'));
 
         Service::setRequest($request);
         Service::getTemplateEngine()->addGlobal("request", $request);

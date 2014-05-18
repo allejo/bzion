@@ -26,10 +26,6 @@ done
 vendor/phpunit/phpunit/phpunit $COVERAGE_TYPE
 PHPUNIT=$?
 
-# Same for behat
-vendor/behat/behat/bin/behat
-BEHAT=$?
-
 # Find all PHP files on the root directory which do not start with "bzion"
 FILES="`find . -maxdepth 1 -iname '*.php' -and ! -iname 'bzion*' | sort`"
 
@@ -46,8 +42,4 @@ fi
 
 if [[ $FILETEST -ne 0 ]]; then
     exit 2
-fi
-
-if [[ $BEHAT -ne 0 ]]; then
-    exit 3
 fi

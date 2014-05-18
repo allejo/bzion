@@ -1,33 +1,38 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
-
+use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Exception\PendingException;
+use Behat\Gherkin\Node\PyStringNode;
+use Behat\Gherkin\Node\TableNode;
 use Symfony\Component\HttpFoundation\Request;
-
-require_once __DIR__ . "/../../bzion-load.php";
+use Symfony\Component\HttpKernel\KernelInterface;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
 
 /**
- * Features context.
+ * Behat context class.
  */
-class FeatureContext extends BehatContext
+class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
 {
-    private $kernel;
+    /**
+     * @var \Symfony\Component\HttpKernel\KernelInterface $kernel
+     */
+    private $kernel = null;
     private $response;
+
+    public function setKernel(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
     /**
      * Initializes context.
-     * Every scenario gets its own context object.
      *
-     * @param array $parameters context parameters (set them up through behat.yml)
+     * Every scenario gets it's own context object.
+     * You can also pass arbitrary arguments to the context constructor through behat.yml.
      */
-    public function __construct(array $parameters)
+    public function __construct()
     {
-        $this->kernel = new AppKernel(AppKernel::guessEnvironment(), DEVELOPMENT > 0);
+//         $this->kernel = new AppKernel("test", true);
     }
 
     /**
