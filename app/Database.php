@@ -32,11 +32,17 @@ class Database
 
     /**
      * Create a new connection to the database
-     * @return Database
+     *
+     * @param string $host     The MySQL host
+     * @param string $user     The MySQL user
+     * @param string $password The MySQL password for the user
+     * @param string $dbName   The MySQL database name
+     *
+     * @return Database A database object to ineract with the database
      */
-    public function __construct()
+    public function __construct($host = MYSQL_HOST, $user = MYSQL_USER, $password = MYSQL_PASSWORD, $dbName = MYSQL_DB_NAME)
     {
-        $this->dbc = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
+        $this->dbc = new mysqli($host, $user, $password, $dbName);
 
         if ($this->dbc->connect_errno) {
             if (!DEVELOPMENT) echo "Something went wrong with the database connection.";
