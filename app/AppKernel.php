@@ -69,8 +69,6 @@ class AppKernel extends Kernel
         if ($this->isDebug())
             $twig->addExtension(new Twig_Extension_Debug());
 
-        $twig->addGlobal("pages", Page::getPages());
-
         Service::setTemplateEngine($twig);
 
     }
@@ -91,9 +89,12 @@ class AppKernel extends Kernel
         $request->setSession($this->container->get('session'));
 
         Service::setRequest($request);
-        Service::getTemplateEngine()->addGlobal("request", $request);
-        Service::getTemplateEngine()->addGlobal("session", $request->getSession());
-        Service::getTemplateEngine()->addGlobal("me",
+
+        $twig = Service::getTemplateEngine();
+        $twig->addGlobal("request", $request);
+        $twig->addGlobal("session", $request->getSession());
+        $twig->addGlobal("pages", Page::getPages());
+        $twig->addGlobal("me",
                  new Player($request->getSession()->get('playerId')));
 
         $con = Controller::getController($request->attributes);
