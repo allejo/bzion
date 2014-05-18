@@ -77,7 +77,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="column">
-                                    {{ player.username }}
+                                    {{ player.country.flagLiteral | raw }} {{ player.linkLiteral | raw }}
                                 </div>
 
                                 {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
