@@ -1,7 +1,7 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Exception\PendingException;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,9 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      * @var \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
     private $kernel = null;
-    private $response;
+    private $response = null;
+    private $player = null;
+    private $genericPlayer;
 
     public function setKernel(KernelInterface $kernel)
     {
@@ -32,7 +34,20 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function __construct()
     {
-//         $this->kernel = new AppKernel("test", true);
+        $this->genericPlayer = $this->getNewUser();
+    }
+
+    protected function getNewUser($username="Sam") {
+        // Try to find a valid bzid
+        $bzid = 300;
+        while (Player::getFromBZID($bzid)->isValid()) {
+            $bzid++;
+
+            if ($bzid > 15000)
+                throw new Exception("bzid too big");
+        }
+
+        return Player::newPlayer($bzid, $username);
     }
 
     /**
@@ -40,7 +55,7 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iHaveEnteredANewsArticleNamed($title)
     {
-        News::addNews($title, "bleep", 1);
+        News::addNews($title, "bleep", $this->genericPlayer->getId());
     }
 
     /**
@@ -48,7 +63,7 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iHaveACustomPageNamed($arg1)
     {
-        Page::addPage($arg1, "blop", 1);
+        Page::addPage($arg1, "blop", $this->genericPlayer->getId());
     }
 
     /**
@@ -66,5 +81,30 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
     {
         if (strpos($this->response->getContent(), $what) === false)
             throw new Exception("Response does not contain $what");
+    }
+
+    /**
+     * @Given I have a user
+     */
+    public function iHaveAUser()
+    {
+        $this->player = $this->getNewUser();
+    }
+
+    /**
+     * @When I log in
+     */
+    public function iLogIn()
+    {
+        Service::getSession()->set('playerId', $this->player->getId());
+    }
+
+    /**
+     * @Then I should not see :something
+     */
+    public function iShouldNotSee($something)
+    {
+        if (strpos($this->response->getContent(), $something) !== false)
+            throw new Exception("Response contains $something");
     }
 }

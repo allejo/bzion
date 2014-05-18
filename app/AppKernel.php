@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-require_once 'bzion-load.php';
+require_once __DIR__ . '/../bzion-load.php';
 
 class AppKernel extends Kernel
 {

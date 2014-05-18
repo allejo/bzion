@@ -6,3 +6,12 @@ Feature: Home Page
       When I go to the home page
       Then I should see "Significant News"
       And I should see "FAQ"
+
+    Scenario: Hide registration button
+      Given I have a user
+      When I go to the home page
+      Then I should see "Register"
+      When I log in
+      And I go to the home page
+      Then I should not see "Register"
+
