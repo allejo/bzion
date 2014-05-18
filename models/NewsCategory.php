@@ -144,7 +144,7 @@ class NewsCategory extends AliasModel
         $query  = "WHERE status NOT IN ($ignoredStatuses) AND category = ? ";
         $query .= "ORDER BY created DESC LIMIT $limit OFFSET $start";
 
-        return News::arrayIdToModel(News::fetchIds($query, 'i', $this->getId()));
+        return News::arrayIdToModel(News::fetchIds($query, 'i', array($this->getId())));
     }
 
     /**
