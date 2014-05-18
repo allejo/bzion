@@ -22,7 +22,7 @@ class BehatTest extends TestCase
             $input = new ArrayInput($arguments);
             $application = $factory->createApplication();
 
-            $application->doRun($input, new ConsoleOutput());
+            $this->assertEquals(0, $application->doRun($input, new ConsoleOutput()));
         } catch (\Exception $exception) {
             $this->fail($exception->getMessage());
         }
