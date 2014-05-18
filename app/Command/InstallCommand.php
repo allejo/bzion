@@ -25,11 +25,9 @@ class InstallCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//         $name = $input->getArgument('name');
         $output->writeln('<bg=green;options=bold>Welcome to BZiON!</bg=green;options=bold>');
         $progress = $this->getHelperSet()->get('progress');
 
-        // the finished part of the bar
         $progress->setBarCharacter('<comment>=</comment>');
         $progress->start($output, 3);
 

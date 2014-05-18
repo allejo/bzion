@@ -86,5 +86,7 @@ class UpdateCommand extends ContainerAwareCommand
         }
 
         $progress->finish();
+
+        $output->writeln('<fg=green;options=bold>BZiON has been updated successfully!</fg=green;options=bold>');
     }
 }
