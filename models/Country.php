@@ -18,10 +18,10 @@ class Country extends Model
     private $name;
 
     /**
-     * The flag of the country
+     * The ISO code of the country
      * @var string
      */
-    private $flag;
+    private $iso;
 
     /**
      * The name of the database table used for queries
@@ -30,6 +30,7 @@ class Country extends Model
 
     /**
      * Construct a new Country
+     *
      * @param int $id The country's id
      */
     public function __construct($id)
@@ -40,13 +41,13 @@ class Country extends Model
         $country = $this->result;
 
         $this->name = $country['name'];
-        $this->flag = $country['flag'];
-
+        $this->iso = $country['iso'];
     }
 
     /**
      * Get the name of the country in the default language
-     * @return string
+     *
+     * @return string The name of the country
      */
     public function getName()
     {
@@ -54,16 +55,28 @@ class Country extends Model
     }
 
     /**
-     * Get the country's flag
-     * @return string The URL to the country's flag
+     * Get the ISO code of a country
+     *
+     * @return string The ISO code of the country
      */
-    public function getFlag()
+    public function getISO()
     {
-        return $this->flag;
+        return $this->iso;
+    }
+
+    /**
+     * Get the HTML to display a specific flag
+     *
+     * @return string HTML to generate a flag
+     */
+    public function getFlagLiteral()
+    {
+        return '<div class="flag ' . $this->getFlagCssClass() . '" title="' . $this->getName() . '"></div>';
     }
 
     /**
      * Get all the countries in the database
+     *
      * @return Country[] An array of country objects
      */
     public static function getCountries()
@@ -71,4 +84,13 @@ class Country extends Model
         return self::arrayIdToModel(self::fetchIds());
     }
 
+    /**
+     * Get the country's flag's CSS class
+     *
+     * @return string The URL to the country's flag
+     */
+    private function getFlagCssClass()
+    {
+        return "flag-" . strtolower($this->getISO());
+    }
 }

@@ -178,6 +178,16 @@ class Player extends AliasModel
     }
 
     /**
+     * Get the country a player belongs to
+     *
+     * @return Country The country belongs to
+     */
+    public function getCountry()
+    {
+        return new Country($this->country);
+    }
+
+    /**
      * Get the player's sanitized description
      * @return string The description
      */

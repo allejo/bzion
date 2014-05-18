@@ -8,6 +8,7 @@
             <img class='avatar_player' src='{{ player.avatar }}'>
         {% endif %}
         <div class='label player_name'>{{ player.username }}</div>
+        {{ player.country.flagLiteral | raw }} rawr
         <div class='label label_team'>Team:
             {% if player.team.valid %}
                 <a href="{{ player.team.url }}">{{ player.team.name }}</a>
