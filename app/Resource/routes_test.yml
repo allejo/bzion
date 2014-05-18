@@ -1,0 +1,6 @@
+test_login:
+    pattern:    /login/{user}
+    defaults: { _controller: 'Login', _action: 'loginAsTestUser' }
+
+_main:
+    resource: ../routes.yml

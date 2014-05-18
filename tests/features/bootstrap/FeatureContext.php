@@ -1,15 +1,16 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\MinkExtension\Context\MinkContext;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
 use PHPUnit_Framework_Assert as Assert;
 
 /**
  * Behat context class.
  */
-class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
+class FeatureContext extends MinkContext implements SnippetAcceptingContext, KernelAwareContext
 {
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface $kernel
@@ -51,7 +52,7 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
                 throw new Exception("bzid too big");
         }
 
-        return Player::newPlayer($bzid, $username, null, "active", $role);
+        return Player::newPlayer($bzid, $username, null, "test", $role);
     }
 
     /**
@@ -71,30 +72,6 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
     }
 
     /**
-     * @When /^I go to the home page$/
-     */
-    public function iGoToTheHomePage()
-    {
-        $this->crawler = $this->client->request('GET', '/');
-        $this->response = $this->client->getResponse();
-    }
-
-    /**
-     * @Then /^I should see "([^"]*)"$/
-     */
-    public function iShouldSee($what)
-    {
-        try {
-            Assert::assertContains(
-                $what,
-                $this->response->getContent()
-            );
-        } catch(Exception $e) {
-            throw new Exception("Response does not contain $what");
-        }
-    }
-
-    /**
      * @Given I have a user
      */
     public function iHaveAUser()
@@ -107,22 +84,7 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iLogIn()
     {
-        $this->kernel->getContainer()->get('session')->set('playerId', $this->player->getId());
-        $this->client = $this->kernel->getContainer()->get('test.client');
-    }
+        $this->visit('/login/' . $this->player->getId());
 
-    /**
-     * @Then I should not see :something
-     */
-    public function iShouldNotSee($something)
-    {
-        try {
-            Assert::assertNotContains(
-                $something,
-                $this->response->getContent()
-            );
-        } catch(Exception $e) {
-            throw new Exception("Response contains $something");
-        }
     }
 }

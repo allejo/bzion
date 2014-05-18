@@ -577,7 +577,7 @@ CREATE TABLE `players` (
   `team` int(10) unsigned DEFAULT NULL COMMENT 'A player''s team',
   `username` varchar(32) NOT NULL DEFAULT '' COMMENT 'A player''s username',
   `alias` varchar(32) DEFAULT NULL COMMENT 'The player''s URL slug that will appear when viewing their profile',
-  `status` set('active','disabled','deleted','reported','banned') NOT NULL DEFAULT 'active' COMMENT 'The player''s status',
+  `status` set('active','disabled','deleted','reported','banned','test') NOT NULL DEFAULT 'active' COMMENT 'The player''s status',
   `avatar` varchar(200) NOT NULL DEFAULT '' COMMENT 'The URL to the player''s avatar',
   `description` text NOT NULL COMMENT 'The description or biography of a player',
   `country` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'The country a player belongs to',

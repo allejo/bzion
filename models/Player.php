@@ -300,6 +300,16 @@ class Player extends AliasModel
     }
 
     /**
+     * Check if everyone can log in as this user on a test environment
+     *
+     * @return bool
+     */
+    public function isTestUser()
+    {
+        return ($this->status == "test");
+    }
+
+    /**
      * Check if a player is teamless
      *
      * @return bool True if the player is teamless

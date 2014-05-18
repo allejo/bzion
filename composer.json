@@ -28,6 +28,9 @@
     },
     "require-dev": {
         "behat/behat": "3.0.*@stable",
+        "behat/mink": "~1.6@dev",
+        "behat/mink-extension": "~2.0@dev",
+        "behat/mink-browserkit-driver": "~1.2@dev",
         "symfony/browser-kit": ">=2.4.0",
         "symfony/form"       : ">=2.4.0",
         "symfony/web-profiler-bundle": ">=2.4.0",

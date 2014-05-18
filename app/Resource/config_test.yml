@@ -8,3 +8,5 @@ framework:
         handler_id: ~
     profiler:
         collect: false
+    router:
+        resource: "%kernel.root_dir%/Resource/routes_test.yml"

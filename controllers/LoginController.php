@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 require_once 'includes/checkToken.php';
 
@@ -65,6 +66,13 @@ class LoginController extends HTMLController
         }
 
         Header::go($loc, $override);
+    }
+
+    public function loginAsTestUserAction(Session $session, Player $user) {
+        if (!$user->isTestUser())
+            throw new Exception("The player you specified is not a test user!");
+
+        $session->set("playerId", $user->getId());
     }
 
 }
