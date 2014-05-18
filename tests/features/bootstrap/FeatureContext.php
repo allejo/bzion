@@ -4,6 +4,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
+use PHPUnit_Framework_Assert as Assert;
 
 /**
  * Behat context class.
@@ -14,13 +15,18 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      * @var \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
     private $kernel = null;
+    private $client = null;
     private $response = null;
+    private $crawler = null;
     private $player = null;
     private $genericPlayer;
 
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+
+        $this->kernel->boot();
+        $this->client = $this->kernel->getContainer()->get('test.client');
     }
 
     /**
@@ -69,7 +75,8 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iGoToTheHomePage()
     {
-        $this->response = $this->kernel->handle(Request::create('/'));
+        $this->crawler = $this->client->request('GET', '/');
+        $this->response = $this->client->getResponse();
     }
 
     /**
@@ -77,8 +84,14 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iShouldSee($what)
     {
-        if (strpos($this->response->getContent(), $what) === false)
+        try {
+            Assert::assertContains(
+                $what,
+                $this->response->getContent()
+            );
+        } catch(Exception $e) {
             throw new Exception("Response does not contain $what");
+        }
     }
 
     /**
@@ -94,7 +107,8 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iLogIn()
     {
-        Service::getSession()->set('playerId', $this->player->getId());
+        $this->kernel->getContainer()->get('session')->set('playerId', $this->player->getId());
+        $this->client = $this->kernel->getContainer()->get('test.client');
     }
 
     /**
@@ -102,7 +116,13 @@ class FeatureContext implements SnippetAcceptingContext, KernelAwareContext
      */
     public function iShouldNotSee($something)
     {
-        if (strpos($this->response->getContent(), $something) !== false)
+        try {
+            Assert::assertNotContains(
+                $something,
+                $this->response->getContent()
+            );
+        } catch(Exception $e) {
             throw new Exception("Response contains $something");
+        }
     }
 }

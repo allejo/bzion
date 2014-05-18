@@ -66,4 +66,5 @@ class LoginController extends HTMLController
 
         Header::go($loc, $override);
     }
+
 }

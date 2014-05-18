@@ -45,7 +45,7 @@ class UpdateCommand extends ContainerAwareCommand
         $commands = array(
                     "git stash", // Save any changes that have been made so
                                  // that git doesn't complain
-                    "git pull origin master",
+                    "git pull origin",
                     "git submodule sync",
                     "git submodule update --init",
                     "git stash pop",
