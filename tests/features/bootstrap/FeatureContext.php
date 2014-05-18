@@ -3,9 +3,7 @@
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
-use PHPUnit_Framework_Assert as Assert;
 
 /**
  * Behat context class.
@@ -20,7 +18,6 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     private $response = null;
     private $crawler = null;
     private $player = null;
-    private $genericPlayer;
 
     public function setKernel(KernelInterface $kernel)
     {
@@ -31,6 +28,16 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
+    * Prepare system for the test suite before it runs
+    *
+    * @BeforeSuite
+    */
+    public static function prepare($event)
+    {
+        self::clearDatabase();
+    }
+
+    /**
      * Initializes context.
      *
      * Every scenario gets it's own context object.
@@ -38,7 +45,6 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function __construct()
     {
-        $this->genericPlayer = $this->getNewUser("admin", Player::DEVELOPER);
     }
 
     protected function getNewUser($username="Sam", $role=Player::PLAYER)
@@ -55,12 +61,16 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         return Player::newPlayer($bzid, $username, null, "test", $role);
     }
 
+    protected function getUserId() {
+        return $this->getNewUser("Administrator", Player::DEVELOPER)->getId();
+    }
+
     /**
      * @Given /^I have entered a news article named "([^"]*)"$/
      */
     public function iHaveEnteredANewsArticleNamed($title)
     {
-        News::addNews($title, "bleep", $this->genericPlayer->getId());
+        News::addNews($title, "bleep", $this->getUserId());
     }
 
     /**
@@ -68,7 +78,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveACustomPageNamed($arg1)
     {
-        Page::addPage($arg1, "blop", $this->genericPlayer->getId());
+        Page::addPage($arg1, "blop", $this->getUserId());
     }
 
     /**
@@ -86,5 +96,64 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     {
         $this->visit('/login/' . $this->player->getId());
 
+    }
+
+    /**
+     * @Given I have a team called :name
+     */
+    public function iHaveATeamCalled($name)
+    {
+        Team::createTeam($name, $this->getUserId(), "Avatar", "Description");
+    }
+
+    /**
+     * @Then I should see :arg1 in the title
+     */
+    public function iShouldSeeInTheTitle($arg1)
+    {
+        $this->assertElementContains("title", $arg1);
+    }
+
+    /**
+     * @Then should not see :arg1 in the title
+     */
+    public function iShouldNotSeeInTheTitle($arg1)
+    {
+        $this->assertElementNotContains("title", $arg1);
+    }
+
+    /**
+     * @Given :team1 plays a match against :team2 with score :score1 - :score2
+     */
+    public function playsAMatchAgainstWithScore($team1, $team2, $score1, $score2)
+    {
+        Match::enterMatch(Team::getFromName($team1)->getId(),
+                          Team::getFromName($team2)->getId(),
+                          $score1,
+                          $score2,
+                          30,
+                          $this->getUserId());
+    }
+
+    /**
+     * @Given that the database is empty
+     */
+    public static function clearDatabase()
+    {
+        $db = Database::getInstance();
+
+        // Get an array of the tables in the database, so that we can remove them
+        $tables = array_map(function($val) { return current($val); },
+                            $db->query('SHOW TABLES'));
+
+        if (count($tables) > 0) {
+            $db->query('SET foreign_key_checks = 0');
+            $db->query('DROP TABLES ' . implode($tables , ','));
+            $db->query('SET foreign_key_checks = 1');
+        }
+
+        $dsn = 'mysql:dbname=' . MYSQL_DB_NAME . ';host=' . MYSQL_HOST .';charset=UTF8';
+        $pdo = new PDO($dsn, MYSQL_USER, MYSQL_PASSWORD);
+        $pdo->exec(file_get_contents('DATABASE.sql'));
     }
 }

@@ -619,4 +619,15 @@ class Team extends AliasModel
             )
         );
     }
+
+    /**
+     * Get a single team by its name
+     *
+     * @param string $name The team name to look for
+     * @return Team
+     */
+    public static function getFromName($name)
+    {
+        return new Team(self::fetchIdFrom($name, 'name', 's'));
+    }
 }

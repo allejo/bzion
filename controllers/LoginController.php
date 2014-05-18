@@ -68,7 +68,8 @@ class LoginController extends HTMLController
         Header::go($loc, $override);
     }
 
-    public function loginAsTestUserAction(Session $session, Player $user) {
+    public function loginAsTestUserAction(Session $session, Player $user)
+    {
         if (!$user->isTestUser())
             throw new Exception("The player you specified is not a test user!");
 
