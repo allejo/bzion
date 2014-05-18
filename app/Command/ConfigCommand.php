@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Process\Process;
 
-class UpdateCommand extends ContainerAwareCommand
+class ConfigCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
