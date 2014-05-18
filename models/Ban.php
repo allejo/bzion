@@ -99,6 +99,11 @@ class Ban extends Model
         $this->ipAddresses = parent::fetchIds("WHERE ban_id = ?", 'i', array($this->getId()), "banned_ips", "ip_address");
     }
 
+    /**
+     * Add an IP to the ban
+     *
+     * @param string $ipAddress The IP to add to a ban
+     */
     public function addIP($ipAddress)
     {
         $this->db->query("INSERT INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
