@@ -2,7 +2,7 @@
 /**
  * This file contains the skeleton for all of the database objects
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
@@ -10,6 +10,7 @@ use \Michelf\Markdown;
 
 /**
  * A database object (e.g. A player or a team)
+ * @package    BZiON\Models
  */
 abstract class Model
 {

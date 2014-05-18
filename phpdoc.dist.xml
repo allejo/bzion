@@ -8,9 +8,10 @@
     </transformer>
     <files>
         <directory>app</directory>
-        <directory>controllers</directory>
         <directory>models</directory>
         <directory>tests</directory>
+        <file>controllers/Controller.php</file>
+        <file>controllers/HTMLController.php</file>
         <ignore>app/cache/*</ignore>
     </files>
     <transformations>

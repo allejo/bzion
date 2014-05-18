@@ -2,7 +2,7 @@
 /**
  * This file contains functionality relating to the teams belonging to the current league
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
@@ -10,6 +10,7 @@ use \Identicon\Identicon;
 
 /**
  * A league team
+ * @package    BZiON\Models
  */
 class Team extends AliasModel
 {

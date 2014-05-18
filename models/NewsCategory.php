@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to the news categories admins can use
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A news category
+ * @package    BZiON\Models
  */
 class NewsCategory extends AliasModel
 {

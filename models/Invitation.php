@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to the invitation of players to join teams
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * An invitation sent to a player asking them to join a team
+ * @package    BZiON\Models
  */
 class Invitation extends Model
 {

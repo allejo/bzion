@@ -2,7 +2,7 @@
 /**
  * This file contains functionality relating to the official BZFlag match servers for the league
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
@@ -10,6 +10,7 @@ include_once(DOC_ROOT . "/includes/bzfquery.php");
 
 /**
  * A BZFlag server
+ * @package    BZiON\Models
  */
 class Server extends Model
 {

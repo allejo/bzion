@@ -51,6 +51,8 @@ use Symfony\Component\HttpFoundation\Response;
  * - A string representing the text you want the user to see
  * - An array representing the variables you want to pass to the controller's
  *   view, so that it can be rendered
+ *
+ * @package BZiON\Controllers
  */
 abstract class Controller
 {

@@ -2,6 +2,9 @@
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @package BZiON\Controllers
+ */
 abstract class HTMLController extends Controller
 {
     protected function getModelFromParameters($modelParameter, $routeParameters)

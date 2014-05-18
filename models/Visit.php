@@ -2,12 +2,13 @@
 /**
  * This file contains functionality to keep track of visitor sessions of registered users
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A player's visit on the website
+ * @package    BZiON\Models
  */
 class Visit extends Model
 {

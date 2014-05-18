@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to the participants of a group message
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A discussion (group of messages)
+ * @package    BZiON\Models
  */
 class Group extends UrlModel
 {

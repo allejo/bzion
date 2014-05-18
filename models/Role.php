@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to roles a player can have on the website to perform certain tasks
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A role a player is assigned
+ * @package    BZiON\Models
  */
 class Role extends Model
 {

@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to the banned league players
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A ban imposed by an admin on a player
+ * @package BZiON\Models
  */
 class Ban extends Model
 {

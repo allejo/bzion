@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to the countries players are allowed to set in their profiles as their location
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A country
+ * @package    BZiON\Models
  */
 class Country extends Model
 {

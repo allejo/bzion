@@ -2,12 +2,13 @@
 /**
  * This file contains functionality relating to permissions that roles have
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A permission that is assigned to a role
+ * @package    BZiON\Models
  */
 class Permission extends Model
 {

@@ -2,12 +2,13 @@
 /**
  * This file contains functionality linking database objects' aliases with Symfony2's URL routing component
  *
- * @package    BZiON
+ * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
 /**
  * A Model that has a URL
+ * @package    BZiON\Models
  */
 abstract class UrlModel extends Model
 {
