@@ -173,11 +173,11 @@ abstract class Model
     /**
      * Gets an array of object IDs from the database
      *
-     * @param string $additional_query Additional query snippet passed to the MySQL query after the SELECT statement (e.g. `WHERE id = ?`)
-     * @param string $types            The types of values that will be passed to Database::query()
-     * @param array  $params           The parameter values that will be passed to Database::query() corresponding to $types
-     * @param string $table            The database table that will be searched
-     * @param string $select           The column that will be returned
+     * @param string          $additional_query Additional query snippet passed to the MySQL query after the SELECT statement (e.g. `WHERE id = ?`)
+     * @param string          $types            The types of values that will be passed to Database::query()
+     * @param array           $params           The parameter values that will be passed to Database::query() corresponding to $types
+     * @param string          $table            The database table that will be searched
+     * @param string|string[] $select           The column that will be returned
      *
      * @return int[]
      */
@@ -188,7 +188,7 @@ abstract class Model
 
         // If $select is an array, convert it into a comma-separated list that MySQL will accept
         if (is_array($select))
-            $select = explode(",", $select);
+            $select = implode(",", $select);
 
         $results = $db->query("SELECT $select FROM $table $additional_query", $types, $params);
 
@@ -218,13 +218,15 @@ abstract class Model
 
     /**
      * Gets an array of object IDs from the database that have a column equal to something else
-     * @param  string       $column           The name of the column that should be tested
-     * @param  array|string $possible_values  List of acceptable values
-     * @param  bool         $negate           Whether to search if the value of $column does NOT belong to the $possible_values array
-     * @param  string       $type             The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
-     * @param  string|array $select           The name of the column(s) that the returned array should contain
-     * @param  string       $additional_query Additional parameters to be paseed to the MySQL query (e.g. `WHERE id = 5`)
-     * @param  string       $table            The database table which will be used for queries
+     *
+     * @param  string          $column           The name of the column that should be tested
+     * @param  array|string    $possible_values  List of acceptable values
+     * @param  bool            $negate           Whether to search if the value of $column does NOT belong to the $possible_values array
+     * @param  string          $type             The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
+     * @param  string|string[] $select           The name of the column(s) that the returned array should contain
+     * @param  string          $additional_query Additional parameters to be passed to the MySQL query (e.g. `WHERE id = 5`)
+     * @param  string          $table            The database table which will be used for queries
+     *
      * @return int[]        A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id')
