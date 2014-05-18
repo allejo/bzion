@@ -20,3 +20,7 @@ services:
         class: Command\UpdateCommand
         tags:
             -  { name: console.command }
+    bzion.command.config_command:
+        class: Command\ConfigCommand
+        tags:
+            -  { name: console.command }
