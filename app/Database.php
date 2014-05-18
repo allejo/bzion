@@ -40,7 +40,7 @@ class Database
      *
      * @return Database A database object to interact with the database
      */
-    public function __construct($host = MYSQL_HOST, $user = MYSQL_USER, $password = MYSQL_PASSWORD, $dbName = MYSQL_DB_NAME)
+    public function __construct($host, $user, $password, $dbName)
     {
         $this->dbc = new mysqli($host, $user, $password, $dbName);
 
@@ -62,14 +62,14 @@ class Database
     /**
      * Get an instance of the Database object
      *
-     * This should be the main way to acquire access
-     * to the database
+     * This should be the main way to acquire access to the database
+     * 
      * @return Database The Database object
      */
     public static function getInstance()
     {
         if (!self::$Database) {
-            self::$Database = new Database();
+            self::$Database = new Database(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
         }
 
         return self::$Database;
