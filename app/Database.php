@@ -38,7 +38,7 @@ class Database
      * @param string $password The MySQL password for the user
      * @param string $dbName   The MySQL database name
      *
-     * @return Database A database object to ineract with the database
+     * @return Database A database object to interact with the database
      */
     public function __construct($host = MYSQL_HOST, $user = MYSQL_USER, $password = MYSQL_PASSWORD, $dbName = MYSQL_DB_NAME)
     {
