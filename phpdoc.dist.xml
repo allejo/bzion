@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <parser>
+        <target>doc-cache</target>
+    </parser>
+    <transformer>
+        <target>doc</target>
+    </transformer>
+    <files>
+        <directory>app</directory>
+        <directory>controllers</directory>
+        <directory>models</directory>
+        <directory>tests</directory>
+        <ignore>app/cache/*</ignore>
+    </files>
+    <transformations>
+        <template name="responsive-twig" />
+    </transformations>
+</phpdoc>

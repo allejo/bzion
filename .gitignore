@@ -5,6 +5,7 @@ bzion_errors.log
 update.php
 vendor
 cache
+logs
 reDB.sh
 assets/imgs/identicons
 !assets/css/vendor
@@ -14,6 +15,12 @@ assets/imgs/identicons
 coverage-report
 coverage.clover
 ocular.phar
+
+# Documentation files #
+#######################
+ast.dump
+doc
+doc-cache
 
 # OS generated files #
 ######################
