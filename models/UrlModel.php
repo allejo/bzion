@@ -58,7 +58,7 @@ abstract class UrlModel extends Model
      */
     public function getURL($action='show', $absolute=false)
     {
-        return static::getPermaLink($absolute);
+        return static::getPermaLink($action, $absolute);
     }
 
     /**
