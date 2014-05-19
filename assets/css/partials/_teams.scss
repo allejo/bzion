@@ -14,7 +14,7 @@ main {
                 list-style: none;
                 margin: 30px 10px;
 
-                img {
+                .rank {
                     float: left;
                     margin: 3px 10px 0 0;
                 }
@@ -80,7 +80,7 @@ main {
         font-family: $sanSerifFont;
 
         .content_header {
-            .rank_image {
+            .rank {
                 float: left;
                 margin-right: 10px;
             }

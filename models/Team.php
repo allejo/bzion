@@ -447,23 +447,13 @@ class Team extends AliasModel
     }
 
     /**
-     * Get the image associated with
-     *
-     * @return string
-     */
-    public function getRankImage()
-    {
-        return Service::getRequest()->getBaseUrl() . '/assets/imgs/ranks/' . $this->getRankValue() . '.png';
-    }
-
-    /**
      * Get the HTML for an image with the rank symbol
      *
      * @return string The HTML for a rank image
      */
     public function getRankImageLiteral()
     {
-        return '<img class="rank_image" src="' . $this->getRankImage() . '" >';
+        return '<div class="rank lvl-' . $this->getRankValue() . '"></div>';
     }
 
     /**
