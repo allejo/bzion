@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file contains the skeleton for all of the controllers
+ *
+ * @package    BZiON\Controllers
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
+
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -192,11 +199,14 @@ abstract class Controller
             // what we should pass
             return null;
 
-        if ($refClass->getName() == "Symfony\Component\HttpFoundation\Request")
+        switch ($refClass->getName()) {
+        case "Symfony\Component\HttpFoundation\Request":
             return $this->getRequest();
-
-        if ($refClass->getName() == "Symfony\Component\HttpFoundation\Session\Session")
+        case "Symfony\Component\HttpFoundation\Session\Session":
             return $this->getRequest()->getSession();
+        case "Symfony\Component\Form\FormFactory":
+            return Service::getFormFactory();
+        }
 
         if ($refClass->isSubclassOf("Model"))
             // Look for the object's ID/slugs in the routeParameters array
@@ -208,11 +218,12 @@ abstract class Controller
     /**
      * Try locating a method's parameter in an array
      *
-     * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
-     * @param array               $routeParameters The route's parameters
-     * @return Model|null A Model or null if it couldn't be found
+     * @param  ReflectionParameter $modelParameter  The model's parameter we want to investigate
+     * @param  array               $routeParameters The route's parameters
+     * @return Model|null          A Model or null if it couldn't be found
      */
-    protected function findModelInParameters($modelParameter, $routeParameters) {
+    protected function findModelInParameters($modelParameter, $routeParameters)
+    {
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 

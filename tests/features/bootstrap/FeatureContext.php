@@ -61,7 +61,8 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         return Player::newPlayer($bzid, $username, null, "test", $role);
     }
 
-    protected function getUserId() {
+    protected function getUserId()
+    {
         return $this->getNewUser("Administrator", Player::DEVELOPER)->getId();
     }
 
@@ -98,6 +99,13 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
 
     }
 
+    /**
+     * @When I log out
+     */
+    public function iLogOut()
+    {
+        $this->visit('/logout');
+    }
     /**
      * @Given I have a team called :name
      */
@@ -136,6 +144,15 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
+     * @Given I am an admin
+     */
+    public function iAmAnAdmin()
+    {
+        $this->player = $this->getNewUser("Sam", Player::S_ADMIN);
+        $this->iLogIn();
+    }
+
+    /**
      * @Given that the database is empty
      */
     public static function clearDatabase()
@@ -143,7 +160,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         $db = Database::getInstance();
 
         // Get an array of the tables in the database, so that we can remove them
-        $tables = array_map(function($val) { return current($val); },
+        $tables = array_map(function ($val) { return current($val); },
                             $db->query('SHOW TABLES'));
 
         if (count($tables) > 0) {

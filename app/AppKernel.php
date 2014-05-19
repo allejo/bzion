@@ -1,6 +1,10 @@
 <?php
 
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\Form\Forms;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
@@ -8,6 +12,11 @@ use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
+use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
+use Symfony\Component\Form\Extension\DataCollector\DataCollectorExtension;
 
 require_once __DIR__ . '/../bzion-load.php';
 
@@ -66,12 +75,16 @@ class AppKernel extends Kernel
         ));
 
         // Load the routing extension to twig, which adds functions such as path()
+        $formEngine = new TwigRendererEngine(array('form_layout.html.twig'));
+        $formEngine->setEnvironment($twig);
         $twig->addExtension(new RoutingExtension(Service::getGenerator()));
+        $twig->addExtension(
+            new FormExtension(new TwigRenderer($formEngine))
+        );
         if ($this->isDebug())
             $twig->addExtension(new Twig_Extension_Debug());
 
         Service::setTemplateEngine($twig);
-
     }
 
     public function handle(Request $request, $type=1, $catch=true)
@@ -87,8 +100,21 @@ class AppKernel extends Kernel
             return parent::handle($request, $type, $catch);
         }
 
-        $request->setSession($this->container->get('session'));
+        $session = $this->container->get('session');
+        $request->setSession($session);
+        $csrfProvider = new SessionCsrfProvider($session, "secret");
 
+        $formFactoryBuilder = Forms::createFormFactoryBuilder()
+                       ->addExtension(new HttpFoundationExtension())
+                       ->addExtension(new CsrfExtension($csrfProvider));
+
+        // Make sure that the profiler shows information about the forms
+        $formDataCollector = $this->container->get('data_collector.form', null);
+        if ($formDataCollector) {
+            $formFactoryBuilder->addExtension(new DataCollectorExtension($formDataCollector));
+        }
+
+        Service::setFormFactory($formFactoryBuilder->getFormFactory());
         Service::setRequest($request);
 
         $twig = Service::getTemplateEngine();

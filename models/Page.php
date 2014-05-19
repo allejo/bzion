@@ -171,7 +171,7 @@ class Page extends AliasModel
     /**
      * {@inheritdoc}
      */
-    protected static function getRouteName()
+    protected static function getRouteName($action='show')
     {
         return "custom_page";
     }

@@ -32,11 +32,12 @@ abstract class AliasModel extends UrlModel
     /**
      * {@inheritDoc}
      */
-    public function getURL($absolute=false)
+    public function getURL($action='show', $absolute=false)
     {
         if (!$this->isValid())
             return "";
-        return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getAlias()), $absolute);
+        return Service::getGenerator()->generate(static::getRouteName($action),
+                array(static::getParamName() => $this->getAlias()), $absolute);
     }
 
     /**

@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <title>{% spaceless %}{% block title %}BZiON{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-        <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/chosen/chosen.min.css">
-        <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="{{ request.getBaseURL() }}/assets/css/reset.css">
-        <link rel="stylesheet" href="{{ request.getBaseURL() }}/assets/css/styles.css">
+        <link rel="stylesheet" href="{{ request.baseURL }}/includes/chosen/chosen.min.css">
+        <link rel="stylesheet" href="{{ request.baseURL }}/includes/ladda/dist/ladda.min.css" />
+        <link rel="stylesheet" href="{{ request.baseURL }}/assets/css/reset.css">
+        <link rel="stylesheet" href="{{ request.baseURL }}/assets/css/styles.css">
 
         {% block stylesheets %}
 
@@ -19,7 +19,7 @@
             <section>
                 <h1>
                     <a href="{{ path('index') }}">
-                        <img src="{{ request.getBaseURL() }}/assets/imgs/bzflag_icon.png" />
+                        <img src="{{ request.baseURL }}/assets/imgs/bzflag_icon.png" />
                         <span>{{ constant("SITE_TITLE") }}</span>
                     </a>
                 </h1>
@@ -29,8 +29,13 @@
                 <div class="notification">
                     <i class="fa fa-check"></i><span>Your message was sent successfully</span>
                 </div>
+
             </section>
         </header>
+
+        {% for message in session.flashbag.all %}
+            <p>{{ message.0 }}</p>
+        {% endfor %}
 
         {% block content %}
 
@@ -52,12 +57,12 @@
         </footer>
 
         <script>
-            var baseURLNoHost = "{{ request.getBaseURL()|e('js')  }}";
-            var baseURL = "{{ request.getSchemeAndHTTPHost()|e('js') }}";
+            var baseURLNoHost = "{{ request.baseURL|e('js')  }}";
+            var baseURL = "{{ request.schemeAndHTTPHost|e('js') }}";
         </script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script src="{{ request.getBaseURL() }}/assets/js/min/main-ck.js"></script>
+        <script src="{{ request.baseURL }}/assets/js/min/main-ck.js"></script>
 
         {% block javascripts %}
 

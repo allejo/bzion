@@ -8,12 +8,7 @@ class TwigCacheWarmer implements CacheWarmerInterface
     {
         $directory = __DIR__.'/../views';
 
-        $loader = new Twig_Loader_Filesystem($directory);
-        $twig = new Twig_Environment($loader, array(
-            'cache' => $cacheDir . '/twig',
-            'debug' => false
-        ));
-        $twig->addExtension(new RoutingExtension(Service::getGenerator()));
+        $twig = Service::getTemplateEngine();
 
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 

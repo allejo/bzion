@@ -82,10 +82,9 @@ team_show:
     pattern:    /teams/{team}
     defaults: { _controller: 'Team', _action: 'show' }
 
-team_remove:
-    pattern:    /teams/{team}/remove
-    defaults: { _controller: 'Team', _action: 'remove' }
-    methods:  [POST]
+team_delete:
+    pattern:    /teams/{team}/delete
+    defaults: { _controller: 'Team', _action: 'delete' }
 
 custom_page:
     pattern:    /{page}

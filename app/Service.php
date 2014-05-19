@@ -7,6 +7,7 @@
  */
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -30,6 +31,12 @@ abstract class Service
      * @var Twig_Environment
      */
     private static $templateEngine;
+
+    /**
+     * Symfony's FormFactory
+     * @var FormFactory
+     */
+    private static $formFactory;
 
     /**
      * @param Request $request
@@ -101,5 +108,15 @@ abstract class Service
     public static function setTemplateEngine($templateEngine)
     {
         self::$templateEngine = $templateEngine;
+    }
+
+    public static function getFormFactory()
+    {
+        return self::$formFactory;
+    }
+
+    public static function setFormFactory($formFactory)
+    {
+        self::$formFactory = $formFactory;
     }
 }

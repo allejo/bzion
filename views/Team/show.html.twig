@@ -18,7 +18,7 @@
 
                 <div class="buttons">
                     {% if me.hasPermission(constant('Permission::SOFT_DELETE_TEAM')) or me.team.id == team.id %}
-                        <a class="button red" href="#"><i class="fa fa-trash-o"></i> Delete</a>
+                        <a class="button red" href="{{ team.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
 
                     {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.team.id == team.leader.id %}

@@ -41,3 +41,22 @@ Feature: Teams
       When I go to "/teams/ironclad-basin"
       Then I should see "1 losses"
       And I should see "1 draws"
+
+    Scenario: Delete team
+        Given I have a team called "Shatterproof Reservoir"
+        And I have a team called "Parlous Provender"
+        And I am an admin
+        When I go to "/teams/shatterproof-reservoir"
+        And I follow "Delete"
+        And I press "Yes"
+        Then I should be on "/teams"
+        And I should see "The team Shatterproof Reservoir was deleted successfully"
+        When I go to "/teams/parlous-provender"
+        And I follow "Delete"
+        And I press "No"
+        Then I should be on "/teams/parlous-provender"
+        When I log out
+        And I go to "/teams"
+        Then I should see "Parlous Provender"
+        But I should not see "Shatterproof Reservoir"
+

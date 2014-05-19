@@ -111,7 +111,7 @@ class Team extends AliasModel
      *
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -625,7 +625,7 @@ class Team extends AliasModel
     /**
      * Get a single team by its name
      *
-     * @param string $name The team name to look for
+     * @param  string $name The team name to look for
      * @return Team
      */
     public static function getFromName($name)

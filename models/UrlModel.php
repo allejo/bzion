@@ -14,11 +14,12 @@ abstract class UrlModel extends Model
 {
     /**
      * Get the name of the route that shows the object
+     * @param  string $action The route's suffix
      * @return string
      */
-    protected static function getRouteName()
+    protected static function getRouteName($action='show')
     {
-        return self::toSnakeCase(get_called_class()) . "_show";
+        return self::getParamName() . "_$action";
     }
 
     /**
@@ -50,11 +51,12 @@ abstract class UrlModel extends Model
     /**
      * Get an object's url
      *
+     * @param string  $action   The action to perform (`show`, `list` or `delete`)
      * @param boolean $absolute Whether to return an absolute URL
      *
      * @return string A permanent link
      */
-    public function getURL($absolute=false)
+    public function getURL($action='show', $absolute=false)
     {
         return static::getPermaLink($absolute);
     }
@@ -62,12 +64,14 @@ abstract class UrlModel extends Model
     /**
      * Get an object's permanent url
      *
+     * @param string  $action   The action to perform (`show`, `list` or `delete`)
      * @param boolean $absolute Whether to return an absolute URL
      *
      * @return string A permanent link
      */
-    public function getPermaLink($absolute=false)
+    public function getPermaLink($action='show', $absolute=false)
     {
-        return Service::getGenerator()->generate(static::getRouteName(), array(static::getParamName() => $this->getId()), $absolute);
+        return Service::getGenerator()->generate(static::getRouteName($action),
+                   array(static::getParamName() => $this->getId()), $absolute);
     }
 }

@@ -19,8 +19,6 @@ abstract class Header
         } else {
             header("Location: " . self::getBasePath() . $location);
         }
-
-        die();
     }
 
     /**
