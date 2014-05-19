@@ -2,6 +2,10 @@
 
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/tipsy/src/stylesheets/tipsy.css" />
+{% endblock %}
+
 {% block content %}
     <main class="team_profile">
         <section class="content_header">
@@ -34,8 +38,11 @@
 
         <section class="profile">
             <section class="team_row">
-                <section class="description">
-                    {{ team.description | raw }}
+                <section class="information">
+                    <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
+                    <article class="description">
+                        {{ team.description | raw }}
+                    </article>
                 </section>
 
                 <section class="profile_picture">
@@ -45,7 +52,12 @@
 
             <section class="team_row">
                 <section class="match_stats">
-                    <h4>Match Statistics</h4>
+                    <h4>
+                        Match Statistics
+                        <small>
+                            [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
+                        </small>
+                    </h4>
                     <canvas id="teamMatchStats" class="teamMatchStats"></canvas>
                     <article class="legend">
                         <div class="item">
@@ -61,7 +73,12 @@
                 </section>
 
                 <section class="activity">
-                    <h4>Team Activity</h4>
+                    <h4>
+                        Team Activity
+                        <small>
+                            [<a id="activity_stats" href="#" original-title="Like activity stats? There's more!">?</a>]
+                        </small>
+                    </h4>
                 </section>
             </section>
 
@@ -107,10 +124,14 @@
 
 {% block javascripts %}
     <script src="{{ request.getBaseURL() }}/includes/chartjs/Chart.min.js"></script>
+    <script src="{{ request.getBaseURL() }}/includes/tipsy/src/javascripts/jquery.tipsy.js"></script>
     <script>
         var teamWins   = {{ team.matchesWon }};
         var teamLosses = {{ team.matchesLost }};
         var teamDraws  = {{ team.matchesDraw }};
+
+        $("#match_stats").tipsy({gravity: 's'});
+        $("#activity_stats").tipsy({gravity: 's'});
     </script>
     <script src="{{ request.getBaseURL() }}/assets/js/min/teams-ck.js"></script>
 {% endblock %}

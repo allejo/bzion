@@ -269,6 +269,18 @@ class Team extends AliasModel
     }
 
     /**
+     * Get the creation date for the team in a specified format
+     *
+     * @param string $format The format of the data
+     *
+     * @return string
+     */
+    public function getCreationDateFormat($format = "Y-m-d")
+    {
+        return $this->created->format($format);
+    }
+
+    /**
      * Get the description of the team
      *
      * @return string The description of the team

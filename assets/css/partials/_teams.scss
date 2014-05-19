@@ -103,6 +103,19 @@ main {
             h4 {
                 margin-bottom: 5px;
                 padding-bottom: 5px;
+
+                small {
+                    color: $Light_Grey;
+                    font-weight: 300;
+                    margin-left: 5px;
+
+                    a {
+                        color: $Light_Grey;
+                        font-weight: normal;
+                        margin-left: 2px;
+                        margin-right: 1px;
+                    }
+                }
             }
 
             .team_row {
@@ -117,7 +130,7 @@ main {
                     padding: 10px 20px;
                     width: 50%;
 
-                    &.description {
+                    &.information {
                         width: 75%;
                     }
 
