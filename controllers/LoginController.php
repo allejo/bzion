@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 require_once 'includes/checkToken.php';
@@ -13,7 +14,7 @@ class LoginController extends HTMLController
         $session = $request->getSession();
 
         if (!$query->has("token") || !$query->has("username")) {
-            Header::go("home");
+            return new RedirectResponse(Service::getGenerator()->generate('index'));
         }
 
         $token = $query->get("token");
@@ -27,11 +28,12 @@ class LoginController extends HTMLController
             $session->set("username", $info['username']);
             $session->set("groups", $info['groups']);
 
-            $go = "home";
+            $go = Service::getGenerator()->generate('index');
 
             if (!Player::playerBZIDExists($info['bzid'])) {
+                // If they're new, redirect to their profile page so they can add some info
                 $player = Player::newPlayer($info['bzid'], $info['username']);
-                $go = "/profile"; // If they're new, redirect to their profile page so they can add some info
+                $go = Service::getGenerator()->generate('profile_show');
             } else {
                 $player = Player::getFromBZID($info['bzid']);
             }
@@ -46,7 +48,7 @@ class LoginController extends HTMLController
                               $request->server->get('HTTP_USER_AGENT'),
                               $request->server->get('HTTP_REFERER'));
 
-            Header::go($go);
+            return new RedirectResponse($go);
 
         } else {
             return "There was an error processing your login. Please go back and try again.";
@@ -57,15 +59,11 @@ class LoginController extends HTMLController
     {
         $request->getSession()->invalidate();
 
-        $loc = "/";
-        $override = false;
-
-        if ($request->server->has('HTTP_REFERER')) {
-            $loc = $request->server->get('HTTP_REFERER');
-            $override = true;
+        if ($loc = $request->server->get('HTTP_REFERER', null)) {
+            return new RedirectResponse($loc);
         }
 
-        Header::go($loc, $override);
+        return new RedirectResponse(Service::getGenerator()->generate('index'));
     }
 
     public function loginAsTestUserAction(Session $session, Player $user)
