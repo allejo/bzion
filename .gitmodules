@@ -4,3 +4,6 @@
 [submodule "includes/chartjs"]
 	path = includes/chartjs
 	url = https://github.com/nnnick/Chart.js.git
+[submodule "includes/tipsy"]
+	path = includes/tipsy
+	url = https://github.com/jaz303/tipsy.git
