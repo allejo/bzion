@@ -424,7 +424,7 @@ class Match extends Model
     /**
      * Get the winner of a match
      *
-     * @return Team The team that was the victor or the team with the higher elo if the match was a draw
+     * @return Team The team that was the victor or the team with the lower elo if the match was a draw
      */
     public function getWinner()
     {
