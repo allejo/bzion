@@ -62,11 +62,9 @@ main {
                     width: 10%;
 
                     a, span {
+                        @include border(1px solid #EFEFEF, bottom, right, top);
+
                         color: $Medium_Grey;
-                        
-                        border-bottom: 1px solid #EFEFEF;
-                        border-right: 1px solid #EFEFEF;
-                        border-top: 1px solid #EFEFEF;
                         display: table-cell;
                         vertical-align: middle;
                     }
