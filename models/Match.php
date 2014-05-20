@@ -408,6 +408,51 @@ class Match extends Model
     }
 
     /**
+     * Get the loser of the match
+     *
+     * @return Team The team that was the loser or the team with the lower elo if the match was a draw
+     */
+    public function getLoser()
+    {
+        // Get the winner of the match
+        $winner = $this->getWinner();
+
+        // Get the team that wasn't the winner... Duh
+        return $this->getOpponent($winner->getId());
+    }
+
+    /**
+     * Get the winner of a match
+     *
+     * @return Team The team that was the victor or the team with the higher elo if the match was a draw
+     */
+    public function getWinner()
+    {
+        // Get the winner if the match had one
+        if ($this->getTeamAPoints() > $this->getTeamBPoints())
+        {
+            return $this->getTeamA();
+        }
+        else if ($this->getTeamBPoints() > $this->getTeamAPoints())
+        {
+            return $this->getTeamB();
+        }
+
+        // It was a draw, so grab the team with the lower elo because they're the underdogs
+        if ($this->getTeamA()->getElo() > $this->getTeamB()->getElo())
+        {
+            return $this->getTeamB();
+        }
+        else if ($this->getTeamB()->getElo() > $this->getTeamA()->getElo())
+        {
+            return $this->getTeamA();
+        }
+
+        // If the ELOs are the same, return Team A because well, fuck you that's why
+        return $this->getTeamA();
+    }
+
+    /**
      * Determine whether the match was a draw
      * @return bool True if the match ended without any winning teams
      */

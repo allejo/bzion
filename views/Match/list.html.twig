@@ -9,74 +9,33 @@
 {% endblock %}
 
 {% block content %}
-    <div class="matches">
-    {% for match in matches %}
-        <section>
-            <div class="score">
-                <div class="date">{{ match.timestamp }}</div>
-                <div class="teams">
-                    <div class="winner"><span class="winner_name">{{ match.teamA.linkLiteral | raw }}</span> <span class="winner_score">{{ match.teamAPoints }}</span></div>
-                    <div class="loser"><span class="loser_score">{{ match.teamBPoints }}</span> <span class="loser_name">{{ match.teamB.linkLiteral | raw }}</span></div>
-                </div>
-                <i class="more_details fa fa-plus-square-o" rel="{{ match.id }}"></i>
-            </div>
-
-            <div id="match-{{ match.id }}" class="match_details">
-                <div class="participants">
-                    <h4>Participants</h4>
-                    <div class="team">
-                        <span>{{ match.teamA.name }}</span>
-                        <ul>
-                        {% if match.teamAPlayers is empty or match.teamAPlayers is not iterable %}
-                            <li><em>No Players Recorded</em></li>
-                        {% else %}
-                            {% for player in match.teamAPlayers %}
-                                <li>{{ player.linkLiteral | raw }}</li>
-                            {% endfor %}
-                        {% endif %}
-                        </ul>
-                    </div>
-                    <div class="team">
-                        <span>{{ match.teamB.name }}</span>
-                        <ul>
-                        {% if match.teamBPlayers is empty or match.teamBPlayers is not iterable %}
-                            <li><em>No Players Recorded</em></li>
-                        {% else %}
-                            {% for player in match.teamBPlayers %}
-                                <li>{{ player.linkLiteral | raw }}</li>
-                            {% endfor %}
-                        {% endif %}
-                        </ul>
-                    </div>
-                </div>
-                <div class="information">
-                    <h4>Details</h4>
-                    <div class="match">
-                        <p><strong>Match Length:</strong> {{ match.duration }} minutes</p>
-                        <p><strong>Elo:</strong> &plusmn; {{ match.eloDiff }}</p>
-                    </div>
-                    <p>
-                        <strong>Server:</strong>
-                        {% if match.serverAddress %}
-                            {{ match.serverAddress }}
-                        {% else %}
-                            <em>No server Recorded</em>
-                        {% endif %}
-                    </p>
-                    <p>
-                        <strong>Replay File:</strong>
-                        {% if match.replayFileName %}
-                            {{ match.replayFileName }}
-                        {% else %}
-                            <em>No replay filename recorded</em>
-                        {% endif %}
-                    </p>
-
-                </div>
-            </div>
+    <main class="match_list">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>Matches</h1>
+            </article>
         </section>
-    {% endfor %}
-    </div>
+
+        <section class="matches">
+            {% for match in matches %}
+                <article>
+                    <div class="css-table">
+                        <div class="row winner">
+                            <div class="column team">{{ match.winner.linkLiteral | raw }}</div>
+                            <div class="column score">{{ match.score(match.winner.id) }}</div>
+                        </div>
+                        <div class="row loser">
+                            <div class="column team">{{ match.loser.linkLiteral | raw }}</div>
+                            <div class="column score">{{ match.score(match.loser.id) }}</div>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        <a href="#" title="View More Match Details"><i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}
 
 {% block javascripts %}
