@@ -133,11 +133,31 @@ class News extends Model
 
     /**
      * Get the time when the article was submitted
-     * @return string The article's creation time in a human-readable form
+     *
+     * @param string $format The data format. Leave blank if you want a relative time (e.g. 2 days ago)
+     *
+     * @return string The article's creation time in the specified format
      */
-    public function getCreated()
+    public function getCreated($format = "")
     {
-        return $this->created->diffForHumans();
+        if (empty($format))
+        {
+            return $this->created->diffForHumans();
+        }
+
+        return $this->created->format($format);
+    }
+
+    /**
+     * Get the data creation with a span containing the date with a different format
+     *
+     * @param string $format The format of the time that will appear on hover
+     *
+     * @return string HTML of the data with a span with a title
+     */
+    public function getCreatedLiteral($format = TimeDate::DATE_FULL)
+    {
+        return '<span title="' . $this->getCreated($format) . '">' . $this->getCreated() . '</span>';
     }
 
     /**

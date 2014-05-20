@@ -5,6 +5,12 @@
  */
 class TimeDate extends Carbon\Carbon
 {
+    const DATE_SHORT = "Y-m-d";
+    const DATE_FULL = "F d, Y";
+    const TIMESTAMP = "H:i";
+    const TIMESTAMP_FULL = "H:i:s";
+    const FULL = "Y-m-d H:i:s";
+
     /**
      * Get the time difference in a human readable format.
      *
