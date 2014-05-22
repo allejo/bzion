@@ -67,7 +67,7 @@ class BadRequestException extends HTTPException
 {
     public function __construct($message="Bad request", $code = 0, Exception $previous = null)
     {
-        parent::_construct($message, $code, $previous);
+        parent::__construct($message, $code, $previous);
     }
 
     public static function getErrorCode()

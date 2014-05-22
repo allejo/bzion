@@ -55,7 +55,7 @@ class LoginController extends HTMLController
                 return $this->goBack();
             }
         } else {
-            return "There was an error processing your login. Please go back and try again.";
+            throw new BadRequestException("Idiot, type it right");
         }
     }
 
