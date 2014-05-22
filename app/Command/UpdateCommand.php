@@ -2,14 +2,13 @@
 
 namespace Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Process\Process;
 
-class UpdateCommand extends ContainerAwareCommand
+class UpdateCommand extends Command
 {
     protected function configure()
     {
@@ -28,12 +27,7 @@ class UpdateCommand extends ContainerAwareCommand
         $progress->setBarCharacter('<comment>=</comment>');
         $progress->start($output, 9);
 
-        // Get number of changes to see if we need to stash anything
-        $changeCount = new Process("git status --porcelain --untracked-files=no");
-        $changeCount->run();
-        if (!$changeCount->isSuccessful())
-            throw new \RuntimeException($process->getErrorOutput());
-        $changeCount = substr_count( $changeCount->getOutput(), "\n" );
+        $changeCount = $this->countGitChanges();
         $progress->advance();
 
         if (file_exists('composer.phar')) {
@@ -53,6 +47,7 @@ class UpdateCommand extends ContainerAwareCommand
                     );
 
         if ($changeCount < 1) {
+            // Nothing has changed, no need to run git stash
             $commands[0] = $commands[4] = null;
         }
 
@@ -72,16 +67,19 @@ class UpdateCommand extends ContainerAwareCommand
             $progress->advance();
         }
 
-        foreach (array('cache:clear', 'cache:warmup') as $commandName) {
-            $command = $this->getApplication()->find($commandName);
-            $arguments = array ( 'command' => $commandName );
-            $input = new ArrayInput($arguments);
-            $clearReturn = $command->run($input, new NullOutput());
-            $progress->advance();
-        }
+        $this->clearCache($progress);
 
         $progress->finish();
 
         $output->writeln('<fg=green;options=bold>BZiON has been updated successfully!</fg=green;options=bold>');
+    }
+
+    private function countGitChanges() {
+        // Get number of changes to see if we need to stash anything
+        $changeCount = new Process("git status --porcelain --untracked-files=no");
+        $changeCount->run();
+        if (!$changeCount->isSuccessful())
+            throw new \RuntimeException($process->getErrorOutput());
+        return substr_count( $changeCount->getOutput(), "\n" );
     }
 }

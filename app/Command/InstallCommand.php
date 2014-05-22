@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Process\Process;
 
-class InstallCommand extends ContainerAwareCommand
+class InstallCommand extends Command
 {
     protected function configure()
     {
@@ -35,13 +35,7 @@ class InstallCommand extends ContainerAwareCommand
         }
         $progress->advance();
 
-        foreach (array('cache:clear', 'cache:warmup') as $commandName) {
-            $command = $this->getApplication()->find($commandName);
-            $arguments = array ( 'command' => $commandName );
-            $input = new ArrayInput($arguments);
-            $clearReturn = $command->run($input, new NullOutput());
-            $progress->advance();
-        }
+        $this->clearCache($progress);
 
         $progress->finish();
     }

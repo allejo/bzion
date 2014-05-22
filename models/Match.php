@@ -263,19 +263,7 @@ class Match extends Model
      */
     public function getTeamAPlayers()
     {
-        $team_A_Players = array();
-
-        if ($this->team_a_players == null) {
-            return null;
-        }
-
-        $BZIDs = explode(",", $this->team_a_players);
-
-        foreach ($BZIDs as $bzid) {
-            $team_A_Players[] = Player::getFromBZID($bzid);
-        }
-
-        return $team_A_Players;
+        return $this->parsePlayers($this->team_b_players);
     }
 
     /**
@@ -284,19 +272,28 @@ class Match extends Model
      */
     public function getTeamBPlayers()
     {
-        $team_B_Players = array();
+        return $this->parsePlayers($this->team_a_players);
+    }
 
-        if ($this->team_b_players == null) {
+    /**
+     * Get an array of players based on a string representation
+     * @return Player[]|null Returns null if there were no players recorded for this match
+     */
+    private static function parsePlayers($playerString)
+    {
+        $players = array();
+
+        if ($playerString == null) {
             return null;
         }
 
-        $BZIDs = explode(",", $this->team_b_players);
+        $BZIDs = explode(",", $playerString);
 
         foreach ($BZIDs as $bzid) {
-            $team_B_Players[] = Player::getFromBZID($bzid);
+            $players[] = Player::getFromBZID($bzid);
         }
 
-        return $team_B_Players;
+        return $players;
     }
 
     /**
