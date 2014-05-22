@@ -63,7 +63,7 @@ class ForbiddenException extends HTTPException
     }
 }
 
-class BadRequestException extend HTTPException
+class BadRequestException extends HTTPException
 {
     public function __construct($message="Bad request", $code = 0, Exception $previous = null)
     {
