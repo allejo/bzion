@@ -220,7 +220,7 @@ abstract class Controller
      * Try locating a method's parameter in an array
      *
      * @param  ReflectionParameter $modelParameter  The model's parameter we want to investigate
-     * @param  array               $routeParameters The route's parameters
+     * @param  ParameterBag        $routeParameters The route's parameters
      * @return Model|null          A Model or null if it couldn't be found
      */
     protected function findModelInParameters($modelParameter, $routeParameters)
