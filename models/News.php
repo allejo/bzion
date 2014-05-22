@@ -213,26 +213,17 @@ class News extends Model
      * @param int    $editorID The ID of the person editing the post
      * @param string $status   The new or current status of the post
      *
-     * @return bool Whether or not the update was successful
+     * @return void
      */
     public function updateAll($subject, $content, $editorID, $status = 'published')
     {
         $author = new Player($editorID);
 
-        if ($author->isValid() && $author->hasPermission(Permission::EDIT_NEWS)) {
-            $errorCount = 0;
-
-            if ($this->updateSubject($subject))     $errorCount++;
-            if ($this->updateContent($content))     $errorCount++;
-            if ($this->updateStatus($status))       $errorCount++;
-            if ($this->updateLastEditor($editorID)) $errorCount++;
-            if ($this->updateEditTimestamp())       $errorCount++;
-
-            // Only return true if there were no errors in updating the post
-            return ($errorCount == 0);
-        }
-
-        return false;
+        $this->updateSubject($subject);
+        $this->updateContent($content);
+        $this->updateStatus($status);
+        $this->updateLastEditor($editorID);
+        $this->updateEditTimestamp();
     }
 
     /**

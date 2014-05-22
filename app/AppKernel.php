@@ -56,9 +56,9 @@ class AppKernel extends Kernel
             return false;
 
         switch (DEVELOPMENT) {
-        case 1: return "dev"; break;
-        case 2: return "profile"; break;
-        default: return "prod"; break;
+        case 1: return "dev";
+        case 2: return "profile";
+        default: return "prod";
         }
     }
 

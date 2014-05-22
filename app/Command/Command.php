@@ -13,7 +13,7 @@ class Command extends ContainerAwareCommand
             $command = $this->getApplication()->find($commandName);
             $arguments = array ( 'command' => $commandName );
             $input = new ArrayInput($arguments);
-            $clearReturn = $command->run($input, new NullOutput());
+            $command->run($input, new NullOutput());
             $progress->advance();
         }
     }
