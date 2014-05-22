@@ -59,19 +59,16 @@ class ForbiddenException extends HTTPException
 {
     public static function getErrorCode()
     {
-        return 403;
+        return 200;
     }
 }
 
 class BadRequestException extends HTTPException
 {
-    public function __construct($message="Bad request", $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
+    protected $message = "Bad request";
 
     public static function getErrorCode()
     {
-        return 400;
+        return 200;
     }
 }

@@ -68,16 +68,58 @@ abstract class HTMLController extends Controller
         );
     }
 
-    /**
+    /*
+     * Returns the URL of the previous page
+     * @return string
+     */
+    protected function getPreviousURL() {
+        // If the request's headers had an HTTP_REFERER parameter, go back there
+        // Otherwise just redirect the user to the home page
+        return $this->getRequest()->server->get('HTTP_REFERER',
+                                   Service::getGenerator()->generate('index'));
+    }
+
+    /*
      * Returns a redirect response to the previous page
+     * @todo Don't redirect to the same page
      * @return RedirectResponse
      */
     protected function goBack() {
-        // If the request's headers had an HTTP_REFERER parameter, go back there
-        // Otherwise just redirect the user to the home page
-        $loc = $this->getRequest()->server->get('HTTP_REFERER',
-                                   Service::getGenerator()->generate('index'));
+        return new RedirectResponse($this->getPreviousURL());
+    }
 
-        return new RedirectResponse($loc);
+    /*
+     * Show a confirmation (Yes, No) form to the user
+     *
+     * @param callable $onYes What to do if the user clicks on "Yes"
+     * @param callable $onNo What to do if the user presses "No" - defaults to
+     *                       redirecting them back
+     * @param array $additionalParams An array of variables to pass to the view
+     * @return mixed The response
+     */
+    protected function showConfirmationForm($onYes, $onNo=null, $additionalParams=array()) {
+        $form = Service::getFormFactory()->createBuilder()
+            ->add('Yes', 'submit')
+            ->add('No', 'submit')
+            ->add('original_url', 'hidden', array(
+                'data' => $this->getPreviousURL()
+            ))
+            ->getForm();
+
+        $form->handleRequest($this->getRequest());
+        if ($form->isValid()) {
+            if ($form->get('Yes')->isClicked())
+                return $onYes();
+            elseif (!$onNo)
+                // We didn't get told about what to do when the user presses
+                // no, just get them back where they were
+                return new RedirectResponse($form->get('original_url')->getData());
+            else
+                return $onNo();
+        }
+
+        // The form hasn't been submitted, let's render it
+        $params = array('form' => $form->createView());
+        return array_merge($params, $additionalParams);
     }
 }

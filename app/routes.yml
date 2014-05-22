@@ -86,6 +86,10 @@ team_delete:
     pattern:    /teams/{team}/delete
     defaults: { _controller: 'Team', _action: 'delete' }
 
+team_kick:
+    pattern:    /teams/{team}/kick/{player}
+    defaults: { _controller: 'Team', _action: 'kick' }
+
 custom_page:
     pattern:    /{page}
     defaults: { _controller: 'Page', _action: 'show' }
