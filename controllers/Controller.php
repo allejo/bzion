@@ -7,6 +7,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -65,13 +66,13 @@ abstract class Controller
 {
     /**
      * Parameters specified by the route
-     * @var array
+     * @var ParameterBag
      */
     protected $parameters;
 
     /**
      *
-     * @param array $parameters The array returned by $router->matchRequest()
+     * @param ParameterBag $parameters The array returned by $router->matchRequest()
      */
     public function __construct($parameters)
     {
@@ -81,13 +82,12 @@ abstract class Controller
     /**
      * Returns the controller that is assigned to a route
      *
-     * @param  array      $parameters The array returned by $router->matchRequest()
-     * @return Controller The controller
+     * @param  ParameterBag $parameters The array returned by $router->matchRequest()
+     * @return Controller   The controller
      */
     public static function getController($parameters)
     {
-        $parameters = $parameters->all();
-        $ref = new ReflectionClass($parameters['_controller'] . 'Controller');
+        $ref = new ReflectionClass($parameters->get('_controller') . 'Controller');
 
         return $ref->newInstance($parameters);
     }
@@ -101,13 +101,13 @@ abstract class Controller
     public function callAction($action=null)
     {
         if (!$action)
-            $action = $this->parameters['_action'];
+            $action = $this->parameters->get('_action');
 
         $this->setup();
         $response = $this->forward($action);
         $this->cleanup();
 
-        return $response;
+        return $response->prepare($this->getRequest());
     }
 
     /**
@@ -123,7 +123,8 @@ abstract class Controller
      */
     protected function forward($action, $params=array())
     {
-        $args = array_merge($this->parameters, $params);
+        $args = clone $this->parameters;
+        $args->add($params);
 
         $ret = $this->callMethod($action . 'Action', $args);
 
@@ -155,9 +156,9 @@ abstract class Controller
      * definition - check the description of the Controller class for more
      * information
      *
-     * @param  string $method     The name of the method
-     * @param  array  $parameters An associative array representing the method's parameters
-     * @return mixed  The return value of the called method
+     * @param  string       $method     The name of the method
+     * @param  ParameterBag $parameters The parameter bag representing the route's parameters
+     * @return mixed        The return value of the called method
     */
     protected function callMethod($method, $parameters)
     {
@@ -167,8 +168,8 @@ abstract class Controller
         foreach ($ref->getParameters() as $p) {
             if ($model = $this->getObjectFromParameters($p, $parameters)) {
                 $params[] = $model;
-            } elseif (isset($parameters[$p->name])) {
-                $params[] = $parameters[$p->name];
+            } elseif ($parameters->has($p->name)) {
+                $params[] = $parameters->get($p->name);
             } elseif ($p->isOptional()) {
                 $params[] = $p->getDefaultValue();
             } else {
@@ -183,7 +184,7 @@ abstract class Controller
      * Find what to pass as an argument on an action
      *
      * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
-     * @param array               $routeParameters The route's parameters
+     * @param ParameterBag        $routeParameters The route's parameters
      */
     protected function getObjectFromParameters($modelParameter, $routeParameters)
     {
@@ -227,16 +228,18 @@ abstract class Controller
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 
-        if (isset($routeParameters[$paramName])) {
-            if (is_object($routeParameters[$paramName]) &&
-                $refClass->getName() === get_class($routeParameters[$paramName])
-            ) return $routeParameters[$paramName]; // The model has already been instantiated - we don't need to do anything
+        if ($routeParameters->has($paramName)) {
+            $parameter = $routeParameters->get($paramName);
+            if (is_object($parameter) && $refClass->getName() === get_class($parameter)) {
+                // The model has already been instantiated - we don't need to do anything
+                return $parameter;
+            }
 
-            return $refClass->getMethod("fetchFromSlug")->invoke(null, $routeParameters[$paramName]);
+            return $refClass->getMethod("fetchFromSlug")->invoke(null, $parameter);
         }
 
-        if (isset($routeParameters[$paramName . 'Id']))
-            return $refClass->newInstance($routeParameters[$paramName . 'Id']);
+        if ($routeParameters->has($paramName . 'Id'))
+            return $refClass->newInstance($routeParameters->get($paramName . 'Id'));
     }
 
     /**
