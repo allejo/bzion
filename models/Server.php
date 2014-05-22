@@ -217,7 +217,7 @@ class Server extends Model
      */
     public static function getServers()
     {
-        return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s"));
+        return static::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s"));
     }
 
 }
