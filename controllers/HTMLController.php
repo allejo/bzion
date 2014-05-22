@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -35,7 +36,7 @@ abstract class HTMLController extends Controller
                                            "message" => $e->getMessage(),
                                            "code" => $e->getErrorCode()));
         } catch (Exception $e) {
-            // Don't handle the exception on the dev environment
+            // Let PHP handle the exception on the dev environment
             if (DEVELOPMENT) throw $e;
             return $this->forward("Error", array("message" => "An error occured"));
         }
@@ -65,5 +66,18 @@ abstract class HTMLController extends Controller
             $this->render("error.html.twig",array("message" => $message)),
             $code
         );
+    }
+
+    /**
+     * Returns a redirect response to the previous page
+     * @return RedirectResponse
+     */
+    protected function goBack() {
+        // If the request's headers had an HTTP_REFERER parameter, go back there
+        // Otherwise just redirect the user to the home page
+        $loc = $this->getRequest()->server->get('HTTP_REFERER',
+                                   Service::getGenerator()->generate('index'));
+
+        return new RedirectResponse($loc);
     }
 }

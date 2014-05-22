@@ -14,7 +14,7 @@ class LoginController extends HTMLController
         $session = $request->getSession();
 
         if (!$query->has("token") || !$query->has("username")) {
-            return new RedirectResponse(Service::getGenerator()->generate('index'));
+            throw new BadRequestException();
         }
 
         $token = $query->get("token");
@@ -28,12 +28,12 @@ class LoginController extends HTMLController
             $session->set("username", $info['username']);
             $session->set("groups", $info['groups']);
 
-            $go = Service::getGenerator()->generate('index');
+            $redirectToProfile = false;
 
             if (!Player::playerBZIDExists($info['bzid'])) {
                 // If they're new, redirect to their profile page so they can add some info
                 $player = Player::newPlayer($info['bzid'], $info['username']);
-                $go = Service::getGenerator()->generate('profile_show');
+                $redirectToProfile = true;
             } else {
                 $player = Player::getFromBZID($info['bzid']);
             }
@@ -48,8 +48,12 @@ class LoginController extends HTMLController
                               $request->server->get('HTTP_USER_AGENT'),
                               $request->server->get('HTTP_REFERER'));
 
-            return new RedirectResponse($go);
-
+            if ($redirectToProfile) {
+                $profile = Service::getGenerator()->generate('profile_show');
+                return new RedirectResponse($profile);
+            } else {
+                return $this->goBack();
+            }
         } else {
             return "There was an error processing your login. Please go back and try again.";
         }
@@ -59,11 +63,7 @@ class LoginController extends HTMLController
     {
         $request->getSession()->invalidate();
 
-        if ($loc = $request->server->get('HTTP_REFERER', null)) {
-            return new RedirectResponse($loc);
-        }
-
-        return new RedirectResponse(Service::getGenerator()->generate('index'));
+        return $this->goBack();
     }
 
     public function loginAsTestUserAction(Session $session, Player $user)
