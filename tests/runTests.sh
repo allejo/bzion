@@ -22,6 +22,10 @@ while test $# -gt 0; do
     esac
 done
 
+if [[ $NO_COVERAGE -eq 1 ]]; then
+   COVERAGE_TYPE=""
+fi
+
 # Run PHPUnit and save its return code
 vendor/phpunit/phpunit/phpunit $COVERAGE_TYPE
 PHPUNIT=$?
