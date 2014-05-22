@@ -2,7 +2,6 @@
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Form\FormFactory;
 
 class TeamController extends HTMLController
 {
@@ -22,7 +21,7 @@ class TeamController extends HTMLController
             throw new ForbiddenException("You are not allowed to delete a team");
         }
 
-        return $this->showConfirmationForm(function() use(&$team, &$session) {
+        return $this->showConfirmationForm(function () use (&$team, &$session) {
             $team->delete();
             $session->getFlashBag()->add('success',
                      "The team {$team->getName()} was deleted successfully");
@@ -43,7 +42,7 @@ class TeamController extends HTMLController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of that team.");
 
-        return $this->showConfirmationForm(function() use(&$team, &$player, &$session) {
+        return $this->showConfirmationForm(function () use (&$team, &$player, &$session) {
             $team->removeMember($player->getId());
 
             $message = "Player {$player->getUsername()} has been kicked from {$team->getName()}";

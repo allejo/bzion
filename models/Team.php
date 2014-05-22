@@ -491,7 +491,7 @@ class Team extends AliasModel
     /**
      * Removes a member from the team
      *
-     * @param int $id The id of the player to remove
+     * @param  int  $id The id of the player to remove
      * @return void
      */
     public function removeMember($id)
@@ -508,7 +508,7 @@ class Team extends AliasModel
     /**
      * Update the description of the team
      *
-     * @param string $description_md The description of the team written as markdown
+     * @param  string $description_md The description of the team written as markdown
      * @return void
      */
     public function setDescription($description_md)

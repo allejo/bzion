@@ -50,6 +50,7 @@ class LoginController extends HTMLController
 
             if ($redirectToProfile) {
                 $profile = Service::getGenerator()->generate('profile_show');
+
                 return new RedirectResponse($profile);
             } else {
                 return $this->goBack();

@@ -31,7 +31,7 @@ abstract class AliasModel extends UrlModel
 
     /**
      * Set a model's alias
-     * @param string $alias The new alias
+     * @param  string $alias The new alias
      * @return void
      */
     protected function setAlias($alias)

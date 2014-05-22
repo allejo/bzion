@@ -426,22 +426,16 @@ class Match extends Model
     public function getWinner()
     {
         // Get the winner if the match had one
-        if ($this->getTeamAPoints() > $this->getTeamBPoints())
-        {
+        if ($this->getTeamAPoints() > $this->getTeamBPoints()) {
             return $this->getTeamA();
-        }
-        else if ($this->getTeamBPoints() > $this->getTeamAPoints())
-        {
+        } elseif ($this->getTeamBPoints() > $this->getTeamAPoints()) {
             return $this->getTeamB();
         }
 
         // It was a draw, so grab the team with the lower elo because they're the underdogs
-        if ($this->getTeamA()->getElo() > $this->getTeamB()->getElo())
-        {
+        if ($this->getTeamA()->getElo() > $this->getTeamB()->getElo()) {
             return $this->getTeamB();
-        }
-        else if ($this->getTeamB()->getElo() > $this->getTeamA()->getElo())
-        {
+        } elseif ($this->getTeamB()->getElo() > $this->getTeamA()->getElo()) {
             return $this->getTeamA();
         }
 

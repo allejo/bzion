@@ -140,8 +140,7 @@ class News extends Model
      */
     public function getCreated($format = "")
     {
-        if (empty($format))
-        {
+        if (empty($format)) {
             return $this->created->diffForHumans();
         }
 
