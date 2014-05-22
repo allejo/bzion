@@ -60,3 +60,22 @@ Feature: Teams
         Then I should see "Parlous Provender"
         But I should not see "Shatterproof Reservoir"
 
+    Scenario: Kick player
+        Given I have a team called "Effervescent Duelists"
+        And I have a team called "Geranium Cauldrons"
+        And a new user called "Matchless" joins "Effervescent Duelists"
+        And a new user called "Sans Pareil" joins "Geranium Cauldrons"
+        And I am an admin
+        When I go to "/teams/effervescent-duelists"
+        Then I should see "Matchless"
+        When I follow "Kick Matchless from team"
+        And I press "Yes"
+        Then I should be on "/teams/effervescent-duelists"
+        When I reload the page
+        Then I should not see "Matchless"
+        When I go to "/teams/geranium-cauldrons"
+        And I follow "Kick Sans Pareil from team"
+        And I press "No"
+        Then I should be on "/teams/geranium-cauldrons"
+        When I reload the page
+        Then I should see "Sans Pareil"

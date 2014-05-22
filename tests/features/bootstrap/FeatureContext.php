@@ -153,6 +153,15 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
+     * @Given a new user called :user joins :team
+     */
+    public function aNewUserCalledJoins($user, $team)
+    {
+        $player = $this->getNewUser($user);
+        Team::getFromName($team)->addMember($player->getId());
+    }
+
+    /**
      * @Given that the database is empty
      */
     public static function clearDatabase()
