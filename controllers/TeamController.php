@@ -19,7 +19,7 @@ class TeamController extends HTMLController
     public function deleteAction(Team $team, Player $me, Request $request, FormFactory $formFactory)
     {
         if (!$me->hasPermission(Permission::SOFT_DELETE_TEAM)) {
-            return new RedirectResponse(Service::getGenerator()->generate('team_list'));
+            throw new ForbiddenException("You are not allowed to delete a team");
         }
 
         $form = $formFactory->createBuilder()

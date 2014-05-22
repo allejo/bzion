@@ -29,22 +29,41 @@ abstract class HTMLController extends Controller
         try {
             return parent::callAction($action);
         } catch (ModelNotFoundException $e) {
-            return $this->forward("NotFound", array("type" => $e->getMessage()));
+            return $this->forward("NotFound", array("exception" => $e));
+        } catch (HTTPException $e) {
+            return $this->forward("Error", array(
+                                           "message" => $e->getMessage(),
+                                           "code" => $e->getErrorCode()));
+        } catch (Exception $e) {
+            // Don't handle the exception on the dev environment
+            if (DEVELOPMENT) throw $e;
+            return $this->forward("Error", array("message" => "An error occured"));
         }
     }
 
     /**
      * Action that will be called if an object is not found
-     * @param string type The type of the object (e.g Player)
+     * @param ModelNotFoundException $exception The exception
      */
-    public function notFoundAction($type)
+    public function notFoundAction(ModelNotFoundException $exception)
     {
         return new Response(
-            $this->render("notfound.html.twig", array("type" => $type)),
+            $this->render("notfound.html.twig",
+                    array("message" => $exception->getMessage(),
+                          "type" => $exception->getType()
+                    )),
             404);
     }
-}
 
-class ModelNotFoundException extends Exception
-{
+    /**
+     * @param string $message The message to show
+     * @param int    $code    The message's HTTP code
+     */
+    public function errorAction($message, $code=500)
+    {
+        return new Response(
+            $this->render("error.html.twig",array("message" => $message)),
+            $code
+        );
+    }
 }
