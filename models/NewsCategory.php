@@ -69,7 +69,7 @@ class NewsCategory extends AliasModel
     /**
      * Disable the category
      *
-     * @return bool Will only return false if there was error when updating the database
+     * @return void
      */
     public function disableCategory()
     {
@@ -81,7 +81,7 @@ class NewsCategory extends AliasModel
     /**
      * Enable the category
      *
-     * @return bool Will only return false if there was error when updating the database
+     * @return void
      */
     public function enableCategory()
     {

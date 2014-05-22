@@ -165,14 +165,12 @@ class Team extends AliasModel
     {
         $player = new Player($id);
 
-        if ($player->isTeamless()) {
-            $playerUpdate = $player->update("team", $this->getId());
-            $teamUpdate   = $this->update('members', ++$this->members, "i");
+        if (!$player->isTeamless())
+            throw new Exception("The player already belongs in a team");
 
-            return ($playerUpdate && $teamUpdate);
-        }
+        $player->update("team", $this->getId());
+        $this->update('members', ++$this->members, "i");
 
-        return false;
     }
 
     /**
@@ -494,36 +492,29 @@ class Team extends AliasModel
      * Removes a member from the team
      *
      * @param int $id The id of the player to remove
-     *
-     * @return bool True if both the player was marked as teamless AND the team member count was decremented
+     * @return void
      */
     public function removeMember($id)
     {
-        if ($this->isMember($id)) {
-            $player = new Player($id);
+        if (!$this->isMember($id))
+            throw new Exception("The player is not a member of that team");
 
-            $playerUpdate = $player->update("team", NULL, "s");
-            $teamUpdate   = $this->update('members', --$this->members, "i");
+        $player = new Player($id);
 
-            return ($playerUpdate && $teamUpdate);
-        }
-
-        return false;
+        $player->update("team", NULL, "s");
+        $this->update('members', --$this->members, "i");
     }
 
     /**
      * Update the description of the team
      *
      * @param string $description_md The description of the team written as markdown
-     *
-     * @return bool Whether or not both the HTML and MD entries in the database were updated
+     * @return void
      */
     public function setDescription($description_md)
     {
-        $mdUpdate = $this->update("description_md", $description_md, "s");
-        $htmlUpdate = $this->update("description_html", parent::mdTransform($description_md), "s");
-
-        return ($mdUpdate && $htmlUpdate);
+        $this->update("description_md", $description_md, "s");
+        $this->update("description_html", parent::mdTransform($description_md), "s");
     }
 
     /**
@@ -591,16 +582,13 @@ class Team extends AliasModel
 
         $db->query($query, "sssssi", $params);
         $id = $db->getInsertId();
+        $team = new Team($id);
 
         // If the generateAlias() method couldn't find an appropriate alias,
         // just make it the same as the ID
         if ($alias === null) {
-            $db->query("UPDATE teams SET alias = id WHERE id = ?", 'i', array(
-                    $id
-                ));
+            $team->setAlias($id);
         }
-
-        $team = new Team($id);
 
         $team->addMember($leader);
 

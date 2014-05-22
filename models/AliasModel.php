@@ -30,6 +30,17 @@ abstract class AliasModel extends UrlModel
     }
 
     /**
+     * Set a model's alias
+     * @param string $alias The new alias
+     * @return void
+     */
+    protected function setAlias($alias)
+    {
+        $this->alias = $alias;
+        $this->update('alias', $alias, 's');
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getURL($action='show', $absolute=false)

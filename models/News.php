@@ -217,8 +217,6 @@ class News extends Model
      */
     public function updateAll($subject, $content, $editorID, $status = 'published')
     {
-        $author = new Player($editorID);
-
         $this->updateSubject($subject);
         $this->updateContent($content);
         $this->updateStatus($status);
