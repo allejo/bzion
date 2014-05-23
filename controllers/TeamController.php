@@ -32,9 +32,7 @@ class TeamController extends HTMLController
 
     public function kickAction(Team $team, Player $player, Player $me, Session $session)
     {
-        if (!$me->hasPermission(Permission::EDIT_TEAM) &&
-            $team->getLeader()->getId() != $me->getId())
-            throw new ForbiddenException("You are not allowed to kick a player off that team!");
+        $this->assertCanEdit($me, $team, "You are not allowed to kick a player off that team!");
 
         if ($team->getLeader()->getId() == $player->getId())
             throw new ForbiddenException("You can't kick the leader off their team.");
@@ -50,5 +48,22 @@ class TeamController extends HTMLController
 
             return new RedirectResponse($team->getUrl());
         }, null, array('team' => $team, 'player' => $player));
+    }
+
+    /*
+     * Make sure that a player can edit a team
+     *
+     * Throws an exception if a player is not an admin or the leader of a team
+     * @throws HTTPException
+     * @param  Player        $player  The player to test
+     * @param  Team          $team    The team
+     * @param  string        $message The error message to show
+     * @return void
+     */
+    private function assertCanEdit(Player $player, Team $team, $message="You are not allowed to edit that team")
+    {
+        if (!$player->hasPermission(Permission::EDIT_TEAM))
+            if ($team->getLeader()->getId() != $player->getId())
+                throw new ForbiddenException($message);
     }
 }
