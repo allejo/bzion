@@ -69,6 +69,15 @@ abstract class HTMLController extends Controller
     }
 
     /*
+     * Returns the path to the home page
+     * @return string
+     */
+    protected function getHomeURL()
+    {
+        return Service::getGenerator()->generate('index');
+    }
+
+    /*
      * Returns the URL of the previous page
      * @return string
      */
@@ -77,7 +86,7 @@ abstract class HTMLController extends Controller
         // If the request's headers had an HTTP_REFERER parameter, go back there
         // Otherwise just redirect the user to the home page
         return $this->getRequest()->server->get('HTTP_REFERER',
-                                   Service::getGenerator()->generate('index'));
+                                                $this->getHomeURL());
     }
 
     /*
@@ -88,6 +97,29 @@ abstract class HTMLController extends Controller
     protected function goBack()
     {
         return new RedirectResponse($this->getPreviousURL());
+    }
+
+    /**
+     * Returns a redirect response to the home page
+     * @return RedirectResponse
+     */
+    protected function goHome()
+    {
+        return new RedirectResponse($this->getHomeURL());
+    }
+
+    /*
+     * Assert that the user is logged in
+     * @throws HTTPException
+     * @param string $message The message to show if the user is not logged i
+     * @return void
+     */
+    protected function requireLogin($message="You need to be signed in to do this")
+    {
+        $me = new Player($this->getRequest()->getSession()->get('playerId'));
+
+        if (!$me->isValid())
+            throw new ForbiddenException($message);
     }
 
     /*

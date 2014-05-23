@@ -7,6 +7,7 @@ abstract class Header
 {
     /**
      * Redirect the page using PHP's header() function
+     * @deprecated Return a RedirectResponse in your controller
      * @param string $location The page to redirect to
      * @param bool   $override True if $location is an absolute path (e.g `http://google.com/`), false to prepend the base URL of the website to the path
      */

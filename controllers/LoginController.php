@@ -61,11 +61,15 @@ class LoginController extends HTMLController
         }
     }
 
-    public function logoutAction(Request $request)
+    public function logoutAction(Session $session)
     {
-        $request->getSession()->invalidate();
+        $session->invalidate();
+        $session->getFlashBag()->add('success', "You logged out successfully");
 
-        return $this->goBack();
+        // Don't redirect back but prefer going home, to prevent visiting
+        // the login page (and logging in again, thus preventing the logout)
+        // or other pages where authentication is required
+        return $this->goHome();
     }
 
     public function loginAsTestUserAction(Session $session, Player $user)

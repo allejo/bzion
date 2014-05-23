@@ -91,15 +91,17 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
+     * @Given I am logged in
      * @When I log in
      */
     public function iLogIn()
     {
-        $this->visit('/login/' . $this->player->getId());
+        $this->visit('/login/' . $this->getUserId());
 
     }
 
     /**
+     * @Given I am logged out
      * @When I log out
      */
     public function iLogOut()

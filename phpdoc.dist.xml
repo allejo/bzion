@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
-    <parser>
-        <target>doc-cache</target>
-    </parser>
     <transformer>
         <target>doc</target>
     </transformer>
@@ -11,6 +8,7 @@
         <directory>models</directory>
         <directory>tests</directory>
         <file>controllers/Controller.php</file>
+        <file>controllers/Header.php</file>
         <file>controllers/HTMLController.php</file>
         <ignore>app/cache/*</ignore>
     </files>

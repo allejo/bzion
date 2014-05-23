@@ -2,26 +2,18 @@
 
 class ProfileController extends HTMLController
 {
-    private $me;
-
     public function setup()
     {
-        $session = $this->getRequest()->getSession();
-
-        if (!$session->has("username")) {
-            Header::go("home");
-        }
-
-        $this->me = new Player($session->get("playerId"));
+        $this->requireLogin();
     }
 
-    public function editAction()
+    public function editAction(Player $me)
     {
-        return array("player" => $this->me, "countries" => Country::getCountries());
+        return array("player" => $me, "countries" => Country::getCountries());
     }
 
-    public function showAction()
+    public function showAction(Player $me)
     {
-        return array("player" => $this->me);
+        return array("player" => $me);
     }
 }
