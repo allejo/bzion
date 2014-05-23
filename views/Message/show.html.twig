@@ -27,7 +27,7 @@
             <ul id="messageView" class="messages">
                 {% for message in messages %}
                     <li>
-                        {% if message.author.id == session.get('playerId') %}
+                        {% if message.author.id == me.id %}
                             <div class="bubble me">
                         {% else %}
                             <div class="bubble">
@@ -49,6 +49,8 @@
                 {% endfor %}
             </ul>
         </div>
+
+        {{ form(form) }}
 
         <form class="reply_form" autocomplete="off">
             <div class="quick_reply">

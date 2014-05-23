@@ -46,7 +46,7 @@ class Database
 
         if ($this->dbc->connect_errno) {
             if (!DEVELOPMENT) echo "Something went wrong with the database connection.";
-            $this->debug($this->dbc->connect_error, $this->dbc->connect_errno);
+            $this->error($this->dbc->connect_error, $this->dbc->connect_errno);
         } else
             $this->dbc->set_charset("utf8");
     }
@@ -185,7 +185,7 @@ class Database
                     } else
                         $queryResult[] = mysqli_stmt_affected_rows($stmt);
                 } else {
-                    $this->debug($this->dbc->error, $this->dbc->errno);
+                    $this->error($this->dbc->error, $this->dbc->errno);
                     $queryResult[] = false;
                 }
 
@@ -220,7 +220,6 @@ class Database
 
     /**
     * Outputs the specified string if debugging is enabled
-    * @todo Debug/Error class?
     *
     * @param string $string The string that will be shown
     * @param string $type A text representing the type of the error (e.g: "MySQL Error:")
