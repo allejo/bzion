@@ -27,8 +27,9 @@ abstract class JSONController extends HTMLController
     {
         $request = $this->getRequest();
         foreach (array($request->request, $request->query) as $params) {
-            if (strtolower($params->get('format')) == 'json')
+            if (strtolower($params->get('format')) == 'json') {
                 return true;
+            }
         }
 
         return false;

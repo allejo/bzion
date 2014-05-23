@@ -14,12 +14,6 @@ function initPage() {
     }
 }
 
-function updatePage() {
-    $(".scrollable_messages").load(window.location.pathname + " .scrollable_messages > *", function() {
-        initPage();
-    });
-}
-
 $(document).ready(function() {
     initPage();
 });
@@ -27,6 +21,20 @@ $(document).ready(function() {
 // Use "on" instead of just "click"/"submit", so that new elements of that class added
 // to the page using $.load() also respond to events
 var pageSelector = $(".messaging");
+
+function updateSelector(selector) {
+    $(selector).load(window.location.pathname + " " + selector + " > *", function() {
+        initPage();
+    });
+}
+
+function updatePage() {
+    return updateSelector(".messaging");
+}
+
+function updateMessages() {
+    return updateSelector(".scrollable_messages");
+}
 
 // Response submit event
 pageSelector.on("submit", ".reply_form", function(event) {
@@ -87,7 +95,7 @@ function sendResponse(form) {
 
         notify(msg.message, type);
         if (msg.success) {
-            updatePage();
+            updateMessages();
             form[0].reset();
         }
     });

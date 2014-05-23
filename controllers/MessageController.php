@@ -28,6 +28,8 @@ class MessageController extends JSONController
 
         // Create the form to send a message to the discussion
         $form = Service::getFormFactory()->createBuilder()
+            ->setAction($discussion->getUrl()) // Prevents JS from going crazy
+                                               // if we load a page with AJAX
             ->add('message', 'textarea')
             ->add('Send', 'submit')
             ->getForm();
@@ -40,11 +42,9 @@ class MessageController extends JSONController
 
         if ($form->isValid()) {
             // The player wants to send a message
-            $content = $form->get('message')->getData();
-            $this->sendMessage($me, $discussion, $content);
-            $form = $cloned; // Reset the form
+            $this->sendMessage($me, $discussion, $form, $cloned);
 
-            if ($this->isJSON())
+            if ($this->isJson())
                 return "Your message was sent successfully";
         }
 
@@ -78,13 +78,17 @@ class MessageController extends JSONController
      *                               SEND_PRIVATE_MSG permission
      * @param  Player        $from    The sender
      * @param  Group         $to      The group that will receive the message
+     * @param  Form          $form    The message's form
+     * @param  Form          $form    The form before it handled the request
      * @param  string        $message The message to send
      * @return void
      */
-    private function sendMessage(Player &$from, Group &$to, &$message)
+    private function sendMessage(Player &$from, Group &$to, &$form, &$cloned)
     {
         if (!$from->hasPermission(Permission::SEND_PRIVATE_MSG))
             throw new ForbiddenException("You are not allowed to send messages");
+
+        $message = $form->get('message')->getData();
 
         if (trim($message) == '')
             throw new BadRequestException("You can't send an empty message!");
@@ -93,5 +97,8 @@ class MessageController extends JSONController
 
         $this->getRequest()->getSession()->getFlashBag()->add('success',
             "Your message was sent successfully");
+
+        // Reset the form
+        $form = $cloned;
     }
 }
