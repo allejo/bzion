@@ -15,7 +15,7 @@ function initPage() {
 }
 
 function updatePage() {
-    $(".messaging").load(window.location.pathname + " .messaging > *", function() {
+    $(".scrollable_messages").load(window.location.pathname + " .scrollable_messages > *", function() {
         initPage();
     });
 }
@@ -34,7 +34,7 @@ pageSelector.on("submit", ".reply_form", function(event) {
     // AJAX will handle the click
     event.preventDefault();
 
-    sendResponse();
+    sendResponse($(this));
 });
 
 // Discussion create event
@@ -64,7 +64,7 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
 /**
  * Perform an AJAX request to send a response to a message group
  */
-function sendResponse() {
+function sendResponse(form) {
     // If the Ladda class exists, use it to style the button
     if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( document.querySelector( '#composeButton' ) );
@@ -74,13 +74,10 @@ function sendResponse() {
     groupId = $("#groupMessages").attr("data-id");
 
     $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: baseURLNoHost + "/ajax/sendMessage.php",
-        data: {
-            group_to: groupId,
-            content: $("#composeArea").val()
-        }
+        type: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize() + "&format=json",
+        dataType: "json"
     }).done(function( msg ) {
         if (l)
             l.stop();
@@ -89,8 +86,10 @@ function sendResponse() {
         var type = msg.success ? "success" : "error";
 
         notify(msg.message, type);
-        if (msg.success)
+        if (msg.success) {
             updatePage();
+            form[0].reset();
+        }
     });
 }
 

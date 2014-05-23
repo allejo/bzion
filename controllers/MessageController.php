@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-class MessageController extends HTMLController
+class MessageController extends JSONController
 {
     /**
     * @todo Show an error
@@ -10,9 +10,11 @@ class MessageController extends HTMLController
     public function setup()
     {
         $this->requireLogin();
-        $groups = Group::getGroups($this->getRequest()->getSession()->get("playerId"));
 
-        Service::getTemplateEngine()->addGlobal("groups", $groups);
+        if (!$this->isJson()) {
+            $groups = Group::getGroups($this->getRequest()->getSession()->get("playerId"));
+            Service::getTemplateEngine()->addGlobal("groups", $groups);
+        }
     }
 
     public function composeAction()
@@ -30,13 +32,20 @@ class MessageController extends HTMLController
             ->add('Send', 'submit')
             ->getForm();
 
+        // Keep a cloned version so we can come back to it later, if we need
+        // to reset the fields of the form
+        $cloned = clone $form;
+
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             // The player wants to send a message
             $content = $form->get('message')->getData();
-            Message::sendMessage($discussion->getId(), $me->getId(), $content);
-            $request->getSession()->getFlashBag()->add('success',
-                "Your message was sent successfully");
+            $this->sendMessage($me, $discussion, $content);
+            $form = $cloned; // Reset the form
+
+            if ($this->isJSON())
+                return "Your message was sent successfully";
         }
 
         $messages = Message::getMessages($discussion->getId());
@@ -44,14 +53,14 @@ class MessageController extends HTMLController
         return array("form" => $form->createView(), "group" => $discussion, "messages" => $messages);
     }
 
-    /*
+    /**
      * Make sure that a player can participate in a group
      *
      * Throws an exception if a player is not an admin or a member of that group
      * @todo Permission for spying on other people's groups?
      * @throws HTTPException
      * @param  Player        $player  The player to test
-     * @param  Group          $group   The message group
+     * @param  Group         $group   The message group
      * @param  string        $message The error message to show
      * @return void
      */
@@ -62,8 +71,27 @@ class MessageController extends HTMLController
             throw new ForbiddenException($message);
     }
 
-    private function sendMessage(Player &$from, Group &$to, string $message)
+    /**
+     * Sends a message to a group
+     *
+     * @throws HTTPException Exception thrown if the user doesn't have the
+     *                               SEND_PRIVATE_MSG permission
+     * @param  Player        $from    The sender
+     * @param  Group         $to      The group that will receive the message
+     * @param  string        $message The message to send
+     * @return void
+     */
+    private function sendMessage(Player &$from, Group &$to, &$message)
     {
+        if (!$from->hasPermission(Permission::SEND_PRIVATE_MSG))
+            throw new ForbiddenException("You are not allowed to send messages");
 
+        if (trim($message) == '')
+            throw new BadRequestException("You can't send an empty message!");
+
+        Message::sendMessage($to->getId(), $from->getId(), $message);
+
+        $this->getRequest()->getSession()->getFlashBag()->add('success',
+            "Your message was sent successfully");
     }
 }

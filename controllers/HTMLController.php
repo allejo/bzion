@@ -9,6 +9,22 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class HTMLController extends Controller
 {
     /**
+     * Prepare the twig global variables
+     */
+    protected function prepareTwig()
+    {
+        $request = $this->getRequest();
+
+        // Add global variables to the twig templates
+        $twig = Service::getTemplateEngine();
+        $twig->addGlobal("request", $request);
+        $twig->addGlobal("session", $request->getSession());
+        $twig->addGlobal("pages", Page::getPages());
+        $twig->addGlobal("me",
+            new Player($request->getSession()->get('playerId')));
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws ModelNotFoundException
@@ -25,9 +41,14 @@ abstract class HTMLController extends Controller
         return $model;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function callAction($action=null)
     {
         try {
+            $this->prepareTwig();
+
             return parent::callAction($action);
         } catch (ModelNotFoundException $e) {
             return $this->forward("NotFound", array("exception" => $e));
@@ -111,11 +132,12 @@ abstract class HTMLController extends Controller
     /*
      * Assert that the user is logged in
      * @throws HTTPException
-     * @param string $message The message to show if the user is not logged i
+     * @param  string        $message The message to show if the user is not logged in
      * @return void
      */
-    protected function requireLogin($message="You need to be signed in to do this")
-    {
+    protected function requireLogin(
+        $message="You need to be signed in to do this"
+    ) {
         $me = new Player($this->getRequest()->getSession()->get('playerId'));
 
         if (!$me->isValid())

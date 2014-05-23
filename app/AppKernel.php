@@ -117,13 +117,6 @@ class AppKernel extends Kernel
         Service::setFormFactory($formFactoryBuilder->getFormFactory());
         Service::setRequest($request);
 
-        $twig = Service::getTemplateEngine();
-        $twig->addGlobal("request", $request);
-        $twig->addGlobal("session", $request->getSession());
-        $twig->addGlobal("pages", Page::getPages());
-        $twig->addGlobal("me",
-                 new Player($request->getSession()->get('playerId')));
-
         $con = Controller::getController($request->attributes);
         $response = $con->callAction();
 

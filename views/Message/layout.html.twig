@@ -52,10 +52,10 @@
                             <div class="members">
                                 {% if group.members is not empty %}
                                     {% for member in group.members %}
-                                            {{- member.username -}}
-                                            {% if not loop.last %}
-                                                {{- ', ' -}}
-                                            {% endif %}
+                                        {{- member.username -}}
+                                        {%- if not loop.last -%}
+                                            {{- ', ' -}}
+                                        {%- endif -%}
                                     {% endfor %}
                                 {% else %}
                                     No other recipients

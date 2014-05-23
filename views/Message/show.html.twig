@@ -1,5 +1,16 @@
 {% extends 'Message/layout.html.twig' %}
 
+{% form_theme form _self %}
+
+{% block button_row %}
+    {% set type = type|default('submit') %}
+    {% spaceless %}
+        <button type="{{ type }}" {{ block('widget_attributes') }}>
+            <span class="ladda-label">{{ form.vars.name }}</span>
+        </button>
+    {% endspaceless %}
+{% endblock button_row %}
+
 {% block messages %}
     <div id="groupMessages" class="chat_area" data-id="{{ group.id }}">
         <div class="chat_details">
@@ -13,9 +24,9 @@
                 {% if group.members is not empty %}
                     {% for member in group.members %}
                             {{- member.username -}}
-                            {% if not loop.last %}
+                            {%- if not loop.last -%}
                                 {{- ', ' -}}
-                            {% endif %}
+                            {%- endif -%}
                     {% endfor %}
                 {% else %}
                     No other recipients
@@ -50,15 +61,14 @@
             </ul>
         </div>
 
-        {{ form(form) }}
-
-        <form class="reply_form" autocomplete="off">
+        {{ form_start(form, {'attr': {'class': 'reply_form', 'autocomplete': 'off'} }) }}
+            {{ form_errors(form) }}
             <div class="quick_reply">
-                <textarea id="composeArea" class="input_compose_area" placeholder="Enter your message here..." ></textarea>
-                <button id="composeButton" type="submit" class="ladda-button" data-style="zoom-out" data-size="xs">
-                    <span class="ladda-label">Send</span>
-                </button>
+                {{ form_errors(form.message) }}
+                {{ form_widget(form.message, {'id': 'composeArea', 'attr': {'class': 'input_compose_area', 'placeholder': 'Enter your message here...'} }) }}
+
+                {{ form_row(form.Send, {'id': 'composeButton', 'attr': {'class': 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
             </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

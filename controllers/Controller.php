@@ -248,7 +248,7 @@ abstract class Controller
      * @param  string   $action The name of the action
      * @return Response The response that the controller wants us to send to the client
      */
-    private function handleReturnValue($return, $action)
+    protected function handleReturnValue($return, $action)
     {
         if ($return instanceof Response)
             return $return;

@@ -8,7 +8,8 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class Command extends ContainerAwareCommand
 {
-    protected function clearCache(&$progress) {
+    protected function clearCache(&$progress)
+    {
         foreach (array('cache:clear', 'cache:warmup') as $commandName) {
             $command = $this->getApplication()->find($commandName);
             $arguments = array ( 'command' => $commandName );

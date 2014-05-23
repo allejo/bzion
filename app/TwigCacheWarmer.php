@@ -1,6 +1,5 @@
 <?php
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
 
 class TwigCacheWarmer implements CacheWarmerInterface
 {

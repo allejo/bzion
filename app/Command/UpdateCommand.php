@@ -2,10 +2,8 @@
 
 namespace Command;
 
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Process\Process;
 
 class UpdateCommand extends Command
@@ -74,12 +72,14 @@ class UpdateCommand extends Command
         $output->writeln('<fg=green;options=bold>BZiON has been updated successfully!</fg=green;options=bold>');
     }
 
-    private function countGitChanges() {
+    private function countGitChanges()
+    {
         // Get number of changes to see if we need to stash anything
         $changeCount = new Process("git status --porcelain --untracked-files=no");
         $changeCount->run();
         if (!$changeCount->isSuccessful())
             throw new \RuntimeException($process->getErrorOutput());
+
         return substr_count( $changeCount->getOutput(), "\n" );
     }
 }
