@@ -1,4 +1,4 @@
-function format(item) { return item.username }
+function format(item) { return item.username; }
 
 function initializeChosen() {
     $("#compose_recipients").attr('placeholder','Add a recipient').select2({
@@ -66,9 +66,9 @@ pageSelector.on("submit", ".reply_form", function(event) {
     // AJAX will handle the click
     event.preventDefault();
 
-    sendMessage($(this), function(msg) {
+    sendMessage($(this), function(msg, form) {
         updateMessages();
-        console.log($(this));
+        console.log(form[0].reset());
     });
 });
 
@@ -123,7 +123,7 @@ function sendMessage(form, onSuccess) {
 
         notify(msg.message, type);
         if (msg.success) {
-            onSuccess(msg);
+            onSuccess(msg, form);
         }
     });
 }
