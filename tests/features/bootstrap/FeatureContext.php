@@ -17,7 +17,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     private $client = null;
     private $response = null;
     private $crawler = null;
-    private $player = null;
+    private $me = null;
 
     public function setKernel(KernelInterface $kernel)
     {
@@ -61,7 +61,12 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         return Player::newPlayer($bzid, $username, null, "test", $role);
     }
 
-    protected function getUserId()
+    protected function getUserId($username="Sam", $role=Player::PLAYER)
+    {
+        return $this->getNewUser($username, $role)->getId();
+    }
+
+    protected function getAdminId()
     {
         return $this->getNewUser("Administrator", Player::DEVELOPER)->getId();
     }
@@ -71,7 +76,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveEnteredANewsArticleNamed($title)
     {
-        News::addNews($title, "bleep", $this->getUserId());
+        News::addNews($title, "bleep", $this->getAdminId());
     }
 
     /**
@@ -79,7 +84,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveACustomPageNamed($arg1)
     {
-        Page::addPage($arg1, "blop", $this->getUserId());
+        Page::addPage($arg1, "blop", $this->getAdminId());
     }
 
     /**
@@ -87,7 +92,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveAUser()
     {
-        $this->player = $this->getNewUser();
+        $this->me = $this->getNewUser();
     }
 
     /**
@@ -96,8 +101,10 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iLogIn()
     {
-        $this->visit('/login/' . $this->getUserId());
+        if (!$this->me)
+            $this->me = $this->getNewUser();
 
+        $this->visit('/login/' . $this->me->getId());
     }
 
     /**
@@ -150,7 +157,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iAmAnAdmin()
     {
-        $this->player = $this->getNewUser("Sam", Player::S_ADMIN);
+        $this->me = $this->getNewUser("Sam", Player::S_ADMIN);
         $this->iLogIn();
     }
 
@@ -161,6 +168,43 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     {
         $player = $this->getNewUser($user);
         Team::getFromName($team)->addMember($player->getId());
+    }
+
+    /**
+     * @Given I am a banned user
+     */
+    public function iAmABannedUser()
+    {
+        $this->me = $this->getNewUser("Sammed", Player::PLAYER_NO_PM);
+        $this->iLogIn();
+    }
+
+    /**
+     * @Given there is a player called :username
+     */
+    public function thereIsAPlayerCalled($username)
+    {
+        $this->getNewUser($username);
+    }
+
+    /**
+     * @When :username sends me a message
+     */
+    public function sendsMeAMessage($username)
+    {
+        $player = Player::getFromUsername($username);
+        $participants = array($player->getId(), $this->me->getId());
+        $group = Group::createGroup("Subject", $player->getId(), $participants);
+        $message = Message::sendMessage($group->getId(), $player->getId(), "Message");
+    }
+
+    /**
+     * @Given I am logged in as :username
+     */
+    public function iAmLoggedInAs($username)
+    {
+        $this->me = $this->getNewUser($username);
+        $this->iLogIn();
     }
 
     /**

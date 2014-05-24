@@ -155,10 +155,9 @@ class MessageController extends JSONController
                 $recipient = new Player($rid);
             }
 
-            // If we are developing, allow players to send messages to themselves
             if ($recipient->getId() == $me->getId()) {
                 // What happens if the user wants themselves as a recipient?
-                if (!DEVELOPMENT && count($recipients) < 2)
+                if (count($recipients) < 2)
                     $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
                 else
                     continue;
