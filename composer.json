@@ -22,16 +22,17 @@
         "symfony/http-foundation" : ">=2.4.0",
         "symfony/twig-bridge"     : ">=2.4.0",
         "symfony/twig-bundle"     : ">=2.4.0",
+        "symfony/validator"       : ">=2.4.0",
         "symfony/yaml"            : ">=2.4.0",
         "twig/twig"               : "dev-master",
-        "yzalis/identicon"        : "1.0.*@dev",
-        "behat/symfony2-extension": "dev-master"
+        "yzalis/identicon"        : "1.0.*@dev"
     },
     "require-dev": {
         "behat/behat": "3.0.*@stable",
         "behat/mink": "~1.6@dev",
         "behat/mink-extension": "~2.0@dev",
         "behat/mink-browserkit-driver": "~1.2@dev",
+        "behat/symfony2-extension": "dev-master",
         "symfony/browser-kit": ">=2.4.0",
         "symfony/web-profiler-bundle": ">=2.4.0",
         "phpunit/phpunit": "4.1.*",

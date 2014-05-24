@@ -1,6 +1,9 @@
 <?php
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MessageController extends JSONController
 {
@@ -17,9 +20,40 @@ class MessageController extends JSONController
         }
     }
 
-    public function composeAction()
+    public function composeAction(Player $me, Request $request)
     {
-        return array("players" => Player::getPlayers());
+        if (!$me->hasPermission(Permission::SEND_PRIVATE_MSG))
+            throw new ForbiddenException("You are not allowed to send messages");
+
+        $notBlank = array( 'constraints' => new NotBlank() );
+        $form = Service::getFormFactory()->createBuilder()
+            ->add('recipients', 'text', $notBlank) // Comma-separated list of recipients
+            ->add('subject', 'text', $notBlank)
+            ->add('message', 'textarea', $notBlank)
+            ->add('listUsernames', 'hidden', array(
+                'data' => true, // True if the client provided the recipient usernames
+            ))                  // instead of IDs (to support non-JS browsers)
+            ->add('send', 'submit')
+            // Prevents JS from going crazy if we load a page with AJAX
+            ->setAction(Service::getGenerator()->generate('message_list'))
+            ->setMethod('POST')
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $recipients = $this->validateComposeForm($form, $me);
+            if ($form->isValid()) {
+                $subject = $form->get('subject')->getData();
+                $content = $form->get('message')->getData();
+
+                $group_to = Group::createGroup($subject, $me->getId(), $recipients);
+                Message::sendMessage($group_to->getId(), $me->getId(), $content);
+
+                return new RedirectResponse($group_to->getUrl());
+            }
+        }
+
+        return array("form" => $form->createView(), "players" => Player::getPlayers());
     }
 
     public function showAction(Group $discussion, Player $me, Request $request)
@@ -28,16 +62,14 @@ class MessageController extends JSONController
 
         // Create the form to send a message to the discussion
         $form = Service::getFormFactory()->createBuilder()
-            ->setAction($discussion->getUrl()) // Prevents JS from going crazy
-                                               // if we load a page with AJAX
             ->add('message', 'textarea')
             ->add('Send', 'submit')
+            ->setAction($discussion->getUrl())
             ->getForm();
 
         // Keep a cloned version so we can come back to it later, if we need
         // to reset the fields of the form
         $cloned = clone $form;
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -74,8 +106,8 @@ class MessageController extends JSONController
     /**
      * Sends a message to a group
      *
-     * @throws HTTPException Exception thrown if the user doesn't have the
-     *                               SEND_PRIVATE_MSG permission
+     * @throws HTTPException Thrown if the user doesn't have the
+     *                       SEND_PRIVATE_MSG permission
      * @param  Player        $from    The sender
      * @param  Group         $to      The group that will receive the message
      * @param  Form          $form    The message's form
@@ -100,5 +132,46 @@ class MessageController extends JSONController
 
         // Reset the form
         $form = $cloned;
+    }
+
+    private function validateComposeForm(&$form, Player &$me)
+    {
+        $recipients = array_unique(explode(',', $form->get('recipients')->getData()));
+        $listingUsernames = (bool) $form->get('listUsernames')->getData();
+        $recipientIds = array();
+
+        foreach ($recipients as $rid) {
+            $rid = trim($rid);
+            if (empty($rid)) continue;
+
+            if ($listingUsernames) {
+                $recipient = Player::getFromUsername($rid);
+            } else {
+                $recipient = new Player($id);
+            }
+
+            // If we are developing, allow players to send messages to themselves
+            if ($recipient->getId() == $me->getId()) {
+                // What happens if the user wants themselves as a recipient?
+                if (!DEVELOPMENT && count($recipients) < 2)
+                    $form->get('recipients')->addError(new FormError("You can't send a message to yourself!"));
+                else
+                    continue;
+            }
+
+            if (!$recipient->isValid()) {
+                $error = ($listingUsernames)
+                       ? "There is no player called " . htmlentities($rid, ENT_QUOTES, 'utf-8')
+                       : "One of the recipients you specified does not exist";
+                $form->get('recipients')->addError(new FormError($error));
+            } else {
+                $recipientIds[] = $recipient->getId();
+            }
+        }
+
+        // Add the currently logged-in user to the list of recipients
+        $recipientIds[] = $me->getId();
+
+        return $recipientIds;
     }
 }

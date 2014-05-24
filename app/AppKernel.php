@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
 use Symfony\Component\Form\Extension\DataCollector\DataCollectorExtension;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Validator\Validation;
 
 require_once __DIR__ . '/../bzion-load.php';
 
@@ -104,8 +106,11 @@ class AppKernel extends Kernel
         $request->setSession($session);
         $csrfProvider = new SessionCsrfProvider($session, "secret");
 
+        $validator = Validation::createValidator();
+
         $formFactoryBuilder = Forms::createFormFactoryBuilder()
                        ->addExtension(new HttpFoundationExtension())
+                       ->addExtension(new ValidatorExtension($validator))
                        ->addExtension(new CsrfExtension($csrfProvider));
 
         // Make sure that the profiler shows information about the forms

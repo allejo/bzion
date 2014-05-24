@@ -421,6 +421,17 @@ class Player extends AliasModel
     }
 
     /**
+     * Get a single player by their username
+     *
+     * @param  string $username The username to look for
+     * @return Player
+     */
+    public static function getFromUsername($username)
+    {
+        return new Player(self::fetchIdFrom($username, 'username', 's'));
+    }
+
+    /**
      * Get all the players in the database that have an active status
      * @return Player[] An array of player BZIDs
      */
@@ -429,6 +440,24 @@ class Player extends AliasModel
         return self::arrayIdToModel(
             parent::fetchIdsFrom("status", array("active"), "s", false)
         );
+    }
+
+    /**
+     * Returns an array of all active players' IDs and usernames
+     * @param  int      $except A player ID to exclude
+     * @return string[] The keys represent the player's ID
+     */
+    public static function getPlayerUsernames($except)
+    {
+        $array = self::fetchIdsFrom("status", "active", "s", false, "ORDER BY username", "", 'id,username');
+
+        $return = array();
+        foreach ($array as $player) {
+            if ($player['id'] != $except)
+                $return[$player['id']] = $player['username'];
+        }
+
+        return $return;
     }
 
     /**
