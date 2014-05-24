@@ -104,7 +104,7 @@ class MessageController extends JSONController
      * Sends a message to a group
      *
      * @throws HTTPException Thrown if the user doesn't have the
-     *                       SEND_PRIVATE_MSG permission
+     *                               SEND_PRIVATE_MSG permission
      * @param  Player        $from    The sender
      * @param  Group         $to      The group that will receive the message
      * @param  Form          $form    The message's form

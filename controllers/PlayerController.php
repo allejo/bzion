@@ -1,14 +1,28 @@
 <?php
 
-class PlayerController extends HTMLController
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+class PlayerController extends JSONController
 {
     public function showAction(Player $player)
     {
         return array("player" => $player);
     }
 
-    public function listAction()
+    public function listAction(Request $request, Player $me)
     {
-        return array("players" => Player::getPlayers());
+        if ($startsWith = $request->query->get('startsWith')) {
+            $players = Player::getPlayerUsernamesStartingWith($startsWith, $me->getId());
+
+            if ($this->isJson())
+                return new JSONResponse($players);
+            else
+                $players = Player::arrayIdToModel(array_keys($players));
+        } else {
+            $players = Player::getPlayers();
+        }
+
+        return array("players" => $players);
     }
 }

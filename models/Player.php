@@ -444,12 +444,15 @@ class Player extends AliasModel
 
     /**
      * Returns an array of all active players' IDs and usernames
+     * @param  string   $start  What the requested usernames should start with
      * @param  int      $except A player ID to exclude
      * @return string[] The keys represent the player's ID
      */
-    public static function getPlayerUsernames($except)
+    public static function getPlayerUsernamesStartingWith($start, $except)
     {
-        $array = self::fetchIdsFrom("status", "active", "s", false, "ORDER BY username", "", 'id,username');
+        $array = self::fetchIds(
+            "WHERE status='active' AND username LIKE CONCAT(?, '%') ORDER BY username",
+            's', $start, '', 'id,username');
 
         $return = array();
         foreach ($array as $player) {
