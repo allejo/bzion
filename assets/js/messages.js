@@ -1,8 +1,6 @@
 function format(item) { return item.username }
 
 function initializeChosen() {
-
-
     $("#compose_recipients").attr('placeholder','Add a recipient').select2({
         allowClear: true,
         multiple: true,
@@ -27,7 +25,7 @@ function initializeChosen() {
         });
 
     // Make sure that PHP knows we are sending player IDs, not usernames
-    $("#form_listUsernames").attr('value', '0');
+    $("#form_ListUsernames").attr('value', '0');
 }
 
 function initPage() {
@@ -68,13 +66,19 @@ pageSelector.on("submit", ".reply_form", function(event) {
     // AJAX will handle the click
     event.preventDefault();
 
-    sendResponse($(this));
+    sendMessage($(this), function(msg) {
+        updateMessages();
+        console.log($(this));
+    });
 });
 
 // Discussion create event
-pageSelector.on("submit", ".compose_fsorm", function(event) {
+pageSelector.on("submit", ".compose_form", function(event) {
     event.preventDefault();
-    sendMessage();
+
+    sendMessage($(this), function(msg) {
+        redirect(msg.id);
+    });
 });
 
 // Group click event
@@ -95,17 +99,15 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
 });
 
 
+
 /**
- * Perform an AJAX request to send a response to a message group
+ * Perform an AJAX request to send a message
  */
-function sendResponse(form) {
-    // If the Ladda class exists, use it to style the button
+function sendMessage(form, onSuccess) {
     if (typeof(Ladda) !== "undefined") {
-        var l = Ladda.create( document.querySelector( '#composeButton' ) );
+        var l = Ladda.create( form.find('button').get()[0] );
         l.start();
     }
-
-    groupId = $("#groupMessages").attr("data-id");
 
     $.ajax({
         type: form.attr('method'),
@@ -121,48 +123,7 @@ function sendResponse(form) {
 
         notify(msg.message, type);
         if (msg.success) {
-            updateMessages();
-            form[0].reset();
-        }
-    });
-}
-
-/**
- * Perform an AJAX request to create a new message group
- */
-function sendMessage() {
-    if (typeof(Ladda) !== "undefined") {
-        var l = Ladda.create( document.querySelector( '#composeButton' ) );
-        l.start();
-    }
-
-    // Generate a comma-separated list of recipients which the AJAX script will read
-    var recipients = "";
-    var recipientSelector = $("#compose_recipients");
-
-    if (recipientSelector.val())
-        recipients = recipientSelector.val().join(',');
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: baseURLNoHost + "/ajax/sendMessage.php",
-        data: {
-            subject: $("#compose_subject").val(),
-            to:  recipients,
-            content: $("#composeArea").val()
-        }
-    }).done(function( msg ) {
-        if (l)
-            l.stop();
-
-        // Find the notification type
-        var type = msg.success ? "success" : "error";
-
-        notify(msg.message, type);
-
-        if (msg.success) {
-            redirect(msg.id);
+            onSuccess(msg);
         }
     });
 }

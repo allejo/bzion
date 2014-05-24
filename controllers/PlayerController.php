@@ -18,7 +18,7 @@ class PlayerController extends JSONController
             if ($this->isJson())
                 return new JSONResponse(array('players' => $players));
             else
-                $players = Player::arrayIdToModel(array_map(function($p){return $p['id'];},$players));
+                $players = Player::arrayIdToModel(array_map(function ($p) {return $p['id'];},$players));
         } else {
             $players = Player::getPlayers();
         }

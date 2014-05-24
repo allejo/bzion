@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +25,10 @@ class MessageController extends JSONController
 
         $notBlank = array( 'constraints' => new NotBlank() );
         $form = Service::getFormFactory()->createBuilder()
-            ->add('recipients', 'text', $notBlank) // Comma-separated list of recipients
-            ->add('subject', 'text', $notBlank)
-            ->add('message', 'textarea', $notBlank)
-            ->add('listUsernames', 'hidden', array(
+            ->add('Recipients', 'text', $notBlank) // Comma-separated list of recipients
+            ->add('Subject', 'text', $notBlank)
+            ->add('Message', 'textarea', $notBlank)
+            ->add('ListUsernames', 'hidden', array(
                 'data' => true, // True if the client provided the recipient usernames
             ))                  // instead of IDs (to support non-JS browsers)
             ->add('Send', 'submit')
@@ -40,14 +41,21 @@ class MessageController extends JSONController
         if ($form->isSubmitted()) {
             $recipients = $this->validateComposeForm($form, $me);
             if ($form->isValid()) {
-                $subject = $form->get('subject')->getData();
-                $content = $form->get('message')->getData();
+                $subject = $form->get('Subject')->getData();
+                $content = $form->get('Message')->getData();
 
                 $group_to = Group::createGroup($subject, $me->getId(), $recipients);
                 Message::sendMessage($group_to->getId(), $me->getId(), $content);
 
-                return new RedirectResponse($group_to->getUrl());
-            }
+                if ($this->isJson())
+                    return new JsonResponse(array(
+                        'success' => true,
+                        'message' => 'Your message was sent successfully',
+                        'id'      => $group_to->getId()
+                    ));
+                else return new RedirectResponse($group_to->getUrl());
+            } elseif ($this->isJson())
+                throw new BadRequestException($this->getErrorMessages($form)[0]);
         }
 
         return array("form" => $form->createView(), "players" => Player::getPlayers());
@@ -133,8 +141,8 @@ class MessageController extends JSONController
 
     private function validateComposeForm(&$form, Player &$me)
     {
-        $recipients = array_unique(explode(',', $form->get('recipients')->getData()));
-        $listingUsernames = (bool) $form->get('listUsernames')->getData();
+        $recipients = array_unique(explode(',', $form->get('Recipients')->getData()));
+        $listingUsernames = (bool) $form->get('ListUsernames')->getData();
         $recipientIds = array();
 
         foreach ($recipients as $rid) {
@@ -151,7 +159,7 @@ class MessageController extends JSONController
             if ($recipient->getId() == $me->getId()) {
                 // What happens if the user wants themselves as a recipient?
                 if (!DEVELOPMENT && count($recipients) < 2)
-                    $form->get('recipients')->addError(new FormError("You can't send a message to yourself!"));
+                    $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
                 else
                     continue;
             }
@@ -160,7 +168,7 @@ class MessageController extends JSONController
                 $error = ($listingUsernames)
                        ? "There is no player called " . htmlentities($rid, ENT_QUOTES, 'utf-8')
                        : "One of the recipients you specified does not exist";
-                $form->get('recipients')->addError(new FormError($error));
+                $form->get('Recipients')->addError(new FormError($error));
             } else {
                 $recipientIds[] = $recipient->getId();
             }
@@ -170,5 +178,16 @@ class MessageController extends JSONController
         $recipientIds[] = $me->getId();
 
         return $recipientIds;
+    }
+
+    private function getErrorMessages(\Symfony\Component\Form\Form $form)
+    {
+        $errors = array();
+
+        foreach ($form->all() as $child)
+            foreach ($child->getErrors() as $error)
+                $errors[] = $child->getName() . ": " . $error->getMessage();
+
+        return $errors;
     }
 }

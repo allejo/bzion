@@ -12,13 +12,13 @@
             {{ form_errors(form) }}
             <div class="input_group">
                 <div class="input_group_row">
-                    {{ form_row(form.recipients, { 'label': 'Recipients: ', 'id': 'compose_recipients', 'attr': { 'class': 'input_group_main', 'placeholder': 'brad, kierra, ...'} }) }}
+                    {{ form_row(form.Recipients, { 'label': 'Recipients: ', 'id': 'compose_recipients', 'attr': { 'class': 'input_group_main', 'placeholder': 'brad, kierra, ...'} }) }}
                 </div>
                 <div class="input_group_row">
-                    {{ form_row(form.subject,    { 'label': 'Subject: ', 'attr': { 'placeholder': 'Enter message subject'} }) }}
+                    {{ form_row(form.Subject,    { 'label': 'Subject: ', 'attr': { 'placeholder': 'Enter message subject'} }) }}
                 </div>
             </div>
-                {{ form_row(form.message,    { 'attr': { 'placeholder': 'Enter your message here...'} }) }}
+                {{ form_row(form.Message,    { 'attr': { 'placeholder': 'Enter your message here...'} }) }}
             <div class="buttons">
                 {{ form_row(form.Send, {'id': 'composeButton', 'attr': {'class': 'ladda-button', 'data-style': 'zoom-out'} }) }}
             </div>
