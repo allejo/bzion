@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -55,7 +56,7 @@ class MessageController extends JSONController
                     ));
                 else return new RedirectResponse($group_to->getUrl());
             } elseif ($this->isJson())
-                throw new BadRequestException($this->getErrorMessages($form)[0]);
+                throw new BadRequestException($this->getErrorMessage($form));
         }
 
         return array("form" => $form->createView(), "players" => Player::getPlayers());
@@ -179,14 +180,12 @@ class MessageController extends JSONController
         return $recipientIds;
     }
 
-    private function getErrorMessages(\Symfony\Component\Form\Form $form)
+    private function getErrorMessage(Form &$form)
     {
-        $errors = array();
-
         foreach ($form->all() as $child)
             foreach ($child->getErrors() as $error)
-                $errors[] = $child->getName() . ": " . $error->getMessage();
+                return $child->getName() . ": " . $error->getMessage();
 
-        return $errors;
+        return "Unknown error";
     }
 }
