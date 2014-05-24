@@ -144,7 +144,7 @@ class MessageController extends JSONController
             if ($listingUsernames) {
                 $recipient = Player::getFromUsername($rid);
             } else {
-                $recipient = new Player($id);
+                $recipient = new Player($rid);
             }
 
             // If we are developing, allow players to send messages to themselves

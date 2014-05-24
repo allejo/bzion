@@ -451,16 +451,10 @@ class Player extends AliasModel
     public static function getPlayerUsernamesStartingWith($start, $except)
     {
         $array = self::fetchIds(
-            "WHERE status='active' AND username LIKE CONCAT(?, '%') ORDER BY username",
-            's', $start, '', 'id,username');
+            "WHERE status='active' and id != ? AND username LIKE CONCAT(?, '%') ORDER BY username",
+            'is',array($except, $start), '', 'id,username');
 
-        $return = array();
-        foreach ($array as $player) {
-            if ($player['id'] != $except)
-                $return[$player['id']] = $player['username'];
-        }
-
-        return $return;
+        return $array;
     }
 
     /**

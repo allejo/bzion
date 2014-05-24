@@ -1,5 +1,33 @@
+function format(item) { return item.username }
+
 function initializeChosen() {
-    $(".select").select2();
+
+
+    $("#compose_recipients").attr('placeholder','Add a recipient').select2({
+        allowClear: true,
+        multiple: true,
+        minimumInputLength: 1,
+        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+            url: baseURLNoHost + "/players",
+            dataType: 'json',
+            data: function (term, page) {
+                return {
+                    format: 'json',
+                    startsWith: term, // search term
+                };
+            },
+            results: function (data, page) { // parse the results into the format expected by Select2.
+                // since we are using custom formatting functions we do not need to alter remote JSON data
+                return {results: data.players};
+            }
+        },
+        formatSelection: format,
+        formatResult: format,
+        // dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+        });
+
+    // Make sure that PHP knows we are sending player IDs, not usernames
+    $("#form_listUsernames").attr('value', '0');
 }
 
 function initPage() {
@@ -44,7 +72,7 @@ pageSelector.on("submit", ".reply_form", function(event) {
 });
 
 // Discussion create event
-pageSelector.on("submit", ".compose_form", function(event) {
+pageSelector.on("submit", ".compose_fsorm", function(event) {
     event.preventDefault();
     sendMessage();
 });
