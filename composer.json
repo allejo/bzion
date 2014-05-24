@@ -6,6 +6,7 @@
 
     "require": {
         "ext-gd"                  : "*",
+        "ivaynberg/select2"       : "dev-master",
         "michelf/php-markdown"    : ">=1.4.1",
         "nesbot/carbon"           : ">=1.8.0",
         "symfony/class-loader"    : ">=2.4.0",

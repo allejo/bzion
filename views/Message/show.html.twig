@@ -1,16 +1,5 @@
 {% extends 'Message/layout.html.twig' %}
 
-{% form_theme form _self %}
-
-{% block button_row %}
-    {% set type = type|default('submit') %}
-    {% spaceless %}
-        <button type="{{ type }}" {{ block('widget_attributes') }}>
-            <span class="ladda-label">{{ form.vars.name }}</span>
-        </button>
-    {% endspaceless %}
-{% endblock button_row %}
-
 {% block messages %}
     <div id="groupMessages" class="chat_area" data-id="{{ group.id }}">
         <div class="chat_details">

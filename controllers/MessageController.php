@@ -7,9 +7,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MessageController extends JSONController
 {
-    /**
-    * @todo Show an error
-    */
     public function setup()
     {
         $this->requireLogin();
@@ -33,14 +30,14 @@ class MessageController extends JSONController
             ->add('listUsernames', 'hidden', array(
                 'data' => true, // True if the client provided the recipient usernames
             ))                  // instead of IDs (to support non-JS browsers)
-            ->add('send', 'submit')
+            ->add('Send', 'submit')
             // Prevents JS from going crazy if we load a page with AJAX
             ->setAction(Service::getGenerator()->generate('message_list'))
             ->setMethod('POST')
             ->getForm();
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $recipients = $this->validateComposeForm($form, $me);
             if ($form->isValid()) {
                 $subject = $form->get('subject')->getData();

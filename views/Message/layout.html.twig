@@ -2,6 +2,17 @@
 
 {% block title %}Messages{% endblock %}
 
+{% form_theme form _self %}
+
+{% block button_row %}
+    {% set type = type|default('submit') %}
+    {% spaceless %}
+        <button type="{{ type }}" {{ block('widget_attributes') }}>
+            <span class="ladda-label">{{ form.vars.name }}</span>
+        </button>
+    {% endspaceless %}
+{% endblock button_row %}
+
 {% block content %}
     <div class="messaging">
         <section class="toolbar">
@@ -81,6 +92,6 @@
 {% block javascripts %}
     <script src="{{ request.baseURL }}/includes/ladda/dist/spin.min.js"></script>
     <script src="{{ request.baseURL }}/includes/ladda/dist/ladda.min.js"></script>
-    <script src="{{ request.baseURL }}/includes/chosen/chosen.jquery.min.js"></script>
+    <script src="{{ request.baseURL }}/vendor/ivaynberg/select2/select2.js"></script>
     <script src="{{ request.baseURL }}/assets/js/messages.js"></script>
 {% endblock %}

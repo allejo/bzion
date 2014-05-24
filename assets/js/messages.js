@@ -1,7 +1,5 @@
 function initializeChosen() {
-    $(".chosen-select").chosen();
-    $(".chosen-container, .chosen-container input").css("width", "100%");
-    $(".chosen-container input").css("height", "25px");
+    $(".select").select2();
 }
 
 function initPage() {

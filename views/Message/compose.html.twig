@@ -8,17 +8,22 @@
                     <div style="clear: both"></div>
                 </div>
             </div>
-            {{ form(form) }}
+            {{ form_start(form, {'attr': {'class': 'orig_compose_form'} }) }}
+                {{ form_errors(form) }}
+                <div class="quick_reply">
+                    {{ form_row(form.recipients, { 'label': 'Recipients: ', 'id': 'e5', 'attr': { 'placeholder': 'brad, kierra, ...'} }) }}
+                    {{ form_row(form.subject,    { 'label': 'Subject: ', 'attr': { 'placeholder': 'Enter message subject'} }) }}
+                    {{ form_row(form.message,    { 'attr': { 'placeholder': 'Enter your message here...'} }) }}
+
+                    {{ form_row(form.Send, {'id': 'composeButton', 'attr': {'class': 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
+                </div>
+            {{ form_end(form) }}
             <form class="compose_form">
-
-
-
                 <div class="input_group">
                     <div class="input_group_row">
                         <label for="compose_recipients">Recipients:</label>
                         <div class="input_group_main" style="padding: 0">
-                            <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="chosen-select">
-                                <option value=""> </option>
+                            <select id="compose_recipients" data-placeholder="Enter message recipients" multiple="" style="width:100%;" class="select">
                                 <optgroup label="Players">
                                     {% for player in players %}
                                         {% if player.id != session.get('playerId') %}
