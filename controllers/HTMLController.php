@@ -129,28 +129,19 @@ abstract class HTMLController extends Controller
         return new RedirectResponse($this->getHomeURL());
     }
 
-    /**
+    /*
      * Assert that the user is logged in
      * @throws HTTPException
      * @param  string        $message The message to show if the user is not logged in
      * @return void
      */
-    protected function requireLogin($message="You need to be signed in to do this")
-    {
+    protected function requireLogin(
+        $message="You need to be signed in to do this"
+    ) {
         $me = new Player($this->getRequest()->getSession()->get('playerId'));
 
         if (!$me->isValid())
             throw new ForbiddenException($message);
-    }
-
-    /**
-     * Add a successful message to the user's flashbag
-     *
-     * The message will be shown for only one request
-     * @param string $message The message to show
-     */
-    protected function success($message) {
-        $this->getRequest()->getSession()->getFlashBag()->add('success', $message);
     }
 
     /*

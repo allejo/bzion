@@ -23,13 +23,14 @@ class TeamController extends HTMLController
 
         return $this->showConfirmationForm(function () use (&$team, &$session) {
             $team->delete();
-            $this->success("The team {$team->getName()} was deleted successfully");
+            $session->getFlashBag()->add('success',
+                     "The team {$team->getName()} was deleted successfully");
 
             return new RedirectResponse(Service::getGenerator()->generate('team_list'));
         }, null, array('team' => $team));
     }
 
-    public function kickAction(Team $team, Player $player, Player $me)
+    public function kickAction(Team $team, Player $player, Player $me, Session $session)
     {
         $this->assertCanEdit($me, $team, "You are not allowed to kick a player off that team!");
 
@@ -41,13 +42,15 @@ class TeamController extends HTMLController
 
         return $this->showConfirmationForm(function () use (&$team, &$player, &$session) {
             $team->removeMember($player->getId());
-            $this->success("Player {$player->getUsername()} has been kicked from {$team->getName()}");
+
+            $message = "Player {$player->getUsername()} has been kicked from {$team->getName()}";
+            $session->getFlashBag()->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
         }, null, array('team' => $team, 'player' => $player));
     }
 
-    public function abandonAction(Team $team, Player $me)
+    public function abandonAction(Team $team, Player $me, Session $session)
     {
         if (!$team->isMember($me->getId()))
             throw new ForbiddenException("You are not a member of that team!");
@@ -57,7 +60,9 @@ class TeamController extends HTMLController
 
         return $this->showConfirmationForm(function () use (&$team, &$me, &$session) {
             $team->removeMember($me->getId());
-            $this->success("You have left {$team->getName()}");
+
+            $message = "You have left {$team->getName()}";
+            $session->getFlashBag()->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
         }, null, array('team' => $team));
