@@ -142,12 +142,15 @@ class MessageController extends JSONController
 
     private function validateComposeForm(&$form, Player &$me)
     {
-        $recipients = array_unique(explode(',', $form->get('Recipients')->getData()));
+        $recipients = explode(',', $form->get('Recipients')->getData());
         $listingUsernames = (bool) $form->get('ListUsernames')->getData();
         $recipientIds = array();
 
+        // Remove all the whitespace and duplicate entries
+        $recipients = array_map(function ($r) { return trim($r); }, $recipients);
+        $recipients = array_unique($recipients);
+
         foreach ($recipients as $rid) {
-            $rid = trim($rid);
             if (empty($rid)) continue;
 
             if ($listingUsernames) {
@@ -156,13 +159,10 @@ class MessageController extends JSONController
                 $recipient = new Player($rid);
             }
 
-            if ($recipient->getId() == $me->getId()) {
-                // What happens if the user wants themselves as a recipient?
-                if (count($recipients) < 2)
-                    $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
-                else
-                    continue;
-            }
+            if ($recipient->getId() == $me->getId())
+                // The user wants themselves as a recipient - ignore that since
+                // we are going to add the user in the end either way
+                continue;
 
             if (!$recipient->isValid()) {
                 $error = ($listingUsernames)
@@ -174,6 +174,9 @@ class MessageController extends JSONController
             }
         }
 
+        if (count($recipientIds) < 1)
+            $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
+
         // Add the currently logged-in user to the list of recipients
         $recipientIds[] = $me->getId();
 
@@ -184,6 +187,7 @@ class MessageController extends JSONController
     {
         foreach ($form->all() as $child)
             foreach ($child->getErrors() as $error)
+
                 return $child->getName() . ": " . $error->getMessage();
 
         return "Unknown error";
