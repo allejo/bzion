@@ -3,12 +3,25 @@
 {% block title %}Players :: {{ player.username }}{% endblock %}
 
 {% block content %}
+    <main class="player">
+        <section class="content_header">
+            <article class="wrapper">
+                {{ player.country.flagLiteral | raw }}
+                <h1>{{ player.username }}</h1>
+            </article>
+        </section>
+
+        <section>
+
+        </section>
+    </main>
+
+
+
     <div class='profile_page'>
         {% if player.avatar %}
             <img class='avatar_player' src='{{ player.avatar }}'>
         {% endif %}
-        <div class='label player_name'>{{ player.username }}</div>
-        {{ player.country.flagLiteral | raw }} rawr
         <div class='label label_team'>Team:
             {% if player.team.valid %}
                 <a href="{{ player.team.url }}">{{ player.team.name }}</a>

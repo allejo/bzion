@@ -1,0 +1,16 @@
+main {
+    &.player {
+        .content_header {
+            article {
+                .flag {
+                    margin-right: 10px;
+                    margin-top: 6px;
+                }
+
+                h1 {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
