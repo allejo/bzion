@@ -12,18 +12,18 @@ Feature: Teams
       And I should see "Teams" in the title
 
    Scenario: Show team
-      Given I have a team called "Inkeeper Aquarium"
+      Given I have a team called "Innkeeper Aquarium"
       And I have a user
-      When I go to "/teams/inkeeper-aquarium"
-      Then I should see "Inkeeper Aquarium"
-      And I should see "Inkeeper Aquarium" in the title
+      When I go to "/teams/innkeeper-aquarium"
+      Then I should see "Innkeeper Aquarium"
+      And I should see "Innkeeper Aquarium" in the title
       And I should see "Team" in the title
       And I should see "0 wins"
       But I should not see "Edit"
       And I should not see "Delete"
       And I should not see "Join"
       When I log in
-      And I go to "/teams/inkeeper-aquarium"
+      And I go to "/teams/innkeeper-aquarium"
       Then I should see "Join"
 
    Scenario: Play match
@@ -79,3 +79,19 @@ Feature: Teams
         Then I should be on "/teams/geranium-cauldrons"
         When I reload the page
         Then I should see "Sans Pareil"
+
+    Scenario: Abandon team
+        Given I am logged in
+        And I create a team called "Uninviting Bulwark"
+        And I go to "/teams/uninviting-bulwark"
+        And I follow "Abandon"
+        Then I should see "You can't abandon the team"
+        Given I am logged in as "irked"
+        Given I am a member of a team called "Vexatious Vats"
+        And I go to "/teams/vexatious-vats"
+        Then I should see "irked"
+        When I follow "Abandon"
+        And I press "Yes"
+        Then I should be on "/teams/vexatious-vats"
+        And I should see "You have left"
+        But I should not see "irked"

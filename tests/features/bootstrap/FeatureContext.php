@@ -120,7 +120,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveATeamCalled($name)
     {
-        Team::createTeam($name, $this->getUserId(), "Avatar", "Description");
+        return Team::createTeam($name, $this->getUserId(), "Avatar", "Description");
     }
 
     /**
@@ -205,6 +205,22 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     {
         $this->me = $this->getNewUser($username);
         $this->iLogIn();
+    }
+
+    /**
+     * @Given I create a team called :name
+     */
+    public function iCreateATeamCalled($name)
+    {
+        Team::createTeam($name, $this->me->getId(), "Avatar", "Description");
+    }
+
+    /**
+     * @Given I am a member of a team called :name
+     */
+    public function iAmAMemberOfATeamCalled($name)
+    {
+        $this->iHaveATeamCalled($name)->addMember($this->me->getId());
     }
 
     /**
