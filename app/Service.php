@@ -39,6 +39,12 @@ abstract class Service
     private static $formFactory;
 
     /**
+     * The AppKernel's container
+     * @var Monolog\Logger
+     */
+    private static $container;
+
+    /**
      * @param Request $request
      */
     public static function setRequest($request)
@@ -118,5 +124,15 @@ abstract class Service
     public static function setFormFactory($formFactory)
     {
         self::$formFactory = $formFactory;
+    }
+
+    public static function getContainer()
+    {
+        return self::$container;
+    }
+
+    public static function setContainer(&$container)
+    {
+        self::$container = $container;
     }
 }

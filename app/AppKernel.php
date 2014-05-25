@@ -39,6 +39,7 @@ class AppKernel extends Kernel
         if ($this->getEnvironment() == 'profile') {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            $bundles[] = new Symfony\Bundle\MonologBundle\MonologBundle();
         }
 
         return $bundles;
@@ -49,6 +50,7 @@ class AppKernel extends Kernel
         parent::boot();
 
         Service::setGenerator($this->container->get('router')->getGenerator());
+        Service::setContainer($this->container);
         $this->setUpTwig();
     }
 

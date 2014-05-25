@@ -125,6 +125,33 @@ class Database
      */
     public function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
+        $log = (Service::getContainer() && Service::getContainer()->has('logger'));
+
+        if ($log) {
+            $queryType = strtok($queryText, " ");
+            // $stopwatch = new Symfony\Component\Stopwatch\Stopwatch;
+            $stopwatch = Service::getContainer()->get('debug.stopwatch');
+            $stopwatch->start('databaseQuery' . $queryType);
+        }
+
+        $return = $this->doQuery($queryText, $typeDef, $params);
+
+        if ($log) {
+            $event = $stopwatch->stop('databaseQuery' . $queryType);
+            $periods = $event->getPeriods();
+            $duration = end($periods)->getDuration();
+            Service::getContainer()->get('logger')->debug("Database $queryType query", array(
+                "query" => $queryText,
+                "params" => $params,
+                "duration" => $duration
+            ));
+        }
+
+        return $return;
+    }
+
+    private function doQuery($queryText, $typeDef = FALSE, $params = FALSE)
+    {
         $multiQuery = true;
         if ($stmt = $this->dbc->prepare($queryText)) {
             if (!is_array($params)) {
