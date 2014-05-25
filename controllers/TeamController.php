@@ -50,6 +50,24 @@ class TeamController extends HTMLController
         }, null, array('team' => $team, 'player' => $player));
     }
 
+    public function abandonAction(Team $team, Player $me, Session $session)
+    {
+        if (!$team->isMember($me->getId()))
+            throw new ForbiddenException("You are not a member of that team!");
+
+        if ($team->getLeader()->getId() == $me->getId())
+            throw new ForbiddenException("You can't abandon the team you are leading.");
+
+        return $this->showConfirmationForm(function () use (&$team, &$me, &$session) {
+            $team->removeMember($me->getId());
+
+            $message = "You have left {$team->getName()}";
+            $session->getFlashBag()->add('success', $message);
+
+            return new RedirectResponse($team->getUrl());
+        }, null, array('team' => $team));
+    }
+
     /*
      * Make sure that a player can edit a team
      *

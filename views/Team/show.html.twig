@@ -30,7 +30,7 @@
                     {% endif %}
 
                     {% if me.isValid and me.team.id == team.id %}
-                        <a class="button grey notextshadow" href="#"><i class="fa fa-sign-out"></i> Abandon</a>
+                        <a class="button grey notextshadow" href="{{ team.url('abandon') }}"><i class="fa fa-sign-out"></i> Abandon</a>
                     {% endif %}
                 </div>
             </article>

@@ -90,6 +90,10 @@ team_kick:
     pattern:    /teams/{team}/kick/{player}
     defaults: { _controller: 'Team', _action: 'kick' }
 
+team_abandon:
+    pattern:    /teams/{team}/abandon
+    defaults: { _controller: 'Team', _action: 'abandon' }
+
 custom_page:
     pattern:    /{page}
     defaults: { _controller: 'Page', _action: 'show' }

@@ -477,7 +477,7 @@ class Team extends AliasModel
     /**
      * Check if a player is part of this team
      *
-     * @param string $playerID The player to check
+     * @param int $playerID The player to check
      *
      * @return bool True if the player belongs to this team
      */
