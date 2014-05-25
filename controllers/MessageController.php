@@ -133,8 +133,7 @@ class MessageController extends JSONController
 
         Message::sendMessage($to->getId(), $from->getId(), $message);
 
-        $this->getRequest()->getSession()->getFlashBag()->add('success',
-            "Your message was sent successfully");
+        $this->success("Your message was sent successfully");
 
         // Reset the form
         $form = $cloned;
@@ -165,13 +164,14 @@ class MessageController extends JSONController
                 continue;
 
             if (!$recipient->isValid()) {
-                $error = ($listingUsernames)
-                       ? "There is no player called " . htmlentities($rid, ENT_QUOTES, 'utf-8')
+                $error = ($listingUsernames) // Note that $rid has been escaped by Symfony
+                       ? "There is no player called $rid"
                        : "One of the recipients you specified does not exist";
                 $form->get('Recipients')->addError(new FormError($error));
-            } else {
-                $recipientIds[] = $recipient->getId();
+                continue;
             }
+
+            $recipientIds[] = $recipient->getId();
         }
 
         if (count($recipientIds) < 1)
