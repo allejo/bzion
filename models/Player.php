@@ -131,6 +131,7 @@ class Player extends AliasModel
         $this->last_login = new TimeDate($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
 
+        // TODO: DANGER
         $this->roles = Role::getRoles($this->getId());
         $this->permissions = array();
 
