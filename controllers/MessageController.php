@@ -166,7 +166,7 @@ class MessageController extends JSONController
 
             if (!$recipient->isValid()) {
                 $error = ($listingUsernames)
-                       ? "There is no player called " . htmlentities($rid, ENT_QUOTES, 'utf-8')
+                       ? "There is no player called " . Model::escape($rid);
                        : "One of the recipients you specified does not exist";
                 $form->get('Recipients')->addError(new FormError($error));
             } else {

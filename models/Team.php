@@ -333,7 +333,7 @@ class Team extends AliasModel
      */
     public function getLinkLiteral()
     {
-        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
+        return '<a href="' . $this->getURL() . '">' . $this->getEscapedName() . '</a>';
     }
 
     /**
@@ -408,8 +408,20 @@ class Team extends AliasModel
     public function getName()
     {
         if (!$this->valid)
-            return "<em>None</em>";
+            return "None";
         return $this->name;
+    }
+
+    /**
+     * Get the name of the team, safe for use in your HTML
+     *
+     * @return string The name of the team
+     */
+    public function getEscapedName()
+    {
+        if (!$this->valid)
+            return "<em>None</em>";
+        return $this->escape($this->name);
     }
 
     /**

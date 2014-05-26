@@ -236,10 +236,10 @@ class Player extends AliasModel
     public function getLinkLiteral()
     {
         if ($this->isDisabled()) {
-            return '<span>' . $this->getUsername() . '</span>';
+            return '<span>' . $this->getEscapedUsername() . '</span>';
         }
 
-        return '<a href="' . $this->getURL() . '">' . $this->getUsername() . '</a>';
+        return '<a href="' . $this->getURL() . '">' . $this->getEscapedUsername() . '</a>';
     }
 
     /**
@@ -382,6 +382,15 @@ class Player extends AliasModel
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Get the player's, safe for use in your HTML
+     * @return string The username
+     */
+    public function getEscapedUsername()
+    {
+        return $this->escape($this->username);
     }
 
     /**

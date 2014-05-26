@@ -323,4 +323,14 @@ abstract class Model
 
         return $mdParser->transform($text);
     }
+
+    /**
+     * Escape special HTML characters from a string
+     * @param  string  $string
+     * @return $string
+     */
+    public static function escape($string)
+    {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
 }
