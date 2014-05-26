@@ -17,7 +17,7 @@ class Notification extends Model
      * The id of the notified player
      * @var int
      */
-    private $player;
+    private $receiver;
 
     /**
      * The text of the notification
@@ -70,14 +70,12 @@ class Notification extends Model
      */
     public static function newNotification($receiver, $content, $timestamp = "now", $status = "unread")
     {
-        $db = Database::getInstance();
-
-        $timestamp = new DateTime($timestamp);
-
-        $db->query("INSERT INTO notifications (receiver, message, status, timestamp) VALUES (?, ?, ?, ?)",
-        "isss", array($receiver, $content, $status, $timestamp->format(DATE_FORMAT)));
-
-        return new Notification($db->getInsertId());
+        return new Notification(self::create(array(
+            "receiver"  => $receiver,
+            "message"   => $content,
+            "timestamp" => $timestamp,
+            "status"    => $status
+        ), 'isss'));
     }
 
     /**

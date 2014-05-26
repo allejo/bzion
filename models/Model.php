@@ -270,6 +270,34 @@ abstract class Model
     }
 
     /**
+     * Creates a new entry in the database
+     *
+     * <code>
+     * Model::create(array( 'author'=>15, 'content'=>"Lorem ipsum..."  ), 'is');
+     * </code>
+     *
+     * @param array $params An associative array, with the keys (columns) pointing to the
+     *                      values you want to put on each
+     * @param string $types The type of the values in $params (can be `s`, `i`, `d` or `b`)
+     * @param string $table The table to perform the query on, defaults to the Model's
+     *                      table
+     * @return int The ID of the new entry
+     */
+    protected static function create($params, $types, $table='') {
+        $table = (empty($table)) ? static::TABLE : $table;
+        $db = Database::getInstance();
+
+        $columns = implode(',', array_keys($params));
+        $question_marks = str_repeat('?,', count($params));
+        $question_marks = rtrim($question_marks, ','); // Remove last comma
+
+        $query = "INSERT into $table ($columns) VALUES ($question_marks)";
+        $db->query($query, $types, array_values($params));
+
+        return $db->getInsertId();
+    }
+
+    /**
      * Generate an invalid object
      *
      * <code>
