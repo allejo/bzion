@@ -444,6 +444,21 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table notifications
+# ------------------------------------------------------------
+CREATE TABLE `notifications` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `receiver` int(10) unsigned NOT NULL COMMENT 'The ID of the player who received the notification',
+    `message` text NOT NULL COMMENT 'The content of the notification',
+    `timestamp` datetime NOT NULL COMMENT 'The timestamp when the notification was send',
+    `status` set('unread','read','deleted') NOT NULL DEFAULT 'unread' COMMENT 'The status of the notification',
+    PRIMARY KEY (`id`),
+    KEY `receiver` (`receiver`),
+    CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`receiver`) REFERENCES `players` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table pages
 # ------------------------------------------------------------
 

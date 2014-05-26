@@ -166,7 +166,7 @@ class MessageController extends JSONController
 
             if (!$recipient->isValid()) {
                 $error = ($listingUsernames)
-                       ? "There is no player called " . Model::escape($rid)
+                       ? "There is no player called $rid" // Symfony auto-escapes $rid
                        : "One of the recipients you specified does not exist";
                 $form->get('Recipients')->addError(new FormError($error));
             } else {

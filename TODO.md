@@ -4,8 +4,6 @@ TODO
 <em>In no specific order</em>
 
 - Get mysqldump of GU's database for testing purposes
-- Create necessary classes
-    - Notification
 - Implement features & style pages
     - Pagination or continuous scrolling on all pages with entries (news, matches, etc)
     - Messages
