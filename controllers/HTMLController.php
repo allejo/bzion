@@ -150,14 +150,15 @@ abstract class HTMLController extends Controller
      * @param  callable $onYes            What to do if the user clicks on "Yes"
      * @param  callable $onNo             What to do if the user presses "No" - defaults to
      *                                    redirecting them back
+     * @param  string $action The text to show on the "Yes" button
      * @param  array    $additionalParams An array of variables to pass to the view
      * @return mixed    The response
      */
-    protected function showConfirmationForm($onYes, $onNo=null, $additionalParams=array())
+    protected function showConfirmationForm($onYes, $onNo=null, $additionalParams=array(), $action="Yes")
     {
         $form = Service::getFormFactory()->createBuilder()
-            ->add('Yes', 'submit')
-            ->add('No', 'submit')
+            ->add($action, 'submit')
+            ->add(($action == 'Yes') ? 'No' : 'Cancel', 'submit')
             ->add('original_url', 'hidden', array(
                 'data' => $this->getPreviousURL()
             ))
@@ -165,7 +166,7 @@ abstract class HTMLController extends Controller
 
         $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
-            if ($form->get('Yes')->isClicked())
+            if ($form->get($action)->isClicked())
                 return $onYes();
             elseif (!$onNo)
                 // We didn't get told about what to do when the user presses

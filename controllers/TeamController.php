@@ -27,7 +27,7 @@ class TeamController extends HTMLController
                      "The team {$team->getName()} was deleted successfully");
 
             return new RedirectResponse(Service::getGenerator()->generate('team_list'));
-        }, null, array('team' => $team));
+        }, null, array('team' => $team), "Delete");
     }
 
     public function kickAction(Team $team, Player $player, Player $me, Session $session)
@@ -47,7 +47,7 @@ class TeamController extends HTMLController
             $session->getFlashBag()->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
-        }, null, array('team' => $team, 'player' => $player));
+        }, null, array('team' => $team, 'player' => $player), "Kick");
     }
 
     public function abandonAction(Team $team, Player $me, Session $session)
@@ -65,7 +65,7 @@ class TeamController extends HTMLController
             $session->getFlashBag()->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
-        }, null, array('team' => $team));
+        }, null, array('team' => $team), "Abandon");
     }
 
     /*
