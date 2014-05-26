@@ -1,9 +1,8 @@
 <?php
 
-class TeamTest extends TestCase
+class NotificationTest extends TestCase
 {
     private $player;
-    private $playerid;
     private $notification;
 
     protected function setUp()
