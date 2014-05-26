@@ -59,7 +59,7 @@ class MessageController extends JSONController
                 throw new BadRequestException($this->getErrorMessage($form));
         }
 
-        return array("form" => $form->createView(), "players" => Player::getPlayers());
+        return array("form" => $form->createView());
     }
 
     public function showAction(Group $discussion, Player $me, Request $request)
