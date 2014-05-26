@@ -12,13 +12,8 @@ class PageController extends HTMLController
         return $this->render("Page/default.html.twig");
     }
 
-    /**
-     * @todo Proper 404 page
-     */
     public function showAction(Page $page)
     {
-        if (!$page->isValid())
-            Header::go("home");
-        else return array("page" => $page);
+        return array("page" => $page);
     }
 }
