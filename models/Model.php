@@ -276,14 +276,15 @@ abstract class Model
      * Model::create(array( 'author'=>15, 'content'=>"Lorem ipsum..."  ), 'is');
      * </code>
      *
-     * @param array $params An associative array, with the keys (columns) pointing to the
-     *                      values you want to put on each
-     * @param string $types The type of the values in $params (can be `s`, `i`, `d` or `b`)
-     * @param string $table The table to perform the query on, defaults to the Model's
-     *                      table
-     * @return int The ID of the new entry
+     * @param  array  $params An associative array, with the keys (columns) pointing to the
+     *                        values you want to put on each
+     * @param  string $types  The type of the values in $params (can be `s`, `i`, `d` or `b`)
+     * @param  string $table  The table to perform the query on, defaults to the Model's
+     *                        table
+     * @return int    The ID of the new entry
      */
-    protected static function create($params, $types, $table='') {
+    protected static function create($params, $types, $table='')
+    {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
