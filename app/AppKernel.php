@@ -49,6 +49,7 @@ class AppKernel extends Kernel
         parent::boot();
 
         Service::setGenerator($this->container->get('router')->getGenerator());
+        Service::setEnvironment($this->getEnvironment());
         $this->setUpTwig();
     }
 
@@ -89,6 +90,25 @@ class AppKernel extends Kernel
         Service::setTemplateEngine($twig);
     }
 
+    private function setUpFormFactory(&$session)
+    {
+        $csrfProvider = new SessionCsrfProvider($session, "secret");
+        $validator = Validation::createValidator();
+
+        $formFactoryBuilder = Forms::createFormFactoryBuilder()
+                       ->addExtension(new HttpFoundationExtension())
+                       ->addExtension(new ValidatorExtension($validator))
+                       ->addExtension(new CsrfExtension($csrfProvider));
+
+        // Make sure that the profiler shows information about the forms
+        $formDataCollector = $this->container->get('data_collector.form', null);
+        if ($formDataCollector) {
+            $formFactoryBuilder->addExtension(new DataCollectorExtension($formDataCollector));
+        }
+
+        Service::setFormFactory($formFactoryBuilder->getFormFactory());
+    }
+
     public function handle(Request $request, $type=1, $catch=true)
     {
         if (false === $this->booted) {
@@ -104,22 +124,9 @@ class AppKernel extends Kernel
 
         $session = $this->container->get('session');
         $request->setSession($session);
-        $csrfProvider = new SessionCsrfProvider($session, "secret");
 
-        $validator = Validation::createValidator();
+        $this->setUpFormFactory($session);
 
-        $formFactoryBuilder = Forms::createFormFactoryBuilder()
-                       ->addExtension(new HttpFoundationExtension())
-                       ->addExtension(new ValidatorExtension($validator))
-                       ->addExtension(new CsrfExtension($csrfProvider));
-
-        // Make sure that the profiler shows information about the forms
-        $formDataCollector = $this->container->get('data_collector.form', null);
-        if ($formDataCollector) {
-            $formFactoryBuilder->addExtension(new DataCollectorExtension($formDataCollector));
-        }
-
-        Service::setFormFactory($formFactoryBuilder->getFormFactory());
         Service::setRequest($request);
 
         $con = Controller::getController($request->attributes);

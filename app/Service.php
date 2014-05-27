@@ -39,6 +39,12 @@ abstract class Service
     private static $formFactory;
 
     /**
+     * The kernel's environment (prod, debug, profile or test)
+     * @var string
+     */
+    private static $environment;
+
+    /**
      * @param Request $request
      */
     public static function setRequest($request)
@@ -118,5 +124,15 @@ abstract class Service
     public static function setFormFactory($formFactory)
     {
         self::$formFactory = $formFactory;
+    }
+
+    public static function getEnvironment()
+    {
+        return self::$environment;
+    }
+
+    public static function setEnvironment($environment)
+    {
+        self::$environment = $environment;
     }
 }
