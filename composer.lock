@@ -2098,12 +2098,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
+<<<<<<< Updated upstream
                 "reference": "1c0bec2814a078a81fb86dbc38798bf73418f839"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/fabpot/Twig/zipball/1c0bec2814a078a81fb86dbc38798bf73418f839",
                 "reference": "1c0bec2814a078a81fb86dbc38798bf73418f839",
+=======
+                "reference": "7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c",
+                "reference": "7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c",
+>>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2147,7 +2156,11 @@
             "keywords": [
                 "templating"
             ],
+<<<<<<< Updated upstream
             "time": "2014-05-26 15:15:28"
+=======
+            "time": "2014-05-26 00:34:04"
+>>>>>>> Stashed changes
         },
         {
             "name": "yzalis/identicon",
@@ -2810,6 +2823,59 @@
             "time": "2014-02-06 12:16:14"
         },
         {
+<<<<<<< Updated upstream
+=======
+            "name": "fzaninotto/faker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "f55668e1fd2abfb8c0aefec16f744735dda7c68b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/f55668e1fd2abfb8c0aefec16f744735dda7c68b",
+                "reference": "f55668e1fd2abfb8c0aefec16f744735dda7c68b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Faker": "src/",
+                    "Faker\\PHPUnit": "test/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "time": "2014-05-26 03:58:35"
+        },
+        {
+>>>>>>> Stashed changes
             "name": "jms/metadata",
             "version": "1.5.0",
             "source": {
