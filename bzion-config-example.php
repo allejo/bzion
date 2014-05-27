@@ -28,6 +28,14 @@ DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
 DEFINE("ERROR_LOG", DOC_ROOT . "/bzion_errors.log"); // The location where errors will be written
 
 /*
+ * Notification service settings
+ */
+DEFINE("ENABLE_PUSHER", false); // true to enable the pusher service for real-time notifications
+DEFINE("PUSHER_APP_ID", "0");
+DEFINE("PUSHER_KEY", "123456789");
+DEFINE("PUSHER_SECRET", "123456789");
+
+/*
  * Miscellaneous settings
  */
 DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server
