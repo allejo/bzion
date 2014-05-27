@@ -49,9 +49,18 @@ class UpdateCommand extends Command
             $commands[0] = $commands[4] = null;
         }
 
+        // Show process output if we verbose
+        $buffer = ($output->isVerbose()) ? function ($type, $buffer) {
+            if (Process::ERR === $type) {
+                echo 'ERR > '.$buffer;
+            } else {
+                echo 'OUT > '.$buffer;
+            }
+        } : null;
+
         foreach ($commands as $cn => $c) {
             $process = new Process($c);
-            $process->run();
+            $process->run($buffer);
 
             if (!$process->isSuccessful()) {
                 if ($cn == 2) {
