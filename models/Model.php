@@ -325,8 +325,8 @@ abstract class Model
 
     /**
      * Converts an array of IDs to an array of Models
-     * @param  int[]   $idArray The list of IDs
-     * @return Model[]
+     * @param  int[]    $idArray The list of IDs
+     * @return static[]
      */
     public static function arrayIdToModel($idArray)
     {

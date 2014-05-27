@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('css', [ 'sass', 'autoprefixer' ]);
+    grunt.registerTask('css', [ 'sass' ]);
     grunt.registerTask('default', [ 'css' ]);
 
     grunt.loadNpmTasks('grunt-autoprefixer');

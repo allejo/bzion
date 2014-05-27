@@ -78,7 +78,7 @@ $group_to = Group::createGroup("New blog", $snake->getId(), array(
     $snake->getId(),
     $tw1sted->getId()
 ));
-Message::sendMessage($group_to->getId(), $snake->getId(), "Check out my new blog!");
+$group_to->sendMessage($snake, "Check out my new blog!");
 echo " done!";
 
 echo "\nAdding bans...";

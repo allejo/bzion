@@ -453,12 +453,21 @@ class Player extends AliasModel
 
     /**
      * Send a notification to a player
-     * @param string $message The content of the notification
+     * @param  string       $message The content of the notification
      * @return Notification The sent notification
      */
     public function notify($message)
     {
         return Notification::newNotification($this->getId(), $message);
+    }
+
+    /**
+     * Show the number of notifications the user hasn't read yet
+     * @return int
+     */
+    public function countUnreadNotifications()
+    {
+        return Notification::countUnreadNotifications($this->id);
     }
 
     /**

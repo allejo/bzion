@@ -90,6 +90,38 @@ class Notification extends Model
     }
 
     /**
+     * Show a list of notifications for a specific user
+     * @param  int            $receiver   The ID of the recipient of the notifications
+     * @param  bool           $onlyUnread False to show both unread & read notifications
+     * @return Notification[]
+     */
+    public static function getNotifications($receiver, $onlyUnread=false)
+    {
+        $statuses = array('unread');
+        if (!$onlyUnread)
+            $statuses[] = 'read';
+
+        return self::arrayIdToModel(self::fetchIdsFrom('status', $statuses, 's'));
+    }
+
+    /**
+     * Show the number of notifications the user hasn't read yet
+     * @param  int $id The ID of the user
+     * @return int
+     */
+    public static function countUnreadNotifications($receiver)
+    {
+        $db = Database::getInstance();
+        $table = static::TABLE;
+
+        $result = $db->query(
+            "SELECT COUNT(*) FROM $table WHERE receiver = ? AND status = 'unread'",
+            'i', $receiver);
+
+        return $result[0]['COUNT(*)'];
+    }
+
+    /**
      * Get the receiving player of the notification
      * @return Player
      */

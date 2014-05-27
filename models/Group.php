@@ -204,6 +204,8 @@ class Group extends UrlModel
         foreach ($this->getMembers($from->getId()) as $member) {
             $member->notify("{$from->getUsername()} has sent you a new message in {$this->getSubject()}");
         }
+
+        return $message;
     }
 
     /**
