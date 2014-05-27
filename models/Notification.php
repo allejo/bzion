@@ -38,6 +38,12 @@ class Notification extends Model
     private $timestamp;
 
     /**
+     * Services that will be notified when a new notification is created
+     * @var NotificationAdapter[]
+     */
+    private static $adapters = array();
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "notifications";
@@ -58,6 +64,7 @@ class Notification extends Model
         $this->status    = $notification['status'];
         $this->timestamp = new DateTime($notification['timestamp']);
 
+        $this->initializeAdapters();
     }
 
     /**
@@ -70,12 +77,16 @@ class Notification extends Model
      */
     public static function newNotification($receiver, $content, $timestamp = "now", $status = "unread")
     {
-        return new Notification(self::create(array(
+        $notification = new Notification(self::create(array(
             "receiver"  => $receiver,
             "message"   => $content,
             "timestamp" => $timestamp,
             "status"    => $status
         ), 'isss'));
+
+        $notification->push();
+
+        return $notification;
     }
 
     /**
@@ -126,5 +137,36 @@ class Notification extends Model
             return;
 
         $this->update('status', $this->status = "read", 's');
+    }
+
+    /**
+     * Make sure that the user is shown the notification immediately if they are
+     * browsing
+     */
+    private function push()
+    {
+        foreach (self::$adapters as $adapter) {
+            $adapter->trigger('main', $this->message);
+        }
+    }
+
+    /**
+     * Initialize the external push adapters
+     * @return void
+     */
+    private static function initializeAdapters()
+    {
+        if (self::$adapters) {
+            // The adapters have already been initialized, no need to do anything!
+            return;
+        }
+
+        $adapters = array('PusherAdapter');
+
+        foreach ($adapters as $adapter) {
+            if ($adapter::isEnabled()) {
+                self::$adapters[] = new $adapter;
+            }
+        }
     }
 }
