@@ -1,5 +1,15 @@
 <?php
+/**
+ * This file contains functionality to communicate with the pusher.com push service
+ *
+ * @package    BZiON\NotificationAdapters
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
+/**
+ * An interface to the pusher.com service
+ * @package    BZiON\NotificationAdapters
+ */
 class PusherAdapter extends NotificationAdapter
 {
     /**

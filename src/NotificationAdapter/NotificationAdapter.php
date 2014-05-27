@@ -2,7 +2,7 @@
 /**
  * This file contains a unifying class for all the notification adapters for push services
  *
- * @package    BZiON\Models
+ * @package    BZiON\NotificationAdapters
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
