@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c42e3078862c814b22962b73a3465362",
+    "hash": "39448f2aa1df7bfa85f7fafd43388b5b",
     "packages": [
         {
             "name": "components/jquery",
@@ -423,50 +423,6 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
-        },
-        {
-            "name": "pusher/pusher-php-server",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pusher/pusher-php-server.git",
-                "reference": "b07349cccec5d3d5006641a1208044d7df0c6d20"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pusher/pusher-php-server/zipball/b07349cccec5d3d5006641a1208044d7df0c6d20",
-                "reference": "b07349cccec5d3d5006641a1208044d7df0c6d20",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Library for interacting with the Pusher REST API",
-            "homepage": "https://github.com/pusher/pusher-php-server",
-            "keywords": [
-                "events",
-                "php-pusher-server",
-                "publish",
-                "pusher",
-                "realtime",
-                "rest",
-                "trigger"
-            ],
-            "time": "2013-12-23 16:41:52"
         },
         {
             "name": "robloach/component-installer",
@@ -5454,7 +5410,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "ivaynberg/select2": 20,
-        "pusher/pusher-php-server": 20,
         "twig/twig": 20,
         "yzalis/identicon": 20,
         "behat/behat": 0,

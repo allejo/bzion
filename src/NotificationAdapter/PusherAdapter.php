@@ -21,7 +21,7 @@ class PusherAdapter extends NotificationAdapter
 
     public function __construct()
     {
-        $this->pusher = new Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID);
+
     }
 
     /**
@@ -29,7 +29,7 @@ class PusherAdapter extends NotificationAdapter
      */
     public function trigger($channel, $message)
     {
-        $this->pusher->trigger($channel, 'unnamed-event', array ( 'message' => $message));
+
     }
 
     /**
