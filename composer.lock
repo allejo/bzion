@@ -2099,12 +2099,21 @@
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 "reference": "1c0bec2814a078a81fb86dbc38798bf73418f839"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/fabpot/Twig/zipball/1c0bec2814a078a81fb86dbc38798bf73418f839",
                 "reference": "1c0bec2814a078a81fb86dbc38798bf73418f839",
+=======
+                "reference": "7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c",
+                "reference": "7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c",
+>>>>>>> Stashed changes
 =======
                 "reference": "7c63a7df8a9d38ff9eb9fb982ae8f6a70258c10c"
             },
@@ -2157,7 +2166,11 @@
                 "templating"
             ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             "time": "2014-05-26 15:15:28"
+=======
+            "time": "2014-05-26 00:34:04"
+>>>>>>> Stashed changes
 =======
             "time": "2014-05-26 00:34:04"
 >>>>>>> Stashed changes
