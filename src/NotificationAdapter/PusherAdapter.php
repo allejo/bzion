@@ -8,6 +8,7 @@
 
 /**
  * An interface to the pusher.com service
+ * @todo Perform an asynchronous request?
  * @package    BZiON\NotificationAdapters
  */
 class PusherAdapter extends NotificationAdapter

@@ -452,6 +452,16 @@ class Player extends AliasModel
     }
 
     /**
+     * Send a notification to a player
+     * @param string $message The content of the notification
+     * @return Notification The sent notification
+     */
+    public function notify($message)
+    {
+        return Notification::newNotification($this->getId(), $message);
+    }
+
+    /**
      * Returns an array of all active players' IDs and usernames
      * @param  string   $start  What the requested usernames should start with
      * @param  int      $except A player ID to exclude

@@ -46,7 +46,7 @@ class MessageController extends JSONController
                 $content = $form->get('Message')->getData();
 
                 $group_to = Group::createGroup($subject, $me->getId(), $recipients);
-                Message::sendMessage($group_to->getId(), $me->getId(), $content);
+                $group_to->sendMessage($me, $content);
 
                 if ($this->isJson())
                     return new JsonResponse(array(
@@ -131,7 +131,7 @@ class MessageController extends JSONController
         if (trim($message) == '')
             throw new BadRequestException("You can't send an empty message!");
 
-        Message::sendMessage($to->getId(), $from->getId(), $message);
+        $to->sendMessage($from, $message);
 
         $this->getRequest()->getSession()->getFlashBag()->add('success',
             "Your message was sent successfully");

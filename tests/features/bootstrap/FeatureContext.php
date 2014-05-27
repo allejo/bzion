@@ -195,7 +195,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         $player = Player::getFromUsername($username);
         $participants = array($player->getId(), $this->me->getId());
         $group = Group::createGroup("Subject", $player->getId(), $participants);
-        $message = Message::sendMessage($group->getId(), $player->getId(), "Message");
+        $message = $group->sendMessage($player, "Message");
     }
 
     /**

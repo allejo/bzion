@@ -106,6 +106,17 @@ class Group extends UrlModel
     }
 
     /**
+     * Update the team's last activity timestamp
+     *
+     * @return void
+     */
+    public function updateLastActivity()
+    {
+        $this->last_activity = TimeDate::now();
+        $this->update('last_activity', 'now', 's');
+    }
+
+    /**
      * Get the last message of the group
      *
      * @return Message
@@ -135,19 +146,19 @@ class Group extends UrlModel
 
     /**
      * Get a list containing the IDs of each member of the group
-     * @param  bool     $hideSelf Whether to hide the currently logged in player
-     * @return Player[] An array of player IDs
+     * @param  int|null $hide The ID of a player to ignore
+     * @return Player[] An array of players
      */
-    public function getMembers($hideSelf=false)
+    public function getMembers($hide=null)
     {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
         $params = array($this->id);
 
-        if ($hideSelf && Service::getSession()->has('playerId')) {
+        if ($hide) {
             $additional_query .= " AND `player` != ?";
             $types .= "i";
-            $params[] = Service::getSession()->get('playerId');
+            $params[] = $hide;
         }
 
         return Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
@@ -176,6 +187,23 @@ class Group extends UrlModel
         }
 
         return new Group($groupid);
+    }
+
+    /**
+     * Send a new message to the group's members
+     * @param  Player  $from    The sender
+     * @param  string  $message The body of the message
+     * @param  string  $status  The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
+     * @return Message An object that represents the sent message
+     */
+    public function sendMessage(&$from, $message, $status='sent')
+    {
+        $message = Message::sendMessage($this->getId(), $from->getId(), $message, $status);
+
+        $this->updateLastActivity();
+        foreach ($this->getMembers($from->getId()) as $member) {
+            $member->notify("{$from->getUsername()} has sent you a new message in {$this->getSubject()}");
+        }
     }
 
     /**
