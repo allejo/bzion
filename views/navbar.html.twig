@@ -27,14 +27,14 @@
             <li>
                 <a href="#">
                     <i class="fa fa-bell"></i>
+                    {% if me.countUnreadNotifications %}
+                        <span class="badge">{{ me.countUnreadNotifications }}</span>
+                    {% endif %}
                 </a>
             </li>
             <li>
                 <a href="{{ path('message_list') }}">
                     <i class="fa fa-comments-o"></i>
-                    {% if me.countUnreadNotifications %}
-                        <span class="badge">{{ me.countUnreadNotifications }}</span>
-                    {% endif %}
                 </a>
             </li>
             <li>
