@@ -25,7 +25,7 @@
             </p>
         </section>
 
-        <div class="scrollable_messages">
+        <section class="scrollable_messages">
             <ul id="messageView" class="messages">
                 {% for message in messages %}
                     <li>
@@ -50,7 +50,7 @@
                     {% set previousAuthor = message.author.id %}
                 {% endfor %}
             </ul>
-        </div>
+        </section>
 
         {{ form_start(form, {'attr': {'class': 'reply_form', 'autocomplete': 'off'} }) }}
             {{ form_errors(form) }}

@@ -172,6 +172,10 @@ main {
                                 }
                             }
                         }
+
+                        &.nopadding {
+                            padding-bottom: 0;
+                        }
                     }
 
                     .members {
@@ -243,13 +247,16 @@ main {
                     }
                 }
 
-                .compose_form {
+                >.compose_form {
                     background-color: #FFFFFF;
 
                     .input_group {
+                        @include box-sizing(border-box);
+
                         display: table;
                         padding: 15px 10px;
                         table-layout: auto;
+                        width: 100%;
                     }
 
                     .input_group_row {

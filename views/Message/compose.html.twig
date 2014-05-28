@@ -1,13 +1,13 @@
 {% extends 'Message/layout.html.twig' %}
 
 {% block messages %}
-    <div id="groupMessages" class="chat_area">
-        <div class="chat_details">
-            <div class="chat_options">
+    <section id="groupMessages" class="chat_area">
+        <div class="details">
+            <div class="meta nopadding">
                 <div class="subject">Compose a new message</div>
-                <div style="clear: both"></div>
             </div>
         </div>
+
         {{ form_start(form, {'attr': {'class': 'compose_form', 'autocomplete': 'off'} }) }}
             {{ form_errors(form) }}
             <div class="input_group">
@@ -23,5 +23,5 @@
                 {{ form_row(form.Send, {'id': 'composeButton', 'attr': {'class': 'ladda-button', 'data-style': 'zoom-out'} }) }}
             </div>
         {{ form_end(form) }}
-    </div>
+    </section>
 {% endblock %}
