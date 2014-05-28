@@ -1,27 +1,29 @@
 {% extends 'Message/layout.html.twig' %}
 
 {% block messages %}
-    <div id="groupMessages" class="chat_area" data-id="{{ group.id }}">
-        <div class="chat_details">
-            <div class="chat_options">
-                <div class="subject">{{ group.subject }}</div>
-                <div class="icon close"><i class="fa fa-times"></i></div>
-                <div class="icon"><i class="fa fa-cog"></i></div>
-                <div style="clear: both"></div>
+    <section id="groupMessages" class="chat_area" data-id="{{ group.id }}">
+        <section class="details">
+            <div class="meta">
+                <p class="subject">{{ group.subject }}</p>
+
+                <div class="tools">
+                    <i class="fa fa-cog"></i>
+                    <i class="fa fa-times close"></i>
+                </div>
             </div>
-            <div class="members">
+            <p class="members">
                 {% if group.members is not empty %}
                     {% for member in group.members %}
-                            {{- member.username -}}
-                            {%- if not loop.last -%}
-                                {{- ', ' -}}
-                            {%- endif -%}
+                        {{- member.username -}}
+                        {%- if not loop.last -%}
+                            {{- ', ' -}}
+                        {%- endif -%}
                     {% endfor %}
                 {% else %}
                     No other recipients
                 {% endif %}
-            </div>
-        </div>
+            </p>
+        </section>
 
         <div class="scrollable_messages">
             <ul id="messageView" class="messages">
@@ -59,5 +61,5 @@
                 {{ form_row(form.Send, {'id': 'composeButton', 'attr': {'class': 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
             </div>
         {{ form_end(form) }}
-    </div>
+    </section>
 {% endblock %}
