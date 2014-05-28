@@ -575,7 +575,7 @@ class Match extends Model
         } elseif ($matchType == "losses") {
             $query .= "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
         } elseif ($matchType == "draws") {
-            $query .= "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
+            $query .= "((team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
         } else {
             $query .= "team_a = ? OR team_b = ?";
         }
