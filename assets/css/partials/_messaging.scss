@@ -144,7 +144,9 @@ main {
                     @include box-sizing(border-box);
 
                     background-color: $Sky_Blue;
+                    border-bottom: 1px solid #EFEFEF;
                     color: #FFFFFF;
+                    min-height: 45px;
                     padding: 10px;
                     width: 100%;
 
@@ -253,14 +255,69 @@ main {
                     .input_group {
                         @include box-sizing(border-box);
 
+                        border-bottom: 1px solid #EFEFEF;
                         display: table;
-                        padding: 15px 10px;
+                        padding: 16px 10px;
                         table-layout: auto;
                         width: 100%;
+
+                        > div {
+                            display: table-row;
+
+                            > input {
+                                @include box-sizing(border-box);
+
+                                font-size: 13px;
+                                padding: 5px;
+                                width: 100%;
+
+                                &:focus {
+                                    border: 1px solid #5897fb;
+                                    outline: none;
+                                    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+                                }
+                            }
+                        }
                     }
 
-                    .input_group_row {
-                        display: table-row;
+                    .editor {
+                        @include box-sizing(border-box);
+
+                        border-bottom: 1px solid #EFEFEF;
+                        padding: 10px;
+
+                        > div {
+                            label {
+                                display: none;
+                                margin-bottom: 10px;
+                            }
+
+                            textarea {
+                                @include box-sizing(border-box);
+
+                                border: none;
+                                font-size: 13px;
+                                height: 340px;
+                                resize: none;
+                                width: 100%;
+
+                                &:focus {
+                                    outline: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .buttons {
+                        text-align: right;
+
+                        .ladda-button {
+                            @include border-radius(0);
+
+                            background-color: $Sky_Blue;
+                            font-size: 16px;
+                            padding: 5px;
+                        }
                     }
 
                     .input_group label {
@@ -282,7 +339,6 @@ main {
                         @include box-sizing(border-box);
 
                         background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
-                        border: 1px solid #eee;
                         font-size: 13px;
                         margin-top: 1px;
                         padding: 5px 5px 5px 5px;
