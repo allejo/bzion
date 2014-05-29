@@ -32,7 +32,7 @@ function initPage() {
     if ($("#groupMessages").attr("data-id")) {
         // Scroll message list to the bottom
         var messageView = $("#messageView");
-        messageView.scrollTop(messageView.height());
+        messageView.scrollTop(messageView.prop("scrollHeight"));
     } else {
         initializeChosen();
     }

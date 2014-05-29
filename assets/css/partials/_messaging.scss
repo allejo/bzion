@@ -68,7 +68,7 @@ main {
 
                 .chat_messages {
                     height: 560px;
-                    overflow: scroll;
+                    overflow: auto;
 
                     .chats {
                         padding-left: 0;
@@ -188,13 +188,12 @@ main {
                 >.scrollable_messages {
                     display: block;
                     height: 335px;
-                    overflow: scroll;
                     width: 100%;
 
                     .messages {
                         display: block;
                         height: 100%;
-                        overflow: scroll;
+                        overflow-y: scroll;
                         padding-left: 0;
                         width: 100%;
 
