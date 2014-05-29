@@ -376,7 +376,23 @@ class Team extends IdenticonModel
      */
     public function getMembers()
     {
-        return Player::getTeamMembers($this->id);
+        $leader = $this->leader;
+        $members = Player::getTeamMembers($this->id);
+
+        usort($members, function (&$a, &$b) use ($leader) {
+            // Leader always goes first
+            if ($a->getId() == $leader)
+                return -1;
+            if ($b->getId() == $leader)
+                return 1;
+
+            // Sort the rest of the players alphabetically
+            $sort = Player::getAlphabeticalSort();
+
+            return $sort($a, $b);
+        });
+
+        return $members;
     }
 
     /**

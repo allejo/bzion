@@ -572,4 +572,15 @@ class Player extends IdenticonModel
 
         $db->query("INSERT IGNORE INTO past_callsigns (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
     }
+
+    /**
+     * Alphabetical order function for use in usort (case-insensitive)
+     * @return callable The sort function
+     */
+    public static function getAlphabeticalSort()
+    {
+        return function (Player $a, Player $b) {
+            return strcasecmp($a->getUsername(), $b->getUsername());
+        };
+    }
 }
