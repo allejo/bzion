@@ -263,6 +263,15 @@ main {
                         > div {
                             display: table-row;
 
+                            .select2-container {
+                                .select2-search-choice {
+                                    @include background-image(linear-gradient(#E4EFFE, #C1DAFE));
+
+                                    border: 1px solid #9EB3D0;
+                                    padding-bottom: 5px;
+                                }
+                            }
+
                             > input {
                                 @include box-sizing(border-box);
 
