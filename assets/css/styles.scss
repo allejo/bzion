@@ -4,10 +4,17 @@
 //
 
 @import "partials/base";
-@import "modules/borders";
 @import "modules/functions";
 @import "modules/mixins";
+
+
+//
+// Vendor
+//    (everything that wasn't written by us)
+//
+
 @import "vendor/bourbon/bourbon";
+@import "vendor/flags";
 
 
 //
@@ -33,9 +40,3 @@
 @import "partials/messaging";
 @import "partials/players";
 @import "partials/teams";
-
-//
-// Vendor
-//    (everything that wasn't written by us)
-//
-@import "vendor/flags";

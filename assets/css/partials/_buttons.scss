@@ -1,26 +1,26 @@
 .button {
     &.red {
-        @include button(#FF0000, $White);
+        @include ion_btn(#FF0000, $White);
     }
 
     &.green {
-        @include button(#00d319, $White);
+        @include ion_btn(#00d319, $White);
     }
 
     &.blue {
-        @include button(#2f79ff, $White);
+        @include ion_btn(#2f79ff, $White);
     }
 
     &.yellow {
-        @include button(#fff400, $White);
+        @include ion_btn(#fff400, $White);
     }
 
     &.orange {
-        @include button(#ff6700, $White);
+        @include ion_btn(#ff6700, $White);
     }
 
     &.grey {
-        @include button(#fafafa, $Medium_Grey);
+        @include ion_btn(#fafafa, $Medium_Grey);
     }
 
     &.skinny {
@@ -28,11 +28,11 @@
     }
 
     &.square {
-        @include border-radius(0);
+        border-radius: 0;
     }
 
     &.noshadow {
-        @include box-shadow(0, 0, 0, 0);
+        box-shadow: 0 0 0 0;
         text-shadow: none;
     }
 }

@@ -203,10 +203,9 @@ main {
                             overflow: hidden;
 
                             .bubble {
-                                @include border-radius(5px);
-
                                 background-color: #FBFFFB;
                                 border: 1px solid #B4EBB0;
+                                border-radius: 5px;
                                 margin: 10px 15px;
                                 padding: 5px 10px;
                                 float: left;
@@ -312,9 +311,8 @@ main {
                         text-align: right;
 
                         .ladda-button {
-                            @include border-radius(0);
-
                             background-color: $Sky_Blue;
+                            border-radius: 0;
                             font-size: 16px;
                             padding: 5px;
                         }
@@ -328,8 +326,8 @@ main {
 
                     .input_group_main {
                         @include box-sizing(border-box);
-                        @include border-radius(0);
 
+                        border-radius: 0;
                         display: table-cell;
                         height: 29px;
                         width: 100%;
@@ -347,10 +345,10 @@ main {
 
                     .compose_area {
                         @include box-sizing(border-box);
-                        @include box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.075), inset);
 
                         background-color: #fff;
                         border: 1px solid #eee;
+                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
                         color: $Dark_Grey;
                         display: block;
                         font-size: 1em;

@@ -10,7 +10,7 @@ main {
 
             article {
                 @extend .clearfix;
-                @include gradient($White, #F2F2F2);
+                @include linear-gradient($White, #F2F2F2);
 
                 display: inline-block;
                 height: 87px;
@@ -25,17 +25,17 @@ main {
 
                     .row {
                         &.winner {
-                            @include gradient($White, $Off_White);
+                            @include linear-gradient($White, $Off_White);
 
                             .column {
                                 &.score {
-                                    @include gradient(#FFFFE5, #E7E7B4);
+                                    @include linear-gradient(#FFFFE5, #E7E7B4);
                                 }
                             }
                         }
 
                         &.loser {
-                            @include gradient($White, #F2F2F2);
+                            @include linear-gradient($White, #F2F2F2);
                         }
 
                         .column {
