@@ -209,6 +209,7 @@ main {
                                 padding: 5px 10px;
                                 float: left;
                                 width: 75%;
+                                max-width: 400px;
 
                                 .details {
                                     border-bottom: 1px solid #B4EBB0;
@@ -231,6 +232,7 @@ main {
 
                                 p {
                                     margin: 10px;
+                                    word-wrap: break-word;
                                 }
 
                                 &.me {
