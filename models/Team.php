@@ -241,7 +241,7 @@ class Team extends IdenticonModel
             return $this->avatar;
         }
 
-        return $this->getIdenticon();
+        return $this->getIdenticon($this->getName(), $this->getAlias());
     }
 
     /**
@@ -505,7 +505,7 @@ class Team extends IdenticonModel
      */
     public function setName($newName)
     {
-        $oldIdenticon = $this->getIdenticonPath();
+        $oldIdenticon = $this->getIdenticonPath($this->getAlias());
 
         $this->name = $newName;
         $this->update("name", $newName, "s");
@@ -513,7 +513,7 @@ class Team extends IdenticonModel
         $this->alias = parent::generateAlias($newName);
         $this->update("alias", $this->alias, "s");
 
-        rename($oldIdenticon, $this->getIdenticonPath());
+        rename($oldIdenticon, $this->getIdenticonPath($this->getAlias()));
     }
 
     /**

@@ -22,30 +22,35 @@ abstract class IdenticonModel extends AliasModel
     /**
      * Get the identicon for a player. This function will create one if it does not already exist
      *
+     * @param  string $idData    The data (name or id) that will be used to generate an identicon
+     * @param  string $file_name The name of the file that will be created for the identicon
+     *
      * @return string The URL to the generated identicon
      */
-    public function getIdenticon()
+    public function getIdenticon($idData, $file_name)
     {
-        $fileName = $this->getIdenticonPath();
+        $fileName = $this->getIdenticonPath($file_name);
 
         if (!$this->hasIdenticon()) {
             $identicon = new Identicon();
-            $imageDataUri = $identicon->getImageDataUri($this->getName(), 250);
+            $imageDataUri = $identicon->getImageDataUri($idData, 250);
 
             file_put_contents($fileName, file_get_contents($imageDataUri));
         }
 
-        return Service::getRequest()->getBaseUrl() . static::IDENTICON_LOCATION . $this->getIdenticonName();
+        return Service::getRequest()->getBaseUrl() . static::IDENTICON_LOCATION . $file_name . ".png";
     }
 
     /**
      * Get the path to the identicon
      *
+     * @param  string $file_name The file name of the identicon we're getting the path for
+     *
      * @return string The path to the image
      */
-    protected function getIdenticonPath()
+    protected function getIdenticonPath($file_name)
     {
-        return DOC_ROOT . static::IDENTICON_LOCATION . $this->getIdenticonName();
+        return DOC_ROOT . static::IDENTICON_LOCATION . $file_name . ".png";
     }
 
     /**
@@ -53,18 +58,8 @@ abstract class IdenticonModel extends AliasModel
      *
      * @return bool True if the identicon already exists
      */
-    protected  function hasIdenticon()
+    protected function hasIdenticon()
     {
         return file_exists(static::IDENTICON_LOCATION . $this->getAlias());
-    }
-
-    /**
-     * Get the file name of the identicon
-     *
-     * @return string The file name of the saved identicon
-     */
-    private function getIdenticonName()
-    {
-        return static::getAlias() . ".png";
     }
 }
