@@ -50,9 +50,11 @@ body {
                                 display: inline-block;
                                 font-size: 11px;
                                 line-height: 16px;
-                                margin-left: 5px;
-                                padding: 0px 5px;
+                                margin-left: -10px;
+                                padding: 0px 4px;
+                                position: relative;
                                 text-shadow: 0px 1px #902A27;
+                                top: -10px;
                             }
 
                             // This rule exists because all outgoing links automatically have an external link symbol added
