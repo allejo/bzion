@@ -162,7 +162,21 @@ class Player extends IdenticonModel
      */
     public function getAvatar()
     {
-        return $this->avatar;
+        if (!empty($this->avatar)) {
+            return $this->avatar;
+        }
+
+        return $this->getIdenticon($this->getUsername(), $this->getBZID());
+    }
+
+    /**
+     * Get the player's avatar as an HTML image element
+     *
+     * @return string The HTML for the image
+     */
+    public function getAvatarLiteral()
+    {
+        return '<img class="player_avatar" src="' . $this->getAvatar() . '">';
     }
 
     /**
@@ -552,6 +566,6 @@ class Player extends IdenticonModel
     {
         $db = Database::getInstance();
 
-        $db->query("INSERT IGNORE INTO `past_callsigns` (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
+        $db->query("INSERT IGNORE INTO past_callsigns (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
     }
 }
