@@ -11,8 +11,18 @@
             </article>
         </section>
 
-        <section>
-
+        <section class="profile">
+            {% if player.id == player.team.leader.id %}
+                <strong>Leader of </strong>
+                {{ player.team.linkLiteral | raw }}
+            {% else %}
+                <strong>Affiliated with </strong>
+                {% if player.team.valid %}
+                    {{ player.team.linkLiteral | raw }}
+                {% else %}
+                    <em>no team.</em>
+                {% endif %}
+            {% endif %}
         </section>
     </main>
 

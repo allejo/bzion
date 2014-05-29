@@ -12,5 +12,11 @@ main {
                 }
             }
         }
+
+        .profile {
+            @extend .wrapper;
+
+            font-family: $sanSerifFont;
+        }
     }
 }
