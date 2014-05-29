@@ -163,7 +163,7 @@ class Group extends UrlModel
 
         // Sort players alphabetically by their username
         $members = Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
-        usort($members, function($a, $b) {
+        usort($members, function ($a, $b) {
             return strcmp($a->getUsername(), $b->getUsername());
         });
 

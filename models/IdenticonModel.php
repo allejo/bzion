@@ -22,8 +22,8 @@ abstract class IdenticonModel extends AliasModel
     /**
      * Get the identicon for a player. This function will create one if it does not already exist
      *
-     * @param  string $idData    The data (name or id) that will be used to generate an identicon
-     * @param  string $file_name The name of the file that will be created for the identicon
+     * @param string $idData    The data (name or id) that will be used to generate an identicon
+     * @param string $file_name The name of the file that will be created for the identicon
      *
      * @return string The URL to the generated identicon
      */
@@ -44,7 +44,7 @@ abstract class IdenticonModel extends AliasModel
     /**
      * Get the path to the identicon
      *
-     * @param  string $file_name The file name of the identicon we're getting the path for
+     * @param string $file_name The file name of the identicon we're getting the path for
      *
      * @return string The path to the image
      */
