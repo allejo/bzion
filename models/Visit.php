@@ -86,14 +86,16 @@ class Visit extends Model
      */
     public static function enterVisit($visitor, $ip, $host, $user_agent, $referrer, $timestamp = "now")
     {
+        $timestamp = new TimeDate($timestamp);
+
         return new Visit(self::create(array(
             'player' => $visitor,
             'ip' => $ip,
             'host' => $host,
             'user_agent' => $user_agent,
-            'referrer' => $referrer,
+            'referer' => $referrer,
             'timestamp' => $timestamp->format(DATE_FORMAT),
-        )));
+        ), 'isssss'));
     }
 
 }
