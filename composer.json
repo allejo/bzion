@@ -9,6 +9,7 @@
         "ivaynberg/select2"        : "dev-master",
         "michelf/php-markdown"     : ">=1.4.1",
         "nesbot/carbon"            : ">=1.8.0",
+        "pusher/pusher-php-server" : "dev-master",
         "symfony/class-loader"     : ">=2.4.0",
         "symfony/config"           : ">=2.4.0",
         "symfony/console"          : ">=2.4.0",
