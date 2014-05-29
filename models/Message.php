@@ -126,7 +126,7 @@ class Message extends Model
             'player_from' => $from,
             'message' => $message,
             'status' => $status,
-        ), 'iiss'));
+        ), 'iiss', 'timestamp'));
     }
 
     /**
