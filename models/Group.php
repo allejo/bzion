@@ -161,7 +161,13 @@ class Group extends UrlModel
             $params[] = $hide;
         }
 
-        return Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
+        // Sort players alphabetically by their username
+        $members = Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
+        usort($members, function($a, $b) {
+            return strcmp($a->getUsername(), $b->getUsername());
+        });
+
+        return $members;
     }
 
     /**
@@ -174,19 +180,20 @@ class Group extends UrlModel
      */
     public static function createGroup($subject, $creatorId, $members=array())
     {
-        $query = "INSERT INTO groups(subject, creator, last_activity, status) VALUES(?, ?, NOW(), ?)";
-        $params = array($subject, $creatorId, "active");
-
-        $db = Database::getInstance();
-        $db->query($query, "sis", $params);
-        $groupid = $db->getInsertId();
+        $group = new Group(self::create(array(
+            'subject' => $subject,
+            'creator' => $creatorId,
+            'status'  => "active",
+        ), 'sis', 'last_activity'));
 
         foreach ($members as $mid) {
-            $query = "INSERT INTO `player_groups` (`player`, `group`) VALUES(?, ?)";
-            $db->query($query, "ii", array($mid, $groupid));
+            parent::create(array(
+                'player' => $mid,
+                'group'  => $group->getId(),
+            ), 'ii', null, 'player_groups');
         }
 
-        return new Group($groupid);
+        return $group;
     }
 
     /**
