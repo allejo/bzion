@@ -465,8 +465,6 @@ class Match extends Model
      */
     public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now")
     {
-        $db = Database::getInstance();
-
         $team_a = new Team($a);
         $team_b = new Team($b);
         $a_elo = $team_a->getElo();

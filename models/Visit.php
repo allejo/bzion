@@ -92,7 +92,7 @@ class Visit extends Model
             'host' => $host,
             'user_agent' => $user_agent,
             'referrer' => $referrer,
-            'timestamp' => $timestamp->format(DATE_FORMAT);
+            'timestamp' => $timestamp->format(DATE_FORMAT),
         )));
     }
 

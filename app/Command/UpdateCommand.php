@@ -50,7 +50,8 @@ class UpdateCommand extends Command
         }
 
         // Show process output if we verbose
-        $buffer = ($output->isVerbose()) ? function ($type, $buffer) {
+        $buffer = ($output->isVerbose()) ? function ($type, $buffer) use (&$progress) {
+            $progress->clear();
             if (Process::ERR === $type) {
                 echo 'ERR > '.$buffer;
             } else {

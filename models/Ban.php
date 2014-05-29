@@ -264,7 +264,6 @@ class Ban extends Model
      */
     public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
     {
-        $db = Database::getInstance();
         $author = new Player($authorID);
 
         // Only add the ban if the author is valid and has the permission to add a ban
