@@ -281,12 +281,14 @@ class Ban extends Model
                     $allowServerJoin = true;
                 }
 
-                $db->query(
-                    "INSERT INTO bans (id, player, expiration, server_message, reason, allow_server_join, created, updated, author) VALUES (NULL, ?, ?, ?, ?, ?, NOW(), NOW(), ?)",
-                    "isssii", array($playerID, $expiration->format(DATE_FORMAT), $srvmsg, $reason, $allowServerJoin, $authorID)
-                );
-
-                $ban = new Ban($db->getInsertId());
+                $ban = new Ban(self::create(array(
+                    'player' => $playerID,
+                    'expiration' => $expiration->format(DATE_FORMAT),
+                    'server_message' => $srvmsg,
+                    'reason' => $reason,
+                    'allow_server_join' => $allowServerJoin,
+                    'author' => $authorID,
+                ), 'isssii', array('created', 'updated')));
 
                 if (is_array($ipAddresses)) {
                     foreach ($ipAddresses as $ip) {

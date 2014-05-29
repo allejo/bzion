@@ -279,7 +279,7 @@ abstract class Model
      * @param  array  $params An associative array, with the keys (columns) pointing to the
      *                        values you want to put on each
      * @param  string $types  The type of the values in $params (can be `s`, `i`, `d` or `b`)
-     * @param  string $now    A column to update with the current timestamp
+     * @param  array|string $now    Column(s) to update with the current timestamp
      * @param  string $table  The table to perform the query on, defaults to the Model's
      *                        table
      * @return int    The ID of the new entry
@@ -296,8 +296,13 @@ abstract class Model
         $question_marks = rtrim($question_marks, ','); // Remove last comma
 
         if ($now) {
-            $columns .= ",$now";
-            $question_marks .= ",NOW()";
+            if (!is_array($now)) // Convert $now to an array if it's a string
+                $now = array($now);
+
+            foreach ($now as $column) {
+                $columns .= ",$column";
+                $question_marks .= ",NOW()";
+            }
         }
 
         $query = "INSERT into $table ($columns) VALUES ($question_marks)";

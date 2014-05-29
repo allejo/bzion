@@ -121,13 +121,12 @@ class Message extends Model
      */
     public static function sendMessage($to, $from, $message, $status='sent')
     {
-        $query = "INSERT INTO messages VALUES(NULL, ?, ?, NOW(), ?, ?)";
-        $params = array($to, $from, $message, $status);
-
-        $db = Database::getInstance();
-        $db->query($query, "iiss", $params);
-
-        return new Message($db->getInsertId());
+        return new Message(self::create(array(
+            'group_to' => $to,
+            'player_from' => $from,
+            'message' => $message,
+            'status' => $status,
+        ), 'iiss'));
     }
 
     /**

@@ -156,16 +156,14 @@ class Page extends AliasModel
      */
     public static function addPage($title, $content, $authorID, $status = "live")
     {
-        $db = Database::getInstance();
-
-        $db->query(
-            "INSERT INTO pages (id, name, alias, content, created, updated, author, home, status) VALUES (NULL, ?, ?, ?, NOW(), NOW(), ?, 0, ?)",
-            "sssis", array($title, parent::generateAlias($title), $content, $authorID, $status)
-        );
-
-        $page = new Page($db->getInsertId());
-
-        return $page;
+        return new Page(self::create(array(
+            'name' => $title,
+            'alias' => self::generateAlias($title),
+            'content' => $content,
+            'author' => $authorID,
+            'home' => 0,
+            'status' => $status,
+        ), 'sssiis', array('created', 'updated')));
     }
 
     /**

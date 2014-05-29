@@ -527,29 +527,20 @@ class Team extends IdenticonModel
      */
     public static function createTeam($name, $leader, $avatar, $description)
     {
-        $alias = self::generateAlias($name);
-
-        $db = Database::getInstance();
-
-        $query = "INSERT INTO teams VALUES(NULL, ?, ?, ?, ?, ?, NOW(), 1200, 0.00, ?, 0, 0, 0, 0, 'open')";
-        $params = array(
-            $name,
-            $alias,
-            $description,
-            parent::mdTransform($description),
-            $avatar,
-            $leader
-        );
-
-        $db->query($query, "sssssi", $params);
-        $id = $db->getInsertId();
-        $team = new Team($id);
-
-        // If the generateAlias() method couldn't find an appropriate alias,
-        // just make it the same as the ID
-        if ($alias === null) {
-            $team->setAlias($id);
-        }
+        $team = new Team(self::create(array(
+            'name' => $name,
+            'alias' => self::generateAlias($name),
+            'description_md' => $description,
+            'description_html' => parent::mdTransform($description),
+            'elo' => 1200,
+            'activity' => 0.00,
+            'matches_won' => 0,
+            'matches_draw' => 0,
+            'matches_lost' => 0,
+            'members' => 0,
+            'avatar' => $avatar,
+            'leader' => $leader
+        ), 'ssssidiiiiss', 'created'));
 
         $team->addMember($leader);
 

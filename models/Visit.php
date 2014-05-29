@@ -86,14 +86,14 @@ class Visit extends Model
      */
     public static function enterVisit($visitor, $ip, $host, $user_agent, $referrer, $timestamp = "now")
     {
-        $db = Database::getInstance();
-
-        $timestamp = new DateTime($timestamp);
-
-        $db->query("INSERT INTO visits (player, ip, host, user_agent, referer, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-        "isssss", array($visitor, $ip, $host, $user_agent, $referrer, $timestamp->format(DATE_FORMAT)));
-
-        return new Visit($db->getInsertId());
+        return new Visit(self::create(array(
+            'player' => $visitor,
+            'ip' => $ip,
+            'host' => $host,
+            'user_agent' => $user_agent,
+            'referrer' => $referrer,
+            'timestamp' => $timestamp->format(DATE_FORMAT);
+        )));
     }
 
 }

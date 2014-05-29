@@ -163,16 +163,12 @@ class NewsCategory extends AliasModel
      */
     public static function addCategory($name)
     {
-        $db = Database::getInstance();
-
-        $db->query(
-            "INSERT INTO news_categories (id, alias, name, protected, status) VALUES (NULL, ?, ?, 0, 'enabled')",
-            "ss", array(parent::generateAlias($name), $name)
-        );
-
-        $newsCategory = new NewsCategory($db->getInsertId());
-
-        return $newsCategory;
+        return new NewsCategory(self::create(array(
+            'alias' => self::generateAlias($name),
+            'name' => $name,
+            'protected' => 0,
+            'status' => 'enabled'
+        ), 'ssis'));
     }
 
     /**

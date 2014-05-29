@@ -365,6 +365,7 @@ class Player extends IdenticonModel
      */
     public function setAvatar($avatar)
     {
+        $this->avatar = $avatar;
         $this->update("avatar", $avatar, 's');
     }
 
@@ -374,6 +375,7 @@ class Player extends IdenticonModel
      */
     public function setDescription($description)
     {
+        $this->description = $description;
         $this->update("description", $description, 's');
     }
 
@@ -383,11 +385,13 @@ class Player extends IdenticonModel
      */
     public function setTimezone($timezone)
     {
+        $this->timezone = $timezone;
         $this->update("timezone", $timezone, 's');
     }
 
     /**
      * Updates this player's last login
+     * @todo Make me work
      */
     public function updateLastLogin()
     {

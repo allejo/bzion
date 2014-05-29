@@ -157,11 +157,11 @@ class Role extends Model
      */
     public static function createNewRole($name, $reusable)
     {
-        $db = Database::getInstance();
-
-        $db->query("INSERT INTO roles (name, reusable, protected) VALUES (?, ?, ?)", "sii", array($name, $reusable, 0));
-
-        return new Role($db->getInsertId());
+        return new Role(self::create(array(
+            'name' => $name,
+            'reusable' => $reusable,
+            'protected' => 0,
+        ), 'sii'));
     }
 
     /**

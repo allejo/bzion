@@ -485,10 +485,19 @@ class Match extends Model
 
         $timestamp = new TimeDate($timestamp);
 
-        $db->query("INSERT INTO matches (team_a, team_b, team_a_points, team_b_points, team_a_elo_new, team_b_elo_new, elo_diff, timestamp, updated, duration, entered_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
-        "iiiiiiisiis", array($a, $b, $a_points, $b_points, $a_elo, $b_elo, $diff, $timestamp->format(DATE_FORMAT), $duration, $entered_by, "entered"));
-
-        $id = $db->getInsertId();
+        $match = new Match(self::create(array(
+            'team_a' => $a,
+            'team_b' => $b,
+            'team_a_points' => $a_points,
+            'team_b_points' => $b_points,
+            'team_a_elo_new' => $a_elo,
+            'team_b_elo_new' => $b_elo,
+            'elo_diff' => $diff,
+            'timestamp' => $timestamp->format(DATE_FORMAT),
+            'duration' => $duration,
+            'entered_by' => $entered_by,
+            'status' => 'entered'
+        ), 'iiiiiiisiis', 'updated'));
 
         // Update team match count
         if ($a_points == $b_points) {
@@ -502,7 +511,7 @@ class Match extends Model
             $team_b->incrementMatchCount("win");
         }
 
-        return new Match($id);
+        return $match;
     }
 
     /**

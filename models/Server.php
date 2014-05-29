@@ -84,13 +84,12 @@ class Server extends Model
      */
     public static function addServer($name, $address, $owner)
     {
-        $query = "INSERT INTO servers VALUES(NULL, ?, ?, ?, '', NOW(), 'active')";
-        $params = array($name, $address, $owner);
-
-        $db = Database::getInstance();
-        $db->query($query, "ssi", $params);
-
-        $server = new Server($db->getInsertId());
+        $server = new Server(self::create(array(
+            'name' => $name,
+            'address' => $address,
+            'owner' => $owner,
+            'status' => 'active',
+        ), 'ssis', 'updated'));
         $server->forceUpdate();
 
         return $server;

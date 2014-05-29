@@ -45,6 +45,7 @@ class TeamTest extends TestCase
         $this->assertEquals("13435-", $team->getAlias());
 
         $this->assertEquals($this->team->getId(), Team::fetchFromAlias("13435-")->getId());
+        $this->assertEquals($this->team->getId(),  Team::fetchFromSlug("13435-")->getId());
     }
 
     public function testIrrationalTeamName2()
@@ -56,7 +57,7 @@ class TeamTest extends TestCase
         $this->assertEquals("-()#*$%!", $team->getName());
         $this->assertEquals($this->team->getId(), $team->getAlias());
 
-        $this->assertEquals($this->team->getId(), Team::fetchFromAlias($team->getId())->getId());
+        $this->assertEquals($this->team->getId(), Team::fetchFromSlug($team->getId())->getId());
     }
 
     public function testMembers()

@@ -311,19 +311,18 @@ class News extends Model
      */
     public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'published')
     {
-        $db = Database::getInstance();
         $author = new Player($authorID);
 
         // Only allow real players to post news articles and if the player posting has permissions to create new posts
         if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS)) {
-            $db->query(
-                "INSERT INTO news (id, category, subject, content, created, updated, author, editor, status) VALUES (NULL, ?, ?, ?, NOW(), NOW(), ?, ?, ?)",
-                "issiis", array($categoryId, $subject, $content, $authorID, $authorID, $status)
-            );
-
-            $article = new News($db->getInsertId());
-
-            return $article;
+            return new News(self::create(array(
+                'category' => $categoryId,
+                'subject' => $subject,
+                'content' => $content,
+                'author' => $authorID,
+                'editor' => $authorID,
+                'status' => $status,
+            ), 'issiis', array('created', 'updated')));
         }
 
         return false;
