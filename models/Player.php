@@ -10,7 +10,7 @@
  * A league player
  * @package    BZiON\Models
  */
-class Player extends AliasModel
+class Player extends IdenticonModel
 {
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
@@ -106,6 +106,11 @@ class Player extends AliasModel
      * The name of the database table used for queries
      */
     const TABLE = "players";
+
+    /**
+     * The location of identicons will stored in
+     */
+    const IDENTICON_LOCATION = "/assets/imgs/identicons/players/";
 
     /**
      * Construct a new Player

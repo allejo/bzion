@@ -6,13 +6,11 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use \Identicon\Identicon;
-
 /**
  * A league team
  * @package    BZiON\Models
  */
-class Team extends AliasModel
+class Team extends IdenticonModel
 {
 
     /**
@@ -299,25 +297,6 @@ class Team extends AliasModel
     }
 
     /**
-     * Get the identicon for a player. This function will create one if it does not already exist
-     *
-     * @return string The URL to the generated identicon
-     */
-    public function getIdenticon()
-    {
-        $fileName = $this->getIdenticonPath();
-
-        if (!$this->hasIdenticon()) {
-            $identicon = new Identicon();
-            $imageDataUri = $identicon->getImageDataUri($this->getName(), 250);
-
-            file_put_contents($fileName, file_get_contents($imageDataUri));
-        }
-
-        return Service::getRequest()->getBaseUrl() . self::IDENTICON_LOCATION . $this->getIdenticonName();
-    }
-
-    /**
      * Get the leader of the team
      *
      * @return Player The object representing the team leader
@@ -467,16 +446,6 @@ class Team extends AliasModel
     }
 
     /**
-     * Check if the team has an identicon already made
-     *
-     * @return bool True if the identicon already exists
-     */
-    public function hasIdenticon()
-    {
-        return file_exists(self::IDENTICON_LOCATION . $this->getAlias());
-    }
-
-    /**
      * Increment the team's match count by one
      *
      * @param string $type The type of the match. Can be 'win', 'draw' or 'loss'
@@ -545,26 +514,6 @@ class Team extends AliasModel
         $this->update("alias", $this->alias, "s");
 
         rename($oldIdenticon, $this->getIdenticonPath());
-    }
-
-    /**
-     * Get the file name of the identicon
-     *
-     * @return string The file name of the saved identicon
-     */
-    private function getIdenticonName()
-    {
-        return $this->getAlias() . ".png";
-    }
-
-    /**
-     * Get the path to the identicon
-     *
-     * @return string The path to the image
-     */
-    private function getIdenticonPath()
-    {
-        return DOC_ROOT . self::IDENTICON_LOCATION . $this->getIdenticonName();
     }
 
     /**
