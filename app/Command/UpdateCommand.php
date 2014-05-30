@@ -19,14 +19,12 @@ class UpdateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<bg=green;options=bold>Welcome to the BZiON updater!</bg=green;options=bold>');
-        $progress = $this->getHelperSet()->get('progress');
 
-        // the finished part of the bar
-        $progress->setBarCharacter('<comment>=</comment>');
-        $progress->start($output, 9);
+        if (!$output->isVerbose())
+            $this->initProgress($output, 9);
 
         $changeCount = $this->countGitChanges();
-        $progress->advance();
+        $this->advance();
 
         $commands = array(
                     "git stash", // Save any changes that have been made so
@@ -43,18 +41,9 @@ class UpdateCommand extends Command
             $commands[0] = $commands[4] = null;
         }
 
-        // Show process output if we verbose
-        $buffer = ($output->isVerbose()) ? function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                echo 'ERR > '.$buffer;
-            } else {
-                echo 'OUT > '.$buffer;
-            }
-        } : null;
-
         foreach ($commands as $cn => $c) {
             $process = new Process($c);
-            $process->run($buffer);
+            $process->run($this->getBufferFunction($output));
 
             if (!$process->isSuccessful()) {
                 if ($cn == 2) {
@@ -65,12 +54,11 @@ class UpdateCommand extends Command
 
                 throw new \RuntimeException($process->getErrorOutput());
             }
-            $progress->advance();
+            $this->advance();
         }
 
-        $this->clearCache($progress);
-
-        $progress->finish();
+        $this->clearCache($output);
+        $this->finishProgress();
 
         $output->writeln('<fg=green;options=bold>BZiON has been updated successfully!</fg=green;options=bold>');
     }
