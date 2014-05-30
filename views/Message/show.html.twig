@@ -56,9 +56,9 @@
             {{ form_errors(form) }}
             <div class="quick_reply">
                 {{ form_errors(form.message) }}
-                {{ form_widget(form.message, {'id': 'composeArea', 'attr': {'class': 'input_compose_area', 'placeholder': 'Enter your message here...'} }) }}
+                {{ form_widget(form.message, {id: 'composeArea', attr: {class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
 
-                {{ form_row(form.Send, {'id': 'composeButton', 'attr': {'class': 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
+                {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
             </div>
         {{ form_end(form) }}
     </section>
