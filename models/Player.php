@@ -249,19 +249,6 @@ class Player extends IdenticonModel
     }
 
     /**
-     * Generate the HTML for a hyperlink to link to a player's profile
-     * @return string The HTML hyperlink to a player's profile
-     */
-    public function getLinkLiteral()
-    {
-        if ($this->isDisabled()) {
-            return '<span>' . $this->getEscapedUsername() . '</span>';
-        }
-
-        return '<a href="' . $this->getURL() . '">' . $this->getEscapedUsername() . '</a>';
-    }
-
-    /**
      * Get all of the callsigns a player has used to log in to the website
      * @return string[] An array containing all of the past callsigns recorded for a player
      */

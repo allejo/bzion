@@ -25,17 +25,17 @@
             <section>
                 {% for article in news %}
                     <article>
-                        <h1><a href="{{ request.getBaseURL ~ "/news/" ~ article.ID }}">{{ article.subject }}</a></h1>
+                        <h1>{{ link_to(article) }}</h1>
 
                         <ul class="meta">
                             <li>
                                 <i class="fa fa-calendar"></i> {{ article.createdLiteral | raw }}
                             </li>
                             <li>
-                                <i class="fa fa-user"></i> {{ article.author.linkLiteral | raw }}
+                                <i class="fa fa-user"></i> {{ link_to(article.author) }}
                             </li>
                             <li>
-                                <i class="fa fa-tag"></i> {{ article.category.linkLiteral | raw }}
+                                <i class="fa fa-tag"></i> {{ link_to(article.category) }}
                             </li>
                         </ul>
 

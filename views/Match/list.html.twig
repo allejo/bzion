@@ -21,11 +21,11 @@
                 <article>
                     <div class="css-table">
                         <div class="row winner">
-                            <div class="column team">{{ match.winner.linkLiteral | raw }}</div>
+                            <div class="column team">{{ link_to(match.winner) }}</div>
                             <div class="column score">{{ match.score(match.winner.id) }}</div>
                         </div>
                         <div class="row loser">
-                            <div class="column team">{{ match.loser.linkLiteral | raw }}</div>
+                            <div class="column team">{{ link_to(match.loser) }}</div>
                             <div class="column score">{{ match.score(match.loser.id) }}</div>
                         </div>
                     </div>

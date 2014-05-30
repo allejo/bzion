@@ -33,16 +33,16 @@
                             {{ ban.created }}
                         </div>
                         <div class="column">
-                            {{ ban.victim.linkLiteral | raw }}
+                            {{ link_to(ban.victim) }}
                         </div>
                         <div class="column">
-                            {{ ban.author.linkLiteral | raw }}
+                            {{ link_to(ban.author) }}
                         </div>
                         <div class="column">
                             {{ ban.expiration }}
                         </div>
                         <div class="column">
-                            <a href="{{ request.getBaseURL ~ "/bans/" ~ ban.ID }}"><i class="fa fa-info-circle"></i></a>
+                            <a href="{{ ban.url }}"><i class="fa fa-info-circle"></i></a>
                         </div>
                     </div>
                 {% endfor %}

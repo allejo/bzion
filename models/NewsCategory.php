@@ -111,15 +111,6 @@ class NewsCategory extends AliasModel
     }
 
     /**
-     * Generate the HTML for a hyperlink to link to a categorys's page
-     * @return string The HTML hyperlink to the category
-     */
-    public function getLinkLiteral()
-    {
-        return '<a href="' . $this->getURL() . '">' . $this->getName() . '</a>';
-    }
-
-    /**
      * Get all the news entries in the category that aren't disabled or deleted
      *
      * @param int  $start     The offset used when fetching matches, i.e. the starting point

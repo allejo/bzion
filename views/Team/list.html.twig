@@ -17,7 +17,7 @@
                     <section>
                         <article class="team_stats">
                             <section class="team">
-                                <p class="name">{{ team.linkLiteral | raw }}</p>
+                                <p class="name">{{ link_to(team) }}</p>
                                 <p class="elo">{{ team.elo }}</p>
                             </section>
 
@@ -31,7 +31,7 @@
                         </article>
 
                         <article class="meta">
-                            <p><i class="fa fa-star"></i> {{ team.leader.linkLiteral | raw }}</p>
+                            <p><i class="fa fa-star"></i> {{ link_to(team.leader) }}</p>
                             <p><i class="fa fa-users"></i> {{ team.numMembers }} members</p>
                             <p><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</p>
                         </article>

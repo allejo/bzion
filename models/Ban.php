@@ -10,7 +10,7 @@
  * A ban imposed by an admin on a player
  * @package BZiON\Models
  */
-class Ban extends Model
+class Ban extends UrlModel
 {
     /**
      * The id of the banned player

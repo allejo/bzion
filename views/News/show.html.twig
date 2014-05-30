@@ -20,10 +20,10 @@
                             <i class="fa fa-calendar"></i> {{ article.created }}
                         </li>
                         <li>
-                            <i class="fa fa-user"></i> {{ article.author.linkLiteral | raw }}
+                            <i class="fa fa-user"></i> {{ link_to(article.author) }}
                         </li>
                         <li>
-                            <i class="fa fa-tag"></i> {{ article.category.linkLiteral | raw }}
+                            <i class="fa fa-tag"></i> {{ link_to(article.category) }}
                         </li>
                     </ul>
 

@@ -43,8 +43,8 @@
                 <ul class="news">
                     {% for post in news %}
                         <li>
-                            <h3><a href="{{ path('news_list') ~ "/" ~ post.ID }}">{{ post.subject}}</a></h3>
-                            <p>by {{ post.author.linkLiteral | raw }}</p>
+                            <h3>{{ link_to(post) }}</h3>
+                            <p>by {{ link_to(post.author) }}</p>
                         </li>
                     {% endfor %}
                 </ul>

@@ -10,7 +10,7 @@
  * A news article
  * @package    BZiON\Models
  */
-class News extends Model
+class News extends UrlModel
 {
     /**
      * The category of the article
@@ -202,6 +202,14 @@ class News extends Model
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getParamName()
+    {
+        return "article";
     }
 
     /**

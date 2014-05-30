@@ -94,12 +94,12 @@
                                     {% endif %}
                                 </div>
                                 <div class="column">
-                                    {{ player.country.flagLiteral | raw }} {{ player.linkLiteral | raw }}
+                                    {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
                                 </div>
 
                                 {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
                                     <div class="column">
-                                        <a href="{{ path('team_kick', {'team':team.alias, 'player':player.alias}) }}" title="Kick {{ player.username }} from team">
+                                        <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
                                             <i class="fa fa-eject"></i>
                                         </a>
                                     </div>
@@ -114,7 +114,7 @@
                     <ul>
                         {% for match in team.matches %}
                             <li>
-                                {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }} {{ match.matchDescription(team.id) }} against {{ match.opponent(team.id).linkLiteral | raw }}
+                                {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }} {{ match.matchDescription(team.id) }} against {{ link_to(match.opponent(team.id)) }}
                             </li>
                         {% endfor %}
                     </ul>

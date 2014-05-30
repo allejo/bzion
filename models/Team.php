@@ -307,15 +307,6 @@ class Team extends IdenticonModel
     }
 
     /**
-     * Generate the HTML for a hyperlink to link to a team's profile
-     * @return string The HTML hyperlink to a team's profile
-     */
-    public function getLinkLiteral()
-    {
-        return '<a href="' . $this->getURL() . '">' . $this->getEscapedName() . '</a>';
-    }
-
-    /**
      * Get the matches this team has participated in
      *
      * @param string $matchType The filter for match types: "all", "wins", "losses", or "draws"

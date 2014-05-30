@@ -14,11 +14,11 @@
         <section class="profile">
             {% if player.id == player.team.leader.id %}
                 <strong>Leader of </strong>
-                {{ player.team.linkLiteral | raw }}
+                {{ link_to(player.team) }}
             {% else %}
                 <strong>Affiliated with </strong>
                 {% if player.team.valid %}
-                    {{ player.team.linkLiteral | raw }}
+                    {{ link_to(player.team) }}
                 {% else %}
                     <em>no team.</em>
                 {% endif %}
