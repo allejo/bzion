@@ -28,12 +28,6 @@ class UpdateCommand extends Command
         $changeCount = $this->countGitChanges();
         $progress->advance();
 
-        if (file_exists('composer.phar')) {
-            $composerLocation = 'php composer.phar';
-        } else {
-            $composerLocation = 'composer';
-        }
-
         $commands = array(
                     "git stash", // Save any changes that have been made so
                                  // that git doesn't complain
@@ -41,7 +35,7 @@ class UpdateCommand extends Command
                     "git submodule sync",
                     "git submodule update --init",
                     "git stash pop",
-                    "$composerLocation install --no-dev"
+                    $this->getComposerCommand()
                     );
 
         if ($changeCount < 1) {
@@ -90,5 +84,18 @@ class UpdateCommand extends Command
             throw new \RuntimeException($process->getErrorOutput());
 
         return substr_count( $changeCount->getOutput(), "\n" );
+    }
+
+    private function getComposerCommand()
+    {
+        $composerLocation = (file_exists('composer.phar'))
+                          ? 'php composer.phar'
+                          : 'composer';
+
+        $arguments = "";
+        if (in_array($this->getContainer()->get('kernel')->getEnvironment(), array('prod', 'dev')))
+            $arguments .= " --no-dev";
+
+        return "$composerLocation install $arguments";
     }
 }

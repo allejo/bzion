@@ -52,12 +52,21 @@ function updateSelector(selector) {
     });
 }
 
+function updateSelectors(selectors) {
+    $.get(window.location.pathname, function(data) {
+        $.each(selectors, function(i, key) {
+            $(key).html($(data).find(key).html());
+        });
+        initPage();
+    }, 'html');
+}
+
 function updatePage() {
     return updateSelector(".messaging");
 }
 
 function updateMessages() {
-    return updateSelector(".scrollable_messages");
+    return updateSelectors([".scrollable_messages", ".conversations"]);
 }
 
 // Response submit event
