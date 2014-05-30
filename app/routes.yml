@@ -97,3 +97,10 @@ team_abandon:
 custom_page:
     pattern:    /{page}
     defaults: { _controller: 'Page', _action: 'show' }
+
+trailing_slash:
+    path: /{url}
+    defaults: { _controller: 'Redirecting', _action: 'removeTrailingSlash' }
+    methods: [GET]
+    requirements:
+        url: .*/$

@@ -138,7 +138,7 @@ function sendMessage(form, onSuccess) {
         if (l)
             l.stop();
 
-        var message = (errorThrown == "") ? textStatus : errorThrown;
+        var message = (errorThrown === "") ? textStatus : errorThrown;
         notify(message, "error");
     });
 }
