@@ -282,7 +282,7 @@ class Ban extends Model
 
                 $ban = new Ban(self::create(array(
                     'player' => $playerID,
-                    'expiration' => $expiration->format(DATE_FORMAT),
+                    'expiration' => $expiration->toMysql(),
                     'server_message' => $srvmsg,
                     'reason' => $reason,
                     'allow_server_join' => $allowServerJoin,

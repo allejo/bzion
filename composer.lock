@@ -181,12 +181,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "5a8394ba094f363664c76bf10ecd2804cf836f44"
+                "reference": "d487fc58a889b471f7d587cc61baeca1d68de633"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/5a8394ba094f363664c76bf10ecd2804cf836f44",
-                "reference": "5a8394ba094f363664c76bf10ecd2804cf836f44",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/d487fc58a889b471f7d587cc61baeca1d68de633",
+                "reference": "d487fc58a889b471f7d587cc61baeca1d68de633",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +216,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-05-24 00:43:31"
+            "time": "2014-05-27 23:09:38"
         },
         {
             "name": "kriswallsmith/assetic",

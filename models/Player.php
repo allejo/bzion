@@ -543,7 +543,7 @@ class Player extends IdenticonModel
         $last_login = new TimeDate($last_login);
 
         $db->query("INSERT INTO players (bzid, team, username, alias, status, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iisssssiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $avatar, $description, $country, $timezone, $joined->format(DATE_FORMAT), $last_login->format(DATE_FORMAT)));
+        "iisssssiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $avatar, $description, $country, $timezone, $joined->toMysql(), $last_login->toMysql()));
 
         $player = new Player($db->getInsertId());
         $player->addRole($role_id);

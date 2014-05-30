@@ -113,7 +113,7 @@ class Group extends UrlModel
     public function updateLastActivity()
     {
         $this->last_activity = TimeDate::now();
-        $this->update('last_activity', $this->last_activity->format("Y-m-d H:i:s"), 's');
+        $this->update('last_activity', $this->last_activity->toMysql(), 's');
     }
 
     /**

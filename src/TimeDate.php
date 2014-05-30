@@ -10,6 +10,7 @@ class TimeDate extends Carbon\Carbon
     const TIMESTAMP = "H:i";
     const TIMESTAMP_FULL = "H:i:s";
     const FULL = "Y-m-d H:i:s";
+    const MYSQL = "Y-m-d H:i:s";
 
     /**
      * Get the time difference in a human readable format.
@@ -23,5 +24,14 @@ class TimeDate extends Carbon\Carbon
         if (self::diffInSeconds($other, true) < 4)
                 return "now";
         return parent::diffForHumans($other);
+    }
+
+    /**
+     * Format the timestamp so that it can be used in mysql queries
+     * @return string The formatted time
+     */
+    public function toMysql()
+    {
+        return $this->format(self::MYSQL);
     }
 }

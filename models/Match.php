@@ -491,7 +491,7 @@ class Match extends Model
             'team_a_elo_new' => $a_elo,
             'team_b_elo_new' => $b_elo,
             'elo_diff' => $diff,
-            'timestamp' => $timestamp->format(DATE_FORMAT),
+            'timestamp' => $timestamp->toMysql(),
             'duration' => $duration,
             'entered_by' => $entered_by,
             'status' => 'entered'

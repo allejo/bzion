@@ -94,7 +94,7 @@ class Visit extends Model
             'host' => $host,
             'user_agent' => $user_agent,
             'referer' => $referrer,
-            'timestamp' => $timestamp->format(DATE_FORMAT),
+            'timestamp' => $timestamp->toMysql(),
         ), 'isssss'));
     }
 

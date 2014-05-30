@@ -193,11 +193,11 @@ class Server extends Model
 
     /**
      * Get when the server information was last updated
-     * @return string
+     * @return TimeDate
      */
     public function getUpdated()
     {
-        return $this->updated->format(DATE_FORMAT);
+        return $this->updated;
     }
 
     /**
