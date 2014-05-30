@@ -134,6 +134,12 @@ function sendMessage(form, onSuccess) {
         if (msg.success) {
             onSuccess(msg, form);
         }
+    }).error(function( jqXHR, textStatus, errorThrown ) {
+        if (l)
+            l.stop();
+
+        var message = (errorThrown == "") ? textStatus : errorThrown;
+        notify(message, "error");
     });
 }
 
