@@ -1,15 +1,18 @@
 <?php
+namespace BZIon\Twig;
+
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
+use Service;
 
 class TwigCacheWarmer implements CacheWarmerInterface
 {
     public function warmUp($cacheDir)
     {
-        $directory = __DIR__.'/../views';
+        $directory = __DIR__.'/../../views';
 
         $twig = Service::getTemplateEngine();
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
 
         foreach ($iterator as $i) {
             $matches = array();

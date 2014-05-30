@@ -10,18 +10,18 @@ framework:
 
 services:
     main.warmer.twig_warmer:
-        class: TwigCacheWarmer
+        class: BZIon\Twig\TwigCacheWarmer
         tags:
             - { name: kernel.cache_warmer, priority: 0 }
     bzion.command.install_command:
-        class: Command\InstallCommand
+        class: BZIon\Command\InstallCommand
         tags:
             -  { name: console.command }
     bzion.command.update_command:
-        class: Command\UpdateCommand
+        class: BZIon\Command\UpdateCommand
         tags:
             -  { name: console.command }
     bzion.command.config_command:
-        class: Command\ConfigCommand
+        class: BZIon\Command\ConfigCommand
         tags:
             -  { name: console.command }

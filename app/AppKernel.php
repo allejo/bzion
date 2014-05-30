@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Twig\PluralFunction;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -84,6 +85,7 @@ class AppKernel extends Kernel
         $twig->addExtension(
             new FormExtension(new TwigRenderer($formEngine))
         );
+        $twig->addFunction(PluralFunction::get());
         if ($this->isDebug())
             $twig->addExtension(new Twig_Extension_Debug());
 

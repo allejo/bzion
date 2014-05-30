@@ -35,12 +35,12 @@ Feature: Teams
       Then I should see "1 - 0 - 1"
       And I should see "0 - 1 - 1"
       When I go to "/teams/invalid-cisterna"
-      Then I should see "1 wins"
-      And I should see "1 draws"
+      Then I should see "1 win"
+      And I should see "1 draw"
       And I should see "0 losses"
       When I go to "/teams/ironclad-basin"
-      Then I should see "1 losses"
-      And I should see "1 draws"
+      Then I should see "1 loss"
+      And I should see "1 draw"
 
     Scenario: Delete team
         Given I have a team called "Shatterproof Reservoir"

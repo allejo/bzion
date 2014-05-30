@@ -61,13 +61,13 @@
                     <canvas id="teamMatchStats" class="teamMatchStats"></canvas>
                     <article class="legend">
                         <div class="item">
-                            <div class="block wins"></div> {{ team.matchesWon }} wins
+                            <div class="block wins"></div> {{ plural(team.matchesWon, 'win') }}
                         </div>
                         <div class="item">
-                            <div class="block losses"></div> {{ team.matchesLost }} losses
+                            <div class="block losses"></div> {{ plural(team.matchesLost, singular='loss', plural='losses') }}
                         </div>
                         <div class="item">
-                            <div class="block draws"></div> {{ team.matchesDraw }} draws
+                            <div class="block draws"></div> {{ plural(team.matchesDraw, 'draw') }}
                         </div>
                     </article>
                 </section>

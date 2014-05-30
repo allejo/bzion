@@ -1,6 +1,6 @@
 <?php
 
-namespace Command;
+namespace BZIon\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -14,8 +14,8 @@ class Command extends ContainerAwareCommand
 
     /**
      * Initialise the progress bar
-     * @param OutputInterface $output The output
-     * @param int $count The number of steps
+     * @param  OutputInterface $output The output
+     * @param  int             $count  The number of steps
      * @return void
      */
     protected function initProgress(&$output, $count)
