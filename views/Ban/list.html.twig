@@ -42,7 +42,7 @@
                             {{ ban.expiration }}
                         </div>
                         <div class="column">
-                            <a href="{{ ban.url }}"><i class="fa fa-info-circle"></i></a>
+                            {{ link_to(ban, icon='info-circle') }}
                         </div>
                     </div>
                 {% endfor %}

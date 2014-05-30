@@ -6,17 +6,20 @@ class LinkToFunction
     /**
      * Get a link literal to a Model
      *
-     * @param UrlModel $model The model we want to link to
-     * @param string $singular The noun in its singular form
-     * @param string|null $plural The noun in its plural form (defaults to adding
-     *                            an 's' in the end of the singular noun)
+     * @param  UrlModel $model The model we want to link to
+     * @param  string   $icon A font awesome icon identifier to show instead of text
+     * @return string   The <a> tag
      */
-    public function __invoke(\UrlModel $model)
+    public function __invoke(\UrlModel $model, $icon=null))
     {
         $url  = $model->getURL();
-        $name = \Model::escape($this->getModelName($model));
 
-        return '<a href="' . $url . '">' . $name . '</a>';
+        if ($icon)
+            $content = "<i class=\"fa fa-$icon\"></i>";
+        else
+            $content = \Model::escape($this->getModelName($model));
+
+        return '<a href="' . $url . '">' . $content . '</a>';
     }
 
     private function getModelName(\UrlModel &$model)
