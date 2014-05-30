@@ -10,7 +10,7 @@ class LinkToFunction
      * @param  string   $icon A font awesome icon identifier to show instead of text
      * @return string   The <a> tag
      */
-    public function __invoke(\UrlModel $model, $icon=null))
+    public function __invoke(\UrlModel $model, $icon=null)
     {
         $url  = $model->getURL();
 
