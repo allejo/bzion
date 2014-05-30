@@ -48,8 +48,11 @@ abstract class HTMLController extends Controller
     {
         try {
             $this->prepareTwig();
+            $response = parent::callAction($action);
+            if (!$response->isRedirection())
+                $this->saveURL();
 
-            return parent::callAction($action);
+            return $response;
         } catch (ModelNotFoundException $e) {
             return $this->forward("NotFound", array("exception" => $e));
         } catch (HTTPException $e) {
@@ -89,6 +92,25 @@ abstract class HTMLController extends Controller
         );
     }
 
+    /**
+     * Save the URL of the current page so that the user can be redirected back to it
+     * if they login
+     */
+    protected function saveURL()
+    {
+        $session = $this->getRequest()->getSession();
+
+        $urls = $session->get('previous_paths', array());
+        array_unshift($urls, $this->getRequest()->getPathInfo());
+
+        // No need to have more than 4 urls stored on the array
+        while (count($urls) > 4)
+            array_pop($urls);
+
+        // Store the URLs in the session, removing any duplicate entries
+        $session->set('previous_paths', array_unique($urls));
+    }
+
     /*
      * Returns the path to the home page
      * @return string
@@ -104,15 +126,19 @@ abstract class HTMLController extends Controller
      */
     protected function getPreviousURL()
     {
-        // If the request's headers had an HTTP_REFERER parameter, go back there
-        // Otherwise just redirect the user to the home page
-        return $this->getRequest()->server->get('HTTP_REFERER',
-                                                $this->getHomeURL());
+        $request = $this->getRequest();
+
+        $urls = $request->getSession()->get('previous_paths', array());
+        foreach ($urls as $url)
+            if ($url != $request->getPathInfo()) // Don't redirect to the same page
+                return $request->getBasePath() . $url;
+
+        // No stored URLs found, just redirect them to the home page
+        return $this->getHomeURL();
     }
 
     /*
      * Returns a redirect response to the previous page
-     * @todo Don't redirect to the same page
      * @return RedirectResponse
      */
     protected function goBack()

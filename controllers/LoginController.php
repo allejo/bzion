@@ -79,5 +79,4 @@ class LoginController extends HTMLController
 
         $session->set("playerId", $user->getId());
     }
-
 }
