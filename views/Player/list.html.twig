@@ -14,7 +14,7 @@
         <ul>
             <li><a href="{{ player.url }}">{{ player.username }}</a>
             <li>
-                {% if player.team.valid %}
+                {% if player.team is valid %}
                     <a href="{{ player.team.link }}">{{ player.team.name }}</a>
                 {% endif %}
             </li>

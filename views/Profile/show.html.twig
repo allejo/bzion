@@ -6,7 +6,7 @@
     <h2>{{ player.username }}</h2><br />
 
     Team:
-    {% if player.team.valid %}
+    {% if player.team is valid %}
         <a href="{{ player.team.url }}">{{ player.team.name }}</a>
     {% else %}
         <em>None</em>

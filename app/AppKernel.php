@@ -2,6 +2,8 @@
 
 use BZIon\Twig\PluralFunction;
 use BZIon\Twig\LinkToFunction;
+use BZIon\Twig\ValidTest;
+use BZIon\Twig\InvalidTest;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -88,6 +90,8 @@ class AppKernel extends Kernel
         );
         $twig->addFunction(PluralFunction::get());
         $twig->addFunction(LinkToFunction::get());
+        $twig->addTest(ValidTest::get());
+        $twig->addTest(InvalidTest::get());
         if ($this->isDebug())
             $twig->addExtension(new Twig_Extension_Debug());
 

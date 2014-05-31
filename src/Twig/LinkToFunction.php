@@ -6,9 +6,9 @@ class LinkToFunction
     /**
      * Get a link literal to a Model
      *
-     * @param  UrlModel $model The model we want to link to
-     * @param  string   $icon A font awesome icon identifier to show instead of text
-     * @return string   The <a> tag
+     * @param  \UrlModel $model The model we want to link to
+     * @param  string    $icon A font awesome icon identifier to show instead of text
+     * @return string    The <a> tag
      */
     public function __invoke(\UrlModel $model, $icon=null)
     {

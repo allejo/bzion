@@ -17,7 +17,7 @@
                 {{ link_to(player.team) }}
             {% else %}
                 <strong>Affiliated with </strong>
-                {% if player.team.valid %}
+                {% if player.team is valid %}
                     {{ link_to(player.team) }}
                 {% else %}
                     <em>no team.</em>
@@ -33,7 +33,7 @@
             <img class='avatar_player' src='{{ player.avatar }}'>
         {% endif %}
         <div class='label label_team'>Team:
-            {% if player.team.valid %}
+            {% if player.team is valid %}
                 <a href="{{ player.team.url }}">{{ player.team.name }}</a>
             {% else %}
                 <em>None</em>
