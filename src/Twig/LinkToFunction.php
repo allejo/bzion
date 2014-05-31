@@ -24,12 +24,12 @@ class LinkToFunction
 
     private function getModelName(\UrlModel &$model)
     {
-        if ($model instanceof \Player)
-            return $model->getUsername();
-        if ($model instanceof \News)
-            return $model->getSubject();
+        if ($model instanceof \NamedModel)
+            return $model->getName();
+        if ($model instanceof \AliasModel)
+            return $model->getAlias();
 
-        return $model->getName();
+        return $model->getId();
     }
 
     public static function get()

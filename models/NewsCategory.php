@@ -10,7 +10,7 @@
  * A news category
  * @package    BZiON\Models
  */
-class NewsCategory extends AliasModel
+class NewsCategory extends AliasModel implements NamedModel
 {
     /**
      * The name of the category

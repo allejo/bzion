@@ -10,7 +10,7 @@
  * A league player
  * @package    BZiON\Models
  */
-class Player extends IdenticonModel
+class Player extends IdenticonModel implements NamedModel
 {
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
@@ -392,6 +392,14 @@ class Player extends IdenticonModel
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return $this->getUsername();
     }
 
     /**

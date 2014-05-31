@@ -10,7 +10,7 @@
  * A news article
  * @package    BZiON\Models
  */
-class News extends UrlModel
+class News extends UrlModel implements NamedModel
 {
     /**
      * The category of the article
@@ -202,6 +202,14 @@ class News extends UrlModel
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return $this->getSubject();
     }
 
     /**

@@ -10,7 +10,7 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends IdenticonModel
+class Team extends IdenticonModel implements NamedModel
 {
 
     /**
