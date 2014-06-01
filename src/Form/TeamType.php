@@ -5,6 +5,8 @@ use Team;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 class TeamType extends AbstractType
 {
@@ -17,6 +19,8 @@ class TeamType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $names = array();
+
+        $names[0] = "Select a team...";
 
         foreach(Team::getTeamNames() as $team)
             $names[$team['id']] = $team['name'];

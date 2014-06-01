@@ -59,12 +59,31 @@ class PlayerType extends AbstractType
     {
         $data = $event->getData();
         $players = $data['players'];
-        $listUsernames = $data['ListUsernames'];
         $form = $event->getForm()->get('players');
 
+        if (trim($players) == '') {
+            // The user didn't include any players, just set data to be an empty
+            // array so that we do foreach() without any tricks
+            $data = array();
+        } else {
+            $data = $this->stringToModels($players, $data['ListUsernames'], $form);
+        }
+
+        $event->setData($data);
+    }
+
+    /**
+     * Convert a comma-separated string into an array of models
+     * @param string $string
+     * @param boolean $listUsernames Whether the user gave us usernames or IDs
+     * @param FormInterface $form A form to write errors into
+     * @return Player[]
+     */
+    private function stringToModels($string, $listUsernames, $form)
+    {
         // Convert the comma-separated list of players the user gave us into an
         // array
-        $players = explode(',', $players);
+        $players = explode(',', $string);
 
         // Remove all the whitespace and duplicate entries
         $players = array_map(function ($r) { return trim($r); }, $players);
@@ -73,15 +92,19 @@ class PlayerType extends AbstractType
         $models = array();
 
         foreach ($players as $player) {
-            $model = ($listUsernames === '0')
-                   ? $this->idToModel($player, $form)
-                   : $this->usernameToModel($player, $form);
+            try {
+                $model = ($listUsernames === '0')
+                       ? $this->idToModel($player, $form)
+                       : $this->usernameToModel($player, $form);
 
-            if ($model)
-                $models[] = $model;
+                if ($model)
+                    $models[] = $model;
+            } catch (InvalidNameException $e) {
+                $form->addError(new FormError($e->getMessage()));
+            }
         }
 
-        $event->setData($models);
+        return $models;
     }
 
     /**
@@ -89,30 +112,28 @@ class PlayerType extends AbstractType
      *
      * Empty usernames are ignored
      *
+     * @throws InvalidNameException
      * @param  string        $usernames The username
-     * @param  FormInterface $form      A form to add errors to
      * @return Player|null
      */
-    private function usernameToModel($username, &$form)
+    private function usernameToModel($username)
     {
         if (empty($username)) return;
 
         $player = Player::getFromUsername($username);
 
-        if (!$player->isValid()) {
+        if (!$player->isValid())
             // Symfony auto-escapes $username
-            $message = "There is no player called $username";
-            $form->addError(new FormError($message));
-        } else {
-            return $player;
-        }
+            throw new InvalidNameException("There is no player called $username");
+
+        return $player;
     }
 
     /**
      * Convert a player ID to a model
      *
+     * @throws InvalidNameException
      * @param  int[]         $ids  A list of player IDs
-     * @param  FormInterface $form A form to add errors to
      * @return Player|null
      */
     private function idToModel($id, &$form)
@@ -120,12 +141,10 @@ class PlayerType extends AbstractType
         $id = (int) $id;
         $player = new Player($id);
 
-        if (!$player->isValid()) {
-            $message = "There is no player with ID $id";
-            $form->addError(new FormError($message));
-        } else {
-            return $player;
-        }
+        if (!$player->isValid())
+            throw new InvalidNameException("There is no player with ID $id");
+
+        return $player;
     }
 
     /**
@@ -170,3 +189,5 @@ class PlayerType extends AbstractType
         return 'player';
     }
 }
+
+class InvalidNameException extends \Exception {}

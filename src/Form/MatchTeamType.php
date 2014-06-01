@@ -12,7 +12,9 @@ class MatchTeamType extends AbstractType
         $builder
             ->add('team', new TeamType())
             ->add('score', 'integer')
-            ->add('participants', new PlayerType());
+            ->add('participants', new PlayerType(), array(
+                'required' => false
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
