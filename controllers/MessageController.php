@@ -27,7 +27,10 @@ class MessageController extends JSONController
 
         $notBlank = array( 'constraints' => new NotBlank() );
         $form = Service::getFormFactory()->createBuilder()
-            ->add('Recipients', new PlayerType(), $notBlank)
+            ->add('Recipients', new PlayerType(), array(
+                'constraints' => new NotBlank(),
+                'include' => $me,
+            ))
             ->add('Subject', 'text', $notBlank)
             ->add('Message', 'textarea', $notBlank)
             ->add('Send', 'submit')
@@ -38,6 +41,9 @@ class MessageController extends JSONController
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
+            if (count($form->get('Recipients')->getData()) < 2) {
+                $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
+            }
             if ($form->isValid()) {
                 $subject = $form->get('Subject')->getData();
                 $content = $form->get('Message')->getData();
@@ -70,7 +76,7 @@ class MessageController extends JSONController
 
         // Create the form to send a message to the discussion
         $form = Service::getFormFactory()->createBuilder()
-            ->add('message', 'textarea', array( 'constraints' => new NotBlank() ))
+            ->add('message', 'textarea', array( 'constraints' => new NotBlank(array("message" => "You can't send an empty message!")) ))
             ->add('Send', 'submit')
             ->setAction($discussion->getUrl())
             ->getForm();
@@ -144,8 +150,11 @@ class MessageController extends JSONController
     {
         foreach ($form->all() as $child)
             foreach ($child->getErrors() as $error)
-                return $child->getName() . ": " . $error->getMessage();
+                return $error->getMessage();
 
-        return $form->getErrors()[0]->getMessage();
+        foreach ($form->getErrors() as $error)
+            return $error->getMessage();
+
+        return "Unknown Error";
     }
 }

@@ -23,12 +23,12 @@ Feature: Messaging
       Given I am logged in as "unequivocal"
       And there is a player called "Incontestable"
       When I go to "/messages"
-      And I fill in "compose_recipients" with "INCONTESTABLE,instant"
+      And I fill in "form_Recipients_players" with "INCONTESTABLE,instant"
       And I press "Send"
       Then I should see "There is no player called instant"
       But I should not see "There is no player called INCONTESTABLE"
       And I should see "This value should not be blank"
-      When I fill in "compose_recipients" with " ,   unequivocal  ,,,   "
+      When I fill in "form_Recipients_players" with " ,   unequivocal  ,,,   "
       And I press "Send"
       Then I should see "You can't send a message to yourself"
 
@@ -36,7 +36,7 @@ Feature: Messaging
      Given I am logged in
      And there is a player called "puissant"
      When I go to "/messages"
-     And I fill in "compose_recipients" with "puissant"
+     And I fill in "form_Recipients_players" with "puissant"
      And I fill in "form_Subject" with "Importance"
      And I fill in "form_Message" with "Lorem ipsum text"
      And I press "Send"

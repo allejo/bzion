@@ -17,9 +17,15 @@ class PlayerType extends AbstractType
 {
     /**
      * Whether the user gave us usernames or IDs
-     * var boolean
+     * @var boolean
      */
     private $listUsernames = false;
+
+    /**
+     * A player to always include
+     * @var Player|null
+     */
+    private $include = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,7 +34,7 @@ class PlayerType extends AbstractType
                 'class' => 'player-select',
                 'placeholder' => 'brad, kierra, ...',
             ),
-            'label' => false,
+            'label' => ucfirst($builder->getName()) . ': ',
             'required' => false
         ));
 
@@ -42,6 +48,9 @@ class PlayerType extends AbstractType
         ));
 
         $builder->addEventListener(FormEvents::SUBMIT, array($this, 'onSubmit'));
+
+        if (isset($options['include']))
+            $this->include = $options['include'];
     }
 
     /**
@@ -112,6 +121,9 @@ class PlayerType extends AbstractType
         // array
         $players = explode(',', $string);
 
+        // Always include a requested player
+        $this->includePlayer($players);
+
         // Remove all the whitespace and duplicate entries
         $players = array_map(function ($r) { return trim($r); }, $players);
         $players = array_unique($players);
@@ -132,6 +144,22 @@ class PlayerType extends AbstractType
         }
 
         return $models;
+    }
+
+    /**
+     * Make sure that the player given in options['include'] is in the returned
+     * array
+     * @param array $players
+     * @return void
+     */
+    private function includePlayer(&$players)
+    {
+        if (!$this->include)
+            return;
+
+        $players[] = ($this->listUsernames)
+               ? $this->include->getUsername()
+               : $this->include->getId();
     }
 
     /**
@@ -197,8 +225,10 @@ class PlayerType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('include'));
         $resolver->setDefaults(array(
             'compound' => true,
+            'label' => false
         ));
     }
 
