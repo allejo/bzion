@@ -1,7 +1,11 @@
 <?php
 
 use BZIon\Form\MatchTeamType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class MatchController extends HTMLController
 {
@@ -30,8 +34,13 @@ class MatchController extends HTMLController
         $form = $this->createForm();
         $form->handleRequest($request);
 
-        if ($form->isValid())
-            var_dump($form->get('first_team')->get('participants')->getData());
+        if ($form->isSubmitted()) {
+            $this->assertDifferentTeams($form);
+            if ($form->isValid()) {
+                //... do stuff
+            }
+        }
+
 
         return array("form" => $form->createView());
     }
@@ -46,8 +55,31 @@ class MatchController extends HTMLController
                 'expanded' => true
             ))
             ->add('server_address', 'text')
-            ->add('time', 'datetime')
+            ->add('time', 'datetime', array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
             ->add('enter', 'submit')
             ->getForm();
+    }
+
+    /**
+     * Make sure that two different teams participated in a match, i.e. a team
+     * didn't match against itself
+     * @param Form $form The form to evaluate
+     */
+    private function assertDifferentTeams(Form $form)
+    {
+        $firstTeam  = $form->get('first_team')->get('team')->getData();
+        $secondTeam = $form->get('second_team')->get('team')->getData();
+
+        if (!$firstTeam || !$secondTeam)
+            return;
+
+        if ($firstTeam->getId() == $secondTeam->getId()) {
+            $message = "You can't report a match where a team played against itself!";
+            $form->addError(new FormError($message));
+        }
     }
 }

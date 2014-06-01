@@ -38,7 +38,7 @@ class PlayerType extends AbstractType
     }
 
     /**
-     * Pass the image URL to the view
+     * Render a list of comma-separated usernames for the user to see
      *
      * @param FormView      $view
      * @param FormInterface $form
@@ -94,8 +94,8 @@ class PlayerType extends AbstractType
         foreach ($players as $player) {
             try {
                 $model = ($listUsernames === '0')
-                       ? $this->idToModel($player, $form)
-                       : $this->usernameToModel($player, $form);
+                       ? $this->idToModel($player)
+                       : $this->usernameToModel($player);
 
                 if ($model)
                     $models[] = $model;
@@ -136,7 +136,7 @@ class PlayerType extends AbstractType
      * @param  int[]         $ids  A list of player IDs
      * @return Player|null
      */
-    private function idToModel($id, &$form)
+    private function idToModel($id)
     {
         $id = (int) $id;
         $player = new Player($id);
