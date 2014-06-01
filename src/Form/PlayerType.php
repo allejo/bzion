@@ -29,6 +29,7 @@ class PlayerType extends AbstractType
                 'placeholder' => 'brad, kierra, ...',
             ),
             'label' => false,
+            'required' => false
         ));
 
         // True if the client provided the recipient usernames instead of IDs
@@ -178,7 +179,7 @@ class PlayerType extends AbstractType
      *
      * @param  Player|Player[]|null $models
      * @param  \Closure             $getName A function that, given a model, returns its name
-     * @return string|null
+     * @return array
      */
     public function reverseTransform($models, $getName)
     {

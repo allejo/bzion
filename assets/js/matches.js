@@ -24,7 +24,7 @@ $(document).ready(function() {
             }).done(function( msg ) {
                 members[i] = msg.players;
             });
-        }
+        };
 
         teams.find("option").eq(0).removeAttr("value");
 

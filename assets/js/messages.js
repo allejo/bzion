@@ -1,7 +1,7 @@
 function format(item) { return item.username; }
 
 function initializeSelect() {
-    $("#compose_recipients").attr('placeholder','Add a recipient').select2({
+    $(".player-select").attr('placeholder','Add a recipient').select2({
         allowClear: true,
         multiple: true,
         minimumInputLength: 1,
@@ -25,7 +25,7 @@ function initializeSelect() {
         });
 
     // Make sure that PHP knows we are sending player IDs, not usernames
-    $("#form_ListUsernames").attr('value', '0');
+    $("#form_Recipients_ListUsernames").attr('value', '0');
 }
 
 function initPage() {

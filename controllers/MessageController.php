@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Form\PlayerType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
@@ -26,12 +27,9 @@ class MessageController extends JSONController
 
         $notBlank = array( 'constraints' => new NotBlank() );
         $form = Service::getFormFactory()->createBuilder()
-            ->add('Recipients', 'text', $notBlank) // Comma-separated list of recipients
+            ->add('Recipients', new PlayerType(), $notBlank)
             ->add('Subject', 'text', $notBlank)
             ->add('Message', 'textarea', $notBlank)
-            ->add('ListUsernames', 'hidden', array(
-                'data' => true, // True if the client provided the recipient usernames
-            ))                  // instead of IDs (to support non-JS browsers)
             ->add('Send', 'submit')
             // Prevents JS from going crazy if we load a page with AJAX
             ->setAction(Service::getGenerator()->generate('message_list'))
@@ -40,12 +38,16 @@ class MessageController extends JSONController
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            $recipients = $this->validateComposeForm($form, $me);
             if ($form->isValid()) {
                 $subject = $form->get('Subject')->getData();
                 $content = $form->get('Message')->getData();
+                $recipientIds = array();
 
-                $group_to = Group::createGroup($subject, $me->getId(), $recipients);
+                foreach ($form->get('Recipients')->getData() as $player) {
+                    $recipientIds[] = $player->getId();
+                }
+
+                $group_to = Group::createGroup($subject, $me->getId(), $recipientIds);
                 $group_to->sendMessage($me, $content);
 
                 if ($this->isJson())
@@ -68,7 +70,7 @@ class MessageController extends JSONController
 
         // Create the form to send a message to the discussion
         $form = Service::getFormFactory()->createBuilder()
-            ->add('message', 'textarea')
+            ->add('message', 'textarea', array( 'constraints' => new NotBlank() ))
             ->add('Send', 'submit')
             ->setAction($discussion->getUrl())
             ->getForm();
@@ -84,7 +86,8 @@ class MessageController extends JSONController
 
             if ($this->isJson())
                 return "Your message was sent successfully";
-        }
+        } elseif ($form->isSubmitted() && $this->isJson())
+            throw new BadRequestException($this->getErrorMessage($form));
 
         $messages = Message::getMessages($discussion->getId());
 
@@ -128,9 +131,6 @@ class MessageController extends JSONController
 
         $message = $form->get('message')->getData();
 
-        if (trim($message) == '')
-            throw new BadRequestException("You can't send an empty message!");
-
         $to->sendMessage($from, $message);
 
         $this->getRequest()->getSession()->getFlashBag()->add('success',
@@ -140,56 +140,12 @@ class MessageController extends JSONController
         $form = $cloned;
     }
 
-    private function validateComposeForm(&$form, Player &$me)
-    {
-        $recipients = explode(',', $form->get('Recipients')->getData());
-        $listingUsernames = (bool) $form->get('ListUsernames')->getData();
-        $recipientIds = array();
-
-        // Remove all the whitespace and duplicate entries
-        $recipients = array_map(function ($r) { return trim($r); }, $recipients);
-        $recipients = array_unique($recipients);
-
-        foreach ($recipients as $rid) {
-            if (empty($rid)) continue;
-
-            if ($listingUsernames) {
-                $recipient = Player::getFromUsername($rid);
-            } else {
-                $recipient = new Player($rid);
-            }
-
-            if ($recipient->getId() == $me->getId())
-                // The user wants themselves as a recipient - ignore that since
-                // we are going to add the user in the end either way
-                continue;
-
-            if (!$recipient->isValid()) {
-                $error = ($listingUsernames)
-                       ? "There is no player called $rid" // Symfony auto-escapes $rid
-                       : "One of the recipients you specified does not exist";
-                $form->get('Recipients')->addError(new FormError($error));
-            } else {
-                $recipientIds[] = $recipient->getId();
-            }
-        }
-
-        if (count($recipientIds) < 1)
-            $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
-
-        // Add the currently logged-in user to the list of recipients
-        $recipientIds[] = $me->getId();
-
-        return $recipientIds;
-    }
-
     private function getErrorMessage(Form &$form)
     {
         foreach ($form->all() as $child)
             foreach ($child->getErrors() as $error)
-
                 return $child->getName() . ": " . $error->getMessage();
 
-        return "Unknown error";
+        return $form->getErrors()[0]->getMessage();
     }
 }
