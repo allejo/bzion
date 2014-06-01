@@ -454,14 +454,14 @@ class Match extends Model
 
     /**
      * Enter a new match to the database
-     * @param  int    $a         Team A's ID
-     * @param  int    $b         Team B's ID
-     * @param  int    $a_points  Team A's match points
-     * @param  int    $b_points  Team B's match points
-     * @param  int    $duration  The match duration in minutes
-     * @param $entered_by
-     * @param  string $timestamp When the match was played
-     * @return Match  An object representing the match that was just entered
+     * @param  int             $a          Team A's ID
+     * @param  int             $b          Team B's ID
+     * @param  int             $a_points   Team A's match points
+     * @param  int             $b_points   Team B's match points
+     * @param  int             $duration   The match duration in minutes
+     * @param  int             $entered_by The ID of the player reporting the match
+     * @param  string|DateTime $timestamp  When the match was played
+     * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now")
     {
@@ -481,7 +481,7 @@ class Match extends Model
 
         $diff = abs($diff);
 
-        $timestamp = new TimeDate($timestamp);
+        $timestamp = TimeDate::from($timestamp);
 
         $match = new Match(self::create(array(
             'team_a' => $a,
@@ -558,7 +558,7 @@ class Match extends Model
         return self::arrayIdToModel(
             parent::fetchIdsFrom(
                 "status", array("disabled", "deleted"), "s", true,
-                "ORDER BY timestamp DESC LIMIT $limit OFFSET $start"
+                "ORDER BY timestamp LIMIT $limit OFFSET $start"
             )
         );
     }
@@ -587,7 +587,7 @@ class Match extends Model
             $query .= "team_a = ? OR team_b = ?";
         }
 
-        $query .= " ORDER BY timestamp DESC LIMIT $limit OFFSET $start";
+        $query .= " ORDER BY timestamp LIMIT $limit OFFSET $start";
 
         return self::arrayIdToModel(
             parent::fetchIds($query, "ii", array($teamID, $teamID))

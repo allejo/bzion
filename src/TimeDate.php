@@ -34,4 +34,17 @@ class TimeDate extends Carbon\Carbon
     {
         return $this->format(self::MYSQL);
     }
+
+    /**
+     * Create a timestamp from a string or another object
+     * @param string|DateTime $time
+     * @return TimeDate
+     */
+    public static function from($time)
+    {
+        if ($time instanceof DateTime)
+            return self::instance($time);
+
+        return new self($time);
+    }
 }
