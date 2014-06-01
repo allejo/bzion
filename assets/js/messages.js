@@ -1,6 +1,6 @@
 function format(item) { return item.username; }
 
-function initializeChosen() {
+function initializeSelect() {
     $("#compose_recipients").attr('placeholder','Add a recipient').select2({
         allowClear: true,
         multiple: true,
@@ -34,7 +34,7 @@ function initPage() {
         var messageView = $("#messageView");
         messageView.scrollTop(messageView.prop("scrollHeight"));
     } else {
-        initializeChosen();
+        initializeSelect();
     }
 }
 

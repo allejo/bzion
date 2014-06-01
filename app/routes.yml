@@ -27,12 +27,16 @@ match_list:
     defaults: { _controller: 'Match', _action: 'list' }
 
 match_by_team_list:
-    pattern:    /matches/{team}
+    pattern:    /teams/{team}/matches
     defaults: { _controller: 'Match', _action: 'listByTeam' }
 
 match_by_team_list_sort:
-    pattern:    /matches/{team}/{type}
+    pattern:    /teams/{team}/matches/{type}
     defaults: { _controller: 'Match', _action: 'listByTeamSort' }
+
+match_enter:
+    pattern:    /matches/enter
+    defaults: { _controller: 'Match', _action: 'create' }
 
 message_list:
     pattern:    /messages
@@ -81,6 +85,10 @@ team_list:
 team_show:
     pattern:    /teams/{team}
     defaults: { _controller: 'Team', _action: 'show' }
+
+team_members:
+    pattern:    /teams/{team}/members
+    defaults: { _controller: 'Player', _action: 'list' }
 
 team_delete:
     pattern:    /teams/{team}/delete

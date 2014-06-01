@@ -504,6 +504,21 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Returns an array of players belonging in a team
+     * @todo QueryBuilder
+     * @param  int $teamId The ID of the team
+     * @return string[] The keys represent the player's ID
+     */
+    public static function getTeamUsernames($teamId)
+    {
+        $array = self::fetchIds(
+            "WHERE status='active' and team = ?",
+            'i',array($teamId), '', 'id,username');
+
+        return $array;
+    }
+
+    /**
      * Get all of the members belonging to a team
      * @param  int      $teamID The ID of the team to fetch the members of
      * @return Player[] An array of Player objects of the team members

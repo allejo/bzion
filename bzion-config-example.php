@@ -18,6 +18,7 @@ DEFINE("SITE_TITLE", "BZiON: A League Management System");
  * League specific settings
  */
 DEFINE("DURATION", serialize(array(
+    "30" => 1,
     "20" => (2/3) // 20 minute match is 2/3rds of a normal match's ELO
 )));
 

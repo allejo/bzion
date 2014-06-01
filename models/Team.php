@@ -570,6 +570,19 @@ class Team extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Get an array with all the team IDs and names
+     *
+     * @return array
+     */
+    public static function getTeamNames()
+    {
+        return self::fetchIdsFrom(
+            "status", array("disabled", "deleted"),
+            "s", true, "ORDER BY name", "", "id, name"
+        );
+    }
+
+    /**
      * Get a single team by its name
      *
      * @param  string $name The team name to look for
