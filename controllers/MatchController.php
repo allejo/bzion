@@ -1,6 +1,5 @@
 <?php
 
-use BZIon\Form\PlayerType;
 use BZIon\Form\MatchTeamType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,7 +27,18 @@ class MatchController extends HTMLController
         if (!$me->hasPermission(Permission::ENTER_MATCH))
             throw new ForbiddenException("You are not allowed to report matches");
 
-        $form = Service::getFormFactory()->createBuilder()
+        $form = $this->createForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+            var_dump($form->get('first_team')->get('participants')->getData());
+
+        return array("form" => $form->createView());
+    }
+
+    private function createForm()
+    {
+        return Service::getFormFactory()->createBuilder()
             ->add('first_team', new MatchTeamType())
             ->add('second_team', new MatchTeamType())
             ->add('match_duration', 'choice', array(
@@ -39,12 +49,5 @@ class MatchController extends HTMLController
             ->add('time', 'datetime')
             ->add('enter', 'submit')
             ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) var_dump($form->get('first_team')->get('participants')->getData());
-            // var_dump($form->get('first_team')->get('participants')->get('players')->getData());
-
-        return array("form" => $form->createView());
     }
 }

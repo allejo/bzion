@@ -20,7 +20,7 @@ class ModelTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms an object (model) to an integer (int).
+     * Transforms an object (model) to an integer (int) .
      *
      * @param  Model|null $model
      * @return int
@@ -37,7 +37,7 @@ class ModelTransformer implements DataTransformerInterface
     /**
      * Transforms an ID to an object
      *
-     * @param  string $number
+     * @param  string                        $number
      * @return Model
      * @throws TransformationFailedException if the team is not found.
      */

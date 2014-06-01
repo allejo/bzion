@@ -1,7 +1,6 @@
 <?php
 namespace BZIon\Form;
 
-use InvalidUsernameException;
 use Model;
 use Player;
 use Symfony\Component\Form\AbstractType;
@@ -41,9 +40,9 @@ class PlayerType extends AbstractType
     /**
      * Pass the image URL to the view
      *
-     * @param FormView $view
+     * @param FormView      $view
      * @param FormInterface $form
-     * @param array $options
+     * @param array         $options
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -53,7 +52,7 @@ class PlayerType extends AbstractType
 
     /**
      * Convert the vague array that the user gave us into meaningful models
-     * @param FormEvent $event
+     * @param  FormEvent $event
      * @return void
      */
     public function onSubmit(FormEvent $event)
@@ -71,75 +70,68 @@ class PlayerType extends AbstractType
         $players = array_map(function ($r) { return trim($r); }, $players);
         $players = array_unique($players);
 
-        if ($listUsernames !== '0') {
-            $players = $this->usernamesToModels($players, $form);
-        } else {
-            $players = $this->idsToModels($players, $form);
+        $models = array();
+
+        foreach ($players as $player) {
+            $model = ($listUsernames === '0')
+                   ? $this->idToModel($player, $form)
+                   : $this->usernameToModel($player, $form);
+
+            if ($model)
+                $models[] = $model;
         }
 
-        $event->setData($players);
+        $event->setData($models);
     }
 
     /**
-     * Convert a list of usernames to models
+     * Convert a username to a model
      *
      * Empty usernames are ignored
      *
-     * @param string[] $usernames A list of usernames
-     * @param Form $form A form to add errors to
-     * @return Player[]
+     * @param  string        $usernames The username
+     * @param  FormInterface $form      A form to add errors to
+     * @return Player|null
      */
-    private function usernamesToModels($usernames, &$form)
+    private function usernameToModel($username, &$form)
     {
-        $players = array();
+        if (empty($username)) return;
 
-        foreach ($usernames as $username) {
-            if (empty($username)) continue;
+        $player = Player::getFromUsername($username);
 
-            $player = Player::getFromUsername($username);
-
-            if (!$player->isValid()) {
-                // Symfony auto-escapes $username
-                $message = "There is no player called $username";
-                $form->addError(new FormError($message));
-            } else {
-                $players[] = $player;
-            }
+        if (!$player->isValid()) {
+            // Symfony auto-escapes $username
+            $message = "There is no player called $username";
+            $form->addError(new FormError($message));
+        } else {
+            return $player;
         }
-
-        return $players;
     }
 
     /**
-     * Convert a list of player IDs to models
+     * Convert a player ID to a model
      *
-     * @param int[] $ids A list of player IDs
-     * @param Form $form A form to add errors to
-     * @return Player[]
+     * @param  int[]         $ids  A list of player IDs
+     * @param  FormInterface $form A form to add errors to
+     * @return Player|null
      */
-    private function idsToModels($ids, &$form)
+    private function idToModel($id, &$form)
     {
-        $players = array();
+        $id = (int) $id;
+        $player = new Player($id);
 
-        foreach ($ids as $id) {
-            $id = (int) $id;
-            $player = new Player($id);
-
-            if (!$player->isValid()) {
-                $message = "There is no player with ID $id";
-                $form->addError(new FormError($message));
-            } else {
-                $players[] = $player;
-            }
+        if (!$player->isValid()) {
+            $message = "There is no player with ID $id";
+            $form->addError(new FormError($message));
+        } else {
+            return $player;
         }
-
-        return $players;
     }
 
     /**
      * Converts an array of models into a user-readable list of their names
      *
-     * @param  Model|Model[]|null $query
+     * @param  Player|Player[]|null $query
      * @return string|null
      */
     public function reverseTransform($models)
@@ -148,7 +140,7 @@ class PlayerType extends AbstractType
             return $models;
 
         $getName = function ($model) {
-            if (!$model instanceof Model) return '';
+            if (!$model instanceof Player) return '';
             return $model->getName();
         };
 

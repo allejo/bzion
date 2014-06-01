@@ -506,7 +506,7 @@ class Player extends IdenticonModel implements NamedModel
     /**
      * Returns an array of players belonging in a team
      * @todo QueryBuilder
-     * @param  int $teamId The ID of the team
+     * @param  int      $teamId The ID of the team
      * @return string[] The keys represent the player's ID
      */
     public static function getTeamUsernames($teamId)
