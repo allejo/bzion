@@ -37,7 +37,7 @@ class TimeDate extends Carbon\Carbon
 
     /**
      * Create a timestamp from a string or another object
-     * @param string|DateTime $time
+     * @param  string|DateTime $time
      * @return TimeDate
      */
     public static function from($time)

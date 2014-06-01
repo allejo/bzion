@@ -32,7 +32,7 @@ class MatchTeamType extends AbstractType
     /**
      * Form event handler that makes sure the participants are actually members
      * of the specified team
-     * @param FormEvent $event
+     * @param  FormEvent $event
      * @return void
      */
     public function checkTeamMembers(FormEvent $event)
@@ -43,8 +43,8 @@ class MatchTeamType extends AbstractType
         if (!$team || !$team->isValid())
             return;
 
-        foreach($form->getParent()->getData() as $player) {
-            if(!$team->isMember($player->getId())) {
+        foreach ($form->getParent()->getData() as $player) {
+            if (!$team->isMember($player->getId())) {
                 $message = "{$player->getUsername()} is not a member of {$team->getName()}";
                 $form->addError(new FormError($message));
             }

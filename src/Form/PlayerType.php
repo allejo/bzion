@@ -15,6 +15,12 @@ use Symfony\Component\Form\FormView;
 
 class PlayerType extends AbstractType
 {
+    /**
+     * Whether the user gave us usernames or IDs
+     * var boolean
+     */
+    private $listUsernames = false;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('players', 'text', array(
@@ -47,7 +53,27 @@ class PlayerType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $data = $view->vars['value'];
-        $view->children['players']->vars['value'] = $this->reverseTransform($data);
+        $newValue = null;
+
+        if ($this->listUsernames) {
+            // The user doesn't have javascript enabled - show a text field with
+            // a comma-separated list of usernames
+            $newValue = implode(', ', $this->reverseTransform($data,
+                function ($player) { return $player->getUsername(); }
+            ));
+        } elseif ($form->isSubmitted()) {
+            // The user has javascript enabled - set the value to a JSON array
+            // that the client can read to fill the field with the values
+            // selected by the user when the form was first submitted
+            $newValue = json_encode($this->reverseTransform($data,
+                function ($player) { return array(
+                    'id' => $player->getId(),
+                    'username' => $player->getUsername()
+                );
+            }));
+        }
+
+        $view->children['players']->vars['value'] = $newValue;
     }
 
     /**
@@ -58,6 +84,7 @@ class PlayerType extends AbstractType
     public function onSubmit(FormEvent $event)
     {
         $data = $event->getData();
+        $this->listUsernames = (bool) $data['ListUsernames'];
         $players = $data['players'];
         $form = $event->getForm()->get('players');
 
@@ -66,7 +93,7 @@ class PlayerType extends AbstractType
             // array so that we do foreach() without any tricks
             $data = array();
         } else {
-            $data = $this->stringToModels($players, $data['ListUsernames'], $form);
+            $data = $this->stringToModels($players, $form);
         }
 
         $event->setData($data);
@@ -74,12 +101,11 @@ class PlayerType extends AbstractType
 
     /**
      * Convert a comma-separated string into an array of models
-     * @param string $string
-     * @param boolean $listUsernames Whether the user gave us usernames or IDs
-     * @param FormInterface $form A form to write errors into
+     * @param  string        $string
+     * @param  FormInterface $form   A form to write errors into
      * @return Player[]
      */
-    private function stringToModels($string, $listUsernames, $form)
+    private function stringToModels($string, $form)
     {
         // Convert the comma-separated list of players the user gave us into an
         // array
@@ -93,9 +119,9 @@ class PlayerType extends AbstractType
 
         foreach ($players as $player) {
             try {
-                $model = ($listUsernames === '0')
-                       ? $this->idToModel($player)
-                       : $this->usernameToModel($player);
+                $model = ($this->listUsernames)
+                       ? $this->usernameToModel($player)
+                       : $this->idToModel($player);
 
                 if ($model)
                     $models[] = $model;
@@ -113,7 +139,7 @@ class PlayerType extends AbstractType
      * Empty usernames are ignored
      *
      * @throws InvalidNameException
-     * @param  string        $usernames The username
+     * @param  string               $username The username
      * @return Player|null
      */
     private function usernameToModel($username)
@@ -133,7 +159,7 @@ class PlayerType extends AbstractType
      * Convert a player ID to a model
      *
      * @throws InvalidNameException
-     * @param  int[]         $ids  A list of player IDs
+     * @param  int                  $id The player ID
      * @return Player|null
      */
     private function idToModel($id)
@@ -150,18 +176,14 @@ class PlayerType extends AbstractType
     /**
      * Converts an array of models into a user-readable list of their names
      *
-     * @param  Player|Player[]|null $query
+     * @param  Player|Player[]|null $models
+     * @param  \Closure             $getName A function that, given a model, returns its name
      * @return string|null
      */
-    public function reverseTransform($models)
+    public function reverseTransform($models, $getName)
     {
         if (null === $models)
             return $models;
-
-        $getName = function ($model) {
-            if (!$model instanceof Player) return '';
-            return $model->getName();
-        };
 
         if (!is_array($models))
             return $getName($models);
@@ -169,7 +191,7 @@ class PlayerType extends AbstractType
         $models = array_map($getName, $models);
         sort($models);
 
-        return implode(', ', $models);
+        return $models;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
