@@ -18,91 +18,91 @@ class Team extends IdenticonModel implements NamedModel
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The description of the team written in markdown
      *
      * @var string
      */
-    private $description_md;
+    protected $description_md;
 
     /**
      * The description of the team parsed to HTML
      *
      * @var string
      */
-    private $description_html;
+    protected $description_html;
 
     /**
      * The url of the team's avatar
      *
      * @var string
      */
-    private $avatar;
+    protected $avatar;
 
     /**
      * The creation date of the team
      *
      * @var TimeDate
      */
-    private $created;
+    protected $created;
 
     /**
      * The team's current elo
      *
      * @var int
      */
-    private $elo;
+    protected $elo;
 
     /**
      * The team's activity
      *
      * @var double
      */
-    private $activity;
+    protected $activity;
 
     /**
      * The id of the team leader
      *
      * @var int
      */
-    private $leader;
+    protected $leader;
 
     /**
      * The number of matches won
      *
      * @var int
      */
-    private $matches_won;
+    protected $matches_won;
 
     /**
      * The number of matches lost
      *
      * @var int
      */
-    private $matches_lost;
+    protected $matches_lost;
 
     /**
      * The number of matches tied
      *
      * @var int
      */
-    private $matches_draw;
+    protected $matches_draw;
 
     /**
      * The total number of matches
      *
      * @var int
      */
-    private $matches_total;
+    protected $matches_total;
 
     /**
      * The number of members
      *
      * @var int
      */
-    private $members;
+    protected $members;
 
     /**
      * The team's status
@@ -122,18 +122,10 @@ class Team extends IdenticonModel implements NamedModel
     const IDENTICON_LOCATION = "/assets/imgs/identicons/teams/";
 
     /**
-     * Construct a new Team
-     *
-     * @param int $id The team's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($team)
     {
-        parent::__construct($id);
-        if (!$this->valid)
-            return;
-
-        $team = $this->result;
-
         $this->name = $team['name'];
         $this->alias = $team['alias'];
         $this->description_md = $team['description_md'];
@@ -166,7 +158,7 @@ class Team extends IdenticonModel implements NamedModel
         if (!$player->isTeamless())
             throw new Exception("The player already belongs in a team");
 
-        $player->update("team", $this->getId());
+        $player->setTeam($this->getId());
         $this->update('members', ++$this->members, "i");
 
     }
@@ -534,7 +526,7 @@ class Team extends IdenticonModel implements NamedModel
      */
     public static function createTeam($name, $leader, $avatar, $description)
     {
-        $team = new Team(self::create(array(
+        $team = self::create(array(
             'name' => $name,
             'alias' => self::generateAlias($name),
             'description_md' => $description,
@@ -547,7 +539,7 @@ class Team extends IdenticonModel implements NamedModel
             'members' => 0,
             'avatar' => $avatar,
             'leader' => $leader
-        ), 'ssssidiiiiss', 'created'));
+        ), 'ssssidiiiiss', 'created');
 
         $team->addMember($leader);
 

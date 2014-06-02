@@ -243,5 +243,8 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         $dsn = 'mysql:dbname=' . MYSQL_DB_NAME . ';host=' . MYSQL_HOST .';charset=UTF8';
         $pdo = new PDO($dsn, MYSQL_USER, MYSQL_PASSWORD);
         $pdo->exec(file_get_contents('DATABASE.sql'));
+
+        if ($modelCache = Service::getModelCache())
+            $modelCache->clear();
     }
 }

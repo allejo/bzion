@@ -17,31 +17,31 @@ class Invitation extends Model
      * The ID of the player receiving the invite
      * @var int
      */
-    private $invited_player;
+    protected $invited_player;
 
     /**
      * The ID of the sender of the invite
      * @var int
      */
-    private $sent_by;
+    protected $sent_by;
 
     /**
      * The ID of the team a player was invited to
      * @var int
      */
-    private $team;
+    protected $team;
 
     /**
      * The time the invitation will expire (Format: YYYY-MM-DD HH:MM:SS)
      * @var DateTime
      */
-    private $expiration;
+    protected $expiration;
 
     /**
      * The optional message sent to a player to join a team
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * The name of the database table used for queries
@@ -50,16 +50,10 @@ class Invitation extends Model
     const TABLE = "invitations";
 
     /**
-     * Construct a new invite
-     * @param int $id The invite's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($invitation)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $invitation = $this->result;
-
         $this->invited_player = $invitation['invited_player'];
         $this->sent_by = $invitation['sent_by'];
         $this->team = $invitation['team'];

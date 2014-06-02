@@ -17,115 +17,115 @@ class Match extends Model
      * The ID of the first team of the match
      * @var int
      */
-    private $team_a;
+    protected $team_a;
 
     /**
      * The ID of the second team of the match
      * @var int
      */
-    private $team_b;
+    protected $team_b;
 
     /**
      * The match points (usually the number of flag captures) Team A scored
      * @var int
      */
-    private $team_a_points;
+    protected $team_a_points;
 
      /**
      * The match points Team B scored
      * @var int
      */
-    private $team_b_points;
+    protected $team_b_points;
 
     /**
      * The BZIDs of players part of Team A who participated in the match, separated by commas
      * @var string
      */
-    private $team_a_players;
+    protected $team_a_players;
 
     /**
      * The BZIDs of players part of Team B who participated in the match, separated by commas
      * @var string
      */
-    private $team_b_players;
+    protected $team_b_players;
 
      /**
      * The ELO score of Team A after the match
      * @var int
      */
-    private $team_a_elo_new;
+    protected $team_a_elo_new;
 
      /**
      * The ELO score of Team B after the match
      * @var int
      */
-    private $team_b_elo_new;
+    protected $team_b_elo_new;
 
     /**
      * The map name used in the match if the league supports more than one map
      * @var string
      */
-    private $map_played;
+    protected $map_played;
 
     /**
      * A JSON string of events that happened during a match, such as captures and substitutions
      * @var string
      */
-    private $match_details;
+    protected $match_details;
 
     /**
      * The port of the server where the match took place
      * @var int
      */
-    private $port;
+    protected $port;
 
     /**
      * The server location of there the match took place
      * @var string
      */
-    private $server;
+    protected $server;
 
     /**
      * The file name of the replay file of the match
      * @var string
      */
-    private $replay_file;
+    protected $replay_file;
 
     /**
      * The absolute value of the ELO score difference
      * @var int
      */
-    private $elo_diff;
+    protected $elo_diff;
 
     /**
      * The timestamp representing when the match was played
      * @var string
      */
-    private $timestamp;
+    protected $timestamp;
 
     /**
      * The timestamp representing when the match information was last updated
      * @var string
      */
-    private $updated;
+    protected $updated;
 
     /**
      * The duration of the match in minutes
      * @var int
      */
-    private $duration;
+    protected $duration;
 
     /**
      * The ID of the person (i.e. referee) who last updated the match information
      * @var string
      */
-    private $entered_by;
+    protected $entered_by;
 
     /**
      * The status of the match. Can be 'entered', 'disabled', 'deleted' or 'reported'
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -133,16 +133,10 @@ class Match extends Model
     const TABLE = "matches";
 
     /**
-     * Construct a new Match
-     * @param int $id The match's ID
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($match)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $match = $this->result;
-
         $this->team_a = $match['team_a'];
         $this->team_b = $match['team_b'];
         $this->team_a_points = $match['team_a_points'];
@@ -483,7 +477,7 @@ class Match extends Model
 
         $timestamp = TimeDate::from($timestamp);
 
-        $match = new Match(self::create(array(
+        $match = self::create(array(
             'team_a' => $a,
             'team_b' => $b,
             'team_a_points' => $a_points,
@@ -495,7 +489,7 @@ class Match extends Model
             'duration' => $duration,
             'entered_by' => $entered_by,
             'status' => 'entered'
-        ), 'iiiiiiisiis', 'updated'));
+        ), 'iiiiiiisiis', 'updated');
 
         // Update team match count
         if ($a_points == $b_points) {

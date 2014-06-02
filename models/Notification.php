@@ -17,25 +17,25 @@ class Notification extends Model
      * The id of the notified player
      * @var int
      */
-    private $receiver;
+    protected $receiver;
 
     /**
      * The text of the notification
      * @var string
      */
-    private $message;
+    protected $message;
 
     /**
      * The status of the notification (unread, read, deleted)
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * When the notification was sent
      * @var DateTime
      */
-    private $timestamp;
+    protected $timestamp;
 
     /**
      * Services that will be notified when a new notification is created
@@ -49,16 +49,10 @@ class Notification extends Model
     const TABLE = "notifications";
 
     /**
-     * Construct a new Visit
-     * @param int $id The visitor's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($notification)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $notification = $this->result;
-
         $this->receiver  = $notification['receiver'];
         $this->message   = $notification['message'];
         $this->status    = $notification['status'];
@@ -77,12 +71,12 @@ class Notification extends Model
      */
     public static function newNotification($receiver, $content, $timestamp = "now", $status = "unread")
     {
-        $notification = new Notification(self::create(array(
+        $notification = self::create(array(
             "receiver"  => $receiver,
             "message"   => $content,
             "timestamp" => $timestamp,
             "status"    => $status
-        ), 'isss'));
+        ), 'isss');
 
         $notification->push();
 

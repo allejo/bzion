@@ -17,37 +17,37 @@ class Visit extends Model
      * The id of the visiting user
      * @var int
      */
-    private $player;
+    protected $player;
 
     /**
      * The ip of the visiting user
      * @var string
      */
-    private $ip;
+    protected $ip;
 
     /**
      * The host of the visiting user
      * @var string
      */
-    private $host;
+    protected $host;
 
     /**
      * The user agent of the visiting user
      * @var string
      */
-    private $user_agent;
+    protected $user_agent;
 
     /**
      * The HTTP_REFERER of the visiting user
      * @var string
      */
-    private $referer;
+    protected $referer;
 
     /**
      * The timestamp of the visit
      * @var DateTime
      */
-    private $timestamp;
+    protected $timestamp;
 
     /**
      * The name of the database table used for queries
@@ -55,16 +55,10 @@ class Visit extends Model
     const TABLE = "visits";
 
     /**
-     * Construct a new Visit
-     * @param int $id The visitor's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($visit)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $visit = $this->result;
-
         $this->player = $visit['player'];
         $this->ip = $visit['ip'];
         $this->host = $visit['host'];
@@ -88,14 +82,14 @@ class Visit extends Model
     {
         $timestamp = new TimeDate($timestamp);
 
-        return new Visit(self::create(array(
+        return self::create(array(
             'player' => $visitor,
             'ip' => $ip,
             'host' => $host,
             'user_agent' => $user_agent,
             'referer' => $referrer,
             'timestamp' => $timestamp->toMysql(),
-        ), 'isssss'));
+        ), 'isssss');
     }
 
 }

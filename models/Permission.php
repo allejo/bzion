@@ -54,13 +54,13 @@ class Permission extends Model
      * The name of the permission
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The description of the permission
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * The name of the database table used for queries
@@ -68,17 +68,10 @@ class Permission extends Model
     const TABLE = "permissions";
 
     /**
-     * Construct a new Permission
-     *
-     * @param int $perm_name The name of the permission
+     * {@inheritDoc}
      */
-    public function __construct($perm_name)
+    protected function assignResult($permission)
     {
-        parent::__construct($perm_name, "name");
-        if (!$this->valid) return;
-
-        $permission = $this->result;
-
         $this->name        = $permission['name'];
         $this->description = $permission['description'];
     }

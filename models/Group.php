@@ -16,19 +16,19 @@ class Group extends UrlModel
      * The subject of the group
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * The time of the last message to the group
      * @var TimeDate
      */
-    private $last_activity;
+    protected $last_activity;
 
     /**
      * The id of the creator of the group
      * @var int
      */
-    private $creator;
+    protected $creator;
 
     /**
      * The status of the group
@@ -36,7 +36,7 @@ class Group extends UrlModel
      * Can be 'active', 'disabled', 'deleted' or 'reported'
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -44,16 +44,10 @@ class Group extends UrlModel
     const TABLE = "groups";
 
     /**
-     * Construct a new group
-     * @param int $id The group's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($group)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $group = $this->result;
-
         $this->subject = $group['subject'];
         $this->last_activity = TimeDate::parse($group['last_activity']);
         $this->creator = $group['creator'];
@@ -178,11 +172,11 @@ class Group extends UrlModel
      */
     public static function createGroup($subject, $creatorId, $members=array())
     {
-        $group = new Group(self::create(array(
+        $group = self::create(array(
             'subject' => $subject,
             'creator' => $creatorId,
             'status'  => "active",
-        ), 'sis', 'last_activity'));
+        ), 'sis', 'last_activity');
 
         foreach ($members as $mid) {
             parent::create(array(

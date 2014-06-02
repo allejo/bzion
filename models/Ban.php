@@ -16,61 +16,61 @@ class Ban extends UrlModel
      * The id of the banned player
      * @var int
      */
-    private $player;
+    protected $player;
 
     /**
      * The ban expiration date
      * @var TimeDate
      */
-    private $expiration;
+    protected $expiration;
 
     /**
      * Either manually or automatically, whether or not a ban has expired
      * @var bool
      */
-    private $expired;
+    protected $expired;
 
     /**
      * The message that will appear when a player is denied connecting to a game server
      * @var string
      */
-    private $srvmsg;
+    protected $srvmsg;
 
     /**
      * The ban reason
      * @var string
      */
-    private $reason;
+    protected $reason;
 
     /**
      * Whether or not a player is allowed to join a server when they are banned
      * @var bool
      */
-    private $allow_server_join;
+    protected $allow_server_join;
 
     /**
      * The ban creation date
      * @var TimeDate
      */
-    private $created;
+    protected $created;
 
     /**
      * The date the ban was last updated
      * @var TimeDate
      */
-    private $updated;
+    protected $updated;
 
     /**
      * The id of the ban author
      * @var int
      */
-    private $author;
+    protected $author;
 
     /**
      * The IP of the banned player if the league would like to implement a global ban list
      * @var string[]
      */
-    private $ipAddresses;
+    protected $ipAddresses;
 
     /**
      * The name of the database table used for queries
@@ -78,16 +78,10 @@ class Ban extends UrlModel
     const TABLE = "bans";
 
     /**
-     * Construct a new Ban
-     * @param int $id The ban's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($ban)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $ban = $this->result;
-
         $this->player = $ban['player'];
         $this->expiration = new TimeDate($ban['expiration']);
         $this->srvmsg = $ban['server_message'];
@@ -107,6 +101,7 @@ class Ban extends UrlModel
      */
     public function addIP($ipAddress)
     {
+        $this->ipAddresses[] = $ipAddress;
         $this->db->query("INSERT INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
     }
 
@@ -280,14 +275,14 @@ class Ban extends UrlModel
                     $allowServerJoin = true;
                 }
 
-                $ban = new Ban(self::create(array(
+                $ban = self::create(array(
                     'player' => $playerID,
                     'expiration' => $expiration->toMysql(),
                     'server_message' => $srvmsg,
                     'reason' => $reason,
                     'allow_server_join' => $allowServerJoin,
                     'author' => $authorID,
-                ), 'isssii', array('created', 'updated')));
+                ), 'isssii', array('created', 'updated'));
 
                 if (is_array($ipAddresses)) {
                     foreach ($ipAddresses as $ip) {

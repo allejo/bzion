@@ -136,7 +136,7 @@ class MessageController extends JSONController
 
     /**
      * Creates the new message form
-     * @param Player $me The currently logged-in player
+     * @param  Player $me The currently logged-in player
      * @return Form
      */
     private function createComposeForm(Player $me)
@@ -161,9 +161,11 @@ class MessageController extends JSONController
     {
         foreach ($form->all() as $child)
             foreach ($child->getErrors() as $error)
+
                 return $error->getMessage();
 
         foreach ($form->getErrors() as $error)
+
             return $error->getMessage();
 
         return "Unknown Error";

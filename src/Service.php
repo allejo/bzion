@@ -45,6 +45,12 @@ abstract class Service
     private static $environment;
 
     /**
+     * The model memory cache
+     * @var ModelCache
+     */
+    private static $modelCache;
+
+    /**
      * @param Request $request
      */
     public static function setRequest($request)
@@ -134,5 +140,15 @@ abstract class Service
     public static function setEnvironment($environment)
     {
         self::$environment = $environment;
+    }
+
+    public static function getModelCache()
+    {
+        return self::$modelCache;
+    }
+
+    public static function setModelCache($modelCache)
+    {
+        self::$modelCache = $modelCache;
     }
 }

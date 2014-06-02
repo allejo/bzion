@@ -19,37 +19,37 @@ class Server extends Model
      * The name of the server
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The address of the server
      * @var string
      */
-    private $address;
+    protected $address;
 
     /**
      * The id of the owner of the server
      * @var int
      */
-    private $owner;
+    protected $owner;
 
     /**
      * The server's bzfquery information
      * @var array
      */
-    private $info;
+    protected $info;
 
     /**
      * The date of the last bzfquery of the server
      * @var TimeDate
      */
-    private $updated;
+    protected $updated;
 
     /**
      * The server's status
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -57,16 +57,10 @@ class Server extends Model
     const TABLE = "servers";
 
     /**
-     * Construct a new Server
-     * @param int $id The server's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($server)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $server = $this->result;
-
         $this->name = $server['name'];
         $this->address = $server['address'];
         $this->owner = $server['owner'];
@@ -84,12 +78,12 @@ class Server extends Model
      */
     public static function addServer($name, $address, $owner)
     {
-        $server = new Server(self::create(array(
+        $server = self::create(array(
             'name' => $name,
             'address' => $address,
             'owner' => $owner,
             'status' => 'active',
-        ), 'ssis', 'updated'));
+        ), 'ssis', 'updated');
         $server->forceUpdate();
 
         return $server;

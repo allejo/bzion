@@ -16,19 +16,19 @@ class NewsCategory extends AliasModel implements NamedModel
      * The name of the category
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Whether or not the category is protected from being deleted
      * @var bool
      */
-    private $protected;
+    protected $protected;
 
     /**
      * The status of the category: 'enabled', 'disabled', or 'deleted'
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -36,16 +36,10 @@ class NewsCategory extends AliasModel implements NamedModel
     const TABLE = "news_categories";
 
     /**
-     * Construct a new News article
-     * @param int $id The news article's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($category)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $category = $this->result;
-
         $this->alias = $category['alias'];
         $this->name = $category['name'];
         $this->protected = $category['protected'];
@@ -154,12 +148,12 @@ class NewsCategory extends AliasModel implements NamedModel
      */
     public static function addCategory($name)
     {
-        return new NewsCategory(self::create(array(
+        return self::create(array(
             'alias' => self::generateAlias($name),
             'name' => $name,
             'protected' => 0,
             'status' => 'enabled'
-        ), 'ssis'));
+        ), 'ssis');
     }
 
     /**

@@ -15,6 +15,17 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     private $playersCreated = array();
 
     /**
+     * Makes sure that a connection to the MySQL database has been achieved
+     * @return Database
+     */
+    public static function connectToDatabase()
+    {
+        global $db;
+        $db = new Database(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
+        return $db;
+    }
+
+    /**
      * Asserts that two arrays have the same values
      *
      * @param array|ArrayAccess $expectedArray

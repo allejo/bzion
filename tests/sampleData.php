@@ -13,6 +13,7 @@ if ($testPlayer->isValid()) {
 }
 
 $db = Database::getInstance();
+Service::setModelCache(new ModelCache());
 
 echo "Adding players...";
 $alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description");

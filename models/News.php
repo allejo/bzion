@@ -16,49 +16,49 @@ class News extends UrlModel implements NamedModel
      * The category of the article
      * @var int
      */
-    private $category;
+    protected $category;
 
     /**
      * The subject of the news article
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * The content of the news article
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * The creation date of the news article
      * @var string
      */
-    private $created;
+    protected $created;
 
     /**
      * The date the news article was last updated
      * @var string
      */
-    private $updated;
+    protected $updated;
 
     /**
      * The ID of the author of the news article
      * @var int
      */
-    private $author;
+    protected $author;
 
     /**
      * The ID of the last person to edit the news article
      * @var int
      */
-    private $editor;
+    protected $editor;
 
     /**
      * The status of the news article
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -66,16 +66,10 @@ class News extends UrlModel implements NamedModel
     const TABLE = "news";
 
     /**
-     * Construct a new News article
-     * @param int $id The news article's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($news)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $news = $this->result;
-
         $this->category = $news['category'];
         $this->subject = $news['subject'];
         $this->content = $news['content'];
@@ -331,14 +325,14 @@ class News extends UrlModel implements NamedModel
 
         // Only allow real players to post news articles and if the player posting has permissions to create new posts
         if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS)) {
-            return new News(self::create(array(
+            return self::create(array(
                 'category' => $categoryId,
                 'subject' => $subject,
                 'content' => $content,
                 'author' => $authorID,
                 'editor' => $authorID,
                 'status' => $status,
-            ), 'issiis', array('created', 'updated')));
+            ), 'issiis', array('created', 'updated'));
         }
 
         return false;

@@ -28,79 +28,79 @@ class Player extends IdenticonModel implements NamedModel
      * The bzid of the player
      * @var int
      */
-    private $bzid;
+    protected $bzid;
 
     /**
      * The id of the player's team
      * @var int
      */
-    private $team;
+    protected $team;
 
     /**
      * The username of the player
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * The player's status
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The url of the player's profile avatar
      * @var string
      */
-    private $avatar;
+    protected $avatar;
 
     /**
      * The player's profile description
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * The id of the player's country
      * @var int
      */
-    private $country;
+    protected $country;
 
     /**
      * The player's timezone, in terms of distance from UTC (i.e. -5 for UTC-5)
      * @var int
      */
-    private $timezone;
+    protected $timezone;
 
     /**
      * The date the player joined the site
      * @var TimeDate
      */
-    private $joined;
+    protected $joined;
 
     /**
      * The date of the player's last login
      * @var TimeDate
      */
-    private $last_login;
+    protected $last_login;
 
     /**
      * The roles a player belongs to
      * @var Role[]
      */
-    private $roles;
+    protected $roles;
 
     /**
      * The permissions a player has
      * @var Permission[]
      */
-    private $permissions;
+    protected $permissions;
 
     /**
      * A section for admins to write notes about players
      * @var string
      */
-    private $admin_notes;
+    protected $admin_notes;
 
     /**
      * The name of the database table used for queries
@@ -113,16 +113,10 @@ class Player extends IdenticonModel implements NamedModel
     const IDENTICON_LOCATION = "/assets/imgs/identicons/players/";
 
     /**
-     * Construct a new Player
-     * @param int $id The player's ID
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($player)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $player = $this->result;
-
         $this->bzid = $player['bzid'];
         $this->username = $player['username'];
         $this->alias = $player['alias'];
@@ -136,7 +130,7 @@ class Player extends IdenticonModel implements NamedModel
         $this->last_login = new TimeDate($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
 
-        $this->roles = Role::getRoles($this->getId());
+        $this->roles = Role::getRoles($this->id);
         $this->permissions = array();
 
         foreach ($this->roles as $role) {
@@ -377,6 +371,16 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Set the player's team
+     * @param int $team The team's ID
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
+        $this->update("team", $team, 'i');
+    }
+
+    /**
      * Updates this player's last login
      * @todo Make me work
      */
@@ -429,6 +433,7 @@ class Player extends IdenticonModel implements NamedModel
             } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));
             }
+            $this->refresh();
 
             return true;
         }

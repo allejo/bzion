@@ -16,43 +16,43 @@ class Page extends AliasModel
      * The name of the page
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The content of the page
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * The creation date of the page
      * @var TimeDate
      */
-    private $created;
+    protected $created;
 
     /**
      * The date the page was last updated
      * @var TimeDate
      */
-    private $updated;
+    protected $updated;
 
     /**
      * The ID of the author of the page
      * @var int
      */
-    private $author;
+    protected $author;
 
     /**
      * Whether the page is the home page
      * @var boolean
      */
-    private $home;
+    protected $home;
 
     /**
      * The status of the page
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * The name of the database table used for queries
@@ -60,16 +60,10 @@ class Page extends AliasModel
     const TABLE = "pages";
 
     /**
-     * Construct a new Page
-     * @param int $id The page's id
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($page)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $page = $this->result;
-
         $this->name = $page['name'];
         $this->alias = $page['alias'];
         $this->content = $page['content'];
@@ -156,14 +150,14 @@ class Page extends AliasModel
      */
     public static function addPage($title, $content, $authorID, $status = "live")
     {
-        return new Page(self::create(array(
+        return self::create(array(
             'name' => $title,
             'alias' => self::generateAlias($title),
             'content' => $content,
             'author' => $authorID,
             'home' => 0,
             'status' => $status,
-        ), 'sssiis', array('created', 'updated')));
+        ), 'sssiis', array('created', 'updated'));
     }
 
     /**

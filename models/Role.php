@@ -16,26 +16,26 @@ class Role extends Model
      * The name of the role
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Whether or not a role is reusable, when a player has a unique role, they will have their own role that isn't
      * reusable by other players
      * @var bool
      */
-    private $reusable;
+    protected $reusable;
 
     /**
      * Whether or not the role is protected from being deleted from the web interface
      * @var bool
      */
-    private $protected;
+    protected $protected;
 
     /**
      * An array of permissions a role has
      * @var bool[]
      */
-    private $permissions;
+    protected $permissions;
 
     /**
      * The name of the database table used for queries
@@ -43,17 +43,10 @@ class Role extends Model
     const TABLE = "roles";
 
     /**
-     * Create a new Role object
-     *
-     * @param int $id The role ID
+     * {@inheritDoc}
      */
-    public function __construct($id)
+    protected function assignResult($role)
     {
-        parent::__construct($id);
-        if (!$this->valid) return;
-
-        $role = $this->result;
-
         $this->name        = $role['name'];
         $this->reusable    = $role['reusable'];
         $this->protected   = $role['protected'];
@@ -61,7 +54,7 @@ class Role extends Model
 
         $permissions = parent::fetchIds(
             "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?", "i",
-            array($id), "permissions", "name");
+            array($this->id), "permissions", "name");
 
         foreach ($permissions as $permission) {
             $this->permissions[$permission] = true;
@@ -157,11 +150,11 @@ class Role extends Model
      */
     public static function createNewRole($name, $reusable)
     {
-        return new Role(self::create(array(
+        return self::create(array(
             'name' => $name,
             'reusable' => $reusable,
             'protected' => 0,
-        ), 'sii'));
+        ), 'sii');
     }
 
     /**

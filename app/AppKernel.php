@@ -54,6 +54,7 @@ class AppKernel extends Kernel
 
         Service::setGenerator($this->container->get('router')->getGenerator());
         Service::setEnvironment($this->getEnvironment());
+        Service::setModelCache(new ModelCache());
         $this->setUpTwig();
     }
 

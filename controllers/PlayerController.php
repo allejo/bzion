@@ -17,7 +17,7 @@ class PlayerController extends JSONController
         } elseif ($team) {
             $players = Player::getTeamUsernames($team->getId());
         } else {
-            return array("players" => $players);
+            return array("players" => Player::getPlayers());
         }
 
         if ($this->isJson())
