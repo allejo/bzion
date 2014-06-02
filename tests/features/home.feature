@@ -15,4 +15,3 @@ Feature: Home Page
       When I log in
       And I go to the homepage
       Then I should not see "Register"
-

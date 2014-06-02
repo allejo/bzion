@@ -25,21 +25,9 @@ class MessageController extends JSONController
         if (!$me->hasPermission(Permission::SEND_PRIVATE_MSG))
             throw new ForbiddenException("You are not allowed to send messages");
 
-        $notBlank = array( 'constraints' => new NotBlank() );
-        $form = Service::getFormFactory()->createBuilder()
-            ->add('Recipients', new PlayerType(), array(
-                'constraints' => new NotBlank(),
-                'include' => $me,
-            ))
-            ->add('Subject', 'text', $notBlank)
-            ->add('Message', 'textarea', $notBlank)
-            ->add('Send', 'submit')
-            // Prevents JS from going crazy if we load a page with AJAX
-            ->setAction(Service::getGenerator()->generate('message_list'))
-            ->setMethod('POST')
-            ->getForm();
-
+        $form = $this->createComposeForm($me);
         $form->handleRequest($request);
+
         if ($form->isSubmitted()) {
             if (count($form->get('Recipients')->getData()) < 2) {
                 $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
@@ -144,6 +132,29 @@ class MessageController extends JSONController
 
         // Reset the form
         $form = $cloned;
+    }
+
+    /**
+     * Creates the new message form
+     * @param Player $me The currently logged-in player
+     * @return Form
+     */
+    private function createComposeForm(Player $me)
+    {
+        $notBlank = array( 'constraints' => new NotBlank() );
+
+        return Service::getFormFactory()->createBuilder()
+            ->add('Recipients', new PlayerType(), array(
+                'constraints' => new NotBlank(),
+                'include' => $me,
+            ))
+            ->add('Subject', 'text', $notBlank)
+            ->add('Message', 'textarea', $notBlank)
+            ->add('Send', 'submit')
+            // Prevents JS from going crazy if we load a page with AJAX
+            ->setAction(Service::getGenerator()->generate('message_list'))
+            ->setMethod('POST')
+            ->getForm();
     }
 
     private function getErrorMessage(Form &$form)

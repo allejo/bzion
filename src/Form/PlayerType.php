@@ -121,9 +121,6 @@ class PlayerType extends AbstractType
         // array
         $players = explode(',', $string);
 
-        // Always include a requested player
-        $this->includePlayer($players);
-
         // Remove all the whitespace and duplicate entries
         $players = array_map(function ($r) { return trim($r); }, $players);
         $players = array_unique($players);
@@ -136,30 +133,25 @@ class PlayerType extends AbstractType
                        ? $this->usernameToModel($player)
                        : $this->idToModel($player);
 
-                if ($model)
+                if ($model) {
+                    if ($this->include && $model->getId() == $this->include->getId()) {
+                        // The caller has explicitly asked to include this player,
+                        // so we just ignore any entries the user gave us to prevent
+                        // duplications
+                        continue;
+                    }
+
                     $models[] = $model;
+                }
             } catch (InvalidNameException $e) {
                 $form->addError(new FormError($e->getMessage()));
             }
         }
 
+        if ($this->include)
+            $models[] = $this->include;
+
         return $models;
-    }
-
-    /**
-     * Make sure that the player given in options['include'] is in the returned
-     * array
-     * @param array $players
-     * @return void
-     */
-    private function includePlayer(&$players)
-    {
-        if (!$this->include)
-            return;
-
-        $players[] = ($this->listUsernames)
-               ? $this->include->getUsername()
-               : $this->include->getId();
     }
 
     /**
