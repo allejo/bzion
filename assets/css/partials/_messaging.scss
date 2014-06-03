@@ -275,8 +275,17 @@ main {
 
                             > input {
                                 @include box-sizing(border-box);
+                                @include placeholder {
+                                    color: #999;
+                                    opacity: 1;
+                                }
 
+                                background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
+                                border: 1px solid #aaa;
+                                font-family: sans-serif;
                                 font-size: 13px;
+                                margin-top: 1px;
+                                height: 31px;
                                 padding: 5px;
                                 width: 100%;
 
@@ -334,7 +343,7 @@ main {
                         text-align: left;
                     }
 
-                    .input_group_main {
+                    .player-select {
                         @include box-sizing(border-box);
 
                         border-radius: 0;
@@ -343,7 +352,7 @@ main {
                         width: 100%;
                     }
 
-                    .input_group_main input[type=text] {
+                    .player-select input[type=text] {
                         @include box-sizing(border-box);
 
                         background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);

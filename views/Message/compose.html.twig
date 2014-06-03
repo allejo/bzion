@@ -8,11 +8,11 @@
             </div>
         </div>
 
-        {{ form_start(form, {'attr': {'class': 'compose_form', 'autocomplete': 'off'} }) }}
+        {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
             {{ form_errors(form) }}
             <div class="input_group">
-                {{ form_row(form.Recipients, { label: 'Recipients: ', attr: { class: 'input_group_main', placeholder: 'brad, kierra, ...'} }) }}
-                {{ form_row(form.Subject,    { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
+                {{ form_row(form.Recipients.players) }}
+                {{ form_row(form.Subject, { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
             </div>
             <div class="editor">
                 {{ form_row(form.Message,    { attr: { 'placeholder': 'Enter your message here...'} }) }}
