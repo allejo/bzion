@@ -1,6 +1,6 @@
 Feature: Messaging
    In order to make secret plans
-   As a GU league veteran
+   As a league veteran
    I need to be able to communicate with the newbs
 
    Scenario: Denial of Access

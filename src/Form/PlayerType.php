@@ -210,7 +210,7 @@ class PlayerType extends AbstractType
             return $getName($models);
 
         $models = array_map($getName, $models);
-        sort($models);
+        natcasesort($models);
 
         return $models;
     }

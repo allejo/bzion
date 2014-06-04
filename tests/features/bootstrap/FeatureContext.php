@@ -117,6 +117,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
     /**
      * @Given I have a team called :name
+     * @Given there is a team called :name
      */
     public function iHaveATeamCalled($name)
     {
