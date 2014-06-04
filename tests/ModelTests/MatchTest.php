@@ -42,6 +42,9 @@ class MatchTest extends TestCase
         $this->assertEquals(25, $this->match->getEloDiff());
 
         $this->assertFalse($this->match->isDraw());
+
+        $this->assertEquals($this->team_a->getId(), $this->match->getWinner()->getId());
+        $this->assertEquals($this->team_b->getId(), $this->match->getLoser()->getId());
     }
 
     public function testTeamBWin()
@@ -57,6 +60,9 @@ class MatchTest extends TestCase
         $this->assertEquals(25, $this->match->getEloDiff());
 
         $this->assertFalse($this->match->isDraw());
+
+        $this->assertEquals($this->team_b->getId(), $this->match->getWinner()->getId());
+        $this->assertEquals($this->team_a->getId(), $this->match->getLoser()->getId());
     }
 
     public function testDraw()
@@ -71,6 +77,9 @@ class MatchTest extends TestCase
 
         $this->assertEquals(1209, $this->match->getTeamAEloNew());
         $this->assertEquals(1201, $this->match->getTeamBEloNew());
+
+        $this->assertInstanceOf("Team", $this->match->getWinner());
+        $this->assertInstanceOf("Team", $this->match->getLoser());
     }
 
     public function testEqualEloDraw()
@@ -103,6 +112,12 @@ class MatchTest extends TestCase
         $this->assertEquals("now", $this->match->getTimestamp());
 
         $this->assertEquals($this->player_a->getId(), $this->match->getEnteredBy()->getId());
+
+        $this->assertEquals(5, $this->match->getScore($this->team_a->getId()));
+        $this->assertEquals(2, $this->match->getOpponentScore($this->team_a->getId()));
+
+        $this->assertEquals($this->team_a->getId(), $this->match->getOpponent($this->team_b->getId())->getId());
+
 
         $matches = Match::getMatches();
         $this->assertArrayContainsModel($this->match, $matches);
