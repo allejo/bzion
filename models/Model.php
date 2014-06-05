@@ -23,6 +23,22 @@ abstract class Model extends CachedModel
     }
 
     /**
+     * Find if the model is in the trash can (or doesn't exist)
+     *
+     * @return boolean True if the model has been deleted
+     */
+    public function isDeleted()
+    {
+        if (!$this->isValid())
+            return true;
+
+        if (!isset($this->status))
+            return false;
+
+        return ($this->status == "deleted");
+    }
+
+    /**
      * Converts an array of IDs to an array of Models
      * @param  int[] $idArray The list of IDs
      * @return array An array of models

@@ -33,7 +33,7 @@ abstract class HTMLController extends Controller
     {
         $model = parent::findModelInParameters($modelParameter, $routeParameters);
 
-        if (!$model instanceof UrlModel || $model->isValid())
+        if (!$model instanceof Model || !$model->isDeleted())
             return $model;
         elseif ($modelParameter->getName() !== "me")
             throw new ModelNotFoundException($model->getParamName());
