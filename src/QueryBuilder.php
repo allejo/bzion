@@ -146,6 +146,23 @@ class QueryBuilder
     }
 
     /**
+     * Request that a column equals a number
+     *
+     * @param int|Model $number The number that the column's value should equal
+     *                          to - if a Model is provided, use the model's ID
+     * @return QueryBuilder
+     */
+    public function is($number)
+    {
+        if ($number instanceof Model)
+            $number = $number->getId();
+
+        $this->addColumnCondition("= ?", $number, 'i');
+
+        return $this;
+    }
+
+    /**
      * Request that a column value starts with a string (case-insensitive)
      *
      * @param  string       $string The substring that the column's value should start with
@@ -218,13 +235,17 @@ class QueryBuilder
      *
      * The columns returned are the ones specified when __constucting() the object
      *
+     * @param string|string[] The column(s) that should be returned
      * @return array[]
      */
-    public function getArray()
+    public function getArray($columns)
     {
+        if (!is_array($columns))
+            $columns = array($columns);
+
         $db = Database::getInstance();
 
-        return $db->query($this->createQuery($this->columns), $this->types, $this->parameters);
+        return $db->query($this->createQuery($columns), $this->types, $this->parameters);
     }
 
     /**
@@ -290,7 +311,8 @@ class QueryBuilder
     {
         $columnStrings = array('id');
 
-        foreach ($columns as $returnName => $dbName) {
+        foreach ($columns as $returnName) {
+            $dbName = $this->columns[$returnName];
             $columnStrings[] = "`$dbName` as `$returnName`";
         }
 

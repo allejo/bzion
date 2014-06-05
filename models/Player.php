@@ -494,35 +494,6 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
-     * Returns an array of all active players' IDs and usernames
-     * @param  string   $start  What the requested usernames should start with
-     * @param  int      $except A player ID to exclude
-     * @return string[] The keys represent the player's ID
-     */
-    public static function getPlayerUsernamesStartingWith($start, $except)
-    {
-        $array = self::fetchIds(
-            "WHERE status='active' and id != ? AND username LIKE CONCAT(?, '%') ORDER BY username",
-            'is',array($except, $start), '', 'id,username');
-
-        return $array;
-    }
-
-    /**
-     * Returns an array of players belonging in a team
-     * @param  int      $teamId The ID of the team
-     * @return string[] The keys represent the player's ID
-     */
-    public static function getTeamUsernames($teamId)
-    {
-        $array = self::fetchIds(
-            "WHERE status='active' and team = ?",
-            'i',array($teamId), '', 'id,username');
-
-        return $array;
-    }
-
-    /**
      * Get all of the members belonging to a team
      * @param  int      $teamID The ID of the team to fetch the members of
      * @return Player[] An array of Player objects of the team members
@@ -532,6 +503,21 @@ class Player extends IdenticonModel implements NamedModel
         return self::arrayIdToModel(
             parent::fetchIds("WHERE team = ?", "i", array($teamID))
         );
+    }
+
+    /**
+     * Get a query builder for players
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Player', array(
+            'columns' => array(
+                'username' => 'username',
+                'team' => 'team'
+            ),
+            'activeStatuses' => array('active', 'test'),
+        ));
     }
 
     /**

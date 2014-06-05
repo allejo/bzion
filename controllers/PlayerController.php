@@ -12,19 +12,19 @@ class PlayerController extends JSONController
 
     public function listAction(Request $request, Player $me, Team $team=null)
     {
+        $query = Player::getQueryBuilder()->active();
+
         if ($startsWith = $request->query->get('startsWith')) {
-            $players = Player::getPlayerUsernamesStartingWith($startsWith, $me->getId());
-        } elseif ($team) {
-            $players = Player::getTeamUsernames($team->getId());
-        } else {
-            return array("players" => Player::getPlayers());
+            $query->where('username')->startsWith($startsWith);
+        }
+
+        if ($team) {
+            $query->where('team')->is($team);
         }
 
         if ($this->isJson())
-            return new JSONResponse(array('players' => $players));
+            return new JSONResponse(array('players' => $query->getArray('username')));
         else
-            $players = Player::arrayIdToModel(array_map(function ($p) {return $p['id'];},$players));
-
-        return array("players" => $players);
+            return array('players' => $query->getModels());
     }
 }
