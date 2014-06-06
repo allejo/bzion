@@ -8,5 +8,5 @@ web_profiler:
 
 framework:
     router:
-        resource: "%kernel.root_dir%/Resource/routes_dev.yml"
+        resource: "%kernel.root_dir%/Resource/routes_profile.yml"
     profiler: { only_exceptions: false }

@@ -19,7 +19,7 @@ echo "Adding players...";
 $alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description");
 $allejo     = Player::newPlayer(31098, "allejo", null, "active", Player::DEVELOPER);
 $ashvala    = Player::newPlayer(34353, "ashvala", null, "active", Player::DEVELOPER);
-$autoreport = Player::newPlayer(55976, "AutoReport");
+$autoreport = Player::newPlayer(55976, "AutoReport", null, "test");
 $blast      = Player::newPlayer(180, "blast", null, "active", Player::S_ADMIN);
 $kierra     = Player::newPlayer(2229, "kierra", null, "active", Player::ADMIN);
 $mdskpr     = Player::newPlayer(8312, "mdskpr");

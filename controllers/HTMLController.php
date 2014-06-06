@@ -196,8 +196,8 @@ abstract class HTMLController extends Controller
             if ($form->get($action)->isClicked())
                 return $onYes();
             elseif (!$onNo)
-                // We didn't get told about what to do when the user presses
-                // no, just get them back where they were
+                // We didn't get told about what to do when the user presses no,
+                // just get them back where they were
                 return new RedirectResponse($form->get('original_url')->getData());
             else
                 return $onNo();

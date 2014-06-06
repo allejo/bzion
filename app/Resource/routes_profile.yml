@@ -13,5 +13,9 @@ _configurator:
     prefix: /_configurator
     defaults: { _defaultHandler: true }
 
+test_login:
+    pattern:    /login/{user}
+    defaults: { _controller: 'Login', _action: 'loginAsTestUser' }
+
 _main:
     resource: ../routes.yml
