@@ -231,6 +231,9 @@ class Group extends UrlModel
 
         $this->updateLastActivity();
 
+        $this->db->query("UPDATE `player_groups` SET `read` = 0 WHERE `group` = ? AND `player` != ?",
+            'ii', array($this->id, $from->getId()));
+
         return $message;
     }
 

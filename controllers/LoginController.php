@@ -78,5 +78,6 @@ class LoginController extends HTMLController
             throw new Exception("The player you specified is not a test user!");
 
         $session->set("playerId", $user->getId());
+        $session->set("username", $user->getUsername());
     }
 }
