@@ -51,6 +51,12 @@ abstract class Service
     private static $modelCache;
 
     /**
+     * The AppKernel's container
+     * @var Monolog\Logger
+     */
+    private static $container;
+
+    /**
      * @param Request $request
      */
     public static function setRequest($request)
@@ -150,5 +156,15 @@ abstract class Service
     public static function setModelCache($modelCache)
     {
         self::$modelCache = $modelCache;
+    }
+
+    public static function getContainer()
+    {
+        return self::$container;
+    }
+
+    public static function setContainer(&$container)
+    {
+        self::$container = $container;
     }
 }

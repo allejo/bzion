@@ -39,7 +39,8 @@
         "symfony/web-profiler-bundle": ">=2.5.0",
         "phpunit/phpunit": "4.1.*",
         "phpdocumentor/phpdocumentor": "dev-develop",
-        "sensio/distribution-bundle": "3.0.*@dev"
+        "sensio/distribution-bundle": "3.0.*@dev",
+        "symfony/monolog-bundle": ">=2.4.0"
     },
 
     "autoload": {
@@ -47,7 +48,7 @@
         "psr-4"    : { "": "app/" }
     },
     "autoload-dev": {
-        "classmap": [ "tests/"]
+        "classmap": [ "tests/" ]
     },
     "archive": {
         "exclude": ["/bzion-config.php", "bzion_errors.log", ".sass_cache"]

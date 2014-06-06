@@ -304,9 +304,22 @@ abstract class Controller
      */
     protected function render($view, $parameters=array())
     {
+        $log = (Service::getContainer() && Service::getContainer()->has('logger'));
+
+        if ($log) {
+            $stopwatch = new Symfony\Component\Stopwatch\Stopwatch;
+            $stopwatch = Service::getContainer()->get('debug.stopwatch');
+            $stopwatch->start('view.render');
+        }
+
         $template = Service::getTemplateEngine();
 
-        return $template->render($view, $parameters);
+        $ret =  $template->render($view, $parameters);
+
+        if ($log)
+            $stopwatch->stop('view.render');
+
+        return $ret;
     }
 }
 

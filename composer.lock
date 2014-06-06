@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b039dfe4e68a3fc62c7fd3f2402b87f4",
+    "hash": "a4e202c2215ae22dd930c3ad149ec5b6",
     "packages": [
         {
             "name": "components/jquery",
@@ -4822,6 +4822,128 @@
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
             "time": "2014-05-31 02:02:56"
+        },
+        {
+            "name": "symfony/monolog-bridge",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Bridge/Monolog",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/MonologBridge.git",
+                "reference": "995c721c078186e968cd74bffdbbd03d25e1177e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/MonologBridge/zipball/995c721c078186e968cd74bffdbbd03d25e1177e",
+                "reference": "995c721c078186e968cd74bffdbbd03d25e1177e",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "~1.3",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/console": "~2.3",
+                "symfony/event-dispatcher": "~2.2",
+                "symfony/http-kernel": "~2.2"
+            },
+            "suggest": {
+                "symfony/console": "For the possibility to show log messages in console commands depending on verbosity settings. You need version ~2.3 of the console for it.",
+                "symfony/event-dispatcher": "Needed when using log messages in console commands",
+                "symfony/http-kernel": "For using the debugging handlers together with the response life cycle of the HTTP kernel."
+            },
+            "type": "symfony-bridge",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Bridge\\Monolog\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Monolog Bridge",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-16 10:36:21"
+        },
+        {
+            "name": "symfony/monolog-bundle",
+            "version": "v2.6.0",
+            "target-dir": "Symfony/Bundle/MonologBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/MonologBundle.git",
+                "reference": "e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a",
+                "reference": "e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "~1.8",
+                "php": ">=5.3.2",
+                "symfony/config": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/http-kernel": "~2.3",
+                "symfony/monolog-bridge": "~2.3"
+            },
+            "require-dev": {
+                "symfony/console": "~2.3",
+                "symfony/yaml": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Bundle\\MonologBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony MonologBundle",
+            "homepage": "http://symfony.com",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2014-06-04 16:49:13"
         },
         {
             "name": "symfony/web-profiler-bundle",
