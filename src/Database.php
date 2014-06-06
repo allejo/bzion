@@ -125,31 +125,30 @@ class Database
      */
     public function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
-        $log = (Service::getContainer() && Service::getContainer()->has('logger'));
+        $queryType = strtok($queryText, ' ');
+        $eventName = "database.query.$queryType";
 
-        if ($log) {
-            $queryType = strtok($queryText, " ");
-            // $stopwatch = new Symfony\Component\Stopwatch\Stopwatch;
-            $stopwatch = Service::getContainer()->get('debug.stopwatch');
-            $stopwatch->start('databaseQuery' . $queryType);
-        }
+        Debug::startStopwatch($eventName);
 
         $return = $this->doQuery($queryText, $typeDef, $params);
 
-        if ($log) {
-            $event = $stopwatch->stop('databaseQuery' . $queryType);
-            $periods = $event->getPeriods();
-            $duration = end($periods)->getDuration();
-            Service::getContainer()->get('logger')->debug("Database $queryType query", array(
-                "query" => $queryText,
-                "params" => $params,
-                "duration" => $duration
-            ));
-        }
+        $duration = Debug::finishStopwatch($eventName);
+        Debug::log("Database $queryType query", array(
+            "query" => $queryText,
+            "params" => $params,
+            "duration" => "$duration ms"
+        ));
 
         return $return;
     }
 
+    /**
+     * Perform a query
+     * @param  string      $queryText The prepared SQL statement that will be executed
+     * @param  bool|string $typeDef   (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
+     * @param  mixed|array $params    (Optional) The array of values that will be binded to the prepared statement
+     * @return mixed       Returns an array of the values received from the query or returns false on empty
+     */
     private function doQuery($queryText, $typeDef = FALSE, $params = FALSE)
     {
         $multiQuery = true;
