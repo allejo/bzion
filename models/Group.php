@@ -123,6 +123,36 @@ class Group extends UrlModel
     }
 
     /**
+     * Find whether the last message in the group has been read by a player
+     *
+     * @param int $playerId The ID of the player
+     * @return boolean
+     */
+    public function isReadBy($playerId)
+    {
+        $query = $this->db->query("SELECT `read` FROM `player_groups` WHERE `player` = ? AND `group` = ?",
+            'ii', array($playerId, $this->id));
+
+        return ($query[0]['read'] == 1);
+    }
+
+    /**
+     * Mark the last message in the group as having been read by a player
+     *
+     * @param int $playerId The ID of the player
+     * @return void
+     */
+    public function markReadBy($playerId)
+    {
+        $query = $this->db->query(
+            "UPDATE `player_groups` SET `read` = 1 WHERE `player` = ? AND `group` = ?",
+            'ii', array($playerId, $this->id));
+
+        return ($query[0]['read'] == 1);
+    }
+
+
+    /**
      * {@inheritDoc}
      */
     protected static function getRouteName($action='show')
@@ -200,9 +230,6 @@ class Group extends UrlModel
         $message = Message::sendMessage($this->getId(), $from->getId(), $message, $status);
 
         $this->updateLastActivity();
-        foreach ($this->getMembers($from->getId()) as $member) {
-            $member->notify("{$from->getUsername()} has sent you a new message in {$this->getSubject()}");
-        }
 
         return $message;
     }

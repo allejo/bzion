@@ -494,6 +494,19 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Show the number of messages the user hasn't read yet
+     * @return int
+     */
+    public function countUnreadMessages()
+    {
+        $result = $this->db->query(
+            "SELECT COUNT(*) FROM `player_groups` WHERE `player` = ? AND `read` = 0",
+            'i', $this->id);
+
+        return $result[0]['COUNT(*)'];
+    }
+
+    /**
      * Get all of the members belonging to a team
      * @param  int      $teamID The ID of the team to fetch the members of
      * @return Player[] An array of Player objects of the team members

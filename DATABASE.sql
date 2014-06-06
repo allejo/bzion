@@ -560,6 +560,7 @@ CREATE TABLE `player_groups` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player` int(10) unsigned NOT NULL COMMENT 'The player ID',
   `group` int(10) unsigned NOT NULL COMMENT 'The group ID a player belongs to',
+  `read` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Whether the last message in the group has been read by the player',
   PRIMARY KEY (`id`),
   KEY `player` (`player`),
   CONSTRAINT `player_groups_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`)

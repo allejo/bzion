@@ -61,6 +61,7 @@ class MessageController extends JSONController
     public function showAction(Group $discussion, Player $me, Request $request)
     {
         $this->assertCanParticipate($me, $discussion);
+        $discussion->markReadBy($me->getId());
 
         // Create the form to send a message to the discussion
         $form = Service::getFormFactory()->createBuilder()
