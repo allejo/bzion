@@ -35,8 +35,9 @@ abstract class HTMLController extends Controller
 
         if (!$model instanceof Model || !$model->isDeleted())
             return $model;
-        elseif ($modelParameter->getName() !== "me")
-            throw new ModelNotFoundException($model->getParamName());
+        elseif ($modelParameter->getName() !== "me") {
+            throw new ModelNotFoundException($model->getTypeForHumans());
+        }
 
         return $model;
     }

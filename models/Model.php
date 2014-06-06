@@ -54,6 +54,41 @@ abstract class Model extends CachedModel
     }
 
     /**
+     * Gets the type of the model
+     * @return string The type of the model, e.g. "server"
+     */
+    public static function getType()
+    {
+        return self::toSnakeCase(get_called_class());
+    }
+
+    /**
+     * Gets a human-readable format of the model's type
+     * @return string
+     */
+    public static function getTypeForHumans()
+    {
+        return self::getType();
+    }
+
+    /**
+     * Takes a CamelCase string and converts it to a snake_case one
+     * @param $input The string to convert
+     * @return string
+     */
+    private static function toSnakeCase($input)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        return implode('_', $ret);
+    }
+
+    /**
      * Convert a markdown string to HTML. This function is used to have one global configuration with all markdown parsing
      *
      * @param string $text The markdown to be parsed to HTML
