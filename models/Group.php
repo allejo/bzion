@@ -144,9 +144,10 @@ class Group extends UrlModel
      */
     public function markReadBy($playerId)
     {
-        $query = $this->db->query(
+        $this->db->query(
             "UPDATE `player_groups` SET `read` = 1 WHERE `player` = ? AND `group` = ? AND `read` = 0",
-            'ii', array($playerId, $this->id));
+            'ii', array($playerId, $this->id)
+        );
     }
 
 

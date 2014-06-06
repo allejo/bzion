@@ -8,9 +8,7 @@
         <directory>models</directory>
         <directory>src</directory>
         <directory>tests</directory>
-        <file>controllers/Controller.php</file>
         <file>controllers/Header.php</file>
-        <file>controllers/HTMLController.php</file>
         <ignore>app/cache/*</ignore>
     </files>
     <transformations>

@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class Service
 {
@@ -52,7 +53,7 @@ abstract class Service
 
     /**
      * The AppKernel's container
-     * @var Monolog\Logger
+     * @var ContainerInterface
      */
     private static $container;
 
