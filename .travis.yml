@@ -8,7 +8,9 @@ php:
 matrix:
     include:
         - php: "hhvm-nightly"
-          env: NO_COVERAGE=1
+          env:
+            - NO_COVERAGE=1
+            - BZION_HHVM=1
     allow_failures:
         - php: 5.6
         - php: hhvm-nightly
@@ -16,7 +18,6 @@ matrix:
 
 install:
  - curl -sS https://getcomposer.org/installer | php
- - php composer.phar install --no-interaction
 
 before_script: bash -xe tests/initialize.sh
 

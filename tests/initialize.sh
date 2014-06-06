@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-FILE=bzion-config.php
+COMPOSER_ARGS="--no-interaction"
+if [[ $BZION_HHVM -eq 1 ]]; then
+   COMPOSER_ARGS="-v"
+fi
 
+php composer.phar install $COMPOSER_ARGS
+
+FILE=bzion-config.php
 cp bzion-config-example.php $FILE
 
 mysql -e "CREATE DATABASE IF NOT EXISTS bzion;" -uroot;
