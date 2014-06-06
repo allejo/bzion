@@ -21,8 +21,7 @@ function initializeSelect() {
         },
         formatSelection: format,
         formatResult: format,
-        // dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
-        });
+    });
 
     // Make sure that PHP knows we are sending player IDs, not usernames
     $("#form_Recipients_ListUsernames").attr('value', '0');
@@ -55,18 +54,22 @@ function updateSelector(selector) {
 function updateSelectors(selectors) {
     $.get(window.location.pathname, function(data) {
         $.each(selectors, function(i, key) {
-            $(key).html($(data).find(key).html());
+            var selector = $(data).closest(key);
+            if (!selector.length)
+                selector = $(data).find(key);
+
+            $(key).html(selector.html());
         });
         initPage();
     }, 'html');
 }
 
 function updatePage() {
-    return updateSelector(".messaging");
+    return updateSelectors([".messaging", "nav"]);
 }
 
 function updateMessages() {
-    return updateSelectors([".scrollable_messages", ".conversations"]);
+    return updateSelectors([".scrollable_messages", ".conversations", "nav"]);
 }
 
 // Response submit event
