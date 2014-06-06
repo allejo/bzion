@@ -3,8 +3,8 @@
 namespace BZIon\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Process\Process;
 
@@ -20,11 +20,10 @@ class Command extends ContainerAwareCommand
      */
     protected function initProgress(&$output, $count)
     {
-        $this->progress = $this->getHelperSet()->get('progress');
+        $this->progress = new ProgressBar($output, $count);
 
-        // the finished part of the bar
         $this->progress->setBarCharacter('<comment>=</comment>');
-        $this->progress->start($output, $count);
+        $this->progress->start();
     }
 
     /**
