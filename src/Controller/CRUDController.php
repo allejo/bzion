@@ -22,11 +22,11 @@ abstract class CRUDController extends JSONController
             throw new ForbiddenException($this->getMessage($model, 'softDelete', 'error'));
 
         $session = $this->getRequest()->getSession();
+        $successMessage = $this->getMessage($model, 'softDelete', 'success');
 
-        return $this->showConfirmationForm(function () use (&$model, &$session) {
+        return $this->showConfirmationForm(function () use (&$model, &$session, $successMessage) {
             $model->delete();
-            $session->getFlashBag()->add('success',
-                     $this->getMessage($model, 'softDelete', 'success'));
+            $session->getFlashBag()->add('success', $successMessage);
 
             return new RedirectResponse($model->getUrl('list'));
         }, $this->getMessage($model, 'softDelete', 'confirm'), "Delete");
