@@ -2,64 +2,66 @@
 
 {% block messages %}
     <section id="groupMessages" class="chat_area" data-id="{{ group.id }}">
-        <section class="details">
-            <div class="meta">
-                <p class="subject">{{ group.subject }}</p>
+        <div class="dimmable">
+            <section class="conversation_details">
+                <div class="meta">
+                    <p class="subject">{{ group.subject }}</p>
 
-                <div class="tools">
-                    <i class="fa fa-cog"></i>
-                    <i class="fa fa-times close"></i>
+                    <div class="tools">
+                        <i class="fa fa-cog"></i>
+                        <i class="fa fa-times close"></i>
+                    </div>
                 </div>
-            </div>
-            <p class="members">
-                {% if group.members is not empty %}
-                    {% for member in group.members %}
-                        {{- member.username -}}
-                        {%- if not loop.last -%}
-                            {{- ', ' -}}
-                        {%- endif -%}
+                <p class="members">
+                    {% if group.members is not empty %}
+                        {% for member in group.members %}
+                            {{- member.username -}}
+                            {%- if not loop.last -%}
+                                {{- ', ' -}}
+                            {%- endif -%}
+                        {% endfor %}
+                    {% else %}
+                        No other recipients
+                    {% endif %}
+                </p>
+            </section>
+
+            <section class="scrollable_messages">
+                <ul id="messageView" class="messages">
+                    {% for message in messages %}
+                        <li>
+                            {% if message.author.id == me.id %}
+                                <div class="bubble me">
+                            {% else %}
+                                <div class="bubble">
+                            {% endif %}
+                                    {# Only display the author details for when the message wasn't sent from the previous user #}
+
+                                    {% if message.author.id != previousAuthor %}
+                                        <div class="message_details">
+                                            <div class='author'>{{ message.author.username }}</div>
+                                            <div class='date'>{{ message.creationDate }}</div>
+                                        </div>
+                                    {% endif %}
+
+                                    <p>{{ message.content }}</p>
+                                </div>
+                        </li>
+
+                        {% set previousAuthor = message.author.id %}
                     {% endfor %}
-                {% else %}
-                    No other recipients
-                {% endif %}
-            </p>
-        </section>
+                </ul>
+            </section>
 
-        <section class="scrollable_messages">
-            <ul id="messageView" class="messages">
-                {% for message in messages %}
-                    <li>
-                        {% if message.author.id == me.id %}
-                            <div class="bubble me">
-                        {% else %}
-                            <div class="bubble">
-                        {% endif %}
-                                {# Only display the author details for when the message wasn't sent from the previous user #}
+            {{ form_start(form, {'attr': {'class': 'reply_form', 'autocomplete': 'off'} }) }}
+                {{ form_errors(form) }}
+                <div class="quick_reply">
+                    {{ form_errors(form.message) }}
+                    {{ form_widget(form.message, {id: 'composeArea', attr: {class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
 
-                                {% if message.author.id != previousAuthor %}
-                                    <div class="details">
-                                        <div class='author'>{{ message.author.username }}</div>
-                                        <div class='date'>{{ message.creationDate }}</div>
-                                    </div>
-                                {% endif %}
-
-                                <p>{{ message.content }}</p>
-                            </div>
-                    </li>
-
-                    {% set previousAuthor = message.author.id %}
-                {% endfor %}
-            </ul>
-        </section>
-
-        {{ form_start(form, {'attr': {'class': 'reply_form', 'autocomplete': 'off'} }) }}
-            {{ form_errors(form) }}
-            <div class="quick_reply">
-                {{ form_errors(form.message) }}
-                {{ form_widget(form.message, {id: 'composeArea', attr: {class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
-
-                {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
-            </div>
-        {{ form_end(form) }}
+                    {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
+                </div>
+            {{ form_end(form) }}
+        </div>
     </section>
 {% endblock %}

@@ -28,6 +28,19 @@ function initializeSelect() {
 }
 
 function initPage() {
+    // Hide any dimmers that might have been left
+    stopSpinners();
+
+    var dimmer  = $("<div/>").hide().addClass("dimmer");
+    var spinner = $("<div/>").hide().addClass("spinner").text("Loading...");
+
+    // Add an invisible dimmer to elements that don't have one yet
+    $(".dimmable").each(function() {
+        if ($(this).find('.dimmer').length == 0) {
+            $(this).prepend(dimmer).prepend(spinner);
+        }
+    });
+
     if ($("#groupMessages").attr("data-id")) {
         // Scroll message list to the bottom
         var messageView = $("#messageView");
@@ -41,9 +54,11 @@ $(document).ready(function() {
     initPage();
 });
 
-// Use "on" instead of just "click"/"submit", so that new elements of that class added
-// to the page using $.load() also respond to events
 var pageSelector = $(".messaging");
+
+function stopSpinners() {
+    $(".dimmer, .spinner").fadeOut('fast');
+}
 
 function updateSelector(selector) {
     $(selector).load(window.location.pathname + " " + selector + " > *", function() {
@@ -71,6 +86,9 @@ function updatePage() {
 function updateMessages() {
     return updateSelectors([".scrollable_messages", ".conversations", "nav"]);
 }
+
+// Use "on" instead of just "click"/"submit", so that new elements of that class added
+// to the page using $.load() also respond to events
 
 // Response submit event
 pageSelector.on("submit", ".reply_form", function(event) {
@@ -121,28 +139,32 @@ function sendMessage(form, onSuccess) {
         l.start();
     }
 
+    $(".dimmer, .spinner").fadeIn('fast');
+
     $.ajax({
         type: form.attr('method'),
         url: form.attr('action'),
         data: form.serialize() + "&format=json",
         dataType: "json"
     }).done(function( msg ) {
-        if (l)
-            l.stop();
-
         // Find the notification type
         var type = msg.success ? "success" : "error";
 
         notify(msg.message, type);
         if (msg.success) {
             onSuccess(msg, form);
+        } else {
+            stopSpinners();
         }
     }).error(function( jqXHR, textStatus, errorThrown ) {
+        var message = (errorThrown === "") ? textStatus : errorThrown;
+        stopSpinners();
+        notify(message, "error");
+    }).complete(function() {
         if (l)
             l.stop();
-
-        var message = (errorThrown === "") ? textStatus : errorThrown;
-        notify(message, "error");
+        // Don't stop the spinners - wait until the AJAX call to reload the page
+        // is complete
     });
 }
 

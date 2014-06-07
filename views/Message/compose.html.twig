@@ -2,25 +2,27 @@
 
 {% block messages %}
     <section id="groupMessages" class="chat_area">
-        <div class="details">
-            <div class="meta nopadding">
-                <div class="subject">Compose a new message</div>
+        <div class="dimmable">
+            <div class="conversation_details">
+                <div class="meta nopadding">
+                    <div class="subject">Compose a new message</div>
+                </div>
             </div>
+
+            {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
+                {{ form_errors(form) }}
+                <div class="input_group">
+                    {{ form_row(form.Recipients.players) }}
+                    {{ form_row(form.Subject, { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
+                </div>
+                <div class="editor">
+                    {{ form_row(form.Message,    { attr: { 'placeholder': 'Enter your message here...'} }) }}
+                </div>
+
+                <div class="buttons">
+                    {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out'} }) }}
+                </div>
+            {{ form_end(form) }}
         </div>
-
-        {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
-            {{ form_errors(form) }}
-            <div class="input_group">
-                {{ form_row(form.Recipients.players) }}
-                {{ form_row(form.Subject, { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
-            </div>
-            <div class="editor">
-                {{ form_row(form.Message,    { attr: { 'placeholder': 'Enter your message here...'} }) }}
-            </div>
-
-            <div class="buttons">
-                {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out'} }) }}
-            </div>
-        {{ form_end(form) }}
     </section>
 {% endblock %}

@@ -140,7 +140,7 @@ main {
                 display: table-cell;
                 width: 100%;
 
-                >.details {
+                .conversation_details {
                     @include box-sizing(border-box);
 
                     background-color: $Sky_Blue;
@@ -185,7 +185,7 @@ main {
                     }
                 }
 
-                >.scrollable_messages {
+                .scrollable_messages {
                     display: block;
                     height: 335px;
                     width: 100%;
@@ -211,7 +211,7 @@ main {
                                 width: 75%;
                                 max-width: 400px;
 
-                                .details {
+                                .message_details {
                                     border-bottom: 1px solid #B4EBB0;
                                     margin-bottom: 10px;
                                     padding-bottom: 5px;
@@ -240,7 +240,7 @@ main {
                                     border: 1px solid #9DD8E1;
                                     float: right;
 
-                                    .details {
+                                    .message_details {
                                         border-bottom: 1px solid #9DD8E1;
                                     }
                                 }
@@ -249,7 +249,7 @@ main {
                     }
                 }
 
-                >.compose_form {
+                .compose_form {
                     background-color: #FFFFFF;
 
                     .input_group {
