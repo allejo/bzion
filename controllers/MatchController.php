@@ -29,7 +29,7 @@ class MatchController extends HTMLController
 
     public function createAction(Player $me, Request $request, Session $session)
     {
-        if (!$me->hasPermission(Permission::ENTER_MATCH))
+        if (!$me->hasPermission(Match::getCreatePermission()))
             throw new ForbiddenException("You are not allowed to report matches");
 
         $form = $this->createForm();

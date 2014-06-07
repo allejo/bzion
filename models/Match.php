@@ -10,7 +10,7 @@
  * A match played between two teams
  * @package    BZiON\Models
  */
-class Match extends Model
+class Match extends Model implements PermissionModel
 {
 
     /**
@@ -587,4 +587,9 @@ class Match extends Model
             parent::fetchIds($query, "ii", array($teamID, $teamID))
         );
     }
+
+    public static function getCreatePermission()      { return Permission::ENTER_MATCH; }
+    public static function getEditPermission()        { return Permission::EDIT_MATCH;  }
+    public static function getSoftDeletePermission()  { return Permission::SOFT_DELETE_MATCH; }
+    public static function getHardDeletePermission()  { return Permission::HARD_DELETE_MATCH; }
 }
