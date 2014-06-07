@@ -81,7 +81,7 @@ class Message extends Model
         $message = $this->message;
 
         if (mb_strlen($this->message) > $maxlength)
-            return mb_substr($message, 0, $maxlength-1) . "...";
+            return trim(mb_substr($message, 0, $maxlength-1)) . "...";
 
         return $message;
     }
