@@ -466,9 +466,6 @@ class Match extends Model implements PermissionModel
 
         $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
 
-        $a_elo += $diff;
-        $b_elo -= $diff;
-
         // Update team ELOs
         $team_a->changeElo($diff);
         $team_b->changeElo(-$diff);
@@ -482,8 +479,8 @@ class Match extends Model implements PermissionModel
             'team_b' => $b,
             'team_a_points' => $a_points,
             'team_b_points' => $b_points,
-            'team_a_elo_new' => $a_elo,
-            'team_b_elo_new' => $b_elo,
+            'team_a_elo_new' => $team_a->getElo(),
+            'team_b_elo_new' => $team_b->getElo(),
             'elo_diff' => $diff,
             'timestamp' => $timestamp->toMysql(),
             'duration' => $duration,

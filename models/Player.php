@@ -550,15 +550,23 @@ class Player extends IdenticonModel implements NamedModel
      */
     public static function newPlayer($bzid, $username, $team=null, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=1, $timezone=0, $joined="now", $last_login="now")
     {
-        $db = Database::getInstance();
+        $joined = TimeDate::from($joined);
+        $last_login = TimeDate::from($last_login);
 
-        $joined = new TimeDate($joined);
-        $last_login = new TimeDate($last_login);
+        $player = self::create(array(
+            'bzid' => $bzid,
+            'team' => $team,
+            'username' => $username,
+            'alias' => self::generateAlias($username),
+            'status' => $status,
+            'avatar' => $avatar,
+            'description' => $description,
+            'country' => $country,
+            'timezone' => $timezone,
+            'joined' => $joined->toMysql(),
+            'last_login' => $last_login->toMysql(),
+        ), 'iisssssiiss');
 
-        $db->query("INSERT INTO players (bzid, team, username, alias, status, avatar, description, country, timezone, joined, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        "iisssssiiss", array($bzid, $team, $username, self::generateAlias($username), $status, $avatar, $description, $country, $timezone, $joined->toMysql(), $last_login->toMysql()));
-
-        $player = new Player($db->getInsertId());
         $player->addRole($role_id);
 
         return $player;
