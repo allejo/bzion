@@ -125,7 +125,7 @@ class Group extends UrlModel
     /**
      * Find whether the last message in the group has been read by a player
      *
-     * @param int $playerId The ID of the player
+     * @param  int     $playerId The ID of the player
      * @return boolean
      */
     public function isReadBy($playerId)
@@ -139,7 +139,7 @@ class Group extends UrlModel
     /**
      * Mark the last message in the group as having been read by a player
      *
-     * @param int $playerId The ID of the player
+     * @param  int  $playerId The ID of the player
      * @return void
      */
     public function markReadBy($playerId)

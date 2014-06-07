@@ -175,13 +175,13 @@ abstract class HTMLController extends Controller
      * Show a confirmation (Yes, No) form to the user
      *
      * @param  callable $onYes            What to do if the user clicks on "Yes"
+     * @param  string   $message          The message to show to the user, asking them to confirm their action
+     * @param  string   $action           The text to show on the "Yes" button
      * @param  callable $onNo             What to do if the user presses "No" - defaults to
      *                                    redirecting them back
-     * @param  array    $additionalParams An array of variables to pass to the view
-     * @param  string   $action           The text to show on the "Yes" button
      * @return mixed    The response
      */
-    protected function showConfirmationForm($onYes, $onNo=null, $additionalParams=array(), $action="Yes")
+    protected function showConfirmationForm($onYes, $message="Are you sure you want to do this?", $action="Yes", $onNo=null)
     {
         $form = Service::getFormFactory()->createBuilder()
             ->add($action, 'submit')
@@ -203,9 +203,9 @@ abstract class HTMLController extends Controller
                 return $onNo();
         }
 
-        // The form hasn't been submitted, let's render it
-        $params = array('form' => $form->createView());
-
-        return array_merge($params, $additionalParams);
+        return $this->render('confirmation.html.twig', array(
+            'form' => $form->createView(),
+            'message' => $message
+        ));
     }
 }

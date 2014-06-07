@@ -10,9 +10,8 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends IdenticonModel implements NamedModel
+class Team extends IdenticonModel implements NamedModel, PermissionModel
 {
-
     /**
      * The name of the team
      *
@@ -584,4 +583,9 @@ class Team extends IdenticonModel implements NamedModel
     {
         return new Team(self::fetchIdFrom($name, 'name', 's'));
     }
+
+    public static function getCreatePermission() { return Permission::CREATE_TEAM; }
+    public static function getEditPermission() { return Permission::EDIT_TEAM;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_TEAM; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_TEAM; }
 }

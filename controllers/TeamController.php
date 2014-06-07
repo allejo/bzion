@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class TeamController extends HTMLController
+class TeamController extends CRUDController
 {
     public function showAction(Team $team)
     {
@@ -15,19 +15,9 @@ class TeamController extends HTMLController
         return array("teams" => Team::getTeams());
     }
 
-    public function deleteAction(Team $team, Player $me, Session $session)
+    public function deleteAction(Player $me, Team $team)
     {
-        if (!$me->hasPermission(Permission::SOFT_DELETE_TEAM)) {
-            throw new ForbiddenException("You are not allowed to delete a team");
-        }
-
-        return $this->showConfirmationForm(function () use (&$team, &$session) {
-            $team->delete();
-            $session->getFlashBag()->add('success',
-                     "The team {$team->getEscapedName()} was deleted successfully");
-
-            return new RedirectResponse(Service::getGenerator()->generate('team_list'));
-        }, null, array('team' => $team), "Delete");
+        return $this->delete($team, $me);
     }
 
     public function kickAction(Team $team, Player $player, Player $me, Session $session)
@@ -43,11 +33,11 @@ class TeamController extends HTMLController
         return $this->showConfirmationForm(function () use (&$team, &$player, &$session) {
             $team->removeMember($player->getId());
 
-            $message = "Player {$player->getEscapedUsername()} has been kicked from {$team->getEscapedName()}";
+            $message = "Player {$player->getUsername()} has been kicked from {$team->getName()}";
             $session->getFlashBag()->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
-        }, null, array('team' => $team, 'player' => $player), "Kick");
+        }, "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?", "Kick");
     }
 
     public function abandonAction(Team $team, Player $me, Session $session)
@@ -65,7 +55,7 @@ class TeamController extends HTMLController
             $session->getFlashBag()->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
-        }, null, array('team' => $team), "Abandon");
+        }, "Are you sure you want to abandon {$team->getEscapedName()}?", "Abandon");
     }
 
     /*

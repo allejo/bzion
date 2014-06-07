@@ -1,6 +1,6 @@
 <?php
 
-class NewsController extends HTMLController
+class NewsController extends CRUDController
 {
     public function showAction(News $article)
     {
@@ -15,5 +15,10 @@ class NewsController extends HTMLController
             $news = News::getNews();
 
         return array("news" => $news, "categories" => NewsCategory::getCategories(), "category" => $category);
+    }
+
+    public function deleteAction(Player $me, News $article)
+    {
+        return $this->delete($article, $me);
     }
 }

@@ -470,8 +470,6 @@ class Match extends Model implements PermissionModel
         $team_a->changeElo($diff);
         $team_b->changeElo(-$diff);
 
-        $diff = abs($diff);
-
         $timestamp = TimeDate::from($timestamp);
 
         $match = self::create(array(
@@ -481,7 +479,7 @@ class Match extends Model implements PermissionModel
             'team_b_points' => $b_points,
             'team_a_elo_new' => $team_a->getElo(),
             'team_b_elo_new' => $team_b->getElo(),
-            'elo_diff' => $diff,
+            'elo_diff' => abs($diff),
             'timestamp' => $timestamp->toMysql(),
             'duration' => $duration,
             'entered_by' => $entered_by,
@@ -585,8 +583,8 @@ class Match extends Model implements PermissionModel
         );
     }
 
-    public static function getCreatePermission()      { return Permission::ENTER_MATCH; }
-    public static function getEditPermission()        { return Permission::EDIT_MATCH;  }
-    public static function getSoftDeletePermission()  { return Permission::SOFT_DELETE_MATCH; }
-    public static function getHardDeletePermission()  { return Permission::HARD_DELETE_MATCH; }
+    public static function getCreatePermission() { return Permission::ENTER_MATCH; }
+    public static function getEditPermission() { return Permission::EDIT_MATCH;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_MATCH; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_MATCH; }
 }

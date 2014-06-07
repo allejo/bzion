@@ -10,7 +10,7 @@
  * A news article
  * @package    BZiON\Models
  */
-class News extends UrlModel implements NamedModel
+class News extends UrlModel implements NamedModel, PermissionModel
 {
     /**
      * The category of the article
@@ -363,4 +363,8 @@ class News extends UrlModel implements NamedModel
         );
     }
 
+    public static function getCreatePermission() { return Permission::CREATE_NEWS; }
+    public static function getEditPermission() { return Permission::EDIT_NEWS;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_NEWS; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_NEWS; }
 }
