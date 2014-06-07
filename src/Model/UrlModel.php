@@ -28,7 +28,7 @@ abstract class UrlModel extends Model
      */
     public static function getParamName()
     {
-        return self::getType();
+        return static::getType();
     }
 
     /**
@@ -37,7 +37,7 @@ abstract class UrlModel extends Model
      */
     public static function getTypeForHumans()
     {
-        return self::getParamName();
+        return static::getParamName();
     }
 
     /**
