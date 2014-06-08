@@ -50,6 +50,10 @@ news_list:
     pattern:    /news
     defaults: { _controller: 'News', _action: 'list' }
 
+news_new:
+    pattern:    /news/new
+    defaults: { _controller: 'News', _action: 'create' }
+
 news_show:
     pattern:    /news/{article}
     defaults: { _controller: 'News', _action: 'show' }

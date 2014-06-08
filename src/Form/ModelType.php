@@ -50,12 +50,14 @@ class ModelType extends AbstractType
     private function getAll()
     {
         $type = $this->type;
+
         return $type::getQueryBuilder()->active()->getNames();
     }
 
     private function getTypeForHumans()
     {
         $type = $this->type;
+
         return strtolower($type::getTypeForHumans());
     }
 

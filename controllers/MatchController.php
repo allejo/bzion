@@ -30,11 +30,7 @@ class MatchController extends CRUDController
     }
 
     /**
-     * Enter a new match into the database
      * @todo Handle players and the server address
-     * @param  Form   $form The form to get the data from
-     * @param  Player $me   The player who enters the match
-     * @return Match  The new match
      */
     protected function enter(Form $form, Player $me)
     {

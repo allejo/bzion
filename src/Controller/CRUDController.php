@@ -14,15 +14,23 @@ abstract class CRUDController extends JSONController
      * Create a form for a model
      * @return Form
      */
-    abstract protected function createForm();
+    protected function createForm()
+    {
+        return Service::getFormFactory()->createBuilder()
+            ->add('create', 'submit')
+            ->getForm();
+    }
 
     /**
      * Enter the data of a valid form into the database
-     * @param  Form   $form    The submitted form
-     * @param  Player $creator The player who enters the data
-     * @return Model
+     * @param  Form       $form    The submitted form
+     * @param  Player     $creator The player who enters the data
+     * @return Model|null
      */
-    abstract protected function enter(Form $form, Player $creator);
+    protected function enter(Form $form, Player $creator)
+    {
+        return null;
+    }
 
     /**
      * Make sure that the data of a form is valid
@@ -49,7 +57,7 @@ abstract class CRUDController extends JSONController
         $successMessage = $this->getMessage($model, 'softDelete', 'success');
         $redirection    = $this->redirectToList($model);
 
-        return $this->showConfirmationForm(function () use (&$model, &$session, $successMessage, $redirectUrl) {
+        return $this->showConfirmationForm(function () use (&$model, &$session, $successMessage, $redirection) {
             $model->delete();
             $session->getFlashBag()->add('success', $successMessage);
 
