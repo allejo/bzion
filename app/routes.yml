@@ -86,6 +86,10 @@ team_list:
     pattern:    /teams
     defaults: { _controller: 'Team', _action: 'list' }
 
+team_new:
+    pattern:    /teams/new
+    defaults: { _controller: 'Team', _action: 'create' }
+
 team_show:
     pattern:    /teams/{team}
     defaults: { _controller: 'Team', _action: 'show' }

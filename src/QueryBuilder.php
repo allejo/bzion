@@ -148,8 +148,8 @@ class QueryBuilder
     /**
      * Request that a column equals a number
      *
-     * @param int|Model $number The number that the column's value should equal
-     *                          to - if a Model is provided, use the model's ID
+     * @param  int|Model    $number The number that the column's value should equal
+     *                              to - if a Model is provided, use the model's ID
      * @return QueryBuilder
      */
     public function is($number)

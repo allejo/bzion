@@ -13,7 +13,7 @@ abstract class Debug
 {
     /**
      * Start counting time for an event
-     * @param string $event The event's name
+     * @param  string $event The event's name
      * @return void
      */
     public static function startStopwatch($event)
@@ -29,8 +29,8 @@ abstract class Debug
 
     /**
      * Stop counting time for an event and get its duration
-     * @param string $event The event's name
-     * @return int The time in milliseconds
+     * @param  string $event The event's name
+     * @return int    The time in milliseconds
      */
     public static function finishStopwatch($event)
     {
@@ -45,13 +45,14 @@ abstract class Debug
         $event = $stopwatch->stop($event);
         $periods = $event->getPeriods();
         $duration = end($periods)->getDuration();
+
         return $duration;
     }
 
     /**
      * Log a debug message
-     * @param string $message The message to return
-     * @param array $context Any additional information to show
+     * @param  string $message The message to return
+     * @param  array  $context Any additional information to show
      * @return void
      */
     public static function log($message, array $context=array())

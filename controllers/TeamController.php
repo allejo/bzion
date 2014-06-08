@@ -1,7 +1,11 @@
 <?php
 
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 
 class TeamController extends CRUDController
 {
@@ -13,6 +17,11 @@ class TeamController extends CRUDController
     public function listAction()
     {
         return array("teams" => Team::getTeams());
+    }
+
+    public function createAction(Player $me)
+    {
+        return $this->create($me);
     }
 
     public function deleteAction(Player $me, Team $team)
@@ -56,6 +65,54 @@ class TeamController extends CRUDController
 
             return new RedirectResponse($team->getUrl());
         }, "Are you sure you want to abandon {$team->getEscapedName()}?", "Abandon");
+    }
+
+    protected function createForm()
+    {
+        // TODO: Add validation constraint for teams with same name
+        return Service::getFormFactory()->createBuilder()
+            ->add('name', 'text', array(
+                'constraints' => array(
+                    new NotBlank(), new Length(array(
+                        'min' => 2,
+                        'max' => 32,
+                    ))
+                )
+            ))
+            ->add('description', 'textarea', array(
+                'required' => false
+            ))
+            ->add('create', 'submit')
+            ->getForm();
+    }
+
+    protected function enter(Form $form, Player $creator)
+    {
+        return Team::createTeam(
+            $form->get('name')->getData(),
+            $creator->getId(),
+            '',
+            $form->get('description')->getData()
+        );
+    }
+
+    protected function validate(Form $form)
+    {
+        $name = $form->get('name');
+        $team = Team::getFromName($name->getData());
+
+        // The name for the team that the user gave us already exists
+        // TODO: This takes deleted teams into account, do we want that?
+        if ($team->isValid())
+            $name->addError(new FormError("A team called {$team->getEscapedName()} already exists"));
+    }
+
+    protected function canCreate(Player $player)
+    {
+        if ($player->getTeam()->isValid())
+            throw new ForbiddenException("You need to abandon your current team before you can create a new one");
+
+        return parent::canCreate($player);
     }
 
     /*

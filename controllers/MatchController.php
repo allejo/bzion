@@ -3,12 +3,9 @@
 use BZIon\Form\MatchTeamType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class MatchController extends HTMLController
+class MatchController extends CRUDController
 {
     public function listByTeamAction(Team $team)
     {
@@ -27,25 +24,9 @@ class MatchController extends HTMLController
         return array("matches" => Match::getMatches());
     }
 
-    public function createAction(Player $me, Request $request, Session $session)
+    public function createAction(Player $me)
     {
-        if (!$me->hasPermission(Match::getCreatePermission()))
-            throw new ForbiddenException("You are not allowed to report matches");
-
-        $form = $this->createForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $this->assertDifferentTeams($form);
-            if ($form->isValid()) {
-                $this->enter($form, $me);
-                $session->getFlashBag()->add("success", "The match has been successfully reported");
-
-                return new RedirectResponse($this->generate('match_list'));
-            }
-        }
-
-        return array("form" => $form->createView());
+        return $this->create($me);
     }
 
     /**
@@ -55,7 +36,7 @@ class MatchController extends HTMLController
      * @param  Player $me   The player who enters the match
      * @return Match  The new match
      */
-    private function enter(Form $form, Player $me)
+    protected function enter(Form $form, Player $me)
     {
         $firstTeam  = $form->get('first_team');
         $secondTeam = $form->get('second_team');
@@ -73,7 +54,7 @@ class MatchController extends HTMLController
         return $match;
     }
 
-    private function createForm()
+    protected function createForm()
     {
         return Service::getFormFactory()->createBuilder()
             ->add('first_team', new MatchTeamType())
@@ -92,14 +73,10 @@ class MatchController extends HTMLController
             ->getForm();
     }
 
-    /**
-     * Make sure that two different teams participated in a match, i.e. a team
-     * didn't match against itself
-     * @param  Form $form The form to evaluate
-     * @return void
-     */
-    private function assertDifferentTeams(Form $form)
+    protected function validate(Form $form)
     {
+        // Make sure that two different teams participated in a match, i.e. a team
+        // didn't match against itself
         $firstTeam  = $form->get('first_team')->get('team')->getData();
         $secondTeam = $form->get('second_team')->get('team')->getData();
 
