@@ -174,11 +174,11 @@ abstract class HTMLController extends Controller
     /*
      * Show a confirmation (Yes, No) form to the user
      *
-     * @param  callable $onYes            What to do if the user clicks on "Yes"
-     * @param  string   $message          The message to show to the user, asking them to confirm their action
-     * @param  string   $action           The text to show on the "Yes" button
-     * @param  callable $onNo             What to do if the user presses "No" - defaults to
-     *                                    redirecting them back
+     * @param  callable $onYes   What to do if the user clicks on "Yes"
+     * @param  string   $message The message to show to the user, asking them to confirm their action
+     * @param  string   $action  The text to show on the "Yes" button
+     * @param  callable $onNo    What to do if the user presses "No" - defaults to
+     *                           redirecting them back
      * @return mixed    The response
      */
     protected function showConfirmationForm($onYes, $message="Are you sure you want to do this?", $action="Yes", $onNo=null)
