@@ -80,6 +80,12 @@ class QueryBuilder
     private $activeStatuses = null;
 
     /**
+     * A column to consider the name of the model
+     * @var string|null
+     */
+    private $nameColumn = null;
+
+    /**
      * Whether to return the results as arrays instead of models
      * @var boolean
      */
@@ -112,6 +118,9 @@ class QueryBuilder
 
         if (isset($options['columns']))
             $this->columns = $options['columns'];
+
+        if (isset($options['name']))
+            $this->nameColumn = $options['name'];
     }
 
     /**
@@ -231,10 +240,30 @@ class QueryBuilder
     }
 
     /**
+     * Perform the query and get back the results in an array of names
+     *
+     * @return string[] An array of the type $id => $name
+     */
+    public function getNames()
+    {
+        if (!$this->nameColumn)
+            throw new Exception("You haven't specified a name column");
+
+        $db = Database::getInstance();
+        $columns = array($this->nameColumn);
+
+        $results = $db->query($this->createQuery($columns), $this->types, $this->parameters);
+
+        $return = array();
+        foreach ($results as $r)
+            $return[$r['id']] = $r[$this->nameColumn];
+
+        return $return;
+    }
+
+    /**
      * Perform the query and get back the results in a list of arrays
-     *
-     * The columns returned are the ones specified when __constucting() the object
-     *
+     *     *
      * @param string|string[] The column(s) that should be returned
      * @return array[]
      */
