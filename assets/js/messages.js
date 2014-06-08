@@ -36,7 +36,7 @@ function initPage() {
 
     // Add an invisible dimmer to elements that don't have one yet
     $(".dimmable").each(function() {
-        if ($(this).find('.dimmer').length == 0) {
+        if (!$(this).find('.dimmer').length) {
             $(this).prepend(dimmer).prepend(spinner);
         }
     });
@@ -55,6 +55,10 @@ $(document).ready(function() {
 });
 
 var pageSelector = $(".messaging");
+
+function startSpinners() {
+    $(".dimmer, .spinner").fadeIn('fast');
+}
 
 function stopSpinners() {
     $(".dimmer, .spinner").fadeOut('fast');
@@ -80,6 +84,7 @@ function updateSelectors(selectors) {
 }
 
 function updatePage() {
+    startSpinners();
     return updateSelectors([".messaging", "nav"]);
 }
 
@@ -139,7 +144,7 @@ function sendMessage(form, onSuccess) {
         l.start();
     }
 
-    $(".dimmer, .spinner").fadeIn('fast');
+    startSpinners();
 
     $.ajax({
         type: form.attr('method'),
