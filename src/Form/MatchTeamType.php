@@ -1,7 +1,6 @@
 <?php
 namespace BZIon\Form;
 
-use Team;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormError;
@@ -16,7 +15,7 @@ class MatchTeamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('team', new TeamType())
+            ->add('team', new ModelType('Team'))
             ->add('score', 'integer', array(
                 'constraints' => array(
                     new NotBlank(),
