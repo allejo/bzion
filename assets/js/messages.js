@@ -11,6 +11,7 @@ function initializeSelect() {
             data: function (term, page) {
                 return {
                     format: 'json',
+                    exceptMe: null,
                     startsWith: term, // search term
                 };
             },

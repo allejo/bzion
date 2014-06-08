@@ -35,7 +35,7 @@ class QueryBuilder
      * The columns that the model provided us
      * @var array
      */
-    private $columns = array();
+    private $columns = array('id' => 'id');
 
     /**
      * The conditions to include in WHERE
@@ -117,7 +117,7 @@ class QueryBuilder
             $this->activeStatuses = $options['activeStatuses'];
 
         if (isset($options['columns']))
-            $this->columns = $options['columns'];
+            $this->columns += $options['columns'];
 
         if (isset($options['name']))
             $this->nameColumn = $options['name'];
@@ -180,6 +180,20 @@ class QueryBuilder
     public function startsWith($string)
     {
         $this->addColumnCondition("LIKE CONCAT(?, '%')", $string, 's');
+
+        return $this;
+    }
+
+    /**
+     * Request that a specific model is not returned
+     *
+     * @param Model $model The model you don't want to get
+     * @return QueryBuilder
+     */
+    public function except($model)
+    {
+        $this->where('id');
+        $this->addColumnCondition("!= ?", $model->getId(), 'i');
 
         return $this;
     }
