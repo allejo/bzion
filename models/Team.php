@@ -584,6 +584,21 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
         return new Team(self::fetchIdFrom($name, 'name', 's'));
     }
 
+    /**
+     * Get a query builder for teams
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Team', array(
+            'columns' => array(
+                'name' => 'name',
+            ),
+            'activeStatuses' => array('open', 'closed'),
+            'name' => 'name',
+        ));
+    }
+
     public static function getCreatePermission() { return Permission::CREATE_TEAM; }
     public static function getEditPermission() { return Permission::EDIT_TEAM;  }
     public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_TEAM; }

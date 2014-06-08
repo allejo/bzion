@@ -172,6 +172,21 @@ class NewsCategory extends AliasModel implements NamedModel
     }
 
     /**
+     * Get a query builder for news categories
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('NewsCategory', array(
+            'columns' => array(
+                'name' => 'name',
+            ),
+            'activeStatuses' => array('enabled'),
+            'name' => 'name',
+        ));
+    }
+
+    /**
      * {@inheritDoc}
      */
     public static function getParamName()

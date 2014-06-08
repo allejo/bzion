@@ -530,6 +530,7 @@ class Player extends IdenticonModel implements NamedModel
                 'team' => 'team'
             ),
             'activeStatuses' => array('active', 'test'),
+            'name' => 'username',
         ));
     }
 
