@@ -42,6 +42,7 @@ class NewsController extends CRUDController
         $form->get('category')->setData($article->getCategory());
         $form->get('subject')->setData($article->getSubject());
         $form->get('content')->setData($article->getContent());
+        $form->get('status')->setData($article->getStatus());
     }
 
     protected function update($form, $article, $me)
@@ -49,6 +50,7 @@ class NewsController extends CRUDController
         $article->updateCategory($form->get('category')->getData()->getId());
         $article->updateSubject($form->get('subject')->getData());
         $article->updateContent($form->get('content')->getData());
+        $article->updateStatus($form->get('status')->getData());
         $article->updateLastEditor($me->getId());
         $article->updateEditTimestamp();
 
@@ -61,7 +63,8 @@ class NewsController extends CRUDController
             $form->get('subject')->getData(),
             $form->get('content')->getData(),
             $me->getId(),
-            $form->get('category')->getData()->getId()
+            $form->get('category')->getData()->getId(),
+            $form->get('status')->getData()
         );
     }
 
@@ -78,6 +81,13 @@ class NewsController extends CRUDController
             ))
             ->add('content', 'textarea', array(
                 'constraints' => new NotBlank()
+            ))
+            ->add('status', 'choice', array(
+                'choices' => array(
+                    'published' => 'Public',
+                    'revision' => 'Revision',
+                    'draft' => 'Draft',
+                ),
             ))
             ->add('enter', 'submit')
             ->getForm();
