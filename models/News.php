@@ -32,13 +32,13 @@ class News extends UrlModel implements NamedModel, PermissionModel
 
     /**
      * The creation date of the news article
-     * @var string
+     * @var TimeDate
      */
     protected $created;
 
     /**
      * The date the news article was last updated
-     * @var string
+     * @var TimeDate
      */
     protected $updated;
 
@@ -212,25 +212,6 @@ class News extends UrlModel implements NamedModel, PermissionModel
     public static function getParamName()
     {
         return "article";
-    }
-
-    /**
-     * Update an existing news article
-     *
-     * @param string $subject  The new or current subject of the post
-     * @param string $content  The new or current content of the post
-     * @param int    $editorID The ID of the person editing the post
-     * @param string $status   The new or current status of the post
-     *
-     * @return void
-     */
-    public function updateAll($subject, $content, $editorID, $status = 'published')
-    {
-        $this->updateSubject($subject);
-        $this->updateContent($content);
-        $this->updateStatus($status);
-        $this->updateLastEditor($editorID);
-        $this->updateEditTimestamp();
     }
 
     /**

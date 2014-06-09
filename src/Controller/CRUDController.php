@@ -42,8 +42,9 @@ abstract class CRUDController extends JSONController
 
     /**
      * Fill a form with the model's data
-     * @param Form  $form  The form to fill
-     * @param Model $model The model to use to fill the form
+     * @param  Form  $form  The form to fill
+     * @param  Model $model The model to use to fill the form
+     * @return void
      */
     protected function fill($form, $model)
     {
@@ -56,7 +57,7 @@ abstract class CRUDController extends JSONController
      * @param  Player $me    The player that wants to edit the model
      * @return Model  The updated model
      */
-    protected function update($form, $article, $me)
+    protected function update($form, $model, $me)
     {
     }
 
