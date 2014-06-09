@@ -58,6 +58,10 @@ news_show:
     pattern:    /news/{article}
     defaults: { _controller: 'News', _action: 'show' }
 
+news_edit:
+    pattern:    /news/{article}/edit
+    defaults: { _controller: 'News', _action: 'edit' }
+
 news_delete:
     pattern:    /news/{article}/delete
     defaults: { _controller: 'News', _action: 'delete' }

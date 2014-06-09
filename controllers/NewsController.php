@@ -27,12 +27,35 @@ class NewsController extends CRUDController
         return $this->create($me);
     }
 
+    public function editAction(Player $me, News $article)
+    {
+        return $this->edit($article, $me, "article");
+    }
+
     public function deleteAction(Player $me, News $article)
     {
         return $this->delete($article, $me);
     }
 
-    protected function enter(Form $form, Player $me)
+    protected function fill($form, $article)
+    {
+        $form->get('category')->setData($article->getCategory());
+        $form->get('subject')->setData($article->getSubject());
+        $form->get('content')->setData($article->getContent());
+    }
+
+    protected function update($form, $article, $me)
+    {
+        $article->updateCategory($form->get('category')->getData()->getId());
+        $article->updateSubject($form->get('subject')->getData());
+        $article->updateContent($form->get('content')->getData());
+        $article->updateLastEditor($me->getId());
+        $article->updateEditTimestamp();
+
+        return $article;
+    }
+
+    protected function enter($form, $me)
     {
         return News::addNews(
             $form->get('subject')->getData(),

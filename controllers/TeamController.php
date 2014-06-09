@@ -86,7 +86,7 @@ class TeamController extends CRUDController
             ->getForm();
     }
 
-    protected function enter(Form $form, Player $creator)
+    protected function enter($form, $creator)
     {
         return Team::createTeam(
             $form->get('name')->getData(),
@@ -96,7 +96,7 @@ class TeamController extends CRUDController
         );
     }
 
-    protected function validate(Form $form)
+    protected function validate($form)
     {
         $name = $form->get('name');
         $team = Team::getFromName($name->getData());
@@ -107,7 +107,7 @@ class TeamController extends CRUDController
             $name->addError(new FormError("A team called {$team->getEscapedName()} already exists"));
     }
 
-    protected function canCreate(Player $player)
+    protected function canCreate($player)
     {
         if ($player->getTeam()->isValid())
             throw new ForbiddenException("You need to abandon your current team before you can create a new one");

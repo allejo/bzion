@@ -23,13 +23,12 @@ abstract class CRUDController extends JSONController
 
     /**
      * Enter the data of a valid form into the database
-     * @param  Form       $form    The submitted form
-     * @param  Player     $creator The player who enters the data
-     * @return Model|null
+     * @param  Form   $form    The submitted form
+     * @param  Player $creator The player who enters the data
+     * @return Model
      */
-    protected function enter(Form $form, Player $creator)
+    protected function enter($form, $creator)
     {
-        return null;
     }
 
     /**
@@ -37,7 +36,27 @@ abstract class CRUDController extends JSONController
      * @param  Form $form The submitted form
      * @return void
      */
-    protected function validate(Form $form)
+    protected function validate($form)
+    {
+    }
+
+    /**
+     * Fill a form with the model's data
+     * @param Form  $form  The form to fill
+     * @param Model $model The model to use to fill the form
+     */
+    protected function fill($form, $model)
+    {
+    }
+
+    /**
+     * Update a model in the database
+     * @param  Form   $form  The form that will be used to update the model
+     * @param  Model  $model The model that will be updated
+     * @param  Player $me    The player that wants to edit the model
+     * @return Model  The updated model
+     */
+    protected function update($form, $article, $me)
     {
     }
 
@@ -67,9 +86,10 @@ abstract class CRUDController extends JSONController
 
     /**
      * Create a model
+     *
+     * This method requires that you have implemented createForm() and enter()
      * @throws ForbiddenException
-     * @param  PermissionModel    $model The model we want to delete
-     * @param  Player             $me    The user who wants to delete the model
+     * @param  Player             $me The user who wants to create the model
      * @return mixed              The response to show to the user
      */
     protected function create(Player $me)
@@ -95,11 +115,46 @@ abstract class CRUDController extends JSONController
     }
 
     /**
+     * Edit a model
+     *
+     * This method requires that you have implemented createForm() and update()
+     * @throws ForbiddenException
+     * @param  PermissionModel    $model The model we want to edit
+     * @param  Player             $me    The user who wants to edit the model
+     * @param  string             $type  The name of the variable to pass to the view
+     * @return mixed              The response to show to the user
+     */
+    protected function edit(PermissionModel $model, Player $me, $type)
+    {
+        if (!$this->canEdit($me, $model))
+            throw new ForbiddenException($this->getMessage($model, 'edit', 'forbidden'));
+
+        $form = $this->createForm();
+        $this->fill($form, $model);
+        $form->handleRequest($this->getRequest());
+
+        if ($form->isSubmitted()) {
+            $this->validate($form);
+            if ($form->isValid()) {
+                $model = $this->update($form, $model, $me);
+                $this->getRequest()->getSession()->getFlashBag()->add("success",
+                    $this->getMessage($model, 'edit', 'success'));
+
+                return $this->redirectTo($model);
+            }
+        }
+
+        return array("form" => $form->createView(), $type => $model);
+    }
+
+    /**
      * Find whether a player can delete a model
      *
+     * @param  Player          $player The player who wants to delete the model
+     * @param  PermissionModel $model  The model that will be deleted
      * @return boolean
      */
-    protected function canDelete(Player $player, PermissionModel $model)
+    protected function canDelete($player, $model)
     {
         return $player->hasPermission($model->getSoftDeletePermission());
     }
@@ -107,13 +162,26 @@ abstract class CRUDController extends JSONController
     /**
      * Find whether a player can create a model
      *
+     * @param  Player  $player The player who wants to create a model
      * @return boolean
      */
-    protected function canCreate(Player $player)
+    protected function canCreate($player)
     {
         $modelName = $this->getName();
 
         return $player->hasPermission($modelName::getCreatePermission());
+    }
+
+    /**
+     * Find whether a player can edit a model
+     *
+     * @param  Player          $player The player who wants to delete the model
+     * @param  PermissionModel $model  The model which will be edited
+     * @return boolean
+     */
+    protected function canEdit($player, $model)
+    {
+        return $player->hasPermission($model->getEditPermission());
     }
 
     /**
@@ -202,6 +270,16 @@ abstract class CRUDController extends JSONController
                 'success' => array(
                     'named'   => "The $type $name was deleted successfully",
                     'unnamed' => "The $type was deleted successfully",
+                ),
+            ),
+            'edit' => array(
+                'forbidden' => array(
+                    'named'   => "You are not allowed to edit the $type $name",
+                    'unnamed' => "You aren't allowed to edit this $type",
+                ),
+                'success' => array(
+                    'named'   => "The $type $name has been successfully updated",
+                    'unnamed' => "The $type was updated successfully",
                 ),
             ),
             'create' => array(

@@ -10,7 +10,7 @@
  * A custom page
  * @package    BZiON\Models
  */
-class Page extends AliasModel
+class Page extends AliasModel implements NamedModel
 {
     /**
      * The name of the page

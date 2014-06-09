@@ -32,7 +32,7 @@ class MatchController extends CRUDController
     /**
      * @todo Handle players and the server address
      */
-    protected function enter(Form $form, Player $me)
+    protected function enter($form, $me)
     {
         $firstTeam  = $form->get('first_team');
         $secondTeam = $form->get('second_team');
@@ -69,7 +69,7 @@ class MatchController extends CRUDController
             ->getForm();
     }
 
-    protected function validate(Form $form)
+    protected function validate($form)
     {
         // Make sure that two different teams participated in a match, i.e. a team
         // didn't match against itself

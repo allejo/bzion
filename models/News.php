@@ -238,73 +238,80 @@ class News extends UrlModel implements NamedModel, PermissionModel
      *
      * @param string $content The new content of the post
      *
-     * @return bool Will only return false if there was error when updating the database
+     * @return void
      */
     public function updateContent($content)
     {
         if ($this->getContent() != $content) {
-            return $this->update("content", $content);
+            $this->content = $content;
+            $this->update("content", $content, 's');
         }
-
-        return true;
     }
 
     /**
      * Update the last edit timestamp
-     *
-     * @return bool Will only return false if there was error when updating the database
+     * @return void
      */
     public function updateEditTimestamp()
     {
-        return $this->update("updated", "NOW()");
+        $this->updated = TimeDate::now();
+        $this->update("updated", $this->updated->toMysql(), 's');
     }
 
     /**
      * Update the editor of the post
      *
-     * @param int $editorID The ID of the editor
-     *
-     * @return bool Will only return false if there was an error when updating the database
+     * @param  int  $editorID The ID of the editor
+     * @return void
      */
     public function updateLastEditor($editorID)
     {
         if ($this->getLastEditorID() != $editorID) {
-            return $this->update("author", $editorID);
+            $this->editor = $editorID;
+            $this->update("editor", $editorID);
         }
+    }
 
-        return true;
+    /**
+     * Update the category of the post
+     *
+     * @param  int  $categoryID The ID of the category
+     * @return void
+     */
+    public function updateCategory($categoryID)
+    {
+        if ($this->category != $categoryID) {
+            $this->category = $categoryID;
+            $this->update("category", $categoryID);
+        }
     }
 
     /**
      * Update the status of a post
      *
-     * @param string $status The new status of a post
-     *
-     * @return bool Will only return false if there was error when updating the database
+     * @param  string $status The new status of a post
+     * @return void
      */
     public function updateStatus($status = 'published')
     {
         if ($this->getStatus() != $status) {
-            return $this->update("status", $status);
+            $this->status = $status;
+            $this->update("status", $status, 's');
         }
-
-        return true;
     }
 
     /**
      * Update the subject of a post
      *
-     * @param string $subject The new subject of a post
-     *
-     * @return bool Will only return false if there was error when updating the database
+     * @param  string $subject The new subject of a post
+     * @return void
      */
     public function updateSubject($subject)
     {
         if ($this->getSubject() != $subject) {
-            return $this->update("subject", $subject);
+            $this->subject = $subject;
+            $this->update("subject", $subject, 's');
         }
-
-        return true;
     }
 
     /**
