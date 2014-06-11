@@ -209,7 +209,7 @@ abstract class CRUDController extends JSONController
      * @param  Model    $model The model to whose list we should redirect
      * @return Response
      */
-    private function redirectToList($model)
+    protected function redirectToList($model)
     {
         $route = strtolower($model->getTypeForHumans()) . '_list';
         $url = Service::getGenerator()->generate($route);

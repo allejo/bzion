@@ -118,9 +118,21 @@ team_abandon:
     pattern:    /teams/{team}/abandon
     defaults: { _controller: 'Team', _action: 'abandon' }
 
+custom_page_create:
+    pattern:    /pages/new
+    defaults: { _controller: 'Page', _action: 'create' }
+
 custom_page:
     pattern:    /{page}
     defaults: { _controller: 'Page', _action: 'show' }
+
+custom_page_edit:
+    pattern:    /{page}/edit
+    defaults: { _controller: 'Page', _action: 'edit' }
+
+custom_page_delete:
+    pattern:    /{page}/delete
+    defaults: { _controller: 'Page', _action: 'delete' }
 
 trailing_slash:
     path: /{url}

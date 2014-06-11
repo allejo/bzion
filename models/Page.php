@@ -10,7 +10,7 @@
  * A custom page
  * @package    BZiON\Models
  */
-class Page extends AliasModel implements NamedModel
+class Page extends AliasModel implements NamedModel, PermissionModel
 {
     /**
      * The name of the page
@@ -139,6 +139,53 @@ class Page extends AliasModel implements NamedModel
     }
 
     /**
+     * Set the name of the page
+     *
+     * @param  string $name
+     * @return void
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        $this->update("name", $name, 's');
+    }
+
+    /**
+     * Set the content of the page
+     *
+     * @param  string $content
+     * @return void
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+        $this->update("content", $content, 's');
+    }
+
+    /**
+     * Set the status of the page
+     *
+     * @param  string $status One of "live", "revision" or "disabled"
+     * @return void
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        $this->update("status", $status, 's');
+    }
+
+    /**
+     * Update the last edit timestamp
+     * @return void
+     */
+    public function updateEditTimestamp()
+    {
+        $this->updated = TimeDate::now();
+        $this->update("updated", $this->updated->toMysql(), 's');
+    }
+
+
+    /**
      * Create a new Page
      *
      * @param string $title    The title of the page
@@ -208,5 +255,10 @@ class Page extends AliasModel implements NamedModel
     {
         return new Page(parent::fetchIdFrom(1, "home"));
     }
+
+    public static function getCreatePermission() { return Permission::CREATE_PAGE; }
+    public static function getEditPermission() { return Permission::EDIT_PAGE;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_PAGE; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_PAGE; }
 
 }
