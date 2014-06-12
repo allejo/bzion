@@ -181,12 +181,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "c23f978262f628aac4c1a160cef12f89a871dfea"
+                "reference": "172f973d7b19c6d108bd8b747f3171687ca7bae7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/c23f978262f628aac4c1a160cef12f89a871dfea",
-                "reference": "c23f978262f628aac4c1a160cef12f89a871dfea",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/172f973d7b19c6d108bd8b747f3171687ca7bae7",
+                "reference": "172f973d7b19c6d108bd8b747f3171687ca7bae7",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +216,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-06-04 01:26:52"
+            "time": "2014-06-05 16:00:03"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -430,12 +430,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pusher/pusher-php-server.git",
-                "reference": "b07349cccec5d3d5006641a1208044d7df0c6d20"
+                "reference": "d5b4e8bec7fc5e53651c879495a74e96b1bc2cea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pusher/pusher-php-server/zipball/b07349cccec5d3d5006641a1208044d7df0c6d20",
-                "reference": "b07349cccec5d3d5006641a1208044d7df0c6d20",
+                "url": "https://api.github.com/repos/pusher/pusher-php-server/zipball/d5b4e8bec7fc5e53651c879495a74e96b1bc2cea",
+                "reference": "d5b4e8bec7fc5e53651c879495a74e96b1bc2cea",
                 "shasum": ""
             },
             "require": {
@@ -466,7 +466,7 @@
                 "rest",
                 "trigger"
             ],
-            "time": "2013-12-23 16:41:52"
+            "time": "2014-06-11 19:32:01"
         },
         {
             "name": "robloach/component-installer",
@@ -4155,16 +4155,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.1.2",
+            "version": "4.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "be5f237df860da88a7cfe247594232cae61845df"
+                "reference": "939cb801b3b2aa253aedd0b279f40bb8f35cec91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/be5f237df860da88a7cfe247594232cae61845df",
-                "reference": "be5f237df860da88a7cfe247594232cae61845df",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/939cb801b3b2aa253aedd0b279f40bb8f35cec91",
+                "reference": "939cb801b3b2aa253aedd0b279f40bb8f35cec91",
                 "shasum": ""
             },
             "require": {
@@ -4225,20 +4225,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-06-07 07:30:48"
+            "time": "2014-06-11 14:15:47"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.1.2",
+            "version": "2.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "4a6423af97d4b4a0010a1ac5addfad4843c3e97b"
+                "reference": "1a894a16b6c15fcdc5ef2b110f0e6233952c9b0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/4a6423af97d4b4a0010a1ac5addfad4843c3e97b",
-                "reference": "4a6423af97d4b4a0010a1ac5addfad4843c3e97b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/1a894a16b6c15fcdc5ef2b110f0e6233952c9b0f",
+                "reference": "1a894a16b6c15fcdc5ef2b110f0e6233952c9b0f",
                 "shasum": ""
             },
             "require": {
@@ -4282,7 +4282,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-06-06 17:02:49"
+            "time": "2014-06-07 16:22:57"
         },
         {
             "name": "pimple/pimple",
