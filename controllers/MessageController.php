@@ -147,6 +147,7 @@ class MessageController extends JSONController
         return Service::getFormFactory()->createBuilder()
             ->add('Recipients', new PlayerType(), array(
                 'constraints' => new NotBlank(),
+                'multiple' => true,
                 'include' => $me,
             ))
             ->add('Subject', 'text', $notBlank)

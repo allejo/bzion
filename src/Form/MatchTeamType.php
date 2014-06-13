@@ -23,7 +23,8 @@ class MatchTeamType extends AbstractType
                 )
             ))
             ->add('participants', new PlayerType(), array(
-                'required' => false
+                'multiple' => true,
+                'required' => false,
             ))
             ->addEventListener(FormEvents::POST_SUBMIT, array($this, 'checkTeamMembers'));
     }
@@ -42,8 +43,13 @@ class MatchTeamType extends AbstractType
         if (!$team || !$team->isValid())
             return;
 
-        foreach ($form->getParent()->getData() as $player) {
-            if (!$team->isMember($player->getId())) {
+        $players = $form->getParent()->getData();
+
+        if (!is_array($players))
+            $players = array($players);
+
+        foreach ($players as $player) {
+            if ($player && !$team->isMember($player->getId())) {
                 $message = "{$player->getUsername()} is not a member of {$team->getName()}";
                 $form->addError(new FormError($message));
             }

@@ -27,6 +27,12 @@ class PlayerType extends AbstractType
      */
     private $include = null;
 
+    /**
+     * Whether more than 1 players can be provided
+     * @var boolean
+     */
+    private $multiple = false;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('players', 'text', array(
@@ -51,6 +57,9 @@ class PlayerType extends AbstractType
 
         if (isset($options['include']))
             $this->include = $options['include'];
+
+        if (isset($options['multiple']))
+            $this->multiple = $options['multiple'];
     }
 
     /**
@@ -68,9 +77,13 @@ class PlayerType extends AbstractType
         if ($this->listUsernames) {
             // The user doesn't have javascript enabled - show a text field with
             // a comma-separated list of usernames
-            $newValue = implode(', ', $this->reverseTransform($data,
+            $players = $this->reverseTransform($data,
                 function ($player) { return $player->getUsername(); }
-            ));
+            );
+
+            $newValue = (is_array($players))
+                      ? implode(', ', $players)
+                      : $players;
         } elseif ($form->isSubmitted()) {
             // The user has javascript enabled - set the value to a JSON array
             // that the client can read to fill the field with the values
@@ -99,9 +112,13 @@ class PlayerType extends AbstractType
         $form = $event->getForm()->get('players');
 
         if (trim($players) == '') {
-            // The user didn't include any players, just set data to be an empty
-            // array so that we do foreach() without any tricks
-            $data = array();
+            if ($this->multiple) {
+                // The user didn't include any players, just set data to be an empty
+                // array so that we do foreach() without any tricks
+                $data = array();
+            } else {
+                $data = null;
+            }
         } else {
             $data = $this->stringToModels($players, $form);
         }
@@ -134,6 +151,10 @@ class PlayerType extends AbstractType
                        : $this->idToModel($player);
 
                 if ($model) {
+                    if (!$this->multiple) {
+                        return $model;
+                    }
+
                     if ($this->include && $model->getId() == $this->include->getId()) {
                         // The caller has explicitly asked to include this player,
                         // so we just ignore any entries the user gave us to prevent
@@ -210,6 +231,15 @@ class PlayerType extends AbstractType
             return $getName($models);
 
         $models = array_map($getName, $models);
+
+        foreach ($models as $model) {
+            // If the array contains strings, sort it
+            // Otherwise just return it
+            if (!is_string($model)) {
+                return $models;
+            }
+        }
+
         natcasesort($models);
 
         return $models;
@@ -220,7 +250,8 @@ class PlayerType extends AbstractType
         $resolver->setOptional(array('include'));
         $resolver->setDefaults(array(
             'compound' => true,
-            'label' => false
+            'label' => false,
+            'multiple' => false,
         ));
     }
 
