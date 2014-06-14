@@ -10,7 +10,7 @@
  * A Model that has a name
  * @package    BZiON\Models
  */
-interface NamedModel
+interface NamedModel extends ModelInterface
 {
     /**
      * Get the name of the entity

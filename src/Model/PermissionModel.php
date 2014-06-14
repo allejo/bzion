@@ -10,7 +10,7 @@
  * A Model that can be managed by users with specific permissions
  * @package BZiON\Models
  */
-interface PermissionModel
+interface PermissionModel extends ModelInterface
 {
     /**
      * Get the permission required to create such a model

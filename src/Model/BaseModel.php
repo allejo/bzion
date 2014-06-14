@@ -10,7 +10,7 @@
  * A base database object (e.g. A player or a team)
  * @package    BZiON\Models
  */
-abstract class BaseModel
+abstract class BaseModel implements ModelInterface
 {
     /**
      * The Database ID of the object
