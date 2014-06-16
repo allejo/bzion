@@ -1,6 +1,7 @@
 <?php
 namespace BZIon\Form;
 
+use NamedModel;
 use Model;
 use Player;
 use Symfony\Component\Form\AbstractType;
@@ -35,14 +36,26 @@ class PlayerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('players', 'text', array(
-            'attr' => array(
-                'class' => 'player-select',
-                'placeholder' => 'brad, kierra, ...',
-            ),
-            'label' => ucfirst($builder->getName()) . ': ',
-            'required' => false
-        ));
+        if (isset($options['include']))
+            $this->include = $options['include'];
+
+        if (isset($options['multiple']))
+            $this->multiple = $options['multiple'];
+
+        $placeholder = ($this->multiple) ? 'brad, kierra, ...' : null;
+
+        $transformer = new PlayerTransformer();
+
+        $builder->add(
+            $builder->create('players', 'text', array(
+                'attr' => array(
+                    'class' => 'player-select',
+                    'placeholder' => $placeholder,
+                ),
+                'label' => ucfirst($builder->getName()) . ': ',
+                'required' => false
+            ))->addViewTransformer($transformer)
+        );
 
         // True if the client provided the recipient usernames instead of IDs
         // (to support non-JS browsers)
@@ -53,13 +66,9 @@ class PlayerType extends AbstractType
             'data' => true,
         ));
 
+
+        // $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onData'));
         $builder->addEventListener(FormEvents::SUBMIT, array($this, 'onSubmit'));
-
-        if (isset($options['include']))
-            $this->include = $options['include'];
-
-        if (isset($options['multiple']))
-            $this->multiple = $options['multiple'];
     }
 
     /**
@@ -73,6 +82,10 @@ class PlayerType extends AbstractType
     {
         $data = $view->vars['value'];
         $newValue = null;
+
+        if ($data === null) {
+            return;
+        }
 
         if ($this->listUsernames) {
             // The user doesn't have javascript enabled - show a text field with
@@ -101,6 +114,10 @@ class PlayerType extends AbstractType
 
     /**
      * Convert the vague array that the user gave us into meaningful models
+     *
+     * We use events instead of model/view transformers so that a proper error
+     * message is show to the user when he enters the form
+     *
      * @param  FormEvent $event
      * @return void
      */
@@ -124,6 +141,25 @@ class PlayerType extends AbstractType
         }
 
         $event->setData($data);
+    }
+
+    public function onData(FormEvent $event)
+    {
+        $data = $event->getData();
+
+        if ($data instanceof NamedModel) {
+            $newData = array(
+                "listUsernames" => true,
+                "players" => $this->reverseTransform($data, function($model) {
+                    return $model->getName();
+                }),
+                "players" => "TOASTYM8"
+            );
+
+            var_dump($data, $newData);
+
+            $event->setData($newData);
+        }
     }
 
     /**
@@ -222,7 +258,7 @@ class PlayerType extends AbstractType
      * @param  \Closure             $getName A function that, given a model, returns its name
      * @return array
      */
-    public function reverseTransform($models, $getName)
+    public static function reverseTransform($models, $getName)
     {
         if (null === $models)
             return $models;

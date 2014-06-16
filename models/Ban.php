@@ -10,7 +10,7 @@
  * A ban imposed by an admin on a player
  * @package BZiON\Models
  */
-class Ban extends UrlModel
+class Ban extends UrlModel implements PermissionModel
 {
     /**
      * The id of the banned player
@@ -143,15 +143,11 @@ class Ban extends UrlModel
 
     /**
      * Get the expiration time of the ban
-     * @return string The expiration time in a human readable form
+     * @return TimeDate
      */
     public function getExpiration()
     {
-        if ($this->hasExpired()) {
-            return "Expired";
-        }
-
-        return $this->expiration->diffForHumans();
+        return $this->expiration;
     }
 
     /**
@@ -169,9 +165,8 @@ class Ban extends UrlModel
      */
     public function getServerMessage()
     {
-        if ($this->allowedServerJoin()) {
-            return "<em>No message available because the player is allowed to join servers to observe.</em>";
-        }
+        if ($this->allowedServerJoin())
+            return '';
 
         return $this->srvmsg;
     }
@@ -264,7 +259,7 @@ class Ban extends UrlModel
         // Only add the ban if the author is valid and has the permission to add a ban
         if ($author->isValid() && $author->hasPermission(Permission::ADD_BAN)) {
             $player     = new Player($playerID);
-            $expiration = new TimeDate($expiration);
+            $expiration = TimeDate::from($expiration);
 
             // Only ban valid players
             if ($player->isValid()) {
@@ -307,5 +302,10 @@ class Ban extends UrlModel
     {
         return self::arrayIdToModel(self::fetchIds("ORDER BY updated DESC"));
     }
+
+    public static function getCreatePermission() { return Permission::ADD_BAN; }
+    public static function getEditPermission() { return Permission::EDIT_BAN;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_BAN; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_BAN; }
 
 }

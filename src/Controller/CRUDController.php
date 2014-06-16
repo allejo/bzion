@@ -29,6 +29,7 @@ abstract class CRUDController extends JSONController
      */
     protected function enter($form, $creator)
     {
+        throw new Exception("You need to specify an enter() method");
     }
 
     /**
@@ -48,6 +49,7 @@ abstract class CRUDController extends JSONController
      */
     protected function fill($form, $model)
     {
+        throw new Exception("You need to specify a fill() method");
     }
 
     /**
@@ -59,6 +61,7 @@ abstract class CRUDController extends JSONController
      */
     protected function update($form, $model, $me)
     {
+        throw new Exception("You need to implement an update() method");
     }
 
     /**

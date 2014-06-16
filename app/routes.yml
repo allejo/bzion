@@ -10,9 +10,21 @@ ban_list:
     pattern:    /bans
     defaults: { _controller: 'Ban', _action: 'list' }
 
+ban_create:
+    pattern:    /bans/new
+    defaults: { _controller: 'Ban', _action: 'create' }
+
 ban_show:
     pattern:    /bans/{ban}
     defaults: { _controller: 'Ban', _action: 'show' }
+
+ban_edit:
+    pattern:    /bans/{ban}/edit
+    defaults: { _controller: 'Ban', _action: 'edit' }
+
+ban_delete:
+    pattern:    /bans/{ban}/delete
+    defaults: { _controller: 'Ban', _action: 'delete' }
 
 login:
     pattern:    /login
