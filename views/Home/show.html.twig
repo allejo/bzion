@@ -63,11 +63,11 @@
                             {# Generate the three columns in the current row #}
                             {% for match in matches | slice(startIndex, endIndex) %}
                                 <div class="column">
-                                    <div class="team">
+                                    <div class="team" title="{{ match.teamA.name }}">
                                         <img src="http://placehold.it/60x60" />
                                         <strong>{{ match.teamAPoints }}</strong>
                                     </div>
-                                    <div class="team">
+                                    <div class="team" title="{{ match.teamB.name }}">
                                         <img src="http://placehold.it/60x60" />
                                         <strong>{{ match.teamBPoints }}</strong>
                                     </div>
