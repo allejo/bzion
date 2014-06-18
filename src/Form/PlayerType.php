@@ -87,14 +87,15 @@ class PlayerType extends AbstractType
             }
         }
 
+        // Human-readable list to show in case the user has javascript disabled
         $usernames = $this->reverseTransform($data,
             function ($player) { return $player->getUsername(); }
         );
+        if (is_array($usernames)) {
+            $usernames = implode(', ', $usernames);
+        }
 
-        // Human-readable list to show in case the user has javascript disabled
-        $usernames = implode(', ', $usernames);
-
-        // List that the javascript will parse to fill select2's list
+        // Array that the javascript will parse to fill select2's list
         $json = json_encode($this->reverseTransform($data,
             function ($player) { return array(
                 'id' => $player->getId(),
