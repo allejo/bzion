@@ -547,7 +547,7 @@ class Match extends Model implements PermissionModel
         return self::arrayIdToModel(
             parent::fetchIdsFrom(
                 "status", array("disabled", "deleted"), "s", true,
-                "ORDER BY timestamp LIMIT $limit OFFSET $start"
+                "ORDER BY timestamp DESC LIMIT $limit OFFSET $start"
             )
         );
     }
@@ -576,7 +576,7 @@ class Match extends Model implements PermissionModel
             $query .= "team_a = ? OR team_b = ?";
         }
 
-        $query .= " ORDER BY timestamp LIMIT $limit OFFSET $start";
+        $query .= " ORDER BY timestamp DESC LIMIT $limit OFFSET $start";
 
         return self::arrayIdToModel(
             parent::fetchIds($query, "ii", array($teamID, $teamID))
