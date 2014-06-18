@@ -32,6 +32,7 @@ class IpTransformer implements DataTransformerInterface
     {
         $array = explode(',', $ips);
         $array = array_map('trim', $array);
+
         return array_filter($array);
     }
 }

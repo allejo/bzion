@@ -1,7 +1,6 @@
 <?php
 namespace BZIon\Form;
 
-use NamedModel;
 use Model;
 use Player;
 use Symfony\Component\Form\AbstractType;
@@ -66,8 +65,6 @@ class PlayerType extends AbstractType
             'data' => true,
         ));
 
-
-        // $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onData'));
         $builder->addEventListener(FormEvents::SUBMIT, array($this, 'onSubmit'));
     }
 
@@ -81,35 +78,36 @@ class PlayerType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $data = $view->vars['value'];
-        $newValue = null;
 
         if ($data === null) {
-            return;
+            $data = $form->get('players')->getData();
+
+            if ($data === null) {
+                return;
+            }
         }
 
-        if ($this->listUsernames) {
-            // The user doesn't have javascript enabled - show a text field with
-            // a comma-separated list of usernames
-            $players = $this->reverseTransform($data,
-                function ($player) { return $player->getUsername(); }
+        $usernames = $this->reverseTransform($data,
+            function ($player) { return $player->getUsername(); }
+        );
+
+        // Human-readable list to show in case the user has javascript disabled
+        $usernames = implode(', ', $usernames);
+
+        // List that the javascript will parse to fill select2's list
+        $json = json_encode($this->reverseTransform($data,
+            function ($player) { return array(
+                'id' => $player->getId(),
+                'username' => $player->getUsername()
             );
+        }));
 
-            $newValue = (is_array($players))
-                      ? implode(', ', $players)
-                      : $players;
-        } elseif ($form->isSubmitted()) {
-            // The user has javascript enabled - set the value to a JSON array
-            // that the client can read to fill the field with the values
-            // selected by the user when the form was first submitted
-            $newValue = json_encode($this->reverseTransform($data,
-                function ($player) { return array(
-                    'id' => $player->getId(),
-                    'username' => $player->getUsername()
-                );
-            }));
-        }
+        $view->children['players']->vars['attr']['data-value'] = $json;
+        $view->children['players']->vars['value'] = $usernames;
 
-        $view->children['players']->vars['value'] = $newValue;
+        // Reset listUsernames in case the user has turned javascript off since
+        // the last request
+        $view->children['ListUsernames']->vars['value'] = '1';
     }
 
     /**
@@ -143,25 +141,6 @@ class PlayerType extends AbstractType
         $event->setData($data);
     }
 
-    public function onData(FormEvent $event)
-    {
-        $data = $event->getData();
-
-        if ($data instanceof NamedModel) {
-            $newData = array(
-                "listUsernames" => true,
-                "players" => $this->reverseTransform($data, function($model) {
-                    return $model->getName();
-                }),
-                "players" => "TOASTYM8"
-            );
-
-            var_dump($data, $newData);
-
-            $event->setData($newData);
-        }
-    }
-
     /**
      * Convert a comma-separated string into an array of models
      * @param  string        $string
@@ -175,7 +154,7 @@ class PlayerType extends AbstractType
         $players = explode(',', $string);
 
         // Remove all the whitespace and duplicate entries
-        $players = array_map(function ($r) { return trim($r); }, $players);
+        $players = array_map('trim', $players);
         $players = array_unique($players);
 
         $models = array();
@@ -258,13 +237,22 @@ class PlayerType extends AbstractType
      * @param  \Closure             $getName A function that, given a model, returns its name
      * @return array
      */
-    public static function reverseTransform($models, $getName)
+    public function reverseTransform($models, $getName)
     {
         if (null === $models)
             return $models;
 
         if (!is_array($models))
             return $getName($models);
+
+        // Remove the player that we have to always include
+        // Since he's always going to be there, don't show him to the user
+        if ($this->include) {
+            $include = $this->include->getId();
+            $models  = array_filter($models, function ($player) use ($include) {
+                return $player->getId() == $include;
+            });
+        }
 
         $models = array_map($getName, $models);
 

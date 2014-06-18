@@ -51,8 +51,8 @@ $(document).ready(function() {
             updateTeam(teams.val());
         }
 
-        if (players.val()) {
-            players.select2("data", JSON.parse(players.val()));
+        if (players.attr('data-value') !== undefined) {
+            players.select2("data", JSON.parse(players.attr('data-value')));
         }
 
         $(this).find(".player-select-type").attr('value', '0');

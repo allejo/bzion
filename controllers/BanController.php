@@ -75,7 +75,9 @@ class BanController extends CRUDController
                     'max' => 150,
                 ))
             ))
-            ->add('ip_addresses', new IpType())
+            ->add('ip_addresses', new IpType(), array(
+                'required' => false,
+            ))
             ->add('enter', 'submit')
             ->getForm();
     }

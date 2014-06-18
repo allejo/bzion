@@ -1,41 +1,43 @@
 <?php
 namespace BZIon\Form;
 
+use Model;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class PlayerTransformer implements DataTransformerInterface
 {
 
-
     /**
-     * Transforms an object (model) to an integer (int) .
+     * Transforms a value assigned to the form using setData() into something we
+     * can read
      *
-     * @param  Model|null $model
-     * @return int
+     * @param  mixed $players The value
+     * @return array
      */
     public function transform($players)
     {
-        if ($players === null) {
+        if (!$players) {
             return '';
         }
 
-        if (!is_string($players)) {
-            return PlayerType::reverseTransform($players, function($player) {
-                return $player->getUsername();
-            });
+        if ($players instanceof Model) {
+            return array($players);
         }
+
+        return $players;
     }
 
     /**
-     * Transforms an ID to an object
+     * Transforms the user's input into something we can read
      *
-     * @param  int                           $id
-     * @return Model
-     * @throws TransformationFailedException if the team is not found.
+     * Even though a ModelTransformer should handle this, we use form events
+     * in the PlayerType class so that errors are shown to the user
+     *
+     * @param  mixed $value The value
+     * @return mixed
      */
-    public function reverseTransform($id)
+    public function reverseTransform($value)
     {
-        return $id;
+        return $value;
     }
 }
