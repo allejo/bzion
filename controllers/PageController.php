@@ -64,7 +64,7 @@ class PageController extends CRUDController
         );
     }
 
-    protected function createForm()
+    public function createForm()
     {
         return Service::getFormFactory()->createBuilder()
             ->add('name', 'text', array(

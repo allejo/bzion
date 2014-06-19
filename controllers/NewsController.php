@@ -68,7 +68,7 @@ class NewsController extends CRUDController
         );
     }
 
-    protected function createForm()
+    public function createForm()
     {
         return Service::getFormFactory()->createBuilder()
             ->add('category', new ModelType('NewsCategory'))

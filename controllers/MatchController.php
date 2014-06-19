@@ -50,7 +50,7 @@ class MatchController extends CRUDController
         return $match;
     }
 
-    protected function createForm()
+    public function createForm()
     {
         return Service::getFormFactory()->createBuilder()
             ->add('first_team', new MatchTeamType())

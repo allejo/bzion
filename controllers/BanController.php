@@ -3,7 +3,6 @@
 use BZIon\Form\IpType;
 use BZIon\Form\PlayerType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -57,10 +56,12 @@ class BanController extends CRUDController
         );
     }
 
-    protected function createForm()
+    public function createForm($edit)
     {
         return Service::getFormFactory()->createBuilder()
-            ->add('player', new PlayerType())
+            ->add('player', new PlayerType(), array(
+                'disabled' => $edit,
+            ))
             ->add('expiration', 'datetime')
             ->add('reason', 'text', array(
                 'constraints' => new NotBlank(),

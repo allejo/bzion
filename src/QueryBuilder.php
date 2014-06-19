@@ -187,7 +187,7 @@ class QueryBuilder
     /**
      * Request that a specific model is not returned
      *
-     * @param Model $model The model you don't want to get
+     * @param  Model        $model The model you don't want to get
      * @return QueryBuilder
      */
     public function except($model)

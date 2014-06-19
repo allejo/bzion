@@ -50,7 +50,6 @@ interface ModelInterface
      */
     public static function fetchFromSlug($slug);
 
-
     /**
      * Generate an invalid object
      *

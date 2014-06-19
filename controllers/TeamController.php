@@ -67,7 +67,7 @@ class TeamController extends CRUDController
         }, "Are you sure you want to abandon {$team->getEscapedName()}?", "Abandon");
     }
 
-    protected function createForm()
+    public function createForm()
     {
         // TODO: Add validation constraint for teams with same name
         return Service::getFormFactory()->createBuilder()

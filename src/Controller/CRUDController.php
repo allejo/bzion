@@ -11,17 +11,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 abstract class CRUDController extends JSONController
 {
     /**
-     * Create a form for a model
-     * @return Form
-     */
-    protected function createForm()
-    {
-        return Service::getFormFactory()->createBuilder()
-            ->add('create', 'submit')
-            ->getForm();
-    }
-
-    /**
      * Enter the data of a valid form into the database
      * @param  Form   $form    The submitted form
      * @param  Player $creator The player who enters the data
@@ -101,7 +90,7 @@ abstract class CRUDController extends JSONController
         if (!$this->canCreate($me))
             throw new ForbiddenException($this->getMessage($this->getName(), 'create', 'forbidden'));
 
-        $form = $this->createForm();
+        $form = $this->getForm(false);
         $form->handleRequest($this->getRequest());
 
         if ($form->isSubmitted()) {
@@ -133,7 +122,7 @@ abstract class CRUDController extends JSONController
         if (!$this->canEdit($me, $model))
             throw new ForbiddenException($this->getMessage($model, 'edit', 'forbidden'));
 
-        $form = $this->createForm();
+        $form = $this->getForm(true);
         $this->fill($form, $model);
         $form->handleRequest($this->getRequest());
 
@@ -218,6 +207,29 @@ abstract class CRUDController extends JSONController
         $url = Service::getGenerator()->generate($route);
 
         return new RedirectResponse($url);
+    }
+
+    /**
+     * Dynamically get the form to show to the user
+     *
+     * @param  boolean $edit True if we are requesting an edit form, false for a create form
+     * @return Form
+     */
+    private function getForm($edit)
+    {
+        $method = new ReflectionMethod($this, 'createForm');
+
+        // Find the parameters to pass to the method
+        $pass = array();
+        foreach ($method->getParameters() as $param) {
+            if ($param->getName() == 'edit') {
+                $pass[] = $edit;
+            } else {
+                $pass[] = $param->getDefaultValue();
+            }
+        }
+
+        return $method->invokeArgs($this, $pass);
     }
 
     /**
