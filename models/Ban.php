@@ -106,6 +106,41 @@ class Ban extends UrlModel implements PermissionModel
     }
 
     /**
+     * Remove an IP from the ban
+     *
+     * @param string $ipAddress The IP to remove from the ban
+     */
+    public function removeIP($ipAddress)
+    {
+        // Remove $ipAddress from $this->ipAddresses
+        $this->ipAddresses = array_diff($this->ipAddresses, array($ipAddress));
+        $this->db->query("DELETE FROM banned_ips WHERE ban_id = ? AND ip_address = ?", "is", array($this->getId(), $ipAddress));
+    }
+
+    /**
+     * Set the IP addresses of the ban
+     *
+     * @todo Is it worth making this faster?
+     * @param string[] $ipAddress The new IP addresses of the ban
+     */
+    public function setIPs($ipAddresses)
+    {
+        $oldIPs = $this->ipAddresses;
+        $this->ipAddresses = $ipAddresses;
+
+        $newIPs     = array_diff($ipAddresses, $oldIPs);
+        $removedIPs = array_diff($oldIPs, $ipAddresses);
+
+        foreach ($newIPs as $ip) {
+            $this->addIP($ip);
+        }
+
+        foreach($removedIPs as $ip) {
+            $this->removeIP($ip);
+        }
+    }
+
+    /**
      * Check whether or not a player is allowed to join a server when they've been banned
      * @return bool Whether or not a player is allowed to join
      */
@@ -236,6 +271,7 @@ class Ban extends UrlModel implements PermissionModel
      */
     public function unban()
     {
+        $this->expired = true;
         $this->update("expired", 1);
     }
 
