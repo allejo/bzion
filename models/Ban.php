@@ -46,7 +46,7 @@ class Ban extends UrlModel implements PermissionModel
      * Whether or not a player is allowed to join a server when they are banned
      * @var bool
      */
-    protected $allow_server_join;
+    protected $allowServerJoin;
 
     /**
      * The ban creation date
@@ -86,7 +86,7 @@ class Ban extends UrlModel implements PermissionModel
         $this->expiration = new TimeDate($ban['expiration']);
         $this->srvmsg = $ban['server_message'];
         $this->reason = $ban['reason'];
-        $this->allow_server_join = $ban['allow_server_join'];
+        $this->allowServerJoin = $ban['allow_server_join'];
         $this->created = new TimeDate($ban['created']);
         $this->updated = new TimeDate($ban['updated']);
         $this->author = $ban['author'];
@@ -146,7 +146,7 @@ class Ban extends UrlModel implements PermissionModel
      */
     public function allowedServerJoin()
     {
-        return $this->allow_server_join;
+        return $this->allowServerJoin;
     }
 
     /**
@@ -264,6 +264,56 @@ class Ban extends UrlModel implements PermissionModel
     public function isExpired()
     {
         return $this->expired;
+    }
+
+    /**
+     * Set the expiration date of the ban
+     * @param mixed $expiration The expiration
+     */
+    public function setExpiration($expiration)
+    {
+        $this->expiration = TimeDate::from($expiration);
+        $this->update('expiration', $this->expiration->toMysql(), 's');
+    }
+
+    /**
+     * Set the server message of the ban
+     * @param string $message The new server message
+     */
+    public function setServerMessage($message)
+    {
+        $this->srvmsg = $message;
+        $this->update('server_message', $message, 's');
+    }
+
+    /**
+     * Set the reason of the ban
+     * @param string $reason The new ban reason
+     */
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
+        $this->update('reason', $reason, 's');
+    }
+
+    /**
+     * Update the last edit timestamp
+     * @return void
+     */
+    public function updateEditTimestamp()
+    {
+        $this->updated = TimeDate::now();
+        $this->update("updated", $this->updated->toMysql(), 's');
+    }
+
+    /**
+     * Set whether the ban's victim is allowed to enter a match server
+     * @param boolean $allowServerJoin
+     */
+    public function setAllowServerJoin($allowServerJoin)
+    {
+        $this->allowServerJoin = (bool) $allowServerJoin;
+        $this->update('allow_server_join', $this->allowServerJoin);
     }
 
     /**
