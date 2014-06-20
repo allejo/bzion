@@ -183,7 +183,7 @@ abstract class CRUDController extends JSONController
      * Goes to a list of models of the same type if the provided model does not
      * have a URL
      *
-     * @param  Model    $model The model to redirect to
+     * @param  ModelInterface $model The model to redirect to
      * @return Response
      */
     private function redirectTo($model)
@@ -198,7 +198,7 @@ abstract class CRUDController extends JSONController
     /**
      * Get a redirection response to a list of models
      *
-     * @param  Model    $model The model to whose list we should redirect
+     * @param  ModelInterface $model The model to whose list we should redirect
      * @return Response
      */
     protected function redirectToList($model)
@@ -234,9 +234,9 @@ abstract class CRUDController extends JSONController
 
     /**
      * Get a message to show to the user
-     * @param  Model|string $model  The model (or type) to show a message for
-     * @param  string       $action The action that will be performed (softDelete, hardDelete, create or edit)
-     * @param  string       $status The message's status (confirm, error or success)
+     * @param  ModelInterface|string $model  The model (or type) to show a message for
+     * @param  string                $action The action that will be performed (softDelete, hardDelete, create or edit)
+     * @param  string                $status The message's status (confirm, error or success)
      * @return string
      */
     private function getMessage($model, $action, $status, $escape=true)

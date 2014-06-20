@@ -47,4 +47,15 @@ class TimeDate extends Carbon\Carbon
 
         return new self($time);
     }
+
+   /**
+    * Get a Carbon instance for the current date and time
+    *
+    * @param  DateTimeZone|string $timezone
+    * @return TimeDate
+    */
+    public static function now($timezone = null)
+    {
+        return parent::now($timezone);
+    }
 }

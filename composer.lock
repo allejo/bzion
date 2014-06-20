@@ -182,12 +182,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "5a7d250071aab5b87ebe1a3e13bf19b160a5a259"
+                "reference": "a73d1b2b52480d7fd6270a195a22938bf6b03ae7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/5a7d250071aab5b87ebe1a3e13bf19b160a5a259",
-                "reference": "5a7d250071aab5b87ebe1a3e13bf19b160a5a259",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/a73d1b2b52480d7fd6270a195a22938bf6b03ae7",
+                "reference": "a73d1b2b52480d7fd6270a195a22938bf6b03ae7",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +217,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-06-15 20:22:04"
+            "time": "2014-06-18 01:00:51"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2110,12 +2110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "1c0bec2814a078a81fb86dbc38798bf73418f839"
+                "reference": "96336aba609af06e8722ddc17451ce93d70b54e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/1c0bec2814a078a81fb86dbc38798bf73418f839",
-                "reference": "1c0bec2814a078a81fb86dbc38798bf73418f839",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/96336aba609af06e8722ddc17451ce93d70b54e1",
+                "reference": "96336aba609af06e8722ddc17451ce93d70b54e1",
                 "shasum": ""
             },
             "require": {
@@ -2159,7 +2159,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-05-26 15:15:28"
+            "time": "2014-06-20 07:26:46"
         },
         {
             "name": "yzalis/identicon",
