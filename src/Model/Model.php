@@ -54,6 +54,31 @@ abstract class Model extends CachedModel
     }
 
     /**
+     * Update a property and the corresponding database column
+     *
+     * @param  mixed  $property The protected class property to update
+     * @param  string $dbColumn The name of the database column to update
+     * @param  mixed  $value    The value to insert
+     * @param  string $type     The mysqli type of the value (s, i, d, b)
+     * @return self   Returns the model itself to allow method chaining
+     */
+    protected function updateProperty(&$property, $dbColumn, $value, $type = 'i')
+    {
+        // Don't waste time with mysql if there aren't any changes
+        if ($property != $value) {
+            $property = $value;
+
+            if ($value instanceof TimeDate) {
+                $value = $value->toMysql();
+            }
+
+            $this->update($dbColumn, $value, $type);
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the type of the model
      * @return string The type of the model, e.g. "server"
      */
