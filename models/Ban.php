@@ -120,8 +120,9 @@ class Ban extends UrlModel implements PermissionModel
     /**
      * Set the IP addresses of the ban
      *
-     * @todo Is it worth making this faster?
-     * @param string[] $ipAddress The new IP addresses of the ban
+     * @todo   Is it worth making this faster?
+     * @param  string[] $ipAddress The new IP addresses of the ban
+     * @return self
      */
     public function setIPs($ipAddresses)
     {
@@ -138,6 +139,8 @@ class Ban extends UrlModel implements PermissionModel
         foreach($removedIPs as $ip) {
             $this->removeIP($ip);
         }
+
+        return $this;
     }
 
     /**
@@ -260,60 +263,59 @@ class Ban extends UrlModel implements PermissionModel
     /**
      * Set the expiration date of the ban
      * @param mixed $expiration The expiration
+     * @return self
      */
     public function setExpiration($expiration)
     {
-        $this->expiration = TimeDate::from($expiration);
-        $this->update('expiration', $this->expiration->toMysql(), 's');
+        return $this->updateProperty($this->expiration, 'expiration', TimeDate::from($expiration), 's');
     }
 
     /**
      * Set the server message of the ban
      * @param string $message The new server message
+     * @return self
      */
     public function setServerMessage($message)
     {
-        $this->srvmsg = $message;
-        $this->update('server_message', $message, 's');
+        return $this->updateProperty($this->srvmsg, 'server_message', $message, 's');
     }
 
     /**
      * Set the reason of the ban
      * @param string $reason The new ban reason
+     * @return self
      */
     public function setReason($reason)
     {
-        $this->reason = $reason;
-        $this->update('reason', $reason, 's');
+        return $this->updateProperty($this->reason, 'reason', $reason, 's');
     }
 
     /**
      * Update the last edit timestamp
-     * @return void
+     * @return self
      */
     public function updateEditTimestamp()
     {
-        $this->updated = TimeDate::now();
-        $this->update("updated", $this->updated->toMysql(), 's');
+        return $this->updateProperty($this->updated, "updated", TimeDate::now(), 's');
     }
 
     /**
      * Set whether the ban's victim is allowed to enter a match server
      * @param boolean $allowServerJoin
+     * @return self
      */
     public function setAllowServerJoin($allowServerJoin)
     {
-        $this->allowServerJoin = (bool) $allowServerJoin;
-        $this->update('allow_server_join', $this->allowServerJoin);
+        return $this->updateProperty($this->allowServerJoin, 'allow_server_join', (bool) $allowServerJoin);
     }
 
     /**
      * Unban a player
+     * @return self
      */
     public function unban()
     {
-        $this->expired = true;
-        $this->update("expired", 1);
+        return $this->updateProperty($this->expired, 'expired', true);
     }
 
     /**

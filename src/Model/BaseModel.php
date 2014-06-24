@@ -260,7 +260,7 @@ abstract class BaseModel implements ModelInterface
     /**
      * Gets an entity from the supplied slug, which can either be an alias or an ID
      * @param  string|int $slug The object's slug
-     * @return Model
+     * @return static
      */
     public static function fetchFromSlug($slug)
     {
@@ -280,7 +280,7 @@ abstract class BaseModel implements ModelInterface
      * @param  array|string $now    Column(s) to update with the current timestamp
      * @param  string       $table  The table to perform the query on, defaults to the Model's
      *                              table
-     * @return static       The new entry
+     * @return self         The new entry
      */
     protected static function create($params, $types, $now=null, $table='')
     {

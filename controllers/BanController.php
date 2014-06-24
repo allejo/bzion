@@ -45,10 +45,10 @@ class BanController extends CRUDController
 
     protected function update($form, $ban, $me)
     {
-        $ban->setIPs($form->get('ip_addresses')->getData());
-        $ban->setReason($form->get('reason')->getData());
-        $ban->setServerMessage($form->get('server_message')->getData());
-        $ban->setAllowServerJoin($form->get('server_join_allowed')->getData());
+        $ban->setIPs($form->get('ip_addresses')->getData())
+            ->setReason($form->get('reason')->getData())
+            ->setServerMessage($form->get('server_message')->getData())
+            ->setAllowServerJoin($form->get('server_join_allowed')->getData());
 
         return $ban;
     }

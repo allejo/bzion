@@ -219,80 +219,64 @@ class News extends UrlModel implements NamedModel, PermissionModel
      *
      * @param string $content The new content of the post
      *
-     * @return void
+     * @return self
      */
     public function updateContent($content)
     {
-        if ($this->getContent() != $content) {
-            $this->content = $content;
-            $this->update("content", $content, 's');
-        }
+        return $this->updateProperty($this->content, 'content', $content, 's');
     }
 
     /**
      * Update the last edit timestamp
-     * @return void
+     * @return self
      */
     public function updateEditTimestamp()
     {
-        $this->updated = TimeDate::now();
-        $this->update("updated", $this->updated->toMysql(), 's');
+        return $this->updateProperty($this->updated, 'updated', TimeDate::now(), 's');
     }
 
     /**
      * Update the editor of the post
      *
      * @param  int  $editorID The ID of the editor
-     * @return void
+     * @return self
      */
     public function updateLastEditor($editorID)
     {
-        if ($this->getLastEditorID() != $editorID) {
-            $this->editor = $editorID;
-            $this->update("editor", $editorID);
-        }
+        return $this->updateProperty($this->editor, 'editor', $editorID);
     }
 
     /**
      * Update the category of the post
      *
      * @param  int  $categoryID The ID of the category
-     * @return void
+     * @return self
      */
     public function updateCategory($categoryID)
     {
-        if ($this->category != $categoryID) {
-            $this->category = $categoryID;
-            $this->update("category", $categoryID);
-        }
+        return $this->updateProperty($this->category, 'category', $categoryID);
     }
 
     /**
      * Update the status of a post
      *
      * @param  string $status The new status of a post
-     * @return void
+     * @return self
      */
     public function updateStatus($status = 'published')
     {
-        if ($this->getStatus() != $status) {
-            $this->status = $status;
-            $this->update("status", $status, 's');
-        }
+        return $this->updateProperty($this->status, 'status', $status, 's');
     }
 
     /**
      * Update the subject of a post
      *
      * @param  string $subject The new subject of a post
-     * @return void
+     * @return self
      */
     public function updateSubject($subject)
     {
-        if ($this->getSubject() != $subject) {
-            $this->subject = $subject;
-            $this->update("subject", $subject, 's');
-        }
+        return $this->updateProperty($this->subject, 'subject', $subject, 's');
     }
 
     /**

@@ -47,12 +47,12 @@ class NewsController extends CRUDController
 
     protected function update($form, $article, $me)
     {
-        $article->updateCategory($form->get('category')->getData()->getId());
-        $article->updateSubject($form->get('subject')->getData());
-        $article->updateContent($form->get('content')->getData());
-        $article->updateStatus($form->get('status')->getData());
-        $article->updateLastEditor($me->getId());
-        $article->updateEditTimestamp();
+        $article->updateCategory($form->get('category')->getData()->getId())
+                ->updateSubject($form->get('subject')->getData())
+                ->updateContent($form->get('content')->getData())
+                ->updateStatus($form->get('status')->getData())
+                ->updateLastEditor($me->getId())
+                ->updateEditTimestamp();
 
         return $article;
     }
