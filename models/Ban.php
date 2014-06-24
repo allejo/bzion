@@ -150,15 +150,6 @@ class Ban extends UrlModel implements PermissionModel
     }
 
     /**
-     * Get a literal value to whether or not a player can join the server
-     * @return string "Yes" or "No" response
-     */
-    public function allowedServerJoinLiteral()
-    {
-        return ($this->allowedServerJoin()) ? "Yes" : "No";
-    }
-
-    /**
      * Get the user who imposed the ban
      * @return Player The banner
      */

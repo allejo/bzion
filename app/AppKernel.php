@@ -2,6 +2,7 @@
 
 use BZIon\Twig\PluralFunction;
 use BZIon\Twig\LinkToFunction;
+use BZIon\Twig\YesNoFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\InvalidTest;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -93,6 +94,7 @@ class AppKernel extends Kernel
         );
         $twig->addFunction(PluralFunction::get());
         $twig->addFunction(LinkToFunction::get());
+        $twig->addFilter(YesNoFilter::get());
         $twig->addTest(ValidTest::get());
         $twig->addTest(InvalidTest::get());
         if ($this->isDebug())

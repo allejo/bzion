@@ -27,7 +27,7 @@
                 <p>{{ ban.serverMessage | raw }}</p>
 
                 <strong>Allow Server Join</strong>
-                <p>{{ ban.allowedServerJoinLiteral }}</p>
+                <p>{{ ban.allowedServerJoin | yesNo }}</p>
 
                 <strong>Banned IP Addresses</strong>
                 <ul>

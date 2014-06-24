@@ -3,7 +3,8 @@ imports:
     - javascript
 
 tools:
-    external_code_coverage: true
+    external_code_coverage:
+        timeout: 1800
     php_mess_detector: true
     php_code_sniffer: true
     sensiolabs_security_checker: true
