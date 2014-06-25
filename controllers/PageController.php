@@ -46,10 +46,10 @@ class PageController extends CRUDController
 
     protected function update($form, $page, $me)
     {
-        $page->setName($form->get('name')->getData());
-        $page->setContent($form->get('content')->getData());
-        $page->setStatus($form->get('status')->getData());
-        $page->updateEditTimestamp();
+        $page->setName($form->get('name')->getData())
+             ->setContent($form->get('content')->getData())
+             ->setStatus($form->get('status')->getData())
+             ->updateEditTimestamp();
 
         return $page;
     }

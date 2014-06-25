@@ -142,46 +142,42 @@ class Page extends AliasModel implements NamedModel, PermissionModel
      * Set the name of the page
      *
      * @param  string $name
-     * @return void
+     * @return self
      */
     public function setName($name)
     {
-        $this->name = $name;
-        $this->update("name", $name, 's');
+        return $this->updateProperty($this->name, "name", $name, 's');
     }
 
     /**
      * Set the content of the page
      *
      * @param  string $content
-     * @return void
+     * @return self
      */
     public function setContent($content)
     {
-        $this->content = $content;
-        $this->update("content", $content, 's');
+        return $this->updateProperty($this->content, "content", $content, 's');
     }
 
     /**
      * Set the status of the page
      *
      * @param  string $status One of "live", "revision" or "disabled"
-     * @return void
+     * @return self
      */
     public function setStatus($status)
     {
-        $this->status = $status;
-        $this->update("status", $status, 's');
+        return $this->updateProperty($this->status, "status", $status, 's');
     }
 
     /**
      * Update the last edit timestamp
-     * @return void
+     * @return self
      */
     public function updateEditTimestamp()
     {
-        $this->updated = TimeDate::now();
-        $this->update("updated", $this->updated->toMysql(), 's');
+        return $this->updateProperty($this->updated, "updated", TimeDate::now(), 's');
     }
 
 
