@@ -108,7 +108,7 @@ abstract class AliasModel extends UrlModel
             $name = $name . '-';
         }
 
-        return static::getUniqueAlias($name);
+        return self::getUniqueAlias($name);
     }
 
     /**
@@ -136,11 +136,12 @@ abstract class AliasModel extends UrlModel
         // in the end of it and keep incrementing it until there is we find
         // an open spot.
         $currentAlias = $alias;
-        for ($i = 2
-           ; in_array($currentAlias, $aliases)
-          || in_array($currentAlias, static::getDisallowedAliases())
-           ; $i++)
-        {
+        for ($i = 2;; $i++) {
+            if (!in_array($currentAlias, $aliases)
+            &&  !in_array($currentAlias, static::getDisallowedAliases())) {
+                break;
+            }
+
             $currentAlias = $alias . $i;
         }
 

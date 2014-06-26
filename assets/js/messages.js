@@ -71,26 +71,26 @@ function updateSelector(selector) {
     });
 }
 
+function setSelectors(selectors, data) {
+    $.each(selectors, function(i, key) {
+        var selector = $(data).closest(key);
+        if (!selector.length)
+            selector = $(data).find(key);
+
+        $(key).html(selector.html());
+    });
+    initPage();
+}
+
 function updateSelectors(selectors) {
     $.get(window.location.pathname, function(data) {
-        $.each(selectors, function(i, key) {
-            var selector = $(data).closest(key);
-            if (!selector.length)
-                selector = $(data).find(key);
-
-            $(key).html(selector.html());
-        });
-        initPage();
+        setSelectors(selectors, data);
     }, 'html');
 }
 
 function updatePage() {
     startSpinners();
     return updateSelectors([".messaging", "nav"]);
-}
-
-function updateMessages() {
-    return updateSelectors([".scrollable_messages", ".conversations", "nav"]);
 }
 
 // Use "on" instead of just "click"/"submit", so that new elements of that class added
@@ -103,8 +103,9 @@ pageSelector.on("submit", ".reply_form", function(event) {
     event.preventDefault();
 
     sendMessage($(this), function(msg, form) {
-        updateMessages();
-        console.log(form[0].reset());
+        selectors = [".scrollable_messages", ".conversations", "nav"];
+        setSelectors(selectors, msg.content);
+        form[0].reset();
     });
 });
 

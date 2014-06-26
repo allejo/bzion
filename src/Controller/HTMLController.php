@@ -9,10 +9,19 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class HTMLController extends Controller
 {
     /**
+     * Whether twig has been prepared
+     * @var boolean
+     */
+    private $twigReady = false;
+
+    /**
      * Prepare the twig global variables
      */
-    protected function prepareTwig()
+    private function addTwigGlobals()
     {
+        if ($this->twigReady)
+            return;
+
         $request = $this->getRequest();
 
         // Add global variables to the twig templates
@@ -22,6 +31,23 @@ abstract class HTMLController extends Controller
         $twig->addGlobal("pages", Page::getPages());
         $twig->addGlobal("me",
             new Player($request->getSession()->get('playerId')));
+
+        $this->prepareTwig();
+
+        $this->twigReady = true;
+    }
+
+    protected function prepareTwig()
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function render($view, $parameters=array())
+    {
+        $this->addTwigGlobals();
+        return parent::render($view, $parameters);
     }
 
     /**
@@ -48,7 +74,6 @@ abstract class HTMLController extends Controller
     public function callAction($action=null)
     {
         try {
-            $this->prepareTwig();
             $response = parent::callAction($action);
             if (!$response->isRedirection())
                 $this->saveURL();

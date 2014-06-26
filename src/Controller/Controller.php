@@ -205,6 +205,8 @@ abstract class Controller
             return $this->getRequest();
         case "Symfony\Component\HttpFoundation\Session\Session":
             return $this->getRequest()->getSession();
+        case "Symfony\Component\HttpFoundation\Session\Flash\FlashBag":
+            return $this->getRequest()->getSession()->getFlashBag();
         case "Symfony\Component\Form\FormFactory":
             return Service::getFormFactory();
         }
@@ -243,6 +245,18 @@ abstract class Controller
     }
 
     /**
+     * Render the action's template
+     * @param  array  $params The variables to pass to the template
+     * @param  string $action The controller's action
+     * @return string The content
+     */
+    protected function renderDefault($params, $action)
+    {
+        $templatePath = $this->getName() . "/$action.html.twig";
+        return $this->render($templatePath, $params);
+    }
+
+    /**
      * Get a Response from the return value of an action
      * @param  mixed    $return Whatever the method returned
      * @param  string   $action The name of the action
@@ -257,8 +271,7 @@ abstract class Controller
         if (is_array($return)) {
             // The controller is probably expecting us to show a view to the
             // user, using the array provided to set variables for the template
-            $templatePath = $this->getName() . "/$action.html.twig";
-            $content = $this->render($templatePath, $return);
+            $content = $this->renderDefault($return, $action);
         } elseif (is_string($return)) {
             $content = $return;
         }
@@ -308,7 +321,7 @@ abstract class Controller
 
         $template = Service::getTemplateEngine();
 
-        $ret =  $template->render($view, $parameters);
+        $ret = $template->render($view, $parameters);
 
         Debug::finishStopwatch('view.render');
 

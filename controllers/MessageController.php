@@ -13,11 +13,12 @@ class MessageController extends JSONController
     public function setup()
     {
         $this->requireLogin();
+    }
 
-        if (!$this->isJson()) {
-            $groups = Group::getGroups($this->getRequest()->getSession()->get("playerId"));
-            Service::getTemplateEngine()->addGlobal("groups", $groups);
-        }
+    protected function prepareTwig()
+    {
+        $groups = Group::getGroups($this->getRequest()->getSession()->get("playerId"));
+        Service::getTemplateEngine()->addGlobal("groups", $groups);
     }
 
     public function composeAction(Player $me, Request $request)
@@ -78,9 +79,6 @@ class MessageController extends JSONController
         if ($form->isValid()) {
             // The player wants to send a message
             $this->sendMessage($me, $discussion, $form, $cloned);
-
-            if ($this->isJson())
-                return "Your message was sent successfully";
         } elseif ($form->isSubmitted() && $this->isJson())
             throw new BadRequestException($this->getErrorMessage($form));
 
@@ -161,14 +159,15 @@ class MessageController extends JSONController
 
     private function getErrorMessage(Form &$form)
     {
-        foreach ($form->all() as $child)
-            foreach ($child->getErrors() as $error)
-
+        foreach ($form->all() as $child) {
+            foreach ($child->getErrors() as $error) {
                 return $error->getMessage();
+            }
+        }
 
-        foreach ($form->getErrors() as $error)
-
+        foreach ($form->getErrors() as $error) {
             return $error->getMessage();
+        }
 
         return "Unknown Error";
     }

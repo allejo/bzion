@@ -9,16 +9,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 abstract class JSONController extends HTMLController
 {
     /**
-     * {@inheritDoc}
-     */
-    public function prepareTwig()
-    {
-        // Only perform HTML stuff if the user hasn't asked for JSON
-        if (!$this->isJson())
-            parent::prepareTwig();
-    }
-
-    /**
      * Finds whether the client has requested a JSON document
      *
      * @return bool
@@ -66,14 +56,20 @@ abstract class JSONController extends HTMLController
     {
         // Format strings nicely with JSON, if the client wants that
         if ($this->isJson()) {
-            if (is_string($return)) {
-                $return = new JsonResponse(array(
-                    "success" => true,
-                    "message" => $return,
-                ));
-            } elseif (!$return instanceof JsonResponse) {
-                throw new BadRequestException(
-                    "The data you requested is not available in JSON format");
+            if (!$return instanceof JsonResponse) {
+                $response = array("success" => true);
+
+                $flashbag = $this->getRequest()->getSession()->getFlashBag();
+                if ($flashbag->has('success')) {
+                    $messages = $flashbag->get('success');
+                    $response['message'] = $messages[0];
+                }
+
+                $response['content'] = (is_array($return))
+                                     ? $this->renderDefault($return, $action)
+                                     : $return;
+
+                $return = new JsonResponse($response);
             }
         }
 
