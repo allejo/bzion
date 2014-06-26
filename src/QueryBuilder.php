@@ -92,6 +92,18 @@ class QueryBuilder
     private $returnArray = false;
 
     /**
+     * The page to return
+     * @var int|null
+     */
+    private $page = null;
+
+    /**
+     * The number of elements on every page
+     * @var int
+     */
+    private $resultsPerPage = 30;
+
+    /**
      * Create a new QueryBuilder
      *
      * A new query builder should be created on a static getQueryBuilder()
@@ -129,7 +141,7 @@ class QueryBuilder
      * `$queryBuilder->where('username')->equals('administrator');`
      *
      * @param  string       $column The column to select
-     * @return QueryBuilder
+     * @return self
      */
     public function where($column)
     {
@@ -145,7 +157,7 @@ class QueryBuilder
      * Request that a column equals a string (case-insensitive)
      *
      * @param  string       $string The string that the column's value should equal to
-     * @return QueryBuilder
+     * @return self
      */
     public function equals($string)
     {
@@ -159,7 +171,7 @@ class QueryBuilder
      *
      * @param  int|Model    $number The number that the column's value should equal
      *                              to - if a Model is provided, use the model's ID
-     * @return QueryBuilder
+     * @return self
      */
     public function is($number)
     {
@@ -175,7 +187,7 @@ class QueryBuilder
      * Request that a column value starts with a string (case-insensitive)
      *
      * @param  string       $string The substring that the column's value should start with
-     * @return QueryBuilder
+     * @return self
      */
     public function startsWith($string)
     {
@@ -188,7 +200,7 @@ class QueryBuilder
      * Request that a specific model is not returned
      *
      * @param  Model        $model The model you don't want to get
-     * @return QueryBuilder
+     * @return self
      */
     public function except($model)
     {
@@ -202,7 +214,7 @@ class QueryBuilder
      * Return the results sorted by the value of a column
      *
      * @param  string       $column The column based on which the results should be ordered
-     * @return QueryBuilder
+     * @return self
      */
     public function sortBy($column)
     {
@@ -219,7 +231,7 @@ class QueryBuilder
      *
      * Note: This only works if you have specified a column in the sortBy() method
      *
-     * @return QueryBuilder
+     * @return self
      */
     public function reverse()
     {
@@ -229,9 +241,35 @@ class QueryBuilder
     }
 
     /**
+     * Specify the number of results per page
+     *
+     * @param  int  $count The number of results
+     * @return self
+     */
+    public function limit($count)
+    {
+        $this->resultsPerPage = $count;
+
+        return $this;
+    }
+
+    /**
+     * Only show results from a specific page
+     *
+     * @param  int|null $page The page number (or null to show all pages - counting starts from 0)
+     * @return self
+     */
+    public function fromPage($page)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
      * Request that only "active" Models should be returned
      *
-     * @return QueryBuilder
+     * @return self
      */
     public function active()
     {
@@ -277,7 +315,7 @@ class QueryBuilder
 
     /**
      * Perform the query and get back the results in a list of arrays
-     *     *
+     *
      * @param string|string[] The column(s) that should be returned
      * @return array[]
      */
@@ -341,8 +379,9 @@ class QueryBuilder
         $columns    = $this->createQueryColumns($columns);
         $conditions = $this->createQueryConditions();
         $order      = $this->createQueryOrder();
+        $pagination = $this->createQueryPagination();
 
-        return "SELECT $columns FROM $table $conditions $order";
+        return "SELECT $columns FROM $table $conditions $order $pagination";
     }
 
     /**
@@ -389,6 +428,25 @@ class QueryBuilder
         }
 
         return $order;
+    }
+
+    /**
+     * Generates the pagination instructions for the query
+     * @return string
+     */
+    private function createQueryPagination()
+    {
+        if (!$this->page) {
+            return '';
+        }
+
+        $firstElement = ($this->page - 1) * $this->resultsPerPage;
+
+        $this->parameters[] = $firstElement;
+        $this->parameters[] = $this->resultsPerPage;
+        $this->types       .= 'ii';
+
+        return "LIMIT ?, ?";
     }
 
 }
