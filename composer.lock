@@ -182,12 +182,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "a73d1b2b52480d7fd6270a195a22938bf6b03ae7"
+                "reference": "fdad112682a1e688991320abc3aed6d68924a857"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/a73d1b2b52480d7fd6270a195a22938bf6b03ae7",
-                "reference": "a73d1b2b52480d7fd6270a195a22938bf6b03ae7",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/fdad112682a1e688991320abc3aed6d68924a857",
+                "reference": "fdad112682a1e688991320abc3aed6d68924a857",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +217,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-06-18 01:00:51"
+            "time": "2014-06-22 15:00:37"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -4607,12 +4607,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "e9caa300faf95076c8e27693f3fdb0bb6e3148c0"
+                "reference": "b71e36491d316be19496cf910e994846b058dcd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/e9caa300faf95076c8e27693f3fdb0bb6e3148c0",
-                "reference": "e9caa300faf95076c8e27693f3fdb0bb6e3148c0",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b71e36491d316be19496cf910e994846b058dcd7",
+                "reference": "b71e36491d316be19496cf910e994846b058dcd7",
                 "shasum": ""
             },
             "require": {
@@ -4657,7 +4657,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-06-06 02:53:20"
+            "time": "2014-06-26 14:40:24"
         },
         {
             "name": "symfony/browser-kit",

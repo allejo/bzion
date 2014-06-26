@@ -64,7 +64,7 @@ class MatchController extends CRUDController
                 'required' => false,
                 'attr' => array('placeholder' => 'brad.guleague.org:5100'),
             ))
-            ->add('time', 'datetime', array('constraints' => new NotBlank()))
+            ->add('time', 'datetime', array('constraints' => new NotBlank(), 'data' => TimeDate::now()))
             ->add('enter', 'submit')
             ->getForm();
     }
