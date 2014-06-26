@@ -60,6 +60,13 @@ class TeamTest extends TestCase
         $this->assertEquals($this->team->getId(), Team::fetchFromSlug($team->getId())->getId());
     }
 
+    public function testDisallowedAlias()
+    {
+        $this->team = Team::createTeam("new", $this->player->getId(), "Avatar", "Description");
+
+        $this->assertNotEquals("new", $this->team->getAlias());
+    }
+
     public function testMembers()
     {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");

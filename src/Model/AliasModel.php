@@ -103,17 +103,28 @@ abstract class AliasModel extends UrlModel
 
         // An alias name can't only contain numbers, because it will be
         // indistinguishable from an ID. If it does, add a dash in the end.
-        if (preg_match("/^[0-9]+$/", $name)) {
+        // Also prevent aliases from taking names such as "new",
+        while (preg_match("/^[0-9]+$/", $name)) {
             $name = $name . '-';
         }
 
+        return static::getUniqueAlias($name);
+    }
+
+    /**
+     * Make sure that the generated alias provided is unique
+     *
+     * @param  string $alias The alias
+     * @return string An alias that is guaranteed to be unique
+     */
+    private static function getUniqueAlias($alias)
+    {
         // Try to find duplicates
         $db = Database::getInstance();
-        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE alias REGEXP ?", 's', array("^" . $name . "[0-9]*$"));
+        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE alias REGEXP ?", 's', array("^" . $alias . "[0-9]*$"));
 
-        // The functionality of the following code block is provided in PHP 5.5's
-        // array_column function. What is does is convert the multi-dimensional
-        // array that $db->query() gave us into a single-dimensional one.
+        // Convert the multi-dimensional array that $db->query() gave us into
+        // a single-dimensional one.
         $aliases = array();
         if (is_array($result)) {
             foreach ($result as $r) {
@@ -121,18 +132,33 @@ abstract class AliasModel extends UrlModel
             }
         }
 
-        // No duplicates found
-        if (!in_array($name, $aliases))
-            return $name;
-
         // If there's already an entry with the alias we generated, put a number
         // in the end of it and keep incrementing it until there is we find
         // an open spot.
-        $i = 2;
-        while (in_array($name . $i, $aliases)) {
-            $i++;
+        $currentAlias = $alias;
+        for ($i = 2
+           ; in_array($currentAlias, $aliases)
+          || in_array($currentAlias, static::getDisallowedAliases())
+           ; $i++)
+        {
+            $currentAlias = $alias . $i;
         }
 
-        return $name . $i;
+        return $currentAlias;
+    }
+
+    /**
+     * Get a list of aliases that should not be given to objects
+     *
+     * For examples, you want to prevent teams from getting the "new" alias.
+     * Otherwise, the team's link would be http://example.com/bzion/teams/new,
+     * and the user would go to the team creation page instead of the team's page.
+     * Disallowed aliases will have a dash appended, so the URL would be
+     * http://example.com/bzion/teams/new-
+     * @return string[]
+     */
+    protected static function getDisallowedAliases()
+    {
+        return array('new');
     }
 }
