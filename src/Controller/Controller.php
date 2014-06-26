@@ -193,7 +193,7 @@ abstract class Controller
 
         // $me -> currently logged in user
         if ($paramName == "me")
-            return $refClass->newInstance(Service::getSession()->get('playerId'));
+            return self::getMe();
 
         if ($refClass === null)
             // No class provived by the method's definition, we don't know
@@ -307,6 +307,15 @@ abstract class Controller
     public static function getRequest()
     {
         return Service::getRequest();
+    }
+
+    /**
+     * Gets the currently logged in player
+     * @return Player
+     */
+    protected static function getMe()
+    {
+        return new Player(self::getRequest()->getSession()->get('playerId'));
     }
 
     /**

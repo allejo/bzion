@@ -9,20 +9,20 @@ $(document).ready(function() {
     });
 
     var members = [];
-    var i = 0;
+    var id = 0;
 
-    $(".match-team").each(function() {
+    var prepareTeam = function(elem, i) {
         members[i] = [];
 
-        var teams =   $(this).find(".team-select");
-        var players = $(this).find(".player-select");
+        var teams =   elem.find(".team-select");
+        var players = elem.find(".player-select");
 
-        updateTeam = function(team) {
+        updateTeam = function(team, pos)  {
             $.ajax({
                 url: baseURLNoHost + "/teams/" + team + "/members",
                 data: { format: "json" }
             }).done(function( msg ) {
-                members[i] = msg.players;
+                members[pos] = msg.players;
             });
         };
 
@@ -33,7 +33,7 @@ $(document).ready(function() {
             .on('change', function (e) {
                 // Clear the memberlist when changing a team
                 players.select2("val", "");
-                updateTeam(e.val);
+                updateTeam(e.val, i);
             });
 
         players.attr('placeholder', 'Enter players...')
@@ -48,15 +48,18 @@ $(document).ready(function() {
             });
 
         if (teams.val()) {
-            updateTeam(teams.val());
+            updateTeam(teams.val(), i);
         }
 
         if (players.attr('data-value') !== undefined) {
             players.select2("data", JSON.parse(players.attr('data-value')));
         }
 
-        $(this).find(".player-select-type").attr('value', '0');
+        elem.find(".player-select-type").attr('value', '0');
+    };
 
-        i++;
+    $(".match-team").each(function() {
+        prepareTeam($(this), id);
+        id++;
     });
 });
