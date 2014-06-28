@@ -65,6 +65,7 @@ class MessageController extends JSONController
         $discussion->markReadBy($me->getId());
 
         $form = $this->showMessageForm($discussion, $me);
+        $inviteForm = $this->showInviteForm($discussion, $me);
 
         $messages = Message::getQueryBuilder()->active()
                   ->where('group')->is($discussion)
@@ -74,7 +75,12 @@ class MessageController extends JSONController
                   ->endAt($request->query->get('start'))
                   ->getModels();
 
-        $params = array("form" => $form->createView(), "group" => $discussion, "messages" => $messages);
+        $params = array(
+            "form"       => $form->createView(),
+            "inviteForm" => $inviteForm->createView(),
+            "group"      => $discussion,
+            "messages"   => $messages,
+        );
 
         if ($request->query->has('nolayout')) {
             // Don't show the layout so that ajax can just load the messages
@@ -82,6 +88,32 @@ class MessageController extends JSONController
         } else {
             return $params;
         }
+    }
+
+    private function showInviteForm($discussion, $me)
+    {
+        $form = Service::getFormFactory()->createNamedBuilder('invite_form')
+            ->add('players', new PlayerType(), array(
+                'constraints' => new NotBlank(),
+                'multiple' => true,
+            ))
+            ->add('Invite', 'submit')
+            ->setAction($discussion->getUrl())->getForm();
+
+        $form->handleRequest($this->getRequest());
+
+        if ($form->isValid()) {
+            foreach($form->get('players')->getData() as $player) {
+                if ($discussion->isMember($player->getId()))
+                    break;
+
+                $discussion->addMember($player->getId());
+            }
+        }
+
+        $this->getFlashBag()->add('success', "The conversation has been updated");
+
+        return $form;
     }
 
     private function showMessageForm($discussion, $me)
@@ -146,8 +178,7 @@ class MessageController extends JSONController
 
         $to->sendMessage($from, $message);
 
-        $this->getRequest()->getSession()->getFlashBag()->add('success',
-            "Your message was sent successfully");
+        $this->getFlashBag()->add('success', "Your message was sent successfully");
 
         // Reset the form
         $form = $cloned;
