@@ -109,9 +109,9 @@ class MessageController extends JSONController
 
                 $discussion->addMember($player->getId());
             }
-        }
 
-        $this->getFlashBag()->add('success', "The conversation has been updated");
+            $this->getFlashBag()->add('success', "The conversation has been updated");
+        }
 
         return $form;
     }

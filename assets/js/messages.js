@@ -50,7 +50,6 @@ function initPage() {
     if (groupMessages.attr("data-id")) {
         messageView = $("#messageView");
         var olderMessageLink = messageView.hideOlder();
-        console.toast = messageView;
 
         // Scroll message list to the bottom
         messageView.scrollTop(messageView.prop("scrollHeight"));
@@ -87,7 +86,6 @@ $(document).ready(function() {
 var pageSelector = $(".messaging");
 
 $.fn.startSpinners = function() {
-    console.toast = this;
     this.children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
     return this;
 };
