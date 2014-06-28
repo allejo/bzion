@@ -98,6 +98,12 @@ class QueryBuilder
     private $page = null;
 
     /**
+     * Whether the ID of the first/last element has been provided
+     * @var boolean
+     */
+    private $limited = false;
+
+    /**
      * The number of elements on every page
      * @var int
      */
@@ -265,6 +271,52 @@ class QueryBuilder
 
         return $this;
     }
+
+    /**
+     * End with a specific result
+     *
+     * @param  int|Model $model     The model (or database ID) after the first result
+     * @param  boolean   $inclusive Whether to include the provided model
+     * @param  boolean   $reverse   Whether to reverse the results
+     * @return self
+     */
+    public function endAt($model, $inclusive=false, $reverse=false)
+    {
+        return $this->startAt($model, $inclusive, !$reverse);
+    }
+
+    /**
+     * Start with a specific result
+     *
+     * @param  int|Model $model     The model (or database ID) before the first result
+     * @param  boolean   $inclusive Whether to include the provided model
+     * @param  boolean   $reverse   Whether to reverse the results
+     * @return self
+     */
+    public function startAt($model, $inclusive=false, $reverse=false)
+    {
+        if (!$model) {
+            return $this;
+        } elseif ($model instanceof Model && !$model->isValid()) {
+            return $this;
+        }
+
+        $this->currentColumn = $this->sortBy;
+        $this->limited = true;
+        $column = $this->currentColumn;
+        $type   = $this->type;
+        $table  = $type::TABLE;
+
+        $comparison  = $this->reverseSort ^ $reverse;
+        $comparison  = ($comparison) ? '>' : '<';
+        $comparison .= ($inclusive)  ? '=' : '';
+        $id = ($model instanceof Model) ? $model->getId() : $model;
+
+        $this->addColumnCondition("$comparison (SELECT $column FROM $table WHERE id = ?)",  $id, 'i');
+
+        return $this;
+    }
+
 
     /**
      * Request that only "active" Models should be returned
@@ -436,17 +488,23 @@ class QueryBuilder
      */
     private function createQueryPagination()
     {
-        if (!$this->page) {
+        if (!$this->page && !$this->limited) {
             return '';
         }
 
-        $firstElement = ($this->page - 1) * $this->resultsPerPage;
+        $offset = '';
+        if ($this->page) {
+            $firstElement       = ($this->page - 1) * $this->resultsPerPage;
+            $this->parameters[] = $firstElement;
+            $this->types       .= 'i';
 
-        $this->parameters[] = $firstElement;
+            $offset = '?,';
+        }
+
         $this->parameters[] = $this->resultsPerPage;
-        $this->types       .= 'ii';
+        $this->types       .= 'i';
 
-        return "LIMIT ?, ?";
+        return "LIMIT $offset ?";
     }
 
 }
