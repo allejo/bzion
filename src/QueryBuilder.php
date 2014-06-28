@@ -57,7 +57,7 @@ class QueryBuilder
 
     /**
      * A column based on which we should sort the results
-     * @var string|nulll
+     * @var string|null
      */
     private $sortBy = null;
 
