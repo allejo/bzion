@@ -15,18 +15,6 @@
 class MatchQueryBuilder extends QueryBuilder
 {
     /**
-     * The team whose matches should be listed
-     * @var Team
-     */
-    private $team;
-
-    /**
-     * The requested outcome of the matches (win, draw or loss)
-     * @var string|null
-     */
-    private $result;
-
-    /**
      * Only include matches where a specific team played
      *
      * @param  $team   Team        The team which played the matches

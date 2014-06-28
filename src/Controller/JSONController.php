@@ -59,7 +59,7 @@ abstract class JSONController extends HTMLController
             if (!$return instanceof JsonResponse) {
                 $response = array("success" => true);
 
-                $flashbag = $this->getRequest()->getSession()->getFlashBag();
+                $flashbag = $this->getFlashBag();
                 if ($flashbag->has('success')) {
                     $messages = $flashbag->get('success');
                     $response['message'] = $messages[0];

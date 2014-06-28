@@ -266,6 +266,17 @@ class Group extends UrlModel
     }
 
     /**
+     * Add a player to the discussion
+     *
+     * @param  int $playerId The ID of the player to add
+     * @return void
+     */
+    public function addMember($playerId)
+    {
+        $this->db->query("INSERT INTO `player_groups` (`group`, `player`) VALUES (?, ?)", "ii", array($this->getId(), $playerId));
+    }
+
+    /**
      * Checks if a player has a new message in the group
      *
      * @todo Make this method work

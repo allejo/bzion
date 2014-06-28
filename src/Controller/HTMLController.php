@@ -181,6 +181,15 @@ abstract class HTMLController extends Controller
         return new RedirectResponse($this->getHomeURL());
     }
 
+    /**
+     * Get the session's flash bag
+     * @return Symfony\Component\HttpFoundation\Session\Flash\FlashBag
+     */
+    public static function getFlashBag()
+    {
+        return self::getRequest()->getSession()->getFlashBag();
+    }
+
     /*
      * Assert that the user is logged in
      * @throws HTTPException

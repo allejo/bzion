@@ -105,7 +105,7 @@ $.fn.hideOlder = function() {
     }
 
     return elem.hide().attr("href");
-}
+};
 
 function updateSelector(selector) {
     $(selector).load(window.location.pathname + " " + selector + " > *", function() {

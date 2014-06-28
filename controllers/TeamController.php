@@ -3,7 +3,7 @@
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -29,7 +29,7 @@ class TeamController extends CRUDController
         return $this->delete($team, $me);
     }
 
-    public function kickAction(Team $team, Player $player, Player $me, Session $session)
+    public function kickAction(Team $team, Player $player, Player $me, FlashBag $flash)
     {
         $this->assertCanEdit($me, $team, "You are not allowed to kick a player off that team!");
 
@@ -39,17 +39,17 @@ class TeamController extends CRUDController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of that team.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$player, &$session) {
+        return $this->showConfirmationForm(function () use (&$team, &$player, &$flash) {
             $team->removeMember($player->getId());
 
             $message = "Player {$player->getUsername()} has been kicked from {$team->getName()}";
-            $session->getFlashBag()->add('success', $message);
+            $flash->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
         }, "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?", "Kick");
     }
 
-    public function abandonAction(Team $team, Player $me, Session $session)
+    public function abandonAction(Team $team, Player $me, FlashBag $flash)
     {
         if (!$team->isMember($me->getId()))
             throw new ForbiddenException("You are not a member of that team!");
@@ -57,11 +57,11 @@ class TeamController extends CRUDController
         if ($team->getLeader()->getId() == $me->getId())
             throw new ForbiddenException("You can't abandon the team you are leading.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$me, &$session) {
+        return $this->showConfirmationForm(function () use (&$team, &$me, &$flash) {
             $team->removeMember($me->getId());
 
             $message = "You have left {$team->getName()}";
-            $session->getFlashBag()->add('success', $message);
+            $flash->add('success', $message);
 
             return new RedirectResponse($team->getUrl());
         }, "Are you sure you want to abandon {$team->getEscapedName()}?", "Abandon");

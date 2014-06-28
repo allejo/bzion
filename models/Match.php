@@ -546,7 +546,7 @@ class Match extends Model implements PermissionModel
 
     /**
      * Get a query builder for matches
-     * @return MatcQueryBuilder
+     * @return MatchQueryBuilder
      */
     public static function getQueryBuilder()
     {

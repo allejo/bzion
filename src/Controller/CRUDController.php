@@ -97,7 +97,7 @@ abstract class CRUDController extends JSONController
             $this->validate($form);
             if ($form->isValid()) {
                 $model = $this->enter($form, $me);
-                $this->getRequest()->getSession()->getFlashBag()->add("success",
+                $this->getFlashBag()->add("success",
                     $this->getMessage($model, 'create', 'success'));
 
                 return $this->redirectTo($model);
@@ -130,7 +130,7 @@ abstract class CRUDController extends JSONController
             $this->validate($form);
             if ($form->isValid()) {
                 $model = $this->update($form, $model, $me);
-                $this->getRequest()->getSession()->getFlashBag()->add("success",
+                $this->getFlashBag()->add("success",
                     $this->getMessage($model, 'edit', 'success'));
 
                 return $this->redirectTo($model);
