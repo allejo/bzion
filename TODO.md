@@ -14,7 +14,6 @@ TODO
             - Add/Remove members from the group
         - Active and inactive
         - Send message to team
-        - Make the recipients and subject input fields have the same style
         - Remove labels for recipient and subject fields
     - Notifications
     - Invites
