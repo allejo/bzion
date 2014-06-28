@@ -103,6 +103,8 @@ class MessageController extends JSONController
         $form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
+            $this->assertCanEdit($me, $discussion);
+
             foreach($form->get('players')->getData() as $player) {
                 if ($discussion->isMember($player->getId()))
                     break;
@@ -221,5 +223,21 @@ class MessageController extends JSONController
         }
 
         return "Unknown Error";
+    }
+
+    /*
+     * Make sure that a player can edit a conversation
+     *
+     * Throws an exception if a player is not an admin or the leader of a team
+     * @throws HTTPException
+     * @param  Player        $player  The player to test
+     * @param  Group         $group   The team
+     * @param  string        $message The error message to show
+     * @return void
+     */
+    private function assertCanEdit(Player $player, Group $group, $message="You are not allowed to edit the discussion")
+    {
+        if ($group->getCreator()->getId() != $player->getId())
+                throw new ForbiddenException($message);
     }
 }
