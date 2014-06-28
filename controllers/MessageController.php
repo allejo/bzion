@@ -64,6 +64,28 @@ class MessageController extends JSONController
         $this->assertCanParticipate($me, $discussion);
         $discussion->markReadBy($me->getId());
 
+        $form = $this->showMessageForm($discussion, $me);
+
+        $messages = Message::getQueryBuilder()->active()
+                  ->where('group')->is($discussion)
+                  ->sortBy('time')->reverse()
+                  ->limit(4)->fromPage($request->query->get('page', 1))
+                  ->startAt($request->query->get('end'))
+                  ->endAt($request->query->get('start'))
+                  ->getModels();
+
+        $params = array("form" => $form->createView(), "group" => $discussion, "messages" => $messages);
+
+        if ($request->query->has('nolayout')) {
+            // Don't show the layout so that ajax can just load the messages
+            return $this->render('Message/messages.html.twig', $params);
+        } else {
+            return $params;
+        }
+    }
+
+    private function showMessageForm($discussion, $me)
+    {
         // Create the form to send a message to the discussion
         $form = Service::getFormFactory()->createBuilder()
             ->add('message', 'textarea', array( 'constraints' => new NotBlank(array("message" => "You can't send an empty message!")) ))
@@ -74,7 +96,7 @@ class MessageController extends JSONController
         // Keep a cloned version so we can come back to it later, if we need
         // to reset the fields of the form
         $cloned = clone $form;
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
             // The player wants to send a message
@@ -82,9 +104,7 @@ class MessageController extends JSONController
         } elseif ($form->isSubmitted() && $this->isJson())
             throw new BadRequestException($this->getErrorMessage($form));
 
-        $messages = Message::getMessages($discussion->getId());
-
-        return array("form" => $form->createView(), "group" => $discussion, "messages" => $messages);
+        return $form;
     }
 
     /**

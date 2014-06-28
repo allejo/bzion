@@ -134,4 +134,19 @@ class Message extends Model
                               "ssi", array("hidden", "deleted", $id)));
     }
 
+    /**
+     * Get a query builder for messages
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Message', array(
+            'columns' => array(
+                'group' => 'group_to',
+                'time'  => 'timestamp',
+            ),
+            'activeStatuses' => array('sent'),
+        ));
+    }
+
 }

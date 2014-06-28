@@ -28,28 +28,7 @@
 
             <section class="scrollable_messages">
                 <ul id="messageView" class="messages">
-                    {% for message in messages %}
-                        <li>
-                            {% if message.author.id == me.id %}
-                                <div class="bubble me">
-                            {% else %}
-                                <div class="bubble">
-                            {% endif %}
-                                    {# Only display the author details for when the message wasn't sent from the previous user #}
-
-                                    {% if message.author.id != previousAuthor %}
-                                        <div class="message_details">
-                                            <div class='author'>{{ message.author.username }}</div>
-                                            <div class='date'>{{ message.creationDate }}</div>
-                                        </div>
-                                    {% endif %}
-
-                                    <p>{{ message.content }}</p>
-                                </div>
-                        </li>
-
-                        {% set previousAuthor = message.author.id %}
-                    {% endfor %}
+                    {% include 'Message/messages.html.twig' %}
                 </ul>
             </section>
 

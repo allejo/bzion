@@ -30,7 +30,7 @@ function initializeSelect() {
 
 function initPage() {
     // Hide any dimmers that might have been left
-    stopSpinners();
+    $(".dimmer, .spinner").fadeOut('fast');
 
     var dimmer  = $("<div/>").hide().addClass("dimmer");
     var spinner = $("<div/>").hide().addClass("spinner").text("Loading...");
@@ -42,10 +42,38 @@ function initPage() {
         }
     });
 
-    if ($("#groupMessages").attr("data-id")) {
-        // Scroll message list to the bottom
+    var noMoreScrolling = false;
+    var groupMessages   = $("#groupMessages")
+
+    if (groupMessages.attr("data-id")) {
         var messageView = $("#messageView");
+
+        // Hide the "load new messages" div for non-JS users
+        var olderMessageLink = messageView.find(".older_messages").hide().attr("href");
+
+        // Scroll message list to the bottom
         messageView.scrollTop(messageView.prop("scrollHeight"));
+
+        // Load older messages when the user scrolls to the top
+        messageView.scroll(function() {
+            if($(this).scrollTop() < 3 && !noMoreScrolling && olderMessageLink !== undefined) {
+                noMoreScrolling = true;
+
+                // TODO: Let the user know that more messages are being loaded
+
+                $.get(olderMessageLink + "&nolayout", function(data) {
+                    // Properly scroll the message view
+                    var firstMessage = messageView.find("li").eq(0);
+                    var curOffset = firstMessage.offset().top - messageView.scrollTop();
+
+                    html = $(data);
+                    olderMessageLink = html.closest(".older_messages").hide().attr("href");
+                    messageView.prepend(html);
+                    messageView.scrollTop(firstMessage.offset().top - curOffset);
+                    noMoreScrolling = false;
+                }, "html");
+            }
+        });
     } else {
         initializeSelect();
     }
@@ -57,13 +85,16 @@ $(document).ready(function() {
 
 var pageSelector = $(".messaging");
 
-function startSpinners() {
-    $(".dimmer, .spinner").fadeIn('fast');
-}
+$.fn.startSpinners = function() {
+    console.toast = this;
+    this.children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
+    return this;
+};
 
-function stopSpinners() {
-    $(".dimmer, .spinner").fadeOut('fast');
-}
+$.fn.stopSpinners = function() {
+    this.children(".dimmable").children(".dimmer, .spinner").fadeOut('fast');
+    return this;
+};
 
 function updateSelector(selector) {
     $(selector).load(window.location.pathname + " " + selector + " > *", function() {
@@ -89,7 +120,7 @@ function updateSelectors(selectors) {
 }
 
 function updatePage() {
-    startSpinners();
+    $("#groupMessages").startSpinners();
     return updateSelectors([".messaging", "nav"]);
 }
 
@@ -146,7 +177,8 @@ function sendMessage(form, onSuccess) {
         l.start();
     }
 
-    startSpinners();
+    var groupMessages = $("#groupMessages");
+    groupMessages.startSpinners();
 
     $.ajax({
         type: form.attr('method'),
@@ -161,11 +193,11 @@ function sendMessage(form, onSuccess) {
         if (msg.success) {
             onSuccess(msg, form);
         } else {
-            stopSpinners();
+            groupMessages.stopSpinners();
         }
     }).error(function( jqXHR, textStatus, errorThrown ) {
         var message = (errorThrown === "") ? textStatus : errorThrown;
-        stopSpinners();
+        // stopSpinners();
         notify(message, "error");
     }).complete(function() {
         if (l)
