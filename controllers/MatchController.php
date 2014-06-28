@@ -32,6 +32,9 @@ class MatchController extends CRUDController
         $firstTeam  = $form->get('first_team');
         $secondTeam = $form->get('second_team');
 
+        $firstPlayers  = array_map($this->getModelToID(),  $firstTeam->get('participants')->getData());
+        $secondPlayers = array_map($this->getModelToID(), $secondTeam->get('participants')->getData());
+
         $match = Match::enterMatch(
             $firstTeam ->get('team')->getData()->getId(),
             $secondTeam->get('team')->getData()->getId(),
@@ -39,10 +42,24 @@ class MatchController extends CRUDController
             $secondTeam->get('score')->getData(),
             $form->get('duration')->getData(),
             $me->getId(),
-            $form->get('time')->getData()
+            $form->get('time')->getData(),
+            $firstPlayers,
+            $secondPlayers
         );
 
         return $match;
+    }
+
+    /**
+     * Get a function which converts models to their IDs
+     *
+     * Useful to store the match players into the database
+     */
+    private static function getModelToID()
+    {
+        return function($model) {
+            return $model->getId();
+        };
     }
 
     public function createForm()

@@ -455,9 +455,11 @@ class Match extends Model implements PermissionModel
      * @param  int             $duration   The match duration in minutes
      * @param  int             $entered_by The ID of the player reporting the match
      * @param  string|DateTime $timestamp  When the match was played
+     * @param  int[]           $a_players  The IDs of the first team's players
+     * @param  int[]           $b_players  The IDs of the second team's players
      * @return Match           An object representing the match that was just entered
      */
-    public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now")
+    public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now", $a_players=array(), $b_players=array())
     {
         $team_a = new Team($a);
         $team_b = new Team($b);
@@ -477,6 +479,8 @@ class Match extends Model implements PermissionModel
             'team_b' => $b,
             'team_a_points' => $a_points,
             'team_b_points' => $b_points,
+            'team_a_players' => implode(',', $a_players),
+            'team_b_players' => implode(',', $b_players),
             'team_a_elo_new' => $team_a->getElo(),
             'team_b_elo_new' => $team_b->getElo(),
             'elo_diff' => abs($diff),
@@ -484,7 +488,7 @@ class Match extends Model implements PermissionModel
             'duration' => $duration,
             'entered_by' => $entered_by,
             'status' => 'entered'
-        ), 'iiiiiiisiis', 'updated');
+        ), 'iiiissiiisiis', 'updated');
 
         // Update team match count
         if ($a_points == $b_points) {
