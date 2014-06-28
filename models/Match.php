@@ -537,50 +537,29 @@ class Match extends Model implements PermissionModel
     }
 
     /**
-     * Get all the matches in the database that aren't disabled or deleted
-     * @param  int     $start The offset used when fetching matches, i.e. the starting point
-     * @param  int     $limit The amount of matches to be retrieved
-     * @return Match[] An array of match IDs
+     * Get all the matches in the database
      */
-    public static function getMatches($start = 0, $limit = 50)
+    public static function getMatches()
     {
-        return self::arrayIdToModel(
-            parent::fetchIdsFrom(
-                "status", array("disabled", "deleted"), "s", true,
-                "ORDER BY timestamp DESC LIMIT $limit OFFSET $start"
-            )
-        );
+        return self::getQueryBuilder()->active()->getModels();
     }
 
     /**
-     * Get the matches that a team took part of
-     *
-     * @param int    $teamID    The team ID of whose matches to search for
-     * @param string $matchType The filter for match types: "all", "wins", "losses", or "draws"
-     * @param int    $start     The offset used when fetching matches, i.e. the starting point
-     * @param int    $limit     The amount of matches to be retrieved
-     *
-     * @return Match[] An array of matches where the team participated in
+     * Get a query builder for matches
+     * @return MatcQueryBuilder
      */
-    public static function getMatchesByTeam($teamID, $matchType = "all", $start = 0, $limit = 5)
+    public static function getQueryBuilder()
     {
-        $query = "WHERE ";
-
-        if ($matchType == "wins") {
-            $query .= "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
-        } elseif ($matchType == "losses") {
-            $query .= "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
-        } elseif ($matchType == "draws") {
-            $query .= "((team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
-        } else {
-            $query .= "team_a = ? OR team_b = ?";
-        }
-
-        $query .= " ORDER BY timestamp DESC LIMIT $limit OFFSET $start";
-
-        return self::arrayIdToModel(
-            parent::fetchIds($query, "ii", array($teamID, $teamID))
-        );
+        return new MatchQueryBuilder('Match', array(
+            'columns' => array(
+                'firstTeam' => 'team_a',
+                'secondTeam' => 'team_b',
+                'firstTeamPoints' => 'team_a_points',
+                'secondTeamPoints' => 'team_b_points',
+                'time' => 'timestamp'
+            ),
+            'activeStatuses' => array('entered'),
+        ));
     }
 
     public static function getCreatePermission() { return Permission::ENTER_MATCH; }

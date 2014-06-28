@@ -3,25 +3,20 @@
 use BZIon\Form\MatchTeamType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class MatchController extends CRUDController
 {
-    public function listByTeamAction(Team $team)
+    public function listAction(Request $request, Team $team=null, $type=null)
     {
-        return $this->render("Match/list.html.twig",
-               array ("matches" => $team->getMatches(), "team" => $team));
-    }
+        $query = Match::getQueryBuilder()->active()
+               ->sortBy('time')->reverse()
+               ->with($team, $type)
+               ->limit(50)->fromPage($request->query->get('page', 1));
 
-    public function listByTeamSortAction(Team $team, $type)
-    {
-        return $this->render("Match/list.html.twig",
-            array ("matches" => $team->getMatches($type, 50), "team" => $team));
-    }
-
-    public function listAction()
-    {
-        return array("matches" => Match::getMatches());
+        return array("matches" => $query->getModels(), "team" => $team);
     }
 
     public function createAction(Player $me)

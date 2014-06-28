@@ -301,14 +301,18 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
      * Get the matches this team has participated in
      *
      * @param string $matchType The filter for match types: "all", "wins", "losses", or "draws"
-     * @param int    $count     The offset used when fetching matches, i.e. the starting point
-     * @param int    $offset    The amount of matches to be retrieved
+     * @param int    $count     The amount of matches to be retrieved
+     * @param int    $page      The number of the page to return
      *
      * @return Match[] The array of match IDs this team has participated in
      */
-    public function getMatches($matchType = "all", $count = 5, $offset = 0)
+    public function getMatches($matchType = "all", $count = 5, $page = 1)
     {
-        return Match::getMatchesByTeam($this->id, $matchType, $offset, $count);
+        return Match::getQueryBuilder()
+             ->active()
+             ->with($this, $matchType)
+             ->limit($count)->fromPage($page)
+             ->getModels();
     }
 
     /**

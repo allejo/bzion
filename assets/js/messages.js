@@ -43,7 +43,7 @@ function initPage() {
     });
 
     var noMoreScrolling = false;
-    var groupMessages   = $("#groupMessages")
+    var groupMessages   = $("#groupMessages");
 
     if (groupMessages.attr("data-id")) {
         var messageView = $("#messageView");

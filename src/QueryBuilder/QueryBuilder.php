@@ -29,31 +29,31 @@ class QueryBuilder
      * The type of the model we're building a query for
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * The columns that the model provided us
      * @var array
      */
-    private $columns = array('id' => 'id');
+    protected $columns = array('id' => 'id');
 
     /**
      * The conditions to include in WHERE
      * @var string[]
      */
-    private $conditions = array();
+    protected $conditions = array();
 
     /**
      * The MySQL value parameters
      * @var array
      */
-    private $parameters = array();
+    protected $parameters = array();
 
     /**
      * The MySQL parameter types
      * @var string
      */
-    private $types = '';
+    protected $types = '';
 
     /**
      * A column based on which we should sort the results

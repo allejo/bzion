@@ -4,6 +4,8 @@ class HomeController extends HTMLController
 {
     public function showAction()
     {
-        return array("matches" => Match::getMatches(0, 6), "news" => News::getNews(0, 5));
+        $matches = Match::getQueryBuilder()->active()->sortBy('time')->reverse()->limit(6)->fromPage(1);
+
+        return array("matches" => $matches->getModels(), "news" => News::getNews(0, 5));
     }
 }
