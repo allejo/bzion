@@ -5,7 +5,7 @@
 {% endif %}
 
 {% for message in messages|reverse %}
-    <li>
+    <li data-id="{{ message.id }}">
         {% if message.author.id == me.id %}
             <div class="bubble me">
         {% else %}

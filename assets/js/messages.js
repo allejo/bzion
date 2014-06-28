@@ -28,6 +28,8 @@ function initializeSelect() {
     $("#form_Recipients_ListUsernames").attr('value', '0');
 }
 
+var messageView, groupMessages;
+
 function initPage() {
     // Hide any dimmers that might have been left
     $(".dimmer, .spinner").fadeOut('fast');
@@ -43,20 +45,19 @@ function initPage() {
     });
 
     var noMoreScrolling = false;
-    var groupMessages   = $("#groupMessages");
+    groupMessages   = $("#groupMessages");
 
     if (groupMessages.attr("data-id")) {
-        var messageView = $("#messageView");
-
-        // Hide the "load new messages" div for non-JS users
-        var olderMessageLink = messageView.find(".older_messages").hide().attr("href");
+        messageView = $("#messageView");
+        var olderMessageLink = messageView.hideOlder();
+        console.toast = messageView;
 
         // Scroll message list to the bottom
         messageView.scrollTop(messageView.prop("scrollHeight"));
 
         // Load older messages when the user scrolls to the top
         messageView.scroll(function() {
-            if($(this).scrollTop() < 3 && !noMoreScrolling && olderMessageLink !== undefined) {
+            if($(this).scrollTop() < 20 && !noMoreScrolling && olderMessageLink !== undefined) {
                 noMoreScrolling = true;
 
                 // TODO: Let the user know that more messages are being loaded
@@ -66,8 +67,8 @@ function initPage() {
                     var firstMessage = messageView.find("li").eq(0);
                     var curOffset = firstMessage.offset().top - messageView.scrollTop();
 
-                    html = $(data);
-                    olderMessageLink = html.closest(".older_messages").hide().attr("href");
+                    html = $($.parseHTML(data));
+                    olderMessageLink = html.hideOlder();
                     messageView.prepend(html);
                     messageView.scrollTop(firstMessage.offset().top - curOffset);
                     noMoreScrolling = false;
@@ -96,6 +97,16 @@ $.fn.stopSpinners = function() {
     return this;
 };
 
+// Hide the "load new messages" div for non-JS users
+$.fn.hideOlder = function() {
+    var elem = this.find(".older_messages");
+    if (elem.length === 0) {
+        elem = this.closest(".older_messages");
+    }
+
+    return elem.hide().attr("href");
+}
+
 function updateSelector(selector) {
     $(selector).load(window.location.pathname + " " + selector + " > *", function() {
         initPage();
@@ -104,18 +115,18 @@ function updateSelector(selector) {
 
 function setSelectors(selectors, data) {
     $.each(selectors, function(i, key) {
-        var selector = $(data).closest(key);
+        var selector = data.closest(key);
         if (!selector.length)
-            selector = $(data).find(key);
+            selector = data.find(key);
 
         $(key).html(selector.html());
     });
-    initPage();
 }
 
 function updateSelectors(selectors) {
     $.get(window.location.pathname, function(data) {
-        setSelectors(selectors, data);
+        setSelectors(selectors, $(data));
+        initPage();
     }, 'html');
 }
 
@@ -134,9 +145,16 @@ pageSelector.on("submit", ".reply_form", function(event) {
     event.preventDefault();
 
     sendMessage($(this), function(msg, form) {
-        selectors = [".scrollable_messages", ".conversations", "nav"];
-        setSelectors(selectors, msg.content);
+        html = $(msg.content);
+        setSelectors([".conversations", "nav"], html);
+
+        loadedView = html.find("#messageView > *").not(".older_messages");
+        loadedView.appendTo(messageView);
+        groupMessages.stopSpinners();
         form[0].reset();
+
+        // Scroll message list to the bottom
+        messageView.animate({ scrollTop: messageView.prop("scrollHeight") });
     });
 });
 
@@ -167,7 +185,6 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
 });
 
 
-
 /**
  * Perform an AJAX request to send a message
  */
@@ -177,12 +194,11 @@ function sendMessage(form, onSuccess) {
         l.start();
     }
 
-    var groupMessages = $("#groupMessages");
     groupMessages.startSpinners();
 
     $.ajax({
         type: form.attr('method'),
-        url: form.attr('action'),
+        url: form.attr('action') + "?end=" + groupMessages.find("li").last().attr('data-id'),
         data: form.serialize() + "&format=json",
         dataType: "json"
     }).done(function( msg ) {

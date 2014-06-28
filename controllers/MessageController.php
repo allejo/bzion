@@ -69,7 +69,7 @@ class MessageController extends JSONController
         $messages = Message::getQueryBuilder()->active()
                   ->where('group')->is($discussion)
                   ->sortBy('time')->reverse()
-                  ->limit(4)->fromPage($request->query->get('page', 1))
+                  ->limit(10)->fromPage($request->query->get('page', 1))
                   ->startAt($request->query->get('end'))
                   ->endAt($request->query->get('start'))
                   ->getModels();
