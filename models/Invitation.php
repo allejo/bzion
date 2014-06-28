@@ -32,8 +32,8 @@ class Invitation extends Model
     protected $team;
 
     /**
-     * The time the invitation will expire (Format: YYYY-MM-DD HH:MM:SS)
-     * @var DateTime
+     * The time the invitation will expire
+     * @var TimeDate
      */
     protected $expiration;
 
@@ -71,10 +71,66 @@ class Invitation extends Model
      */
     public static function sendInvite($to, $from, $teamid, $message = "")
     {
-        $db = Database::getInstance();
-        $db->query("INSERT INTO invitations VALUES (NULL, ?, ?, ?, ADDDATE(NOW(), INTERVAL 7 DAY), ?)", "iis", array($to, $from, $teamid, $message));
+        $invitation = self::create(array(
+            "invited_player"  => $to,
+            "sent_by"         => $from,
+            "team"            => $teamid,
+            "text"            => $message,
+            "expiration"      => TimeDate::now()->addWeek()->toMysql(),
+        ), 'iiiss');
 
-        return new Invitation($db->getInsertId());
+        return $invitation;
+    }
+
+
+    /**
+     * Get the player receiving the invite
+     *
+     * @return Player
+     */
+    public function getInvitedPlayer()
+    {
+        return new Player($this->invited_player);
+    }
+
+    /**
+     * Get the sender of the invite
+     *
+     * @return Player
+     */
+    public function getSentBy()
+    {
+        return new Player($this->sent_by);
+    }
+
+    /**
+     * Get the team a player was invited to
+     *
+     * @return Team
+     */
+    public function getTeam()
+    {
+        return new Team($this->team);
+    }
+
+    /**
+     * Get the time when the invitation will expire
+     *
+     * @return TimeDate
+     */
+    public function getExpiration()
+    {
+        return $this->expiration;
+    }
+
+    /**
+     * Get the optional message sent to a player to join a team
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 
 }

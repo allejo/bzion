@@ -26,6 +26,10 @@ ban_delete:
     pattern:    /bans/{ban}/delete
     defaults: { _controller: 'Ban', _action: 'delete' }
 
+invitation_accept:
+    pattern:    /invitations/{invitation}
+    defaults: { _controller: 'Invitation', _action: 'accept' }
+
 login:
     pattern:    /login
     defaults: { _controller: 'Login', _action: 'login' }
@@ -129,6 +133,10 @@ team_delete:
 team_kick:
     pattern:    /teams/{team}/kick/{player}
     defaults: { _controller: 'Team', _action: 'kick' }
+
+team_invite:
+    pattern:    /teams/{team}/invite/{player}
+    defaults: { _controller: 'Team', _action: 'invite' }
 
 team_abandon:
     pattern:    /teams/{team}/abandon
