@@ -1,43 +1,29 @@
 {% extends 'layout.html.twig' %}
-{% import _self as serverlist %}
 
 {% block title %}Servers{% endblock %}
 
 {% block content %}
-    {% for server in servers %}
-        <strong>{{ server.name }}</strong><br />
-        <em>{{ server.address }}</em><br />
+    <main class="server_list">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>Servers</h1>
+            </article>
+        </section>
 
-        Total players: {{ server.numPlayers }}
-
-        {% if server.players is not empty %}
-            <ul>
-                {% for player in server.players %}
-                    <li>
-                        {{ player.sign ~ serverlist.team(player) }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <br /><small>Last update: {{ server.lastUpdate }}</small>
-        <br /><br />
-    {% endfor %}
+        <section class="servers">
+            {% for server in servers %}
+                <div class="server" data-id="{{ server.id }}">
+                    <div class="dimmable">
+                        <div class="server_info">
+                            {{ include('Server/show.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}
 
-{% macro team(player) %}
-    {% set team = player.team %}
-
-    {% if team == 0 %}
-        (Rogue)
-    {% elseif team == 1 %}
-        (Red)
-    {% elseif team == 2 %}
-        (Green)
-    {% elseif team == 3 %}
-        (Blue)
-    {% elseif team == 4 %}
-        (Purple)
-    {% elseif team == 5 %}
-        (Observer)
-    {% endif %}
-{% endmacro %}
+{% block javascripts %}
+    <script src="{{ request.baseURL }}/assets/js/servers.js"></script>
+{% endblock %}

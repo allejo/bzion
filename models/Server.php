@@ -94,7 +94,7 @@ class Server extends Model
      */
     public function forceUpdate()
     {
-        $this->info = bzfquery($this->address);
+        $this->info = @bzfquery($this->address);
         $this->updated = TimeDate::now();
         $this->db->query("UPDATE servers SET info = ?, updated = NOW() WHERE id = ?", "si", array(serialize($this->info), $this->id));
     }

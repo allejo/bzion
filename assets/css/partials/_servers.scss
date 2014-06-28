@@ -1,0 +1,22 @@
+main {
+    &.server_list {
+        font-family: $sanSerifFont;
+
+        .servers {
+            @extend .clearfix;
+            @extend .wrapper;
+
+            @include columns(2 3em);
+
+            .server {
+                display: inline-block;
+                margin: 10px;
+                width: 100%;
+
+                .dimmable {
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}

@@ -102,6 +102,10 @@ server_list:
     pattern:    /servers
     defaults: { _controller: 'Server', _action: 'list' }
 
+server_show:
+    pattern:    /servers/{server}
+    defaults: { _controller: 'Server', _action: 'show' }
+
 team_list:
     pattern:    /teams
     defaults: { _controller: 'Team', _action: 'list' }

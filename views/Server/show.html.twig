@@ -1,0 +1,36 @@
+{% import _self as serverlist %}
+
+<strong>{{ server.name }}</strong><br />
+<em>{{ server.address }}</em><br />
+
+Total players: {{ server.numPlayers }}
+
+{% if server.players is not empty %}
+    <ul>
+        {% for player in server.players %}
+            <li>
+                {{ player.sign ~ serverlist.team(player) }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<br /><small>Last update: {{ server.lastUpdate }}</small>
+<br /><br />
+
+{% macro team(player) %}
+    {% set team = player.team %}
+
+    {% if team == 0 %}
+        (Rogue)
+    {% elseif team == 1 %}
+        (Red)
+    {% elseif team == 2 %}
+        (Green)
+    {% elseif team == 3 %}
+        (Blue)
+    {% elseif team == 4 %}
+        (Purple)
+    {% elseif team == 5 %}
+        (Observer)
+    {% endif %}
+{% endmacro %}

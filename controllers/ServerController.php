@@ -6,11 +6,15 @@ class ServerController extends HTMLController
     {
         $servers = Server::getServers();
 
-        foreach ($servers as $server) {
-            if ($server->staleInfo())
-                $server->forceUpdate();
+        return array("servers" => $servers);
+    }
+
+    public function showAction(Server $server)
+    {
+        if ($server->staleInfo()) {
+            $server->forceUpdate();
         }
 
-        return array("servers" => $servers);
+        return array("server" => $server);
     }
 }
