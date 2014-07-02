@@ -126,6 +126,10 @@ team_members:
     pattern:    /teams/{team}/members
     defaults: { _controller: 'Player', _action: 'list' }
 
+team_join:
+    pattern:    /teams/{team}/join
+    defaults: { _controller: 'Team', _action: 'join' }
+
 team_delete:
     pattern:    /teams/{team}/delete
     defaults: { _controller: 'Team', _action: 'delete' }

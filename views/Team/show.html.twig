@@ -25,8 +25,8 @@
                         <a class="button grey notextshadow" href="#"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 
-                    {% if me is valid and me.team.id != team.id and me.isTeamless %}
-                        <a class="button grey notextshadow" href="#"><i class="fa fa-plus"></i> Join</a>
+                    {% if me is valid and me.team.id != team.id and me.isTeamless and team.status == 'open' %}
+                        <a class="button grey notextshadow" href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join</a>
                     {% endif %}
 
                     {% if me is valid and me.team.id == team.id %}

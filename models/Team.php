@@ -297,6 +297,8 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
         return new Player($this->leader);
     }
 
+
+
     /**
      * Get the matches this team has participated in
      *
@@ -426,6 +428,16 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     }
 
     /**
+     * Get the team's status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * Get the rank category a team belongs too based on their ELO
      *
      * This value is always a multiple of 100 and less than or equal to 2000
@@ -519,15 +531,27 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     }
 
     /**
+     * Change the status of the team
+     *
+     * @param  string $newStatus The new status of the team (open, closed, disabled or deleted)
+     * @return self
+     */
+    public function setStatus($newStatus)
+    {
+        $this->updateProperty($this->status, 'status', $newStatus, 's');
+    }
+
+    /**
      * Create a new team
      *
      * @param  string $name        The name of the team
      * @param  int    $leader      The ID of the person creating the team, also the leader
      * @param  string $avatar      The URL to the team's avatar
      * @param  string $description The team's description
+     * @param  string $status      The team's status (open, closed, disabled or deleted)
      * @return Team   An object that represents the newly created team
      */
-    public static function createTeam($name, $leader, $avatar, $description)
+    public static function createTeam($name, $leader, $avatar, $description, $status)
     {
         $team = self::create(array(
             'name' => $name,
@@ -541,8 +565,9 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
             'matches_lost' => 0,
             'members' => 0,
             'avatar' => $avatar,
-            'leader' => $leader
-        ), 'ssssidiiiiss', 'created');
+            'leader' => $leader,
+            'status' => $status
+        ), 'ssssidiiiisss', 'created');
 
         $team->addMember($leader);
 

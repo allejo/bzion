@@ -29,6 +29,25 @@ class TeamController extends CRUDController
         return $this->delete($team, $me);
     }
 
+    public function joinAction(Team $team, Player $me, FlashBag $flash)
+    {
+        $this->requireLogin();
+        if (!$me->isTeamless()) {
+            throw new ForbiddenException("You are already a member of a team");
+        } elseif ($team->getStatus() != 'open') {
+            throw new ForbiddenException("This team is not accepting new members without an invitation");
+        }
+
+        return $this->showConfirmationForm(function () use (&$team, &$me, &$flash) {
+            $team->addMember($me->getId());
+
+            $message = "You are now a member of {$team->getName()}";
+            $flash->add('success', $message);
+
+            return new RedirectResponse($team->getUrl());
+        }, "Are you sure you want to join {$team->getEscapedName()}?");
+    }
+
     public function inviteAction(Team $team, Player $player, Player $me, FlashBag $flash)
     {
         $this->assertCanEdit($me, $team, "You are not allowed to invite a player to that team!");
@@ -86,7 +105,6 @@ class TeamController extends CRUDController
 
     public function createForm()
     {
-        // TODO: Add validation constraint for teams with same name
         return Service::getFormFactory()->createBuilder()
             ->add('name', 'text', array(
                 'constraints' => array(
@@ -99,6 +117,12 @@ class TeamController extends CRUDController
             ->add('description', 'textarea', array(
                 'required' => false
             ))
+            ->add('status', 'choice', array(
+                'choices' => array(
+                    'open'   => 'Open',
+                    'closed' => 'Closed',
+                ),
+            ))
             ->add('create', 'submit')
             ->getForm();
     }
@@ -109,7 +133,8 @@ class TeamController extends CRUDController
             $form->get('name')->getData(),
             $creator->getId(),
             '',
-            $form->get('description')->getData()
+            $form->get('description')->getData(),
+            $form->get('status')->getData()
         );
     }
 
