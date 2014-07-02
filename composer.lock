@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "components/jquery",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "099ad075783a6189f13c1e742e03f9cc95654a27"
+                "reference": "9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/099ad075783a6189f13c1e742e03f9cc95654a27",
-                "reference": "099ad075783a6189f13c1e742e03f9cc95654a27",
+                "url": "https://api.github.com/repos/components/jquery/zipball/9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4",
+                "reference": "9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2014-01-24 19:52:32"
+            "time": "2014-07-02 11:52:43"
         },
         {
             "name": "doctrine/annotations",
@@ -2215,16 +2215,16 @@
     "packages-dev": [
         {
             "name": "behat/behat",
-            "version": "v3.0.9",
+            "version": "v3.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Behat.git",
-                "reference": "9f7ef83c1072d3f7ec8d99f5f3f1c8e2749303d7"
+                "reference": "f2c5d8653fce4884e9d68eb3d1ed9f22acbaa369"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/9f7ef83c1072d3f7ec8d99f5f3f1c8e2749303d7",
-                "reference": "9f7ef83c1072d3f7ec8d99f5f3f1c8e2749303d7",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/f2c5d8653fce4884e9d68eb3d1ed9f22acbaa369",
+                "reference": "f2c5d8653fce4884e9d68eb3d1ed9f22acbaa369",
                 "shasum": ""
             },
             "require": {
@@ -2292,7 +2292,7 @@
                 "symfony",
                 "testing"
             ],
-            "time": "2014-06-20 21:35:34"
+            "time": "2014-06-29 15:02:58"
         },
         {
             "name": "behat/gherkin",
@@ -3904,16 +3904,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "58401826c8cfc8fd689b60026e91c337df374bca"
+                "reference": "ed8ac99ce38c3fd134128c898f7ca74665abef7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/58401826c8cfc8fd689b60026e91c337df374bca",
-                "reference": "58401826c8cfc8fd689b60026e91c337df374bca",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ed8ac99ce38c3fd134128c898f7ca74665abef7f",
+                "reference": "ed8ac99ce38c3fd134128c898f7ca74665abef7f",
                 "shasum": ""
             },
             "require": {
@@ -3965,7 +3965,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-05-26 14:55:24"
+            "time": "2014-06-29 08:14:40"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4603,12 +4603,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "b71e36491d316be19496cf910e994846b058dcd7"
+                "reference": "9e20df93f2d797851cb1caf18cc4f5c91171d769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b71e36491d316be19496cf910e994846b058dcd7",
-                "reference": "b71e36491d316be19496cf910e994846b058dcd7",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/9e20df93f2d797851cb1caf18cc4f5c91171d769",
+                "reference": "9e20df93f2d797851cb1caf18cc4f5c91171d769",
                 "shasum": ""
             },
             "require": {
@@ -4653,7 +4653,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-06-26 14:40:24"
+            "time": "2014-06-29 09:44:03"
         },
         {
             "name": "symfony/browser-kit",

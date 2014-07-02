@@ -55,10 +55,10 @@ class Invitation extends Model
     protected function assignResult($invitation)
     {
         $this->invited_player = $invitation['invited_player'];
-        $this->sent_by = $invitation['sent_by'];
-        $this->team = $invitation['team'];
-        $this->expiration = $invitation['expiration'];
-        $this->text = $invitation['text'];
+        $this->sent_by    = $invitation['sent_by'];
+        $this->team       = $invitation['team'];
+        $this->expiration = new TimeDate($invitation['expiration']);
+        $this->text       = $invitation['text'];
     }
 
     /**
@@ -121,6 +121,16 @@ class Invitation extends Model
     public function getExpiration()
     {
         return $this->expiration;
+    }
+
+    /**
+     * Mark the invitation as having expired
+     *
+     * @return self
+     */
+    public function updateExpiration()
+    {
+        return $this->updateProperty($this->expiration, 'expiration', TimeDate::now(), 's');
     }
 
     /**

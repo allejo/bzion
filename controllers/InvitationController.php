@@ -37,12 +37,16 @@ class InvitationController extends CRUDController
         if ($invitation->getInvitedPlayer()->getId() != $me->getId())
             throw new ForbiddenException("This invitation isn't for you!");
 
+        if ($invitation->getExpiration()->lt(TimeDate::now()))
+            throw new ForbiddenException("This invitation has expired");
+
         $inviter = $invitation->getSentBy()->getEscapedUsername();
         $team    = $invitation->getTeam()->getEscapedName();
 
         return $this->showConfirmationForm(function () use (&$invitation, &$me, &$flash) {
             $team = $invitation->getTeam();
             $team->addMember($me->getId());
+            $invitation->updateExpiration();
 
             $message = "You are now a member of {$team->getName()}";
             $flash->add('success', $message);
