@@ -121,7 +121,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveATeamCalled($name)
     {
-        return Team::createTeam($name, $this->getUserId(), "Avatar", "Description");
+        return Team::createTeam($name, $this->getUserId(), "Avatar", "Description", "open");
     }
 
     /**
