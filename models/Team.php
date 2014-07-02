@@ -542,6 +542,19 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function delete()
+    {
+        parent::delete();
+
+        // Remove all the members of a deleted team
+        $this->members = 0;
+        $this->db->query("UPDATE `players` SET `team` = NULL WHERE `team` = ?",
+            'i', $this->id);
+    }
+
+    /**
      * Create a new team
      *
      * @param  string $name        The name of the team
@@ -551,7 +564,7 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
      * @param  string $status      The team's status (open, closed, disabled or deleted)
      * @return Team   An object that represents the newly created team
      */
-    public static function createTeam($name, $leader, $avatar, $description, $status)
+    public static function createTeam($name, $leader, $avatar, $description, $status='closed')
     {
         $team = self::create(array(
             'name' => $name,
