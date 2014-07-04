@@ -26,6 +26,8 @@ class PlayerController extends JSONController
             $query->except($me);
         }
 
+        $query->sortBy('username');
+
         if ($this->isJson())
             return new JSONResponse(array('players' => $query->getArray('username')));
         else
