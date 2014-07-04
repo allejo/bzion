@@ -366,7 +366,6 @@ class Ban extends UrlModel implements PermissionModel
      */
     public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
     {
-        $author = new Player($authorID);
         $player = new Player($playerID);
 
         if ($expiration !== null) {

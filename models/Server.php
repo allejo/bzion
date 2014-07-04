@@ -12,7 +12,7 @@ include_once(DOC_ROOT . "/includes/bzfquery.php");
  * A BZFlag server
  * @package    BZiON\Models
  */
-class Server extends Model implements PermissionModel
+class Server extends UrlModel implements PermissionModel
 {
 
     /**
