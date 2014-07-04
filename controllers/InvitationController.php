@@ -29,7 +29,7 @@ class InvitationController extends CRUDController
         return $this->delete($team, $me);
     }
 
-    public function acceptAction(Invitation $invitation, Player $me, FlashBag $flash)
+    public function acceptAction(Invitation $invitation, Player $me)
     {
         if (!$me->isTeamless())
             throw new ForbiddenException("You can't join a new team until you leave your current one.");
@@ -41,17 +41,14 @@ class InvitationController extends CRUDController
             throw new ForbiddenException("This invitation has expired");
 
         $inviter = $invitation->getSentBy()->getEscapedUsername();
-        $team    = $invitation->getTeam()->getEscapedName();
+        $team    = $invitation->getTeam();
 
-        return $this->showConfirmationForm(function () use (&$invitation, &$me, &$flash) {
-            $team = $invitation->getTeam();
+        return $this->showConfirmationForm(function () use (&$invitation, &$team, &$me) {
             $team->addMember($me->getId());
             $invitation->updateExpiration();
 
-            $message = "You are now a member of {$team->getName()}";
-            $flash->add('success', $message);
-
             return new RedirectResponse($team->getUrl());
-        }, "Are you sure you want to accept the invitation from $inviter to join $team?");
+        },  "Are you sure you want to accept the invitation from $inviter to join {$team->getEscapedName()}?",
+            "You are now a member of {$team->getName()}");
     }
 }

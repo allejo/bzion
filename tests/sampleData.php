@@ -30,7 +30,7 @@ echo " done!";
 
 echo "\nAdding teams...";
 $olfm      = Team::createTeam("OpenLeague FM?", $kierra->getId(), "", "");
-$reptitles = Team::createTeam("Reptitles", $snake->getId(), "", "");
+$reptitles = Team::createTeam("Reptitles", $snake->getId(), "", "", "open");
 $fflood    = Team::createTeam("Formal Flood", $allejo->getId(), "", "");
 $lweak     = Team::createTeam("[LakeWeakness]", $mdskpr->getId(), "", "");
 $gsepar    = Team::createTeam("Good Separation", $tw1sted->getId(), "", "");

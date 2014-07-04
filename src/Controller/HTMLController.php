@@ -208,15 +208,21 @@ abstract class HTMLController extends Controller
     /*
      * Show a confirmation (Yes, No) form to the user
      *
-     * @param  callable $onYes   What to do if the user clicks on "Yes"
-     * @param  string   $message The message to show to the user, asking them to confirm their action
-     * @param  string   $action  The text to show on the "Yes" button
-     * @param  callable $onNo    What to do if the user presses "No" - defaults to
-     *                           redirecting them back
+     * @param  callable $onYes          What to do if the user clicks on "Yes"
+     * @param  string   $message        The message to show to the user, asking them to confirm their action
+     * @param  string   $action         The text to show on the "Yes" button
+     * @param  string   $successMessage A message to add on the session's flashbag on success
+     * @param  callable $onNo           What to do if the user presses "No" - defaults to
+     *                                  redirecting them back
      * @return mixed    The response
      */
-    protected function showConfirmationForm($onYes, $message="Are you sure you want to do this?", $action="Yes", $onNo=null)
-    {
+    protected function showConfirmationForm(
+        $onYes,
+        $message = "Are you sure you want to do this?",
+        $successMessage = "Operation completed successfully",
+        $action = "Yes",
+        $onNo = null
+    ) {
         $form = Service::getFormFactory()->createBuilder()
             ->add($action, 'submit')
             ->add(($action == 'Yes') ? 'No' : 'Cancel', 'submit')
@@ -227,14 +233,20 @@ abstract class HTMLController extends Controller
 
         $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
-            if ($form->get($action)->isClicked())
-                return $onYes();
-            elseif (!$onNo)
+            if ($form->get($action)->isClicked()) {
+                $return = $onYes();
+
+                // If no exceptions are thrown, show a success message
+                $this->getFlashBag()->add('success', $successMessage);
+
+                return $return;
+            } elseif (!$onNo) {
                 // We didn't get told about what to do when the user presses no,
                 // just get them back where they were
                 return new RedirectResponse($form->get('original_url')->getData());
-            else
+            } else {
                 return $onNo();
+            }
         }
 
         return $this->render('confirmation.html.twig', array(

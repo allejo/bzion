@@ -29,7 +29,7 @@ class TeamController extends CRUDController
         return $this->delete($team, $me);
     }
 
-    public function joinAction(Team $team, Player $me, FlashBag $flash)
+    public function joinAction(Team $team, Player $me)
     {
         $this->requireLogin();
         if (!$me->isTeamless()) {
@@ -38,34 +38,30 @@ class TeamController extends CRUDController
             throw new ForbiddenException("This team is not accepting new members without an invitation");
         }
 
-        return $this->showConfirmationForm(function () use (&$team, &$me, &$flash) {
+        return $this->showConfirmationForm(function () use (&$team, &$me) {
             $team->addMember($me->getId());
 
-            $message = "You are now a member of {$team->getName()}";
-            $flash->add('success', $message);
-
             return new RedirectResponse($team->getUrl());
-        }, "Are you sure you want to join {$team->getEscapedName()}?");
+        },  "Are you sure you want to join {$team->getEscapedName()}?",
+            "You are now a member of {$team->getName()}");
     }
 
-    public function inviteAction(Team $team, Player $player, Player $me, FlashBag $flash)
+    public function inviteAction(Team $team, Player $player, Player $me)
     {
         $this->assertCanEdit($me, $team, "You are not allowed to invite a player to that team!");
 
         if ($team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is already a member of that team.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$player, &$me, &$flash) {
+        return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
             Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
 
-            $message = "Player {$player->getUsername()} has been invited to {$team->getName()}";
-            $flash->add('success', $message);
-
             return new RedirectResponse($team->getUrl());
-        }, "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?");
+        },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
+            "Player {$player->getUsername()} has been invited to {$team->getName()}");
     }
 
-    public function kickAction(Team $team, Player $player, Player $me, FlashBag $flash)
+    public function kickAction(Team $team, Player $player, Player $me)
     {
         $this->assertCanEdit($me, $team, "You are not allowed to kick a player off that team!");
 
@@ -75,17 +71,15 @@ class TeamController extends CRUDController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of that team.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$player, &$flash) {
+        return $this->showConfirmationForm(function () use (&$team, &$player) {
             $team->removeMember($player->getId());
 
-            $message = "Player {$player->getUsername()} has been kicked from {$team->getName()}";
-            $flash->add('success', $message);
-
             return new RedirectResponse($team->getUrl());
-        }, "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?", "Kick");
+        },  "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?",
+            "Player {$player->getUsername()} has been kicked from {$team->getName()}", "Kick");
     }
 
-    public function abandonAction(Team $team, Player $me, FlashBag $flash)
+    public function abandonAction(Team $team, Player $me)
     {
         if (!$team->isMember($me->getId()))
             throw new ForbiddenException("You are not a member of that team!");
@@ -93,14 +87,12 @@ class TeamController extends CRUDController
         if ($team->getLeader()->getId() == $me->getId())
             throw new ForbiddenException("You can't abandon the team you are leading.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$me, &$flash) {
+        return $this->showConfirmationForm(function () use (&$team, &$me) {
             $team->removeMember($me->getId());
 
-            $message = "You have left {$team->getName()}";
-            $flash->add('success', $message);
-
             return new RedirectResponse($team->getUrl());
-        }, "Are you sure you want to abandon {$team->getEscapedName()}?", "Abandon");
+        },  "Are you sure you want to abandon {$team->getEscapedName()}?",
+            "You have left {$team->getName()}", "Abandon");
     }
 
     public function createForm()
