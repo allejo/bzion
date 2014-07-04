@@ -90,6 +90,23 @@ class MessageController extends JSONController
         }
     }
 
+
+    public function leaveAction(Player $me, Group $discussion)
+    {
+        if (!$discussion->isMember($me->getId())) {
+            throw new ForbiddenException("You are not a member of this discussion.");
+        } elseif ($discussion->getCreator()->getId() == $me->getId()) {
+            throw new ForbiddenException("You can't abandon the conversation you started!");
+        }
+
+        return $this->showConfirmationForm(function () use (&$discussion, &$me) {
+            $discussion->removeMember($me->getId());
+
+            return new RedirectResponse(Service::getGenerator()->generate('message_list'));
+        },  "Are you sure you want to abandon this discussion?",
+            "You will no longer receive messages from this conversation", "Leave");
+    }
+
     private function showInviteForm($discussion, $me)
     {
         $form = Service::getFormFactory()->createNamedBuilder('invite_form')

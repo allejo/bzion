@@ -277,6 +277,18 @@ class Group extends UrlModel
     }
 
     /**
+     * Remove a player from the discussion
+     *
+     * @param  int $playerId The ID of the player to remove
+     * @return void
+     */
+    public function removeMember($playerId)
+    {
+        $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $playerId));
+    }
+
+
+    /**
      * Checks if a player has a new message in the group
      *
      * @todo Make this method work

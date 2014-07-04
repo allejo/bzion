@@ -62,6 +62,10 @@ message_show_discussion:
     pattern:    /messages/{discussion}
     defaults: { _controller: 'Message', _action: 'show' }
 
+message_leave_discussion:
+    pattern:    /messages/{discussion}/leave
+    defaults: { _controller: 'Message', _action: 'leave' }
+
 news_list:
     pattern:    /news
     defaults: { _controller: 'News', _action: 'list' }
