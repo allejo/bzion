@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This executable file runs the websocket server for real-time notifications
+ *
+ * @package    BZiON
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
+
+use Ratchet\Server\IoServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
+use BZIon\Socket\EventPusher;
+
+set_time_limit(0);
+
+require_once __DIR__.'/../bzion-load.php';
+require_once __DIR__.'/AppKernel.php';
+
+$loop   = React\EventLoop\Factory::create();
+$pusher = new EventPusher();
+
+// Listen for the web server to make a ZeroMQ push after an ajax request
+$context = new React\ZMQ\Context($loop);
+$pull = $context->getSocket(ZMQ::SOCKET_PULL);
+$pull->bind('tcp://127.0.0.1:' . WEBSOCKET_PULL_PORT); // Binding to 127.0.0.1 means the only client that can connect is itself
+$pull->on('message', array($pusher, 'onServerEvent'));
+
+// Set up our WebSocket server for clients wanting real-time updates
+$webSock = new React\Socket\Server($loop);
+$webSock->listen(WEBSOCKET_PUSH_PORT, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
+$webServer = new IoServer(
+    new HttpServer(
+        new WsServer(
+            $pusher
+        )
+    ),
+    $webSock
+);
+
+$loop->run();

@@ -29,7 +29,11 @@ class PusherAdapter extends NotificationAdapter
      */
     public function trigger($channel, $message)
     {
+        Debug::startStopwatch("notification.trigger.pusher");
+
         $this->pusher->trigger($channel, 'unnamed-event', array ( 'message' => $message));
+
+        Debug::finishStopwatch("notification.trigger.pusher");
     }
 
     /**

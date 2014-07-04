@@ -30,6 +30,9 @@
         "yzalis/identicon"         : "1.0.*@dev"
     },
     "require-dev": {
+        "react/zmq": "0.2.*|0.3.*",
+        "cboden/ratchet": "0.3.*",
+        "ext-zmq": "*",
         "behat/behat": "3.0.*@stable",
         "behat/mink": "~1.6@dev",
         "behat/mink-extension": "~2.0@dev",

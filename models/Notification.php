@@ -187,7 +187,7 @@ class Notification extends Model
             return;
         }
 
-        $adapters = array('PusherAdapter');
+        $adapters = array('PusherAdapter', 'WebSocketAdapter');
 
         foreach ($adapters as $adapter) {
             if ($adapter::isEnabled()) {

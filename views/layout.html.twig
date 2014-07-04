@@ -59,10 +59,21 @@
         <script>
             var baseURLNoHost = "{{ request.baseURL|e('js')  }}";
             var baseURL = "{{ request.schemeAndHTTPHost|e('js') }}";
+
+            var config  = {
+                {% if constant('ENABLE_WEBSOCKET') %}
+                    websocket: {
+                        port: {{ constant('WEBSOCKET_PUSH_PORT') }}
+                    }
+                {% else %}
+                    websocket: false
+                {% endif %}
+            };
         </script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="{{ request.baseURL }}/assets/js/min/main-ck.js"></script>
+        <script src="{{ request.baseURL }}/assets/js/events.js"></script>
 
         {% block javascripts %}
 

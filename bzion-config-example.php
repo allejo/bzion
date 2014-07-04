@@ -36,6 +36,10 @@ DEFINE("PUSHER_APP_ID", "0");
 DEFINE("PUSHER_KEY", "123456789");
 DEFINE("PUSHER_SECRET", "123456789");
 
+DEFINE("ENABLE_WEBSOCKET", false); // true to enable PHP's socket for real-time notifications
+DEFINE("WEBSOCKET_PULL_PORT", 8591); // If these ports are reserved in your machine, set them
+DEFINE("WEBSOCKET_PUSH_PORT", 8592); // to a free value
+
 /*
  * Miscellaneous settings
  */

@@ -14,7 +14,6 @@ $(document).ready(function() {
  * @param type string Can be "success" or "error"
  */
 function notify(message, type) {
-
     // Default to "success" if the caller hasn't specified a type
     type = typeof type !== 'undefined' ? type : 'success';
 
