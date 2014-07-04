@@ -354,46 +354,37 @@ class Ban extends UrlModel implements PermissionModel
     public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
     {
         $author = new Player($authorID);
+        $player = new Player($playerID);
 
-        // Only add the ban if the author is valid and has the permission to add a ban
-        if ($author->isValid() && $author->hasPermission(Permission::ADD_BAN)) {
-            $player     = new Player($playerID);
-
-            if ($expiration !== null) {
-                $expiration = TimeDate::from($expiration)->toMysql();
-            }
-
-            // Only ban valid players
-            if ($player->isValid()) {
-                $player->markAsBanned();
-
-                // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
-                if (empty($srvmsg) || empty($ipAddresses)) {
-                    $allowServerJoin = true;
-                }
-
-                $ban = self::create(array(
-                    'player' => $playerID,
-                    'expiration' => $expiration,
-                    'server_message' => $srvmsg,
-                    'reason' => $reason,
-                    'allow_server_join' => $allowServerJoin,
-                    'author' => $authorID,
-                ), 'isssii', array('created', 'updated'));
-
-                if (is_array($ipAddresses)) {
-                    foreach ($ipAddresses as $ip) {
-                        $ban->addIP($ip);
-                    }
-                } else {
-                    $ban->addIP($ipAddresses);
-                }
-
-                return $ban;
-            }
+        if ($expiration !== null) {
+            $expiration = TimeDate::from($expiration)->toMysql();
+        } else {
+            $player->markAsBanned();
         }
 
-        return false;
+        // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
+        if (empty($srvmsg) || empty($ipAddresses)) {
+            $allowServerJoin = true;
+        }
+
+        $ban = self::create(array(
+            'player' => $playerID,
+            'expiration' => $expiration,
+            'server_message' => $srvmsg,
+            'reason' => $reason,
+            'allow_server_join' => $allowServerJoin,
+            'author' => $authorID,
+        ), 'isssii', array('created', 'updated'));
+
+        if (is_array($ipAddresses)) {
+            foreach ($ipAddresses as $ip) {
+                $ban->addIP($ip);
+            }
+        } else {
+            $ban->addIP($ipAddresses);
+        }
+
+        return $ban;
     }
 
     /**
@@ -403,6 +394,22 @@ class Ban extends UrlModel implements PermissionModel
     public static function getBans()
     {
         return self::arrayIdToModel(self::fetchIds("ORDER BY updated DESC"));
+    }
+
+    /**
+     * Get an active ban for the player
+     * @param  int $playerId The player's ID
+     * @return Ban|null null if the player isn't currently banned
+     */
+    public static function getBan($playerId)
+    {
+        $bans = self::fetchIdsFrom('player', array($playerId), 'i', false, "AND (expiration IS NULL OR expiration > NOW())");
+
+        if (empty($bans)) {
+            return null;
+        }
+
+        return new Ban($bans[0]);
     }
 
     public static function getCreatePermission() { return Permission::ADD_BAN; }
