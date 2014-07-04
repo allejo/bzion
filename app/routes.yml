@@ -110,9 +110,21 @@ server_list:
     pattern:    /servers
     defaults: { _controller: 'Server', _action: 'list' }
 
+server_new:
+    pattern:    /servers/new
+    defaults: { _controller: 'Server', _action: 'create' }
+
 server_show:
     pattern:    /servers/{server}
     defaults: { _controller: 'Server', _action: 'show' }
+
+server_delete:
+    pattern:    /servers/{server}/delete
+    defaults: { _controller: 'Server', _action: 'delete' }
+
+server_edit:
+    pattern:    /servers/{server}/edit
+    defaults: { _controller: 'Server', _action: 'edit' }
 
 team_list:
     pattern:    /teams

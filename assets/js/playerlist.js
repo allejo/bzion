@@ -25,7 +25,7 @@ $(document).ready(function() {
         });
 
     // Make sure that PHP knows we are sending player IDs, not usernames
-    $("#form_player_ListUsernames").attr('value', '0');
+    $(".player-select-type").attr('value', '0');
 
     if (players.attr('data-value') !== undefined) {
         players.select2("data", JSON.parse(players.attr('data-value')));

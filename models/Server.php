@@ -12,7 +12,7 @@ include_once(DOC_ROOT . "/includes/bzfquery.php");
  * A BZFlag server
  * @package    BZiON\Models
  */
-class Server extends Model
+class Server extends Model implements PermissionModel
 {
 
     /**
@@ -195,6 +195,15 @@ class Server extends Model
     }
 
     /**
+     * Get the owner of the server
+     * @return Player
+     */
+    public function getOwner()
+    {
+        return new Player($this->owner);
+    }
+
+    /**
      * Returns the amount of time passed since the server was
      * last updated in a human-readable form
      * @return string
@@ -205,6 +214,42 @@ class Server extends Model
     }
 
     /**
+     * Set the name of the server
+     *
+     * @param string $name The new name of the server
+     *
+     * @return self
+     */
+    public function setName($name)
+    {
+        return $this->updateProperty($this->name, 'name', $name, 's');
+    }
+
+    /**
+     * Set the address of the server
+     *
+     * @param string $address The new address of the server
+     *
+     * @return self
+     */
+    public function setAddress($address)
+    {
+        return $this->updateProperty($this->address, 'address', $address, 's');
+    }
+
+    /**
+     * Set the id of the owner of the server
+     *
+     * @param int $ownerId The ID of the new owner of the server
+     *
+     * @return self
+     */
+    public function setOwner($ownerId)
+    {
+        return $this->updateProperty($this->owner, 'owner', $ownerId, 'i');
+    }
+
+    /**
      * Get all the servers in the database that have an active status
      * @return Server[] An array of server objects
      */
@@ -212,5 +257,10 @@ class Server extends Model
     {
         return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s", false, "ORDER BY name"));
     }
+
+    public static function getCreatePermission() { return Permission::EDIT_SERVER; }
+    public static function getEditPermission() { return Permission::EDIT_SERVER;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_SERVER; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_SERVER; }
 
 }

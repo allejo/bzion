@@ -11,6 +11,7 @@ main {
             .server {
                 display: inline-block;
                 margin: 10px;
+                overflow: auto;
                 width: 100%;
 
                 .dimmable {
