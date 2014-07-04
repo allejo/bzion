@@ -333,6 +333,18 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Mark a player's account as unbanned
+     */
+    public function markAsUnbanned()
+    {
+        if ($this->status != 'banned') {
+            return $this;
+        }
+
+        return $this->updateProperty($this->status, "status", "active", 's');
+    }
+
+    /**
      * Find out if a player is banned
      */
     public function isBanned()

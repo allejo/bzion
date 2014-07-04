@@ -22,6 +22,10 @@ ban_edit:
     pattern:    /bans/{ban}/edit
     defaults: { _controller: 'Ban', _action: 'edit' }
 
+ban_expire:
+    pattern:    /bans/{ban}/unban
+    defaults: { _controller: 'Ban', _action: 'unban' }
+
 ban_delete:
     pattern:    /bans/{ban}/delete
     defaults: { _controller: 'Ban', _action: 'delete' }

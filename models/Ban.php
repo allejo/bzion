@@ -277,6 +277,19 @@ class Ban extends UrlModel implements PermissionModel
     }
 
     /**
+     * Mark the ban as expired
+     *
+     * @return self
+     */
+    public function expire()
+    {
+        $this->setExpiration(TimeDate::now());
+        $this->getVictim()->markAsUnbanned();
+
+        return $this;
+    }
+
+    /**
      * Set the expiration date of the ban
      * @param mixed $expiration The expiration
      * @return self

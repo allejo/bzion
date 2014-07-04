@@ -3,6 +3,7 @@
 use BZIon\Form\IpType;
 use BZIon\Form\PlayerType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -31,6 +32,24 @@ class BanController extends CRUDController
     public function deleteAction(Player $me, Ban $ban)
     {
         return $this->delete($ban, $me);
+    }
+
+    public function unbanAction(Player $me, Ban $ban)
+    {
+        if (!$this->canEdit($me, $ban)) {
+            throw new ForbiddenException("You are not allowed to unban a player.");
+        } elseif ($ban->hasExpired()) {
+            throw new ForbiddenException("Sorry, this ban has already expired.");
+        }
+
+        $victim = $ban->getVictim()->getEscapedUsername();
+
+        return $this->showConfirmationForm(function() use(&$ban) {
+            $ban->expire();
+
+            return new RedirectResponse($ban->getUrl());
+        }, "Are you sure you want to unban <strong>$victim</strong>?",
+            "$victim's ban has been deactivated successfully", "Unban");
     }
 
     protected function fill($form, $ban)
