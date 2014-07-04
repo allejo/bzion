@@ -69,12 +69,11 @@ abstract class CRUDController extends JSONController
         $successMessage = $this->getMessage($model, 'softDelete', 'success');
         $redirection    = $this->redirectToList($model);
 
-        return $this->showConfirmationForm(function () use (&$model, &$session, $successMessage, $redirection) {
+        return $this->showConfirmationForm(function () use (&$model, &$session, $redirection) {
             $model->delete();
-            $session->getFlashBag()->add('success', $successMessage);
 
             return $redirection;
-        }, $this->getMessage($model, 'softDelete', 'confirm'), "Delete");
+        }, $this->getMessage($model, 'softDelete', 'confirm'), $successMessage, "Delete");
     }
 
     /**
