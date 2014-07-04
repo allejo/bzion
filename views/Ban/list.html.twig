@@ -39,7 +39,11 @@
                             {{ link_to(ban.author) }}
                         </div>
                         <div class="column">
-                            {{ ban.expiration }}
+                            {% if ban.willExpire %}
+                                {{ ban.expiration }}
+                            {% else %}
+                                <em>Never</em>
+                            {% endif %}
                         </div>
                         <div class="column">
                             {{ link_to(ban, icon='info-circle') }}

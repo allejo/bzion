@@ -83,7 +83,9 @@ class Ban extends UrlModel implements PermissionModel
     protected function assignResult($ban)
     {
         $this->player = $ban['player'];
-        $this->expiration = new TimeDate($ban['expiration']);
+        $this->expiration = ($ban['expiration'] === null)
+                          ? null
+                          : new TimeDate($ban['expiration']);
         $this->srvmsg = $ban['server_message'];
         $this->reason = $ban['reason'];
         $this->allowServerJoin = $ban['allow_server_join'];
@@ -247,6 +249,10 @@ class Ban extends UrlModel implements PermissionModel
             return true;
         }
 
+        if ($this->expiration === null) {
+            return false;
+        }
+
         return TimeDate::now()->gte($this->expiration);
     }
 
@@ -261,13 +267,27 @@ class Ban extends UrlModel implements PermissionModel
     }
 
     /**
+     * Check whether the ban will expire automatically
+     *
+     * @return bool
+     */
+    public function willExpire()
+    {
+        return ($this->expiration !== null);
+    }
+
+    /**
      * Set the expiration date of the ban
      * @param mixed $expiration The expiration
      * @return self
      */
     public function setExpiration($expiration)
     {
-        return $this->updateProperty($this->expiration, 'expiration', TimeDate::from($expiration), 's');
+        if ($expiration !== null) {
+            $expiration = TimeDate::from($expiration);
+        }
+
+        return $this->updateProperty($this->expiration, 'expiration', $expiration, 's');
     }
 
     /**
@@ -321,13 +341,13 @@ class Ban extends UrlModel implements PermissionModel
     /**
      * Add a new ban
      *
-     * @param int              $playerID        The ID of the victim of the ban
-     * @param int              $authorID        The ID of the player responsible for the ban
-     * @param string|\TimeDate $expiration      The expiration of the ban
-     * @param string           $reason          The full reason for the ban
-     * @param string           $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
-     * @param string[]         $ipAddresses     An array of IPs that have been banned
-     * @param bool             $allowServerJoin Whether or not
+     * @param int      $playerID        The ID of the victim of the ban
+     * @param int      $authorID        The ID of the player responsible for the ban
+     * @param mixed    $expiration      The expiration of the ban (set to NULL so that it never expires)
+     * @param string   $reason          The full reason for the ban
+     * @param string   $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
+     * @param string[] $ipAddresses     An array of IPs that have been banned
+     * @param bool     $allowServerJoin Whether or not
      *
      * @return Ban|bool An object representing the ban that was just entered or false if the ban was not created
      */
@@ -338,7 +358,10 @@ class Ban extends UrlModel implements PermissionModel
         // Only add the ban if the author is valid and has the permission to add a ban
         if ($author->isValid() && $author->hasPermission(Permission::ADD_BAN)) {
             $player     = new Player($playerID);
-            $expiration = TimeDate::from($expiration);
+
+            if ($expiration !== null) {
+                $expiration = TimeDate::from($expiration)->toMysql();
+            }
 
             // Only ban valid players
             if ($player->isValid()) {
@@ -351,7 +374,7 @@ class Ban extends UrlModel implements PermissionModel
 
                 $ban = self::create(array(
                     'player' => $playerID,
-                    'expiration' => $expiration->toMysql(),
+                    'expiration' => $expiration,
                     'server_message' => $srvmsg,
                     'reason' => $reason,
                     'allow_server_join' => $allowServerJoin,

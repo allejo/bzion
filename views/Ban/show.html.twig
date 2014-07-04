@@ -15,7 +15,13 @@
             <p>{{ ban.created }}</p>
 
             <strong>Expiration</strong>
-            <p>{{ ban.expiration }} ({{ ban.expiration.diffForHumans }})</p>
+            <p>
+                {% if ban.willExpire %}
+                    {{ ban.expiration }} ({{ ban.expiration.diffForHumans }})
+                {% else %}
+                    <em>Never</em>
+                {% endif %}
+            </p>
 
             <strong>Reason</strong>
             <article>

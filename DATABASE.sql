@@ -27,7 +27,7 @@ CREATE TABLE `banned_ips` (
 CREATE TABLE `bans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player` int(10) unsigned NOT NULL COMMENT 'The victim of the ban',
-  `expiration` datetime NOT NULL COMMENT 'The timestamp of when the ban will expire',
+  `expiration` datetime DEFAULT NULL COMMENT 'The timestamp of when the ban will expire (or NULL if it never expires)',
   `server_message` varchar(150) DEFAULT '' COMMENT 'The ban summary that is displayed when a player is rejected from joining a server',
   `reason` text NOT NULL COMMENT 'The official reason for a ban',
   `allow_server_join` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not to allow players to join servers while banned',

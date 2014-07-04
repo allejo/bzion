@@ -36,16 +36,22 @@ class BanController extends CRUDController
     protected function fill($form, $ban)
     {
         $form->get('player')->get('players')->setData($ban->getVictim());
-        $form->get('expiration')->setData($ban->getExpiration());
         $form->get('reason')->setData($ban->getReason());
         $form->get('server_message')->setData($ban->getServerMessage());
         $form->get('server_join_allowed')->setData($ban->allowedServerJoin());
         $form->get('ip_addresses')->setData($ban->getIpAddresses());
+
+        if ($ban->willExpire()) {
+            $form->get('expiration')->setData($ban->getExpiration());
+        } else {
+            $form->get('automatic_expiration')->setData(false);
+        }
     }
 
     protected function update($form, $ban, $me)
     {
         $ban->setIPs($form->get('ip_addresses')->getData())
+            ->setExpiration($this->getExpiration($form))
             ->setReason($form->get('reason')->getData())
             ->setServerMessage($form->get('server_message')->getData())
             ->setAllowServerJoin($form->get('server_join_allowed')->getData());
@@ -58,7 +64,7 @@ class BanController extends CRUDController
         return Ban::addBan(
             $form->get('player')->getData()->getId(),
             $me->getId(),
-            $form->get('expiration')->getData(),
+            $this->getExpiration($form),
             $form->get('reason')->getData(),
             $form->get('server_message')->getData(),
             $form->get('ip_addresses')->getData(),
@@ -68,11 +74,23 @@ class BanController extends CRUDController
 
     public function createForm($edit)
     {
-        return Service::getFormFactory()->createBuilder()
+        $builder = Service::getFormFactory()->createBuilder();
+
+        return $builder
             ->add('player', new PlayerType(), array(
                 'disabled' => $edit,
             ))
-            ->add('expiration', 'datetime')
+            ->add(
+                $builder->create('automatic_expiration', 'checkbox', array(
+                    'data' => true,
+                    'required' => false,
+                ))->setDataLocked(false)
+            )
+            ->add(
+                $builder->create('expiration', 'datetime', array(
+                    'data' => TimeDate::now(),
+                ))->setDataLocked(false)
+            )
             ->add('reason', 'text', array(
                 'constraints' => new NotBlank(),
             ))
@@ -90,6 +108,22 @@ class BanController extends CRUDController
                 'required' => false,
             ))
             ->add('enter', 'submit')
+            ->setDataLocked(false)
             ->getForm();
+    }
+
+    /**
+     * Get the expiration time of the ban based on the fields of the form
+     *
+     * @param  Form $form The form
+     * @return TimeDate|null
+     */
+    private function getExpiration($form)
+    {
+        if ($form->get('automatic_expiration')->getData()) {
+            return $form->get('expiration')->getData();
+        } else {
+            return null;
+        }
     }
 }

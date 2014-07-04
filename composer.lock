@@ -182,12 +182,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "79b5bf6db918d7560bdd959109b7bcfb47edaf43"
+                "reference": "c4cba75b5aa2befa581d86a453c07477b0409f4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/79b5bf6db918d7560bdd959109b7bcfb47edaf43",
-                "reference": "79b5bf6db918d7560bdd959109b7bcfb47edaf43",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/c4cba75b5aa2befa581d86a453c07477b0409f4d",
+                "reference": "c4cba75b5aa2befa581d86a453c07477b0409f4d",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +217,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-06-27 00:18:09"
+            "time": "2014-07-03 13:58:23"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2358,12 +2358,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "8becf96f7df113433ad4030a1ad2114de842d9b0"
+                "reference": "fee86c964aec405377006018e0b11b8e0aaf7ea8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/8becf96f7df113433ad4030a1ad2114de842d9b0",
-                "reference": "8becf96f7df113433ad4030a1ad2114de842d9b0",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/fee86c964aec405377006018e0b11b8e0aaf7ea8",
+                "reference": "fee86c964aec405377006018e0b11b8e0aaf7ea8",
                 "shasum": ""
             },
             "require": {
@@ -2405,7 +2405,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2014-05-20 08:34:33"
+            "time": "2014-07-03 21:36:30"
         },
         {
             "name": "behat/mink-browserkit-driver",
