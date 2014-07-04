@@ -94,6 +94,10 @@ news_category_show:
     pattern:    /news/category/{category}
     defaults: { _controller: 'News', _action: 'list' }
 
+notification_send_sample:
+    pattern:    /notifications/test
+    defaults: { _controller: 'Notification', _action: 'list' }
+
 player_list:
     pattern:    /players
     defaults: { _controller: 'Player', _action: 'list' }
