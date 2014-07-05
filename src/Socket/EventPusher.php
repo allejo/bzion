@@ -34,7 +34,7 @@ class EventPusher implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
         // The client isn't supposed to send messages -
         // probably a user is messing with the console, just close the connection
-        $conn->close();
+        $from->close();
     }
 
     /**

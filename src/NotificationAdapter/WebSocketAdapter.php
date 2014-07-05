@@ -19,18 +19,16 @@ class WebSocketAdapter extends NotificationAdapter
     {
         Debug::startStopwatch("notification.trigger.websocket");
 
-        $fp = stream_socket_client("tcp://127.0.0.1:". WEBSOCKET_PULL_PORT, $errno, $errstr, 1);
-
-        var_dump('triggered');
+        $fp = stream_socket_client("tcp://127.0.0.1:". WEBSOCKET_PULL_PORT, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
 
         fwrite($fp, json_encode(array(
             'event' => array(
                 'type' => 'global_notification',
                 'message' => $message,
             )
-        )));
+        ))."\n");
 
-        fclose($fp);
+        // Don't fclose() the connection because of a weird bug with React
 
         Debug::finishStopwatch("notification.trigger.websocket");
     }

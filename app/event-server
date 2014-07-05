@@ -8,7 +8,6 @@
  */
 
 use Ratchet\Server\IoServer;
-use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use BZIon\Socket\EventPusher;
 
@@ -35,10 +34,8 @@ $pullSocket->listen(WEBSOCKET_PULL_PORT, '127.0.0.1');
 $pushSocket = new React\Socket\Server($loop);
 
 $webServer = new IoServer(
-    new HttpServer(
-        new WsServer(
-            $pusher
-        )
+    new WsServer(
+        $pusher
     ),
     $pushSocket
 );
