@@ -135,7 +135,7 @@ class AppKernel extends Kernel
             return parent::handle($request, $type, $catch);
         }
 
-        $session = $this->container->get('session');
+        $session = Service::getNewSession();
         $request->setSession($session);
 
         $this->setUpFormFactory($session);

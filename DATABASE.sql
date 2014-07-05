@@ -789,6 +789,16 @@ CREATE TABLE `servers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+# Dump of table sessions
+# ------------------------------------------------------------
+
+CREATE TABLE `sessions` (
+  `sess_id` varchar(40) NOT NULL,
+  `sess_data` text NOT NULL COMMENT 'The data of the session',
+  `sess_time` int(10) NOT NULL COMMENT 'The timestamp of the session',
+  PRIMARY KEY (`sess_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 # Dump of table teams
 # ------------------------------------------------------------
