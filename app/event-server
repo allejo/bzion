@@ -17,25 +17,33 @@ set_time_limit(0);
 require_once __DIR__.'/../bzion-load.php';
 require_once __DIR__.'/AppKernel.php';
 
-$loop   = React\EventLoop\Factory::create();
 $pusher = new EventPusher();
 
-// Listen for the web server to make a ZeroMQ push after an ajax request
-$context = new React\ZMQ\Context($loop);
-$pull = $context->getSocket(ZMQ::SOCKET_PULL);
-$pull->bind('tcp://127.0.0.1:' . WEBSOCKET_PULL_PORT); // Binding to 127.0.0.1 means the only client that can connect is itself
-$pull->on('message', array($pusher, 'onServerEvent'));
+$loop = React\EventLoop\Factory::create();
 
-// Set up our WebSocket server for clients wanting real-time updates
-$webSock = new React\Socket\Server($loop);
-$webSock->listen(WEBSOCKET_PUSH_PORT, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
+$pullSocket = new React\Socket\Server($loop);
+
+$pullSocket->on('connection', function ($conn) use($pusher) {
+    $conn->on('data', function ($data) use($pusher) {
+        $pusher->onServerEvent(json_decode($data));
+    });
+});
+
+// Bind to 127.0.0.1, so that only the server can send messages to the socket
+$pullSocket->listen(WEBSOCKET_PULL_PORT, '127.0.0.1');
+
+$pushSocket = new React\Socket\Server($loop);
+
 $webServer = new IoServer(
     new HttpServer(
         new WsServer(
             $pusher
         )
     ),
-    $webSock
+    $pushSocket
 );
+
+// Binding to 0.0.0.0 means remotes can connect
+$pushSocket->listen(WEBSOCKET_PUSH_PORT, '0.0.0.0');
 
 $loop->run();

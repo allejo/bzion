@@ -19,18 +19,18 @@ class WebSocketAdapter extends NotificationAdapter
     {
         Debug::startStopwatch("notification.trigger.websocket");
 
-        $context = new ZMQContext();
-        $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
-        $socket->connect("tcp://localhost:" . WEBSOCKET_PULL_PORT);
+        $fp = stream_socket_client("tcp://127.0.0.1:". WEBSOCKET_PULL_PORT, $errno, $errstr, 1);
 
         var_dump('triggered');
 
-        $socket->send(json_encode(array(
+        fwrite($fp, json_encode(array(
             'event' => array(
                 'type' => 'global_notification',
                 'message' => $message,
             )
         )));
+
+        fclose($fp);
 
         Debug::finishStopwatch("notification.trigger.websocket");
     }

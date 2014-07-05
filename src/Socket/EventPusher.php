@@ -60,7 +60,7 @@ class EventPusher implements MessageComponentInterface {
      * @param string $event JSON'ified string we'll receive from ZeroMQ
      */
     public function onServerEvent($event) {
-        $event = json_decode($event)->event;
+        $event = $event->event;
 
         switch($event->type) {
         case 'global_notification':
