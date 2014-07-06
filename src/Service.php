@@ -11,8 +11,6 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class Service
@@ -111,26 +109,11 @@ abstract class Service
 
     /**
      * Create a new session
-     * @todo Write a session handler so that we don't have to make 2 connections
-     *       to the database
      * @return Session
      */
     public static function getNewSession()
     {
-        if (ENABLE_WEBSOCKET) {
-            // Our websocket does not support native PHP sessions, so just use
-            // the database
-            $pdo = new PDO('mysql:host='. MYSQL_HOST .';dbname='. MYSQL_DB_NAME, MYSQL_USER, MYSQL_PASSWORD);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo, array(
-                'db_table' => 'sessions',
-            )));
-            $newSession = new Session($storage);
-        } else {
-            $newSession = new Session();
-        }
-
+        $newSession = new Session();
         $newSession->start();
 
         return $newSession;
