@@ -1,7 +1,22 @@
 main {
     &.teams {
-        font-family: $sanSerifFont;
+        font-family: $sansSerifFont;
         padding: 20px 0;
+
+        .content_header {
+            .rank {
+                float: left;
+                margin-right: 10px;
+            }
+
+            div {
+                float: left;
+
+                h1 {
+                    color: #000000;
+                }
+            }
+        }
 
         .list {
             @extend .wrapper;
@@ -72,34 +87,8 @@ main {
                 }
             }
         }
-    }
-}
-
-main {
-    &.team_profile {
-        font-family: $sanSerifFont;
-
-        .content_header {
-            .rank {
-                float: left;
-                margin-right: 10px;
-            }
-
-            div {
-                float: left;
-
-                h1 {
-                    color: #000000;
-                }
-            }
-        }
 
         .profile {
-            @extend .clearfix;
-            @extend .wrapper;
-
-            margin-bottom: 20px;
-
             h4 {
                 margin-bottom: 5px;
                 padding-bottom: 5px;
@@ -118,96 +107,77 @@ main {
                 }
             }
 
-            .team_row {
-                @extend .clearfix;
-
-                width: 100%;
-
+            .row {
                 > section {
-                    @include box-sizing(border-box);
+                    &.match_stats {
+                        .teamMatchStats {
+                            $size: 150px;
 
-                    float: left;
-                    padding: 10px 20px;
-                    width: 50%;
-
-                    &.information {
-                        width: 75%;
-                    }
-
-                    &.profile_picture {
-                        padding: 0;
-                        width: 25%;
-                    }
-                }
-            }
-
-            .match_stats {
-                .teamMatchStats {
-                    $size: 150px;
-
-                    float: left;
-                    height: $size;
-                    width: $size;
-                }
-
-                .legend {
-                    float: left;
-                    margin: 40px 0;
-
-                    .item {
-                        display: block;
-
-                        .block {
-                            $block_size: 10px;
-
-                            border: 1px solid $Off_White;
                             float: left;
-                            height: $block_size;
-                            margin: 5px 10px;
-                            width: $block_size;
+                            height: $size;
+                            width: $size;
+                        }
 
-                            &.wins {
-                                background-color: #EBEBEB;
-                            }
+                        .legend {
+                            float: left;
+                            margin: 40px 0;
 
-                            &.losses {
-                                background-color: #B6D1D8;
-                            }
+                            .item {
+                                display: block;
 
-                            &.draws {
-                                background-color: #8FDC00;
+                                .block {
+                                    $block_size: 10px;
+
+                                    border: 1px solid $Off_White;
+                                    float: left;
+                                    height: $block_size;
+                                    margin: 5px 10px;
+                                    width: $block_size;
+
+                                    &.wins {
+                                        background-color: #EBEBEB;
+                                    }
+
+                                    &.losses {
+                                        background-color: #B6D1D8;
+                                    }
+
+                                    &.draws {
+                                        background-color: #8FDC00;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            .members {
-                .team_members {
-                    margin-left: 20px;
+                    &.members {
+                        .team_members {
+                            margin-left: 20px;
 
-                    .row {
-                        border: none;
+                            .row {
+                                border: none;
 
-                        .column {
-                            border: none;
-                            padding: 5px;
+                                .column {
+                                    border: none;
+                                    padding: 5px;
 
-                            a {
-                                color: $Black;
+                                    a {
+                                        color: $Black;
 
-                                &:hover {
-                                    color: $Sky_Blue;
-                                }
-                            }
+                                        &:hover {
+                                            color: $Sky_Blue;
+                                        }
+                                    }
 
-                            i {
-                                &.fa-eject {
-                                    color: $Medium_Grey;
-                                }
+                                    i {
+                                        &.fa-eject {
+                                            color: $Medium_Grey;
+                                        }
 
-                                &.fa-star {
-                                    color: #FDCE46;
+                                        &.fa-star {
+                                            color: #FDCE46;
+                                        }
+                                    }
                                 }
                             }
                         }

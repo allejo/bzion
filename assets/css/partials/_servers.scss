@@ -1,6 +1,6 @@
 main {
     &.server_list {
-        font-family: $sanSerifFont;
+        font-family: $sansSerifFont;
 
         .servers {
             @extend .clearfix;

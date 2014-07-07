@@ -2,7 +2,7 @@ main {
     &.messaging {
         @extend .clearfix;
 
-        font-family: $sanSerifFont;
+        font-family: $sansSerifFont;
 
         .content_header {
             margin-bottom: 0;

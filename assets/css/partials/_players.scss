@@ -1,5 +1,7 @@
 main {
-    &.player {
+    &.players {
+        font-family: $sansSerifFont;
+
         .content_header {
             article {
                 .flag {
@@ -13,17 +15,11 @@ main {
             }
         }
 
-        .profile {
-            @extend .wrapper;
-
-            font-family: $sanSerifFont;
-        }
-
         .list {
             @extend .clearfix;
             @extend .wrapper;
 
-            font-family: $sanSerifFont;
+            font-family: $sansSerifFont;
             margin-bottom: 30px;
 
             article {
@@ -62,6 +58,12 @@ main {
                         }
                     }
                 }
+            }
+        }
+
+        .profile {
+            .row {
+
             }
         }
     }

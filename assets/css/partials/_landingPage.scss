@@ -18,7 +18,7 @@ main {
 
                 h1, h2 {
                     color: #fff;
-                    font-family: $sanSerifFont;
+                    font-family: $sansSerifFont;
                     text-shadow: 0 1px 10px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.9);
                 }
 
@@ -43,7 +43,7 @@ main {
             ul {
                 @extend .wrapper;
 
-                font-family: $sanSerifFont;
+                font-family: $sansSerifFont;
                 text-align: center;
 
                 li {
@@ -90,7 +90,7 @@ main {
             @extend .clearfix;
             @extend .wrapper;
 
-            font-family: $sanSerifFont;
+            font-family: $sansSerifFont;
 
             aside {
                 float: left;

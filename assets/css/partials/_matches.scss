@@ -1,6 +1,6 @@
 main {
     &.match_list {
-        font-family: $sanSerifFont;
+        font-family: $sansSerifFont;
 
         .matches {
             @extend .clearfix;

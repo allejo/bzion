@@ -3,7 +3,7 @@
 {% block title %}Players :: {{ player.username }}{% endblock %}
 
 {% block content %}
-    <main class="player">
+    <main class="players">
         <section class="content_header">
             <article class="wrapper">
                 {{ player.country.flagLiteral | raw }}
@@ -12,26 +12,30 @@
         </section>
 
         <section class="profile">
-            {% if player.id == player.team.leader.id %}
-                <strong>Leader of </strong>
-                {{ link_to(player.team) }}
-            {% else %}
-                <strong>Affiliated with </strong>
-                {% if player.team is valid %}
-                    {{ link_to(player.team) }}
-                {% else %}
-                    <em>no team.</em>
-                {% endif %}
-            {% endif %}
+            <section class="row">
+                <section class="information">
+                    {% if player.id == player.team.leader.id %}
+                        <strong>Leader of </strong> {{ link_to(player.team) }}
+                    {% else %}
+                        <strong>Affiliated with </strong>
+                        {% if player.team is valid %}
+                            {{ link_to(player.team) }}
+                        {% else %}
+                            <em>no team.</em>
+                        {% endif %}
+                    {% endif %}
+                </section>
+
+                <section class="profile_picture">
+                    {{ player.getAvatarLiteral | raw }}
+                </section>
+            </section>
         </section>
     </main>
 
 
 
     <div class='profile_page'>
-        {% if player.avatar %}
-            <img class='avatar_player' src='{{ player.avatar }}'>
-        {% endif %}
         <div class='label label_team'>Team:
             {% if player.team is valid %}
                 <a href="{{ player.team.url }}">{{ player.team.name }}</a>

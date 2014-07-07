@@ -8,7 +8,7 @@ main {
         @extend .clearfix;
 
         border-bottom: 1px solid $Off_White;
-        font-family: $sanSerifFont;
+        font-family: $sansSerifFont;
         margin: 0 0 30px;
         padding: 20px 0;
 
@@ -84,7 +84,7 @@ main {
 }
 
 .tipsy {
-    font-family: $sanSerifFont;
+    font-family: $sansSerifFont;
     font-size: 16px;
 }
 

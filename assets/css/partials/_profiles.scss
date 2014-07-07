@@ -1,0 +1,33 @@
+main {
+    &.players, &.teams {
+        .profile {
+            @extend .clearfix;
+            @extend .wrapper;
+
+            margin-bottom: 20px;
+
+            .row {
+                @extend .clearfix;
+
+                width: 100%;
+
+                > section {
+                    @include box-sizing(border-box);
+
+                    float: left;
+                    padding: 10px 20px;
+                    width: 50%;
+
+                    &.information {
+                        width: 75%;
+                    }
+
+                    &.profile_picture {
+                        padding: 0;
+                        width: 25%;
+                    }
+                }
+            }
+        }
+    }
+}
