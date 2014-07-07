@@ -55,6 +55,10 @@ main {
 
                         a {
                             color: $Medium_Grey;
+
+                            &:hover {
+                                color: lighten($Medium_Grey, 15%);
+                            }
                         }
                     }
                 }
