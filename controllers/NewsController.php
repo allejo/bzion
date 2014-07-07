@@ -71,26 +71,23 @@ class NewsController extends CRUDController
     public function createForm()
     {
         return Service::getFormFactory()->createBuilder()
-            ->add('address', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'max' => 50,
-                    )),
-                ),
-                'attr' => array(
-                    'placeholder' => 'owner.guleague.org:5100',
-                )
-            ))
-            ->add('name', 'text', array(
+            ->add('category', new ModelType('NewsCategory'))
+            ->add('subject', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
                         'max' => 100,
                     )),
                 ),
             ))
-            ->add('owner', new PlayerType())
-            ->add('enabled', 'checkbox', array(
-                'data' => true
+            ->add('content', 'textarea', array(
+                'constraints' => new NotBlank()
+            ))
+            ->add('status', 'choice', array(
+                'choices' => array(
+                    'published' => 'Public',
+                    'revision' => 'Revision',
+                    'draft' => 'Draft',
+                ),
             ))
             ->add('enter', 'submit')
             ->getForm();
