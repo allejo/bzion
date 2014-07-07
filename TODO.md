@@ -33,6 +33,7 @@ TODO
     - Match details
     - Notifications
     - Discussion settings dropdown
+    - Pagination buttons
 - Discuss features with admins
 - Finish the installer at some point.
 - Bug testing, bug testing and more bug testing

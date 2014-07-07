@@ -10,7 +10,11 @@ class PlayerController extends JSONController
     {
 	if ($me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
 	    $form = $this->getAdminNotesForm($player)->handleRequest($request);
-	    $form = $this->handleAdminNotesForm($form, $player, $me);
+
+	    if ($form->isValid()) {
+	        $form = $this->handleAdminNotesForm($form, $player, $me);
+	    }
+
 	    $formView = $form->createView();
 	} else {
 	    // Don't spend time rendering the form unless we need it
