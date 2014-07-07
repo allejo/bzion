@@ -212,11 +212,18 @@ class Player extends IdenticonModel implements NamedModel
 
     /**
      * Get the joined date of the player
+     *
+     * @param string $format
+     *
      * @return string The joined date of the player
      */
-    public function getJoinedDate()
+    public function getJoinedDate($format = "")
     {
-        return $this->joined->diffForHumans();
+        if (empty($format)) {
+            return $this->joined->diffForHumans();
+        }
+
+        return $this->joined->format($format);
     }
 
     /**
