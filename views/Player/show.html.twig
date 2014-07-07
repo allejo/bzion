@@ -80,10 +80,13 @@
                 <section class="row">
                     <section class="admin_notes">
                         <h4>Admin Notes</h4>
-                        <form>
-                            <textarea>{{ player.adminNotes }}</textarea>
-                            <input class="button grey notextshadow" type="submit" value="Save">
-                        </form>
+                        {{ form_start(adminNotesForm) }}
+			    {{ form_errors(adminNotesForm) }}
+
+			    {{ form_row(adminNotesForm.notes, { label: false }) }}
+			    {{ form_row(adminNotesForm.save, { attr: { class: "button grey notextshadow" }}) }}
+			    {{ form_row(adminNotesForm.save_and_sign, { attr: { class: "button grey notextshadow" }}) }}
+			{{ form_end(adminNotesForm) }}
                     </section>
                 </section>
             {% endif %}

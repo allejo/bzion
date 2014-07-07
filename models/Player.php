@@ -412,6 +412,16 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Set the player's admin notes
+     * @param  string $admin_notes The new admin notes
+     * @return self
+     */
+    public function setAdminNotes($admin_notes)
+    {
+	return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
+    }
+
+    /**
      * Updates this player's last login
      * @todo Make me work
      */
