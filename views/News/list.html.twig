@@ -12,12 +12,20 @@
     <main class="news">
         <section class="content_header">
             <article class="wrapper">
-                <h1>
-                    League News
-                    {% if category %}
-                        in '{{ category.name }}' category
-                    {% endif %}
-                </h1>
+                <div>
+                    <h1>
+                        League News
+                        {% if category %}
+                            in '{{ category.name }}' category
+                        {% endif %}
+                    </h1>
+                </div>
+
+                {% if me.hasPermission(constant('Permission::CREATE_NEWS')) %}
+                    <div class="buttons">
+                        <a class="button grey notextshadow" href="#"><i class="fa fa-plus"></i> Post New</a>
+                    </div>
+                {% endif %}
             </article>
         </section>
 

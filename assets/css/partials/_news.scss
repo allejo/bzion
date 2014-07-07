@@ -4,6 +4,12 @@ main {
 
         text-align: justify;
 
+        .content_header {
+            .buttons {
+                margin: 0;
+            }
+        }
+
         .articles {
             @extend .clearfix;
             @extend .wrapper;
