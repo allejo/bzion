@@ -63,7 +63,34 @@ main {
 
         .profile {
             .row {
+                .previous_callsigns {
 
+                }
+
+                .previous_ips {
+
+                }
+
+                .admin_notes {
+                    width: 100%;
+
+                    form {
+                        @extend .clearfix;
+
+                        padding: 5px 15px;
+
+                        textarea {
+                            height: 160px;
+                            margin-bottom: 5px;
+                            resize: vertical;
+                            width: 100%;
+                        }
+
+                        input[type="submit"] {
+                            float: right;
+                        }
+                    }
+                }
             }
         }
     }
