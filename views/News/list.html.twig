@@ -23,7 +23,7 @@
 
                 {% if me.hasPermission(constant('Permission::CREATE_NEWS')) %}
                     <div class="buttons">
-                        <a class="button grey notextshadow" href="#"><i class="fa fa-plus"></i> Post New</a>
+                        <a class="button grey notextshadow" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
                     </div>
                 {% endif %}
             </article>
