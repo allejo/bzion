@@ -3,24 +3,23 @@
 {% block title %}Players{% endblock %}
 
 {% block content %}
-    <div class="table players">
-        <ul>
-            <li>Name</li>
-            <li>Team</li>
-            <li>Joined</li>
-        </ul>
+    <main class="player">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>Player List</h1>
+            </article>
+        </section>
 
-    {% for player in players %}
-        <ul>
-            <li><a href="{{ player.url }}">{{ player.username }}</a>
-            <li>
-                {% if player.team is valid %}
-                    {{ link_to(player.team) }}
-                {% endif %}
-            </li>
-            <li>{{ player.joinedDate }}</li>
-        </ul>
-    {% endfor %}
-
-    </div>
+        <section class="list">
+            {% for player in players %}
+                <article>
+                    {{ player.getAvatarLiteral | raw }}
+                    <section class="info">
+                        <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+                        <p class="team">{{ link_to(player.team) }}</p>
+                    </section>
+                </article>
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}
