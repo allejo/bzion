@@ -7,9 +7,11 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use BZIon\Session\DatabaseSessionHandler;
+use BZIon\Socket\EventPusher;
+use Ratchet\Session\SessionProvider;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
-use BZIon\Socket\EventPusher;
 
 set_time_limit(0);
 
@@ -28,6 +30,11 @@ $pullSocket->on('connection', function ($conn) use($pusher) {
     });
 });
 
+$session = new SessionProvider(
+        $pusher,
+        new DatabaseSessionHandler()
+    );
+
 // Bind to 127.0.0.1, so that only the server can send messages to the socket
 $pullSocket->listen(WEBSOCKET_PULL_PORT, '127.0.0.1');
 
@@ -35,7 +42,7 @@ $pushSocket = new React\Socket\Server($loop);
 
 $webServer = new IoServer(
     new WsServer(
-        $pusher
+        $session
     ),
     $pushSocket
 );

@@ -1,5 +1,6 @@
 <?php
 namespace BZIon\Socket;
+use Player;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
@@ -22,6 +23,9 @@ class EventPusher implements MessageComponentInterface {
      * @param ConnectionInterface $conn
      */
     public function onOpen(ConnectionInterface $conn) {
+        // Find which player opened the connection
+        $conn->Player = new Player($conn->Session->get('playerId'));
+
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
     }
