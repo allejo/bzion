@@ -774,6 +774,7 @@ VALUES
 UNLOCK TABLES;
 
 
+
 # Dump of table servers
 # ------------------------------------------------------------
 
@@ -785,6 +786,17 @@ CREATE TABLE `servers` (
   `info` text NOT NULL COMMENT 'Information regarding the server',
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the server was last pinged',
   `status` set('active','disabled','deleted') NOT NULL DEFAULT 'active' COMMENT 'The status of the server relative to BZiON',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+# Dump of table sessions
+# ------------------------------------------------------------
+
+CREATE TABLE `sessions` (
+  `id` varchar(40) NOT NULL,
+  `data` text NOT NULL COMMENT 'The data of the session',
+  `timestamp` datetime NOT NULL COMMENT 'The timestamp of the session',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

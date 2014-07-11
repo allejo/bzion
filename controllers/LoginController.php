@@ -64,7 +64,7 @@ class LoginController extends HTMLController
     public function logoutAction(Session $session)
     {
         $session->invalidate();
-        $this->getFlashBag()->add('success', "You logged out successfully");
+        $session->getFlashBag()->add('success', "You logged out successfully");
 
         // Don't redirect back but prefer going home, to prevent visiting
         // the login page (and logging in again, thus preventing the logout)

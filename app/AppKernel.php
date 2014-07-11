@@ -136,6 +136,7 @@ class AppKernel extends Kernel
         }
 
         $session = $this->container->get('session');
+        $session->start();
         $request->setSession($session);
 
         $this->setUpFormFactory($session);
