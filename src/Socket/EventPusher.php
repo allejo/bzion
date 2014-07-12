@@ -75,6 +75,11 @@ class EventPusher implements MessageComponentInterface {
         }
 
         foreach ($this->clients as $client) {
+            $player = $client->Player;
+
+            $message->notification_count = $player->countUnreadNotifications();
+            $message->message_count      = $player->countUnreadMessages();
+
             $client->send(json_encode(array('event' => $message)));
         }
     }

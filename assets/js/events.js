@@ -5,6 +5,7 @@ $(document).ready(function() {
 
         conn.onmessage = function(e) {
             var data = JSON.parse(e.data).event;
+            console.log(data);
             notify(data.message, 'success');
         };
     }
