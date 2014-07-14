@@ -5,8 +5,13 @@ $(document).ready(function() {
 
         conn.onmessage = function(e) {
             var data = JSON.parse(e.data).event;
-            console.log(data);
             notify(data.message, 'success');
+
+            var notifications = (data.notification_count > 0) ? data.notification_count : '';
+            var messages      = (data.message_count > 0) ? data.message_count : '';
+
+            $(".unreadNotificationCount").text(notifications);
+            $(".unreadMessageCount").text(messages);
         };
     }
 });

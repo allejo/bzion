@@ -1,8 +1,10 @@
 {% import _self as navbar %}
-{% macro badge(number) %}
-    {% if number %}
-        <span class="badge">{{ number }}</span>
-    {% endif %}
+{% macro badge(number, type) %}
+    <span class="badge {{ type }}">
+        {% if number %}
+            {{- number -}}
+        {% endif %}
+    </span>
 {% endmacro %}
 
 <nav>
@@ -34,13 +36,13 @@
             <li>
                 <a href="#">
                     <i class="fa fa-bell"></i>
-                    {{ navbar.badge(me.countUnreadNotifications) }}
+                    {{ navbar.badge(me.countUnreadNotifications, "unreadNotificationCount") }}
                 </a>
             </li>
             <li>
                 <a href="{{ path('message_list') }}">
                     <i class="fa fa-comments-o"></i>
-                    {{ navbar.badge(me.countUnreadMessages) }}
+                    {{ navbar.badge(me.countUnreadMessages, "unreadMessageCount") }}
                 </a>
             </li>
             <li>
