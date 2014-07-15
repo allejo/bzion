@@ -28,7 +28,7 @@
         "symfony/validator"        : ">=2.5.0",
         "symfony/yaml"             : ">=2.5.0",
         "twig/twig"                : "dev-master",
-        "yzalis/identicon"         : "1.0.*@dev"
+        "yzalis/identicon"         : "1.1.*@dev"
     },
     "require-dev": {
         "behat/behat": "3.0.*@stable",

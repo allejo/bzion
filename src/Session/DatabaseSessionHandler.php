@@ -51,11 +51,9 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
     public function read($sessionId)
     {
         // We need to make sure we do not return session data that is already considered garbage according
-        // to the session.gc_maxlifetime setting because gc() is called after read() and only sometimes.
-        $maxlifetime = (int) ini_get('session.gc_maxlifetime');
-
-        $results = $this->database->query("SELECT data FROM sessions WHERE id = ? AND timestamp > NOW() - ? LIMIT 1",
-            'si', array($sessionId, $maxlifetime));
+        // to the session.gc_maxlifetime setting because gc() is called after read() and only sometimes
+        $results = $this->database->query("SELECT data FROM sessions WHERE id = ? AND timestamp > ? LIMIT 1",
+            'ss', array($sessionId, $this->getOldestTimestamp()));
 
         if (isset($results[0]) && isset($results[0]['data'])) {
             return base64_decode($results[0]['data']);
@@ -108,13 +106,24 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
     public function close()
     {
         if ($this->gcCalled) {
-            $maxlifetime = (int) ini_get('session.gc_maxlifetime');
-
             // Delete the session records that have expired
-            $this->database->query("DELETE FROM session WHERE timestamp <= NOW() - ?",
-                'i', $maxlifetime);
+            $this->database->query("DELETE FROM session WHERE timestamp <= ?",
+                's', $this->getOldestTimestamp());
         }
 
         return true;
+    }
+
+    /**
+     * Make sure that we are not using expired sessions
+     * @return string The oldest timestamp that is not considered expired, in a
+     *                MySQL-readable format
+     */
+    private function getOldestTimestamp()
+    {
+        $maxLifetime = (int) ini_get('session.gc_maxlifetime');
+        $oldestTimestamp = \TimeDate::now()->subSeconds($maxLifetime);
+
+        return $oldestTimestamp->toMysql();
     }
 }
