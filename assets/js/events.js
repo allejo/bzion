@@ -6,7 +6,7 @@ function Event(name){
 }
 Event.prototype.registerCallback = function(callback){
   this.callbacks.push(callback);
-}
+};
 
 function Reactor(){
   this.events = {};

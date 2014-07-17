@@ -178,7 +178,7 @@ pageSelector.on("submit", ".reply_form", function(event) {
         html = $(msg.content);
         updateLastMessage(html);
         form[0].reset();
-    });
+    }, false);
 });
 
 // Discussion create event
@@ -211,13 +211,15 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
 /**
  * Perform an AJAX request to send a message
  */
-function sendMessage(form, onSuccess) {
+function sendMessage(form, onSuccess, spinners) {
     if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( form.find('button').get()[0] );
         l.start();
     }
 
-    groupMessages.startSpinners();
+    if (spinners !== undefined && spinners) {
+        groupMessages.startSpinners();
+    }
 
     $.ajax({
         type: form.attr('method'),
