@@ -1,3 +1,24 @@
+reactor.addEventListener("push-event", function(data) {
+    if (data.type != 'message') {
+        return;
+    }
+
+    groupId = $("#groupMessages").attr("data-id");
+
+    if (groupId && groupId == data.data.discussion) {
+        // Find the ID of the last message, so we can fetch anything sent after
+        // it
+        var lastId = $( "#messageView li:last-child" ).attr('data-id');
+
+        $.get(document.URL, { end: lastId }, function(data) {
+            html = $($.parseHTML(data));
+            updateLastMessage(html);
+        }, "html");
+    } else {
+        updateSelectors([".conversations", "nav"]);
+    }
+});
+
 function format(item) { return item.username; }
 
 function initializeSelect() {
@@ -133,6 +154,17 @@ function updatePage() {
     return updateSelectors([".messaging", "nav"]);
 }
 
+function updateLastMessage(html) {
+    setSelectors([".conversations", "nav"], html);
+
+    loadedView = html.find("#messageView > *").not(".older_messages");
+    loadedView.appendTo(messageView);
+    groupMessages.stopSpinners();
+
+    // Scroll message list to the bottom
+    messageView.animate({ scrollTop: messageView.prop("scrollHeight") });
+}
+
 // Use "on" instead of just "click"/"submit", so that new elements of that class added
 // to the page using $.load() also respond to events
 
@@ -144,15 +176,8 @@ pageSelector.on("submit", ".reply_form", function(event) {
 
     sendMessage($(this), function(msg, form) {
         html = $(msg.content);
-        setSelectors([".conversations", "nav"], html);
-
-        loadedView = html.find("#messageView > *").not(".older_messages");
-        loadedView.appendTo(messageView);
-        groupMessages.stopSpinners();
+        updateLastMessage(html);
         form[0].reset();
-
-        // Scroll message list to the bottom
-        messageView.animate({ scrollTop: messageView.prop("scrollHeight") });
     });
 });
 

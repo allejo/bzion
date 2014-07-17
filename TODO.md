@@ -7,7 +7,6 @@ TODO
 - Implement features & style pages
     - Pagination or continuous scrolling on all pages with entries (news, matches, etc)
     - Messages
-        - Push new messages from others to page without refresh
         - Move message to trash
         - Groups
             - Leave a group?
