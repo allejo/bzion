@@ -23,8 +23,8 @@ class WebSocketAdapter extends NotificationAdapter
 
         fwrite($fp, json_encode(array(
             'event' => array(
-                'type' => 'global_notification',
-                'message' => $message,
+                'type' => $channel,
+                'data' => $message,
             )
         ))."\n");
 

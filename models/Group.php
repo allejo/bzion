@@ -168,11 +168,25 @@ class Group extends UrlModel
     }
 
     /**
-     * Get a list containing the IDs of each member of the group
+     * Get a list containing each member of the group
      * @param  int|null $hide The ID of a player to ignore
      * @return Player[] An array of players
      */
     public function getMembers($hide=null)
+    {
+        // Sort players alphabetically by their username
+        $members = Player::arrayIdToModel($this->getMemberIds($hide));
+        usort($members, Player::getAlphabeticalSort());
+
+        return $members;
+    }
+
+    /**
+     * Get a list containing the IDs of each member of the group
+     * @param  int|null $hide The ID of a player to ignore
+     * @return int      An array of player IDs
+     */
+    public function getMemberIds($hide=null)
     {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
@@ -184,11 +198,7 @@ class Group extends UrlModel
             $params[] = $hide;
         }
 
-        // Sort players alphabetically by their username
-        $members = Player::arrayIdToModel(parent::fetchIds($additional_query, $types, $params, "player_groups", "player"));
-        usort($members, Player::getAlphabeticalSort());
-
-        return $members;
+        return parent::fetchIds($additional_query, $types, $params, "player_groups", "player");
     }
 
     /**
@@ -229,6 +239,8 @@ class Group extends UrlModel
         $message = Message::sendMessage($this->getId(), $from->getId(), $message, $status);
 
         $this->updateLastActivity();
+
+        Notification::pushEvent('message', $message);
 
         $this->db->query("UPDATE `player_groups` SET `read` = 0 WHERE `group` = ? AND `player` != ?",
             'ii', array($this->id, $from->getId()));

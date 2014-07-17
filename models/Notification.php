@@ -57,8 +57,6 @@ class Notification extends Model
         $this->message   = $notification['message'];
         $this->status    = $notification['status'];
         $this->timestamp = new DateTime($notification['timestamp']);
-
-        $this->initializeAdapters();
     }
 
     /**
@@ -177,10 +175,34 @@ class Notification extends Model
     }
 
     /**
+     * Push an event to the event adapters
+     * @param  string $type The type of the event
+     * @param  mixed  $data The data for the event
+     * @return void
+     */
+    public static function pushEvent($type, $data)
+    {
+        switch ($type) {
+        case 'message':
+            $message = array(
+                'discussion' => $data->getGroup()->getId(),
+                'author'     => $data->getAuthor()->getId(),
+            );
+            break;
+        default:
+            $message = $data;
+        }
+
+        foreach (self::$adapters as $adapter) {
+            $adapter->trigger($type, $message);
+        }
+    }
+
+    /**
      * Initialize the external push adapters
      * @return void
      */
-    private static function initializeAdapters()
+    public static function initializeAdapters()
     {
         if (self::$adapters) {
             // The adapters have already been initialized, no need to do anything!

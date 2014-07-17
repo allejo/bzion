@@ -59,6 +59,8 @@ class AppKernel extends Kernel
         Service::setModelCache(new ModelCache());
         Service::setContainer($this->container);
         $this->setUpTwig();
+
+        Notification::initializeAdapters();
     }
 
     public static function guessEnvironment()

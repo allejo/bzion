@@ -72,6 +72,15 @@ class Message extends Model
     }
 
     /**
+    * Get the receiving group for the message
+    * @return Group
+    */
+    public function getGroup()
+    {
+        return new Group($this->group_to);
+    }
+
+    /**
      * Get a shorter, unformatted version of the message
      * @param  int    $maxlength The maximum characters of the summary
      * @return string

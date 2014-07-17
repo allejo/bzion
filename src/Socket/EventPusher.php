@@ -66,21 +66,28 @@ class EventPusher implements MessageComponentInterface {
     public function onServerEvent($event) {
         $event = $event->event;
 
-        switch($event->type) {
-        case 'global_notification':
-            $message = $event;
-            break;
-        default:
-            return;
+        if ($event->type == 'message') {
+            $group        = new \Group($event->data->discussion);
+
+            // Don't notify the sender of the message, Javascript will
+            // automatically refresh the page
+            $groupMembers = $group->getMemberIds($event->data->author);
         }
 
         foreach ($this->clients as $client) {
             $player = $client->Player;
 
-            $message->notification_count = $player->countUnreadNotifications();
-            $message->message_count      = $player->countUnreadMessages();
+            if ($event->type == 'message') {
+                if (!in_array($player->getId(), $groupMembers)) {
+                    // Don't notify that player, he doesn't belong in the group
+                    continue;
+                }
+            }
 
-            $client->send(json_encode(array('event' => $message)));
+            $event->notification_count = $player->countUnreadNotifications();
+            $event->message_count      = $player->countUnreadMessages();
+
+            $client->send(json_encode(array('event' => $event)));
         }
     }
 }
