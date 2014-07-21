@@ -150,6 +150,11 @@ main {
 
                             .team {
                                 display: inline-block;
+                                
+                                .team_avatar {
+                                    height: 60px;
+                                    width: 60px;
+                                }
 
                                 strong {
                                     display: block;
