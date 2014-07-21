@@ -64,11 +64,11 @@
                             {% for match in matches | slice(startIndex, endIndex) %}
                                 <div class="column">
                                     <div class="team" title="{{ match.winner.name }}">
-                                        {{ match.winner.avatarLiteral }}
+                                        {{ match.winner.avatarLiteral | raw }}
                                         <strong>{{ match.score(match.winner.id) }}</strong>
                                     </div>
                                     <div class="team" title="{{ match.loser.name }}">
-                                        {{ match.loser.avatarLiteral }}
+                                        {{ match.loser.avatarLiteral | raw }}
                                         <strong>{{ match.score(match.loser.id) }}</strong>
                                     </div>
 
