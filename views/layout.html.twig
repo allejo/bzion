@@ -75,6 +75,10 @@
         <script src="{{ request.baseURL }}/assets/js/min/main-ck.js"></script>
         <script src="{{ request.baseURL }}/assets/js/events.js"></script>
 
+        {% if constant('DEVELOPMENT') %}
+            <script src="{{ request.baseURL }}/assets/js/debug.js"></script>
+        {% endif %}
+
         {% block javascripts %}
 
         {% endblock %}
