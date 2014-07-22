@@ -186,6 +186,7 @@ class Notification extends Model
         case 'message':
             $message = array(
                 'discussion' => $data->getGroup()->getId(),
+                'message'    => $data->getId(),
                 'author'     => $data->getAuthor()->getId(),
             );
             break;

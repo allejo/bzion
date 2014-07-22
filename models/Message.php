@@ -116,6 +116,10 @@ class Message extends Model
     /**
      * Create a new message
      *
+     * This method only stores a message in the database (doesn't update the
+     * unread count or push live notifications), prefer to use Group::sendMessage()
+     * instead.
+     *
      * @param  int     $to      The id of the group the message is sent to
      * @param  int     $from    The ID of the sender
      * @param  string  $message The body of the message
