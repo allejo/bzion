@@ -72,7 +72,7 @@ class Notification extends Model
         $notification = self::create(array(
             "receiver"  => $receiver,
             "message"   => $content,
-            "timestamp" => $timestamp,
+            "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
         ), 'isss');
 
