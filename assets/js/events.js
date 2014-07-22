@@ -51,4 +51,34 @@ $(document).ready(function() {
             reactor.dispatchEvent("push-event", data);
         };
     }
+
+    updateFavicon();
 });
+
+ var favicon = new Favico({
+     animation : 'popFade'
+ });
+
+ var oldCount = 0;
+
+var updateFavicon = function() {
+    var totalCount = 0;
+
+    [".unreadNotificationCount", ".unreadMessageCount"].forEach(function(elem) {
+        count = parseInt($(elem).text());
+
+        if (!isNaN(count)) {
+            totalCount += count;
+        }
+    });
+
+    if (oldCount !== totalCount) {
+        // Update the favicon and perform an animation only if the number of
+        // notifications has changed
+
+        oldCount = totalCount;
+        favicon.badge(totalCount);
+    }
+}
+
+reactor.addEventListener("push-event", updateFavicon);

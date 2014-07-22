@@ -7,3 +7,6 @@
 [submodule "includes/tipsy"]
 	path = includes/tipsy
 	url = https://github.com/jaz303/tipsy.git
+[submodule "includes/favicojs"]
+	path = includes/favicojs
+	url = https://github.com/ejci/favico.js.git

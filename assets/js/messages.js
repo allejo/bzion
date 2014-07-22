@@ -98,6 +98,8 @@ function initPage() {
     } else {
         initializeSelect();
     }
+
+    updateFavicon();
 }
 
 $(document).ready(function() {
@@ -163,6 +165,8 @@ function updateLastMessage(html) {
 
     // Scroll message list to the bottom
     messageView.animate({ scrollTop: messageView.prop("scrollHeight") });
+
+    updateFavicon();
 }
 
 // Use "on" instead of just "click"/"submit", so that new elements of that class added

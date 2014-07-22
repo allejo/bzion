@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="{{ request.baseURL }}/assets/css/reset.css">
         <link rel="stylesheet" href="{{ request.baseURL }}/assets/css/styles.css">
 
+        <link rel="shortcut icon" href="{{ request.baseURL }}/favicon.ico" />
+
         {% block stylesheets %}
 
         {% endblock %}
@@ -72,6 +74,7 @@
         </script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="{{ request.baseURL }}/includes/favicojs/favico-0.3.4.min.js"></script>
         <script src="{{ request.baseURL }}/assets/js/min/main-ck.js"></script>
         <script src="{{ request.baseURL }}/assets/js/events.js"></script>
 
