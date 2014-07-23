@@ -214,7 +214,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -470,12 +470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "140efeb28c1a94cef723e7f5fdc6f058fa2c423d"
+                "reference": "c13b284c74a02ff5948366008c43f3e6554ccf2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/140efeb28c1a94cef723e7f5fdc6f058fa2c423d",
-                "reference": "140efeb28c1a94cef723e7f5fdc6f058fa2c423d",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/c13b284c74a02ff5948366008c43f3e6554ccf2f",
+                "reference": "c13b284c74a02ff5948366008c43f3e6554ccf2f",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +505,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-07-20 00:59:52"
+            "time": "2014-07-22 23:00:44"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -3277,9 +3277,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -3747,12 +3747,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "b8173af50891fb20afe6662381f057b01df187b5"
+                "reference": "0820fd3b7f7b0c400ef42d77748912dbc45666c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/b8173af50891fb20afe6662381f057b01df187b5",
-                "reference": "b8173af50891fb20afe6662381f057b01df187b5",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/0820fd3b7f7b0c400ef42d77748912dbc45666c5",
+                "reference": "0820fd3b7f7b0c400ef42d77748912dbc45666c5",
                 "shasum": ""
             },
             "require": {
@@ -3838,7 +3838,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-07-21 08:39:46"
+            "time": "2014-07-22 19:59:02"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -4965,7 +4965,8 @@
                 },
                 {
                     "name": "Adam Harvey",
-                    "email": "aharvey@php.net"
+                    "email": "aharvey@php.net",
+                    "role": "Lead"
                 },
                 {
                     "name": "Bernhard Schussek",
@@ -5994,9 +5995,7 @@
             "time": "2013-12-19 11:40:00"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "ivaynberg/select2": 20,
@@ -6015,7 +6014,5 @@
     "platform": {
         "ext-gd": "*"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
