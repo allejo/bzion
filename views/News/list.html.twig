@@ -21,7 +21,7 @@
                     </h1>
                 </div>
 
-                {% if me.hasPermission(constant('Permission::CREATE_NEWS')) %}
+                {% if me.canCreate("News") %}
                     <div class="buttons">
                         <a class="button grey notextshadow" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
                     </div>

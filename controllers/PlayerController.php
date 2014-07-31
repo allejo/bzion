@@ -8,23 +8,23 @@ class PlayerController extends JSONController
 {
     public function showAction(Player $player, Player $me, Request $request)
     {
-	if ($me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
-	    $form = $this->getAdminNotesForm($player)->handleRequest($request);
+    if ($me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
+        $form = $this->getAdminNotesForm($player)->handleRequest($request);
 
-	    if ($form->isValid()) {
-	        $form = $this->handleAdminNotesForm($form, $player, $me);
-	    }
+        if ($form->isValid()) {
+            $form = $this->handleAdminNotesForm($form, $player, $me);
+        }
 
-	    $formView = $form->createView();
-	} else {
-	    // Don't spend time rendering the form unless we need it
-	    $formView = null;
-	}
+        $formView = $form->createView();
+    } else {
+        // Don't spend time rendering the form unless we need it
+        $formView = null;
+    }
 
         return array(
-	  "player" => $player,
-	  "adminNotesForm" => $formView,
-	);
+      "player" => $player,
+      "adminNotesForm" => $formView,
+    );
     }
 
     public function listAction(Request $request, Player $me, Team $team=null)
@@ -53,19 +53,19 @@ class PlayerController extends JSONController
 
     /**
      * Get the form for admins to secretly gossip about the player
-     * @param Player $player The player in question
+     * @param  Player $player The player in question
      * @return Form
      */
     private function getAdminNotesForm($player)
     {
-	return Service::getFormFactory()->createBuilder()
+    return Service::getFormFactory()->createBuilder()
             ->add('notes', 'textarea', array(
-		'data'     => $player->getAdminNotes(),
+        'data'     => $player->getAdminNotes(),
                 'required' => false,
-	    ))
-	    ->add('save_and_sign', 'submit', array(
-		'label' => 'Save & Sign',
-	    ))
+        ))
+        ->add('save_and_sign', 'submit', array(
+        'label' => 'Save & Sign',
+        ))
             ->add('save', 'submit')
             ->getForm();
     }
@@ -79,15 +79,15 @@ class PlayerController extends JSONController
      */
     private function handleAdminNotesForm($form, $player, $me)
     {
-	$notes = $form->get('notes')->getData();
-	if ($form->get('save_and_sign')->isClicked()) {
-	    $notes .= ' — ' . $me->getUsername() . ' on ' . TimeDate::now()->toRFC2822String();
-	}
+    $notes = $form->get('notes')->getData();
+    if ($form->get('save_and_sign')->isClicked()) {
+        $notes .= ' — ' . $me->getUsername() . ' on ' . TimeDate::now()->toRFC2822String();
+    }
 
-	$player->setAdminNotes($notes);
-	$this->getFlashBag()->add('success', "The admin notes for {$player->getUsername()} have been updated");
+    $player->setAdminNotes($notes);
+    $this->getFlashBag()->add('success', "The admin notes for {$player->getUsername()} have been updated");
 
-	// Reset the form so that the user sees the updated admin notes
-	return $this->getAdminNotesForm($player);
+    // Reset the form so that the user sees the updated admin notes
+    return $this->getAdminNotesForm($player);
     }
 }

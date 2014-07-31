@@ -148,7 +148,7 @@ abstract class CRUDController extends JSONController
      */
     protected function canDelete($player, $model)
     {
-        return $player->hasPermission($model->getSoftDeletePermission());
+        return $player->canDelete($model);
     }
 
     /**
@@ -161,7 +161,7 @@ abstract class CRUDController extends JSONController
     {
         $modelName = $this->getName();
 
-        return $player->hasPermission($modelName::getCreatePermission());
+        return $player->canCreate($modelName);
     }
 
     /**
@@ -173,7 +173,7 @@ abstract class CRUDController extends JSONController
      */
     protected function canEdit($player, $model)
     {
-        return $player->hasPermission($model->getEditPermission());
+        return $player->canEdit($model);
     }
 
     /**

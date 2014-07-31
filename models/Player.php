@@ -646,4 +646,37 @@ class Player extends IdenticonModel implements NamedModel
             return strcasecmp($a->getUsername(), $b->getUsername());
         };
     }
+
+    /**
+     * Find whether the player can delete a model
+     *
+     * @param  PermissionModel $model  The model that will be deleted
+     * @return boolean
+     */
+    public function canDelete($model)
+    {
+        return $this->hasPermission($model->getSoftDeletePermission());
+    }
+
+    /**
+     * Find whether the player can create a model
+     *
+     * @param  string  $modelName The PHP class identifier of the model type
+     * @return boolean
+     */
+    public function canCreate($modelName)
+    {
+        return $this->hasPermission($modelName::getCreatePermission());
+    }
+
+    /**
+     * Find whether the player can edit a model
+     *
+     * @param  PermissionModel $model  The model which will be edited
+     * @return boolean
+     */
+    public function canEdit($model)
+    {
+        return $this->hasPermission($model->getEditPermission());
+    }
 }

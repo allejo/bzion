@@ -2,6 +2,12 @@ main {
     &.match_list {
         font-family: $sansSerifFont;
 
+        .content_header {
+            .buttons {
+                margin: 0;
+            }
+        }
+
         .matches {
             @extend .clearfix;
             @extend .wrapper;
