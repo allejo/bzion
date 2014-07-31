@@ -423,11 +423,10 @@ class Player extends IdenticonModel implements NamedModel
 
     /**
      * Updates this player's last login
-     * @todo Make me work
      */
     public function updateLastLogin()
     {
-        $this->update("last_login", "now", 's');
+        $this->update("last_login", TimeDate::now()->toMysql(), 's');
     }
 
     /**
