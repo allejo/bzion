@@ -214,7 +214,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -470,12 +470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "c13b284c74a02ff5948366008c43f3e6554ccf2f"
+                "reference": "7c1acdbe5e4fbcd5920f7a6e06acd46a0c686abf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/c13b284c74a02ff5948366008c43f3e6554ccf2f",
-                "reference": "c13b284c74a02ff5948366008c43f3e6554ccf2f",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/7c1acdbe5e4fbcd5920f7a6e06acd46a0c686abf",
+                "reference": "7c1acdbe5e4fbcd5920f7a6e06acd46a0c686abf",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +505,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-07-22 23:00:44"
+            "time": "2014-07-23 16:04:25"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2529,12 +2529,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "5fd428ed7603ea63998716995c123c99648aab26"
+                "reference": "4134169b67e692107b385af857b526e6013361ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/5fd428ed7603ea63998716995c123c99648aab26",
-                "reference": "5fd428ed7603ea63998716995c123c99648aab26",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/4134169b67e692107b385af857b526e6013361ce",
+                "reference": "4134169b67e692107b385af857b526e6013361ce",
                 "shasum": ""
             },
             "require": {
@@ -2578,7 +2578,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-08 13:46:25"
+            "time": "2014-07-29 11:54:16"
         },
         {
             "name": "yzalis/identicon",
@@ -2586,12 +2586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yzalis/Identicon.git",
-                "reference": "a99fc2a3d018512f7914bc6f972952536c0f309b"
+                "reference": "7e6f6b8a961bc862f5fef2cfb8df031d2269d7f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yzalis/Identicon/zipball/a99fc2a3d018512f7914bc6f972952536c0f309b",
-                "reference": "a99fc2a3d018512f7914bc6f972952536c0f309b",
+                "url": "https://api.github.com/repos/yzalis/Identicon/zipball/7e6f6b8a961bc862f5fef2cfb8df031d2269d7f7",
+                "reference": "7e6f6b8a961bc862f5fef2cfb8df031d2269d7f7",
                 "shasum": ""
             },
             "require": {
@@ -2628,7 +2628,7 @@
                 "identicon",
                 "image"
             ],
-            "time": "2014-07-13 09:19:12"
+            "time": "2014-07-29 18:00:35"
         }
     ],
     "packages-dev": [
@@ -3277,9 +3277,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -3746,13 +3746,13 @@
             "version": "dev-develop",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "0820fd3b7f7b0c400ef42d77748912dbc45666c5"
+                "url": "git@github.com:phpDocumentor/phpDocumentor2.git",
+                "reference": "2909413efc89075e12527eb7fff498d766538596"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/0820fd3b7f7b0c400ef42d77748912dbc45666c5",
-                "reference": "0820fd3b7f7b0c400ef42d77748912dbc45666c5",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/2909413efc89075e12527eb7fff498d766538596",
+                "reference": "2909413efc89075e12527eb7fff498d766538596",
                 "shasum": ""
             },
             "require": {
@@ -3838,7 +3838,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-07-22 19:59:02"
+            "time": "2014-07-31 06:50:45"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -4965,8 +4965,7 @@
                 },
                 {
                     "name": "Adam Harvey",
-                    "email": "aharvey@php.net",
-                    "role": "Lead"
+                    "email": "aharvey@php.net"
                 },
                 {
                     "name": "Bernhard Schussek",
@@ -5023,24 +5022,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "0124a80962725feecc998a8b85e391ae635cb5ca"
+                "reference": "7fc58bee6244b774f7992eb185dce80b9a412530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/0124a80962725feecc998a8b85e391ae635cb5ca",
-                "reference": "0124a80962725feecc998a8b85e391ae635cb5ca",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/7fc58bee6244b774f7992eb185dce80b9a412530",
+                "reference": "7fc58bee6244b774f7992eb185dce80b9a412530",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
+                "sensiolabs/security-checker": "~2.0",
                 "symfony/class-loader": "~2.2",
-                "symfony/config": "~2.2",
-                "symfony/dependency-injection": "~2.2",
-                "symfony/filesystem": "~2.2",
                 "symfony/form": "~2.2",
-                "symfony/framework-bundle": "~2.2",
-                "symfony/http-foundation": "~2.2",
-                "symfony/http-kernel": "~2.2",
+                "symfony/framework-bundle": "~2.4",
                 "symfony/process": "~2.2",
                 "symfony/validator": "~2.2",
                 "symfony/yaml": "~2.2"
@@ -5063,17 +5058,60 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 }
             ],
-            "description": "The base bundle for the Symfony Distributions",
+            "description": "Base bundle for Symfony Distributions",
             "keywords": [
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-07-19 10:45:57"
+            "time": "2014-07-25 05:58:26"
+        },
+        {
+            "name": "sensiolabs/security-checker",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/security-checker.git",
+                "reference": "5b4eb4743ebe68276c911c84101ecdf4a9ae76ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/5b4eb4743ebe68276c911c84101ecdf4a9ae76ee",
+                "reference": "5b4eb4743ebe68276c911c84101ecdf4a9ae76ee",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "symfony/console": "~2.0"
+            },
+            "bin": [
+                "security-checker"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "SensioLabs\\Security": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@gmail.com"
+                }
+            ],
+            "description": "A security checker for your composer.lock",
+            "time": "2014-07-19 10:52:35"
         },
         {
             "name": "symfony/browser-kit",
@@ -5995,7 +6033,9 @@
             "time": "2013-12-19 11:40:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "ivaynberg/select2": 20,
@@ -6014,5 +6054,7 @@
     "platform": {
         "ext-gd": "*"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

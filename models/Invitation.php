@@ -82,7 +82,6 @@ class Invitation extends Model
         return $invitation;
     }
 
-
     /**
      * Get the player receiving the invite
      *

@@ -34,8 +34,8 @@ class ServerCommand extends Command
         $loop = EventLoopFactory::create();
 
         $pullSocket = new Server($loop);
-        $pullSocket->on('connection', function ($conn) use($pusher) {
-            $conn->on('data', function ($data) use($pusher) {
+        $pullSocket->on('connection', function ($conn) use ($pusher) {
+            $conn->on('data', function ($data) use ($pusher) {
                 $pusher->onServerEvent(json_decode($data));
             });
         });

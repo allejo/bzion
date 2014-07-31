@@ -47,6 +47,7 @@ abstract class HTMLController extends Controller
     protected function render($view, $parameters=array())
     {
         $this->addTwigGlobals();
+
         return parent::render($view, $parameters);
     }
 

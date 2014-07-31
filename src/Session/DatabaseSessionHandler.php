@@ -12,11 +12,10 @@
  * @package BZiON\Session
  */
 
-
 namespace BZIon\Session;
 
-
-class DatabaseSessionHandler implements \SessionHandlerInterface {
+class DatabaseSessionHandler implements \SessionHandlerInterface
+{
     /**
      * @var \Database The database instance
      */

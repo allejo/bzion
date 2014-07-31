@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-
 class MatchController extends CRUDController
 {
     public function listAction(Request $request, Team $team=null, $type=null)
@@ -57,7 +56,7 @@ class MatchController extends CRUDController
      */
     private static function getModelToID()
     {
-        return function($model) {
+        return function ($model) {
             return $model->getId();
         };
     }

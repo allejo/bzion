@@ -418,7 +418,7 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function setAdminNotes($admin_notes)
     {
-	return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
+    return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
     }
 
     /**

@@ -122,7 +122,7 @@ class MessageController extends JSONController
         if ($form->isValid()) {
             $this->assertCanEdit($me, $discussion);
 
-            foreach($form->get('players')->getData() as $player) {
+            foreach ($form->get('players')->getData() as $player) {
                 if ($discussion->isMember($player->getId()))
                     break;
 

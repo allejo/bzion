@@ -280,7 +280,7 @@ class Group extends UrlModel
     /**
      * Add a player to the discussion
      *
-     * @param  int $playerId The ID of the player to add
+     * @param  int  $playerId The ID of the player to add
      * @return void
      */
     public function addMember($playerId)
@@ -291,14 +291,13 @@ class Group extends UrlModel
     /**
      * Remove a player from the discussion
      *
-     * @param  int $playerId The ID of the player to remove
+     * @param  int  $playerId The ID of the player to remove
      * @return void
      */
     public function removeMember($playerId)
     {
         $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $playerId));
     }
-
 
     /**
      * Checks if a player has a new message in the group

@@ -146,7 +146,7 @@ class QueryBuilder
      *
      * `$queryBuilder->where('username')->equals('administrator');`
      *
-     * @param  string       $column The column to select
+     * @param  string $column The column to select
      * @return self
      */
     public function where($column)
@@ -162,7 +162,7 @@ class QueryBuilder
     /**
      * Request that a column equals a string (case-insensitive)
      *
-     * @param  string       $string The string that the column's value should equal to
+     * @param  string $string The string that the column's value should equal to
      * @return self
      */
     public function equals($string)
@@ -175,8 +175,8 @@ class QueryBuilder
     /**
      * Request that a column equals a number
      *
-     * @param  int|Model    $number The number that the column's value should equal
-     *                              to - if a Model is provided, use the model's ID
+     * @param  int|Model $number The number that the column's value should equal
+     *                           to - if a Model is provided, use the model's ID
      * @return self
      */
     public function is($number)
@@ -192,7 +192,7 @@ class QueryBuilder
     /**
      * Request that a column value starts with a string (case-insensitive)
      *
-     * @param  string       $string The substring that the column's value should start with
+     * @param  string $string The substring that the column's value should start with
      * @return self
      */
     public function startsWith($string)
@@ -205,7 +205,7 @@ class QueryBuilder
     /**
      * Request that a specific model is not returned
      *
-     * @param  Model        $model The model you don't want to get
+     * @param  Model $model The model you don't want to get
      * @return self
      */
     public function except($model)
@@ -219,7 +219,7 @@ class QueryBuilder
     /**
      * Return the results sorted by the value of a column
      *
-     * @param  string       $column The column based on which the results should be ordered
+     * @param  string $column The column based on which the results should be ordered
      * @return self
      */
     public function sortBy($column)
@@ -316,7 +316,6 @@ class QueryBuilder
 
         return $this;
     }
-
 
     /**
      * Request that only "active" Models should be returned

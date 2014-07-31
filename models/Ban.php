@@ -138,7 +138,7 @@ class Ban extends UrlModel implements PermissionModel
             $this->addIP($ip);
         }
 
-        foreach($removedIPs as $ip) {
+        foreach ($removedIPs as $ip) {
             $this->removeIP($ip);
         }
 
@@ -291,7 +291,7 @@ class Ban extends UrlModel implements PermissionModel
 
     /**
      * Set the expiration date of the ban
-     * @param mixed $expiration The expiration
+     * @param  mixed $expiration The expiration
      * @return self
      */
     public function setExpiration($expiration)
@@ -305,7 +305,7 @@ class Ban extends UrlModel implements PermissionModel
 
     /**
      * Set the server message of the ban
-     * @param string $message The new server message
+     * @param  string $message The new server message
      * @return self
      */
     public function setServerMessage($message)
@@ -315,7 +315,7 @@ class Ban extends UrlModel implements PermissionModel
 
     /**
      * Set the reason of the ban
-     * @param string $reason The new ban reason
+     * @param  string $reason The new ban reason
      * @return self
      */
     public function setReason($reason)
@@ -334,7 +334,7 @@ class Ban extends UrlModel implements PermissionModel
 
     /**
      * Set whether the ban's victim is allowed to enter a match server
-     * @param boolean $allowServerJoin
+     * @param  boolean $allowServerJoin
      * @return self
      */
     public function setAllowServerJoin($allowServerJoin)
@@ -410,7 +410,7 @@ class Ban extends UrlModel implements PermissionModel
 
     /**
      * Get an active ban for the player
-     * @param  int $playerId The player's ID
+     * @param  int      $playerId The player's ID
      * @return Ban|null null if the player isn't currently banned
      */
     public static function getBan($playerId)

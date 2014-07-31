@@ -253,6 +253,7 @@ abstract class Controller
     protected function renderDefault($params, $action)
     {
         $templatePath = $this->getName() . "/$action.html.twig";
+
         return $this->render($templatePath, $params);
     }
 
