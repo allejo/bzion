@@ -28,9 +28,9 @@ abstract class HTMLController extends Controller
         $twig = Service::getTemplateEngine();
         $twig->addGlobal("request", $request);
         $twig->addGlobal("session", $request->getSession());
-        $twig->addGlobal("pages", Page::getPages());
-        $twig->addGlobal("me",
-            new Player($request->getSession()->get('playerId')));
+        $twig->addGlobal("pages",      Page::getPages());
+        $twig->addGlobal("controller", $this);
+        $twig->addGlobal("me",         $this->getMe());
 
         $this->prepareTwig();
 

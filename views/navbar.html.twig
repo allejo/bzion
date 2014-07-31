@@ -7,28 +7,26 @@
     </span>
 {% endmacro %}
 
+{% macro page(title, controller_name, path, icon) %}
+    {% set class = '' %}
+
+    {% if controller.name == controller_name %}
+        {% set class = ' class="active"' %}
+    {% endif %}
+
+    <li {{- class|raw -}} >
+        <a href="{{ path(path) }}">
+            <i class="fa fa-{{ icon }}"></i> {{ title }}
+        </a>
+    </li>
+{% endmacro %}
+
 <nav>
     <ul class="pages">
-        <li>
-            <a href="{{ path('news_list') }}">
-                <i class="fa fa-thumb-tack"></i> News
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('team_list') }}">
-                <i class="fa fa-users"></i> Teams
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('player_list') }}">
-                <i class="fa fa-user"></i> Players
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('match_list') }}">
-                <i class="fa fa-trophy"></i> Matches
-            </a>
-        </li>
+        {{ navbar.page('News', 'News', 'news_list', 'thumb-tack')}}
+        {{ navbar.page('Teams', 'Team', 'team_list', 'users')}}
+        {{ navbar.page('Players', 'Player', 'player_list', 'user')}}
+        {{ navbar.page('Matches', 'Match', 'match_list', 'trophy')}}
     </ul>
 
     <ul class="user">
@@ -39,12 +37,10 @@
                     {{ navbar.badge(me.countUnreadNotifications, "unreadNotificationCount") }}
                 </a>
             </li>
-            <li>
-                <a href="{{ path('message_list') }}">
-                    <i class="fa fa-comments-o"></i>
-                    {{ navbar.badge(me.countUnreadMessages, "unreadMessageCount") }}
-                </a>
-            </li>
+            {{ navbar.page(
+                navbar.badge(me.countUnreadMessages, "unreadMessageCount"),
+                'Message', 'message_list', 'comments-o'
+            )}}
             <li>
                 <a href="{{ path('logout') }}">
                     <i class="fa fa-sign-out"></i>

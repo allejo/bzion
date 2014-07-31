@@ -2529,12 +2529,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "4134169b67e692107b385af857b526e6013361ce"
+                "reference": "72aa82b9a260b823325eec9b37bf6106a0137fb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/4134169b67e692107b385af857b526e6013361ce",
-                "reference": "4134169b67e692107b385af857b526e6013361ce",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/72aa82b9a260b823325eec9b37bf6106a0137fb2",
+                "reference": "72aa82b9a260b823325eec9b37bf6106a0137fb2",
                 "shasum": ""
             },
             "require": {
@@ -2578,7 +2578,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-29 11:54:16"
+            "time": "2014-07-31 13:21:40"
         },
         {
             "name": "yzalis/identicon",
