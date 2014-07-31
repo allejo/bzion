@@ -23,9 +23,9 @@
 
                             <section class="stats">
                                 <p class="match_stats">
-                                    <a href="matches/{{ team.alias }}/wins">{{ team.matchesWon }}</a> -
-                                    <a href="matches/{{ team.alias }}/losses">{{ team.matchesLost }}</a> -
-                                    <a href="matches/{{ team.alias }}/draws">{{ team.matchesDraw }}</a>
+                                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}">{{ team.matchesWon }}</a> -
+                                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}">{{ team.matchesLost }}</a> -
+                                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}">{{ team.matchesDraw }}</a>
                                 </p>
                             </section>
                         </article>
