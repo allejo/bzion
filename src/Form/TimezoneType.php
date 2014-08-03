@@ -9,7 +9,8 @@ class TimezoneType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => $this->getTimezones()
+            'choices' => $this->getTimezones(),
+            'data'    => 'Europe/London'
         ));
     }
 
@@ -23,7 +24,7 @@ class TimezoneType extends AbstractType
         return 'timezone';
     }
 
-    private function getTimezones()
+    static public function getTimezones()
     {
         return array(
             'Pacific/Midway'       => "(GMT-11:00) Midway Island",
@@ -50,7 +51,7 @@ class TimezoneType extends AbstractType
             'America/Santiago'     => "(GMT-04:00) Santiago",
             'Canada/Newfoundland'  => "(GMT-03:30) Newfoundland",
             'America/Buenos_Aires' => "(GMT-03:00) Buenos Aires",
-            'Greenland'            => "(GMT-03:00) Greenland",
+            'America/Godthab'      => "(GMT-03:00) Greenland",
             'Atlantic/Stanley'     => "(GMT-02:00) Stanley",
             'Atlantic/Azores'      => "(GMT-01:00) Azores",
             'Atlantic/Cape_Verde'  => "(GMT-01:00) Cape Verde Is.",

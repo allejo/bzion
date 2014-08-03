@@ -19,9 +19,25 @@ class DatetimeWithTimezoneTransformer implements DataTransformerInterface
             return null;
         }
 
+        $timezone  = $time->timezone->getName();
+        $timezones = array_keys(TimezoneType::getTimezones());
+
+        if (!in_array($timezone, $timezones)) {
+            // The timezone isn't in the list, just find one with the same
+            // offset and use it instead
+            $timezone = 'Europe/London'; // Default if we can't find a timezone
+
+            foreach ($timezones as $t) {
+                if ($time->copy()->setTimezone($t)->offset === $time->offset) {
+                    $timezone = $t;
+                    break;
+                }
+            }
+        }
+
         return array(
             'time' => $this->createTimeDate($time),
-            'timezone' => $time->timezone->getName()
+            'timezone' => $timezone
         );
     }
 

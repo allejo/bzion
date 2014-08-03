@@ -11,7 +11,10 @@ class DatetimeWithTimezoneType extends AbstractType
     {
         $builder
             ->add('time', 'datetime')
-            ->add('timezone', new TimezoneType())
+            ->add(
+                $builder->create('timezone', new TimezoneType())
+                        ->setDataLocked(false)
+            )
             ->addViewTransformer(new DatetimeWithTimezoneTransformer());
     }
 
