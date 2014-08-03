@@ -18,7 +18,9 @@ class IpType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'placeholder' => '198.51.100.193, 203.0.113.18, ...',
+            // Documentation IP addresses
+            // See http://en.wikipedia.org/wiki/Reserved_IP_addresses
+            'placeholder' => '192.0.2.193, 203.0.113.18, ...',
         ));
     }
 

@@ -470,12 +470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "7c1acdbe5e4fbcd5920f7a6e06acd46a0c686abf"
+                "reference": "3c17d3b5bbf738ac3aa842891616351039bbc6b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/7c1acdbe5e4fbcd5920f7a6e06acd46a0c686abf",
-                "reference": "7c1acdbe5e4fbcd5920f7a6e06acd46a0c686abf",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/3c17d3b5bbf738ac3aa842891616351039bbc6b3",
+                "reference": "3c17d3b5bbf738ac3aa842891616351039bbc6b3",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +505,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-07-23 16:04:25"
+            "time": "2014-08-01 14:36:09"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2529,12 +2529,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "72aa82b9a260b823325eec9b37bf6106a0137fb2"
+                "reference": "54da75aebfc50a73d4fe6915696bf78910a4347a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/72aa82b9a260b823325eec9b37bf6106a0137fb2",
-                "reference": "72aa82b9a260b823325eec9b37bf6106a0137fb2",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/54da75aebfc50a73d4fe6915696bf78910a4347a",
+                "reference": "54da75aebfc50a73d4fe6915696bf78910a4347a",
                 "shasum": ""
             },
             "require": {
@@ -2578,7 +2578,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-31 13:21:40"
+            "time": "2014-08-03 08:10:53"
         },
         {
             "name": "yzalis/identicon",
@@ -3746,13 +3746,13 @@
             "version": "dev-develop",
             "source": {
                 "type": "git",
-                "url": "git@github.com:phpDocumentor/phpDocumentor2.git",
-                "reference": "2909413efc89075e12527eb7fff498d766538596"
+                "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
+                "reference": "b417cb1b04d5828aadd6bd040ad218457b689a06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/2909413efc89075e12527eb7fff498d766538596",
-                "reference": "2909413efc89075e12527eb7fff498d766538596",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/b417cb1b04d5828aadd6bd040ad218457b689a06",
+                "reference": "b417cb1b04d5828aadd6bd040ad218457b689a06",
                 "shasum": ""
             },
             "require": {
@@ -3838,7 +3838,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-07-31 06:50:45"
+            "time": "2014-08-01 20:51:36"
         },
         {
             "name": "phpdocumentor/reflection",
