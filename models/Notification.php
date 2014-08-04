@@ -254,7 +254,7 @@ class Notification extends Model
      * @param  mixed  $data The data for the event
      * @return void
      */
-    public static function pushEvent($type, $data)
+    public static function pushEvent($type, $data=null)
     {
         switch ($type) {
         case 'message':
@@ -268,6 +268,9 @@ class Notification extends Model
             $message = array(
                 'type' => $data->getType()
             );
+            break;
+        case 'blank':
+            $message = null;
             break;
         default:
             $message = $data;
