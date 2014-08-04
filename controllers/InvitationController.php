@@ -41,6 +41,10 @@ class InvitationController extends CRUDController
         return $this->showConfirmationForm(function () use (&$invitation, &$team, &$me) {
             $team->addMember($me->getId());
             $invitation->updateExpiration();
+            $team->getLeader()->notify(Notification::TEAM_JOIN, array(
+                'player' => $me->getId(),
+                'team'   => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to accept the invitation from $inviter to join {$team->getEscapedName()}?",
