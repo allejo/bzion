@@ -449,7 +449,8 @@ UNLOCK TABLES;
 CREATE TABLE `notifications` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
     `receiver` int(10) unsigned NOT NULL COMMENT 'The ID of the player who received the notification',
-    `message` text NOT NULL COMMENT 'The content of the notification',
+    `type` set('text', 'team_invite', 'team_deleted', 'team_leader', 'team_kicked') NOT NULL COMMENT 'The type of the notification',
+    `content` text NOT NULL COMMENT 'The serialized content of the notification',
     `timestamp` datetime NOT NULL COMMENT 'The timestamp when the notification was send',
     `status` set('unread','read','deleted') NOT NULL DEFAULT 'unread' COMMENT 'The status of the notification',
     PRIMARY KEY (`id`),

@@ -516,12 +516,13 @@ class Player extends IdenticonModel implements NamedModel
 
     /**
      * Send a notification to a player
-     * @param  string       $message The content of the notification
+     * @param  string       $type    The type of the notification
+     * @param  array        $content The content of the notification
      * @return Notification The sent notification
      */
-    public function notify($message)
+    public function notify($type, $content)
     {
-        return Notification::newNotification($this->getId(), $message);
+        return Notification::newNotification($this->getId(), $type, $content);
     }
 
     /**

@@ -12,6 +12,45 @@
  */
 class Notification extends Model
 {
+    /**
+     * A plain text notification
+     *
+     * data:
+     *     { text => the text to display to the user }
+     */
+    const TEXT         = "text";
+
+    /**
+     * A notification to an invitee
+     *
+     * data:
+     *     { id => the id of the notification }
+     */
+    const TEAM_INVITE  = "team_invite";
+
+    /**
+     * A notification to a player who gets kicked from their team
+     *
+     * data:
+     *     { by => the ID of the leader who kicked the player }
+     */
+    const TEAM_KICKED  = "team_kicked";
+
+    /**
+     * A notification to a player who gets appointed as a team leader
+     *
+     * data:
+     *     { by => the ID of the former leader of the team }
+     */
+    const TEAM_LEADER  = "team_leader";
+
+    /**
+     * A notification to a player whose team is deleted
+     *
+     * data:
+     *     { by => the ID of the former leader of the team }
+     */
+    const TEAM_DELETED = "team_deleted";
 
     /**
      * The id of the notified player
@@ -20,10 +59,26 @@ class Notification extends Model
     protected $receiver;
 
     /**
-     * The text of the notification
-     * @var string
+     * The type of the notification
+     *
+     * Can be one of the class constants
+     *
+     * @var int
      */
-    protected $message;
+    protected $type;
+
+    /**
+     * The content of the notification
+     *
+     * Contains two arrays:
+     *  - `data`:    Defines the entities with which the notification is
+     *               connected (e.g. an invitation id)
+     *  - `actions`: Defines the links that the user can click to respond to the
+     *               notification (e.g. a link to accept the invite)
+     *
+     * @var array[]
+     */
+    protected $content;
 
     /**
      * The status of the notification (unread, read, deleted)
@@ -54,7 +109,8 @@ class Notification extends Model
     protected function assignResult($notification)
     {
         $this->receiver  = $notification['receiver'];
-        $this->message   = $notification['message'];
+        $this->type      = $notification['type'];
+        $this->content   = unserialize($notification['content']);
         $this->status    = $notification['status'];
         $this->timestamp = new DateTime($notification['timestamp']);
     }
@@ -62,21 +118,21 @@ class Notification extends Model
     /**
      * Enter a new notification into the database
      * @param  int          $receiver  The receiver's ID
-     * @param  string       $content   The content of the notification
+     * @param  string       $type      The type of the notification
+     * @param  array        $content   The content of the notification
      * @param  string       $timestamp The timestamp of the notification
      * @param  string       $status    The status of the notification (unread, read, deleted)
      * @return Notification An object representing the notification that was just entered
      */
-    public static function newNotification($receiver, $content, $timestamp = "now", $status = "unread")
+    public static function newNotification($receiver, $type, $content, $timestamp = "now", $status = "unread")
     {
         $notification = self::create(array(
             "receiver"  => $receiver,
-            "message"   => $content,
+            "type"      => $type,
+            "content"   => serialize($content),
             "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
-        ), 'isss');
-
-        $notification->push();
+        ), 'issss');
 
         return $notification;
     }
@@ -124,11 +180,37 @@ class Notification extends Model
 
     /**
      * Get the content of the notification
-     * @return string
+     * @return array
      */
-    public function getMessage()
+    public function getContent()
     {
-        return $this->message;
+        return $this->content;
+    }
+
+    /**
+     * Get the data of the notification
+     * @return array
+     */
+    public function getData()
+    {
+        if (!isset($this->content['data'])) {
+            return array();
+        }
+
+        return $this->content['data'];
+    }
+
+    /**
+     * Get the actions of the notification
+     * @return array
+     */
+    public function getActions()
+    {
+        if (!isset($this->content['actions'])) {
+            return array();
+        }
+
+        return $this->content['actions'];
     }
 
     /**
