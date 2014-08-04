@@ -134,6 +134,8 @@ class Notification extends Model
             "status"    => $status
         ), 'issss');
 
+        $notification->push();
+
         return $notification;
     }
 
@@ -251,9 +253,7 @@ class Notification extends Model
      */
     private function push()
     {
-        foreach (self::$adapters as $adapter) {
-            $adapter->trigger('main', $this->message);
-        }
+        self::pushEvent('notification', $this);
     }
 
     /**
@@ -270,6 +270,11 @@ class Notification extends Model
                 'discussion' => $data->getGroup()->getId(),
                 'message'    => $data->getId(),
                 'author'     => $data->getAuthor()->getId(),
+            );
+            break;
+        case 'notification':
+            $message = array(
+                'type' => $data->getType()
             );
             break;
         default:
