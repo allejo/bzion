@@ -31,12 +31,10 @@
 
     <ul class="user">
         {% if session.get('username') %}
-            <li>
-                <a href="#">
-                    <i class="fa fa-bell"></i>
-                    {{ navbar.badge(me.countUnreadNotifications, "unreadNotificationCount") }}
-                </a>
-            </li>
+            {{ navbar.page(
+                navbar.badge(me.countUnreadNotifications, "unreadNotificationCount"),
+                'Notification', 'notification_list', 'bell'
+            )}}
             {{ navbar.page(
                 navbar.badge(me.countUnreadMessages, "unreadMessageCount"),
                 'Message', 'message_list', 'comments-o'

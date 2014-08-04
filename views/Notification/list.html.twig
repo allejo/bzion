@@ -1,3 +1,27 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}Notifications{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for notification in notifications %}
+            <li>
+                {# TODO: Move this to a helper #}
+                {% set type = notification.category %}
+                {% if type == "text" %}
+                    {{ notification.data.text }}
+                {% elseif type == "team_invite" %}
+                    You were invited to a team!
+                {% elseif type == "team_kicked" %}
+                    You were kicked from your team!
+                {% elseif type == "team_leader" %}
+                    You have been appointed as a leader of your team!
+                {% elseif type == "team_delete" %}
+                    Your team was deleted!
+                {% else %}
+                    {{ type }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

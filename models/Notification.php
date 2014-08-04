@@ -32,7 +32,10 @@ class Notification extends Model
      * A notification to a player who gets kicked from their team
      *
      * data:
-     *     { by => the ID of the leader who kicked the player }
+     *     {
+     *       by   => the ID of the leader who kicked the player
+     *       team => the ID of the team
+     *     }
      */
     const TEAM_KICKED  = "team_kicked";
 
@@ -40,7 +43,10 @@ class Notification extends Model
      * A notification to a player who gets appointed as a team leader
      *
      * data:
-     *     { by => the ID of the former leader of the team }
+     *     {
+     *       by   => the ID of the former leader of the team
+     *       team => the ID of the team
+     *     }
      */
     const TEAM_LEADER  = "team_leader";
 
@@ -48,7 +54,10 @@ class Notification extends Model
      * A notification to a player whose team is deleted
      *
      * data:
-     *     { by => the ID of the former leader of the team }
+     *     {
+     *       by   => the ID of the former leader of the team
+     *       team => the name of the deleted team
+     *     }
      */
     const TEAM_DELETED = "team_deleted";
 
@@ -187,6 +196,19 @@ class Notification extends Model
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Get the type of the notification
+     *
+     * Do not use Notification::getType(), as it returns the name of the class
+     * (i.e. notification)
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->type;
     }
 
     /**

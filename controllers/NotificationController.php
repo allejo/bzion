@@ -5,12 +5,13 @@ class NotificationController extends HTMLController
     public function listAction(Player $me)
     {
         $this->requireLogin();
-        $not = $me->notify('text', array(
+
+        $me->notify('text', array(
             'data' => array(
                 'text' => 'heyooo'
             )
         ));
 
-        return array();
+        return array('notifications' => Notification::getNotifications($me->getId()));
     }
 }

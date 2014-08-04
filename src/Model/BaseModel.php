@@ -280,7 +280,7 @@ abstract class BaseModel implements ModelInterface
      * @param  array|string $now    Column(s) to update with the current timestamp
      * @param  string       $table  The table to perform the query on, defaults to the Model's
      *                              table
-     * @return self         The new entry
+     * @return static       The new entry
      */
     protected static function create($params, $types, $now=null, $table='')
     {
