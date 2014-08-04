@@ -11,6 +11,12 @@ class NotificationController extends HTMLController
             )
         );
 
-        return array('notifications' => Notification::getNotifications($me->getId()));
+        $notifications = Notification::getQueryBuilder()
+            ->active()
+            ->where('receiver')->is($me)
+            ->markRead()
+            ->getModels();
+
+        return array('notifications' => $notifications);
     }
 }

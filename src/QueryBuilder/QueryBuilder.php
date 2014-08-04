@@ -124,6 +124,8 @@ class QueryBuilder
      *                     a list of values that make the entry be considered
      *                     "active"
      *
+     * - `name`: The name of the column which represents the name of the object
+     *
      * @param string $type    The type of the Model (e.g. "Player" or "Match")
      * @param array  $options The options to pass to the builder (see above)
      */
@@ -415,7 +417,7 @@ class QueryBuilder
      * @param  string $type      The type of the value
      * @return void
      */
-    private function addColumnCondition($condition, $value, $type)
+    protected function addColumnCondition($condition, $value, $type)
     {
         if (!$this->currentColumn)
             throw new Exception("You haven't selected a column!");
@@ -428,20 +430,31 @@ class QueryBuilder
     }
 
     /**
+     * Get the MySQL extra parameters
+     * @return string
+     */
+    protected function createQueryParams()
+    {
+        $conditions = $this->createQueryConditions();
+        $order      = $this->createQueryOrder();
+        $pagination = $this->createQueryPagination();
+
+        return "$conditions $order $pagination";
+    }
+
+    /**
      * Get a MySQL query string in the requested format
      * @param  string[] $columns The columns that should be included (without the ID)
      * @return string   The query
      */
     private function createQuery($columns = array())
     {
-        $type       = $this->type;
-        $table      = $type::TABLE;
-        $columns    = $this->createQueryColumns($columns);
-        $conditions = $this->createQueryConditions();
-        $order      = $this->createQueryOrder();
-        $pagination = $this->createQueryPagination();
+        $type     = $this->type;
+        $table    = $type::TABLE;
+        $columns  = $this->createQueryColumns($columns);
+        $params   = $this->createQueryParams();
 
-        return "SELECT $columns FROM $table $conditions $order $pagination";
+        return "SELECT $columns FROM $table $params";
     }
 
     /**

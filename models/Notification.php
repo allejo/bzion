@@ -114,7 +114,7 @@ class Notification extends Model
         $this->type      = $notification['type'];
         $this->data      = unserialize($notification['data']);
         $this->status    = $notification['status'];
-        $this->timestamp = new DateTime($notification['timestamp']);
+        $this->timestamp = new TimeDate($notification['timestamp']);
     }
 
     /**
@@ -153,7 +153,11 @@ class Notification extends Model
         if (!$onlyUnread)
             $statuses[] = 'read';
 
-        return self::arrayIdToModel(self::fetchIdsFrom('status', $statuses, 's'));
+        return self::getQueryBuilder()
+            ->where('status')->isOneOf($statuses)
+            ->where('receiver')->is($receiver)
+            ->getModels();
+
     }
 
     /**
@@ -292,5 +296,19 @@ class Notification extends Model
                 self::$adapters[] = new $adapter;
             }
         }
+    }
+
+    /**
+     * Get a query builder for notifications
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new NotificationQueryBuilder('Notification', array(
+            'columns' => array(
+                'receiver' => 'receiver'
+            ),
+            'activeStatuses' => array('read', 'unread')
+        ));
     }
 }
