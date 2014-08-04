@@ -131,8 +131,10 @@ class QueryBuilder
     {
         $this->type = $type;
 
-        if (isset($options['activeStatuses']))
+        if (isset($options['activeStatuses'])) {
             $this->activeStatuses = $options['activeStatuses'];
+            $this->columns['status'] = 'status';
+        }
 
         if (isset($options['columns']))
             $this->columns += $options['columns'];
@@ -185,6 +187,28 @@ class QueryBuilder
             $number = $number->getId();
 
         $this->addColumnCondition("= ?", $number, 'i');
+
+        return $this;
+    }
+
+    /**
+     * Request that a column equals one of some strings
+     *
+     * @param  string[] $strings The list of accepted values for the column
+     * @return self
+     */
+    public function isOneOf($strings)
+    {
+        $count         = count($strings);
+        $questionMarks = str_repeat(',?', $count);
+        $types         = str_repeat('s', $count);
+
+        // Remove first comma from questionMarks so that MySQL can read our query
+        $questionMarks = ltrim($questionMarks, ',');
+
+        $this->conditions[] = "`{$this->currentColumn}` IN ($questionMarks)";
+        $this->types       .= $types;
+        $this->parameters   = array_merge($this->parameters, $strings);
 
         return $this;
     }
@@ -324,22 +348,7 @@ class QueryBuilder
      */
     public function active()
     {
-        if ($this->activeStatuses === null)
-            return $this;
-
-        $statuses      = $this->activeStatuses;
-        $statusCount   = count($statuses);
-        $questionMarks = str_repeat(',?', $statusCount);
-        $types         = str_repeat('s', $statusCount);
-
-        // Remove first comma from questionMarks so that MySQL can read our query
-        $questionMarks = ltrim($questionMarks, ',');
-
-        $this->conditions[] = "`status` IN ($questionMarks)";
-        $this->types .= $types;
-        $this->parameters = array_merge($this->parameters, $statuses);
-
-        return $this;
+        return $this->where('status')->isOneOf($this->activeStatuses);
     }
 
     /**
@@ -411,7 +420,7 @@ class QueryBuilder
         if (!$this->currentColumn)
             throw new Exception("You haven't selected a column!");
 
-        $this->conditions[] = "{$this->currentColumn} $condition";
+        $this->conditions[] = "`{$this->currentColumn}` $condition";
         $this->parameters[] = $value;
         $this->types       .= $type;
 
