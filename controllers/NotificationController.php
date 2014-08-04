@@ -7,10 +7,9 @@ class NotificationController extends HTMLController
         $this->requireLogin();
 
         $me->notify('text', array(
-            'data' => array(
                 'text' => 'heyooo'
             )
-        ));
+        );
 
         return array('notifications' => Notification::getNotifications($me->getId()));
     }

@@ -16,21 +16,15 @@ class NotificationTest extends TestCase
     public function testNotification()
     {
         $this->notification = Notification::newNotification($this->player->getId(), 'text',
-            array('data' => array(
+            array(
                     'text' => "Something happened, please take a look"
-                )
-            )
+                 )
         );
 
-        $content = $this->notification->getContent();
-        $data    = $this->notification->getData();
-        $actions = $this->notification->getActions();
+        $this->assertEquals($this->notification->getData(), array(
+            'text' => "Something happened, please take a look"
+        ));
 
-        $this->assertEquals($data, $content['data']);
-
-        $this->assertEmpty($actions);
-
-        $this->assertEquals("Something happened, please take a look", $data['text']);
         $this->assertEquals($this->player->getId(), $this->notification->getReceiver()->getId());
         $this->assertFalse($this->notification->isRead());
 

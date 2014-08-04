@@ -77,17 +77,10 @@ class Notification extends Model
     protected $type;
 
     /**
-     * The content of the notification
-     *
-     * Contains two arrays:
-     *  - `data`:    Defines the entities with which the notification is
-     *               connected (e.g. an invitation id)
-     *  - `actions`: Defines the links that the user can click to respond to the
-     *               notification (e.g. a link to accept the invite)
-     *
-     * @var array[]
+     * The data of the notification
+     * @var array
      */
-    protected $content;
+    protected $data;
 
     /**
      * The status of the notification (unread, read, deleted)
@@ -119,7 +112,7 @@ class Notification extends Model
     {
         $this->receiver  = $notification['receiver'];
         $this->type      = $notification['type'];
-        $this->content   = unserialize($notification['content']);
+        $this->data      = unserialize($notification['data']);
         $this->status    = $notification['status'];
         $this->timestamp = new DateTime($notification['timestamp']);
     }
@@ -128,17 +121,17 @@ class Notification extends Model
      * Enter a new notification into the database
      * @param  int          $receiver  The receiver's ID
      * @param  string       $type      The type of the notification
-     * @param  array        $content   The content of the notification
+     * @param  array        $data      The data of the notification
      * @param  string       $timestamp The timestamp of the notification
      * @param  string       $status    The status of the notification (unread, read, deleted)
      * @return Notification An object representing the notification that was just entered
      */
-    public static function newNotification($receiver, $type, $content, $timestamp = "now", $status = "unread")
+    public static function newNotification($receiver, $type, $data, $timestamp = "now", $status = "unread")
     {
         $notification = self::create(array(
             "receiver"  => $receiver,
             "type"      => $type,
-            "content"   => serialize($content),
+            "data"      => serialize($data),
             "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
         ), 'issss');
@@ -188,16 +181,6 @@ class Notification extends Model
     {
         return new Player($this->receiver);
     }
-
-    /**
-     * Get the content of the notification
-     * @return array
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
     /**
      * Get the type of the notification
      *
@@ -217,24 +200,7 @@ class Notification extends Model
      */
     public function getData()
     {
-        if (!isset($this->content['data'])) {
-            return array();
-        }
-
-        return $this->content['data'];
-    }
-
-    /**
-     * Get the actions of the notification
-     * @return array
-     */
-    public function getActions()
-    {
-        if (!isset($this->content['actions'])) {
-            return array();
-        }
-
-        return $this->content['actions'];
+        return $this->data;
     }
 
     /**
