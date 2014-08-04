@@ -28,7 +28,7 @@ class TeamController extends CRUDController
         $members = $team->getMembers();
         $name    = $team->getName();
 
-        return $this->delete($team, $me, function() use ($members, $me, $name) {
+        return $this->delete($team, $me, function () use ($members, $me, $name) {
             foreach ($members as $member) {
                 // Do not notify the user who initiated the deletion
                 if ($me->getId() != $member->getId()) {
@@ -52,6 +52,10 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$team, &$me) {
             $team->addMember($me->getId());
+            $team->getLeader()->notify(Notification::TEAM_JOIN, array(
+                'player' => $me->getId(),
+                'team'   => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to join {$team->getEscapedName()}?",
@@ -106,6 +110,10 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$team, &$me) {
             $team->removeMember($me->getId());
+            $team->getLeader()->notify(Notification::TEAM_ABANDON, array(
+                'player' => $me->getId(),
+                'team'   => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to abandon {$team->getEscapedName()}?",

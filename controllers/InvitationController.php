@@ -1,6 +1,5 @@
 <?php
 
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class InvitationController extends CRUDController

@@ -650,7 +650,7 @@ class Player extends IdenticonModel implements NamedModel
     /**
      * Find whether the player can delete a model
      *
-     * @param  PermissionModel $model  The model that will be deleted
+     * @param  PermissionModel $model The model that will be deleted
      * @return boolean
      */
     public function canDelete($model)
@@ -672,7 +672,7 @@ class Player extends IdenticonModel implements NamedModel
     /**
      * Find whether the player can edit a model
      *
-     * @param  PermissionModel $model  The model which will be edited
+     * @param  PermissionModel $model The model which will be edited
      * @return boolean
      */
     public function canEdit($model)

@@ -360,7 +360,7 @@ class Ban extends UrlModel implements PermissionModel
      * @param string   $reason          The full reason for the ban
      * @param string   $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
      * @param string[] $ipAddresses     An array of IPs that have been banned
-     * @param bool     $allowServerJoin Whether or not
+     * @param bool     $allowServerJoin Whether or not the player is allowed to join match servers
      *
      * @return Ban|bool An object representing the ban that was just entered or false if the ban was not created
      */

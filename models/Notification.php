@@ -62,6 +62,30 @@ class Notification extends Model
     const TEAM_DELETED = "team_deleted";
 
     /**
+     * A notification to the leader of the team when a new player joins
+     *
+     * data:
+     *     {
+     *       player => the ID of the new player
+     *       team   => the ID of the team
+     *     }
+     *
+     */
+    const TEAM_JOIN = "team_join";
+
+    /**
+     * A notification to the leader of the team when a player abandons it
+     *
+     * data:
+     *     {
+     *       player => the ID of the former player
+     *       team   => the ID of the team
+     *     }
+     *
+     */
+    const TEAM_ABANDON = "team_abandon";
+
+    /**
      * The id of the notified player
      * @var int
      */
