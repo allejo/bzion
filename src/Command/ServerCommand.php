@@ -60,6 +60,7 @@ class ServerCommand extends Command
         // Binding to 0.0.0.0 means remotes can connect
         $pushSocket->listen(WEBSOCKET_PUSH_PORT, '0.0.0.0');
 
+        $output->writeln('<bg=green;options=bold>Welcome to the BZiON live notification server!</bg=green;options=bold>');
         $loop->run();
     }
 }
