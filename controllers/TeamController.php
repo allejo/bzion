@@ -32,7 +32,7 @@ class TeamController extends CRUDController
             foreach ($members as $member) {
                 // Do not notify the user who initiated the deletion
                 if ($me->getId() != $member->getId()) {
-                    $member->notify('team_deleted', array(
+                    $member->notify(Notification::TEAM_DELETED, array(
                         'by'   => $me->getId(),
                         'team' => $name
                     ));
@@ -71,7 +71,7 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
             $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
-            $player->notify('team_invite', array('id' => $invite->getId()));
+            $player->notify(Notification::TEAM_INVITE, array('id' => $invite->getId()));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
@@ -90,7 +90,7 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$me, &$team, &$player) {
             $team->removeMember($player->getId());
-            $player->notify('team_kicked', array(
+            $player->notify(Notification::TEAM_KICKED, array(
                 'by' => $me->getId(),
                 'team' => $team->getId()
             ));
