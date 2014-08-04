@@ -25,7 +25,20 @@ class TeamController extends CRUDController
 
     public function deleteAction(Player $me, Team $team)
     {
-        return $this->delete($team, $me);
+        $members = $team->getMembers();
+        $name    = $team->getName();
+
+        return $this->delete($team, $me, function() use ($members, $me, $name) {
+            foreach ($members as $member) {
+                // Do not notify the user who initiated the deletion
+                if ($me->getId() != $member->getId()) {
+                    $member->notify('team_deleted', array(
+                        'by'   => $me->getId(),
+                        'team' => $name
+                    ));
+                }
+            }
+        });
     }
 
     public function joinAction(Team $team, Player $me)
@@ -53,7 +66,8 @@ class TeamController extends CRUDController
             throw new ForbiddenException("The specified player is already a member of that team.");
 
         return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
-            Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
+            $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
+            $player->notify('team_invite', array('id' => $invite->getId()));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
@@ -70,8 +84,12 @@ class TeamController extends CRUDController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of that team.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$player) {
+        return $this->showConfirmationForm(function () use (&$me, &$team, &$player) {
             $team->removeMember($player->getId());
+            $player->notify('team_kicked', array(
+                'by' => $me->getId(),
+                'team' => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?",
