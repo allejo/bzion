@@ -303,7 +303,7 @@ class Notification extends Model
 
     /**
      * Get a query builder for notifications
-     * @return QueryBuilder
+     * @return NotificationQueryBuilder
      */
     public static function getQueryBuilder()
     {

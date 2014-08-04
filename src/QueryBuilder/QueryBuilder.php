@@ -350,6 +350,10 @@ class QueryBuilder
      */
     public function active()
     {
+        if (!$this->activeStatuses) {
+            return $this;
+        }
+
         return $this->where('status')->isOneOf($this->activeStatuses);
     }
 
