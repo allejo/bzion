@@ -333,7 +333,8 @@ class Notification extends Model
     {
         return new NotificationQueryBuilder('Notification', array(
             'columns' => array(
-                'receiver' => 'receiver'
+                'receiver'  => 'receiver',
+                'timestamp' => 'timestamp'
             ),
             'activeStatuses' => array('read', 'unread')
         ));

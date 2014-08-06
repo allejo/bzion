@@ -13,7 +13,7 @@ class LinkToFunction
      */
     public function __invoke(\UrlModel $model, $icon=null, $action='show')
     {
-        $url  = $model->getURL($action);
+        $url = $model->getURL($action);
 
         if ($icon)
             $content = "<i class=\"fa fa-$icon\"></i>";

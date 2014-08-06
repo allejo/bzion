@@ -28,6 +28,12 @@ $tw1sted    = Player::newPlayer(9736, "tw1sted", null, "active", Player::DEVELOP
 $brad       = Player::newPlayer(3030, "brad", null, "active", Player::S_ADMIN, "", "I keep nagging about when this project will be done");
 echo " done!";
 
+echo "\nSending notifications...";
+foreach (Player::getPlayers() as $player) {
+    $player->notify('text', array('text' => 'Welcome to ' . SITE_TITLE));
+}
+echo " done!";
+
 echo "\nAdding teams...";
 $olfm      = Team::createTeam("OpenLeague FM?", $kierra->getId(), "", "");
 $reptitles = Team::createTeam("Reptitles", $snake->getId(), "", "", "open");

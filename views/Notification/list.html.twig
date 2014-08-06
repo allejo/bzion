@@ -3,13 +3,17 @@
 {% block title %}Notifications{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for notification in notifications %}
+    {% for chunk in notifications %}
+        <h3>{{ chunk.date.format('F Y') }}</h3>
+
+        <ul>
+            {% for notification in chunk.notifications %}
             <li>
                 {{ include('Notification/item.html.twig') }}
             </li>
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 {% endblock %}
 
 
