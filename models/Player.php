@@ -510,7 +510,7 @@ class Player extends IdenticonModel implements NamedModel
     public static function getPlayers()
     {
         return self::arrayIdToModel(
-            parent::fetchIdsFrom("status", array("active"), "s", false)
+            parent::fetchIdsFrom("status", array("active", "test"), "s", false)
         );
     }
 

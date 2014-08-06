@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Twig\ModelFetcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,11 +27,12 @@ abstract class HTMLController extends Controller
 
         // Add global variables to the twig templates
         $twig = Service::getTemplateEngine();
-        $twig->addGlobal("request", $request);
-        $twig->addGlobal("session", $request->getSession());
+        $twig->addGlobal("request",    $request);
+        $twig->addGlobal("session",    $request->getSession());
         $twig->addGlobal("pages",      Page::getPages());
         $twig->addGlobal("controller", $this);
         $twig->addGlobal("me",         $this->getMe());
+        $twig->addGlobal("model",      new ModelFetcher());
 
         $this->prepareTwig();
 
