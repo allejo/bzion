@@ -6,16 +6,18 @@ class NotificationController extends HTMLController
     {
         $this->requireLogin();
 
-        $notifications = Notification::getQueryBuilder()
+        $query = Notification::getQueryBuilder()
             ->active()
             ->where('receiver')->is($me)
-            ->markRead()
-            ->sortBy('timestamp')->reverse()
-            ->getModels();
+            ->sortBy('timestamp')->reverse();
 
-        $notifications = $this->chunk($notifications);
+        $notifications = $query->getModels();
 
-        return array('notifications' => $notifications);
+        // Mark the notifications as read after fetching them, so we can show
+        // to the user which notifications he hadn't seen
+        $query->markRead();
+
+        return array('notifications' => $this->chunk($notifications));
     }
 
     /**

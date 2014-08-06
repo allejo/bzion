@@ -3,21 +3,37 @@
 {% block title %}Notifications{% endblock %}
 
 {% block content %}
-    {% for chunk in notifications %}
-        <h3>{{ chunk.date.format('F Y') }}</h3>
+    <main class="notification_list">
+        <section class="content_header">
+            <article class="wrapper">
+                <h1>Notifications</h1>
+            </article>
+        </section>
 
-        <ul>
-            {% for notification in chunk.notifications %}
-            <li>
-                {{ include('Notification/item.html.twig') }}
-                <em> {{ notification.timestamp.diffForHumans }} </em>
-                {% for title, link in notification.actions %}
-                    <a href="{{ link }}">{{ title }}</a>
+    <section class="notifications">
+        {% for chunk in notifications %}
+            <h3>{{ chunk.date.format('F Y') }}</h3>
+
+            <ul>
+                {% for notification in chunk.notifications %}
+
+                    {% set class = "" %}
+
+                    {% if not notification.read %}
+                        {% set class = "unread" %}
+                    {% endif %}
+
+                    <li class="{{ class }} notification">
+                        {{ include('Notification/item.html.twig') }}
+                        <em> {{ notification.timestamp.diffForHumans }} </em>
+                        {% for title, link in notification.actions %}
+                            <a href="{{ link }}">{{ title }}</a>
+                        {% endfor %}
+                    </li>
                 {% endfor %}
-            </li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
+            </ul>
+        {% endfor %}
+    </section>
 {% endblock %}
 
 

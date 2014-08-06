@@ -1,0 +1,18 @@
+main {
+    &.notification_list {
+        font-family: $sansSerifFont;
+
+        .notifications {
+            @extend .clearfix;
+            @extend .wrapper;
+
+            .notification {
+                padding: 10px;
+
+                &.unread {
+                    background-color: $Blue_Grey;
+                }
+            }
+        }
+    }
+}
