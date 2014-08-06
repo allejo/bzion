@@ -6,26 +6,7 @@
     <ul>
         {% for notification in notifications %}
             <li>
-                {# TODO: Move this to a helper #}
-                {% set type = notification.category %}
-                {% if type == "text" %}
-                    {{ notification.data.text }}
-                {% elseif type == "team_invite" %}
-                    <i class="fa fa-envelope-square"></i> You were invited to a team!
-                {% elseif type == "team_kicked" %}
-                    <i class="fa fa-hand-o-left"></i> You left your team!
-                {% elseif type == "team_abandon" %}
-                    <i class="fa fa-hand-o-left"></i> Someone left your team!
-                {% elseif type == "team_join" %}
-                    <i class="fa fa-plus-circle"></i> Someone joined your team!
-                {% elseif type == "team_leader" %}
-                    <i class="fa fa-chevron-circle-up"></i> You have been appointed as a leader of your team!
-                {% elseif type == "team_deleted" %}
-                    <i class="fa fa-minus-circle"></i> Your team was deleted!
-                {% else %}
-                    {{ type }}
-                {% endif %}
-                <em> {{ notification.timestamp.diffForHumans }} </em>
+                {{ include('Notification/item.html.twig') }}
             </li>
         {% endfor %}
     </ul>
