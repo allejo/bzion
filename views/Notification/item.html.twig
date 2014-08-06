@@ -1,5 +1,6 @@
-{% set type = notification.category %}
-{% if type == "text" %}
+{% set type = notification.category -%}
+
+{%- if type == "text" %}
     {{ notification.data.text }}
 {% elseif type == "team_invite" %}
     <i class="fa fa-envelope-square"></i> You were invited to a team!
@@ -16,4 +17,3 @@
 {% else %}
     {{ type }}
 {% endif %}
-<em> {{ notification.timestamp.diffForHumans }} </em>

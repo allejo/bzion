@@ -273,6 +273,23 @@ class Notification extends Model
     }
 
     /**
+     * Get the available actions for the notification
+     *
+     * @return array
+     */
+    public function getActions()
+    {
+        switch($this->type) {
+            case self::TEAM_INVITE:
+                $invitation = new Invitation($this->data['id']);
+
+                return array('Accept' => $invitation->getUrl('accept'));
+            default:
+                return array();
+        }
+    }
+
+    /**
      * Push an event to the event adapters
      * @param  string $type The type of the event
      * @param  mixed  $data The data for the event

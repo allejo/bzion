@@ -10,6 +10,10 @@
             {% for notification in chunk.notifications %}
             <li>
                 {{ include('Notification/item.html.twig') }}
+                <em> {{ notification.timestamp.diffForHumans }} </em>
+                {% for title, link in notification.actions %}
+                    <a href="{{ link }}">{{ title }}</a>
+                {% endfor %}
             </li>
             {% endfor %}
         </ul>
