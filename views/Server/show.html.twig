@@ -1,7 +1,12 @@
 {% import _self as serverlist %}
 
-{{ link_to(server, 'pencil', 'edit') }}
-{{ link_to(server, 'minus', 'delete') }}
+{% if me.hasPermission('edit_server') %}
+    {{ link_to(server, 'pencil', 'edit') }}
+{% endif %}
+
+{% if me.hasPermission('del_server') %}
+    {{ link_to(server, 'minus', 'delete') }}
+{% endif %}
 
 <strong>{{ server.name }}</strong><br />
 <em>{{ server.address }}</em><br />
