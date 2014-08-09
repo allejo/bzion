@@ -12,7 +12,15 @@
     <main class="match_list">
         <section class="content_header">
             <article class="wrapper">
-                <h1>Matches</h1>
+                <div>
+                    <h1>Matches</h1>
+                </div>
+
+                {% if me.canCreate("Match") %}
+                    <div class="buttons">
+                        <a class="button grey notextshadow" href="{{ path('match_enter') }}"><i class="fa fa-plus"></i> Report Match</a>
+                    </div>
+                {% endif %}
             </article>
         </section>
 

@@ -32,7 +32,11 @@ class TimeDate extends Carbon\Carbon
      */
     public function toMysql()
     {
-        return $this->format(self::MYSQL);
+        // We can't tell MySQL to store timezone data, so just convert the
+        // timestamp to local time
+        $time = $this->copy()->setTimezone(date_default_timezone_get());
+
+        return $time->format(self::MYSQL);
     }
 
     /**

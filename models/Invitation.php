@@ -10,7 +10,7 @@
  * An invitation sent to a player asking them to join a team
  * @package    BZiON\Models
  */
-class Invitation extends Model
+class Invitation extends UrlModel
 {
 
     /**
@@ -82,7 +82,6 @@ class Invitation extends Model
         return $invitation;
     }
 
-
     /**
      * Get the player receiving the invite
      *
@@ -142,5 +141,4 @@ class Invitation extends Model
     {
         return $this->text;
     }
-
 }

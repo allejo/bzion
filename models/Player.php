@@ -418,16 +418,15 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function setAdminNotes($admin_notes)
     {
-	return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
+    return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
     }
 
     /**
      * Updates this player's last login
-     * @todo Make me work
      */
     public function updateLastLogin()
     {
-        $this->update("last_login", "now", 's');
+        $this->update("last_login", TimeDate::now()->toMysql(), 's');
     }
 
     /**
@@ -511,18 +510,19 @@ class Player extends IdenticonModel implements NamedModel
     public static function getPlayers()
     {
         return self::arrayIdToModel(
-            parent::fetchIdsFrom("status", array("active"), "s", false)
+            parent::fetchIdsFrom("status", array("active", "test"), "s", false)
         );
     }
 
     /**
      * Send a notification to a player
-     * @param  string       $message The content of the notification
+     * @param  string       $type    The type of the notification
+     * @param  array        $content The content of the notification
      * @return Notification The sent notification
      */
-    public function notify($message)
+    public function notify($type, $content)
     {
-        return Notification::newNotification($this->getId(), $message);
+        return Notification::newNotification($this->getId(), $type, $content);
     }
 
     /**
@@ -645,5 +645,38 @@ class Player extends IdenticonModel implements NamedModel
         return function (Player $a, Player $b) {
             return strcasecmp($a->getUsername(), $b->getUsername());
         };
+    }
+
+    /**
+     * Find whether the player can delete a model
+     *
+     * @param  PermissionModel $model The model that will be deleted
+     * @return boolean
+     */
+    public function canDelete($model)
+    {
+        return $this->hasPermission($model->getSoftDeletePermission());
+    }
+
+    /**
+     * Find whether the player can create a model
+     *
+     * @param  string  $modelName The PHP class identifier of the model type
+     * @return boolean
+     */
+    public function canCreate($modelName)
+    {
+        return $this->hasPermission($modelName::getCreatePermission());
+    }
+
+    /**
+     * Find whether the player can edit a model
+     *
+     * @param  PermissionModel $model The model which will be edited
+     * @return boolean
+     */
+    public function canEdit($model)
+    {
+        return $this->hasPermission($model->getEditPermission());
     }
 }

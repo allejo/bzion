@@ -1,11 +1,6 @@
 <?php
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
 
 class InvitationController extends CRUDController
 {
@@ -46,6 +41,10 @@ class InvitationController extends CRUDController
         return $this->showConfirmationForm(function () use (&$invitation, &$team, &$me) {
             $team->addMember($me->getId());
             $invitation->updateExpiration();
+            $team->getLeader()->notify(Notification::TEAM_JOIN, array(
+                'player' => $me->getId(),
+                'team'   => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to accept the invitation from $inviter to join {$team->getEscapedName()}?",

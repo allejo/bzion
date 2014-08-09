@@ -4,7 +4,8 @@ use Player;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
-class EventPusher implements MessageComponentInterface {
+class EventPusher implements MessageComponentInterface
+{
     /**
      * The connected clients
      * @var \SplObjectStorage
@@ -14,7 +15,8 @@ class EventPusher implements MessageComponentInterface {
     /**
      * Create a new event pusher handler
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->clients = new \SplObjectStorage;
     }
 
@@ -22,7 +24,8 @@ class EventPusher implements MessageComponentInterface {
      * Open the connection
      * @param ConnectionInterface $conn
      */
-    public function onOpen(ConnectionInterface $conn) {
+    public function onOpen(ConnectionInterface $conn)
+    {
         // Find which player opened the connection
         $conn->Player = new Player($conn->Session->get('playerId'));
 
@@ -33,9 +36,10 @@ class EventPusher implements MessageComponentInterface {
     /**
      * Send a message as a client
      * @param ConnectionInterface $from
-     * @param mixed $msg
+     * @param mixed               $msg
      */
-    public function onMessage(ConnectionInterface $from, $msg) {
+    public function onMessage(ConnectionInterface $from, $msg)
+    {
         // The client isn't supposed to send messages -
         // probably a user is messing with the console, just close the connection
         $from->close();
@@ -45,7 +49,8 @@ class EventPusher implements MessageComponentInterface {
      * Close a connection
      * @param ConnectionInterface $conn
      */
-    public function onClose(ConnectionInterface $conn) {
+    public function onClose(ConnectionInterface $conn)
+    {
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
     }
@@ -53,7 +58,8 @@ class EventPusher implements MessageComponentInterface {
     /**
      * Action to call on an error
      */
-    public function onError(ConnectionInterface $conn, \Exception $e) {
+    public function onError(ConnectionInterface $conn, \Exception $e)
+    {
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
@@ -63,7 +69,8 @@ class EventPusher implements MessageComponentInterface {
      * Action to call when the server notifies us about something
      * @param string $event JSON'ified string we'll receive from ZeroMQ
      */
-    public function onServerEvent($event) {
+    public function onServerEvent($event)
+    {
         $event = $event->event;
 
         if ($event->type == 'message') {

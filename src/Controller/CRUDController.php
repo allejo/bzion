@@ -58,9 +58,10 @@ abstract class CRUDController extends JSONController
      * @throws ForbiddenException
      * @param  PermissionModel    $model The model we want to delete
      * @param  Player             $me    The user who wants to delete the model
+     * @param  Closure|null       $onSuccess Something to do when the model is deleted
      * @return mixed              The response to show to the user
      */
-    protected function delete(PermissionModel $model, Player $me)
+    protected function delete(PermissionModel $model, Player $me, $onSuccess = null)
     {
         if (!$this->canDelete($me, $model))
             throw new ForbiddenException($this->getMessage($model, 'softDelete', 'forbidden'));
@@ -69,8 +70,12 @@ abstract class CRUDController extends JSONController
         $successMessage = $this->getMessage($model, 'softDelete', 'success');
         $redirection    = $this->redirectToList($model);
 
-        return $this->showConfirmationForm(function () use (&$model, &$session, $redirection) {
+        return $this->showConfirmationForm(function () use (&$model, &$session, $redirection, $onSuccess) {
             $model->delete();
+
+            if ($onSuccess) {
+                $onSuccess();
+            }
 
             return $redirection;
         }, $this->getMessage($model, 'softDelete', 'confirm'), $successMessage, "Delete");
@@ -148,7 +153,7 @@ abstract class CRUDController extends JSONController
      */
     protected function canDelete($player, $model)
     {
-        return $player->hasPermission($model->getSoftDeletePermission());
+        return $player->canDelete($model);
     }
 
     /**
@@ -161,7 +166,7 @@ abstract class CRUDController extends JSONController
     {
         $modelName = $this->getName();
 
-        return $player->hasPermission($modelName::getCreatePermission());
+        return $player->canCreate($modelName);
     }
 
     /**
@@ -173,7 +178,7 @@ abstract class CRUDController extends JSONController
      */
     protected function canEdit($player, $model)
     {
-        return $player->hasPermission($model->getEditPermission());
+        return $player->canEdit($model);
     }
 
     /**

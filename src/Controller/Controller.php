@@ -253,6 +253,7 @@ abstract class Controller
     protected function renderDefault($params, $action)
     {
         $templatePath = $this->getName() . "/$action.html.twig";
+
         return $this->render($templatePath, $params);
     }
 
@@ -283,7 +284,7 @@ abstract class Controller
      * Returns the name of the controller without the "Controller" part
      * @return string
      */
-    protected function getName()
+    public function getName()
     {
         return preg_replace('/Controller$/', '', get_called_class());
     }

@@ -25,7 +25,20 @@ class TeamController extends CRUDController
 
     public function deleteAction(Player $me, Team $team)
     {
-        return $this->delete($team, $me);
+        $members = $team->getMembers();
+        $name    = $team->getName();
+
+        return $this->delete($team, $me, function () use ($members, $me, $name) {
+            foreach ($members as $member) {
+                // Do not notify the user who initiated the deletion
+                if ($me->getId() != $member->getId()) {
+                    $member->notify(Notification::TEAM_DELETED, array(
+                        'by'   => $me->getId(),
+                        'team' => $name
+                    ));
+                }
+            }
+        });
     }
 
     public function joinAction(Team $team, Player $me)
@@ -39,6 +52,10 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$team, &$me) {
             $team->addMember($me->getId());
+            $team->getLeader()->notify(Notification::TEAM_JOIN, array(
+                'player' => $me->getId(),
+                'team'   => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to join {$team->getEscapedName()}?",
@@ -53,7 +70,8 @@ class TeamController extends CRUDController
             throw new ForbiddenException("The specified player is already a member of that team.");
 
         return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
-            Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
+            $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
+            $player->notify(Notification::TEAM_INVITE, array('id' => $invite->getId()));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
@@ -70,8 +88,12 @@ class TeamController extends CRUDController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of that team.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$player) {
+        return $this->showConfirmationForm(function () use (&$me, &$team, &$player) {
             $team->removeMember($player->getId());
+            $player->notify(Notification::TEAM_KICKED, array(
+                'by' => $me->getId(),
+                'team' => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?",
@@ -88,6 +110,10 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$team, &$me) {
             $team->removeMember($me->getId());
+            $team->getLeader()->notify(Notification::TEAM_ABANDON, array(
+                'player' => $me->getId(),
+                'team'   => $team->getId()
+            ));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to abandon {$team->getEscapedName()}?",

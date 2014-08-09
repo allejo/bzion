@@ -124,6 +124,8 @@ class QueryBuilder
      *                     a list of values that make the entry be considered
      *                     "active"
      *
+     * - `name`: The name of the column which represents the name of the object
+     *
      * @param string $type    The type of the Model (e.g. "Player" or "Match")
      * @param array  $options The options to pass to the builder (see above)
      */
@@ -131,8 +133,10 @@ class QueryBuilder
     {
         $this->type = $type;
 
-        if (isset($options['activeStatuses']))
+        if (isset($options['activeStatuses'])) {
             $this->activeStatuses = $options['activeStatuses'];
+            $this->columns['status'] = 'status';
+        }
 
         if (isset($options['columns']))
             $this->columns += $options['columns'];
@@ -146,7 +150,7 @@ class QueryBuilder
      *
      * `$queryBuilder->where('username')->equals('administrator');`
      *
-     * @param  string       $column The column to select
+     * @param  string $column The column to select
      * @return self
      */
     public function where($column)
@@ -162,7 +166,7 @@ class QueryBuilder
     /**
      * Request that a column equals a string (case-insensitive)
      *
-     * @param  string       $string The string that the column's value should equal to
+     * @param  string $string The string that the column's value should equal to
      * @return self
      */
     public function equals($string)
@@ -175,8 +179,8 @@ class QueryBuilder
     /**
      * Request that a column equals a number
      *
-     * @param  int|Model    $number The number that the column's value should equal
-     *                              to - if a Model is provided, use the model's ID
+     * @param  int|Model $number The number that the column's value should equal
+     *                           to - if a Model is provided, use the model's ID
      * @return self
      */
     public function is($number)
@@ -190,9 +194,31 @@ class QueryBuilder
     }
 
     /**
+     * Request that a column equals one of some strings
+     *
+     * @param  string[] $strings The list of accepted values for the column
+     * @return self
+     */
+    public function isOneOf($strings)
+    {
+        $count         = count($strings);
+        $questionMarks = str_repeat(',?', $count);
+        $types         = str_repeat('s', $count);
+
+        // Remove first comma from questionMarks so that MySQL can read our query
+        $questionMarks = ltrim($questionMarks, ',');
+
+        $this->conditions[] = "`{$this->currentColumn}` IN ($questionMarks)";
+        $this->types       .= $types;
+        $this->parameters   = array_merge($this->parameters, $strings);
+
+        return $this;
+    }
+
+    /**
      * Request that a column value starts with a string (case-insensitive)
      *
-     * @param  string       $string The substring that the column's value should start with
+     * @param  string $string The substring that the column's value should start with
      * @return self
      */
     public function startsWith($string)
@@ -205,7 +231,7 @@ class QueryBuilder
     /**
      * Request that a specific model is not returned
      *
-     * @param  Model        $model The model you don't want to get
+     * @param  Model $model The model you don't want to get
      * @return self
      */
     public function except($model)
@@ -219,7 +245,7 @@ class QueryBuilder
     /**
      * Return the results sorted by the value of a column
      *
-     * @param  string       $column The column based on which the results should be ordered
+     * @param  string $column The column based on which the results should be ordered
      * @return self
      */
     public function sortBy($column)
@@ -317,7 +343,6 @@ class QueryBuilder
         return $this;
     }
 
-
     /**
      * Request that only "active" Models should be returned
      *
@@ -325,22 +350,11 @@ class QueryBuilder
      */
     public function active()
     {
-        if ($this->activeStatuses === null)
+        if (!$this->activeStatuses) {
             return $this;
+        }
 
-        $statuses      = $this->activeStatuses;
-        $statusCount   = count($statuses);
-        $questionMarks = str_repeat(',?', $statusCount);
-        $types         = str_repeat('s', $statusCount);
-
-        // Remove first comma from questionMarks so that MySQL can read our query
-        $questionMarks = ltrim($questionMarks, ',');
-
-        $this->conditions[] = "`status` IN ($questionMarks)";
-        $this->types .= $types;
-        $this->parameters = array_merge($this->parameters, $statuses);
-
-        return $this;
+        return $this->where('status')->isOneOf($this->activeStatuses);
     }
 
     /**
@@ -407,16 +421,29 @@ class QueryBuilder
      * @param  string $type      The type of the value
      * @return void
      */
-    private function addColumnCondition($condition, $value, $type)
+    protected function addColumnCondition($condition, $value, $type)
     {
         if (!$this->currentColumn)
             throw new Exception("You haven't selected a column!");
 
-        $this->conditions[] = "{$this->currentColumn} $condition";
+        $this->conditions[] = "`{$this->currentColumn}` $condition";
         $this->parameters[] = $value;
         $this->types       .= $type;
 
         $this->currentColumn = null;
+    }
+
+    /**
+     * Get the MySQL extra parameters
+     * @return string
+     */
+    protected function createQueryParams()
+    {
+        $conditions = $this->createQueryConditions();
+        $order      = $this->createQueryOrder();
+        $pagination = $this->createQueryPagination();
+
+        return "$conditions $order $pagination";
     }
 
     /**
@@ -426,14 +453,12 @@ class QueryBuilder
      */
     private function createQuery($columns = array())
     {
-        $type       = $this->type;
-        $table      = $type::TABLE;
-        $columns    = $this->createQueryColumns($columns);
-        $conditions = $this->createQueryConditions();
-        $order      = $this->createQueryOrder();
-        $pagination = $this->createQueryPagination();
+        $type     = $this->type;
+        $table    = $type::TABLE;
+        $columns  = $this->createQueryColumns($columns);
+        $params   = $this->createQueryParams();
 
-        return "SELECT $columns FROM $table $conditions $order $pagination";
+        return "SELECT $columns FROM $table $params";
     }
 
     /**

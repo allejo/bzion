@@ -12,6 +12,78 @@
  */
 class Notification extends Model
 {
+    /**
+     * A plain text notification
+     *
+     * data:
+     *     { text => the text to display to the user }
+     */
+    const TEXT         = "text";
+
+    /**
+     * A notification to an invitee
+     *
+     * data:
+     *     { id => the id of the notification }
+     */
+    const TEAM_INVITE  = "team_invite";
+
+    /**
+     * A notification to a player who gets kicked from their team
+     *
+     * data:
+     *     {
+     *       by   => the ID of the leader who kicked the player
+     *       team => the ID of the team
+     *     }
+     */
+    const TEAM_KICKED  = "team_kicked";
+
+    /**
+     * A notification to a player who gets appointed as a team leader
+     *
+     * data:
+     *     {
+     *       by   => the ID of the former leader of the team
+     *       team => the ID of the team
+     *     }
+     */
+    const TEAM_LEADER  = "team_leader";
+
+    /**
+     * A notification to a player whose team is deleted
+     *
+     * data:
+     *     {
+     *       by   => the ID of the former leader of the team
+     *       team => the name of the deleted team
+     *     }
+     */
+    const TEAM_DELETED = "team_deleted";
+
+    /**
+     * A notification to the leader of the team when a new player joins
+     *
+     * data:
+     *     {
+     *       player => the ID of the new player
+     *       team   => the ID of the team
+     *     }
+     *
+     */
+    const TEAM_JOIN = "team_join";
+
+    /**
+     * A notification to the leader of the team when a player abandons it
+     *
+     * data:
+     *     {
+     *       player => the ID of the former player
+     *       team   => the ID of the team
+     *     }
+     *
+     */
+    const TEAM_ABANDON = "team_abandon";
 
     /**
      * The id of the notified player
@@ -20,10 +92,19 @@ class Notification extends Model
     protected $receiver;
 
     /**
-     * The text of the notification
-     * @var string
+     * The type of the notification
+     *
+     * Can be one of the class constants
+     *
+     * @var int
      */
-    protected $message;
+    protected $type;
+
+    /**
+     * The data of the notification
+     * @var array
+     */
+    protected $data;
 
     /**
      * The status of the notification (unread, read, deleted)
@@ -54,27 +135,30 @@ class Notification extends Model
     protected function assignResult($notification)
     {
         $this->receiver  = $notification['receiver'];
-        $this->message   = $notification['message'];
+        $this->type      = $notification['type'];
+        $this->data      = unserialize($notification['data']);
         $this->status    = $notification['status'];
-        $this->timestamp = new DateTime($notification['timestamp']);
+        $this->timestamp = new TimeDate($notification['timestamp']);
     }
 
     /**
      * Enter a new notification into the database
      * @param  int          $receiver  The receiver's ID
-     * @param  string       $content   The content of the notification
+     * @param  string       $type      The type of the notification
+     * @param  array        $data      The data of the notification
      * @param  string       $timestamp The timestamp of the notification
      * @param  string       $status    The status of the notification (unread, read, deleted)
      * @return Notification An object representing the notification that was just entered
      */
-    public static function newNotification($receiver, $content, $timestamp = "now", $status = "unread")
+    public static function newNotification($receiver, $type, $data, $timestamp = "now", $status = "unread")
     {
         $notification = self::create(array(
             "receiver"  => $receiver,
-            "message"   => $content,
+            "type"      => $type,
+            "data"      => serialize($data),
             "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
-        ), 'isss');
+        ), 'issss');
 
         $notification->push();
 
@@ -93,7 +177,11 @@ class Notification extends Model
         if (!$onlyUnread)
             $statuses[] = 'read';
 
-        return self::arrayIdToModel(self::fetchIdsFrom('status', $statuses, 's'));
+        return self::getQueryBuilder()
+            ->where('status')->isOneOf($statuses)
+            ->where('receiver')->is($receiver)
+            ->getModels();
+
     }
 
     /**
@@ -121,14 +209,26 @@ class Notification extends Model
     {
         return new Player($this->receiver);
     }
-
     /**
-     * Get the content of the notification
+     * Get the type of the notification
+     *
+     * Do not use Notification::getType(), as it returns the name of the class
+     * (i.e. notification)
+     *
      * @return string
      */
-    public function getMessage()
+    public function getCategory()
     {
-        return $this->message;
+        return $this->type;
+    }
+
+    /**
+     * Get the data of the notification
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -169,8 +269,23 @@ class Notification extends Model
      */
     private function push()
     {
-        foreach (self::$adapters as $adapter) {
-            $adapter->trigger('main', $this->message);
+        self::pushEvent('notification', $this);
+    }
+
+    /**
+     * Get the available actions for the notification
+     *
+     * @return array
+     */
+    public function getActions()
+    {
+        switch($this->type) {
+            case self::TEAM_INVITE:
+                $invitation = new Invitation($this->data['id']);
+
+                return array('Accept' => $invitation->getUrl('accept'));
+            default:
+                return array();
         }
     }
 
@@ -180,7 +295,7 @@ class Notification extends Model
      * @param  mixed  $data The data for the event
      * @return void
      */
-    public static function pushEvent($type, $data)
+    public static function pushEvent($type, $data=null)
     {
         switch ($type) {
         case 'message':
@@ -189,6 +304,14 @@ class Notification extends Model
                 'message'    => $data->getId(),
                 'author'     => $data->getAuthor()->getId(),
             );
+            break;
+        case 'notification':
+            $message = array(
+                'type' => $data->getType()
+            );
+            break;
+        case 'blank':
+            $message = null;
             break;
         default:
             $message = $data;
@@ -217,5 +340,20 @@ class Notification extends Model
                 self::$adapters[] = new $adapter;
             }
         }
+    }
+
+    /**
+     * Get a query builder for notifications
+     * @return NotificationQueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new NotificationQueryBuilder('Notification', array(
+            'columns' => array(
+                'receiver'  => 'receiver',
+                'timestamp' => 'timestamp'
+            ),
+            'activeStatuses' => array('read', 'unread')
+        ));
     }
 }

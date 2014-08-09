@@ -44,7 +44,7 @@ class BanController extends CRUDController
 
         $victim = $ban->getVictim()->getEscapedUsername();
 
-        return $this->showConfirmationForm(function() use(&$ban) {
+        return $this->showConfirmationForm(function () use (&$ban) {
             $ban->expire();
 
             return new RedirectResponse($ban->getUrl());

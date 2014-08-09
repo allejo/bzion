@@ -14,8 +14,6 @@ TODO
         - Active and inactive
         - Send message to team
         - Remove labels for recipient and subject fields
-    - Notifications
-    - Invites
     - Admin Interface
     - Maintenance
     - Profile (Add more editing functionality)

@@ -79,5 +79,7 @@ class LoginController extends HTMLController
 
         $session->set("playerId", $user->getId());
         $session->set("username", $user->getUsername());
+
+        return $this->goHome();
     }
 }

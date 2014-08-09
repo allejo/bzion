@@ -6,14 +6,14 @@ class LinkToFunction
     /**
      * Get a link literal to a Model
      *
-     * @param  \UrlModel $model   The model we want to link to
-     * @param  string    $icon    A font awesome icon identifier to show instead of text
-     * @param  string    $action  The action to link to (e.g show or edit)
+     * @param  \UrlModel $model  The model we want to link to
+     * @param  string    $icon   A font awesome icon identifier to show instead of text
+     * @param  string    $action The action to link to (e.g show or edit)
      * @return string    The <a> tag
      */
     public function __invoke(\UrlModel $model, $icon=null, $action='show')
     {
-        $url  = $model->getURL($action);
+        $url = $model->getURL($action);
 
         if ($icon)
             $content = "<i class=\"fa fa-$icon\"></i>";

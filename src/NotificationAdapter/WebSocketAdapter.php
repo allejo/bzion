@@ -14,6 +14,8 @@ class WebSocketAdapter extends NotificationAdapter
 {
     /**
      * {@inheritDoc}
+     *
+     * @todo Error handling
      */
     public function trigger($channel, $message)
     {

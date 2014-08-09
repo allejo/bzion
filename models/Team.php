@@ -297,8 +297,6 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
         return new Player($this->leader);
     }
 
-
-
     /**
      * Get the matches this team has participated in
      *
