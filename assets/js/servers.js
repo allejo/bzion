@@ -22,7 +22,7 @@ $(".servers").on("click", ".server-refresh", function(event) {
     event.preventDefault();
 
     $(this).parents(".server").updateServer($(this).attr("href"));
-})
+});
 
 $.fn.updateServer = function(url) {
     var server = $(this);
@@ -30,7 +30,7 @@ $.fn.updateServer = function(url) {
     server.startSpinners().find(".server_info").load(url, function() {
         server.stopSpinners();
     });
-}
+};
 
 $.fn.startSpinners = function() {
     $(this).children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
