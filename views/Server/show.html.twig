@@ -1,10 +1,13 @@
 {% import _self as serverlist %}
 
-{% if me.hasPermission('edit_server') %}
+{% if me.canEdit(server) %}
+    <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+        <i class="fa fa-refresh"></i>
+    </a>
     {{ link_to(server, 'pencil', 'edit') }}
 {% endif %}
 
-{% if me.hasPermission('del_server') %}
+{% if me.canDelete(server) %}
     {{ link_to(server, 'minus', 'delete') }}
 {% endif %}
 

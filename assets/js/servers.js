@@ -8,13 +8,9 @@ function initPage() {
     // Add an invisible dimmer to elements that don't have one yet
     $(".dimmable").prepend(dimmer).prepend(spinner);
 
-    $(".server").startSpinners().each(function() {
-        var serverUrl = baseURLNoHost + "/servers/" + $(this).attr("data-id");
-        var server    = $(this);
-
-        server.find(".server_info").load(serverUrl, function() {
-            server.stopSpinners();
-        });
+    $(".server").each(function() {
+        var url = baseURLNoHost + "/servers/" + $(this).attr("data-id");
+        $(this).updateServer(url);
     });
 }
 
@@ -22,10 +18,22 @@ $(document).ready(function() {
     initPage();
 });
 
-$.fn.startSpinners = function() {
-    this.each(function() {
-        $(this).children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
+$(".servers").on("click", ".server-refresh", function(event) {
+    event.preventDefault();
+
+    $(this).parents(".server").updateServer($(this).attr("href"));
+})
+
+$.fn.updateServer = function(url) {
+    var server = $(this);
+
+    server.startSpinners().find(".server_info").load(url, function() {
+        server.stopSpinners();
     });
+}
+
+$.fn.startSpinners = function() {
+    $(this).children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
     return this;
 };
 

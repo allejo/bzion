@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Form\PlayerType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -13,9 +14,13 @@ class ServerController extends CRUDController
         return array("servers" => $servers);
     }
 
-    public function showAction(Server $server)
+    public function showAction(Server $server, Player $me, Request $request)
     {
         if ($server->staleInfo()) {
+            $server->forceUpdate();
+        }
+
+        if ($request->get('forced') && $me->canEdit($server)) {
             $server->forceUpdate();
         }
 
