@@ -23,7 +23,7 @@
  *
  * @package    BZiON\Models\QueryBuilder
  */
-class QueryBuilder
+class QueryBuilder implements Countable
 {
     /**
      * The type of the model we're building a query for
@@ -412,6 +412,24 @@ class QueryBuilder
             $return[] = new $type($r['id']);
 
         return $return;
+    }
+
+    /**
+     * Count the results
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $type   = $this->type;
+        $table  = $type::TABLE;
+        $params = $this->createQueryParams();
+        $db     = Database::getInstance();
+
+        $query   = "SELECT COUNT(*) FROM $table $params";
+        $results = $db->query($query, $this->types, $this->parameters);
+
+        return $results[0]['COUNT(*)'];
     }
 
     /**
