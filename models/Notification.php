@@ -18,7 +18,7 @@ class Notification extends Model
      * data:
      *     { text => the text to display to the user }
      */
-    const TEXT         = "text";
+    const TEXT = "text";
 
     /**
      * A notification to an invitee

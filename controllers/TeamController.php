@@ -69,6 +69,10 @@ class TeamController extends CRUDController
         if ($team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is already a member of that team.");
 
+        if (Invitation::hasOpenInvitation($player->getId(), $team->getId())) {
+            throw new ForbiddenException("This player has already been invited to join the team.");
+        }
+
         return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
             $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
             $player->notify(Notification::TEAM_INVITE, array('id' => $invite->getId()));

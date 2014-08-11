@@ -4,26 +4,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class InvitationController extends CRUDController
 {
-    public function showAction(Team $team)
-    {
-        return array("team" => $team);
-    }
-
-    public function listAction()
-    {
-        return array("teams" => Team::getTeams());
-    }
-
-    public function createAction(Player $me)
-    {
-        return $this->create($me);
-    }
-
-    public function deleteAction(Player $me, Team $team)
-    {
-        return $this->delete($team, $me);
-    }
-
     public function acceptAction(Invitation $invitation, Player $me)
     {
         if (!$me->isTeamless())
