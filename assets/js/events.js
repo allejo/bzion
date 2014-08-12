@@ -30,6 +30,32 @@ Reactor.prototype.addEventListener = function(eventName, callback){
 var reactor = new Reactor();
 reactor.registerEvent("push-event");
 
+var favicon = new Favico({
+ animation : 'popFade'
+});
+
+var oldCount = 0;
+
+function updateFavicon() {
+    var totalCount = 0;
+
+    [".unreadNotificationCount", ".unreadMessageCount"].forEach(function(elem) {
+        count = parseInt($(elem).text());
+
+        if (!isNaN(count)) {
+            totalCount += count;
+        }
+    });
+
+    if (oldCount !== totalCount) {
+        // Update the favicon and perform an animation only if the number of
+        // notifications has changed
+
+        oldCount = totalCount;
+        favicon.badge(totalCount);
+    }
+}
+
 $(document).ready(function() {
     if (config.websocket) {
         var conn = new WebSocket('ws://' + window.location.hostname + ':' + config.websocket.port);
@@ -54,31 +80,5 @@ $(document).ready(function() {
 
     updateFavicon();
 });
-
- var favicon = new Favico({
-     animation : 'popFade'
- });
-
- var oldCount = 0;
-
-var updateFavicon = function() {
-    var totalCount = 0;
-
-    [".unreadNotificationCount", ".unreadMessageCount"].forEach(function(elem) {
-        count = parseInt($(elem).text());
-
-        if (!isNaN(count)) {
-            totalCount += count;
-        }
-    });
-
-    if (oldCount !== totalCount) {
-        // Update the favicon and perform an animation only if the number of
-        // notifications has changed
-
-        oldCount = totalCount;
-        favicon.badge(totalCount);
-    }
-}
 
 reactor.addEventListener("push-event", updateFavicon);

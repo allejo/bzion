@@ -9,7 +9,6 @@ TODO
     - Messages
         - Move message to trash
         - Groups
-            - Leave a group?
             - Add/Remove members from the group
         - Active and inactive
         - Send message to team
