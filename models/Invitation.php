@@ -149,12 +149,9 @@ class Invitation extends UrlModel
      */
     public static function hasOpenInvitation($player, $team)
     {
-        $table = self::TABLE;
-        $db    = Database::getInstance();
-
-        $result = $db->query("SELECT COUNT(*) FROM $table WHERE invited_player = ? AND team = ? AND expiration > NOW()",
-            'ii', array($player, $team));
-
-        return $result[0]['COUNT(*)'] > 0;
+        return self::fetchCount(
+            "WHERE invited_player = ? AND team = ? AND expiration > NOW()",
+            'ii', array($player, $team)
+        );
     }
 }

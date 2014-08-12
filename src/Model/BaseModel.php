@@ -153,6 +153,28 @@ abstract class BaseModel implements ModelInterface
     }
 
     /**
+     * Counts the elements of the database that match a specific query
+     *
+     * @param  string $additional_query The MySQL query string (e.g. `WHERE id = ?`)
+     * @param  string $types            The types of values that will be passed to Database::query()
+     * @param  array  $params           The parameter values that will be passed to Database::query() corresponding to $types
+     * @param  string $table            The database table that will be searched, defaults to the model's table
+     * @param  string $column           Only count the entries where `$column` is not `NULL` (or all if `$column` is `*`)
+     * @return int
+     */
+    protected static function fetchCount($additional_query='', $types='', $params=array(), $table='', $column='*')
+    {
+        $table = (empty($table)) ? static::TABLE : $table;
+        $db = Database::getInstance();
+
+        $result = $db->query("SELECT COUNT($column) AS count FROM $table $additional_query",
+            $types, $params
+        );
+
+        return $result[0]['count'];
+    }
+
+    /**
      * Gets the id of a database row which has a specific value on a column
      * @param  string $value  The value which the column should be equal to
      * @param  string $column The name of the database column

@@ -540,11 +540,9 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function countUnreadMessages()
     {
-        $result = $this->db->query(
-            "SELECT COUNT(*) FROM `player_groups` WHERE `player` = ? AND `read` = 0",
-            'i', $this->id);
-
-        return $result[0]['COUNT(*)'];
+        return $this->fetchCount("WHERE `player` = ? AND `read` = 0",
+            'i', $this->id, 'player_groups'
+        );
     }
 
     /**

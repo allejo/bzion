@@ -191,14 +191,9 @@ class Notification extends Model
      */
     public static function countUnreadNotifications($receiver)
     {
-        $db = Database::getInstance();
-        $table = static::TABLE;
-
-        $result = $db->query(
-            "SELECT COUNT(*) FROM $table WHERE receiver = ? AND status = 'unread'",
-            'i', $receiver);
-
-        return $result[0]['COUNT(*)'];
+        return self::fetchCount("WHERE receiver = ? AND status = 'unread'",
+            'i', $receiver
+        );
     }
 
     /**
