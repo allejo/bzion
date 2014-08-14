@@ -363,7 +363,7 @@ CREATE TABLE `matches` (
   `timestamp` datetime NOT NULL COMMENT 'The timestamp of the match',
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the match was last updated',
   `duration` int(10) unsigned NOT NULL COMMENT 'The duration of the match',
-  `entered_by` int(10) unsigned NOT NULL COMMENT 'The ID of the player who inserted this match',
+  `entered_by` int(10) unsigned DEFAULT NULL COMMENT 'The ID of the player who inserted this match',
   `status` set('entered','disabled','deleted','reported') NOT NULL DEFAULT 'entered' COMMENT 'The status of the match',
   PRIMARY KEY (`id`),
   KEY `team_a` (`team_a`),
