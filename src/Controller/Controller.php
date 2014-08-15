@@ -208,7 +208,7 @@ abstract class Controller
         case "Symfony\Component\HttpFoundation\Session\Flash\FlashBag":
             return $this->getRequest()->getSession()->getFlashBag();
         case "Monolog\Logger":
-            return Service::getContainer()->get('logger');
+            return Service::getContainer()->get('monolog.logger.' . $this->getLogChannel());
         case "Symfony\Component\Form\FormFactory":
             return Service::getFormFactory();
         }
@@ -319,6 +319,15 @@ abstract class Controller
     protected static function getMe()
     {
         return new Player(self::getRequest()->getSession()->get('playerId'));
+    }
+
+    /**
+     * Gets the logging channel for monolog
+     * @return string
+     */
+    protected static function getLogChannel()
+    {
+        return 'app';
     }
 
     /**

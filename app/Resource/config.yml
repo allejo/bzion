@@ -8,6 +8,21 @@ framework:
     session:
         handler_id: ~
 
+monolog:
+    channels: ["api"]
+    handlers:
+        api:
+            type: stream
+            # TODO: Store the path on the config file
+            path: "%kernel.root_dir%/logs/api.log"
+            level: notice
+            channels: [api]
+        main:
+            type: stream
+            path: "%kernel.root_dir%/logs/main.log"
+            level: notice
+            channels: [app]
+
 services:
     main.warmer.twig_warmer:
         class: BZIon\Twig\TwigCacheWarmer

@@ -231,4 +231,12 @@ class LeagueOverseerHookController extends JSONController
 
         return $team;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected static function getLogChannel()
+    {
+        return 'api';
+    }
 }

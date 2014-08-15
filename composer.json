@@ -41,7 +41,7 @@
         "symfony/web-profiler-bundle": ">=2.5.0",
         "phpunit/phpunit": "4.1.*",
         "phpdocumentor/phpdocumentor": "dev-develop",
-        "sensio/distribution-bundle": "3.0.*@dev",
+        "sensio/distribution-bundle": "3.0.*@dev"
     },
 
     "autoload": {
