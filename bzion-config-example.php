@@ -43,7 +43,7 @@ DEFINE("WEBSOCKET_PUSH_PORT", 8592); // to a free value
 /*
  * API settings
  */
-DEFINE("ALLOWED_IPS", "127.0.0.1, 127.0.0.2"); // A comma separated list of IP addresses which are
+DEFINE("ALLOWED_IPS", "127.0.0.1, 127.0.0.2"); // A comma separated list of the IPs of servers
                                                // allowed to report matches
 
 /*
@@ -52,5 +52,5 @@ DEFINE("ALLOWED_IPS", "127.0.0.1, 127.0.0.2"); // A comma separated list of IP a
 DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server
 DEFINE("UPDATE_INTERVAL", 5); // Server polling interval in minutes
 DEFINE("DEVELOPMENT", FALSE); // Whether to enable some functions which make debugging easier
-                              // WARNING: Setting this to TRUE might introduce significant security risks
+                              // WARNING: Setting this to true WILL introduce significant security risks
                               // and should NOT be used in a production environment
