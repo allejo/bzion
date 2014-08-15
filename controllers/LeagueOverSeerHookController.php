@@ -41,11 +41,26 @@ class LeagueOverSeerHookController extends JSONController
         case 'reportMatch':
             return 'Reporting match...';
         case 'teamNameQuery':
-            return 'Returning team name...';
+            return $this->forward('teamName');
         case 'teamDump':
             return 'Dumping team members...';
         default:
             throw new BadRequestException();
         }
+    }
+
+    public function teamNameAction()
+    {
+        if ($this->version < 1) {
+            throw new BadRequestException();
+        }
+
+        $bzid = (int) $this->params->get('teamPlayers');
+        $team = Player::getFromBZID($bzid)->getTeam();
+
+        return new JsonResponse(array(
+            "bzid" => $bzid,
+            "team" => ($team->isValid()) ? preg_replace("/&[^\s]*;/", "", $team->getName()) : ''
+        ));
     }
 }
