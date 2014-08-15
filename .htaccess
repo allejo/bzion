@@ -3,7 +3,7 @@
     Deny from all
 </Files>
 
-<Files "bzion_errors.log">
+<Files "*.log">
     Order Allow,Deny
     Deny from all
 </Files>
@@ -30,7 +30,7 @@ Options -MultiViews
     RewriteRule ^(.*) - [E=BASE:%1]
 
     # Redirect to URI without front controller to prevent duplicate content
-    # (with and without `/app.php`). Only do this redirect on the initial
+    # (with and without `/index.php`). Only do this redirect on the initial
     # rewrite by Apache and not on subsequent cycles. Otherwise we would get an
     # endless redirect loop (request -> rewrite to front controller ->
     # redirect -> request -> ...).
