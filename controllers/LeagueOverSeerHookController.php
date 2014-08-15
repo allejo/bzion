@@ -18,11 +18,12 @@ class LeagueOverSeerHookController extends JSONController
     private $params;
 
     /**
-     * @todo Add IP check
-     * @todo Test/revoke support for API version 0
+     * {@inheritDoc}
      */
-    public function queryAction(Request $request)
+    public function setUp()
     {
+        $request = $this->getRequest();
+
         $this->params = $request->request; // $_POST
 
         if (!$this->params->has('query')) {
@@ -36,10 +37,17 @@ class LeagueOverSeerHookController extends JSONController
         }
 
         $this->version = $this->params->get('apiVersion', 0);
+    }
 
+    /**
+     * @todo Add IP check
+     * @todo Test/revoke support for API version 0
+     */
+    public function queryAction()
+    {
         switch ($this->params->get('query')) {
         case 'reportMatch':
-            return 'Reporting match...';
+            return $this->forward('reportMatch');
         case 'teamNameQuery':
             return $this->forward('teamName');
         case 'teamDump':
@@ -87,5 +95,94 @@ class LeagueOverSeerHookController extends JSONController
         }
 
         return new JsonResponse(array("teamDump" => $teamArray));
+    }
+
+    /**
+     * @todo Debug logging
+     */
+    public function reportMatchAction()
+    {
+        $teamOnePlayers = $this->bzidsToIdArray($this->params->get('teamOnePlayers'));
+        $teamTwoPlayers = $this->bzidsToIdArray($this->params->get('teamTwoPlayers'));
+
+        $teamOne = $this->getTeam($teamOnePlayers);
+        $teamTwo = $this->getTeam($teamTwoPlayers);
+
+        // If we fail to get the the team ID for either the teams or both reported teams are the same team, we cannot
+        // report the match due to it being illegal.
+
+        // An invalid team could be found in either or both teams, so we need to check both teams and log it the match
+        // failure respectively.
+        if (!$teamOne->isValid() || !$teamTwo->isValid()) {
+            throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match");
+        }
+
+        if ($teamOne->getId() == $teamTwo->getId()) {
+            throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
+        }
+
+        $match = Match::enterMatch(
+            $teamOne->getId(),
+            $teamTwo->getId(),
+            $this->params->get('teamOnePoints'),
+            $this->params->get('teamTwoPoints'),
+            $this->params->get('duration'),
+            null,
+            $this->params->get('matchTime'),
+            $teamOnePlayers,
+            $teamTwoPlayers
+        );
+
+        return sprintf("(+/- %d) %s [%d] vs [%d] %s",
+            $match->getEloDiff(),
+            $match->getWinner()->getName(),
+            $match->getScore($match->getWinner()),
+            $match->getScore($match->getLoser()),
+            $match->getLoser()->getName()
+        );
+    }
+
+    /**
+     * Convert a comma-separated list of bzids to player IDs so we can pass
+     * them to Match::enterMatch()
+     *
+     * @param  string $players A comma-separated list of BZIDs
+     * @return int[]  A list of Player IDs
+     */
+    private function bzidsToIdArray($players)
+    {
+        $players = explode(',', $players);
+
+        foreach ($players as &$player) {
+            $player = Player::getFromBZID($player)->getId();
+        }
+
+        return $players;
+    }
+
+    /**
+     * Queries the database to get the team which a group of players belong to
+     *
+     * @param  int[] $players The IDs of players
+     * @return Team  The team
+     */
+    private function getTeam($players)
+    {
+        $team = null;
+
+        foreach ($players as $id) {
+            $player = new Player($id);
+
+            if ($player->isTeamless()) {
+                return Team::invalid();
+            } elseif ($team == null) {
+                $team = $player->getTeam();
+            } elseif ($team->getId() != $player->getTeam()->getId()) {
+                // This player is on a different team from the previous one!
+                return Team::invalid();
+            }
+        }
+
+        return $team;
     }
 }

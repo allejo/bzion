@@ -185,6 +185,11 @@ class Match extends Model implements PermissionModel
      */
     public function getScore($teamID)
     {
+        if ($teamID instanceof Team) {
+            // Oh no! The caller gave us a Team model instead of an ID!
+            $teamID = $teamID->getId();
+        }
+
         if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamAPoints();
         }
@@ -201,6 +206,10 @@ class Match extends Model implements PermissionModel
      */
     public function getOpponentScore($teamID)
     {
+        if ($teamID instanceof Team) {
+            $teamID = $teamID->getId();
+        }
+
         if ($this->getTeamA()->getId() != $teamID) {
             return $this->getTeamAPoints();
         }
@@ -453,7 +462,7 @@ class Match extends Model implements PermissionModel
      * @param  int             $a_points   Team A's match points
      * @param  int             $b_points   Team B's match points
      * @param  int             $duration   The match duration in minutes
-     * @param  int             $entered_by The ID of the player reporting the match
+     * @param  int|null        $entered_by The ID of the player reporting the match
      * @param  string|DateTime $timestamp  When the match was played
      * @param  int[]           $a_players  The IDs of the first team's players
      * @param  int[]           $b_players  The IDs of the second team's players
