@@ -130,7 +130,11 @@ class LeagueOverSeerHookController extends JSONController
             null,
             $this->params->get('matchTime'),
             $teamOnePlayers,
-            $teamTwoPlayers
+            $teamTwoPlayers,
+            $this->params->get('server'),
+            $this->params->get('port'),
+            $this->params->get('replayFile'),
+            $this->params->get('mapPlayed')
         );
 
         return sprintf("(+/- %d) %s [%d] vs [%d] %s",
