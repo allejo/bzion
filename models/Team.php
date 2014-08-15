@@ -311,6 +311,7 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
         return Match::getQueryBuilder()
              ->active()
              ->with($this, $matchType)
+             ->sortBy('time')->reverse()
              ->limit($count)->fromPage($page)
              ->getModels();
     }
