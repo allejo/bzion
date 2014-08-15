@@ -98,13 +98,15 @@ class LeagueOverSeerHookController extends JSONController
         return new JsonResponse(array("teamDump" => $teamArray));
     }
 
-    /**
-     * @todo Debug logging
-     */
-    public function reportMatchAction()
+    public function reportMatchAction(Logger $log, Request $request)
     {
-        $teamOnePlayers = $this->bzidsToIdArray($this->params->get('teamOnePlayers'));
-        $teamTwoPlayers = $this->bzidsToIdArray($this->params->get('teamTwoPlayers'));
+        $log->addNotice("Match data received from " . $request->getClientIp());
+
+        $teamOneBZIDs = $this->params->get('teamOnePlayers');
+        $teamTwoBZIDs = $this->params->get('teamTwoPlayers');
+
+        $teamOnePlayers = $this->bzidsToIdArray($teamOneBZIDs);
+        $teamTwoPlayers = $this->bzidsToIdArray($teamTwoBZIDs);
 
         $teamOne = $this->getTeam($teamOnePlayers);
         $teamTwo = $this->getTeam($teamTwoPlayers);
@@ -112,13 +114,23 @@ class LeagueOverSeerHookController extends JSONController
         // If we fail to get the the team ID for either the teams or both reported teams are the same team, we cannot
         // report the match due to it being illegal.
 
-        // An invalid team could be found in either or both teams, so we need to check both teams and log it the match
+        // An invalid team might be found in either or both teams, so we need to check both teams and log it the match
         // failure respectively.
-        if (!$teamOne->isValid() || !$teamTwo->isValid()) {
+        $error = true;
+        if (!$teamOne->isValid()) {
+            $log->addNotice("The BZIDs ($teamOneBZIDs) were not found on the same team. Match invalidated.");
+        } elseif (!$teamTwo->isValid()) {
+            $log->addNotice("The BZIDs ($teamTwoBZIDs) were not found on the same team. Match invalidated.");
+        } else {
+            $error = false;
+        }
+
+        if ($error) {
             throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match");
         }
 
         if ($teamOne->getId() == $teamTwo->getId()) {
+            $log->addNotice("The '" . $teamOne->getName() . "' team played against each other in an official match. Match invalidated.");
             throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
         }
 
@@ -137,6 +149,18 @@ class LeagueOverSeerHookController extends JSONController
             $this->params->get('replayFile'),
             $this->params->get('mapPlayed')
         );
+
+        $log->addNotice("Match reported automatically", array(
+            'winner' => array(
+                'name' => $match->getWinner()->getName(),
+                'score' => $match->getScore($match->getWinner()),
+            ),
+            'loser' => array(
+                'name' => $match->getLoser()->getName(),
+                'score' => $match->getScore($match->getLoser())
+            ),
+            'eloDiff' => $match->getEloDiff()
+        ));
 
         return sprintf("(+/- %d) %s [%d] vs [%d] %s",
             $match->getEloDiff(),
