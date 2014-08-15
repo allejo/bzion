@@ -7,8 +7,8 @@ admin_list:
     defaults: { _controller: 'Admin', _action: 'list' }
 
 api_leagueoverseer:
-    pattern:    /api/leagueOverSeer
-    defaults: { _controller: 'LeagueOverSeerHook', _action: 'query' }
+    pattern:    /api/leagueOverseer
+    defaults: { _controller: 'LeagueOverseerHook', _action: 'query' }
 
 ban_list:
     pattern:    /bans

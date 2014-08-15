@@ -4,7 +4,7 @@ use Monolog\Logger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class LeagueOverSeerHookController extends JSONController
+class LeagueOverseerHookController extends JSONController
 {
     /**
      * The API version of the server performing the request
