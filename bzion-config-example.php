@@ -7,7 +7,6 @@ DEFINE("MYSQL_HOST", "localhost"); // Database host
 DEFINE("MYSQL_DB_NAME", "bzion"); // Database name
 DEFINE("MYSQL_USER", "bzion_admin"); // Database username
 DEFINE("MYSQL_PASSWORD", "password"); // Database password
-DEFINE("MYSQL_DEBUG", TRUE);  // Whether or not to log MySQL errors on a file
 
 /*
  * Site settings
