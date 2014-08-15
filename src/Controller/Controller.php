@@ -207,6 +207,8 @@ abstract class Controller
             return $this->getRequest()->getSession();
         case "Symfony\Component\HttpFoundation\Session\Flash\FlashBag":
             return $this->getRequest()->getSession()->getFlashBag();
+        case "Monolog\Logger":
+            return Service::getContainer()->get('logger');
         case "Symfony\Component\Form\FormFactory":
             return Service::getFormFactory();
         }
