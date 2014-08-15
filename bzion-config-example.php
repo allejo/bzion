@@ -41,6 +41,12 @@ DEFINE("WEBSOCKET_PULL_PORT", 8591); // If these ports are reserved in your mach
 DEFINE("WEBSOCKET_PUSH_PORT", 8592); // to a free value
 
 /*
+ * API settings
+ */
+DEFINE("ALLOWED_IPS", "127.0.0.1, 127.0.0.2"); // A comma separated list of IP addresses which are
+                                               // allowed to report matches
+
+/*
  * Miscellaneous settings
  */
 DEFINE("LIST_SERVER", "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"); // BZFlag List Server

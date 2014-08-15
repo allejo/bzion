@@ -25,6 +25,20 @@ class LeagueOverSeerHookController extends JSONController
     {
         $request = $this->getRequest();
 
+        // To prevent abuse of the automated system, we need to make sure that
+        // the IP making the request is one of the IPs we allowed in the config
+        $allowedIPs = array_map('trim', explode(',', ALLOWED_IPS));
+        $clientIP   = $request->getClientIp();
+
+        if (DEVELOPMENT < 1 && // Don't care about IPs if we're in debug mode
+           !in_array($clientIP, $allowedIPs)) {
+            // If server making the request isn't an official server, then log the unauthorized attempt and kill the script
+
+            Service::getContainer()->get('logger')->addNotice("Unauthorized access attempt from $clientIP");
+            throw new ForbiddenException("Error: 403 - Forbidden");
+        }
+
+        // We will be looking at either $_POST or $_GET depending on the status, production or development
         $this->params = $request->request; // $_POST
 
         if (!$this->params->has('query')) {
@@ -37,12 +51,14 @@ class LeagueOverSeerHookController extends JSONController
             }
         }
 
+        // After the first major rewrite of the league overseer plugin, the
+        // API was introduced in order to provide backwards compatibility for
+        // servers that have not updated to the latest version of the plugin.
         $this->version = $this->params->get('apiVersion', 0);
     }
 
     /**
-     * @todo Add IP check
-     * @todo Test/revoke support for API version 0
+     * @todo Test/improve/revoke support for API version 0
      */
     public function queryAction()
     {
@@ -114,7 +130,7 @@ class LeagueOverSeerHookController extends JSONController
         // If we fail to get the the team ID for either the teams or both reported teams are the same team, we cannot
         // report the match due to it being illegal.
 
-        // An invalid team might be found in either or both teams, so we need to check both teams and log it the match
+        // An invalid team could be found in either or both teams, so we need to check both teams and log the match
         // failure respectively.
         $error = true;
         if (!$teamOne->isValid()) {
@@ -162,6 +178,7 @@ class LeagueOverSeerHookController extends JSONController
             'eloDiff' => $match->getEloDiff()
         ));
 
+        // Output the match stats that will be sent back to BZFS
         return sprintf("(+/- %d) %s [%d] vs [%d] %s",
             $match->getEloDiff(),
             $match->getWinner()->getName(),
