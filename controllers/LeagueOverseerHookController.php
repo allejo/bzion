@@ -4,7 +4,7 @@ use Monolog\Logger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class LeagueOverseerHookController extends JSONController
+class LeagueOverseerHookController extends PlainTextController
 {
     /**
      * The API version of the server performing the request
@@ -34,7 +34,7 @@ class LeagueOverseerHookController extends JSONController
            !in_array($clientIP, $allowedIPs)) {
             // If server making the request isn't an official server, then log the unauthorized attempt and kill the script
 
-            Service::getContainer()->get('logger')->addNotice("Unauthorized access attempt from $clientIP");
+            $this->getLogger()->addNotice("Unauthorized access attempt from $clientIP");
             throw new ForbiddenException("Error: 403 - Forbidden");
         }
 
