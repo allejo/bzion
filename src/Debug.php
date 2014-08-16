@@ -53,14 +53,15 @@ abstract class Debug
      * Log a debug message
      * @param  string $message The message to return
      * @param  array  $context Any additional information to show
+     * @param  string $channel The channel to store the log into
      * @return void
      */
-    public static function log($message, array $context=array())
+    public static function log($message, array $context=array(), $channel='app')
     {
         if (!Service::getContainer())
             return;
 
-        $logger = Service::getContainer()->get('logger', null);
+        $logger = Service::getContainer()->get("monolog.logger.$channel", null);
 
         if (!$logger)
             return;
