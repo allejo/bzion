@@ -1,3 +1,6 @@
+imports:
+    - {  resource: "bzion_config_bridge.php" }
+
 framework:
     secret: "toast"
     router:
@@ -13,14 +16,13 @@ monolog:
     handlers:
         api:
             type: stream
-            # TODO: Store the path on the config file
-            path: "%kernel.root_dir%/logs/api.log"
-            level: notice
+            path: "%bzion.log.dir%/api.log"
+            level: %bzion.log.level%
             channels: [api]
         main:
             type: stream
-            path: "%kernel.root_dir%/logs/main.log"
-            level: notice
+            path: "%bzion.log.dir%/main.log"
+            level: %bzion.log.level%
             channels: [app]
 
 services:
