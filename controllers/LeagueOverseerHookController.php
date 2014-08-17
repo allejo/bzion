@@ -142,7 +142,7 @@ class LeagueOverseerHookController extends PlainTextController
         }
 
         if ($error) {
-            throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match");
+            throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match.");
         }
 
         if ($teamOne->getId() == $teamTwo->getId()) {
@@ -224,7 +224,7 @@ class LeagueOverseerHookController extends PlainTextController
             } elseif ($team == null) {
                 $team = $player->getTeam();
             } elseif ($team->getId() != $player->getTeam()->getId()) {
-                // This player is on a different team from the previous one!
+                // This player is on a different team from the previous player!
                 return Team::invalid();
             }
         }
