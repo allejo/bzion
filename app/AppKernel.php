@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -45,6 +46,7 @@ class AppKernel extends Kernel
         if ($this->getEnvironment() == 'profile') {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
         }
 
         return $bundles;
@@ -61,6 +63,10 @@ class AppKernel extends Kernel
         $this->setUpTwig();
 
         Notification::initializeAdapters();
+
+        if ($this->getEnvironment() == 'profile') {
+            Debug::enable();
+        }
     }
 
     public static function guessEnvironment()
