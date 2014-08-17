@@ -80,7 +80,7 @@ class LeagueOverseerHookController extends PlainTextController
             throw new BadRequestException();
         }
 
-        $bzid = (int) $this->params->get('teamPlayers');
+        $bzid = $this->params->get('teamPlayers');
         $team = Player::getFromBZID($bzid)->getTeam();
 
         return new JsonResponse(array(
@@ -153,8 +153,8 @@ class LeagueOverseerHookController extends PlainTextController
         $match = Match::enterMatch(
             $teamOne->getId(),
             $teamTwo->getId(),
-            $this->params->get('teamOnePoints'),
-            $this->params->get('teamTwoPoints'),
+            $this->params->get('teamOneWins'),
+            $this->params->get('teamTwoWins'),
             $this->params->get('duration'),
             null,
             $this->params->get('matchTime'),
