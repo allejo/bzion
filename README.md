@@ -1,6 +1,6 @@
 # BZiON [![Build Status](https://travis-ci.org/allejo/bzion.png?branch=master)](https://travis-ci.org/allejo/bzion) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/allejo/bzion/badges/quality-score.png?s=291afbdf9d3ff68b2e2f44e9d02533795bcbf107)](https://scrutinizer-ci.com/g/allejo/bzion/)
 
-A Content Mangement System (CMS) intended for BZFlag leagues to manage players, teams, matches and more.
+A Content Management System (CMS) intended for BZFlag leagues to manage players, teams, matches and more.
 
 ## Authors
 
