@@ -36,6 +36,11 @@ class MatchController extends CRUDController
         $firstPlayers  = array_map($this->getModelToID(),  $firstTeam->get('participants')->getData());
         $secondPlayers = array_map($this->getModelToID(), $secondTeam->get('participants')->getData());
 
+        $serverInfo = explode(':', $form->get('server_address')->getData());
+        if (!isset($serverInfo[1])) {
+            $serverInfo[1] = 5154;
+        }
+
         $match = Match::enterMatch(
             $firstTeam ->get('team')->getData()->getId(),
             $secondTeam->get('team')->getData()->getId(),
@@ -45,7 +50,9 @@ class MatchController extends CRUDController
             $me->getId(),
             $form->get('time')->getData(),
             $firstPlayers,
-            $secondPlayers
+            $secondPlayers,
+            $serverInfo[0],
+            $serverInfo[1]
         );
 
         return $match;

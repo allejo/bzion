@@ -1,0 +1,29 @@
+<?php
+
+use BZIon\Twig\ModelFetcher;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * A controller that will not connect to Twig, used for API calls
+ *
+ * @package BZiON\Controllers
+ */
+abstract class PlainTextController extends Controller
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function callAction($action=null)
+    {
+        try {
+            return parent::callAction($action);
+        } catch (HTTPException $e) {
+            return new Response($e->getMessage());
+        } catch (Exception $e) {
+            // Let PHP handle the exception on the dev environment
+            if (DEVELOPMENT) throw $e;
+            return new Response("An error occured");
+        }
+    }
+}

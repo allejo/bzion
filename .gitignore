@@ -1,7 +1,6 @@
 # BZiON files #
 ###############
 bzion-config.php
-bzion_errors.log
 update.php
 vendor
 components

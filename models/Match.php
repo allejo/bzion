@@ -185,6 +185,11 @@ class Match extends Model implements PermissionModel
      */
     public function getScore($teamID)
     {
+        if ($teamID instanceof Team) {
+            // Oh no! The caller gave us a Team model instead of an ID!
+            $teamID = $teamID->getId();
+        }
+
         if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamAPoints();
         }
@@ -201,6 +206,10 @@ class Match extends Model implements PermissionModel
      */
     public function getOpponentScore($teamID)
     {
+        if ($teamID instanceof Team) {
+            $teamID = $teamID->getId();
+        }
+
         if ($this->getTeamA()->getId() != $teamID) {
             return $this->getTeamAPoints();
         }
@@ -453,14 +462,21 @@ class Match extends Model implements PermissionModel
      * @param  int             $a_points   Team A's match points
      * @param  int             $b_points   Team B's match points
      * @param  int             $duration   The match duration in minutes
-     * @param  int             $entered_by The ID of the player reporting the match
+     * @param  int|null        $entered_by The ID of the player reporting the match
      * @param  string|DateTime $timestamp  When the match was played
      * @param  int[]           $a_players  The IDs of the first team's players
      * @param  int[]           $b_players  The IDs of the second team's players
+     * @param  string|null     $server     The address of the server where the match was played
+     * @param  int|null        $port       The port of the server where the match was played
+     * @param  string          $replayFile The name of the replay file of the match
+     * @param  string          $mapPlayed  The name of the map where the map was played, only for rotational leagues
      * @return Match           An object representing the match that was just entered
      */
-    public static function enterMatch($a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now", $a_players=array(), $b_players=array())
-    {
+    public static function enterMatch(
+        $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp="now",
+        $a_players=array(), $b_players=array(), $server=null, $port=null,
+        $replayFile=null, $mapPlayed=null
+    ) {
         $team_a = new Team($a);
         $team_b = new Team($b);
         $a_elo = $team_a->getElo();
@@ -487,8 +503,12 @@ class Match extends Model implements PermissionModel
             'timestamp' => $timestamp->toMysql(),
             'duration' => $duration,
             'entered_by' => $entered_by,
+            'server' => $server,
+            'port' => $port,
+            'replay_file' => $replayFile,
+            'map_played' => $mapPlayed,
             'status' => 'entered'
-        ), 'iiiissiiisiis', 'updated');
+        ), 'iiiissiiisiisisss', 'updated');
 
         // Update team match count
         if ($a_points == $b_points) {

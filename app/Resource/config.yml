@@ -1,3 +1,6 @@
+imports:
+    - {  resource: "bzion_config_bridge.php" }
+
 framework:
     secret: "toast"
     router:
@@ -7,6 +10,20 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
+
+monolog:
+    channels: ["api", "mysql"]
+    handlers:
+        api:
+            type: stream
+            path: "%bzion.log.dir%/api.log"
+            level: %bzion.log.level%
+            channels: [api]
+        main:
+            type: stream
+            path: "%bzion.log.dir%/main.log"
+            level: %bzion.log.level%
+            channels: [app, mysql]
 
 services:
     main.warmer.twig_warmer:

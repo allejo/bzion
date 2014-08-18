@@ -19,6 +19,7 @@
         "symfony/finder"           : ">=2.5.0",
         "symfony/form"             : ">=2.5.0",
         "symfony/icu"              : "1.0.*",
+        "symfony/monolog-bundle"   : ">=2.5.0",
         "symfony/process"          : ">=2.5.0",
         "symfony/routing"          : ">=2.5.0",
         "symfony/http-kernel"      : ">=2.5.0",
@@ -41,7 +42,7 @@
         "phpunit/phpunit": "4.1.*",
         "phpdocumentor/phpdocumentor": "dev-develop",
         "sensio/distribution-bundle": "3.0.*@dev",
-        "symfony/monolog-bundle": ">=2.4.0"
+        "raulfraile/ladybug-bundle": "~1.0"
     },
 
     "autoload": {
