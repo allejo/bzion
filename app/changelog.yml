@@ -1,0 +1,9 @@
+17 August 2014:
+    Features:
+        - Finalized support for the LeagueOverseer plugin
+16 August 2014:
+    Notes:
+        - New logging-related options have been added to the config, please update your bzion-config.php file
+15 August 2014:
+    Bugfixes:
+        - Matches are now ordered properly on team pages
