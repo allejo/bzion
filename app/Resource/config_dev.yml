@@ -1,2 +1,8 @@
 imports:
     - { resource: config.yml }
+
+services:
+    bzion.command.log_command:
+        class: BZIon\Command\LogCommand
+        tags:
+            -  { name: console.command }
