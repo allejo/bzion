@@ -18,6 +18,17 @@ module.exports = function(grunt) {
                 }
             }
         },
+        jshint: {
+            options: {
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true
+                },
+                reporter: require('jshint-stylish')
+            },
+            all: ['Gruntfile.js', 'assets/js/*.js']
+        },
         uglify: {
             options: {
                 mangle: true
@@ -38,11 +49,12 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('css', [ 'sass' ]);
-    grunt.registerTask('js', [ 'uglify' ]);
+    grunt.registerTask('js', [ 'jshint', 'uglify' ]);
     grunt.registerTask('default', [ 'css', 'js' ]);
 
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 };
