@@ -30,6 +30,7 @@ TODO
     - Notifications
     - Discussion settings dropdown
     - Pagination buttons
+    - Assign role to users page
 - Discuss features with admins
 - Finish the installer at some point.
 - Bug testing, bug testing and more bug testing
