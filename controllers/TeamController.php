@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Form\ModelType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,6 +22,11 @@ class TeamController extends CRUDController
     public function createAction(Player $me)
     {
         return $this->create($me);
+    }
+
+    public function editAction(Player $me, Team $team)
+    {
+        return $this->edit($team, $me, "team");
     }
 
     public function deleteAction(Player $me, Team $team)
@@ -124,9 +130,9 @@ class TeamController extends CRUDController
             "You have left {$team->getName()}", "Abandon");
     }
 
-    public function createForm()
+    public function createForm($edit, Team $team=null)
     {
-        return Service::getFormFactory()->createBuilder()
+        $builder = Service::getFormFactory()->createBuilder()
             ->add('name', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
@@ -137,14 +143,24 @@ class TeamController extends CRUDController
             ))
             ->add('description', 'textarea', array(
                 'required' => false
-            ))
-            ->add('status', 'choice', array(
+            ));
+
+        if ($edit) {
+            // We are editing the team, not creating it
+            // Let the user appoint a different leader
+            $builder->add('leader', new ModelType('Player', false, function ($query) use ($team) {
+                // Only list players belonging in that team
+                return $query->where('team')->is($team);
+            }));
+        }
+
+        return $builder->add('status', 'choice', array(
                 'choices' => array(
                     'open'   => 'Open',
                     'closed' => 'Closed',
                 ),
             ))
-            ->add('create', 'submit')
+            ->add('submit', 'submit')
             ->getForm();
     }
 
@@ -159,7 +175,25 @@ class TeamController extends CRUDController
         );
     }
 
-    protected function validate($form)
+    protected function fill($form, $team)
+    {
+        $form->get('name')->setData($team->getName());
+        $form->get('description')->setData($team->getDescription(true));
+        $form->get('status')->setData($team->getStatus());
+        $form->get('leader')->setData($team->getLeader());
+    }
+
+    protected function update($form, $team, $me)
+    {
+        $team->setName($form->get('name')->getData());
+        $team->setDescription($form->get('description')->getData());
+        $team->setStatus($form->get('status')->getData());
+        $team->setLeader($form->get('leader')->getData()->getId());
+
+        return $team;
+    }
+
+    protected function validateNew($form)
     {
         $name = $form->get('name');
         $team = Team::getFromName($name->getData());

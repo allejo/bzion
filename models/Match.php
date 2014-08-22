@@ -159,6 +159,16 @@ class Match extends Model implements PermissionModel
     }
 
     /**
+     * Get the name of the route that shows the object
+     * @param  string $action The route's suffix
+     * @return string
+     */
+    public static function getRouteName($action='list')
+    {
+        return "match_$action";
+    }
+
+    /**
      * Get a one word description of a match relative to a team (i.e. win, loss, or draw)
      *
      * @param int $teamID The team ID we want the noun for

@@ -17,12 +17,29 @@ class ModelType extends AbstractType
     private $type;
 
     /**
-     * Get a new ModelType
-     * @param string $type The type of the model
+     * Whether to include an empty element in the list
+     * @var boolean
      */
-    public function __construct($type)
+    private $emptyElem;
+
+    /**
+     * A function to apply on the QueryBuilder
+     * @var callable|null
+     */
+    private $modifier;
+
+    /**
+     * Get a new ModelType
+     * @param string  $type      The type of the model
+     * @param boolean $emptyElem Whether to include an empty element in the list
+     * @param callable|null $modifier A function which modifies the query builder
+     *                                used to fetch the Models
+     */
+    public function __construct($type, $emptyElem=true, $modifier=null)
     {
         $this->type = "$type";
+        $this->emptyElem = $emptyElem;
+        $this->modifier = $modifier;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -35,7 +52,7 @@ class ModelType extends AbstractType
     {
         $type = $this->getTypeForHumans();
 
-        $emptyElement = array( null => '' );
+        $emptyElement = ($this->emptyElem) ? array( null => '' ) : array();
         $names = $emptyElement + $this->getAll();
 
         $resolver->setDefaults(array(
@@ -49,9 +66,15 @@ class ModelType extends AbstractType
 
     private function getAll()
     {
-        $type = $this->type;
+        $type     = $this->type;
+        $query    = $type::getQueryBuilder()->active();
+        $modifier = $this->modifier;
 
-        return $type::getQueryBuilder()->active()->getNames();
+        if ($modifier) {
+            $query = $modifier($query);
+        }
+
+        return $query->getNames();
     }
 
     private function getTypeForHumans()

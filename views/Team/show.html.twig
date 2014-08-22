@@ -22,7 +22,7 @@
                     {% endif %}
 
                     {% if me.canEdit(team) or me.id == team.leader.id %}
-                        <a class="button grey notextshadow" href="#"><i class="fa fa-pencil"></i> Edit</a>
+                        <a class="button grey notextshadow" href="{{ team.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 
                     {% if me is valid and me.team.id != team.id and me.isTeamless and team.status == 'open' %}

@@ -22,6 +22,16 @@ abstract class CRUDController extends JSONController
     }
 
     /**
+     * Make sure that the data of a form is valid, only called when creating a
+     * new object
+     * @param  Form $form The submitted form
+     * @return void
+     */
+    protected function validateNew($form)
+    {
+    }
+
+    /**
      * Make sure that the data of a form is valid
      * @param  Form $form The submitted form
      * @return void
@@ -99,6 +109,7 @@ abstract class CRUDController extends JSONController
 
         if ($form->isSubmitted()) {
             $this->validate($form);
+            $this->validateNew($form);
             if ($form->isValid()) {
                 $model = $this->enter($form, $me);
                 $this->getFlashBag()->add("success",
@@ -126,7 +137,7 @@ abstract class CRUDController extends JSONController
         if (!$this->canEdit($me, $model))
             throw new ForbiddenException($this->getMessage($model, 'edit', 'forbidden'));
 
-        $form = $this->getForm(true);
+        $form = $this->getForm(true, $model);
         $this->fill($form, $model);
         $form->handleRequest($this->getRequest());
 
@@ -216,10 +227,11 @@ abstract class CRUDController extends JSONController
     /**
      * Dynamically get the form to show to the user
      *
-     * @param  boolean $edit True if we are requesting an edit form, false for a create form
+     * @param  boolean      $edit  True if we are requesting an edit form, false for a create form
+     * @param  \Model|null  $model The model being edited
      * @return Form
      */
-    private function getForm($edit)
+    private function getForm($edit, $model=null)
     {
         $method = new ReflectionMethod($this, 'createForm');
 
@@ -228,8 +240,12 @@ abstract class CRUDController extends JSONController
         foreach ($method->getParameters() as $param) {
             if ($param->getName() == 'edit') {
                 $pass[] = $edit;
-            } else {
+            } elseif ($model && $param->getClass()->isInstance($model)) {
+                $pass[] = $model;
+            } elseif ($param->isOptional()) {
                 $pass[] = $param->getDefaultValue();
+            } else {
+                $pass[] = null;
             }
         }
 

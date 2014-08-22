@@ -270,11 +270,12 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     /**
      * Get the description of the team
      *
-     * @return string The description of the team
+     * @param  boolean $md false for HTML format, true for the original markdown
+     * @return string  The description of the team
      */
-    public function getDescription()
+    public function getDescription($md=false)
     {
-        return $this->description_html;
+        return ($md) ? $this->description_md : $this->description_html;
     }
 
     /**
@@ -538,6 +539,17 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     public function setStatus($newStatus)
     {
         $this->updateProperty($this->status, 'status', $newStatus, 's');
+    }
+
+    /**
+     * Change the leader of the team
+     *
+     * @param  int $leader The ID of the new leader of the team
+     * @return self
+     */
+    public function setLeader($leader)
+    {
+        $this->updateProperty($this->leader, 'leader', $leader, 'i');
     }
 
     /**
