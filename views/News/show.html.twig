@@ -6,7 +6,19 @@
     <main class="news">
         <section class="content_header">
             <article class="wrapper">
-                <h1>League News</h1>
+                <div>
+                    <h1>League News</h1>
+                </div>
+
+                <div class="buttons">
+                    {% if me.canEdit(article) %}
+                        <a class="button grey notextshadow" href="{{ article.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
+                    {% endif %}
+
+                    {% if me.canDelete(article) %}
+                        <a class="button red" href="{{ article.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
+                    {% endif %}
+                </div>
             </article>
         </section>
 

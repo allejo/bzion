@@ -215,6 +215,14 @@ class News extends UrlModel implements NamedModel, PermissionModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getRouteName($action='show')
+    {
+        return "news_$action";
+    }
+
+    /**
      * Update the content of a post
      *
      * @param string $content The new content of the post

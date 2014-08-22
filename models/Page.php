@@ -206,7 +206,7 @@ class Page extends AliasModel implements NamedModel, PermissionModel
     /**
      * {@inheritdoc}
      */
-    protected static function getRouteName($action='show')
+    public static function getRouteName($action='show')
     {
         return "custom_page";
     }

@@ -17,7 +17,7 @@ abstract class UrlModel extends Model
      * @param  string $action The route's suffix
      * @return string
      */
-    protected static function getRouteName($action='show')
+    public static function getRouteName($action='show')
     {
         return self::getParamName() . "_$action";
     }

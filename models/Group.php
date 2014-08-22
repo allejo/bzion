@@ -154,7 +154,7 @@ class Group extends UrlModel
     /**
      * {@inheritDoc}
      */
-    protected static function getRouteName($action='show')
+    public static function getRouteName($action='show')
     {
         return "message_" . $action . "_discussion";
     }
