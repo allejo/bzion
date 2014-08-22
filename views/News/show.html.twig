@@ -37,6 +37,11 @@
                         <li>
                             <i class="fa fa-tag"></i> {{ link_to(article.category) }}
                         </li>
+                        {% if me.canCreate("News") or me.canEdit(article) %}
+                            <li>
+                                <i class="fa fa-bullhorn"></i> {{ article.status|capitalize }}
+                            </li>
+                        {% endif %}
                     </ul>
 
                     <section class="post">
