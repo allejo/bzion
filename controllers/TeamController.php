@@ -130,6 +130,21 @@ class TeamController extends CRUDController
             "You have left {$team->getName()}", "Abandon");
     }
 
+    public function assignLeaderAction(Team $team, Player $me, Player $player)
+    {
+        $this->assertCanEdit($me, $team, "You are not allowed to change the leader of this team.");
+
+        if (!$team->isMember($player->getId()))
+            throw new ForbiddenException("The specified player is not a member of {$team->getEscapedName()}");
+
+        return $this->showConfirmationForm(function() use ($player, $team) {
+            $team->setLeader($player->getId());
+            return new RedirectResponse($team->getUrl());
+        }, "Are you sure you want to transfer the leadership of the team to <strong>{$player->getEscapedUsername()}</strong>?",
+        "{$player->getUsername()} is now leading {$team->getName()}",
+        "Appoint leadership");
+    }
+
     public function createForm($edit, Team $team=null)
     {
         $builder = Service::getFormFactory()->createBuilder()
