@@ -515,6 +515,7 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     /**
      * Change the name for team
      *
+     * @todo  Change the team's alias
      * @param string $newName The new name of the team
      */
     public function setName($newName)
@@ -523,9 +524,6 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
 
         $this->name = $newName;
         $this->update("name", $newName, "s");
-
-        $this->alias = parent::generateAlias($newName);
-        $this->update("alias", $this->alias, "s");
 
         rename($oldIdenticon, $this->getIdenticonPath($this->getAlias()));
     }
