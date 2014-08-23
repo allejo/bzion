@@ -10,15 +10,8 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends IdenticonModel implements NamedModel, PermissionModel
+class Team extends IdenticonModel implements PermissionModel
 {
-    /**
-     * The name of the team
-     *
-     * @var string
-     */
-    protected $name;
-
     /**
      * The description of the team written in markdown
      *
@@ -522,8 +515,7 @@ class Team extends IdenticonModel implements NamedModel, PermissionModel
     {
         $oldIdenticon = $this->getIdenticonPath($this->getAlias());
 
-        $this->name = $newName;
-        $this->update("name", $newName, "s");
+        parent::setName($newName);
 
         rename($oldIdenticon, $this->getIdenticonPath($this->getAlias()));
     }

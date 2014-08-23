@@ -10,13 +10,54 @@
  * A Model that has a URL and an alias
  * @package    BZiON\Models
  */
-abstract class AliasModel extends UrlModel
+abstract class AliasModel extends UrlModel implements NamedModel
 {
+    /**
+     * The name of the object
+     * @var string
+     */
+    protected $name;
+
     /**
      * A unique URL-friendly identifier for the object
      * @var string
      */
     protected $alias;
+
+    /**
+     * Get the name of the object
+     * @var string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the name of the team, safe for use in your HTML
+     *
+     * @return string The name of the team
+     */
+    public function getEscapedName()
+    {
+        if (!$this->valid)
+            return "<em>None</em>";
+        return $this->escape($this->name);
+    }
+
+    /**
+     * Change the object's name
+     *
+     * @param  string $username The new name of the object
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->updateProperty($this->name, 'name', $name, 's');
+        $this->resetAlias();
+
+        return $this;
+    }
 
     /**
      * Get an object's alias
@@ -36,8 +77,17 @@ abstract class AliasModel extends UrlModel
      */
     protected function setAlias($alias)
     {
-        $this->alias = $alias;
-        $this->update('alias', $alias, 's');
+        $this->updateProperty($this->alias, 'alias', $alias, 's');
+    }
+
+    /**
+     * Reset a model's alias based on its
+     * @return self
+     */
+    public function resetAlias()
+    {
+        $alias = static::generateAlias($this->name, $this->alias);
+        return $this->updateProperty($this->alias, 'alias', $alias, 's');
     }
 
     /**
@@ -79,10 +129,12 @@ abstract class AliasModel extends UrlModel
     /**
      * Generate a URL-friendly unique alias for an object name
      *
-     * @param  string      $name The original object name
+     * @param  string      $name     The original object name
+     * @param  string|Null $oldAlias The older alias of the object, if it's being
+     *                               edited and not created
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    public static function generateAlias($name)
+    public static function generateAlias($name, $oldAlias=null)
     {
         // Convert name to lowercase
         $name = strtolower($name);
@@ -106,6 +158,12 @@ abstract class AliasModel extends UrlModel
         // Also prevent aliases from taking names such as "new",
         while (preg_match("/^[0-9]+$/", $name)) {
             $name = $name . '-';
+        }
+
+        // Prevent getUniqueAlias() from returning a different alias if we
+        // change an already existing model's alias
+        if ($oldAlias && $name === $oldAlias) {
+            return $name;
         }
 
         return self::getUniqueAlias($name);

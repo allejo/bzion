@@ -10,14 +10,8 @@
  * A news category
  * @package    BZiON\Models
  */
-class NewsCategory extends AliasModel implements NamedModel
+class NewsCategory extends AliasModel
 {
-    /**
-     * The name of the category
-     * @var string
-     */
-    protected $name;
-
     /**
      * Whether or not the category is protected from being deleted
      * @var bool
@@ -82,16 +76,6 @@ class NewsCategory extends AliasModel implements NamedModel
         if ($this->getStatus() != "enabled") {
             $this->update("status", "enabled", 's');
         }
-    }
-
-    /**
-     * Get the name of the category
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

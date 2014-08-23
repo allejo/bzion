@@ -37,12 +37,6 @@ class Player extends IdenticonModel implements NamedModel
     protected $team;
 
     /**
-     * The username of the player
-     * @var string
-     */
-    protected $username;
-
-    /**
      * The player's status
      * @var string
      */
@@ -118,7 +112,7 @@ class Player extends IdenticonModel implements NamedModel
     protected function assignResult($player)
     {
         $this->bzid = $player['bzid'];
-        $this->username = $player['username'];
+        $this->name = $player['username'];
         $this->alias = $player['alias'];
         $this->team = $player['team'];
         $this->status = $player['status'];
@@ -435,25 +429,32 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function getUsername()
     {
-        return $this->username;
+        return $this->name;
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return $this->getUsername();
-    }
-
-    /**
-     * Get the player's, safe for use in your HTML
+     * Get the player's username, safe for use in your HTML
      * @return string The username
      */
     public function getEscapedUsername()
     {
-        return $this->escape($this->username);
+        return $this->getEscapedName();
     }
+
+    /**
+     * Change the players's username
+     *
+     * @param  string $username The new username
+     * @return self
+     */
+    public function setName($username)
+    {
+        $this->updateProperty($this->name, 'name', $username, 's');
+        $this->resetAlias();
+
+        return $this;
+    }
+
 
     /**
      * Give or remove a role to/form a player

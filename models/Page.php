@@ -10,14 +10,8 @@
  * A custom page
  * @package    BZiON\Models
  */
-class Page extends AliasModel implements NamedModel, PermissionModel
+class Page extends AliasModel implements PermissionModel
 {
-    /**
-     * The name of the page
-     * @var string
-     */
-    protected $name;
-
     /**
      * The content of the page
      * @var string
@@ -76,15 +70,6 @@ class Page extends AliasModel implements NamedModel, PermissionModel
     }
 
     /**
-     * Get the title of the page
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Get the raw content of the page
      * @return string
      */
@@ -136,17 +121,6 @@ class Page extends AliasModel implements NamedModel, PermissionModel
     public function isHomePage()
     {
         return $this->home;
-    }
-
-    /**
-     * Set the name of the page
-     *
-     * @param  string $name
-     * @return self
-     */
-    public function setName($name)
-    {
-        return $this->updateProperty($this->name, "name", $name, 's');
     }
 
     /**
