@@ -489,7 +489,7 @@ CREATE TABLE `past_callsigns` (
   `player` int(10) unsigned NOT NULL COMMENT 'The player ID',
   `username` varchar(32) NOT NULL DEFAULT '' COMMENT 'The old username the player used',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `player_username` (`player` ,`username`),
   KEY `player` (`player`),
   CONSTRAINT `past_callsigns_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
