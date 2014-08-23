@@ -442,17 +442,14 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
-     * Change the players's username
+     * Alias for Player::setUsername()
      *
      * @param  string $username The new username
      * @return self
      */
     public function setName($username)
     {
-        $this->updateProperty($this->name, 'name', $username, 's');
-        $this->resetAlias();
-
-        return $this;
+        return $this->setUsername($username);
     }
 
 
@@ -624,15 +621,24 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
-     * Add a player's callsign to the database if it does not exist as a past callsign
-     * @param string $id       The ID for the player whose callsign we're saving
-     * @param string $username The callsign which we are saving if it doesn't exist
+     * Change a player's callsign and add it to the database if it does not
+     * exist as a past callsign
+     *
+     * @param  string $username The new username of the player
+     * @return self
      */
-    public static function saveUsername($id, $username)
+    public function setUsername($username)
     {
-        $db = Database::getInstance();
+        if ($username === $this->name) {
+            // The player's username hasn't changed, no need to do anything
+            return $this;
+        }
 
-        $db->query("INSERT IGNORE INTO past_callsigns (id, player, username) VALUES (?, ?, ?)", "iis", array(NULL, $id, $username));
+        $this->updateProperty($this->name, 'username', $username, 's');
+        $this->db->query("INSERT IGNORE INTO past_callsigns (player, username) VALUES (?, ?)", "is", array($this->id, $username));
+        $this->resetAlias();
+
+        return $this;
     }
 
     /**

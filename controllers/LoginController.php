@@ -45,7 +45,7 @@ class LoginController extends HTMLController
         $session->set("playerId", $player->getId());
         $player->updateLastLogin();
 
-        Player::saveUsername($player->getId(), $info['username']);
+        $player->setUsername($info['username']);
         Visit::enterVisit($player->getId(),
                           $request->getClientIp(),
                           gethostbyaddr($request->getClientIp()),
