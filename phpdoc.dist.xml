@@ -8,7 +8,6 @@
         <directory>models</directory>
         <directory>src</directory>
         <directory>tests</directory>
-        <file>controllers/Header.php</file>
         <ignore>app/cache/*</ignore>
     </files>
     <transformations>
