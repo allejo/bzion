@@ -1,6 +1,7 @@
 <?php
-namespace BZIon\Form;
+namespace BZIon\Form\Transformer;
 
+use BZIon\Form\Type\TimezoneType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 

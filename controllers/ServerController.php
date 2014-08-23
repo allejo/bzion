@@ -1,6 +1,6 @@
 <?php
 
-use BZIon\Form\PlayerType;
+use BZIon\Form\Type\PlayerType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;

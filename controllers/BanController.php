@@ -1,7 +1,7 @@
 <?php
 
-use BZIon\Form\IpType;
-use BZIon\Form\PlayerType;
+use BZIon\Form\Type\IpType;
+use BZIon\Form\Type\PlayerType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;

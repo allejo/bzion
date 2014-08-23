@@ -96,7 +96,7 @@ Ban::addBan($snake->getId(), $alezakos->getId(), "2014-09-15", "Snarke 12534 has
 echo " done!";
 
 echo "\nAdding pages...";
-Page::addPage("Rules", "<p>This is a test page.</p>\n<p>Lets hope this works!</p>", $tw1sted->getId());
+Page::addPage("Rules", "<p>This is a test page.</p>\n<p>Let's hope this works!</p>", $tw1sted->getId());
 Page::addPage("Contact", "<p>If you find anything wrong, please stop by irc.freenode.net channel #sujevo and let a developer know.<br /><br />Thanks", $tw1sted->getId());
 echo " done!";
 

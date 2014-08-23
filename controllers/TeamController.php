@@ -1,6 +1,6 @@
 <?php
 
-use BZIon\Form\ModelType;
+use BZIon\Form\Type\ModelType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;

@@ -1,6 +1,6 @@
 <?php
 
-use BZIon\Form\PlayerType;
+use BZIon\Form\Type\PlayerType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;

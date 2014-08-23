@@ -1,8 +1,9 @@
 <?php
-namespace BZIon\Form;
+namespace BZIon\Form\Type;
 
 use Model;
 use Player;
+use BZIon\Form\Transformer\PlayerTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Form;

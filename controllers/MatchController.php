@@ -1,7 +1,7 @@
 <?php
 
-use BZIon\Form\MatchTeamType;
-use BZIon\Form\DatetimeWithTimezoneType;
+use BZIon\Form\Type\MatchTeamType;
+use BZIon\Form\Type\DatetimeWithTimezoneType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;

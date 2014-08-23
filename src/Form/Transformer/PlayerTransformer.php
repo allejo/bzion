@@ -1,5 +1,5 @@
 <?php
-namespace BZIon\Form;
+namespace BZIon\Form\Transformer;
 
 use Model;
 use Symfony\Component\Form\DataTransformerInterface;

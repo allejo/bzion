@@ -1,5 +1,5 @@
 <?php
-namespace BZIon\Form;
+namespace BZIon\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
