@@ -226,7 +226,7 @@ abstract class HTMLController extends Controller
         $action = "Yes",
         $onNo = null
     ) {
-        $form = Service::getFormFactory()->createBuilder()
+        $form = Service::getFormFactory()->createNamedBuilder('confirm_form')
             ->add($action, 'submit')
             ->add(($action == 'Yes') ? 'No' : 'Cancel', 'submit')
             ->add('original_url', 'hidden', array(

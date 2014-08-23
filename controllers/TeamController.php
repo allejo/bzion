@@ -9,6 +9,12 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class TeamController extends CRUDController
 {
+    /**
+     * The new leader if we're changing them
+     * @var null|Player
+     */
+    private $newLeader = null;
+
     public function showAction(Team $team)
     {
         return array("team" => $team);
@@ -26,7 +32,19 @@ class TeamController extends CRUDController
 
     public function editAction(Player $me, Team $team)
     {
-        return $this->edit($team, $me, "team");
+        $response = $this->edit($team, $me, "team");
+
+        if ($this->newLeader) {
+            // Redirect to a confirmation form if we are assigning a new leader
+            $url = Service::getGenerator()->generate('team_assign_leader', array(
+                'team' => $team->getAlias(),
+                'player' => $this->newLeader->getAlias()
+            ));
+
+            return new RedirectResponse($url);
+        }
+
+        return $response;
     }
 
     public function deleteAction(Player $me, Team $team)
@@ -203,7 +221,14 @@ class TeamController extends CRUDController
         $team->setName($form->get('name')->getData());
         $team->setDescription($form->get('description')->getData());
         $team->setStatus($form->get('status')->getData());
-        $team->setLeader($form->get('leader')->getData()->getId());
+
+        // Is the player updating the team's leader?
+        // Don't let them do it right away - issue a confirmation notice first
+        $leader = $form->get('leader')->getData();
+
+        if ($leader->getId() != $team->getLeader()->getId()) {
+            $this->newLeader = $leader;
+        }
 
         return $team;
     }
