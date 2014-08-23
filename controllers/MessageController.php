@@ -66,6 +66,7 @@ class MessageController extends JSONController
 
         $form = $this->showMessageForm($discussion, $me);
         $inviteForm = $this->showInviteForm($discussion, $me);
+        $renameForm = $this->showRenameForm($discussion, $me);
 
         $messages = Message::getQueryBuilder()->active()
                   ->where('group')->is($discussion)
@@ -78,6 +79,7 @@ class MessageController extends JSONController
         $params = array(
             "form"       => $form->createView(),
             "inviteForm" => $inviteForm->createView(),
+            "renameForm" => $renameForm->createView(),
             "group"      => $discussion,
             "messages"   => $messages,
         );
@@ -129,6 +131,27 @@ class MessageController extends JSONController
                 $discussion->addMember($player->getId());
             }
 
+            $this->getFlashBag()->add('success', "The conversation has been updated");
+        }
+
+        return $form;
+    }
+
+    private function showRenameForm($discussion, $me)
+    {
+        $form = Service::getFormFactory()->createNamedBuilder('rename_form')
+            ->add('subject', 'text', array(
+                'constraints' => new NotBlank(),
+                'data' => $discussion->getSubject(),
+            ))
+            ->add('Rename', 'submit')
+            ->setAction($discussion->getUrl())->getForm();
+
+        $form->handleRequest($this->getRequest());
+
+        if ($form->isValid()) {
+            $this->assertCanEdit($me, $discussion);
+            $discussion->setSubject($form->get('subject')->getData());
             $this->getFlashBag()->add('success', "The conversation has been updated");
         }
 

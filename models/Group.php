@@ -100,7 +100,7 @@ class Group extends UrlModel
     }
 
     /**
-     * Update the team's last activity timestamp
+     * Update the group's last activity timestamp
      *
      * @return void
      */
@@ -108,6 +108,17 @@ class Group extends UrlModel
     {
         $this->last_activity = TimeDate::now();
         $this->update('last_activity', $this->last_activity->toMysql(), 's');
+    }
+
+    /**
+     * Update the group's subject
+     *
+     * @param  string $subject The new subject
+     * @return self
+     */
+    public function setSubject($subject)
+    {
+        return $this->updateProperty($this->subject, 'subject', $subject, 's');
     }
 
     /**
