@@ -252,7 +252,7 @@ class TeamController extends CRUDController
         return parent::canCreate($player);
     }
 
-    /*
+    /**
      * Make sure that a player can edit a team
      *
      * Throws an exception if a player is not an admin or the leader of a team

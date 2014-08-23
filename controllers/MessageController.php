@@ -242,7 +242,7 @@ class MessageController extends JSONController
         return "Unknown Error";
     }
 
-    /*
+    /**
      * Make sure that a player can edit a conversation
      *
      * Throws an exception if a player is not an admin or the leader of a team

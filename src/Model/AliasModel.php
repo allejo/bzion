@@ -151,11 +151,12 @@ abstract class AliasModel extends UrlModel
     /**
      * Get a list of aliases that should not be given to objects
      *
-     * For examples, you want to prevent teams from getting the "new" alias.
+     * For example, you want to prevent teams from getting the "new" alias.
      * Otherwise, the team's link would be http://example.com/bzion/teams/new,
      * and the user would go to the team creation page instead of the team's page.
      * Disallowed aliases will have a dash appended, so the URL would be
      * http://example.com/bzion/teams/new-
+     *
      * @return string[]
      */
     protected static function getDisallowedAliases()

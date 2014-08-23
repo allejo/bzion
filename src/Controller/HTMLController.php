@@ -140,7 +140,7 @@ abstract class HTMLController extends Controller
         $session->set('previous_paths', array_unique($urls));
     }
 
-    /*
+    /**
      * Returns the path to the home page
      * @return string
      */
@@ -149,7 +149,7 @@ abstract class HTMLController extends Controller
         return Service::getGenerator()->generate('index');
     }
 
-    /*
+    /**
      * Returns the URL of the previous page
      * @return string
      */
@@ -166,7 +166,7 @@ abstract class HTMLController extends Controller
         return $this->getHomeURL();
     }
 
-    /*
+    /**
      * Returns a redirect response to the previous page
      * @return RedirectResponse
      */
@@ -193,7 +193,7 @@ abstract class HTMLController extends Controller
         return self::getRequest()->getSession()->getFlashBag();
     }
 
-    /*
+    /**
      * Assert that the user is logged in
      * @throws HTTPException
      * @param  string        $message The message to show if the user is not logged in
@@ -208,7 +208,7 @@ abstract class HTMLController extends Controller
             throw new ForbiddenException($message);
     }
 
-    /*
+    /**
      * Show a confirmation (Yes, No) form to the user
      *
      * @param  callable $onYes          What to do if the user clicks on "Yes"
