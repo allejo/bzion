@@ -245,11 +245,19 @@ class Match extends Model implements PermissionModel
 
     /**
      * Get the timestamp of the match
+     *
+     * @param string $format The date format. Leave blank if you want a relative time (e.g. 2 days ago)
+     *
      * @return string The match's timestamp
      */
-    public function getTimestamp()
+    public function getTimestamp($format = "")
     {
-        return $this->timestamp->diffForHumans();
+        if (empty($format))
+        {
+            return $this->timestamp->diffForHumans();
+        }
+
+        return $this->timestamp->format($format);
     }
 
     /**

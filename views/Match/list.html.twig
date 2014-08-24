@@ -25,22 +25,28 @@
         </section>
 
         <section class="matches">
+            {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
+            {% set lastMatchDate = "" %}
+
             {% for match in matches %}
+                {% set currentMatch = match.timestamp(dateFormat) %}
+
+                {% if lastMatchDate != currentMatch %}
+                    <h4>{{ currentMatch }}</h4>
+                {% endif %}
+
                 <article>
                     <div class="css-table">
-                        <div class="row winner">
-                            <div class="column team">{{ link_to(match.winner) }}</div>
-                            <div class="column score">{{ match.score(match.winner.id) }}</div>
+                        <div class="row">
+                            <div class="column winner">{{ link_to(match.winner) }}</div>
+                            <div class="column win-points">{{ match.score(match.winner.id) }}</div>
+                            <div class="column loss-points">{{ match.score(match.loser.id) }}</div>
+                            <div class="column loser">{{ link_to(match.loser) }}</div>
                         </div>
-                        <div class="row loser">
-                            <div class="column team">{{ link_to(match.loser) }}</div>
-                            <div class="column score">{{ match.score(match.loser.id) }}</div>
-                        </div>
-                    </div>
-                    <div class="extra">
-                        <a href="#" title="View More Match Details"><i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </article>
+
+                {% set lastMatchDate = match.timestamp(dateFormat) %}
             {% endfor %}
         </section>
     </main>

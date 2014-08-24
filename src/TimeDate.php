@@ -6,6 +6,7 @@
 class TimeDate extends Carbon\Carbon
 {
     const DATE_SHORT = "Y-m-d";
+    const DATE_MEDIUM = "F d";
     const DATE_FULL = "F d, Y";
     const TIMESTAMP = "H:i";
     const TIMESTAMP_FULL = "H:i:s";

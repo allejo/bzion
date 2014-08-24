@@ -128,7 +128,7 @@ class News extends UrlModel implements NamedModel, PermissionModel
     /**
      * Get the time when the article was submitted
      *
-     * @param string $format The data format. Leave blank if you want a relative time (e.g. 2 days ago)
+     * @param string $format The date format. Leave blank if you want a relative time (e.g. 2 days ago)
      *
      * @return string The article's creation time in the specified format
      */
