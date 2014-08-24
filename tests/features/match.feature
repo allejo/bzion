@@ -40,4 +40,4 @@ Feature: Matches
        Then I should be on "/matches"
        And I should see "The match was created successfully"
        And I should see "Preeminent Cannoneers 16"
-       And I should see "Subpar Fusillade 2"
+       And I should see "2 Subpar Fusillade"
