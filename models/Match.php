@@ -99,7 +99,7 @@ class Match extends Model implements PermissionModel
 
     /**
      * The timestamp representing when the match was played
-     * @var string
+     * @var TimeDate
      */
     protected $timestamp;
 
