@@ -93,7 +93,7 @@ class Server extends UrlModel implements PermissionModel
             'country' => $country,
             'owner' => $owner,
             'status' => 'active',
-        ), 'ssis', 'updated');
+        ), 'ssiis', 'updated');
         $server->forceUpdate();
 
         return $server;
