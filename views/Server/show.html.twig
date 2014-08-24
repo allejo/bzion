@@ -1,20 +1,34 @@
 {% import _self as serverlist %}
 
-{% if me.canEdit(server) %}
-    <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
-        <i class="fa fa-refresh"></i>
-    </a>
-    {{ link_to(server, 'pencil', 'edit') }}
-{% endif %}
+<section class="title">
+    {% set status = "offline" %}
 
-{% if me.canDelete(server) %}
-    {{ link_to(server, 'minus', 'delete') }}
-{% endif %}
+    {% if server.status %}
+        {% set status = "online" %}
+    {% endif %}
 
-<strong>{{ server.name }}</strong> {{ server.country.flagLiteral | raw }}<br />
-<em>{{ server.address }}</em><br />
+    <span class="status {{ status }}" title="Server is currently {{ status }}">&bull;</span>
+    <span class="name">{{ server.name }}</span>
+    {{ server.country.flagLiteral | raw }}
 
-Total players: {{ server.numPlayers }}
+    <ul>
+        {% if me.canEdit(server) %}
+            <li>
+                <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </li>
+            <li>{{ link_to(server, 'pencil', 'edit') }}</li>
+        {% endif %}
+
+        {% if me.canDelete(server) %}
+            <li>{{ link_to(server, 'minus', 'delete') }}</li>
+        {% endif %}
+    </ul>
+</section>
+
+<p class="address">{{ server.address }}</p>
+<p class="playerCount">Total players: {{ server.numPlayers }}</p>
 
 {% if server.players is not empty %}
     <ul>
@@ -25,8 +39,7 @@ Total players: {{ server.numPlayers }}
         {% endfor %}
     </ul>
 {% endif %}
-<br /><small>Last update: {{ server.lastUpdate }}</small>
-<br /><br />
+<small>Last update: {{ server.lastUpdate }}</small>
 
 {% macro team(player) %}
     {% set team = player.team %}

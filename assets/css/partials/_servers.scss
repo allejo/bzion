@@ -17,6 +17,33 @@ main {
                 .dimmable {
                     padding: 10px;
                 }
+
+                // HTML needs to be restructured, until then this class won't
+                // be expanded
+                .server_info {
+                    .title {
+                        .status {
+                            cursor: pointer;
+                            font-size: 18px;
+
+                            &.offline {
+                                color: red;
+                            }
+
+                            &.online {
+                                color: green;
+                            }
+                        }
+
+                        .name {
+                            font-weight: bold;
+                        }
+                    }
+
+                    .address {
+                        font-weight: 14px;
+                    }
+                }
             }
         }
     }

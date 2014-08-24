@@ -71,6 +71,7 @@ echo " done!";
 echo "\nAdding servers...";
 Server::addServer("BZPro Public HiX FFA", "bzpro.net:5154", 227, $tw1sted->getId());
 Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net:5155", 227, $tw1sted->getId());
+Server::addServer("Apocalypse", "apocalypse.planet-mofo.com:4202", 227, $allejo->getId());
 echo " done!";
 
 echo "\nAdding messages...";

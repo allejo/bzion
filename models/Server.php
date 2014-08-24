@@ -141,7 +141,7 @@ class Server extends UrlModel implements PermissionModel
      */
     public function numPlayers()
     {
-        return $this->info['numPlayers'];
+        return (isset($this->info['numPlayers'])) ? $this->info['numPlayers'] : 0;
     }
 
     /**
