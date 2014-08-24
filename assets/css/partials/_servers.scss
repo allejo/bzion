@@ -56,6 +56,27 @@ main {
                         font-size: 14px;
                         margin-left: 13px;
                     }
+
+                    small {
+                        font-style: italic;
+                    }
+
+                    .players {
+                        font-size: 12px;
+
+                        li {
+                            display: inline-block;
+                            list-style-type: none;
+
+                            &:after {
+                                content: ',';
+                            }
+
+                            &:last-child:after {
+                                content: '';
+                            }
+                        }
+                    }
                 }
             }
         }

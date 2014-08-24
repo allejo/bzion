@@ -28,18 +28,17 @@
 </section>
 
 <p class="address">{{ server.address }}</p>
-<p class="playerCount">Total players: {{ server.numPlayers }}</p>
+<p class="playerCount">Player count: {{ server.numPlayers }}</p>
 
 {% if server.players is not empty %}
-    <ul>
+    <ul class="players">
         {% for player in server.players %}
-            <li>
-                {{ player.sign ~ serverlist.team(player) }}
-            </li>
+            <li>{{ player.sign ~ " " ~ serverlist.team(player) | trim }}</li>
         {% endfor %}
     </ul>
 {% endif %}
-<small>Last update: {{ server.lastUpdate }}</small>
+
+<small>Updated {{ server.lastUpdate }}</small>
 
 {% macro team(player) %}
     {% set team = player.team %}
