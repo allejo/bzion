@@ -3,7 +3,7 @@
 <section class="title">
     {% set status = "offline" %}
 
-    {% if server.status %}
+    {% if server.online %}
         {% set status = "online" %}
     {% endif %}
 
