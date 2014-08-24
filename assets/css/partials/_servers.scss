@@ -52,8 +52,9 @@ main {
                         }
                     }
 
-                    .address {
-                        font-weight: 14px;
+                    .address, .playerCount, small {
+                        font-size: 14px;
+                        margin-left: 13px;
                     }
                 }
             }
