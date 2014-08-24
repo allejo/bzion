@@ -1,12 +1,7 @@
 <?php
 
-use BZIon\Form\Type\MatchTeamType;
-use BZIon\Form\Type\DatetimeWithTimezoneType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\LessThan;
 
 class MatchController extends CRUDController
 {
@@ -68,34 +63,6 @@ class MatchController extends CRUDController
         return function ($model) {
             return $model->getId();
         };
-    }
-
-    public function createForm()
-    {
-        return Service::getFormFactory()->createBuilder()
-            ->add('first_team', new MatchTeamType())
-            ->add('second_team', new MatchTeamType())
-            ->add('duration', 'choice', array(
-                'choices' => array_keys(unserialize(DURATION)),
-                'constraints' => new NotBlank(),
-                'expanded' => true
-            ))
-            ->add('server_address', 'text', array(
-                'required' => false,
-                'attr' => array('placeholder' => 'brad.guleague.org:5100'),
-            ))
-            ->add('time', new DatetimeWithTimezoneType(), array(
-                'constraints' => array(
-                    new NotBlank(),
-                    new LessThan(array(
-                        'value'   => TimeDate::now()->addMinutes(10),
-                        'message' => 'The timestamp of the match must not be in the future'
-                    ))
-                ),
-                'data' => TimeDate::now()
-            ))
-            ->add('enter', 'submit')
-            ->getForm();
     }
 
     protected function validate($form)

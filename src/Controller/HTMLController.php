@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Form\Creator\ConfirmationFormCreator;
 use BZIon\Twig\ModelFetcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -226,15 +227,9 @@ abstract class HTMLController extends Controller
         $action = "Yes",
         $onNo = null
     ) {
-        $form = Service::getFormFactory()->createNamedBuilder('confirm_form')
-            ->add($action, 'submit')
-            ->add(($action == 'Yes') ? 'No' : 'Cancel', 'submit')
-            ->add('original_url', 'hidden', array(
-                'data' => $this->getPreviousURL()
-            ))
-            ->getForm();
+        $creator = new ConfirmationFormCreator($action, $this->getPreviousURL());
+        $form = $creator->create()->handleRequest($this->getRequest());
 
-        $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
             if ($form->get($action)->isClicked()) {
                 $return = $onYes();

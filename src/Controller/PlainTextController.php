@@ -1,7 +1,5 @@
 <?php
 
-use BZIon\Twig\ModelFetcher;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

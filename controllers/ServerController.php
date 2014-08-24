@@ -1,9 +1,6 @@
 <?php
 
-use BZIon\Form\Type\PlayerType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
 
 class ServerController extends CRUDController
 {
@@ -42,13 +39,6 @@ class ServerController extends CRUDController
         return $this->edit($server, $me, "server");
     }
 
-    protected function fill($form, $server)
-    {
-        $form->get('name')->setData($server->getName());
-        $form->get('address')->setData($server->getAddress());
-        $form->get('owner')->get('players')->setData($server->getOwner());
-    }
-
     protected function update($form, $server, $me)
     {
         $server->setName($form->get('name')->getData())
@@ -63,29 +53,8 @@ class ServerController extends CRUDController
         return Server::addServer(
             $form->get('name')->getData(),
             $form->get('address')->getData(),
+            1,
             $form->get('owner')->getData()->getId()
         );
-    }
-
-    public function createForm()
-    {
-        return Service::getFormFactory()->createBuilder()
-            ->add('address', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'max' => 50,
-                    )),
-                ),
-            ))
-            ->add('name', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'max' => 100,
-                    )),
-                ),
-            ))
-            ->add('owner', new PlayerType())
-            ->add('add', 'submit')
-            ->getForm();
     }
 }

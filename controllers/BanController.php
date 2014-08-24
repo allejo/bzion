@@ -1,11 +1,6 @@
 <?php
 
-use BZIon\Form\Type\IpType;
-use BZIon\Form\Type\PlayerType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
 
 class BanController extends CRUDController
 {
@@ -52,21 +47,6 @@ class BanController extends CRUDController
             "$victim's ban has been deactivated successfully", "Unban");
     }
 
-    protected function fill($form, $ban)
-    {
-        $form->get('player')->get('players')->setData($ban->getVictim());
-        $form->get('reason')->setData($ban->getReason());
-        $form->get('server_message')->setData($ban->getServerMessage());
-        $form->get('server_join_allowed')->setData($ban->allowedServerJoin());
-        $form->get('ip_addresses')->setData($ban->getIpAddresses());
-
-        if ($ban->willExpire()) {
-            $form->get('expiration')->setData($ban->getExpiration());
-        } else {
-            $form->get('automatic_expiration')->setData(false);
-        }
-    }
-
     protected function update($form, $ban, $me)
     {
         $ban->setIPs($form->get('ip_addresses')->getData())
@@ -89,46 +69,6 @@ class BanController extends CRUDController
             $form->get('ip_addresses')->getData(),
             $form->get('server_join_allowed')->getData()
         );
-    }
-
-    public function createForm($edit)
-    {
-        $builder = Service::getFormFactory()->createBuilder();
-
-        return $builder
-            ->add('player', new PlayerType(), array(
-                'disabled' => $edit,
-            ))
-            ->add(
-                $builder->create('automatic_expiration', 'checkbox', array(
-                    'data' => true,
-                    'required' => false,
-                ))->setDataLocked(false)
-            )
-            ->add(
-                $builder->create('expiration', 'datetime', array(
-                    'data' => TimeDate::now(),
-                ))->setDataLocked(false)
-            )
-            ->add('reason', 'text', array(
-                'constraints' => new NotBlank(),
-            ))
-            ->add('server_join_allowed', 'checkbox', array(
-                'data' => true,
-                'required' => false,
-            ))
-            ->add('server_message', 'text', array(
-                'required' => false,
-                'constraints' => new Length(array(
-                    'max' => 150,
-                ))
-            ))
-            ->add('ip_addresses', new IpType(), array(
-                'required' => false,
-            ))
-            ->add('enter', 'submit')
-            ->setDataLocked(false)
-            ->getForm();
     }
 
     /**

@@ -31,10 +31,10 @@ class ModelType extends AbstractType
 
     /**
      * Get a new ModelType
-     * @param string  $type      The type of the model
-     * @param boolean $emptyElem Whether to include an empty element in the list
-     * @param callable|null $modifier A function which modifies the query builder
-     *                                used to fetch the Models
+     * @param string        $type      The type of the model
+     * @param boolean       $emptyElem Whether to include an empty element in the list
+     * @param callable|null $modifier  A function which modifies the query builder
+     *                                 used to fetch the Models
      */
     public function __construct($type, $emptyElem=true, $modifier=null)
     {

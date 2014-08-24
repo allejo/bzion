@@ -7,10 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 
 class LogCommand extends ContainerAwareCommand
@@ -146,13 +144,14 @@ class LogCommand extends ContainerAwareCommand
      */
     private function sort(&$changelog)
     {
-        uksort($changelog, function($first, $second) {
+        uksort($changelog, function ($first, $second) {
             $a = \TimeDate::from($first);
             $b = \TimeDate::from($second);
 
             if ($a == $b) {
                 return 0;
             }
+
             return ($a > $b) ? -1 : 1;
         });
     }

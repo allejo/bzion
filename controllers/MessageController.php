@@ -1,12 +1,15 @@
 <?php
 
-use BZIon\Form\Type\PlayerType;
+use BZIon\Form\Creator\GroupFormCreator;
+use BZIon\Form\Creator\GroupInviteFormCreator;
+use BZIon\Form\Creator\GroupRenameFormCreator;
+use BZIon\Form\Creator\MessageFormCreator;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MessageController extends JSONController
 {
@@ -26,8 +29,8 @@ class MessageController extends JSONController
         if (!$me->hasPermission(Permission::SEND_PRIVATE_MSG))
             throw new ForbiddenException("You are not allowed to send messages");
 
-        $form = $this->createComposeForm($me);
-        $form->handleRequest($request);
+        $creator = new GroupFormCreator($me);
+        $form = $creator->create()->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if (count($form->get('Recipients')->getData()) < 2) {
@@ -111,27 +114,22 @@ class MessageController extends JSONController
 
     private function showInviteForm($discussion, $me)
     {
-        $form = Service::getFormFactory()->createNamedBuilder('invite_form')
-            ->add('players', new PlayerType(), array(
-                'constraints' => new NotBlank(),
-                'multiple' => true,
-            ))
-            ->add('Invite', 'submit')
-            ->setAction($discussion->getUrl())->getForm();
-
-        $form->handleRequest($this->getRequest());
+        $creator = new GroupInviteFormCreator($discussion);
+        $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
             $this->assertCanEdit($me, $discussion);
 
             foreach ($form->get('players')->getData() as $player) {
-                if ($discussion->isMember($player->getId()))
-                    break;
-
-                $discussion->addMember($player->getId());
+                if (!$discussion->isMember($player->getId())) {
+                    $discussion->addMember($player->getId());
+                }
             }
 
             $this->getFlashBag()->add('success', "The conversation has been updated");
+
+            // Reset the form fields
+            return $creator->create();
         }
 
         return $form;
@@ -139,15 +137,8 @@ class MessageController extends JSONController
 
     private function showRenameForm($discussion, $me)
     {
-        $form = Service::getFormFactory()->createNamedBuilder('rename_form')
-            ->add('subject', 'text', array(
-                'constraints' => new NotBlank(),
-                'data' => $discussion->getSubject(),
-            ))
-            ->add('Rename', 'submit')
-            ->setAction($discussion->getUrl())->getForm();
-
-        $form->handleRequest($this->getRequest());
+        $creator = new GroupRenameFormCreator($discussion);
+        $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
             $this->assertCanEdit($me, $discussion);
@@ -161,11 +152,8 @@ class MessageController extends JSONController
     private function showMessageForm($discussion, $me)
     {
         // Create the form to send a message to the discussion
-        $form = Service::getFormFactory()->createBuilder()
-            ->add('message', 'textarea', array( 'constraints' => new NotBlank(array("message" => "You can't send an empty message!")) ))
-            ->add('Send', 'submit')
-            ->setAction($discussion->getUrl())
-            ->getForm();
+        $creator = new MessageFormCreator($discussion);
+        $form = $creator->create();
 
         // Keep a cloned version so we can come back to it later, if we need
         // to reset the fields of the form
@@ -224,30 +212,6 @@ class MessageController extends JSONController
 
         // Reset the form
         $form = $cloned;
-    }
-
-    /**
-     * Creates the new message form
-     * @param  Player $me The currently logged-in player
-     * @return Form
-     */
-    private function createComposeForm(Player $me)
-    {
-        $notBlank = array( 'constraints' => new NotBlank() );
-
-        return Service::getFormFactory()->createBuilder()
-            ->add('Recipients', new PlayerType(), array(
-                'constraints' => new NotBlank(),
-                'multiple' => true,
-                'include' => $me,
-            ))
-            ->add('Subject', 'text', $notBlank)
-            ->add('Message', 'textarea', $notBlank)
-            ->add('Send', 'submit')
-            // Prevents JS from going crazy if we load a page with AJAX
-            ->setAction(Service::getGenerator()->generate('message_list'))
-            ->setMethod('POST')
-            ->getForm();
     }
 
     private function getErrorMessage(Form &$form)

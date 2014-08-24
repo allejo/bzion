@@ -1,9 +1,6 @@
 <?php
 
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
 
 class PageController extends CRUDController
 {
@@ -37,13 +34,6 @@ class PageController extends CRUDController
         return $this->delete($page, $me);
     }
 
-    protected function fill($form, $page)
-    {
-        $form->get('name')->setData($page->getName());
-        $form->get('content')->setData($page->getContent());
-        $form->get('status')->setData($page->getStatus());
-    }
-
     protected function update($form, $page, $me)
     {
         $page->setName($form->get('name')->getData())
@@ -62,30 +52,6 @@ class PageController extends CRUDController
             $me->getId(),
             $form->get('status')->getData()
         );
-    }
-
-    public function createForm()
-    {
-        return Service::getFormFactory()->createBuilder()
-            ->add('name', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'max' => 32,
-                    )),
-                ),
-            ))
-            ->add('content', 'textarea', array(
-                'constraints' => new NotBlank()
-            ))
-            ->add('status', 'choice', array(
-                'choices' => array(
-                    'live' => 'Public',
-                    'revision' => 'Revision',
-                    'disabled' => 'Disabled',
-                ),
-            ))
-            ->add('enter', 'submit')
-            ->getForm();
     }
 
     protected function redirectToList($model)

@@ -41,17 +41,6 @@ abstract class CRUDController extends JSONController
     }
 
     /**
-     * Fill a form with the model's data
-     * @param  Form  $form  The form to fill
-     * @param  Model $model The model to use to fill the form
-     * @return void
-     */
-    protected function fill($form, $model)
-    {
-        throw new Exception("You need to specify a fill() method");
-    }
-
-    /**
      * Update a model in the database
      * @param  Form   $form  The form that will be used to update the model
      * @param  Model  $model The model that will be updated
@@ -66,8 +55,8 @@ abstract class CRUDController extends JSONController
     /**
      * Delete a model
      * @throws ForbiddenException
-     * @param  PermissionModel    $model The model we want to delete
-     * @param  Player             $me    The user who wants to delete the model
+     * @param  PermissionModel    $model     The model we want to delete
+     * @param  Player             $me        The user who wants to delete the model
      * @param  Closure|null       $onSuccess Something to do when the model is deleted
      * @return mixed              The response to show to the user
      */
@@ -96,15 +85,16 @@ abstract class CRUDController extends JSONController
      *
      * This method requires that you have implemented createForm() and enter()
      * @throws ForbiddenException
-     * @param  Player             $me The user who wants to create the model
-     * @return mixed              The response to show to the user
+     * @param  Player $me   The user who wants to create the model
+     * @param  string $type The type of the model being created
+     * @return mixed  The response to show to the user
      */
     protected function create(Player $me)
     {
         if (!$this->canCreate($me))
             throw new ForbiddenException($this->getMessage($this->getName(), 'create', 'forbidden'));
 
-        $form = $this->getForm(false);
+        $form = $this->getForm();
         $form->handleRequest($this->getRequest());
 
         if ($form->isSubmitted()) {
@@ -137,8 +127,7 @@ abstract class CRUDController extends JSONController
         if (!$this->canEdit($me, $model))
             throw new ForbiddenException($this->getMessage($model, 'edit', 'forbidden'));
 
-        $form = $this->getForm(true, $model);
-        $this->fill($form, $model);
+        $form = $this->getForm($model);
         $form->handleRequest($this->getRequest());
 
         if ($form->isSubmitted()) {
@@ -227,36 +216,25 @@ abstract class CRUDController extends JSONController
     /**
      * Dynamically get the form to show to the user
      *
-     * @param  boolean      $edit  True if we are requesting an edit form, false for a create form
-     * @param  \Model|null  $model The model being edited
+     * @param  \Model|null $model The model being edited, `null` if we're creating one
      * @return Form
      */
-    private function getForm($edit, $model=null)
+    private function getForm($model=null)
     {
-        $method = new ReflectionMethod($this, 'createForm');
+        $type = ($model instanceof Model) ? $model->getType() : $this->getName();
+        $type = ucfirst($type);
 
-        // Find the parameters to pass to the method
-        $pass = array();
-        foreach ($method->getParameters() as $param) {
-            if ($param->getName() == 'edit') {
-                $pass[] = $edit;
-            } elseif ($model && $param->getClass()->isInstance($model)) {
-                $pass[] = $model;
-            } elseif ($param->isOptional()) {
-                $pass[] = $param->getDefaultValue();
-            } else {
-                $pass[] = null;
-            }
-        }
+        $creatorClass = "\\BZIon\\Form\\Creator\\{$type}FormCreator";
+        $creator = new $creatorClass($model);
 
-        return $method->invokeArgs($this, $pass);
+        return $creator->create();
     }
 
     /**
      * Get a message to show to the user
-     * @param  ModelInterface|string $model  The model (or type) to show a message for
-     * @param  string                $action The action that will be performed (softDelete, hardDelete, create or edit)
-     * @param  string                $status The message's status (confirm, error or success)
+     * @param  \ModelInterface|string $model  The model (or type) to show a message for
+     * @param  string $action The action that will be performed (softDelete, hardDelete, create or edit)
+     * @param  string $status The message's status (confirm, error or success)
      * @return string
      */
     private function getMessage($model, $action, $status, $escape=true)

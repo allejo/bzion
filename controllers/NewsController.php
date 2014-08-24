@@ -1,10 +1,5 @@
 <?php
 
-use BZIon\Form\Type\ModelType;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
-
 class NewsController extends CRUDController
 {
     public function showAction(News $article)
@@ -37,14 +32,6 @@ class NewsController extends CRUDController
         return $this->delete($article, $me);
     }
 
-    protected function fill($form, $article)
-    {
-        $form->get('category')->setData($article->getCategory());
-        $form->get('subject')->setData($article->getSubject());
-        $form->get('content')->setData($article->getContent());
-        $form->get('status')->setData($article->getStatus());
-    }
-
     protected function update($form, $article, $me)
     {
         $article->updateCategory($form->get('category')->getData()->getId())
@@ -66,30 +53,5 @@ class NewsController extends CRUDController
             $form->get('category')->getData()->getId(),
             $form->get('status')->getData()
         );
-    }
-
-    public function createForm()
-    {
-        return Service::getFormFactory()->createBuilder()
-            ->add('category', new ModelType('NewsCategory'))
-            ->add('subject', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'max' => 100,
-                    )),
-                ),
-            ))
-            ->add('content', 'textarea', array(
-                'constraints' => new NotBlank()
-            ))
-            ->add('status', 'choice', array(
-                'choices' => array(
-                    'published' => 'Public',
-                    'revision' => 'Revision',
-                    'draft' => 'Draft',
-                ),
-            ))
-            ->add('enter', 'submit')
-            ->getForm();
     }
 }

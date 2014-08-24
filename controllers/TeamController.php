@@ -1,11 +1,8 @@
 <?php
 
-use BZIon\Form\Type\ModelType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
 
 class TeamController extends CRUDController
 {
@@ -155,46 +152,13 @@ class TeamController extends CRUDController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of {$team->getEscapedName()}");
 
-        return $this->showConfirmationForm(function() use ($player, $team) {
+        return $this->showConfirmationForm(function () use ($player, $team) {
             $team->setLeader($player->getId());
+
             return new RedirectResponse($team->getUrl());
         }, "Are you sure you want to transfer the leadership of the team to <strong>{$player->getEscapedUsername()}</strong>?",
         "{$player->getUsername()} is now leading {$team->getName()}",
         "Appoint leadership");
-    }
-
-    public function createForm($edit, Team $team=null)
-    {
-        $builder = Service::getFormFactory()->createBuilder()
-            ->add('name', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'min' => 2,
-                        'max' => 32,
-                    ))
-                )
-            ))
-            ->add('description', 'textarea', array(
-                'required' => false
-            ));
-
-        if ($edit) {
-            // We are editing the team, not creating it
-            // Let the user appoint a different leader
-            $builder->add('leader', new ModelType('Player', false, function ($query) use ($team) {
-                // Only list players belonging in that team
-                return $query->where('team')->is($team);
-            }));
-        }
-
-        return $builder->add('status', 'choice', array(
-                'choices' => array(
-                    'open'   => 'Open',
-                    'closed' => 'Closed',
-                ),
-            ))
-            ->add('submit', 'submit')
-            ->getForm();
     }
 
     protected function enter($form, $creator)
@@ -206,14 +170,6 @@ class TeamController extends CRUDController
             $form->get('description')->getData(),
             $form->get('status')->getData()
         );
-    }
-
-    protected function fill($form, $team)
-    {
-        $form->get('name')->setData($team->getName());
-        $form->get('description')->setData($team->getDescription(true));
-        $form->get('status')->setData($team->getStatus());
-        $form->get('leader')->setData($team->getLeader());
     }
 
     protected function update($form, $team, $me)

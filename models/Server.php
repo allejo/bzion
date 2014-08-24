@@ -111,6 +111,7 @@ class Server extends UrlModel implements PermissionModel
 
     /**
      * Checks if the server is online (listed on the public list server)
+     * @todo   Fix performance issues
      * @return bool Whether the server is online
      */
     public function isOnline()

@@ -24,7 +24,7 @@ class TimezoneType extends AbstractType
         return 'timezone';
     }
 
-    static public function getTimezones()
+    public static function getTimezones()
     {
         return array(
             'Pacific/Midway'       => "(GMT-11:00) Midway Island",

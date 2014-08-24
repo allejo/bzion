@@ -1,15 +1,19 @@
 <?php
 
+use BZIon\Form\Creator\PlayerAdminNotesFormCreator as FormCreator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PlayerController extends JSONController
 {
+    private $creator;
+
     public function showAction(Player $player, Player $me, Request $request)
     {
         if ($me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
-            $form = $this->getAdminNotesForm($player)->handleRequest($request);
+            $this->creator = new FormCreator($player);
+            $form = $this->creator->create()->handleRequest($request);
 
             if ($form->isValid()) {
                 $form = $this->handleAdminNotesForm($form, $player, $me);
@@ -52,25 +56,6 @@ class PlayerController extends JSONController
     }
 
     /**
-     * Get the form for admins to secretly gossip about the player
-     * @param  Player $player The player in question
-     * @return Form
-     */
-    private function getAdminNotesForm($player)
-    {
-        return Service::getFormFactory()->createBuilder()
-            ->add('notes', 'textarea', array(
-                'data'     => $player->getAdminNotes(),
-                'required' => false,
-            ))
-            ->add('save_and_sign', 'submit', array(
-                'label' => 'Save & Sign',
-            ))
-            ->add('save', 'submit')
-            ->getForm();
-    }
-
-    /**
      * Handle the admin notes form
      * @param  Form   $form   The form
      * @param  Player $player The player in question
@@ -88,6 +73,6 @@ class PlayerController extends JSONController
         $this->getFlashBag()->add('success', "The admin notes for {$player->getUsername()} have been updated");
 
         // Reset the form so that the user sees the updated admin notes
-        return $this->getAdminNotesForm($player);
+        return $this->creator->create();
     }
 }
