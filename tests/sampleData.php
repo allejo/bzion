@@ -17,11 +17,11 @@ Service::setModelCache(new ModelCache());
 
 echo "Adding players...";
 $alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description");
-$allejo     = Player::newPlayer(31098, "allejo", null, "active", Player::DEVELOPER);
-$ashvala    = Player::newPlayer(34353, "ashvala", null, "active", Player::DEVELOPER);
+$allejo     = Player::newPlayer(31098, "allejo", null, "active", Player::DEVELOPER, "", "I'm the one who breaks the build", 227);
+$ashvala    = Player::newPlayer(34353, "ashvala", null, "active", Player::DEVELOPER, "", "", 100);
 $autoreport = Player::newPlayer(55976, "AutoReport", null, "test");
 $blast      = Player::newPlayer(180, "blast", null, "active", Player::S_ADMIN);
-$kierra     = Player::newPlayer(2229, "kierra", null, "active", Player::ADMIN);
+$kierra     = Player::newPlayer(2229, "kierra", null, "active", Player::ADMIN, "", "", 174);
 $mdskpr     = Player::newPlayer(8312, "mdskpr");
 $snake      = Player::newPlayer(54497, "Snake12534");
 $tw1sted    = Player::newPlayer(9736, "tw1sted", null, "active", Player::DEVELOPER);
@@ -69,8 +69,8 @@ $fradis->update("activity", 3.14159265358979323846, "d");
 echo " done!";
 
 echo "\nAdding servers...";
-Server::addServer("BZPro Public HiX FFA", "bzpro.net:5154", $tw1sted->getId());
-Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net:5155", $tw1sted->getId());
+Server::addServer("BZPro Public HiX FFA", "bzpro.net:5154", 227, $tw1sted->getId());
+Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net:5155", 227, $tw1sted->getId());
 echo " done!";
 
 echo "\nAdding messages...";

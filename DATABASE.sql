@@ -783,11 +783,14 @@ CREATE TABLE `servers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT 'The name of the server',
   `address` varchar(50) NOT NULL DEFAULT '' COMMENT 'The address of the server (e.g. host:port)',
+  `country` int(10) unsigned NOT NULL DEFAULT '1',
   `owner` int(10) unsigned NOT NULL COMMENT 'The owner of the server',
   `info` text NOT NULL COMMENT 'Information regarding the server',
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the server was last pinged',
   `status` set('active','disabled','deleted') NOT NULL DEFAULT 'active' COMMENT 'The status of the server relative to BZiON',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `country` (`country`),
+  CONSTRAINT `servers_ibfk_1` FOREIGN KEY (`country`) REFERENCES `countries` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

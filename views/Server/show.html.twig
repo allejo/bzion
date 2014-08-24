@@ -11,7 +11,7 @@
     {{ link_to(server, 'minus', 'delete') }}
 {% endif %}
 
-<strong>{{ server.name }}</strong><br />
+<strong>{{ server.name }}</strong> {{ server.country.flagLiteral | raw }}<br />
 <em>{{ server.address }}</em><br />
 
 Total players: {{ server.numPlayers }}

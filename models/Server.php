@@ -28,6 +28,12 @@ class Server extends UrlModel implements PermissionModel
     protected $address;
 
     /**
+     * The id of the country the server is located in
+     * @var Country
+     */
+    protected $country;
+
+    /**
      * The id of the owner of the server
      * @var int
      */
@@ -63,6 +69,7 @@ class Server extends UrlModel implements PermissionModel
     {
         $this->name = $server['name'];
         $this->address = $server['address'];
+        $this->country = new Country($server['country']);
         $this->owner = $server['owner'];
         $this->info = unserialize($server['info']);
         $this->updated = new TimeDate($server['updated']);
@@ -73,14 +80,17 @@ class Server extends UrlModel implements PermissionModel
      *
      * @param  string $name    The name of the server
      * @param  string $address The address of the server (e.g: server.com:5155)
+     * @param  int    $country The ID of the country
      * @param  int    $owner   The ID of the server owner
+     *
      * @return Server An object that represents the sent message
      */
-    public static function addServer($name, $address, $owner)
+    public static function addServer($name, $address, $country, $owner)
     {
         $server = self::create(array(
             'name' => $name,
             'address' => $address,
+            'country' => $country,
             'owner' => $owner,
             'status' => 'active',
         ), 'ssis', 'updated');
@@ -192,6 +202,15 @@ class Server extends UrlModel implements PermissionModel
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Get the country the server is in
+     * @return Country The country the server is located in
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     /**
