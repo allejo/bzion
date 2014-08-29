@@ -42,6 +42,10 @@ services:
         class: BZIon\Command\ConfigCommand
         tags:
             -  { name: console.command }
+    bzion.command.changes_command:
+        class: BZIon\Command\ChangesCommand
+        tags:
+            -  { name: console.command }
     bzion.command.server_command:
         class: BZIon\Command\ServerCommand
         tags:

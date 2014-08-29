@@ -31,9 +31,7 @@ class NotificationController extends HTMLController
         $index  = -1;
 
         foreach ($notifications as $notification) {
-            // Only keep the year and the month to separate the notifications
-            $date = $notification->getTimestamp();
-            $date = TimeDate::create($date->year, $date->month, 1, 0, 0, 0);
+            $date = $notification->getTimestamp()->startOfMonth();
 
             // Create a new element in the $result array for every month
             if ($index == -1 || $result[$index]['date'] != $date) {

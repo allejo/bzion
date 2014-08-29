@@ -142,7 +142,7 @@ class LogCommand extends ContainerAwareCommand
      *
      * @param array $changelog The parsed changelog
      */
-    private function sort(&$changelog)
+    public static function sort(&$changelog)
     {
         uksort($changelog, function ($first, $second) {
             $a = \TimeDate::from($first);
