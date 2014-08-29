@@ -16,7 +16,7 @@ $db = Database::getInstance();
 Service::setModelCache(new ModelCache());
 
 echo "Adding players...";
-$alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description");
+$alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description", 84);
 $allejo     = Player::newPlayer(31098, "allejo", null, "active", Player::DEVELOPER, "", "I'm the one who breaks the build", 227);
 $ashvala    = Player::newPlayer(34353, "ashvala", null, "active", Player::DEVELOPER, "", "", 100);
 $autoreport = Player::newPlayer(55976, "AutoReport", null, "test");
