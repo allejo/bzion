@@ -341,7 +341,7 @@ class Match extends Model implements PermissionModel
      */
     public function getEloDiff()
     {
-        return $this->elo_diff;
+        return abs($this->elo_diff);
     }
 
     /**
@@ -360,6 +360,24 @@ class Match extends Model implements PermissionModel
     public function getTeamBEloNew()
     {
         return $this->team_b_elo_new;
+    }
+
+    /**
+     * Get the first team's old ELO
+     * @return int
+     */
+    public function getTeamAEloOld()
+    {
+        return $this->team_a_elo_new - $this->elo_diff;
+    }
+
+    /**
+     * Get the second team's old ELO
+     * @return int
+     */
+    public function getTeamBEloOld()
+    {
+        return $this->team_b_elo_new + $this->elo_diff;
     }
 
     /**
@@ -517,7 +535,7 @@ class Match extends Model implements PermissionModel
             'team_b_players' => implode(',', $b_players),
             'team_a_elo_new' => $team_a->getElo(),
             'team_b_elo_new' => $team_b->getElo(),
-            'elo_diff' => abs($diff),
+            'elo_diff' => $diff,
             'timestamp' => $timestamp->toMysql(),
             'duration' => $duration,
             'entered_by' => $entered_by,
@@ -567,15 +585,17 @@ class Match extends Model implements PermissionModel
             $diff = 50*(0-$prob);
         }
 
+        // Apply ELO modifiers from bzion-config.php
         $durations = unserialize(DURATION);
+        $diff *= (isset($durations[$duration])) ? $durations[$duration] : 1;
 
-        foreach ($durations as $time => $modifier) {
-            if ($duration == $time) {
-                return floor($modifier*$diff);
-            }
+        if (abs($diff) < 1 && $diff != 0) {
+            // ELOs such as 0.75 should round up to 1...
+            return ($diff > 0) ? 1 : -1;
         }
 
-        return floor($diff);
+        // ...everything else is rounded down (-3.7 becomes -3 and 48.1 becomes 48)
+        return intval($diff);
     }
 
     /**

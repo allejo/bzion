@@ -359,7 +359,7 @@ CREATE TABLE `matches` (
   `port` int(10) unsigned DEFAULT NULL COMMENT 'The port the match was held on',
   `server` varchar(100) DEFAULT NULL COMMENT 'The server address the match was held on',
   `replay_file` varchar(256) DEFAULT NULL COMMENT 'The name of the replay file the match was stored on',
-  `elo_diff` int(10) unsigned NOT NULL COMMENT 'The difference in ELO to both teams',
+  `elo_diff` int(10) NOT NULL COMMENT 'The difference in ELO to Team 1',
   `timestamp` datetime NOT NULL COMMENT 'The timestamp of the match',
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the match was last updated',
   `duration` int(10) unsigned NOT NULL COMMENT 'The duration of the match',

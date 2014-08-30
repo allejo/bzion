@@ -238,7 +238,7 @@ class Database
     */
     public function writeToDebug($error, $id=null)
     {
-        if ($log = Service::getContainer()->get('monolog.logger.mysql', null)) {
+        if (Service::getContainer() && $log = Service::getContainer()->get('monolog.logger.mysql', null)) {
             // Create a context array so that we can log the ID, if provided
             $context = array();
 

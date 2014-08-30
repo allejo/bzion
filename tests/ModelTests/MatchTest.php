@@ -34,6 +34,9 @@ class MatchTest extends TestCase
         $this->assertEquals(1225, $this->match->getTeamAEloNew());
         $this->assertEquals(1175, $this->match->getTeamBEloNew());
 
+        $this->assertEquals(1200, $this->match->getTeamAEloOld());
+        $this->assertEquals(1200, $this->match->getTeamBEloOLd());
+
         $this->assertEquals(5, $this->match->getTeamAPoints());
         $this->assertEquals(2, $this->match->getTeamBPoints());
 
@@ -53,6 +56,9 @@ class MatchTest extends TestCase
 
         $this->assertEquals(1175, $this->match->getTeamAEloNew());
         $this->assertEquals(1225, $this->match->getTeamBEloNew());
+
+        $this->assertEquals(1200, $this->match->getTeamAEloOld());
+        $this->assertEquals(1200, $this->match->getTeamBEloOLd());
 
         $this->assertEquals(2, $this->match->getTeamAPoints());
         $this->assertEquals(5, $this->match->getTeamBPoints());
@@ -78,6 +84,29 @@ class MatchTest extends TestCase
         $this->assertEquals(1209, $this->match->getTeamAEloNew());
         $this->assertEquals(1201, $this->match->getTeamBEloNew());
 
+        $this->assertEquals(1210, $this->match->getTeamAEloOld());
+        $this->assertEquals(1200, $this->match->getTeamBEloOLd());
+
+        $this->assertInstanceOf("Team", $this->match->getWinner());
+        $this->assertInstanceOf("Team", $this->match->getLoser());
+    }
+
+    public function testDrawReverse()
+    {
+        $this->team_b->changeElo(+10);
+
+        $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
+
+        $this->assertTrue($this->match->isDraw());
+
+        $this->assertEquals(1, $this->match->getEloDiff());
+
+        $this->assertEquals(1201, $this->match->getTeamAEloNew());
+        $this->assertEquals(1209, $this->match->getTeamBEloNew());
+
+        $this->assertEquals(1200, $this->match->getTeamAEloOld());
+        $this->assertEquals(1210, $this->match->getTeamBEloOLd());
+
         $this->assertInstanceOf("Team", $this->match->getWinner());
         $this->assertInstanceOf("Team", $this->match->getLoser());
     }
@@ -88,6 +117,7 @@ class MatchTest extends TestCase
 
         $this->assertEquals(0, $this->match->getEloDiff());
         $this->assertEquals($this->match->getTeamAEloNew(), $this->match->getTeamBEloNew());
+        $this->assertEquals($this->match->getTeamAEloOld(), $this->match->getTeamBEloOLd());
     }
 
     public function testShortMatch()
