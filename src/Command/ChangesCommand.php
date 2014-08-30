@@ -124,7 +124,7 @@ class ChangesCommand extends ContainerAwareCommand
      * Parse the last update file
      *
      * @param  string $path The path to the last update file
-     * @return void
+     * @return string The message to show to the user
      */
     private function parseLastUpdate($path)
     {

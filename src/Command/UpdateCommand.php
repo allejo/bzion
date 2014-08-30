@@ -2,6 +2,7 @@
 
 namespace BZIon\Command;
 
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
@@ -60,7 +61,10 @@ class UpdateCommand extends Command
         $this->clearCache($output);
         $this->finishProgress();
 
-        $output->writeln('<fg=green;options=bold>BZiON has been updated successfully!</fg=green;options=bold>');
+        $output->writeln("\n<fg=green;options=bold>BZiON has been updated successfully!</fg=green;options=bold>\n");
+
+        $commandInput = new ArrayInput(array('command' => 'bzion:changes'));
+        $this->getApplication()->run($commandInput, $output);
     }
 
     private function countGitChanges()
