@@ -95,7 +95,6 @@ class MessageController extends JSONController
         }
     }
 
-
     public function leaveAction(Player $me, Group $discussion)
     {
         if (!$discussion->isMember($me->getId())) {
@@ -110,6 +109,24 @@ class MessageController extends JSONController
             return new RedirectResponse(Service::getGenerator()->generate('message_list'));
         },  "Are you sure you want to abandon this discussion?",
             "You will no longer receive messages from this conversation", "Leave");
+    }
+
+    public function kickAction(Group $discussion, Player $player, Player $me)
+    {
+        $this->assertCanEdit($me, $discussion, "You are not allowed to kick a player off that discussion!");
+
+        if ($discussion->isCreator($player->getId()))
+            throw new ForbiddenException("You can't leave your own discussion.");
+
+        if (!$discussion->isMember($player->getId()))
+            throw new ForbiddenException("The specified player is not a member of this conversation.");
+
+        return $this->showConfirmationForm(function () use ($discussion, $player) {
+            $discussion->removeMember($player->getId());
+
+            return new RedirectResponse($discussion->getUrl());
+        },  "Are you sure you want to kick {$player->getEscapedUsername()} from the discussion?",
+            "Player {$player->getUsername()} has been kicked from the conversation", "Kick");
     }
 
     private function showInviteForm($discussion, $me)

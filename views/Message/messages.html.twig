@@ -1,5 +1,5 @@
 {% if messages %}
-    <a href="{{ path('message_show_discussion', {discussion: group.id, start: (messages|last).id }) }}" class="older_messages">
+    <a href="{{ path('message_discussion_show', {discussion: group.id, start: (messages|last).id }) }}" class="older_messages">
         Load older messages
     </a>
 {% endif %}

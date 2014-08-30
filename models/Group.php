@@ -167,7 +167,7 @@ class Group extends UrlModel
      */
     public static function getRouteName($action='show')
     {
-        return "message_" . $action . "_discussion";
+        return "message_discussion_$action";
     }
 
     /**

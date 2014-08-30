@@ -66,13 +66,17 @@ message_list:
     pattern:    /messages
     defaults: { _controller: 'Message', _action: 'compose' }
 
-message_show_discussion:
+message_discussion_show:
     pattern:    /messages/{discussion}
     defaults: { _controller: 'Message', _action: 'show' }
 
-message_leave_discussion:
+message_discussion_leave:
     pattern:    /messages/{discussion}/leave
     defaults: { _controller: 'Message', _action: 'leave' }
+
+message_discussion_kick:
+    pattern:    /messages/{discussion}/kick/{player}
+    defaults: { _controller: 'Message', _action: 'kick' }
 
 news_list:
     pattern:    /news
