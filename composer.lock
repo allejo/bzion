@@ -470,12 +470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "8460e83df0dc210a6502a18999316be391b307ba"
+                "reference": "15133f6642c9f3f27dc2ffb2f79ef66a61559131"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/8460e83df0dc210a6502a18999316be391b307ba",
-                "reference": "8460e83df0dc210a6502a18999316be391b307ba",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/15133f6642c9f3f27dc2ffb2f79ef66a61559131",
+                "reference": "15133f6642c9f3f27dc2ffb2f79ef66a61559131",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +505,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-08-27 19:26:39"
+            "time": "2014-08-29 14:44:50"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -3812,12 +3812,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "a171e763284c616d2c7dfa08afd5f6239242d460"
+                "reference": "b1c6cd04c8c67c7870db99eb51f3025df373a7b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/a171e763284c616d2c7dfa08afd5f6239242d460",
-                "reference": "a171e763284c616d2c7dfa08afd5f6239242d460",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/b1c6cd04c8c67c7870db99eb51f3025df373a7b6",
+                "reference": "b1c6cd04c8c67c7870db99eb51f3025df373a7b6",
                 "shasum": ""
             },
             "require": {
@@ -3860,7 +3860,7 @@
             "require-dev": {
                 "behat/behat": "~2.4",
                 "mikey179/vfsstream": "~1.2",
-                "mockery/mockery": "dev-master#1b3b265a904cab6f28b72684d7d62abade836e25",
+                "mockery/mockery": "dev-master",
                 "phpunit/phpunit": "~3.7",
                 "squizlabs/php_codesniffer": "~1.4",
                 "symfony/expression-language": "~2.4"
@@ -3903,7 +3903,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-08-25 14:15:24"
+            "time": "2014-08-30 13:00:00"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -4934,17 +4934,17 @@
         },
         {
             "name": "raulfraile/ladybug-bundle",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "target-dir": "RaulFraile/Bundle/LadybugBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/LadybugBundle.git",
-                "reference": "8a1b4f349e6c245a7395f92a467faa59bfb9d908"
+                "reference": "e2ef2c979444300e8fe85eee292bb43d87ea908c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/8a1b4f349e6c245a7395f92a467faa59bfb9d908",
-                "reference": "8a1b4f349e6c245a7395f92a467faa59bfb9d908",
+                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/e2ef2c979444300e8fe85eee292bb43d87ea908c",
+                "reference": "e2ef2c979444300e8fe85eee292bb43d87ea908c",
                 "shasum": ""
             },
             "require": {
@@ -4955,6 +4955,10 @@
             },
             "replace": {
                 "raulfraile/ladybugbundle": "dev-master"
+            },
+            "require-dev": {
+                "mockery/mockery": "@stable",
+                "phpunit/phpunit": "@stable"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -4981,7 +4985,7 @@
                 "tree",
                 "twig"
             ],
-            "time": "2014-08-20 10:09:23"
+            "time": "2014-08-29 20:43:09"
         },
         {
             "name": "raulfraile/ladybug-installer",

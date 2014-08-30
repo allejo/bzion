@@ -40,6 +40,12 @@ class Server extends UrlModel implements PermissionModel
     protected $owner;
 
     /**
+     * Whether the server is listed on the public list server
+     * @var bool
+     */
+    protected $online;
+
+    /**
      * The server's bzfquery information
      * @var array
      */
@@ -71,6 +77,7 @@ class Server extends UrlModel implements PermissionModel
         $this->address = $server['address'];
         $this->country = new Country($server['country']);
         $this->owner = $server['owner'];
+        $this->online = $server['online'];
         $this->info = unserialize($server['info']);
         $this->updated = new TimeDate($server['updated']);
     }
@@ -111,20 +118,31 @@ class Server extends UrlModel implements PermissionModel
 
     /**
      * Checks if the server is online (listed on the public list server)
-     * @todo   Fix performance issues
+     * @todo   Fix performance issues (many calls to the list server)
+     * @return self
+     */
+    private function updateOnline()
+    {
+        $online = false;
+        $servers = file(LIST_SERVER);
+
+        foreach ($servers as $server) {
+            list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
+            if ($this->address == $host) {
+                $online = true;
+            }
+        }
+
+        return $this->updateProperty($this->online, 'online', $online, 'i');
+    }
+
+    /**
+     * Checks if the server is online (listed on the public list server)
      * @return bool Whether the server is online
      */
     public function isOnline()
     {
-        $servers = file(LIST_SERVER);
-        foreach ($servers as $server) {
-            list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
-            if ($this->address == $host) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->online;
     }
 
     /**
@@ -166,7 +184,7 @@ class Server extends UrlModel implements PermissionModel
         $update_time = $this->updated->copy();
         $update_time->addMinutes(UPDATE_INTERVAL);
 
-        return TimeDate::now()->gte($update_time);
+        return TimeDate::now() >= $update_time;
     }
 
     /**

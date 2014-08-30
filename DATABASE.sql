@@ -785,6 +785,7 @@ CREATE TABLE `servers` (
   `address` varchar(50) NOT NULL DEFAULT '' COMMENT 'The address of the server (e.g. host:port)',
   `country` int(10) unsigned NOT NULL DEFAULT '1',
   `owner` int(10) unsigned NOT NULL COMMENT 'The owner of the server',
+  `online` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the server is listed on the public server list',
   `info` text NOT NULL COMMENT 'Information regarding the server',
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the server was last pinged',
   `status` set('active','disabled','deleted') NOT NULL DEFAULT 'active' COMMENT 'The status of the server relative to BZiON',
