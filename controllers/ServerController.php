@@ -43,7 +43,8 @@ class ServerController extends CRUDController
     {
         $server->setName($form->get('name')->getData())
                ->setAddress($form->get('address')->getData())
-               ->setOwner($form->get('owner')->getData()->getId());
+               ->setOwner($form->get('owner')->getData()->getId())
+               ->forceUpdate();
 
         return $server;
     }
