@@ -21,9 +21,9 @@ class WebSocketAdapter extends NotificationAdapter
     {
         Debug::startStopwatch("notification.trigger.websocket");
 
-        $fp = stream_socket_client("tcp://127.0.0.1:". WEBSOCKET_PULL_PORT, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
+        $fp = @stream_socket_client("tcp://127.0.0.1:". WEBSOCKET_PULL_PORT, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
 
-        fwrite($fp, json_encode(array(
+        @fwrite($fp, json_encode(array(
             'event' => array(
                 'type' => $channel,
                 'data' => $message,
