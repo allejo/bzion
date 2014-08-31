@@ -433,6 +433,21 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Find if there is any result
+     *
+     * @return boolean
+     */
+    public function any()
+    {
+        // Make sure that we don't mess with the user's options
+        $query = clone $this;
+
+        $query->limit(1);
+
+        return $query->count() > 0;
+    }
+
+    /**
      * Add a condition for the column
      * @param  string $condition The MySQL condition
      * @param  mixed  $value     A value to pass to MySQL
@@ -502,8 +517,13 @@ class QueryBuilder implements Countable
      */
     private function createQueryConditions()
     {
-        if ($this->conditions)
-            return 'WHERE ' . implode(' AND ', $this->conditions);
+        if ($this->conditions) {
+            // Add parentheses around the conditions to prevent conflicts due
+            // to the order of operations
+            $conditions = array_map(function($value) { return "($value)"; }, $this->conditions);
+
+            return 'WHERE ' . implode(' AND ', $conditions);
+        }
 
         return '';
     }

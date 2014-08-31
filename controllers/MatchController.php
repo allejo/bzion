@@ -20,9 +20,16 @@ class MatchController extends CRUDController
         return $this->create($me);
     }
 
-    /**
-     * @todo Handle players and the server address
-     */
+    public function deleteAction(Player $me, Match $match)
+    {
+        if (!$match->getTeamA()->isLastMatch($match)
+         || !$match->getTeamB()->isLastMatch($match)) {
+            throw new BadRequestException("You can only delete the last match of a team");
+        }
+
+        return $this->delete($match, $me);
+    }
+
     protected function enter($form, $me)
     {
         $firstTeam  = $form->get('first_team');

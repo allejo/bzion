@@ -472,9 +472,9 @@ class Match extends Model implements PermissionModel
         }
 
         // It was a draw, so grab the team with the lower elo because they're the underdogs
-        if ($this->getTeamA()->getElo() > $this->getTeamB()->getElo()) {
+        if ($this->getTeamAEloOld() > $this->getTeamBEloOld()) {
             return $this->getTeamB();
-        } elseif ($this->getTeamB()->getElo() > $this->getTeamA()->getElo()) {
+        } elseif ($this->getTeamBEloOld() > $this->getTeamAEloOld()) {
             return $this->getTeamA();
         }
 
@@ -489,6 +489,17 @@ class Match extends Model implements PermissionModel
     public function isDraw()
     {
         return $this->team_a_points == $this->team_b_points;
+    }
+
+    /**
+     * Reset the ELOs of the teams participating in the match
+     *
+     * @return self
+     */
+    public function resetELOs()
+    {
+        $this->getTeamA()->changeELO(-$this->elo_diff);
+        $this->getTeamB()->changeELO(+$this->elo_diff);
     }
 
     /**
@@ -546,17 +557,7 @@ class Match extends Model implements PermissionModel
             'status' => 'entered'
         ), 'iiiissiiisiisisss', 'updated');
 
-        // Update team match count
-        if ($a_points == $b_points) {
-            $team_a->incrementMatchCount("draw");
-            $team_b->incrementMatchCount("draw");
-        } elseif ($a_points > $b_points) {
-            $team_a->incrementMatchCount("win");
-            $team_b->incrementMatchCount("loss");
-        } else {
-            $team_a->incrementMatchCount("loss");
-            $team_b->incrementMatchCount("win");
-        }
+        $match->updateMatchCount();
 
         return $match;
     }
@@ -622,6 +623,35 @@ class Match extends Model implements PermissionModel
             ),
             'activeStatuses' => array('entered'),
         ));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete()
+    {
+        $this->updateMatchCount(true);
+        $this->resetELOs();
+
+        return parent::delete();
+    }
+
+    /**
+     * Update the match count of the teams participating in the match
+     *
+     * @param bool $decrement Whether to decrement instead of incrementing the match count
+     */
+    private function updateMatchCount($decrement = false)
+    {
+        $diff = ($decrement) ? -1 : 1;
+
+        if ($this->isDraw()) {
+            $this->getTeamA()->changeMatchCount($diff, 'draw');
+            $this->getTeamB()->changeMatchCount($diff, 'draw');
+        } else {
+            $this->getWinner()->changeMatchCount($diff, 'win');
+            $this->getLoser()->changeMatchCount($diff, 'loss');
+        }
     }
 
     public static function getCreatePermission() { return Permission::ENTER_MATCH; }

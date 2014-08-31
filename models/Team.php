@@ -508,8 +508,8 @@ class Team extends IdenticonModel implements PermissionModel
     /**
      * Change the name for team
      *
-     * @todo  Change the team's alias
-     * @param string $newName The new name of the team
+     * @param  string $newName The new name of the team
+     * @return self
      */
     public function setName($newName)
     {
@@ -518,6 +518,8 @@ class Team extends IdenticonModel implements PermissionModel
         parent::setName($newName);
 
         rename($oldIdenticon, $this->getIdenticonPath($this->getAlias()));
+
+        return $this;
     }
 
     /**
@@ -528,7 +530,7 @@ class Team extends IdenticonModel implements PermissionModel
      */
     public function setStatus($newStatus)
     {
-        $this->updateProperty($this->status, 'status', $newStatus, 's');
+        return $this->updateProperty($this->status, 'status', $newStatus, 's');
     }
 
     /**
@@ -539,7 +541,24 @@ class Team extends IdenticonModel implements PermissionModel
      */
     public function setLeader($leader)
     {
-        $this->updateProperty($this->leader, 'leader', $leader, 'i');
+        return $this->updateProperty($this->leader, 'leader', $leader, 'i');
+    }
+
+    /**
+     * Find if a specific match is the team's last one
+     *
+     * @param  int $matchID The ID of the match
+     * @return bool
+     */
+    public function isLastMatch($matchID)
+    {
+        // Find if this team participated in any matches after the current match
+        return !Match::getQueryBuilder()
+            ->with($this)
+            ->active()
+            ->sortBy('id')->reverse()
+            ->startAt($matchID)
+            ->any();
     }
 
     /**
@@ -550,7 +569,7 @@ class Team extends IdenticonModel implements PermissionModel
         parent::delete();
 
         // Remove all the members of a deleted team
-        $this->members = 0;
+        $this->updateProperty($this->members, 'members', 0, 'i');
         $this->db->query("UPDATE `players` SET `team` = NULL WHERE `team` = ?",
             'i', $this->id);
     }

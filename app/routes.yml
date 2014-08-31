@@ -62,6 +62,10 @@ match_enter:
     pattern:    /matches/enter
     defaults: { _controller: 'Match', _action: 'create' }
 
+match_delete:
+    pattern:    /matches/{match}/delete
+    defaults: { _controller: 'Match', _action: 'delete' }
+
 message_list:
     pattern:    /messages
     defaults: { _controller: 'Message', _action: 'compose' }

@@ -45,7 +45,7 @@ class MatchQueryBuilder extends QueryBuilder
         case "draws":
         case "tie":
         case "ties":
-            $query = "((team_a = ? OR team_b = ?) AND team_a_points = team_b_points)";
+            $query = "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points";
             break;
         default:
             $query = "team_a = ? OR team_b = ?";
