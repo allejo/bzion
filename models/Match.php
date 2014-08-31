@@ -464,18 +464,11 @@ class Match extends Model implements PermissionModel
      */
     public function getWinner()
     {
-        // Get the winner if the match had one
-        if ($this->getTeamAPoints() > $this->getTeamBPoints()) {
+        // Get the team that had its ELO increased
+        if ($this->elo_diff > 0) {
             return $this->getTeamA();
-        } elseif ($this->getTeamBPoints() > $this->getTeamAPoints()) {
+        } elseif ($this->elo_diff < 0) {
             return $this->getTeamB();
-        }
-
-        // It was a draw, so grab the team with the lower elo because they're the underdogs
-        if ($this->getTeamAEloOld() > $this->getTeamBEloOld()) {
-            return $this->getTeamB();
-        } elseif ($this->getTeamBEloOld() > $this->getTeamAEloOld()) {
-            return $this->getTeamA();
         }
 
         // If the ELOs are the same, return Team A because well, fuck you that's why
