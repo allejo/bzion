@@ -367,10 +367,7 @@ class QueryBuilder implements Countable
         if (!$this->nameColumn)
             throw new Exception("You haven't specified a name column");
 
-        $db = Database::getInstance();
-        $columns = array($this->nameColumn);
-
-        $results = $db->query($this->createQuery($columns), $this->types, $this->parameters);
+        $results = $this->getArray($this->nameColumn);
 
         return array_column($results, $this->nameColumn, 'id');
     }
@@ -398,8 +395,8 @@ class QueryBuilder implements Countable
      */
     public function getModels()
     {
-        $type = $this->type;
         $db   = Database::getInstance();
+        $type = $this->type;
 
         $results = $db->query($this->createQuery(), $this->types, $this->parameters);
 

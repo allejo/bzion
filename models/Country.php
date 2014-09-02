@@ -79,6 +79,21 @@ class Country extends Model
     }
 
     /**
+     * Get an associative array with country ISO code as keys and country names
+     * as values
+     *
+     * @return array
+     */
+    public static function getCountriesWithISO()
+    {
+        $result = Database::getInstance()->query(
+            'SELECT iso, name from ' . static::TABLE
+        );
+
+        return array_column($result, 'name', 'iso');
+    }
+
+    /**
      * Get the country's flag's CSS class
      *
      * @return string The URL to the country's flag
@@ -86,5 +101,16 @@ class Country extends Model
     private function getFlagCssClass()
     {
         return "flag-" . strtolower($this->getISO());
+    }
+
+    /**
+     * Given a country's ISO, get its ID
+     *
+     * @param  string $iso The two-letter ISO code of the country
+     * @return int The country's database ID
+     */
+    public static function getIdFromISO($iso)
+    {
+        return self::fetchIdFrom($iso, 'iso');
     }
 }

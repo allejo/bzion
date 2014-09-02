@@ -61,8 +61,8 @@ class Player extends IdenticonModel implements NamedModel
     protected $country;
 
     /**
-     * The player's timezone, in terms of distance from UTC (i.e. -5 for UTC-5)
-     * @var int
+     * The player's timezone PHP identifier, e.g. "(GMT+01:00) Paris"
+     * @var string
      */
     protected $timezone;
 
@@ -271,8 +271,8 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
-     * Get the player's timezone
-     * @return integer The timezone
+     * Get the player's timezone PHP identifier (example: "(GMT+01:00) Paris")
+     * @return string The timezone
      */
     public function getTimezone()
     {
@@ -412,7 +412,22 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function setAdminNotes($admin_notes)
     {
-    return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
+        return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
+    }
+
+    /**
+     * Set the player's country
+     * @param  string|int $country The ID or ISO code of the new country
+     * @return self
+     */
+    public function setCountry($country)
+    {
+        if (is_string($country)) {
+            // $country is an ISO code, convert it to a database ID
+            $country = Country::getIdFromISO($country);
+        }
+
+        return $this->updateProperty($this->country, 'country', $country, 'i');
     }
 
     /**
@@ -581,15 +596,16 @@ class Player extends IdenticonModel implements NamedModel
      * @param  string           $avatar      The player's profile avatar
      * @param  string           $description The player's profile description
      * @param  int              $country     The player's country
-     * @param  int              $timezone    The player's timezone
+     * @param  string           $timezone    The player's timezone
      * @param  string|\TimeDate $joined      The date the player joined
      * @param  string|\TimeDate $last_login  The timestamp of the player's last login
      * @return Player           An object representing the player that was just entered
      */
-    public static function newPlayer($bzid, $username, $team=null, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=1, $timezone=0, $joined="now", $last_login="now")
+    public static function newPlayer($bzid, $username, $team=null, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=1, $timezone=null, $joined="now", $last_login="now")
     {
         $joined = TimeDate::from($joined);
         $last_login = TimeDate::from($last_login);
+        $timezone = ($timezone) ?: date_default_timezone_get();
 
         $player = self::create(array(
             'bzid' => $bzid,
@@ -603,7 +619,7 @@ class Player extends IdenticonModel implements NamedModel
             'timezone' => $timezone,
             'joined' => $joined->toMysql(),
             'last_login' => $last_login->toMysql(),
-        ), 'iisssssiiss');
+        ), 'iisssssisss');
 
         $player->addRole($role_id);
 
