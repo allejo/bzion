@@ -528,8 +528,6 @@ class Match extends Model implements PermissionModel
         $team_a->changeElo($diff);
         $team_b->changeElo(-$diff);
 
-        $timestamp = TimeDate::from($timestamp);
-
         $match = self::create(array(
             'team_a' => $a,
             'team_b' => $b,
@@ -540,7 +538,7 @@ class Match extends Model implements PermissionModel
             'team_a_elo_new' => $team_a->getElo(),
             'team_b_elo_new' => $team_b->getElo(),
             'elo_diff' => $diff,
-            'timestamp' => $timestamp->toMysql(),
+            'timestamp' => TimeDate::from($timestamp)->toMysql(),
             'duration' => $duration,
             'entered_by' => $entered_by,
             'server' => $server,

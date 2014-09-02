@@ -372,11 +372,7 @@ class QueryBuilder implements Countable
 
         $results = $db->query($this->createQuery($columns), $this->types, $this->parameters);
 
-        $return = array();
-        foreach ($results as $r)
-            $return[$r['id']] = $r[$this->nameColumn];
-
-        return $return;
+        return array_column($results, $this->nameColumn, 'id');
     }
 
     /**
@@ -407,11 +403,7 @@ class QueryBuilder implements Countable
 
         $results = $db->query($this->createQuery(), $this->types, $this->parameters);
 
-        $return = array();
-        foreach ($results as $r)
-            $return[] = new $type($r['id']);
-
-        return $return;
+        return $type::arrayIdToModel(array_column($results, 'id'));
     }
 
     /**

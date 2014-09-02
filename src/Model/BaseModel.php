@@ -216,8 +216,6 @@ abstract class BaseModel implements ModelInterface
             return $results;
         }
 
-        $ids = array();
-
         // Find the correct value if the user specified a table.
         // For example, if $select is "groups.id", we should convert it to
         // "id", because that's how MySQLi stores column names in the $results
@@ -228,11 +226,7 @@ abstract class BaseModel implements ModelInterface
         if (!$results)
             return array();
 
-        foreach ($results as $r) {
-            $ids[] = $r[$select];
-        }
-
-        return $ids;
+        return array_column($results, $select);
     }
 
     /**

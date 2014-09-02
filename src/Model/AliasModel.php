@@ -183,12 +183,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
 
         // Convert the multi-dimensional array that $db->query() gave us into
         // a single-dimensional one.
-        $aliases = array();
-        if (is_array($result)) {
-            foreach ($result as $r) {
-                $aliases[] = $r['alias'];
-            }
-        }
+        $aliases = (is_array($result)) ? array_column($result, 'alias') : array();
 
         // If there's already an entry with the alias we generated, put a number
         // in the end of it and keep incrementing it until there is we find
