@@ -105,7 +105,7 @@ class Match extends Model implements PermissionModel
 
     /**
      * The timestamp representing when the match information was last updated
-     * @var string
+     * @var TimeDate
      */
     protected $updated;
 
