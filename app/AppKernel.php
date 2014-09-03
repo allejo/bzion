@@ -5,6 +5,7 @@ use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\YesNoFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\InvalidTest;
+use RaulFraile\Bundle\LadybugBundle\Twig\Extension\LadybugExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -100,6 +101,11 @@ class AppKernel extends Kernel
         $twig->addExtension(
             new FormExtension(new TwigRenderer($formEngine))
         );
+
+        if ($this->getEnvironment() == 'profile') {
+            $twig->addExtension(new LadybugExtension($this->container->get('ladybug.dumper')));
+        }
+
         $twig->addFunction(PluralFunction::get());
         $twig->addFunction(LinkToFunction::get());
         $twig->addFilter(YesNoFilter::get());
