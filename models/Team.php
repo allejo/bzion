@@ -10,7 +10,7 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends IdenticonModel implements PermissionModel
+class Team extends IdenticonModel
 {
     /**
      * The description of the team written in markdown

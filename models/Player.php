@@ -282,12 +282,16 @@ class Player extends IdenticonModel implements NamedModel
     /**
      * Check if a player has a specific permission
      *
-     * @param string $permission The permission to check for
+     * @param string|null $permission The permission to check for
      *
      * @return bool Whether or not the player has the permission
      */
     public function hasPermission($permission)
     {
+        if ($permission === null) {
+            return true;
+        }
+
         return isset($this->permissions[$permission]);
     }
 
@@ -674,9 +678,20 @@ class Player extends IdenticonModel implements NamedModel
      * @param  PermissionModel $model The model that will be deleted
      * @return boolean
      */
+    public function canSee($model)
+    {
+        return $model->canBeSeenBy($this);
+    }
+
+    /**
+     * Find whether the player can delete a model
+     *
+     * @param  PermissionModel $model The model that will be deleted
+     * @return boolean
+     */
     public function canDelete($model)
     {
-        return $this->hasPermission($model->getSoftDeletePermission());
+        return $model->canBeSoftDeletedBy($this);
     }
 
     /**
@@ -687,7 +702,7 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function canCreate($modelName)
     {
-        return $this->hasPermission($modelName::getCreatePermission());
+        return $modelName::canBeCreatedBy($this);
     }
 
     /**
@@ -698,6 +713,6 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function canEdit($model)
     {
-        return $this->hasPermission($model->getEditPermission());
+        return $model->canBeEditedBy($this);
     }
 }

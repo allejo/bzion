@@ -10,7 +10,7 @@
  * A Model that has a URL
  * @package    BZiON\Models
  */
-abstract class UrlModel extends Model
+abstract class UrlModel extends PermissionModel
 {
     /**
      * Get the name of the route that shows the object

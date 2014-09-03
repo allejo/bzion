@@ -10,7 +10,7 @@
  * A match played between two teams
  * @package    BZiON\Models
  */
-class Match extends Model implements PermissionModel
+class Match extends PermissionModel
 {
 
     /**

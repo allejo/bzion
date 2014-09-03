@@ -10,7 +10,7 @@
  * A custom page
  * @package    BZiON\Models
  */
-class Page extends AliasModel implements PermissionModel
+class Page extends AliasModel
 {
     /**
      * The content of the page

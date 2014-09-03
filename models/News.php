@@ -10,7 +10,7 @@
  * A news article
  * @package    BZiON\Models
  */
-class News extends UrlModel implements NamedModel, PermissionModel
+class News extends UrlModel implements NamedModel
 {
     /**
      * The category of the article
