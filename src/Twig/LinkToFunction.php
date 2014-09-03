@@ -11,16 +11,22 @@ class LinkToFunction
      * @param  string    $action The action to link to (e.g show or edit)
      * @return string    The <a> tag
      */
-    public function __invoke(\UrlModel $model, $icon=null, $action='show')
+    public function __invoke($context, \UrlModel $model, $icon=null, $action='show')
     {
-        $url = $model->getURL($action);
-
-        if ($icon)
+        if ($icon) {
             $content = "<i class=\"fa fa-$icon\"></i>";
-        else
+        } else {
             $content = \Model::escape($this->getModelName($model));
+        }
 
-        return '<a href="' . $url . '">' . $content . '</a>';
+        if ($context['me']->canSee($model)) {
+            $url  = $model->getURL($action);
+            $attr = 'href="' . $url . '"';
+        } else {
+            $attr = '';
+        }
+
+        return "<a $attr>$content</a>";
     }
 
     private function getModelName(\UrlModel &$model)
@@ -35,6 +41,9 @@ class LinkToFunction
 
     public static function get()
     {
-        return new \Twig_SimpleFunction('link_to', new self(), array('is_safe' => array('html')));
+        return new \Twig_SimpleFunction('link_to', new self(), array(
+            'is_safe' => array('html'),
+            'needs_context' => true
+        ));
     }
 }
