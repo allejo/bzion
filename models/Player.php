@@ -575,6 +575,14 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('active', 'test');
+    }
+
+    /**
      * Get a query builder for players
      * @return QueryBuilder
      */
@@ -583,9 +591,9 @@ class Player extends IdenticonModel implements NamedModel
         return new QueryBuilder('Player', array(
             'columns' => array(
                 'username' => 'username',
-                'team' => 'team'
+                'team' => 'team',
+                'status' => 'status'
             ),
-            'activeStatuses' => array('active', 'test'),
             'name' => 'username',
         ));
     }

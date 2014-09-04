@@ -610,9 +610,9 @@ class Match extends PermissionModel
                 'secondTeam' => 'team_b',
                 'firstTeamPoints' => 'team_a_points',
                 'secondTeamPoints' => 'team_b_points',
-                'time' => 'timestamp'
+                'time' => 'timestamp',
+                'status' => 'status'
             ),
-            'activeStatuses' => array('entered'),
         ));
     }
 
@@ -625,6 +625,14 @@ class Match extends PermissionModel
         $this->resetELOs();
 
         return parent::delete();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('entered');
     }
 
     /**

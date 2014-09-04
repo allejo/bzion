@@ -179,6 +179,14 @@ class Group extends UrlModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('active', 'reported');
+    }
+
+    /**
      * Get a list containing each member of the group
      * @param  int|null $hide The ID of a player to ignore
      * @return Player[] An array of players

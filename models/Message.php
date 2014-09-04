@@ -148,6 +148,14 @@ class Message extends Model
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('sent', 'reported');
+    }
+
+    /**
      * Get a query builder for messages
      * @return QueryBuilder
      */
@@ -155,10 +163,10 @@ class Message extends Model
     {
         return new QueryBuilder('Message', array(
             'columns' => array(
-                'group' => 'group_to',
-                'time'  => 'timestamp',
-            ),
-            'activeStatuses' => array('sent'),
+                'group'  => 'group_to',
+                'time'   => 'timestamp',
+                'status' => 'status'
+            )
         ));
     }
 

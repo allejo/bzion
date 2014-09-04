@@ -156,6 +156,14 @@ class NewsCategory extends AliasModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('enabled');
+    }
+
+    /**
      * Get a query builder for news categories
      * @return QueryBuilder
      */
@@ -163,9 +171,9 @@ class NewsCategory extends AliasModel
     {
         return new QueryBuilder('NewsCategory', array(
             'columns' => array(
-                'name' => 'name',
+                'name'   => 'name',
+                'status' => 'status'
             ),
-            'activeStatuses' => array('enabled'),
             'name' => 'name',
         ));
     }

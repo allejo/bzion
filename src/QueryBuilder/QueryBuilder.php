@@ -74,12 +74,6 @@ class QueryBuilder implements Countable
     private $currentColumn = null;
 
     /**
-     * Statuses to consider active
-     * @var string[]|null
-     */
-    private $activeStatuses = null;
-
-    /**
      * A column to consider the name of the model
      * @var string|null
      */
@@ -132,11 +126,6 @@ class QueryBuilder implements Countable
     public function __construct($type, $options=array())
     {
         $this->type = $type;
-
-        if (isset($options['activeStatuses'])) {
-            $this->activeStatuses = $options['activeStatuses'];
-            $this->columns['status'] = 'status';
-        }
 
         if (isset($options['columns']))
             $this->columns += $options['columns'];
@@ -350,11 +339,13 @@ class QueryBuilder implements Countable
      */
     public function active()
     {
-        if (!$this->activeStatuses) {
+        if (!isset($this->columns['status'])) {
             return $this;
         }
 
-        return $this->where('status')->isOneOf($this->activeStatuses);
+        $type = $this->type;
+
+        return $this->where('status')->isOneOf($type::getActiveStatuses());
     }
 
     /**

@@ -207,6 +207,14 @@ class Page extends AliasModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('live');
+    }
+
+    /**
      * Get the home page
      * @return Page
      */

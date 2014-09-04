@@ -181,15 +181,6 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * Get the status of the post
-     * @return string The string representation of the post's status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * Get the subject of the news article
      * @return string
      */
@@ -285,6 +276,14 @@ class News extends UrlModel implements NamedModel
     public function updateSubject($subject)
     {
         return $this->updateProperty($this->subject, 'subject', $subject, 's');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('published');
     }
 
     /**

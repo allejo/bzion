@@ -338,6 +338,14 @@ class Notification extends Model
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('read', 'unread');
+    }
+
+    /**
      * Get a query builder for notifications
      * @return NotificationQueryBuilder
      */
@@ -346,9 +354,9 @@ class Notification extends Model
         return new NotificationQueryBuilder('Notification', array(
             'columns' => array(
                 'receiver'  => 'receiver',
-                'timestamp' => 'timestamp'
-            ),
-            'activeStatuses' => array('read', 'unread')
+                'timestamp' => 'timestamp',
+                'status'    => 'status'
+            )
         ));
     }
 }

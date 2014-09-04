@@ -421,16 +421,6 @@ class Team extends IdenticonModel
     }
 
     /**
-     * Get the team's status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * Get the rank category a team belongs too based on their ELO
      *
      * This value is always a multiple of 100 and less than or equal to 2000
@@ -634,6 +624,14 @@ class Team extends IdenticonModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('open', 'closed');
+    }
+
+    /**
      * Get a query builder for teams
      * @return QueryBuilder
      */
@@ -641,9 +639,9 @@ class Team extends IdenticonModel
     {
         return new QueryBuilder('Team', array(
             'columns' => array(
-                'name' => 'name',
+                'name'   => 'name',
+                'status' => 'status'
             ),
-            'activeStatuses' => array('open', 'closed'),
             'name' => 'name',
         ));
     }
