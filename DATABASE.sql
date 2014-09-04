@@ -438,7 +438,7 @@ LOCK TABLES `news_categories` WRITE;
 
 INSERT INTO `news_categories` (`id`, `alias`, `name`, `protected`, `status`)
 VALUES
-  (1,'uncategorized','Uncategorized',1,'live');
+  (1,'uncategorized','Uncategorized',1,'entered');
 
 /*!40000 ALTER TABLE `news_categories` ENABLE KEYS */;
 UNLOCK TABLES;
