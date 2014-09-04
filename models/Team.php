@@ -654,7 +654,7 @@ class Team extends IdenticonModel
     public static function getHardDeletePermission() { return Permission::HARD_DELETE_TEAM; }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function isEditor($player)
     {
