@@ -78,7 +78,7 @@ abstract class HTMLController extends Controller
      * Find out whether we should throw a 404 error for the specified model
      * or not
      *
-     * @param  PermissionModel $model The model to check
+     * @param  Model   $model The model to check
      * @param  string  $paramName The name of the action's parameter
      * @return boolean false to show a 404 error to the user
      */
@@ -89,6 +89,10 @@ abstract class HTMLController extends Controller
             // in - in this case we can just pass the invalid Player model to
             // the controller without complaining
             return true;
+        }
+
+        if (!$model instanceof PermissionModel) {
+            return !$model->isDeleted();
         }
 
         if ($this->getMe()->canSee($model)) {
