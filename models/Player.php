@@ -289,7 +289,7 @@ class Player extends IdenticonModel implements NamedModel
     public function hasPermission($permission)
     {
         if ($permission === null) {
-            return true;
+            return false;
         }
 
         return isset($this->permissions[$permission]);
