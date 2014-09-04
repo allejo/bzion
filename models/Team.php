@@ -623,19 +623,6 @@ class Team extends IdenticonModel
     }
 
     /**
-     * Get an array with all the team IDs and names
-     *
-     * @return array
-     */
-    public static function getTeamNames()
-    {
-        return self::fetchIdsFrom(
-            "status", array("disabled", "deleted"),
-            "s", true, "ORDER BY name", "", "id, name"
-        );
-    }
-
-    /**
      * Get a single team by its name
      *
      * @param  string $name The team name to look for
@@ -665,4 +652,12 @@ class Team extends IdenticonModel
     public static function getEditPermission() { return Permission::EDIT_TEAM;  }
     public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_TEAM; }
     public static function getHardDeletePermission() { return Permission::HARD_DELETE_TEAM; }
+
+    /**
+     * @inheritDoc
+     */
+    protected function isEditor($player)
+    {
+        return $player->getId() == $this->getLeader()->getId();
+    }
 }

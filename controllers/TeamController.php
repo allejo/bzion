@@ -220,8 +220,8 @@ class TeamController extends CRUDController
      */
     private function assertCanEdit(Player $player, Team $team, $message="You are not allowed to edit that team")
     {
-        if (!$player->hasPermission(Permission::EDIT_TEAM))
-            if ($team->getLeader()->getId() != $player->getId())
-                throw new ForbiddenException($message);
+        if (!$player->canEdit($team)) {
+            throw new ForbiddenException($message);
+        }
     }
 }

@@ -67,6 +67,8 @@ abstract class PermissionModel extends Model
     /**
      * Find out whether a player can create a model of this type
      *
+     * If possible, prefer to override PermissionModel::getCreatePermission()
+     *
      * @return boolean
      */
     public static function canBeCreatedBy($player)
@@ -77,30 +79,50 @@ abstract class PermissionModel extends Model
     /**
      * Find out whether a player can edit this model
      *
+     * If possible, prefer to override PermissionModel::getEditPermission() and/or
+     * PermissionModel::isEditor()
+     *
      * @return boolean
      */
     public function canBeEditedBy($player)
     {
-        return $player->hasPermission(static::getEditPermission());
+        return $player->hasPermission(static::getEditPermission()) || $this->isEditor($player);
     }
 
     /**
      * Find out whether a player can soft delete the model
      *
+     * If possible, prefer to override PermissionModel::getSoftDeletePermission()
+     * and/or PermissionModel::isEditor()
+     *
      * @return boolean
      */
     public function canBeSoftDeletedBy($player)
     {
-        return $player->hasPermission(static::getSoftDeletePermission());
+        return $player->hasPermission(static::getSoftDeletePermission()) || $this->isEditor($player);
     }
 
     /**
      * Find out whether a player can delete this model
+     *
+     * If possible, prefer to override PermissionModel::getHardDeletePermission()
      *
      * @return boolean
      */
     public function canBeHardDeletedBy($player)
     {
         return $player->hasPermission(static::getHardDeletePermission());
+    }
+
+    /**
+     * Find out whether a player can edit or delete the model even without
+     * having the appropriate permissions (for example, a team owner should be
+     * able to edit their team)
+     *
+     * @return boolean
+     */
+    protected function isEditor($player)
+    {
+        return false;
     }
 }

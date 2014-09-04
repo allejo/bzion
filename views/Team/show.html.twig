@@ -17,11 +17,11 @@
                 </div>
 
                 <div class="buttons">
-                    {% if me.canDelete(team) or me.id == team.leader.id %}
+                    {% if me.canDelete(team) %}
                         <a class="button red" href="{{ team.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
 
-                    {% if me.canEdit(team) or me.id == team.leader.id %}
+                    {% if me.canEdit(team) %}
                         <a class="button grey notextshadow" href="{{ team.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 
