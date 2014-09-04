@@ -63,13 +63,46 @@ abstract class HTMLController extends Controller
     {
         $model = parent::findModelInParameters($modelParameter, $routeParameters);
 
-        if (!$model instanceof Model || !$model->isDeleted())
+        if (!$model instanceof Model) {
             return $model;
-        elseif ($modelParameter->getName() !== "me") {
+        } elseif (!$this->isValid($model, $modelParameter->getName())) {
+            // If the model is not supposed to be visible to the player
+            // requesting it, pretend it's not there
             throw new ModelNotFoundException($model->getTypeForHumans());
         }
 
         return $model;
+    }
+
+    /**
+     * Find out whether we should throw a 404 error for the specified model
+     * or not
+     *
+     * @param  PermissionModel $model The model to check
+     * @param  string  $paramName The name of the action's parameter
+     * @return boolean false to show a 404 error to the user
+     */
+    private function isValid($model, $paramName)
+    {
+        if ($paramName === "me") {
+            // `$me` can be invalid if, for example, no user is currently logged
+            // in - in this case we can just pass the invalid Player model to
+            // the controller without complaining
+            return true;
+        }
+
+        if ($this->getMe()->canSee($model)) {
+            return true;
+        }
+
+        if ($model->canBeHardDeletedBy($this->getMe())) {
+            if ($this->getRequest()->get('showDeleted')) {
+                // An admin has asked to see a deleted model
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
