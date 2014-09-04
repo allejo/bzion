@@ -20,13 +20,12 @@ class LinkToFunction
         }
 
         if ($context['me']->canSee($model)) {
-            $url  = $model->getURL($action);
-            $attr = 'href="' . $url . '"';
-        } else {
-            $attr = '';
+            $url = $model->getURL($action);
+
+            return '<a href="' . $url . '">' . $content . '</a>';
         }
 
-        return "<a $attr>$content</a>";
+        return '<span class="disabled-link">' . $content . '</a>';
     }
 
     private function getModelName(\UrlModel &$model)

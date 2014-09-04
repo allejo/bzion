@@ -51,14 +51,18 @@ abstract class PermissionModel extends Model
     /**
      * Find out whether a player should know that a model exists
      *
-     * @todo Add checks for hidden ('inactive'), not just deleted models
      * @return boolean
      */
     public function canBeSeenBy($player)
     {
         if ($this->isDeleted()) {
-            // Only admins can see deleted or hidden models
+            // Only admins can see deleted models
             return $this->canBeHardDeletedBy($player);
+        }
+
+        if (!$this->isActive()) {
+            // Only admins can see hidden models
+            return $this->canBeEditedBy($player);
         }
 
         return true;
