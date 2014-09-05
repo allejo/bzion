@@ -196,11 +196,13 @@ abstract class HTMLController extends Controller
      * The returned QueryBuilder will only show models visible to the currently
      * logged in user
      *
+     * @param  string|null The model whose query builder we should get (null
+     *                     to get the builder of the controller's model)
      * @return QueryBuilder
      */
-    protected static function getQueryBuilder()
+    protected static function getQueryBuilder($type = null)
     {
-        $type = static::getName();
+        $type = ($type) ?: static::getName();
 
         return $type::getQueryBuilder()
             ->visibleTo(static::getMe(), static::getRequest()->get('showDeleted'));

@@ -342,6 +342,23 @@ class News extends UrlModel implements NamedModel
         );
     }
 
+    /**
+     * Get a query builder for news
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('News', array(
+            'columns' => array(
+                'subject'  => 'subject',
+                'category' => 'category',
+                'created'  => 'created',
+                'status'   => 'status'
+            ),
+            'name' => 'subject'
+        ));
+    }
+
     public static function getCreatePermission() { return Permission::CREATE_NEWS; }
     public static function getEditPermission() { return Permission::EDIT_NEWS;  }
     public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_NEWS; }

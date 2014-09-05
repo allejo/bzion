@@ -4,17 +4,17 @@ class NewsController extends CRUDController
 {
     public function showAction(News $article)
     {
-        return array("article" => $article, "categories" => NewsCategory::getCategories());
+        return array("article" => $article, "categories" => $this->getCategories());
     }
 
     public function listAction(NewsCategory $category = null)
     {
-        if ($category)
-            $news = $category->getNews();
-        else
-            $news = News::getNews();
+        $news = $this->getQueryBuilder()
+            ->sortBy('created')->reverse()
+            ->where('category')->is($category)
+            ->getModels();
 
-        return array("news" => $news, "categories" => NewsCategory::getCategories(), "category" => $category);
+        return array("news" => $news, "categories" => $this->getCategories(), "category" => $category);
     }
 
     public function createAction(Player $me)
@@ -53,5 +53,12 @@ class NewsController extends CRUDController
             $form->get('category')->getData()->getId(),
             $form->get('status')->getData()
         );
+    }
+
+    private function getCategories()
+    {
+        return $this->getQueryBuilder('NewsCategory')
+            ->sortBy('name')
+            ->getModels();
     }
 }
