@@ -6,6 +6,10 @@ admin_list:
     pattern:    /admins
     defaults: { _controller: 'Admin', _action: 'list' }
 
+admin_wipe:
+    pattern:    /admin/deleted
+    defaults: { _controller: 'Admin', _action: 'wipe' }
+
 api_leagueoverseer:
     pattern:    /api/leagueOverseer
     defaults: { _controller: 'LeagueOverseerHook', _action: 'query' }

@@ -43,27 +43,47 @@ abstract class UrlModel extends PermissionModel
     /**
      * Get an object's url
      *
-     * @param string  $action   The action to perform (`show`, `list` or `delete`)
+     * @param string  $action   The action to perform (e.g `show`, `list` or `delete`)
      * @param boolean $absolute Whether to return an absolute URL
+     * @param array   $params   Extra parameters to pass to the URL generator
      *
-     * @return string A permanent link
+     * @return string A link
      */
-    public function getURL($action='show', $absolute=false)
+    public function getURL($action='show', $absolute=false, $params=array())
     {
-        return static::getPermaLink($action, $absolute);
+        return static::getPermaLink($action, $absolute, $params);
     }
 
     /**
      * Get an object's permanent url
      *
-     * @param string  $action   The action to perform (`show`, `list` or `delete`)
+     * @param string  $action   The action to perform (e.g `show`, `list` or `delete`)
      * @param boolean $absolute Whether to return an absolute URL
+     * @param array   $params   Extra parameters to pass to the URL generator
      *
      * @return string A permanent link
      */
-    public function getPermaLink($action='show', $absolute=false)
+    public function getPermaLink($action='show', $absolute=false, $params=array())
     {
-        return Service::getGenerator()->generate(static::getRouteName($action),
-                   array(static::getParamName() => $this->getId()), $absolute);
+        return $this->getLink($this->getId(), $action, $absolute, $params);
+    }
+
+    /**
+     * Generate a link for a route related to this object
+     *
+     * @param mixed   $identifier A parameter representing the model (e.g an ID or alias)
+     * @param string  $action     The action to perform
+     * @param boolean $absolute   Whether to return an absolute URL
+     * @param array   $params     Extra parameters to pass to the URL generator
+     *
+     * @return string A link
+     */
+    protected function getLink($identifier, $action, $absolute, $params)
+    {
+        return Service::getGenerator()->generate(
+            static::getRouteName($action),
+            array_merge(array(static::getParamName() => $identifier), $params),
+            $absolute
+        );
     }
 }

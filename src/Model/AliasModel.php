@@ -81,7 +81,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     }
 
     /**
-     * Reset a model's alias based on its
+     * Reset a model's alias based on its name
      * @return self
      */
     public function resetAlias()
@@ -93,12 +93,12 @@ abstract class AliasModel extends UrlModel implements NamedModel
     /**
      * {@inheritDoc}
      */
-    public function getURL($action='show', $absolute=false)
+    public function getURL($action='show', $absolute=false, $params=array())
     {
         if (!$this->isValid())
             return "";
-        return Service::getGenerator()->generate(static::getRouteName($action),
-                array(static::getParamName() => $this->getAlias()), $absolute);
+
+        return $this->getLink($this->getAlias(), $action, $absolute, $params);
     }
 
     /**
