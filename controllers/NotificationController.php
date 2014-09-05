@@ -6,8 +6,7 @@ class NotificationController extends HTMLController
     {
         $this->requireLogin();
 
-        $query = Notification::getQueryBuilder()
-            ->active()
+        $query = $this->getQueryBuilder()
             ->where('receiver')->is($me)
             ->sortBy('timestamp')->reverse();
 

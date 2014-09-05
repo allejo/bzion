@@ -78,41 +78,6 @@ abstract class HTMLController extends Controller
     }
 
     /**
-     * Find out whether we should throw a 404 error for the specified model
-     * or not
-     *
-     * @param  Model   $model The model to check
-     * @param  string  $paramName The name of the action's parameter
-     * @return boolean false to show a 404 error to the user
-     */
-    private function isValid($model, $paramName)
-    {
-        if ($paramName === "me") {
-            // `$me` can be invalid if, for example, no user is currently logged
-            // in - in this case we can just pass the invalid Player model to
-            // the controller without complaining
-            return true;
-        }
-
-        if (!$model instanceof PermissionModel) {
-            return !$model->isDeleted();
-        }
-
-        if ($this->getMe()->canSee($model)) {
-            return true;
-        }
-
-        if ($model->canBeHardDeletedBy($this->getMe())) {
-            if ($this->getRequest()->get('showDeleted')) {
-                // An admin has asked to see a deleted model
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function callAction($action=null)
@@ -223,6 +188,22 @@ abstract class HTMLController extends Controller
     protected function goHome()
     {
         return new RedirectResponse($this->getHomeURL());
+    }
+
+    /**
+     * Returns a configured QueryBuilder for the corresponding model
+     *
+     * The returned QueryBuilder will only show models visible to the currently
+     * logged in user
+     *
+     * @return QueryBuilder
+     */
+    protected static function getQueryBuilder()
+    {
+        $type = static::getName();
+
+        return $type::getQueryBuilder()
+            ->visibleTo(static::getMe(), static::getRequest()->get('showDeleted'));
     }
 
     /**

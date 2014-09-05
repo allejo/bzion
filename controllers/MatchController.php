@@ -7,7 +7,7 @@ class MatchController extends CRUDController
 {
     public function listAction(Request $request, Team $team=null, $type=null)
     {
-        $query = Match::getQueryBuilder()->active()
+        $query = $this->getQueryBuilder()
                ->sortBy('time')->reverse()
                ->with($team, $type)
                ->limit(50)->fromPage($request->query->get('page', 1));

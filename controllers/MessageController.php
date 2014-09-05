@@ -71,7 +71,7 @@ class MessageController extends JSONController
         $inviteForm = $this->showInviteForm($discussion, $me);
         $renameForm = $this->showRenameForm($discussion, $me);
 
-        $messages = Message::getQueryBuilder()->active()
+        $messages = $this->getQueryBuilder()
                   ->where('group')->is($discussion)
                   ->sortBy('time')->reverse()
                   ->limit(10)->fromPage($request->query->get('page', 1))

@@ -166,6 +166,20 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Request that a column doesNOT equals a string (case-insensitive)
+     *
+     * @param  string $string The string that the column's value should equal to
+     * @return self
+     */
+    public function notEquals($string)
+    {
+        $this->addColumnCondition("!= ?", $string, 's');
+
+        return $this;
+    }
+
+
+    /**
      * Request that a column equals a number
      *
      * @param  int|Model $number The number that the column's value should equal
@@ -346,6 +360,33 @@ class QueryBuilder implements Countable
         $type = $this->type;
 
         return $this->where('status')->isOneOf($type::getActiveStatuses());
+    }
+
+    /**
+     * Make sure that Models invisible to a player are not returned
+     *
+     * Note that this method does not take PermissionModel::canBeSeenBy() into
+     * consideration for performance purposes, so you will have to override this
+     * in your query builder if necessary.
+     *
+     * @param  Player  $player The player in question
+     * @param  boolean $showDeleted false to hide deleted models even from admins
+     * @return self
+     */
+    public function visibleTo($player, $showDeleted = false)
+    {
+        $type = $this->type;
+
+        if ($player->hasPermission($type::getEditPermission())) {
+            // The player is an admin who can see hidden models
+            if ($showDeleted) {
+                return $this;
+            } else {
+                return $this->where('status')->notEquals('deleted');
+            }
+        } else {
+            return $this->active();
+        }
     }
 
     /**

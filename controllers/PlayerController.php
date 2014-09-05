@@ -33,7 +33,7 @@ class PlayerController extends JSONController
 
     public function listAction(Request $request, Player $me, Team $team=null)
     {
-        $query = Player::getQueryBuilder()->active();
+        $query = $this->getQueryBuilder();
 
         if ($startsWith = $request->query->get('startsWith')) {
             $query->where('username')->startsWith($startsWith);
