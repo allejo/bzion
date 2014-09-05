@@ -12,7 +12,7 @@ include_once(DOC_ROOT . "/includes/bzfquery.php");
  * A BZFlag server
  * @package    BZiON\Models
  */
-class Server extends UrlModel
+class Server extends UrlModel implements NamedModel
 {
 
     /**
@@ -80,6 +80,7 @@ class Server extends UrlModel
         $this->online = $server['online'];
         $this->info = unserialize($server['info']);
         $this->updated = new TimeDate($server['updated']);
+        $this->status = $server['status'];
     }
 
     /**
@@ -302,7 +303,7 @@ class Server extends UrlModel
     }
 
     /**
-     * Get a query builder for news
+     * Get a query builder for servers
      * @return QueryBuilder
      */
     public static function getQueryBuilder()

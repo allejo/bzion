@@ -215,6 +215,21 @@ class Page extends AliasModel
     }
 
     /**
+     * Get a query builder for pages
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Page', array(
+            'columns' => array(
+                'name' => 'name',
+                'status' => 'status'
+            ),
+            'name' => 'name'
+        ));
+    }
+
+    /**
      * Get the home page
      * @return Page
      */
