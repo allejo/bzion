@@ -286,7 +286,7 @@ abstract class Controller
      * Returns the name of the controller without the "Controller" part
      * @return string
      */
-    public function getName()
+    public static function getName()
     {
         return preg_replace('/Controller$/', '', get_called_class());
     }

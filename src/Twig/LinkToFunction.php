@@ -19,7 +19,7 @@ class LinkToFunction
             $content = \Model::escape($this->getModelName($model));
         }
 
-        if ($context['me']->canSee($model)) {
+        if ($context['controller']->canSee($model)) {
             $url = $model->getURL($action);
 
             return '<a href="' . $url . '">' . $content . '</a>';

@@ -30,7 +30,7 @@ abstract class Model extends CachedModel
     public function isDeleted()
     {
         if (!$this->isValid() || $this->getStatus() == 'deleted')
-            return false;
+            return true;
 
         return false;
     }

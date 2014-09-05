@@ -579,7 +579,7 @@ class Player extends IdenticonModel implements NamedModel
      */
     public static function getActiveStatuses()
     {
-        return array('active', 'test');
+        return array('active', 'reported', 'test');
     }
 
     /**
@@ -683,12 +683,13 @@ class Player extends IdenticonModel implements NamedModel
     /**
      * Find whether the player can delete a model
      *
-     * @param  PermissionModel $model The model that will be deleted
+     * @param  PermissionModel $model The model that will be seen
+     * @param  boolean $showDeleted Whether to show deleted models to admins
      * @return boolean
      */
-    public function canSee($model)
+    public function canSee($model, $showDeleted=false)
     {
-        return $model->canBeSeenBy($this);
+        return $model->canBeSeenBy($this, $showDeleted);
     }
 
     /**
