@@ -724,4 +724,8 @@ class Player extends IdenticonModel implements NamedModel
     {
         return $model->canBeEditedBy($this);
     }
+
+    public static function getEditPermission() { return Permission::EDIT_USER;  }
+    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_USER; }
+    public static function getHardDeletePermission() { return Permission::HARD_DELETE_USER; }
 }
