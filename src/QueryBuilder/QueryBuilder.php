@@ -145,7 +145,7 @@ class QueryBuilder implements Countable
     public function where($column)
     {
         if (!isset($this->columns[$column]))
-            throw new Exception("Unknown column");
+            throw new InvalidArgumentException("Unknown column '$column'");
 
         $this->currentColumn = $this->columns[$column];
 
@@ -182,14 +182,20 @@ class QueryBuilder implements Countable
     /**
      * Request that a column equals a number
      *
-     * @param  int|Model $number The number that the column's value should equal
-     *                           to - if a Model is provided, use the model's ID
+     * @param  int|Model|null $number The number that the column's value should
+     *                                equal to. If a Model is provided, use the
+     *                                model's ID, while null values are ignored.
      * @return self
      */
     public function is($number)
     {
-        if ($number instanceof Model)
+        if ($number === null) {
+            return $this;
+        }
+
+        if ($number instanceof Model) {
             $number = $number->getId();
+        }
 
         $this->addColumnCondition("= ?", $number, 'i');
 
