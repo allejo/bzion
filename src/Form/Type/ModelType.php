@@ -68,7 +68,7 @@ class ModelType extends AbstractType
     private function getAll()
     {
         $type     = $this->type;
-        $query    = $type::getQueryBuilder()->active();
+        $query    = \Controller::getQueryBuilder($this->type);
         $modifier = $this->modifier;
 
         if ($modifier) {

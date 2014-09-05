@@ -207,7 +207,7 @@ class PlayerType extends AbstractType
 
         $player = Player::getFromUsername($username);
 
-        if (!$player->isValid())
+        if (!\HTMLController::canSee($player))
             // Symfony auto-escapes $username
             throw new InvalidNameException("There is no player called $username");
 
@@ -226,7 +226,7 @@ class PlayerType extends AbstractType
         $id = (int) $id;
         $player = new Player($id);
 
-        if (!$player->isValid())
+        if (!\HTMLController::canSee($player))
             throw new InvalidNameException("There is no player with ID $id");
 
         return $player;

@@ -292,6 +292,24 @@ abstract class Controller
     }
 
     /**
+     * Returns a configured QueryBuilder for the corresponding model
+     *
+     * The returned QueryBuilder will only show models visible to the currently
+     * logged in user
+     *
+     * @param  string|null The model whose query builder we should get (null
+     *                     to get the builder of the controller's model)
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder($type = null)
+    {
+        $type = ($type) ?: static::getName();
+
+        return $type::getQueryBuilder()
+            ->visibleTo(static::getMe(), static::getRequest()->get('showDeleted'));
+    }
+
+    /**
      * Generates a URL from the given parameters.
      * @param  string  $name       The name of the route
      * @param  mixed   $parameters An array of parameters
