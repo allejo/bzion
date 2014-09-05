@@ -42,7 +42,7 @@ class MatchFormCreator extends ModelFormCreator
                         'message' => 'The timestamp of the match must not be in the future'
                     ))
                 ),
-                'data' => \TimeDate::now()
+                'data' => \TimeDate::now(\Controller::getMe()->getTimezone())
             ))
             ->add('enter', 'submit');
     }

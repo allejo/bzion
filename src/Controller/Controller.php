@@ -316,7 +316,7 @@ abstract class Controller
      * Gets the currently logged in player
      * @return Player
      */
-    protected static function getMe()
+    public static function getMe()
     {
         return new Player(self::getRequest()->getSession()->get('playerId'));
     }

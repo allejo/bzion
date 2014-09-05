@@ -276,7 +276,7 @@ class Player extends IdenticonModel implements NamedModel
      */
     public function getTimezone()
     {
-        return $this->timezone;
+        return ($this->timezone) ?: date_default_timezone_get();
     }
 
     /**
