@@ -377,7 +377,8 @@ class QueryBuilder implements Countable
     {
         $type = $this->type;
 
-        if ($player->hasPermission($type::getEditPermission())) {
+        if (is_subclass_of($type, "PermissionModel")
+         && $player->hasPermission($type::getEditPermission())) {
             // The player is an admin who can see hidden models
             if ($showDeleted) {
                 return $this;

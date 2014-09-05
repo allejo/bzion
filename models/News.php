@@ -283,7 +283,7 @@ class News extends UrlModel implements NamedModel
      */
     public static function getActiveStatuses()
     {
-        return array('published');
+        return array('published', 'revision');
     }
 
     /**

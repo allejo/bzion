@@ -211,7 +211,7 @@ class Page extends AliasModel
      */
     public static function getActiveStatuses()
     {
-        return array('live');
+        return array('live', 'revision');
     }
 
     /**
