@@ -301,6 +301,21 @@ class Server extends UrlModel
         return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s", false, "ORDER BY name"));
     }
 
+    /**
+     * Get a query builder for news
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Server', array(
+            'columns' => array(
+                'name' => 'name',
+                'status' => 'status'
+            ),
+            'name' => 'name'
+        ));
+    }
+
     public static function getCreatePermission() { return Permission::EDIT_SERVER; }
     public static function getEditPermission() { return Permission::EDIT_SERVER;  }
     public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_SERVER; }
