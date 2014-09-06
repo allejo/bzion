@@ -179,13 +179,7 @@ class LeagueOverseerHookController extends PlainTextController
         ));
 
         // Output the match stats that will be sent back to BZFS
-        return sprintf("(+/- %d) %s [%d] vs [%d] %s",
-            $match->getEloDiff(),
-            $match->getWinner()->getName(),
-            $match->getScore($match->getWinner()),
-            $match->getScore($match->getLoser()),
-            $match->getLoser()->getName()
-        );
+        return $match->getName();
     }
 
     /**

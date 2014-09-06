@@ -10,7 +10,7 @@
  * A match played between two teams
  * @package    BZiON\Models
  */
-class Match extends PermissionModel
+class Match extends PermissionModel implements NamedModel
 {
 
     /**
@@ -633,6 +633,20 @@ class Match extends PermissionModel
     public static function getActiveStatuses()
     {
         return array('entered');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return sprintf("(+/- %d) %s [%d] vs [%d] %s",
+            $this->getEloDiff(),
+            $this->getWinner()->getName(),
+            $this->getScore($this->getWinner()),
+            $this->getScore($this->getLoser()),
+            $this->getLoser()->getName()
+        );
     }
 
     /**

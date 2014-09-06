@@ -185,4 +185,12 @@ class NewsCategory extends AliasModel
     {
         return "category";
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getTypeForHumans()
+    {
+        return "news category";
+    }
 }

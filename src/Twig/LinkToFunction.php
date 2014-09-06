@@ -6,13 +6,13 @@ class LinkToFunction
     /**
      * Get a link literal to a Model
      *
-     * @param  \UrlModel $model  The model we want to link to
-     * @param  string    $icon   A font awesome icon identifier to show instead of text
-     * @param  string    $action The action to link to (e.g show or edit)
-     * @param  boolean   $linkAll Whether to link to inactive or deleted models
-     * @return string    The <a> tag
+     * @param  \Model  $model  The model we want to link to
+     * @param  string  $icon   A font awesome icon identifier to show instead of text
+     * @param  string  $action The action to link to (e.g show or edit)
+     * @param  boolean $linkAll Whether to link to inactive or deleted models
+     * @return string  The <a> tag
      */
-    public function __invoke($context, \UrlModel $model, $icon=null, $action='show', $linkAll=false)
+    public function __invoke($context, \Model $model, $icon=null, $action='show', $linkAll=false)
     {
         if ($icon) {
             $content = "<i class=\"fa fa-$icon\"></i>";
@@ -20,7 +20,7 @@ class LinkToFunction
             $content = \Model::escape($this->getModelName($model));
         }
 
-        if ($linkAll || $context['controller']->canSee($model)) {
+        if ($model instanceof \UrlModel && ($linkAll || $context['controller']->canSee($model))) {
             $params = array();
             if ($linkAll) {
                 $params['showDeleted'] = true;
@@ -34,7 +34,7 @@ class LinkToFunction
         return '<span class="disabled-link">' . $content . '</a>';
     }
 
-    private function getModelName(\UrlModel &$model)
+    private function getModelName(\Model &$model)
     {
         if ($model instanceof \NamedModel)
             return $model->getName();
