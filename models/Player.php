@@ -61,7 +61,7 @@ class Player extends IdenticonModel implements NamedModel
     protected $country;
 
     /**
-     * The player's timezone PHP identifier, e.g. "(GMT+01:00) Paris"
+     * The player's timezone PHP identifier, e.g. "Europe/Paris"
      * @var string
      */
     protected $timezone;
@@ -271,7 +271,7 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
-     * Get the player's timezone PHP identifier (example: "(GMT+01:00) Paris")
+     * Get the player's timezone PHP identifier (example: "Europe/Paris")
      * @return string The timezone
      */
     public function getTimezone()
