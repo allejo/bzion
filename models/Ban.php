@@ -10,7 +10,7 @@
  * A ban imposed by an admin on a player
  * @package BZiON\Models
  */
-class Ban extends UrlModel
+class Ban extends UrlModel implements NamedModel
 {
     /**
      * The id of the banned player
@@ -73,6 +73,12 @@ class Ban extends UrlModel
     protected $ipAddresses;
 
     /**
+     * The ban's status
+     * @var string
+     */
+    protected $status;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "bans";
@@ -92,6 +98,7 @@ class Ban extends UrlModel
         $this->created = new TimeDate($ban['created']);
         $this->updated = new TimeDate($ban['updated']);
         $this->author = $ban['author'];
+        $this->status = $ban['status'];
 
         $this->ipAddresses = parent::fetchIds("WHERE ban_id = ?", 'i', array($this->getId()), "banned_ips", "ip_address");
     }
@@ -397,6 +404,45 @@ class Ban extends UrlModel
         }
 
         return $ban;
+    }
+
+    /**
+     * Get a query builder for news
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Ban', array(
+            'columns' => array(
+                'status' => 'status',
+                'updated' => 'updated'
+            ),
+        ));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'Ban against ' . $this->getVictim()->getUsername();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete()
+    {
+        $this->getVictim()->markAsUnbanned();
+        parent::delete();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getActiveStatuses()
+    {
+        return array('public');
     }
 
     /**

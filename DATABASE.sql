@@ -34,6 +34,7 @@ CREATE TABLE `bans` (
   `created` datetime NOT NULL COMMENT 'The timestamp this ban was created',
   `updated` datetime NOT NULL COMMENT 'The timestamp of the last update for this ban',
   `author` int(10) unsigned NOT NULL COMMENT 'The person who issued the ban',
+  `status` set('public','deleted') NOT NULL DEFAULT 'public' COMMENT 'The status of the ban',
   PRIMARY KEY (`id`),
   KEY `author` (`author`),
   KEY `player` (`player`),

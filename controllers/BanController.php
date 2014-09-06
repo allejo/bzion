@@ -11,7 +11,7 @@ class BanController extends CRUDController
 
     public function listAction()
     {
-        return array("bans" => Ban::getBans());
+        return array("bans" => $this->getQueryBuilder()->sortBy('updated')->reverse()->getModels());
     }
 
     public function createAction(Player $me)
