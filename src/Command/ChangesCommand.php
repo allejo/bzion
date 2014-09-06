@@ -191,11 +191,11 @@ class ChangesCommand extends ContainerAwareCommand
 
         foreach ($changes as $type => &$changelist) {
             $changelist = array_filter($changelist, function ($change) use ($type, $alreadyListed) {
-                if (!isset($alreadyListedChanges[$type])) {
+                if (!isset($alreadyListed[$type])) {
                     return true;
                 }
 
-                return !in_array($change, $alreadyListedChanges[$type]);
+                return !in_array($change, $alreadyListed[$type]);
             });
         }
     }
