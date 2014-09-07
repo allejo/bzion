@@ -1,7 +1,7 @@
 <?php
 
-use BZIon\Twig\PluralFunction;
 use BZIon\Twig\LinkToFunction;
+use BZIon\Twig\PluralFilter;
 use BZIon\Twig\YesNoFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\InvalidTest;
@@ -106,8 +106,8 @@ class AppKernel extends Kernel
             $twig->addExtension(new LadybugExtension($this->container->get('ladybug.dumper')));
         }
 
-        $twig->addFunction(PluralFunction::get());
         $twig->addFunction(LinkToFunction::get());
+        $twig->addFilter(PluralFilter::get());
         $twig->addFilter(YesNoFilter::get());
         $twig->addTest(ValidTest::get());
         $twig->addTest(InvalidTest::get());

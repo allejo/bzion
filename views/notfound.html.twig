@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}{{ type|capitalize }}s{% endblock %}
+{% block title %}{{ type|plural|capitalize }}{% endblock %}
 
 {% block content %}
     {{ message }}

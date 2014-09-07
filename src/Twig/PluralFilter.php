@@ -1,29 +1,34 @@
 <?php
 namespace BZIon\Twig;
 
-class PluralFunction
+use Doctrine\Common\Inflector\Inflector;
+
+class PluralFilter
 {
     /**
-     * Make sure that a number is acoompanied with the appropriate grammatical
+     * Make sure that a number is accompanied with the appropriate grammatical
      * number
      *
      * @param number      $number
      * @param string      $singular The noun in its singular form
-     * @param string|null $plural   The noun in its plural form (defaults to adding
-     *                              an 's' in the end of the singular noun)
      */
-    public function __invoke($number, $singular, $plural=null)
+    public function __invoke($singular, $number = null)
     {
-        if (!$plural)
-            $plural = $singular . "s";
-
-        if ($number == 1)
+        if ($number == 1) {
             return "1 $singular";
+        }
+
+        $plural = Inflector::pluralize($singular);
+
+        if ($number === null) {
+            return $plural;
+        }
+
         return "$number $plural";
     }
 
     public static function get()
     {
-        return new \Twig_SimpleFunction('plural', new self());
+        return new \Twig_SimpleFilter('plural', new self());
     }
 }

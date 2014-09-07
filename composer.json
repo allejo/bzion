@@ -6,6 +6,7 @@
 
     "require": {
         "cboden/ratchet"           : "0.2.*",
+        "doctrine/inflector"       : "~1.0",
         "ext-gd"                   : "*",
         "ivaynberg/select2"        : "dev-master",
         "michelf/php-markdown"     : ">=1.4.1",
