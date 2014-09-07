@@ -696,11 +696,17 @@ class Player extends IdenticonModel implements NamedModel
      * Find whether the player can delete a model
      *
      * @param  PermissionModel $model The model that will be deleted
+     * @param  boolean $hard Whether to check for hard-delete perms, as opposed
+     *                       to soft-delete ones
      * @return boolean
      */
-    public function canDelete($model)
+    public function canDelete($model, $hard=false)
     {
-        return $model->canBeSoftDeletedBy($this);
+        if ($hard) {
+            return $model->canBeHardDeletedBy($this);
+        } else {
+            return $model->canBeSoftDeletedBy($this);
+        }
     }
 
     /**

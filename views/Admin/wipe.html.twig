@@ -20,6 +20,9 @@
                     <div class="column">
                         <strong>Name</strong>
                     </div>
+                    <div class="column">
+                        <strong>Delete</strong>
+                    </div>
                 </div>
                 {% for model in models %}
                     <div class="row">
@@ -39,6 +42,9 @@
                         </div>
                         <div class="column">
                             <i class="fa fa-{{ icons[model.type] }}"></i> {{ link_to(model, linkAll = true) }}
+                        </div>
+                        <div class="column">
+                            {{ link_to(model, icon = 'trash', action='delete', class= 'button orange', linkAll = true) }}
                         </div>
                     </div>
                 {% endfor %}

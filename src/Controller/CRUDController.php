@@ -62,21 +62,36 @@ abstract class CRUDController extends JSONController
      */
     protected function delete(PermissionModel $model, Player $me, $onSuccess = null)
     {
-        if (!$this->canDelete($me, $model))
-            throw new ForbiddenException($this->getMessage($model, 'softDelete', 'forbidden'));
+        if ($model->isDeleted()) {
+            // We will have to hard delete the model
+            $hard = true;
+            $message = 'hardDelete';
+            $action = 'Erase forever';
+        } else {
+            $hard = false;
+            $message = 'softDelete';
+            $action = 'Delete';
+        }
 
-        $successMessage = $this->getMessage($model, 'softDelete', 'success');
+        if (!$this->canDelete($me, $model, $hard))
+            throw new ForbiddenException($this->getMessage($model, $message, 'forbidden'));
+
+        $successMessage = $this->getMessage($model, $message, 'success');
         $redirection    = $this->redirectToList($model);
 
-        return $this->showConfirmationForm(function () use ($model, $redirection, $onSuccess) {
-            $model->delete();
+        return $this->showConfirmationForm(function () use ($model, $hard, $redirection, $onSuccess) {
+            if ($hard) {
+                $model->wipe();
+            } else {
+                $model->delete();
+            }
 
             if ($onSuccess) {
                 $onSuccess();
             }
 
             return $redirection;
-        }, $this->getMessage($model, 'softDelete', 'confirm'), $successMessage, "Delete");
+        }, $this->getMessage($model, $message, 'confirm'), $successMessage, $action);
     }
 
     /**
@@ -150,13 +165,14 @@ abstract class CRUDController extends JSONController
     /**
      * Find whether a player can delete a model
      *
-     * @param  Player          $player The player who wants to delete the model
+     * @param  Player $player The player who wants to delete the model
      * @param  PermissionModel $model  The model that will be deleted
+     * @param  boolean $hard Whether to hard-delete the model instead of soft-deleting it
      * @return boolean
      */
-    protected function canDelete($player, $model)
+    protected function canDelete($player, $model, $hard=false)
     {
-        return $player->canDelete($model);
+        return $player->canDelete($model, $hard);
     }
 
     /**
@@ -275,6 +291,29 @@ abstract class CRUDController extends JSONController
     protected function getMessages($type, $name='')
     {
         return array(
+            'hardDelete' => array(
+                'confirm' => array(
+                    'named'   => <<<"WARNING"
+Are you sure you want to wipe <strong>$name</strong>?<br />
+<strong><em>DANGER</em></strong>: This action will <strong>permanently</strong>
+erase the $type from the database, including any objects directly related to it!
+WARNING
+                ,
+                    'unnamed' => <<<"WARNING"
+Are you sure you want to wipe this $type?<br />
+<strong><em>DANGER</em></strong>: This action will <strong>permanently</strong>
+erase the $type from the database, including any objects directly related to it!
+WARNING
+                ),
+                'forbidden' => array(
+                    'named'   => "You are not allowed to delete the $type $name",
+                    'unnamed' => "You are not allowed to delete this $type",
+                ),
+                'success' => array(
+                    'named'   => "The $type $name was permanently erased from the database",
+                    'unnamed' => "The $type has been permanently erased from the database",
+                ),
+            ),
             'softDelete' => array(
                 'confirm' => array(
                     'named'   => "Are you sure you want to delete <strong>$name</strong>?",
