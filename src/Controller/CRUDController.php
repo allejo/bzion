@@ -65,11 +65,10 @@ abstract class CRUDController extends JSONController
         if (!$this->canDelete($me, $model))
             throw new ForbiddenException($this->getMessage($model, 'softDelete', 'forbidden'));
 
-        $session        = $this->getRequest()->getSession();
         $successMessage = $this->getMessage($model, 'softDelete', 'success');
         $redirection    = $this->redirectToList($model);
 
-        return $this->showConfirmationForm(function () use (&$model, &$session, $redirection, $onSuccess) {
+        return $this->showConfirmationForm(function () use ($model, $redirection, $onSuccess) {
             $model->delete();
 
             if ($onSuccess) {
@@ -83,7 +82,9 @@ abstract class CRUDController extends JSONController
     /**
      * Create a model
      *
-     * This method requires that you have implemented createForm() and enter()
+     * This method requires that you have implemented enter() and a form creator
+     * for the model
+     *
      * @throws ForbiddenException
      * @param  Player $me   The user who wants to create the model
      * @param  string $type The type of the model being created
@@ -115,7 +116,9 @@ abstract class CRUDController extends JSONController
     /**
      * Edit a model
      *
-     * This method requires that you have implemented createForm() and update()
+     * This method requires that you have implemented update() and a form creator
+     * for the model
+     *
      * @throws ForbiddenException
      * @param  PermissionModel    $model The model we want to edit
      * @param  Player             $me    The user who wants to edit the model
@@ -269,7 +272,7 @@ abstract class CRUDController extends JSONController
      * @param  string $name The name of the model
      * @return array
      */
-    private function getMessages($type, $name='')
+    protected function getMessages($type, $name='')
     {
         return array(
             'softDelete' => array(

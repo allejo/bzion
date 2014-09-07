@@ -61,6 +61,25 @@ class MatchController extends CRUDController
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected function getMessages($type, $name='')
+    {
+        $messages = parent::getMessages($type, $name);
+
+        // Don't show the match info on the successful create/edit message
+        foreach($messages as &$action) {
+            foreach ($action as &$status) {
+                if (isset($status['named'])) {
+                    $status['named'] = $status['unnamed'];
+                }
+            }
+        }
+
+        return $messages;
+    }
+
+    /**
      * Get a function which converts models to their IDs
      *
      * Useful to store the match players into the database
