@@ -10,9 +10,10 @@ class LinkToFunction
      * @param  string  $icon   A font awesome icon identifier to show instead of text
      * @param  string  $action The action to link to (e.g show or edit)
      * @param  boolean $linkAll Whether to link to inactive or deleted models
-     * @return string  The <a> tag
+     * @param  string  $class  The CSS class(es) to apply to the link
+     * @return string  The HTML link
      */
-    public function __invoke($context, \Model $model, $icon=null, $action='show', $linkAll=false)
+    public function __invoke($context, \Model $model, $icon=null, $action='show', $linkAll=false, $class='')
     {
         if ($icon) {
             $content = "<i class=\"fa fa-$icon\"></i>";
@@ -28,12 +29,18 @@ class LinkToFunction
 
             $url = $model->getURL($action, false, $params);
 
-            return '<a href="' . $url . '">' . $content . '</a>';
+            return '<a' . $this->getClass($class) . ' href="' . $url . '">' . $content . '</a>';
         }
 
-        return '<span class="disabled-link">' . $content . '</a>';
+        return '<span' .  $this->getClass("$class disabled-link") .'>' . $content . '</a>';
     }
 
+    /**
+     * Get the name of any model
+     *
+     * @param  \Model $model
+     * @return string The name of the model
+     */
     private function getModelName(\Model &$model)
     {
         if ($model instanceof \NamedModel)
@@ -42,6 +49,20 @@ class LinkToFunction
             return $model->getAlias();
 
         return $model->getId();
+    }
+
+    /**
+     * Create a CSS class string
+     *
+     * @param string The CSS class(es), without `class=".."`
+     */
+    private function getClass($class)
+    {
+        if (trim($class) == '') {
+            return $class;
+        }
+
+        return ' class="' . $class . '"';
     }
 
     public static function get()
