@@ -86,7 +86,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      */
     public function resetAlias()
     {
-        $alias = static::generateAlias($this->name, $this->alias);
+        $alias = static::generateAlias($this->name, $this->id);
         return $this->updateProperty($this->alias, 'alias', $alias, 's');
     }
 
@@ -129,12 +129,11 @@ abstract class AliasModel extends UrlModel implements NamedModel
     /**
      * Generate a URL-friendly unique alias for an object name
      *
-     * @param  string      $name     The original object name
-     * @param  string|Null $oldAlias The older alias of the object, if it's being
-     *                               edited and not created
+     * @param  string   $name The original object name
+     * @param  int|Null $id   The ID of the object, if it's being edited and not created
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    public static function generateAlias($name, $oldAlias=null)
+    public static function generateAlias($name, $id=null)
     {
         // Convert name to lowercase
         $name = strtolower($name);
@@ -160,26 +159,21 @@ abstract class AliasModel extends UrlModel implements NamedModel
             $name = $name . '-';
         }
 
-        // Prevent getUniqueAlias() from returning a different alias if we
-        // change an already existing model's alias
-        if ($oldAlias && $name === $oldAlias) {
-            return $name;
-        }
-
-        return self::getUniqueAlias($name);
+        return self::getUniqueAlias($name, ($id) ?: 0);
     }
 
     /**
      * Make sure that the generated alias provided is unique
      *
      * @param  string $alias The alias
+     * @param  int    $id The ID of the object, if it's being edited and not created
      * @return string An alias that is guaranteed to be unique
      */
-    private static function getUniqueAlias($alias)
+    private static function getUniqueAlias($alias, $id=0)
     {
         // Try to find duplicates
         $db = Database::getInstance();
-        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE alias REGEXP ?", 's', array("^" . $alias . "[0-9]*$"));
+        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE id != ? AND alias REGEXP ?", 'is', array($id, "^" . $alias . "[0-9]*$"));
 
         // Convert the multi-dimensional array that $db->query() gave us into
         // a single-dimensional one.
@@ -207,8 +201,8 @@ abstract class AliasModel extends UrlModel implements NamedModel
      * For example, you want to prevent teams from getting the "new" alias.
      * Otherwise, the team's link would be http://example.com/bzion/teams/new,
      * and the user would go to the team creation page instead of the team's page.
-     * Disallowed aliases will have a dash appended, so the URL would be
-     * http://example.com/bzion/teams/new-
+     * Disallowed aliases will have a number appended, so the URL would be
+     * http://example.com/bzion/teams/new2
      *
      * @return string[]
      */
