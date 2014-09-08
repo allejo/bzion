@@ -34,26 +34,6 @@ class PageController extends CRUDController
         return $this->delete($page, $me);
     }
 
-    protected function update($form, $page, $me)
-    {
-        $page->setName($form->get('name')->getData())
-             ->setContent($form->get('content')->getData())
-             ->setStatus($form->get('status')->getData())
-             ->updateEditTimestamp();
-
-        return $page;
-    }
-
-    protected function enter($form, $me)
-    {
-        return Page::addPage(
-            $form->get('name')->getData(),
-            $form->get('content')->getData(),
-            $me->getId(),
-            $form->get('status')->getData()
-        );
-    }
-
     protected function redirectToList($model)
     {
         return new RedirectResponse(

@@ -50,4 +50,28 @@ class PageFormCreator extends ModelFormCreator
         $form->get('content')->setData($page->getContent());
         $form->get('status')->setData($page->getStatus());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function update($form, $page)
+    {
+        $page->setName($form->get('name')->getData())
+             ->setContent($form->get('content')->getData())
+             ->setStatus($form->get('status')->getData())
+             ->updateEditTimestamp();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enter($form)
+    {
+        return \Page::addPage(
+            $form->get('name')->getData(),
+            $form->get('content')->getData(),
+            $this->me->getId(),
+            $form->get('status')->getData()
+        );
+    }
 }

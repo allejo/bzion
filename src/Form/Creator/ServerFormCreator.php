@@ -49,4 +49,28 @@ class ServerFormCreator extends ModelFormCreator
         $form->get('address')->setData($server->getAddress());
         $form->get('owner')->get('players')->setData($server->getOwner());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function update($form, $server)
+    {
+        $server->setName($form->get('name')->getData())
+               ->setAddress($form->get('address')->getData())
+               ->setOwner($form->get('owner')->getData()->getId())
+               ->forceUpdate();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enter($form)
+    {
+        return \Server::addServer(
+            $form->get('name')->getData(),
+            $form->get('address')->getData(),
+            1,
+            $form->get('owner')->getData()->getId()
+        );
+    }
 }

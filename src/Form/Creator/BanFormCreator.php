@@ -75,4 +75,47 @@ class BanFormCreator extends ModelFormCreator
             $form->get('automatic_expiration')->setData(false);
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function update($form, $ban)
+    {
+        $ban->setIPs($form->get('ip_addresses')->getData())
+            ->setExpiration($this->getExpiration($form))
+            ->setReason($form->get('reason')->getData())
+            ->setServerMessage($form->get('server_message')->getData())
+            ->setAllowServerJoin($form->get('server_join_allowed')->getData());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enter($form)
+    {
+        return \Ban::addBan(
+            $form->get('player')->getData()->getId(),
+            $this->me->getId(),
+            $this->getExpiration($form),
+            $form->get('reason')->getData(),
+            $form->get('server_message')->getData(),
+            $form->get('ip_addresses')->getData(),
+            $form->get('server_join_allowed')->getData()
+        );
+    }
+
+    /**
+     * Get the expiration time of the ban based on the fields of the form
+     *
+     * @param  Form $form The form
+     * @return TimeDate|null
+     */
+    private function getExpiration($form)
+    {
+        if ($form->get('automatic_expiration')->getData()) {
+            return $form->get('expiration')->getData();
+        } else {
+            return null;
+        }
+    }
 }

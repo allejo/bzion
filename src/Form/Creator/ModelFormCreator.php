@@ -22,12 +22,29 @@ abstract class ModelFormCreator implements FormCreatorInterface
     protected $editing;
 
     /**
-     * Create a new ModelForm
-     * @param \Model|null $editing The model that's being edited
+     * The user who is submitting the form
+     * @var \Player
      */
-    public function __construct($editing = null)
+    protected $me;
+
+    /**
+     * The controller showing the form
+     * @var \Controller|null
+     */
+    protected $controller;
+
+    /**
+     * Create a new ModelFormCreator
+     *
+     * @param \Model|null $editing The model that's being edited
+     * @param \Player|null $me The user who is submitting the form
+     * @param \Controller|null $controller The controller showing the form
+     */
+    public function __construct($editing = null, $me = null, $controller = null)
     {
         $this->editing = $editing;
+        $this->me = ($me) ?: \Player::invalid();
+        $this->controller = $controller;
     }
 
     /**
@@ -64,6 +81,30 @@ abstract class ModelFormCreator implements FormCreatorInterface
      */
     public function fill($form, $model)
     {
+    }
+
+    /**
+     * Update a model based on a form's data
+     *
+     * Override this in your form
+     *
+     * @param  Form $form The form to use
+     * @param  \Model $model The model to update
+     * @return void
+     */
+    public function update($form, $model)
+    {
+        throw new BadMethodCallException("Please override the update() method in the FormCreator class for the model");
+    }
+
+    /**
+     * Enter the data of a valid form into the database
+     * @param  Form $form The submitted form
+     * @return \Model
+     */
+    public function enter($form)
+    {
+        throw new BadMethodCallException("Please override the enter() method in the FormCreator class for the model");
     }
 
     /**

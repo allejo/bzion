@@ -46,4 +46,49 @@ class MatchFormCreator extends ModelFormCreator
             ))
             ->add('enter', 'submit');
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enter($form)
+    {
+        $firstTeam  = $form->get('first_team');
+        $secondTeam = $form->get('second_team');
+
+        $firstPlayers  = array_map($this->getModelToID(),  $firstTeam->get('participants')->getData());
+        $secondPlayers = array_map($this->getModelToID(), $secondTeam->get('participants')->getData());
+
+        $serverInfo = explode(':', $form->get('server_address')->getData());
+        if (!isset($serverInfo[1])) {
+            $serverInfo[1] = 5154;
+        }
+
+        $match = \Match::enterMatch(
+            $firstTeam ->get('team')->getData()->getId(),
+            $secondTeam->get('team')->getData()->getId(),
+            $firstTeam ->get('score')->getData(),
+            $secondTeam->get('score')->getData(),
+            $form->get('duration')->getData(),
+            $this->me->getId(),
+            $form->get('time')->getData(),
+            $firstPlayers,
+            $secondPlayers,
+            $serverInfo[0],
+            $serverInfo[1]
+        );
+
+        return $match;
+    }
+
+    /**
+     * Get a function which converts models to their IDs
+     *
+     * Useful to store the match players into the database
+     */
+    private static function getModelToID()
+    {
+        return function ($model) {
+            return $model->getId();
+        };
+    }
 }

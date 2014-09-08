@@ -32,29 +32,6 @@ class NewsController extends CRUDController
         return $this->delete($article, $me);
     }
 
-    protected function update($form, $article, $me)
-    {
-        $article->updateCategory($form->get('category')->getData()->getId())
-                ->updateSubject($form->get('subject')->getData())
-                ->updateContent($form->get('content')->getData())
-                ->updateStatus($form->get('status')->getData())
-                ->updateLastEditor($me->getId())
-                ->updateEditTimestamp();
-
-        return $article;
-    }
-
-    protected function enter($form, $me)
-    {
-        return News::addNews(
-            $form->get('subject')->getData(),
-            $form->get('content')->getData(),
-            $me->getId(),
-            $form->get('category')->getData()->getId(),
-            $form->get('status')->getData()
-        );
-    }
-
     private function getCategories()
     {
         return $this->getQueryBuilder('NewsCategory')

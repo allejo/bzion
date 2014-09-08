@@ -61,4 +61,38 @@ class TeamFormCreator extends ModelFormCreator
         $form->get('status')->setData($team->getStatus());
         $form->get('leader')->setData($team->getLeader());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enter($form)
+    {
+        return \Team::createTeam(
+            $form->get('name')->getData(),
+            $this->me->getId(),
+            '',
+            $form->get('description')->getData(),
+            $form->get('status')->getData()
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function update($form, $team)
+    {
+        $team->setName($form->get('name')->getData());
+        $team->setDescription($form->get('description')->getData());
+        $team->setStatus($form->get('status')->getData());
+
+        // Is the player updating the team's leader?
+        // Don't let them do it right away - issue a confirmation notice first
+        $leader = $form->get('leader')->getData();
+
+        if ($leader->getId() != $team->getLeader()->getId()) {
+            $this->controller->newLeader($leader);
+        }
+
+        return $team;
+    }
 }

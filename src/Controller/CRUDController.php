@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Form\Creator\ModelFormCreator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -10,17 +11,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 abstract class CRUDController extends JSONController
 {
-    /**
-     * Enter the data of a valid form into the database
-     * @param  Form   $form    The submitted form
-     * @param  Player $creator The player who enters the data
-     * @return Model
-     */
-    protected function enter($form, $creator)
-    {
-        throw new Exception("You need to specify an enter() method");
-    }
-
     /**
      * Make sure that the data of a form is valid, only called when creating a
      * new object
@@ -38,18 +28,6 @@ abstract class CRUDController extends JSONController
      */
     protected function validate($form)
     {
-    }
-
-    /**
-     * Update a model in the database
-     * @param  Form   $form  The form that will be used to update the model
-     * @param  Model  $model The model that will be updated
-     * @param  Player $me    The player that wants to edit the model
-     * @return Model  The updated model
-     */
-    protected function update($form, $model, $me)
-    {
-        throw new Exception("You need to implement an update() method");
     }
 
     /**
@@ -110,14 +88,14 @@ abstract class CRUDController extends JSONController
         if (!$this->canCreate($me))
             throw new ForbiddenException($this->getMessage($this->getName(), 'create', 'forbidden'));
 
-        $form = $this->getForm();
-        $form->handleRequest($this->getRequest());
+        $creator = $this->getFormCreator();
+        $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isSubmitted()) {
             $this->validate($form);
             $this->validateNew($form);
             if ($form->isValid()) {
-                $model = $this->enter($form, $me);
+                $model = $creator->enter($form);
                 $this->getFlashBag()->add("success",
                     $this->getMessage($model, 'create', 'success'));
 
@@ -145,13 +123,13 @@ abstract class CRUDController extends JSONController
         if (!$this->canEdit($me, $model))
             throw new ForbiddenException($this->getMessage($model, 'edit', 'forbidden'));
 
-        $form = $this->getForm($model);
-        $form->handleRequest($this->getRequest());
+        $creator = $this->getFormCreator($model);
+        $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isSubmitted()) {
             $this->validate($form);
             if ($form->isValid()) {
-                $model = $this->update($form, $model, $me);
+                $creator->update($form, $model);
                 $this->getFlashBag()->add("success",
                     $this->getMessage($model, 'edit', 'success'));
 
@@ -236,17 +214,17 @@ abstract class CRUDController extends JSONController
      * Dynamically get the form to show to the user
      *
      * @param  \Model|null $model The model being edited, `null` if we're creating one
-     * @return Form
+     * @return ModelFormCreator
      */
-    private function getForm($model=null)
+    private function getFormCreator($model=null)
     {
         $type = ($model instanceof Model) ? $model->getType() : $this->getName();
         $type = ucfirst($type);
 
         $creatorClass = "\\BZIon\\Form\\Creator\\{$type}FormCreator";
-        $creator = new $creatorClass($model);
+        $creator = new $creatorClass($model, $this->getMe(), $this);
 
-        return $creator->create();
+        return $creator;
     }
 
     /**

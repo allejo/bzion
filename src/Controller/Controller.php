@@ -374,7 +374,6 @@ abstract class Controller
         Debug::startStopwatch('view.render');
 
         $template = Service::getTemplateEngine();
-
         $ret = $template->render($view, $parameters);
 
         Debug::finishStopwatch('view.render');

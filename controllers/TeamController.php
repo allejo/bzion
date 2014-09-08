@@ -161,32 +161,15 @@ class TeamController extends CRUDController
         "Appoint leadership");
     }
 
-    protected function enter($form, $creator)
+    /**
+     * Show a confirmation form to confirm that the user wants to assign a new
+     * leader to a team
+     *
+     * @param Player $leader The new leader
+     */
+    public function newLeader($leader)
     {
-        return Team::createTeam(
-            $form->get('name')->getData(),
-            $creator->getId(),
-            '',
-            $form->get('description')->getData(),
-            $form->get('status')->getData()
-        );
-    }
-
-    protected function update($form, $team, $me)
-    {
-        $team->setName($form->get('name')->getData());
-        $team->setDescription($form->get('description')->getData());
-        $team->setStatus($form->get('status')->getData());
-
-        // Is the player updating the team's leader?
-        // Don't let them do it right away - issue a confirmation notice first
-        $leader = $form->get('leader')->getData();
-
-        if ($leader->getId() != $team->getLeader()->getId()) {
-            $this->newLeader = $leader;
-        }
-
-        return $team;
+        $this->newLeader = $leader;
     }
 
     protected function validateNew($form)

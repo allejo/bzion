@@ -53,4 +53,31 @@ class NewsFormCreator extends ModelFormCreator
         $form->get('content')->setData($article->getContent());
         $form->get('status')->setData($article->getStatus());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function update($form, $article)
+    {
+        $article->updateCategory($form->get('category')->getData()->getId())
+                ->updateSubject($form->get('subject')->getData())
+                ->updateContent($form->get('content')->getData())
+                ->updateStatus($form->get('status')->getData())
+                ->updateLastEditor($this->me->getId())
+                ->updateEditTimestamp();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function enter($form)
+    {
+        return \News::addNews(
+            $form->get('subject')->getData(),
+            $form->get('content')->getData(),
+            $this->me->getId(),
+            $form->get('category')->getData()->getId(),
+            $form->get('status')->getData()
+        );
+    }
 }
