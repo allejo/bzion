@@ -30,7 +30,7 @@ class NotificationController extends HTMLController
         $index  = -1;
 
         foreach ($notifications as $notification) {
-            $date = $notification->getTimestamp()->startOfMonth();
+            $date = $notification->getTimestamp()->copy()->startOfMonth();
 
             // Create a new element in the $result array for every month
             if ($index == -1 || $result[$index]['date'] != $date) {
