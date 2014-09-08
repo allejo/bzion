@@ -49,6 +49,12 @@ class Player extends IdenticonModel implements NamedModel
     protected $avatar;
 
     /**
+     * The player's e-mail address
+     * @var string
+     */
+    protected $email;
+
+    /**
      * The player's profile description
      * @var string
      */
@@ -117,6 +123,7 @@ class Player extends IdenticonModel implements NamedModel
         $this->team = $player['team'];
         $this->status = $player['status'];
         $this->avatar = $player['avatar'];
+        $this->email = $player['email'];
         $this->description = $player['description'];
         $this->country = $player['country'];
         $this->timezone = $player['timezone'];
@@ -193,6 +200,16 @@ class Player extends IdenticonModel implements NamedModel
     public function getCountry()
     {
         return new Country($this->country);
+    }
+
+    /**
+     * Get the e-mail address of the player
+     *
+     * @return string The address
+     */
+    public function getEmailAddress()
+    {
+        return $this->email;
     }
 
     /**
@@ -377,6 +394,16 @@ class Player extends IdenticonModel implements NamedModel
     {
         $this->avatar = $avatar;
         $this->update("avatar", $avatar, 's');
+    }
+
+    /**
+     * Set the player's email address
+     * @param string $description The address
+     */
+    public function setEmailAddress($email)
+    {
+        $this->email = $email;
+        $this->update("email", $email, 's');
     }
 
     /**

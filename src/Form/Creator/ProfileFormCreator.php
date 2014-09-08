@@ -8,6 +8,7 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\TimezoneType;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -30,6 +31,12 @@ class ProfileFormCreator extends ModelFormCreator
             ->add('country', 'choice', array(
                 'choices' => \Country::getCountriesWithISO(),
                 'data' => $this->editing->getCountry()->getISO()
+            ))
+            ->add('email', 'email', array(
+                'constraints' => array(new Email(), new Length(array('max' => 255))),
+                'data' => $this->editing->getEmailAddress(),
+                'label' => 'E-Mail Address',
+                'required' => false
             ))
             ->add('timezone', new TimezoneType(), array(
                 'constraints' => new NotBlank(),
