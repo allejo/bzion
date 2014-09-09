@@ -6,6 +6,9 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use Symfony\Component\Security\Core\Util\SecureRandom;
+use Symfony\Component\Security\Core\Util\StringUtils;
+
 /**
  * A league player
  * @package    BZiON\Models
@@ -53,6 +56,18 @@ class Player extends IdenticonModel implements NamedModel
      * @var string
      */
     protected $email;
+
+    /**
+     * Whether the player has verified their e-mail address
+     * @var bool
+     */
+    protected $verified;
+
+    /**
+     * A confirmation code for the player's e-mail address verification
+     * @var string
+     */
+    protected $confirmCode;
 
     /**
      * The player's profile description
@@ -124,6 +139,8 @@ class Player extends IdenticonModel implements NamedModel
         $this->status = $player['status'];
         $this->avatar = $player['avatar'];
         $this->email = $player['email'];
+        $this->verified = $player['verified'];
+        $this->confirmCode = $player['confirm_code'];
         $this->description = $player['description'];
         $this->country = $player['country'];
         $this->timezone = $player['timezone'];
@@ -210,6 +227,42 @@ class Player extends IdenticonModel implements NamedModel
     public function getEmailAddress()
     {
         return $this->email;
+    }
+
+    /**
+     * Returns whether the player has verified their e-mail address
+     *
+     * @return bool `true` for verified players
+     */
+    public function isVerified()
+    {
+        return $this->verified;
+    }
+
+    /**
+     * Returns the confirmation code for the player's e-mail address verification
+     *
+     * @return string The player's confirmation code
+     */
+    public function getConfirmCode()
+    {
+        return $this->confirmCode;
+    }
+
+    /**
+     * Find out whether the specified confirmation code is correct
+     *
+     * This method protects against timing attacks
+     *
+     * @return book `true` for a correct e-mail verification code
+     */
+    public function isCorrectConfirmCode($code)
+    {
+        if ($this->confirmCode === null) {
+            return false;
+        }
+
+        return StringUtils::equals($code, $this->confirmCode);
     }
 
     /**
@@ -397,13 +450,59 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
-     * Set the player's email address
+     * Set the player's email address and reset their verification status
      * @param string $description The address
      */
     public function setEmailAddress($email)
     {
+        if ($this->email == $email) {
+            // The e-mail hasn't changed, don't do anything
+        }
+
+        $this->setVerified(false);
+        $this->generateNewConfirmCode();
+
         $this->email = $email;
         $this->update("email", $email, 's');
+    }
+
+    /**
+     * Set whether the player has verified their e-mail address
+     *
+     * @param  bool $verified Whether the player is verified or not
+     * @return self
+     */
+    public function setVerified($verified)
+    {
+        if ($verified) {
+            $this->setConfirmCode(null);
+        }
+
+        return $this->updateProperty($this->verified, 'verified', $verified, 'i');
+    }
+
+    /**
+     * Generate a new random confirmation token for e-mail address verification
+     *
+     * @return self
+     */
+    public function generateNewConfirmCode()
+    {
+        $generator = new SecureRandom();
+        $random = $generator->nextBytes(16);
+
+        return $this->setConfirmCode(bin2hex($random));
+    }
+
+    /**
+     * Set the confirmation token for e-mail address verification
+     *
+     * @param  string $code The confirmation code
+     * @return self
+     */
+    private function setConfirmCode($code)
+    {
+        return $this->updateProperty($this->confirmCode, 'confirm_code', $code, 's');
     }
 
     /**
@@ -761,4 +860,5 @@ class Player extends IdenticonModel implements NamedModel
     public static function getEditPermission() { return Permission::EDIT_USER;  }
     public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_USER; }
     public static function getHardDeletePermission() { return Permission::HARD_DELETE_USER; }
+
 }

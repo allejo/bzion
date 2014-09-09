@@ -130,6 +130,10 @@ profile_edit:
     pattern:    /profile/edit
     defaults: { _controller: 'Profile', _action: 'edit' }
 
+profile_confirm:
+    pattern:    /profile/confirm/{token}
+    defaults: { _controller: 'Profile', _action: 'confirm' }
+
 server_list:
     pattern:    /servers
     defaults: { _controller: 'Server', _action: 'list' }

@@ -570,7 +570,7 @@ class Match extends PermissionModel implements NamedModel
     {
         $prob = 1.0 / (1 + pow(10, (($b_elo-$a_elo)/400.0)));
         if ($a_points > $b_points) {
-           $diff = 50*(1-$prob);
+            $diff = 50*(1-$prob);
         } elseif ($a_points == $b_points) {
             $diff = 50*(0.5-$prob);
         } else {

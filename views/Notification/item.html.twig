@@ -14,7 +14,7 @@
 {% elseif type == "team_leader" %}
     <i class="fa fa-chevron-circle-up"></i> You have been appointed as a leader of {{ link_to(model.team(data.team)) }}
 {% elseif type == "team_deleted" %}
-    <i class="fa fa-minus-circle"></i> <strong>{{ data.team }}</strong> was deleted!
+    <i class="fa fa-minus-circle"></i> <strong>{{ data.team }}</strong> was deleted
 {% else %}
     {{ type }}
 {% endif %}

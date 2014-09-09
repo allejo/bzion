@@ -26,6 +26,26 @@ class ProfileController extends HTMLController
         return array("player" => $me, "form" => $form->createView());
     }
 
+    public function confirmAction(Player $me, $token)
+    {
+        if (!$me->getEmailAddress()) {
+            throw new ForbiddenException("You need to have an e-mail address to confirm it!");
+        }
+
+        if ($me->isVerified()) {
+            throw new ForbiddenException("You have already been verified");
+        }
+
+        if (!$me->isCorrectConfirmCode($token)) {
+            throw new ForbiddenException("Invalid verification code");
+        }
+
+        $me->setVerified(true);
+
+        $this->getFlashBag()->add('success', "Your e-mail address has been successfully verified");
+        return new RedirectResponse($me->getUrl());
+    }
+
     public function showAction(Player $me)
     {
         return new RedirectResponse($me->getUrl());

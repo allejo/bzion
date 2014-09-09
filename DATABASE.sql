@@ -598,6 +598,8 @@ CREATE TABLE `players` (
   `status` set('active','disabled','deleted','reported','banned','test') NOT NULL DEFAULT 'active' COMMENT 'The player''s status',
   `avatar` varchar(200) NOT NULL DEFAULT '' COMMENT 'The URL to the player''s avatar',
   `email` varchar(255) DEFAULT NULL COMMENT 'The player''s e-mail address',
+  `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Whether the player''s e-mail address has been verified',
+  `confirm_code` varchar(32) DEFAULT NULL COMMENT 'A confirmation code used to verify the player''s email address',
   `description` text NOT NULL COMMENT 'The description or biography of a player',
   `country` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'The country a player belongs to',
   `timezone` varchar(40) NOT NULL COMMENT 'The PHP identifier of the timezone a player belongs to',
