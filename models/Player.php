@@ -457,6 +457,7 @@ class Player extends IdenticonModel implements NamedModel
     {
         if ($this->email == $email) {
             // The e-mail hasn't changed, don't do anything
+            return;
         }
 
         $this->setVerified(false);
