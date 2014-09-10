@@ -60,8 +60,6 @@ class ProfileController extends HTMLController
 
     /**
      * Send a confirmation e-mail to a player
-     *
-     * @todo  Configuration value for FROM address
      * @param Player $player The receiving player
      */
     private function sendConfirmationMessage($player)
@@ -73,7 +71,7 @@ class ProfileController extends HTMLController
 
         $message = Swift_Message::newInstance()
             ->setSubject(SITE_TITLE . ' Email Confirmation')
-            ->setFrom('noreply@' .  $this->getRequest()->getHost())
+            ->setFrom(array(EMAIL_FROM => SITE_TITLE))
             ->setTo($player->getEmailAddress())
             ->setBody($this->render('Email/confirm.txt.twig',  array('player' => $player)))
             ->addPart($this->render('Email/confirm.html.twig', array('player' => $player)), 'text/html');

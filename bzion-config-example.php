@@ -25,6 +25,8 @@ DEFINE("DURATION", serialize(array(
  * File, directory and URL settings
  */
 DEFINE("DOC_ROOT", dirname(__FILE__)); // The BZiON document root
+DEFINE("EMAIL_FROM", "noreply@localhost"); // The e-mail address that will be shown in the 'From:'
+                                           // field when sending messages
 
 /*
  * API settings
