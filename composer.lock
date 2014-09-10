@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d01ef715bf05206d358628a30a3352f2",
+    "hash": "05e78c6524a913474aff5041f29c09f0",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -1105,25 +1105,28 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.0.3",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "32edc3b0de0fdc1b10f5c4912e8677b3f411a230"
+                "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/32edc3b0de0fdc1b10f5c4912e8677b3f411a230",
-                "reference": "32edc3b0de0fdc1b10f5c4912e8677b3f411a230",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/2b9af56cc676c338d52fca4c657e5bdff73bb7af",
+                "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
+            "require-dev": {
+                "mockery/mockery": "~0.9.1"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -1152,7 +1155,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2013-12-03 13:33:24"
+            "time": "2014-06-13 11:44:54"
         },
         {
             "name": "symfony/class-loader",
@@ -2416,57 +2419,6 @@
             "description": "Symfony Stopwatch Component",
             "homepage": "http://symfony.com",
             "time": "2014-08-14 16:10:54"
-        },
-        {
-            "name": "symfony/swiftmailer-bridge",
-            "version": "v2.5.4",
-            "target-dir": "Symfony/Bridge/Swiftmailer",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/SwiftmailerBridge.git",
-                "reference": "b2e0674ae2830882e7e5e103a5282840239ba6e8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBridge/zipball/b2e0674ae2830882e7e5e103a5282840239ba6e8",
-                "reference": "b2e0674ae2830882e7e5e103a5282840239ba6e8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "swiftmailer/swiftmailer": ">=4.2.0,<5.1-dev"
-            },
-            "suggest": {
-                "symfony/http-kernel": ""
-            },
-            "type": "symfony-bridge",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Bridge\\Swiftmailer\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Symfony Swiftmailer Bridge",
-            "homepage": "http://symfony.com",
-            "time": "2014-04-16 08:08:40"
         },
         {
             "name": "symfony/swiftmailer-bundle",
