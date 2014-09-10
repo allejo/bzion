@@ -22,6 +22,14 @@ class ProfileFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
+        $emailConstraints = array(new Length(array('max' => 255)));
+        if (!DEVELOPMENT) {
+            // Don't validate e-mails when developing, for example to allow
+            // messaging anyone@localhost
+            $emailConstraints[] = new Email();
+        }
+
+
         return $builder
             ->add('description', 'textarea', array(
                 'constraints' => new Length(array('max' => 8000)),
@@ -33,7 +41,7 @@ class ProfileFormCreator extends ModelFormCreator
                 'data' => $this->editing->getCountry()->getISO()
             ))
             ->add('email', 'email', array(
-                'constraints' => array(new Email(), new Length(array('max' => 255))),
+                'constraints' => $emailConstraints,
                 'data' => $this->editing->getEmailAddress(),
                 'label' => 'E-Mail Address',
                 'required' => false

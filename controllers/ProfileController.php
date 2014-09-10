@@ -19,8 +19,15 @@ class ProfileController extends HTMLController
         if ($form->isValid()) {
             $me->setDescription($form->get('description')->getData());
             $me->setTimezone($form->get('timezone')->getData());
-            $me->setEmailAddress($form->get('email')->getData());
             $me->setCountry($form->get('country')->getData());
+
+            $email = $form->get('email')->getData();
+            if ($email !== $me->getEmailAddress()) {
+                // User has changed their address, send a confirmation mail
+                $me->setEmailAddress($email);
+                $this->sendConfirmationMessage($me);
+            }
+
         }
 
         return array("player" => $me, "form" => $form->createView());
@@ -49,5 +56,31 @@ class ProfileController extends HTMLController
     public function showAction(Player $me)
     {
         return new RedirectResponse($me->getUrl());
+    }
+
+    /**
+     * Send a confirmation e-mail to a player
+     *
+     * @todo  Configuration value for FROM address
+     * @param Player $player The receiving player
+     */
+    private function sendConfirmationMessage($player)
+    {
+        if ($player->getConfirmCode() === null) {
+            // The player has no confirmation code, don't send them a message
+            return;
+        }
+
+        $message = Swift_Message::newInstance()
+            ->setSubject(SITE_TITLE . ' Email Confirmation')
+            ->setFrom('noreply@' .  $this->getRequest()->getHost())
+            ->setTo($player->getEmailAddress())
+            ->setBody($this->render('Email/confirm.txt.twig',  array('player' => $player)))
+            ->addPart($this->render('Email/confirm.html.twig', array('player' => $player)), 'text/html');
+
+        $this->container->get('mailer')->send($message);
+
+        $this->getFlashBag()->add('info',
+            'Please check your inbox in order to confirm your email address.');
     }
 }

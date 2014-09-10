@@ -1,0 +1,9 @@
+{% extends 'Email/layout.html.twig' %}
+{% from 'Email/layout.html.twig' import open_block, close_block, button %}
+
+{% block content %}
+    {{ open_block() }}
+        Please confirm your email address by clicking the link below.
+    {{ close_block() }}
+    {{ button(url('profile_confirm', { token: player.confirmCode }), 'Confirm email address') }}
+{% endblock %}
