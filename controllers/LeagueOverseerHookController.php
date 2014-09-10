@@ -63,15 +63,15 @@ class LeagueOverseerHookController extends PlainTextController
     public function queryAction()
     {
         switch ($this->params->get('query')) {
-        case 'reportMatch':
-            return $this->forward('reportMatch');
-        case 'teamNameQuery':
-            return $this->forward('teamName');
-        case 'teamDump':
-            return $this->forward('teamDump');
-        default:
-            throw new BadRequestException();
-        }
+            case 'reportMatch':
+                return $this->forward('reportMatch');
+            case 'teamNameQuery':
+                return $this->forward('teamName');
+            case 'teamDump':
+                return $this->forward('teamDump');
+            default:
+                throw new BadRequestException();
+            }
     }
 
     public function teamNameAction()

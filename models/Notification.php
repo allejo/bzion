@@ -293,23 +293,23 @@ class Notification extends Model
     public static function pushEvent($type, $data=null)
     {
         switch ($type) {
-        case 'message':
-            $message = array(
-                'discussion' => $data->getGroup()->getId(),
-                'message'    => $data->getId(),
-                'author'     => $data->getAuthor()->getId(),
-            );
-            break;
-        case 'notification':
-            $message = array(
-                'type' => $data->getType()
-            );
-            break;
-        case 'blank':
-            $message = null;
-            break;
-        default:
-            $message = $data;
+            case 'message':
+                $message = array(
+                    'discussion' => $data->getGroup()->getId(),
+                    'message'    => $data->getId(),
+                    'author'     => $data->getAuthor()->getId(),
+                );
+                break;
+            case 'notification':
+                $message = array(
+                    'type' => $data->getType()
+                );
+                break;
+            case 'blank':
+                $message = null;
+                break;
+            default:
+                $message = $data;
         }
 
         foreach (self::$adapters as $adapter) {

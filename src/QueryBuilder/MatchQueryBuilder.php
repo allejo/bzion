@@ -28,27 +28,27 @@ class MatchQueryBuilder extends QueryBuilder
         }
 
         switch ($result) {
-        case "wins":
-        case "win":
-        case "victory":
-        case "victories":
-            $query = "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
-            break;
-        case "loss":
-        case "lose":
-        case "losses":
-        case "defeat":
-        case "defeats":
-            $query = "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
-            break;
-        case "draw":
-        case "draws":
-        case "tie":
-        case "ties":
-            $query = "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points";
-            break;
-        default:
-            $query = "team_a = ? OR team_b = ?";
+            case "wins":
+            case "win":
+            case "victory":
+            case "victories":
+                $query = "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
+                break;
+            case "loss":
+            case "lose":
+            case "losses":
+            case "defeat":
+            case "defeats":
+                $query = "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
+                break;
+            case "draw":
+            case "draws":
+            case "tie":
+            case "ties":
+                $query = "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points";
+                break;
+            default:
+                $query = "team_a = ? OR team_b = ?";
         }
 
         $this->conditions[] = $query;

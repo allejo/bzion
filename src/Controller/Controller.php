@@ -7,6 +7,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -62,7 +63,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package BZiON\Controllers
  */
-abstract class Controller
+abstract class Controller extends ContainerAware
 {
     /**
      * Parameters specified by the route
@@ -88,8 +89,11 @@ abstract class Controller
     public static function getController($parameters)
     {
         $ref = new ReflectionClass($parameters->get('_controller') . 'Controller');
+        $controller = $ref->newInstance($parameters);
 
-        return $ref->newInstance($parameters);
+        $controller->setContainer(Service::getContainer());
+
+        return $controller;
     }
 
     /**
@@ -201,16 +205,16 @@ abstract class Controller
             return null;
 
         switch ($refClass->getName()) {
-        case "Symfony\Component\HttpFoundation\Request":
-            return $this->getRequest();
-        case "Symfony\Component\HttpFoundation\Session\Session":
-            return $this->getRequest()->getSession();
-        case "Symfony\Component\HttpFoundation\Session\Flash\FlashBag":
-            return $this->getRequest()->getSession()->getFlashBag();
-        case "Monolog\Logger":
-            return $this->getLogger();
-        case "Symfony\Component\Form\FormFactory":
-            return Service::getFormFactory();
+            case "Symfony\Component\HttpFoundation\Request":
+                return $this->getRequest();
+            case "Symfony\Component\HttpFoundation\Session\Session":
+                return $this->getRequest()->getSession();
+            case "Symfony\Component\HttpFoundation\Session\Flash\FlashBag":
+                return $this->getRequest()->getSession()->getFlashBag();
+            case "Monolog\Logger":
+                return $this->getLogger();
+            case "Symfony\Component\Form\FormFactory":
+                return Service::getFormFactory();
         }
 
         if ($refClass->isSubclassOf("Model"))
