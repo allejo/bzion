@@ -10,7 +10,7 @@
 namespace BZIon\Composer;
 
 use Symfony\Component\Process\Process;
-use Composer\Script\CommandEvent;
+use Composer\Script\Event;
 
 /**
  * A manager for composer events
@@ -20,22 +20,46 @@ class ScriptHandler
     /**
     * Clears the Symfony cache.
     *
-    * @param $event CommandEvent Composer's event
+    * @param $event Event Composer's event
     */
-    public static function clearCache(CommandEvent $event)
+    public static function clearCache(Event $event)
     {
         static::executeCommand($event, 'cache:clear');
     }
 
     /**
+    * Shows what changed since the last update
+    *
+    * @param $event Event Composer's event
+    */
+    public static function showChangelog(Event $event)
+    {
+        static::executeCommand($event, 'bzion:changes');
+    }
+
+    /**
+    * Copy bzion-config-example.php to bzion-config.php
+    *
+    * @param $event Event Composer's event
+    */
+    public static function prepareConfig(Event $event)
+    {
+        $path = __DIR__ . '/../../bzion-config.php';
+
+        if (file_exists($path)) {
+            copy(__DIR__ . '/../../bzion-config-example.php', $path);
+        }
+    }
+
+    /**
      * Execute a symfony console command
      *
-     * @param  CommandEvent Composer's event
+     * @param  Event Composer's event
      * @param  string $command The command to execute
      * @param  int $timeout The timeout of the command in seconds
      * @return void
      */
-    protected static function executeCommand(CommandEvent $event, $command, $timeout = 300)
+    protected static function executeCommand(Event $event, $command, $timeout = 300)
     {
         $console = escapeshellarg(__DIR__ .'/../../app/console');
 

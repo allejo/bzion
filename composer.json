@@ -51,9 +51,17 @@
         "sensio/distribution-bundle": "3.0.*@dev",
         "raulfraile/ladybug-bundle": "~1.0"
     },
+
     "scripts": {
-        "post-install-cmd": [
-            "BZIon\\Composer\\ScriptHandler::clearCache"
+        "post-create-project-cmd": [
+            "BZIon\\Composer\\ScriptHandler::prepareConfig"
+        ],
+        "upgrade": [
+            "git pull origin",
+            "git submodule sync",
+            "git submodule update --init",
+            "BZIon\\Composer\\ScriptHandler::clearCache",
+            "BZIon\\Composer\\ScriptHandler::showChangelog"
         ]
     },
     "autoload": {
