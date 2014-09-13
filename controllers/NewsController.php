@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 class NewsController extends CRUDController
 {
     public function showAction(News $article)
@@ -7,11 +9,12 @@ class NewsController extends CRUDController
         return array("article" => $article, "categories" => $this->getCategories());
     }
 
-    public function listAction(NewsCategory $category = null)
+    public function listAction(Request $request, NewsCategory $category = null)
     {
         $news = $this->getQueryBuilder()
             ->sortBy('created')->reverse()
             ->where('category')->is($category)
+            ->limit(5)->fromPage($request->query->get('page', 1))
             ->getModels();
 
         return array("news" => $news, "categories" => $this->getCategories(), "category" => $category);

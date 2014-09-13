@@ -2,6 +2,7 @@
 
 use BZIon\Form\Creator\BanFormCreator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class BanController extends CRUDController
 {
@@ -10,9 +11,12 @@ class BanController extends CRUDController
         return array("ban" => $ban);
     }
 
-    public function listAction()
+    public function listAction(Request $request)
     {
-        return array("bans" => $this->getQueryBuilder()->sortBy('updated')->reverse()->getModels());
+        return array("bans" => $this->getQueryBuilder()
+            ->sortBy('updated')->reverse()
+            ->limit(15)->fromPage($request->query->get('page', 1))
+            ->getModels());
     }
 
     public function createAction(Player $me)
