@@ -34,10 +34,6 @@ services:
         class: BZIon\Command\InstallCommand
         tags:
             -  { name: console.command }
-    bzion.command.update_command:
-        class: BZIon\Command\UpdateCommand
-        tags:
-            -  { name: console.command }
     bzion.command.config_command:
         class: BZIon\Command\ConfigCommand
         tags:

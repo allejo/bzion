@@ -60,6 +60,7 @@
             "git pull origin",
             "git submodule sync",
             "git submodule update --init",
+            "app/upgrade.sh --no-dev --ansi install",
             "BZIon\\Composer\\ScriptHandler::clearCache",
             "BZIon\\Composer\\ScriptHandler::showChangelog"
         ]
