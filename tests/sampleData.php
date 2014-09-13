@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use BZIon\Cache\ModelCache;
+
 require_once(__DIR__ . "/../bzion-load.php");
 
 if (!DEVELOPMENT) {

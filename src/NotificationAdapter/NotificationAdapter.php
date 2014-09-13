@@ -6,6 +6,8 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+namespace BZIon\NotificationAdapter;
+
 /**
  * An external push service, used to send notifications to users in real-time
  * while they are using the web interface
@@ -20,7 +22,7 @@ abstract class NotificationAdapter
     public static function isEnabled()
     {
         // Don't push notifications when testing
-        return (Service::getEnvironment() != "test");
+        return (\Service::getEnvironment() != "test");
     }
 
     /**

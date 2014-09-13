@@ -328,7 +328,10 @@ class Notification extends Model
             return;
         }
 
-        $adapters = array('PusherAdapter', 'WebSocketAdapter');
+        $adapters = array(
+            'BZIon\NotificationAdapter\PusherAdapter',
+            'BZIon\NotificationAdapter\WebSocketAdapter'
+        );
 
         foreach ($adapters as $adapter) {
             if ($adapter::isEnabled()) {

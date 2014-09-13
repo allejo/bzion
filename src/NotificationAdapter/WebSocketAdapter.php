@@ -6,6 +6,8 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+namespace BZIon\NotificationAdapter;
+
 /**
  * An interface to our websocket
  * @package    BZiON\NotificationAdapters

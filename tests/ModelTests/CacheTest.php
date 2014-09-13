@@ -1,5 +1,7 @@
 <?php
 
+use BZIon\Cache\ModelCache;
+
 class CacheTest extends TestCase
 {
     private $player;

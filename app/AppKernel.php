@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Cache\ModelCache;
 use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\PluralFilter;
 use BZIon\Twig\YesNoFilter;

@@ -51,10 +51,28 @@
         "sensio/distribution-bundle": "3.0.*@dev",
         "raulfraile/ladybug-bundle": "~1.0"
     },
-
+    "scripts": {
+        "post-install-cmd": [
+            "BZIon\\Composer\\ScriptHandler::clearCache"
+        ]
+    },
     "autoload": {
-        "classmap" : [ "models/", "controllers/", "src/"],
-        "psr-4"    : { "": "app/" }
+        "classmap" : [
+            "models/",
+            "controllers/",
+            "src/Controller",
+            "src/Exception",
+            "src/Model",
+            "src/QueryBuilder",
+            "src/Database.php",
+            "src/Debug.php",
+            "src/Service.php",
+            "src/TimeDate.php"
+        ],
+        "psr-4"    : {
+            "": "app/",
+            "BZIon\\": "src/"
+        }
     },
     "autoload-dev": {
         "classmap": [ "tests/" ]
