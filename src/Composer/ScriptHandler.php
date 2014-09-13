@@ -46,7 +46,7 @@ class ScriptHandler
     {
         $path = __DIR__ . '/../../bzion-config.php';
 
-        if (file_exists($path)) {
+        if (!file_exists($path)) {
             copy(__DIR__ . '/../../bzion-config-example.php', $path);
         }
     }

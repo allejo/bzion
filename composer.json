@@ -54,6 +54,7 @@
 
     "scripts": {
         "post-create-project-cmd": [
+            "git submodule update --init",
             "BZIon\\Composer\\ScriptHandler::prepareConfig"
         ],
         "upgrade": [
