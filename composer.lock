@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "05e78c6524a913474aff5041f29c09f0",
+    "hash": "d92e0831973ae38fd389ba2b22ed2dc0",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -534,12 +534,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "d0d4bfb289bb1362479c9a7233ec30ae30107191"
+                "reference": "bfaaf8e6e58d491efec9c798edd00051120f8327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/d0d4bfb289bb1362479c9a7233ec30ae30107191",
-                "reference": "d0d4bfb289bb1362479c9a7233ec30ae30107191",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/bfaaf8e6e58d491efec9c798edd00051120f8327",
+                "reference": "bfaaf8e6e58d491efec9c798edd00051120f8327",
                 "shasum": ""
             },
             "require": {
@@ -569,7 +569,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-09-08 19:14:12"
+            "time": "2014-09-11 23:15:26"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -6440,6 +6440,7 @@
     },
     "prefer-stable": false,
     "platform": {
+        "php": ">=5.3.0",
         "ext-gd": "*"
     },
     "platform-dev": [
