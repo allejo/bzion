@@ -27,9 +27,9 @@ A demo BZiON installation can be found at [http://bzpro.net/bzion/](http://bzpro
 
 ### Installation
 
-1. Clone the repository
+1. Go to the directory where you want to install BZiON
 
-      `git clone https://github.com/allejo/bzion.git league; cd league`
+      `cd league`
 
 2. If you do not have PHP Composer installed, install it
 
@@ -37,15 +37,13 @@ A demo BZiON installation can be found at [http://bzpro.net/bzion/](http://bzpro
 
 3. Install the required libraries using Composer via the `composer.phar` file
 
-      `php composer.phar install --no-dev`
+      `php composer.phar create-project allejo/bzion --keep-vcs --no-dev -s dev .`
 
 4. Use the `DATABASE.sql` file to create the necessary database structure
 
-5. Rename `bzion-config-example.php` to `bzion-config.php` and configure the settings.
+5. Configure the settings in the `bzion-config.php` file
 
-6. `app/console bzion:install`
-
-7. Make sure that the app/cache, app/logs and assets/imgs/identicons/ directories
+6. Make sure that the app/cache, app/logs and assets/imgs/identicons/ directories
    are writeable by you and the web server:
 
    <sub>_Example for Apache2 on Ubuntu_</sub>
