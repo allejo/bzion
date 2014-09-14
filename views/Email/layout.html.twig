@@ -116,7 +116,7 @@ background-color: #f6f6f6;
                     <table width="100%" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">
                         <tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0; padding: 0;">
                             <td class="aligncenter content-block" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
-                                {{ layout.link(url('profile_edit'), 'Edit your profile')}} to stop receiving these notifications.
+                                {{ layout.footer_link(url('profile_edit'), 'Edit your profile')}} to stop receiving these notifications.
                             </td>
                         </tr>
                     </table>
@@ -148,5 +148,9 @@ background-color: #f6f6f6;
 {% endmacro %}
 
 {% macro link(href, text) %}
+    <a href="{{ href }}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; color: #348eda; text-decoration: underline; margin: 0; padding: 0;">{{ text }}</a>
+{% endmacro %}
+
+{% macro footer_link(href, text) %}
     <a href="{{ href }}" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0; padding: 0;">{{ text }}</a>
 {% endmacro %}

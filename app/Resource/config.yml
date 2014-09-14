@@ -32,6 +32,7 @@ services:
             - { name: kernel.cache_warmer, priority: 0 }
     kernel.subscriber.bzion_subscriber:
         class: BZIon\Event\EventSubscriber
+        arguments: [@mailer]
         tags:
             - { name: kernel.event_subscriber }
     bzion.command.install_command:

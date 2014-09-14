@@ -1,0 +1,12 @@
+{% extends 'Email/layout.html.twig' %}
+{% from 'Email/layout.html.twig' import open_block, close_block, link %}
+
+{% block content %}
+    {{ open_block() }}
+        <strong>{{ message.author.name }}</strong> sent a new message on {{ link(message.group.url('show', true), message.group.subject) }}
+    {{ close_block() }}
+
+    {{ open_block() }}
+        <blockquote>{{ message.content }}</blockquote>
+    {{ close_block() }}
+{% endblock %}
