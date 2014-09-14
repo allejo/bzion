@@ -30,6 +30,10 @@ services:
         class: BZIon\Twig\TwigCacheWarmer
         tags:
             - { name: kernel.cache_warmer, priority: 0 }
+    kernel.subscriber.bzion_subscriber:
+        class: BZIon\Event\EventSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
     bzion.command.install_command:
         class: BZIon\Command\InstallCommand
         tags:

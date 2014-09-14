@@ -1,5 +1,7 @@
 <?php
 
+use BZIon\Event\Events;
+use BZIon\Event\NewMessageEvent;
 use BZIon\Form\Creator\GroupFormCreator;
 use BZIon\Form\Creator\GroupInviteFormCreator;
 use BZIon\Form\Creator\GroupRenameFormCreator;
@@ -46,7 +48,10 @@ class MessageController extends JSONController
                 }
 
                 $group_to = Group::createGroup($subject, $me->getId(), $recipientIds);
-                $group_to->sendMessage($me, $content);
+                $message = $group_to->sendMessage($me, $content);
+
+                $event = new NewMessageEvent($message, true);
+                $this->dispatch(Events::MESSAGE_NEW, $event);
 
                 if ($this->isJson())
                     return new JsonResponse(array(
@@ -222,13 +227,16 @@ class MessageController extends JSONController
             throw new ForbiddenException("You are not allowed to send messages");
 
         $message = $form->get('message')->getData();
-
-        $to->sendMessage($from, $message);
+        $message = $to->sendMessage($from, $message);
 
         $this->getFlashBag()->add('success', "Your message was sent successfully");
 
         // Reset the form
         $form = $cloned;
+
+        // Notify everyone that we sent a new message
+        $event = new NewMessageEvent($message, false);
+        $this->dispatch(Events::MESSAGE_NEW, $event);
     }
 
     private function getErrorMessage(Form &$form)

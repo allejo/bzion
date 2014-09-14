@@ -21,7 +21,7 @@ class WebSocketAdapter extends NotificationAdapter
      */
     public function trigger($channel, $message)
     {
-        Debug::startStopwatch("notification.trigger.websocket");
+        \Debug::startStopwatch("notification.trigger.websocket");
 
         $fp = @stream_socket_client("tcp://127.0.0.1:". WEBSOCKET_PULL_PORT, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
 
@@ -34,7 +34,7 @@ class WebSocketAdapter extends NotificationAdapter
 
         // Don't fclose() the connection because of a weird bug with React
 
-        Debug::finishStopwatch("notification.trigger.websocket");
+        \Debug::finishStopwatch("notification.trigger.websocket");
     }
 
     /**

@@ -33,10 +33,13 @@ class ProfileController extends HTMLController
         return array("player" => $me, "form" => $form->createView());
     }
 
+    /**
+     * @todo Expire verification codes
+     */
     public function confirmAction(Player $me, $token)
     {
         if (!$me->getEmailAddress()) {
-            throw new ForbiddenException("You need to have an e-mail address to confirm it!");
+            throw new ForbiddenException("You need to have an e-mail address to confirm!");
         }
 
         if ($me->isVerified()) {

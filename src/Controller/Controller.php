@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -365,6 +366,17 @@ abstract class Controller extends ContainerAware
     protected static function getLogChannel()
     {
         return 'app';
+    }
+
+    /**
+     * Uses symfony's dispatcher to announce an event
+     * @param  string $eventName The name of the event to dispatch.
+     * @param  Event  $event The event to pass to the event handlers/listeners.
+     * @return Event
+     */
+    protected function dispatch($eventName, Event $event = null)
+    {
+        return $this->container->get('event_dispatcher')->dispatch($eventName, $event);
     }
 
     /**
