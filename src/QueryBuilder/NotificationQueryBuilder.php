@@ -22,18 +22,14 @@ class NotificationQueryBuilder extends QueryBuilder
     {
         $cloned = clone $this;
 
-        $cloned->where('status')->equals('unread');
-
         $type   = $cloned->type;
         $table  = $type::TABLE;
         $params = $cloned->createQueryParams();
 
-        ld($cloned->parameters);
-
         Database::getInstance()->query(
-            "UPDATE `$table` SET `status`='read' WHERE id IN ( SELECT id FROM ( SELECT id FROM `$table` $params) tmp)",
-            $cloned->types,
-            $cloned->parameters
+            "UPDATE `$table` SET `status`='read' WHERE `status`='unread' AND id IN ( SELECT id FROM ( SELECT id FROM `$table` $params) tmp)",
+            $cloned->getTypes(),
+            $cloned->getParameters()
         );
 
         return $this;

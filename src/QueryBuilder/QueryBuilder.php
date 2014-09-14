@@ -56,6 +56,18 @@ class QueryBuilder implements Countable
     protected $types = '';
 
     /**
+     * The MySQL value parameters for pagination
+     * @var array
+     */
+    protected $paginationParameters = array();
+
+    /**
+     * The MySQL parameter types for pagination
+     * @var string
+     */
+    protected $paginationTypes = '';
+
+    /**
      * A column based on which we should sort the results
      * @var string|null
      */
@@ -424,7 +436,7 @@ class QueryBuilder implements Countable
 
         $db = Database::getInstance();
 
-        return $db->query($this->createQuery($columns), $this->types, $this->parameters);
+        return $db->query($this->createQuery($columns), $this->getTypes(), $this->getParameters());
     }
 
     /**
@@ -437,7 +449,7 @@ class QueryBuilder implements Countable
         $db   = Database::getInstance();
         $type = $this->type;
 
-        $results = $db->query($this->createQuery(), $this->types, $this->parameters);
+        $results = $db->query($this->createQuery(), $this->getTypes(), $this->getParameters());
 
         return $type::arrayIdToModel(array_column($results, 'id'));
     }
@@ -455,7 +467,7 @@ class QueryBuilder implements Countable
         $db     = Database::getInstance();
 
         $query   = "SELECT COUNT(*) FROM $table $params";
-        $results = $db->query($query, $this->types, $this->parameters);
+        $results = $db->query($query, $this->getTypes(), $this->getParameters());
 
         return $results[0]['COUNT(*)'];
     }
@@ -505,6 +517,26 @@ class QueryBuilder implements Countable
         $pagination = $this->createQueryPagination();
 
         return "$conditions $order $pagination";
+    }
+
+    /**
+     * Get the query parameters
+     *
+     * @return array
+     */
+    protected function getParameters()
+    {
+        return array_merge($this->parameters, $this->paginationParameters);
+    }
+
+    /**
+     * Get the query types
+     *
+     * @return string
+     */
+    protected function getTypes()
+    {
+        return $this->types . $this->paginationTypes;
     }
 
     /**
@@ -579,6 +611,11 @@ class QueryBuilder implements Countable
      */
     private function createQueryPagination()
     {
+        // Reset mysqli params and types just in case createQueryParagination()
+        // had been called earlier
+        $this->paginationParameters = array();
+        $this->paginationTypes = "";
+
         if (!$this->page && !$this->limited) {
             return '';
         }
@@ -586,14 +623,14 @@ class QueryBuilder implements Countable
         $offset = '';
         if ($this->page) {
             $firstElement       = ($this->page - 1) * $this->resultsPerPage;
-            $this->parameters[] = $firstElement;
-            $this->types       .= 'i';
+            $this->paginationParameters[] = $firstElement;
+            $this->paginationTypes       .= 'i';
 
             $offset = '?,';
         }
 
-        $this->parameters[] = $this->resultsPerPage;
-        $this->types       .= 'i';
+        $this->paginationParameters[] = $this->resultsPerPage;
+        $this->paginationTypes       .= 'i';
 
         return "LIMIT $offset ?";
     }

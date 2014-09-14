@@ -1,13 +1,16 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 class NotificationController extends HTMLController
 {
-    public function listAction(Player $me)
+    public function listAction(Player $me, Request $request)
     {
         $this->requireLogin();
 
         $query = $this->getQueryBuilder()
             ->where('receiver')->is($me)
+            ->limit(15)->fromPage($request->query->get('page', 1))
             ->sortBy('timestamp')->reverse();
 
         $notifications = $query->getModels();
