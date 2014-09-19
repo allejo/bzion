@@ -7,8 +7,6 @@
 
 namespace BZIon\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-
 /**
  * Event thrown each time a new message is sent or a conversation is created
  */
