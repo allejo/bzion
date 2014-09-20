@@ -20,4 +20,71 @@ class Events {
      * @var string
      */
     const MESSAGE_NEW = 'message.new';
+
+    /**
+     * The team abandon event is announced every time a player leaves a team
+     *
+     * The event listener receives a BZIon\Event\TeamAbandonEvent instance
+     *
+     * @var string
+     */
+    const TEAM_ABANDON = 'team.abandon';
+
+    /**
+     * The team delete event is sent when a team is deleted
+     *
+     * The event listener receives a BZIon\Event\TeamDeleteEvent instance
+     *
+     * @var string
+     */
+    const TEAM_DELETE = 'team.delete';
+
+    /**
+     * The team invite event is dispatched whenever a player is invited
+     * to a team
+     *
+     * The event listener receives a BZIon\Event\TeamInviteEvent instance
+     *
+     * @var string
+     */
+    const TEAM_INVITE = 'team.invite';
+
+    /**
+     * The team join event is dispatched when a player becomes a member of a
+     * team
+     *
+     * The event listener receives a BZIon\Event\TeamJoinEvent instance
+     *
+     * @var string
+     */
+    const TEAM_JOIN = 'team.join';
+
+    /**
+     * The team kick event is announced every time a player gets kicked from a
+     * team
+     *
+     * The event listener receives a BZIon\Event\TeamKickEvent instance
+     *
+     * @var string
+     */
+    const TEAM_KICK = 'team.kick';
+
+    /**
+     * The team leader change event is sent whenever a player is assigned to be
+     * the new leader of a team
+     *
+     * The event listener receives a BZIon\Event\TeamLeaderChangeEvent instance
+     *
+     * @var string
+     */
+    const TEAM_LEADER_CHANGE = 'team.leader_change';
+
+    /**
+     * The welcome event is sent when a new player is added to the database
+     *
+     * The event listener receives a BZIon\Event\WelcomeEvent instance
+     *
+     * @var string
+     */
+    const WELCOME = 'welcome';
 }

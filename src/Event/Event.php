@@ -85,6 +85,9 @@ abstract class Event extends SymfonyEvent implements \Serializable {
 
     /**
      * Find out if the specified parameter of the Event's constructor needs a Model
+     *
+     * @param \ReflectionParameter $param The constructor's parameter
+     * @return boolean
      */
     private function isModel($param)
     {
@@ -103,5 +106,47 @@ abstract class Event extends SymfonyEvent implements \Serializable {
         }
 
         return false;
+    }
+
+    /**
+     * Send a notification to the players affected by this event
+     *
+     * @param string $type The type of the event
+     */
+    public function notify($type)
+    {
+    }
+
+    /**
+     * Sends a notification to some players
+     *
+     * @param mixed A single player/ID or a player/ID list
+     * @param string $type The type of the event
+     * @param null|Player|int A player who should not receive a notification
+     */
+    protected function doNotify($players, $type, $except = null)
+    {
+        \Debug::log("Notifying about $type", array(
+            'players' => $players,
+            'except'  => $except
+        ));
+
+        if ($except instanceof \Player) {
+            $except = $except->getId();
+        }
+
+        if (!is_array($players)) {
+            $players = array($players);
+        }
+
+        foreach ($players as $player) {
+            if ($player instanceof \Player) {
+                $player = $player->getId();
+            }
+
+            if ($player != $except) {
+                \Notification::newNotification($player, $type, $this);
+            }
+        }
     }
 }
