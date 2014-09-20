@@ -22,6 +22,10 @@ class ProfileController extends HTMLController
             $me->setCountry($form->get('country')->getData());
             $me->setReceives($form->get('receive')->getData());
 
+            if ($form->get('avatar')->getData()) {
+                $me->setAvatarFile($form->get('avatar')->getData());
+            }
+
             $email = $form->get('email')->getData();
             if ($email !== $me->getEmailAddress()) {
                 // User has changed their address, send a confirmation mail

@@ -135,6 +135,11 @@ class Player extends IdenticonModel implements NamedModel
     const IDENTICON_LOCATION = "/assets/imgs/identicons/players/";
 
     /**
+     * The location where avatars will be stored
+     */
+    const AVATAR_LOCATION = "/assets/imgs/avatars/players/";
+
+    /**
      * {@inheritDoc}
      */
     protected function assignResult($player)

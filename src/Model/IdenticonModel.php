@@ -20,6 +20,11 @@ abstract class IdenticonModel extends AliasModel
     const IDENTICON_LOCATION = "";
 
     /**
+     * The location where avatars will be stored
+     */
+    const AVATAR_LOCATION = "";
+
+    /**
      * Get the identicon for a player. This function will create one if it does not already exist
      *
      * @param string $idData    The data (name or id) that will be used to generate an identicon
@@ -39,6 +44,12 @@ abstract class IdenticonModel extends AliasModel
         }
 
         return Service::getRequest()->getBaseUrl() . static::IDENTICON_LOCATION . $file_name . ".png";
+    }
+
+    public function setAvatarFile($file)
+    {
+        $file->move(DOC_ROOT . static::AVATAR_LOCATION, $this->getId() . ".png");
+        $this->setAvatar(Service::getRequest()->getBaseUrl() . static::AVATAR_LOCATION . $this->getId() . ".png");
     }
 
     /**

@@ -9,6 +9,7 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\TimezoneType;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -34,6 +35,16 @@ class ProfileFormCreator extends ModelFormCreator
             ->add('description', 'textarea', array(
                 'constraints' => new Length(array('max' => 8000)),
                 'data' => $this->editing->getDescription(),
+                'required' => false
+            ))
+            ->add('avatar', 'file', array(
+                'constraints' => new Image(array(
+                    'minWidth' => 200,
+                    'maxWidth' => 800,
+                    'minHeight' => 200,
+                    'maxHeight' => 800,
+                    'maxSize' => '4M'
+                )),
                 'required' => false
             ))
             ->add('country', 'choice', array(
