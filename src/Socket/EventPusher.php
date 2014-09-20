@@ -75,6 +75,91 @@ class EventPusher implements MessageComponentInterface
     }
 
     /**
+     * Pushes or emails a new private message to the user
+     *
+     * @param array $event The event data we received from the web server
+     */
+    private function onMessageServerEvent($event)
+    {
+        // A list of players who received a message so that we can e-mail the
+        // ones who didn't
+        $received = array();
+
+        $group = new \Group($event->data->discussion);
+
+        // Don't notify the sender of the message, Javascript will
+        // automatically refresh the page
+        $groupMembers = $group->getMemberIds($event->data->author);
+
+        foreach ($this->clients as $client) {
+            $player = $client->Player;
+
+            if (!in_array($player->getId(), $groupMembers)) {
+                // Don't notify that player, he doesn't belong in the group
+                continue;
+            }
+
+            $event->notification_count = $player->countUnreadNotifications();
+            $event->message_count      = $player->countUnreadMessages();
+
+            $this->send($client, $event);
+            $received[] = $player->getId();
+        }
+
+        // Send e-mails
+        foreach ($event->data->recipients as $recipient) {
+            // Only send an email to users who aren't currently logged in
+            if (!in_array($recipient, $received)) {
+                $this->subscriber->sendEmails(
+                    'New message received',
+                    array($recipient),
+                    'message',
+                    array('message' => new \Message($event->data->message))
+                );
+            }
+        }
+    }
+
+    /**
+     * Pushes or emails a new notification to the user
+     *
+     * @param array $event The event data we received from the web server
+     */
+    private function onNotificationServerEvent($event)
+    {
+        $notification = new \Notification($event->data->notification);
+
+        // Whether we've notified that player in real time - if he isn't online
+        // at the moment, we'll send an e-mail to him
+        $active = false;
+
+        foreach ($this->clients as $client) {
+            if ($client->Player->getId() == $event->data->receiver) {
+                $this->send($client, $event);
+                $active = true;
+            }
+        }
+
+        if (!$active) {
+            $this->subscriber->emailNotification($notification);
+        }
+    }
+
+    /**
+     * Send some data to the client
+     *
+     * @param ConnectionInterface $client The client that will receive the data
+     * @param array $data The data to send
+     */
+    protected function send(ConnectionInterface $client, $data)
+    {
+        $data->notification_count = $client->Player->countUnreadNotifications();
+        $data->message_count      = $client->Player->countUnreadMessages();
+
+        $client->send(json_encode(array('event' => $data)));
+    }
+
+    /**
      * Action to call when the server notifies us about something
      * @param string $event JSON'ified string we'll receive from the webserver
      */
@@ -82,48 +167,17 @@ class EventPusher implements MessageComponentInterface
     {
         $event = $event->event;
 
-        // A list of players who received a message so that we can e-mail the
-        // ones who didn't
-        $received = array();
-
-        if ($event->type == 'message') {
-            $group = new \Group($event->data->discussion);
-
-            // Don't notify the sender of the message, Javascript will
-            // automatically refresh the page
-            $groupMembers = $group->getMemberIds($event->data->author);
-        }
-
-        foreach ($this->clients as $client) {
-            $player = $client->Player;
-
-            if ($event->type == 'message') {
-                if (!in_array($player->getId(), $groupMembers)) {
-                    // Don't notify that player, he doesn't belong in the group
-                    continue;
+        switch ($event->type) {
+            case 'message':
+                $this->onMessageServerEvent($event);
+                break;
+            case 'notification':
+                $this->onNotificationServerEvent($event);
+                break;
+            default:
+                foreach ($this->clients as $client) {
+                    $this->send($client, $event);
                 }
-            }
-
-            $event->notification_count = $player->countUnreadNotifications();
-            $event->message_count      = $player->countUnreadMessages();
-
-            $client->send(json_encode(array('event' => $event)));
-            $received[] = $player->getId();
-        }
-
-        // Send e-mails
-        if ($event->type == 'message') {
-            foreach ($event->data->recipients as $recipient) {
-                // Only send an email to users who aren't currently logged in
-                if (!in_array($recipient, $received)) {
-                    $this->subscriber->sendEmails(
-                        'New message received',
-                        array($recipient),
-                        'message',
-                        array('message' => new \Message($event->data->message))
-                    );
-                }
-            }
         }
     }
 }

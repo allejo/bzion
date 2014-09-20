@@ -160,7 +160,12 @@ abstract class Event extends SymfonyEvent implements \Serializable {
             }
 
             if ($player != $except) {
-                \Notification::newNotification($player, $type, $this);
+                $notification = \Notification::newNotification($player, $type, $this);
+
+                \Service::getContainer()->get('event_dispatcher')->dispatch(
+                    Events::NOTIFICATION_NEW,
+                    new NewNotificationEvent($notification)
+                );
             }
         }
     }

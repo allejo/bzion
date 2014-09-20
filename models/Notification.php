@@ -90,8 +90,6 @@ class Notification extends Model
             "status"    => $status
         ), 'issss');
 
-        $notification->push();
-
         return $notification;
     }
 
@@ -192,7 +190,7 @@ class Notification extends Model
      * Make sure that the user is shown the notification immediately if they are
      * browsing
      */
-    private function push()
+    public function push()
     {
         self::pushEvent('notification', $this);
     }
@@ -200,13 +198,16 @@ class Notification extends Model
     /**
      * Get the available actions for the notification
      *
+     * @param  boolean $absolute Whether to return an action list appropriate for e-mail messages
      * @return array
      */
-    public function getActions()
+    public function getActions($email=false)
     {
         switch($this->type) {
             case Events::TEAM_INVITE:
-                return array('Accept' => $this->event->getInvitation()->getUrl('accept'));
+                return array(
+                    ($email) ? 'Accept invitation' : 'Accept' => $this->event->getInvitation()->getUrl('accept', $email)
+                );
             default:
                 return array();
         }
@@ -231,7 +232,9 @@ class Notification extends Model
                 break;
             case 'notification':
                 $message = array(
-                    'type' => $data->getType()
+                    'type' => $data->getType(),
+                    'receiver' => $data->getReceiver()->getId(),
+                    'notification' => $data->getId()
                 );
                 break;
             case 'blank':

@@ -47,6 +47,7 @@ class EventSubscriber implements EventSubscriberInterface {
     {
         return array(
             'message.new'  => 'onNewMessage',
+            'notification.new'  => 'onNewNotification',
             'team.delete'  => 'notify',
             'team.abandon' => 'notify',
             'team.kick'    => 'notify',
@@ -87,6 +88,23 @@ class EventSubscriber implements EventSubscriberInterface {
     }
 
     /**
+     * Called every time a new notification is sent
+     * @param NewNotificationEvent $event The event
+     */
+    public function onNewNotification(NewNotificationEvent $event)
+    {
+        if ($event->getNotification()->getReceiver()->canReceive('notification')) {
+            if (!WebSocketAdapter::isEnabled()) {
+                $this->emailNotification($event->getNotification());
+            }
+        }
+
+        // Show the notification to the currently logged in players in real time
+        $event->getNotification()->push();
+    }
+
+
+    /**
      * Called when an event needs to notify a user
      * @param Event $event The event
      * @param string $type The event's type
@@ -94,6 +112,25 @@ class EventSubscriber implements EventSubscriberInterface {
     public function notify(Event $event, $name)
     {
         $event->notify($name);
+    }
+
+    /**
+     * Notify the user about a notification by e-
+     * @param \Notification $notification The notification that will be mailed
+     */
+    public function emailNotification(\Notification $notification)
+    {
+        $text = \Service::getTemplateEngine()->render(
+            'Notification/item.html.twig',
+            array('notification' => $notification)
+        );
+
+        return $this->sendEmails(
+            trim(strip_tags($text)),
+            array($notification->getReceiver()->getId()),
+            'notification',
+            array('notification' => $notification, 'text' => $text)
+        );
     }
 
     /**

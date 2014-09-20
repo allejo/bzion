@@ -22,6 +22,16 @@ class Events {
     const MESSAGE_NEW = 'message.new';
 
     /**
+     * The new notification event is dispatched each time a new notification is
+     * sent to a player
+     *
+     * The event listener receives a BZIon\Event\NewNotificationEvent instance
+     *
+     * @var string
+     */
+    const NOTIFICATION_NEW = 'notification.new';
+
+    /**
      * The team abandon event is announced every time a player leaves a team
      *
      * The event listener receives a BZIon\Event\TeamAbandonEvent instance

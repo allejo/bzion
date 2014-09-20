@@ -1,0 +1,12 @@
+{% extends 'Email/layout.html.twig' %}
+{% from 'Email/layout.html.twig' import open_block, close_block, button %}
+
+{% block content %}
+    {{ open_block() }}
+        {{ text|striptags|trim }}
+    {{ close_block() }}
+
+    {% for title, link in notification.actions(true) %}
+        {{ button(link, title) }}
+    {% endfor %}
+{% endblock %}
