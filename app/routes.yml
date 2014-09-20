@@ -188,7 +188,7 @@ team_kick:
 
 team_invite:
     pattern:    /teams/{team}/invite/{player}
-    defaults: { _controller: 'Team', _action: 'invite' }
+    defaults: { _controller: 'Invitation', _action: 'invite' }
 
 team_assign_leader:
     pattern:    /teams/{team}/change-leader/{player}

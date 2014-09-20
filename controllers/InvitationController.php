@@ -1,5 +1,8 @@
 <?php
 
+use BZIon\Event\Events;
+use BZIon\Event\TeamJoinEvent;
+use BZIon\Event\TeamInviteEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class InvitationController extends CRUDController
@@ -18,16 +21,32 @@ class InvitationController extends CRUDController
         $inviter = $invitation->getSentBy()->getEscapedUsername();
         $team    = $invitation->getTeam();
 
-        return $this->showConfirmationForm(function () use (&$invitation, &$team, &$me) {
+        return $this->showConfirmationForm(function () use ($invitation, $team, $me) {
             $team->addMember($me->getId());
             $invitation->updateExpiration();
-            $team->getLeader()->notify(Notification::TEAM_JOIN, array(
-                'player' => $me->getId(),
-                'team'   => $team->getId()
-            ));
+            $this->dispatch(Events::TEAM_JOIN, new TeamJoinEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to accept the invitation from $inviter to join {$team->getEscapedName()}?",
             "You are now a member of {$team->getName()}");
+    }
+
+    public function inviteAction(Team $team, Player $player, Player $me)
+    {
+        if (!$me->canEdit($team)) {
+            throw new ForbiddenException("You are not allowed to invite a player to that team!");
+        } elseif ($team->isMember($player->getId())) {
+            throw new ForbiddenException("The specified player is already a member of that team.");
+        } elseif (Invitation::hasOpenInvitation($player->getId(), $team->getId())) {
+            throw new ForbiddenException("This player has already been invited to join the team.");
+        }
+
+        return $this->showConfirmationForm(function () use ($team, $player, $me) {
+            $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
+            $this->dispatch(Events::TEAM_INVITE, new TeamInviteEvent($invite));
+
+            return new RedirectResponse($team->getUrl());
+        },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
+            "Player {$player->getUsername()} has been invited to {$team->getName()}");
     }
 }

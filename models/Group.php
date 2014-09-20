@@ -273,8 +273,6 @@ class Group extends UrlModel
 
         $this->updateLastActivity();
 
-        Notification::pushEvent('message', $message);
-
         return $message;
     }
 

@@ -83,6 +83,7 @@ class EventSubscriber implements EventSubscriberInterface {
         );
 
         $event->getMessage()->getGroup()->markUnread($author);
+        \Notification::pushEvent('message', $event->getMessage());
     }
 
     /**

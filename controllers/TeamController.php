@@ -74,26 +74,6 @@ class TeamController extends CRUDController
             "You are now a member of {$team->getName()}");
     }
 
-    public function inviteAction(Team $team, Player $player, Player $me)
-    {
-        $this->assertCanEdit($me, $team, "You are not allowed to invite a player to that team!");
-
-        if ($team->isMember($player->getId()))
-            throw new ForbiddenException("The specified player is already a member of that team.");
-
-        if (Invitation::hasOpenInvitation($player->getId(), $team->getId())) {
-            throw new ForbiddenException("This player has already been invited to join the team.");
-        }
-
-        return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
-            $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
-            $this->dispatch(Events::TEAM_INVITE,  new Event\TeamInviteEvent($invite));
-
-            return new RedirectResponse($team->getUrl());
-        },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
-            "Player {$player->getUsername()} has been invited to {$team->getName()}");
-    }
-
     public function kickAction(Team $team, Player $player, Player $me)
     {
         $this->assertCanEdit($me, $team, "You are not allowed to kick a player off that team!");
