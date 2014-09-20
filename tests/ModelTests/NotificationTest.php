@@ -1,5 +1,8 @@
 <?php
 
+use BZIon\Event\Events;
+use BZIon\Event\WelcomeEvent;
+
 class NotificationTest extends TestCase
 {
     private $player;
@@ -15,15 +18,15 @@ class NotificationTest extends TestCase
 
     public function testNotification()
     {
-        $this->notification = Notification::newNotification($this->player->getId(), 'text',
-            array(
-                    'text' => "Something happened, please take a look"
-                 )
+        $event = new WelcomeEvent("Welcome!", $this->player);
+
+        $this->notification = Notification::newNotification(
+            $this->player->getId(),
+            Events::WELCOME, $event
         );
 
-        $this->assertEquals($this->notification->getData(), array(
-            'text' => "Something happened, please take a look"
-        ));
+        $this->assertEquals($event, $this->notification->getEvent());
+        $this->assertEquals(Events::WELCOME, $this->notification->getCategory());
 
         $this->assertEquals($this->player->getId(), $this->notification->getReceiver()->getId());
         $this->assertFalse($this->notification->isRead());
