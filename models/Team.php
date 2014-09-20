@@ -114,6 +114,11 @@ class Team extends IdenticonModel
     const IDENTICON_LOCATION = "/assets/imgs/identicons/teams/";
 
     /**
+     * The location where avatars will be stored
+     */
+    const AVATAR_LOCATION = "/assets/imgs/avatars/teams/";
+
+    /**
      * {@inheritDoc}
      */
     protected function assignResult($team)
@@ -532,6 +537,17 @@ class Team extends IdenticonModel
     public function setLeader($leader)
     {
         return $this->updateProperty($this->leader, 'leader', $leader, 'i');
+    }
+
+    /**
+     * Change the avatar of the team
+     *
+     * @param  string $avatar The URL to the team's avatar
+     * @return self
+     */
+    public function setAvatar($avatar)
+    {
+        return $this->updateProperty($this->avatar, 'avatar', $avatar, 's');
     }
 
     /**

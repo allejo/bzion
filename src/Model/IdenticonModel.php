@@ -7,6 +7,7 @@
  */
 
 use \Identicon\Identicon;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * A Model that has a URL, an alias, and an identicon
@@ -46,10 +47,22 @@ abstract class IdenticonModel extends AliasModel
         return Service::getRequest()->getBaseUrl() . static::IDENTICON_LOCATION . $file_name . ".png";
     }
 
+    /**
+     * Set the avatar of the object to be a specific file
+     *
+     * @param  File|null $file The avatar file
+     * @return self
+     */
     public function setAvatarFile($file)
     {
-        $file->move(DOC_ROOT . static::AVATAR_LOCATION, $this->getId() . ".png");
-        $this->setAvatar(Service::getRequest()->getBaseUrl() . static::AVATAR_LOCATION . $this->getId() . ".png");
+        if ($file) {
+            $filename = $this->getId() . ".png";
+
+            $file->move(DOC_ROOT . static::AVATAR_LOCATION, $filename);
+            $this->setAvatar(Service::getRequest()->getBaseUrl() . static::AVATAR_LOCATION . $filename);
+        }
+
+        return $this;
     }
 
     /**

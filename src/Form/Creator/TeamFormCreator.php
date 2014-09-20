@@ -9,6 +9,7 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
@@ -29,6 +30,15 @@ class TeamFormCreator extends ModelFormCreator
                 ))
             )
         ))->add('description', 'textarea', array(
+            'required' => false
+        ))->add('avatar', 'file', array(
+            'constraints' => new Image(array(
+                'minWidth' => 200,
+                'maxWidth' => 800,
+                'minHeight' => 200,
+                'maxHeight' => 800,
+                'maxSize' => '4M'
+            )),
             'required' => false
         ));
 
@@ -73,7 +83,7 @@ class TeamFormCreator extends ModelFormCreator
             '',
             $form->get('description')->getData(),
             $form->get('status')->getData()
-        );
+        )->setAvatarFile($form->get('avatar')->getData());
     }
 
     /**
@@ -91,6 +101,10 @@ class TeamFormCreator extends ModelFormCreator
 
         if ($leader->getId() != $team->getLeader()->getId()) {
             $this->controller->newLeader($leader);
+        }
+
+        if ($form->get('avatar')->getData()) {
+            $team->setAvatarFile($form->get('avatar')->getData());
         }
 
         return $team;
