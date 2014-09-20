@@ -1,6 +1,8 @@
 <?php
 namespace BZIon\Socket;
+
 use Player;
+use BZIon\Event\EventSubscriber;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
@@ -13,11 +15,18 @@ class EventPusher implements MessageComponentInterface
     protected $clients;
 
     /**
+     * The event subscriber
+     * @var EventSubscriber
+     */
+    protected $subscriber;
+
+    /**
      * Create a new event pusher handler
      */
     public function __construct()
     {
         $this->clients = new \SplObjectStorage;
+        $this->subscriber = \Service::getContainer()->get('kernel.subscriber.bzion_subscriber');
     }
 
     /**
@@ -67,14 +76,18 @@ class EventPusher implements MessageComponentInterface
 
     /**
      * Action to call when the server notifies us about something
-     * @param string $event JSON'ified string we'll receive from ZeroMQ
+     * @param string $event JSON'ified string we'll receive from the webserver
      */
     public function onServerEvent($event)
     {
         $event = $event->event;
 
+        // A list of players who received a message so that we can e-mail the
+        // ones who didn't
+        $received = array();
+
         if ($event->type == 'message') {
-            $group        = new \Group($event->data->discussion);
+            $group = new \Group($event->data->discussion);
 
             // Don't notify the sender of the message, Javascript will
             // automatically refresh the page
@@ -95,6 +108,24 @@ class EventPusher implements MessageComponentInterface
             $event->message_count      = $player->countUnreadMessages();
 
             $client->send(json_encode(array('event' => $event)));
+            $received[] = $player->getId();
+        }
+
+        // Send e-mails
+        if ($event->type == 'message') {
+            foreach ($event->data->recipients as $recipient) {
+                $recipient = new Player($recipient);
+
+                // Only send an email to users who aren't currently logged in
+                if ($recipient->isVerified() && !in_array($recipient->getId(), $received)) {
+                    $this->subscriber->sendEmails(
+                        'New message received',
+                        array($recipient->getId()),
+                        'message',
+                        array('message' => new \Message($event->data->message))
+                    );
+                }
+            }
         }
     }
 }

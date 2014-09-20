@@ -67,23 +67,23 @@ class EventSubscriber implements EventSubscriberInterface {
         // the sender of the message is excluded
         $group = $event->getMessage()->getGroup();
         $author = $event->getMessage()->getAuthor()->getId();
+        $recipients = $group->getReadMemberIDs($author);
 
-        $recipients = array_filter($group->getMembers($author), function($player) use ($group)
-        {
-            // If a player already has an unread message, we've already sent
-            // them an e-mail - this will prevent spamming their inbox
-            return $group->isReadBy($player->getId());
-        });
-
-        $this->sendEmails(
-            'New message received',
-            $recipients,
-            'message',
-            array('message' => $event->getMessage())
-        );
+        // The websocket will handle emails if it is enabled
+        if (!WebSocketAdapter::isEnabled()) {
+            $this->sendEmails(
+                'New message received',
+                $recipients,
+                'message',
+                array('message' => $event->getMessage())
+            );
+        }
 
         $event->getMessage()->getGroup()->markUnread($author);
-        \Notification::pushEvent('message', $event->getMessage());
+        \Notification::pushEvent('message', array(
+            'message' => $event->getMessage(),
+            'recipients' => $recipients
+        ));
     }
 
     /**
@@ -100,15 +100,13 @@ class EventSubscriber implements EventSubscriberInterface {
      * Send emails to a list of recipients
      *
      * @param string $subject The subject of the messages
-     * @param \Player[] $recipients The players to which the messages will be sent
+     * @param \int[] $recipients The IDs of the players to which the messages will be sent
      * @param string $template The twig template name for the e-mail body
      * @param array $params Any extra parameters to pass to twig
      * @return void
      */
-    private function sendEmails($subject, $recipients, $template, $params = array())
+    public function sendEmails($subject, $recipients, $template, $params = array())
     {
-        $messages = array();
-
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom(array(EMAIL_FROM => SITE_TITLE))
@@ -117,18 +115,14 @@ class EventSubscriber implements EventSubscriberInterface {
         ;
 
         foreach ($recipients as $recipient) {
+            $recipient = new \Player($recipient);
+
             if (!$recipient->isVerified()) {
                 continue;
             }
 
-            $cloned = clone $message;
-            $messages[] = $cloned->setTo($recipient->getEmailAddress());
-        }
-
-        if (!WebSocketAdapter::isEnabled()) {
-            foreach ($messages as $message) {
-                $this->mailer->send($message);
-            }
+            $message->setTo($recipient->getEmailAddress());
+            $this->mailer->send($message);
         }
     }
 }

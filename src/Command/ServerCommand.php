@@ -30,8 +30,8 @@ class ServerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $pusher = new EventPusher();
         $loop = EventLoopFactory::create();
+        $pusher = new EventPusher();
 
         $pullSocket = new Server($loop);
         $pullSocket->on('connection', function ($conn) use ($pusher) {
@@ -60,7 +60,7 @@ class ServerCommand extends Command
         // Binding to 0.0.0.0 means remotes can connect
         $pushSocket->listen(WEBSOCKET_PUSH_PORT, '0.0.0.0');
 
-        $output->writeln('<bg=green;options=bold>Welcome to the BZiON live notification server!</bg=green;options=bold>');
+        $output->writeln('<bg=green;options=bold>Welcome to the BZiON live notification server!</>');
         $loop->run();
     }
 }

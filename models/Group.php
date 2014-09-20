@@ -327,6 +327,15 @@ class Group extends UrlModel
         $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $playerId));
     }
 
+    public function getReadMemberIDs($except)
+    {
+        return $this->fetchIds(
+            'WHERE `group` = ? AND `read` = 1 AND `player` != ?',
+            'ii',
+            array($this->id, $except),
+            'player_groups');
+    }
+
     /**
      * Checks if a player has a new message in the group
      *
