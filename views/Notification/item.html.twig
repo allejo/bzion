@@ -1,20 +1,20 @@
-{%  set type = notification.category -%}
-{%- set data = notification.data -%}
+{% set type = notification.category -%}
+{% set event = notification.event %}
 
-{%- if type == "text" %}
-    {{ notification.data.text }}
-{% elseif type == "team_invite" %}
-    <i class="fa fa-envelope-square"></i> You were invited to {{ link_to(model.invitation(data.id).team) }}
-{% elseif type == "team_kicked" %}
-    <i class="fa fa-hand-o-left"></i> You left {{ link_to(model.team(data.team)) }}
-{% elseif type == "team_abandon" %}
-    <i class="fa fa-hand-o-left"></i> {{ link_to(model.player(data.player)) }} left {{ link_to(model.team(data.team)) }}
-{% elseif type == "team_join" %}
-    <i class="fa fa-plus-circle"></i> {{ link_to(model.player(data.player)) }} joined {{ link_to(model.team(data.team)) }}
-{% elseif type == "team_leader" %}
-    <i class="fa fa-chevron-circle-up"></i> You have been appointed as a leader of {{ link_to(model.team(data.team)) }}
-{% elseif type == "team_deleted" %}
-    <i class="fa fa-minus-circle"></i> <strong>{{ data.team }}</strong> was deleted
+{%- if type == "welcome" %}
+    {{ event.message }}
+{% elseif type == "team.invite" %}
+    <i class="fa fa-envelope-square"></i> You were invited to {{ link_to(event.invitation.team) }}
+{% elseif type == "team.kick" %}
+    <i class="fa fa-hand-o-left"></i> You left {{ link_to(event.team) }}
+{% elseif type == "team.abandon" %}
+    <i class="fa fa-hand-o-left"></i> {{ link_to(event.player) }} left {{ link_to(event.team) }}
+{% elseif type == "team.join" %}
+    <i class="fa fa-plus-circle"></i> {{ link_to(event.player) }} joined {{ link_to(event.team) }}
+{% elseif type == "team.leader_change" %}
+    <i class="fa fa-chevron-circle-up"></i> You have been appointed as a leader of {{ link_to(event.team) }}
+{% elseif type == "team.delete" %}
+    <i class="fa fa-minus-circle"></i> The team {{ link_to(event.team) }} was deleted
 {% else %}
     {{ type }}
 {% endif %}

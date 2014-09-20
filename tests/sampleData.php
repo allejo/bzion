@@ -2,6 +2,7 @@
 <?php
 
 use BZIon\Cache\ModelCache;
+use BZIon\Event\WelcomeEvent;
 
 require_once(__DIR__ . "/../bzion-load.php");
 
@@ -32,7 +33,8 @@ echo " done!";
 
 echo "\nSending notifications...";
 foreach (Player::getPlayers() as $player) {
-    $player->notify('text', array('text' => 'Welcome to ' . SITE_TITLE));
+    $event = new WelcomeEvent('Welcome to ' . SITE_TITLE . '!', $player);
+    $event->notify('welcome');
 }
 echo " done!";
 

@@ -6,85 +6,15 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use BZIon\Event\Event;
+use BZIon\Event\Events;
+
 /**
  * A notification to a player
  * @package    BZiON\Models
  */
 class Notification extends Model
 {
-    /**
-     * A plain text notification
-     *
-     * data:
-     *     { text => the text to display to the user }
-     */
-    const TEXT = "text";
-
-    /**
-     * A notification to an invitee
-     *
-     * data:
-     *     { id => the id of the notification }
-     */
-    const TEAM_INVITE  = "team_invite";
-
-    /**
-     * A notification to a player who gets kicked from their team
-     *
-     * data:
-     *     {
-     *       by   => the ID of the leader who kicked the player
-     *       team => the ID of the team
-     *     }
-     */
-    const TEAM_KICKED  = "team_kicked";
-
-    /**
-     * A notification to a player who gets appointed as a team leader
-     *
-     * data:
-     *     {
-     *       by   => the ID of the former leader of the team
-     *       team => the ID of the team
-     *     }
-     */
-    const TEAM_LEADER  = "team_leader";
-
-    /**
-     * A notification to a player whose team is deleted
-     *
-     * data:
-     *     {
-     *       by   => the ID of the former leader of the team
-     *       team => the name of the deleted team
-     *     }
-     */
-    const TEAM_DELETED = "team_deleted";
-
-    /**
-     * A notification to the leader of the team when a new player joins
-     *
-     * data:
-     *     {
-     *       player => the ID of the new player
-     *       team   => the ID of the team
-     *     }
-     *
-     */
-    const TEAM_JOIN = "team_join";
-
-    /**
-     * A notification to the leader of the team when a player abandons it
-     *
-     * data:
-     *     {
-     *       player => the ID of the former player
-     *       team   => the ID of the team
-     *     }
-     *
-     */
-    const TEAM_ABANDON = "team_abandon";
-
     /**
      * The id of the notified player
      * @var int
@@ -94,17 +24,17 @@ class Notification extends Model
     /**
      * The type of the notification
      *
-     * Can be one of the class constants
+     * Can be one of the constants in BZIon\Event\Events
      *
      * @var int
      */
     protected $type;
 
     /**
-     * The data of the notification
-     * @var array
+     * The event of the notification
+     * @var Event
      */
-    protected $data;
+    protected $event;
 
     /**
      * The status of the notification (unread, read, deleted)
@@ -136,7 +66,7 @@ class Notification extends Model
     {
         $this->receiver  = $notification['receiver'];
         $this->type      = $notification['type'];
-        $this->data      = unserialize($notification['data']);
+        $this->event     = unserialize($notification['event']);
         $this->status    = $notification['status'];
         $this->timestamp = new TimeDate($notification['timestamp']);
     }
@@ -145,17 +75,17 @@ class Notification extends Model
      * Enter a new notification into the database
      * @param  int          $receiver  The receiver's ID
      * @param  string       $type      The type of the notification
-     * @param  array        $data      The data of the notification
+     * @param  Event        $event     The event of the notification
      * @param  string       $timestamp The timestamp of the notification
      * @param  string       $status    The status of the notification (unread, read, deleted)
      * @return Notification An object representing the notification that was just entered
      */
-    public static function newNotification($receiver, $type, $data, $timestamp = "now", $status = "unread")
+    public static function newNotification($receiver, $type, $event, $timestamp = "now", $status = "unread")
     {
         $notification = self::create(array(
             "receiver"  => $receiver,
             "type"      => $type,
-            "data"      => serialize($data),
+            "event"     => serialize($event),
             "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
         ), 'issss');
@@ -218,12 +148,12 @@ class Notification extends Model
     }
 
     /**
-     * Get the data of the notification
-     * @return array
+     * Get the event of the notification
+     * @return Event
      */
-    public function getData()
+    public function getEvent()
     {
-        return $this->data;
+        return $this->event;
     }
 
     /**
@@ -275,10 +205,8 @@ class Notification extends Model
     public function getActions()
     {
         switch($this->type) {
-            case self::TEAM_INVITE:
-                $invitation = new Invitation($this->data['id']);
-
-                return array('Accept' => $invitation->getUrl('accept'));
+            case Events::TEAM_INVITE:
+                return array('Accept' => $this->event->getInvitation()->getUrl('accept'));
             default:
                 return array();
         }

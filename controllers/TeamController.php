@@ -1,5 +1,7 @@
 <?php
 
+use BZIon\Event\Events;
+use BZIon\Event as Event;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,18 +49,10 @@ class TeamController extends CRUDController
     public function deleteAction(Player $me, Team $team)
     {
         $members = $team->getMembers();
-        $name    = $team->getName();
 
-        return $this->delete($team, $me, function () use ($members, $me, $name) {
-            foreach ($members as $member) {
-                // Do not notify the user who initiated the deletion
-                if ($me->getId() != $member->getId()) {
-                    $member->notify(Notification::TEAM_DELETED, array(
-                        'by'   => $me->getId(),
-                        'team' => $name
-                    ));
-                }
-            }
+        return $this->delete($team, $me, function () use ($team, $me, $members) {
+            $event = new Event\TeamDeleteEvent($team, $me, $members);
+            $this->dispatch(Events::TEAM_DELETE, $event);
         });
     }
 
@@ -71,12 +65,9 @@ class TeamController extends CRUDController
             throw new ForbiddenException("This team is not accepting new members without an invitation");
         }
 
-        return $this->showConfirmationForm(function () use (&$team, &$me) {
+        return $this->showConfirmationForm(function () use ($team, $me) {
             $team->addMember($me->getId());
-            $team->getLeader()->notify(Notification::TEAM_JOIN, array(
-                'player' => $me->getId(),
-                'team'   => $team->getId()
-            ));
+            $this->dispatch(Events::TEAM_JOIN,  new Event\TeamJoinEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to join {$team->getEscapedName()}?",
@@ -96,7 +87,7 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use (&$team, &$player, &$me) {
             $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
-            $player->notify(Notification::TEAM_INVITE, array('id' => $invite->getId()));
+            $this->dispatch(Events::TEAM_INVITE,  new Event\TeamInviteEvent($invite));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
@@ -113,12 +104,10 @@ class TeamController extends CRUDController
         if (!$team->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of that team.");
 
-        return $this->showConfirmationForm(function () use (&$me, &$team, &$player) {
+        return $this->showConfirmationForm(function () use ($me, $team, $player) {
             $team->removeMember($player->getId());
-            $player->notify(Notification::TEAM_KICKED, array(
-                'by' => $me->getId(),
-                'team' => $team->getId()
-            ));
+            $event = new Event\TeamKickEvent($team, $player, $me);
+            $this->dispatch(Events::TEAM_KICK, $event);
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?",
@@ -133,12 +122,9 @@ class TeamController extends CRUDController
         if ($team->getLeader()->getId() == $me->getId())
             throw new ForbiddenException("You can't abandon the team you are leading.");
 
-        return $this->showConfirmationForm(function () use (&$team, &$me) {
+        return $this->showConfirmationForm(function () use ($team, $me) {
             $team->removeMember($me->getId());
-            $team->getLeader()->notify(Notification::TEAM_ABANDON, array(
-                'player' => $me->getId(),
-                'team'   => $team->getId()
-            ));
+            $this->dispatch(Events::TEAM_ABANDON, new Event\TeamAbandonEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to abandon {$team->getEscapedName()}?",
@@ -149,11 +135,16 @@ class TeamController extends CRUDController
     {
         $this->assertCanEdit($me, $team, "You are not allowed to change the leader of this team.");
 
-        if (!$team->isMember($player->getId()))
+        if (!$team->isMember($player->getId())) {
             throw new ForbiddenException("The specified player is not a member of {$team->getEscapedName()}");
+        } elseif ($team->getLeader()->getId() == $player->getId()) {
+            throw new ForbiddenException("{$player->getEscapedUsername()} is already the leader of {$team->getEscapedName()}");
+        }
 
         return $this->showConfirmationForm(function () use ($player, $team) {
+            $event = new Event\TeamLeaderChangeEvent($team, $player, $team->getLeader());
             $team->setLeader($player->getId());
+            $this->dispatch(Events::TEAM_LEADER_CHANGE, $event);
 
             return new RedirectResponse($team->getUrl());
         }, "Are you sure you want to transfer the leadership of the team to <strong>{$player->getEscapedUsername()}</strong>?",

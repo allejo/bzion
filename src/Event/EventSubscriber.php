@@ -46,7 +46,14 @@ class EventSubscriber implements EventSubscriberInterface {
     public static function getSubscribedEvents()
     {
         return array(
-            'message.new' => 'onNewMessage',
+            'message.new'  => 'onNewMessage',
+            'team.delete'  => 'notify',
+            'team.abandon' => 'notify',
+            'team.kick'    => 'notify',
+            'team.join'    => 'notify',
+            'team.invite'  => 'notify',
+            'team.leader_change' => 'notify',
+            'welcome'      => 'notify',
         );
     }
 
@@ -67,6 +74,16 @@ class EventSubscriber implements EventSubscriberInterface {
             'message',
             array('message' => $event->getMessage())
         );
+    }
+
+    /**
+     * Called when an event needs to notify a user
+     * @param Event $event The event
+     * @param string $type The event's type
+     */
+    public function notify(Event $event, $name)
+    {
+        $event->notify($name);
     }
 
     /**

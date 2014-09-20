@@ -12,7 +12,7 @@ framework:
         handler_id: ~
 
 monolog:
-    channels: ["api", "mysql"]
+    channels: ["app", "api", "mysql"]
     handlers:
         api:
             type: stream

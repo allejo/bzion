@@ -6,6 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use BZIon\Event\Event;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
@@ -661,12 +662,12 @@ class Player extends IdenticonModel implements NamedModel
     /**
      * Send a notification to a player
      * @param  string       $type    The type of the notification
-     * @param  array        $content The content of the notification
+     * @param  Event        $event   The event of the notification
      * @return Notification The sent notification
      */
-    public function notify($type, $content)
+    public function notify($type, $event)
     {
-        return Notification::newNotification($this->getId(), $type, $content);
+        return Notification::newNotification($this->getId(), $type, $event);
     }
 
     /**
