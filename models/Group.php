@@ -161,6 +161,20 @@ class Group extends UrlModel
         );
     }
 
+    /**
+     * Mark the last message in the group as unread by the group's members
+     *
+     * @param  int $except The ID of a player to exclude
+     * @return void
+     */
+    public function markUnread($except)
+    {
+        $this->db->query(
+            "UPDATE `player_groups` SET `read` = 0 WHERE `group` = ? AND `player` != ?",
+            'ii',
+            array($this->id, $except)
+        );
+    }
 
     /**
      * {@inheritDoc}
@@ -253,16 +267,13 @@ class Group extends UrlModel
      * @param  string  $status  The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
      */
-    public function sendMessage(&$from, $message, $status='sent')
+    public function sendMessage($from, $message, $status='sent')
     {
         $message = Message::sendMessage($this->getId(), $from->getId(), $message, $status);
 
         $this->updateLastActivity();
 
         Notification::pushEvent('message', $message);
-
-        $this->db->query("UPDATE `player_groups` SET `read` = 0 WHERE `group` = ? AND `player` != ?",
-            'ii', array($this->id, $from->getId()));
 
         return $message;
     }

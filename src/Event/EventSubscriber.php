@@ -65,8 +65,15 @@ class EventSubscriber implements EventSubscriberInterface {
     {
         // Get a list of everyone who can see the message so we can notify them -
         // the sender of the message is excluded
+        $group = $event->getMessage()->getGroup();
         $author = $event->getMessage()->getAuthor()->getId();
-        $recipients = $event->getMessage()->getGroup()->getMembers($author);
+
+        $recipients = array_filter($group->getMembers($author), function($player) use ($group)
+        {
+            // If a player already has an unread message, we've already sent
+            // them an e-mail - this will prevent spamming their inbox
+            return $group->isReadBy($player->getId());
+        });
 
         $this->sendEmails(
             'New message received',
@@ -74,6 +81,8 @@ class EventSubscriber implements EventSubscriberInterface {
             'message',
             array('message' => $event->getMessage())
         );
+
+        $event->getMessage()->getGroup()->markUnread($author);
     }
 
     /**
