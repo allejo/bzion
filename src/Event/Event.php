@@ -15,7 +15,9 @@ use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
  * Events can be serialized using PHP's `serialize()` and `unserialize()`
  * functions. Class properties present as parameters to the constructor are
  * serialized and unserialized - if you provide type hinting for a model, only
- * its ID and type are stored.
+ * its ID (and type, if necessary) is stored. This means that you shouldn't
+ * change the parameter names or non-abstract model type hints without writing
+ * the appropriate database migrations first.
  */
 abstract class Event extends SymfonyEvent implements \Serializable {
     /**
@@ -36,10 +38,19 @@ abstract class Event extends SymfonyEvent implements \Serializable {
 
             // We just need to store IDs and types for models
             if ($value !== null && $this->isModel($param)) {
-                $value = array(
-                    'id' => $value->getId(),
-                    'type' => get_class($value)
-                );
+                if ($param->getClass()->isInstantiable()) {
+                    // The parameter is a non-abstract model, we can just
+                    // store its ID since the type will be known when
+                    // unserializing
+                    $value = $value->getId();
+                } else {
+                    // The parameter is an abstract model class, we need to
+                    // store the model's type as well
+                    $value = array(
+                        'id' => $value->getId(),
+                        'type' => get_class($value)
+                    );
+                }
             }
 
             $data[$property->getName()] = $value;
@@ -66,12 +77,16 @@ abstract class Event extends SymfonyEvent implements \Serializable {
             if (isset($data[$param->getName()])) {
                 $value = $data[$param->getName()];
 
-                // If the serialized data contained a model's ID and type, pass
-                // a new instance of it
+                // If the serialized data contained a model's ID (and type),
+                // pass a new instance of it
                 if ($this->isModel($param)) {
-                    $id = $value['id'];
-                    $type = $value['type'];
-                    $value = new $type($id);
+                    if ($param->getClass()->isInstantiable()) {
+                        $value = $param->getClass()->newInstance($value);
+                    } else {
+                        $id = $value['id'];
+                        $type = $value['type'];
+                        $value = new $type($id);
+                    }
                 }
             } else {
                 $value = null;
