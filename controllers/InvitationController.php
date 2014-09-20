@@ -24,7 +24,7 @@ class InvitationController extends CRUDController
         return $this->showConfirmationForm(function () use ($invitation, $team, $me) {
             $team->addMember($me->getId());
             $invitation->updateExpiration();
-            $this->dispatch(Events::TEAM_JOIN, new TeamJoinEvent($team, $me));
+            Service::getDispatcher()->dispatch(Events::TEAM_JOIN, new TeamJoinEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to accept the invitation from $inviter to join {$team->getEscapedName()}?",
@@ -43,7 +43,7 @@ class InvitationController extends CRUDController
 
         return $this->showConfirmationForm(function () use ($team, $player, $me) {
             $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
-            $this->dispatch(Events::TEAM_INVITE, new TeamInviteEvent($invite));
+            Service::getDispatcher()->dispatch(Events::TEAM_INVITE, new TeamInviteEvent($invite));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",

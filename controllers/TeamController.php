@@ -52,7 +52,7 @@ class TeamController extends CRUDController
 
         return $this->delete($team, $me, function () use ($team, $me, $members) {
             $event = new Event\TeamDeleteEvent($team, $me, $members);
-            $this->dispatch(Events::TEAM_DELETE, $event);
+            Service::getDispatcher()->dispatch(Events::TEAM_DELETE, $event);
         });
     }
 
@@ -67,7 +67,7 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use ($team, $me) {
             $team->addMember($me->getId());
-            $this->dispatch(Events::TEAM_JOIN,  new Event\TeamJoinEvent($team, $me));
+            Service::getDispatcher()->dispatch(Events::TEAM_JOIN,  new Event\TeamJoinEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to join {$team->getEscapedName()}?",
@@ -87,7 +87,7 @@ class TeamController extends CRUDController
         return $this->showConfirmationForm(function () use ($me, $team, $player) {
             $team->removeMember($player->getId());
             $event = new Event\TeamKickEvent($team, $player, $me);
-            $this->dispatch(Events::TEAM_KICK, $event);
+            Service::getDispatcher()->dispatch(Events::TEAM_KICK, $event);
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to kick {$player->getEscapedUsername()} from {$team->getEscapedName()}?",
@@ -104,7 +104,7 @@ class TeamController extends CRUDController
 
         return $this->showConfirmationForm(function () use ($team, $me) {
             $team->removeMember($me->getId());
-            $this->dispatch(Events::TEAM_ABANDON, new Event\TeamAbandonEvent($team, $me));
+            Service::getDispatcher()->dispatch(Events::TEAM_ABANDON, new Event\TeamAbandonEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
         },  "Are you sure you want to abandon {$team->getEscapedName()}?",
@@ -124,7 +124,7 @@ class TeamController extends CRUDController
         return $this->showConfirmationForm(function () use ($player, $team) {
             $event = new Event\TeamLeaderChangeEvent($team, $player, $team->getLeader());
             $team->setLeader($player->getId());
-            $this->dispatch(Events::TEAM_LEADER_CHANGE, $event);
+            Service::getDispatcher()->dispatch(Events::TEAM_LEADER_CHANGE, $event);
 
             return new RedirectResponse($team->getUrl());
         }, "Are you sure you want to transfer the leadership of the team to <strong>{$player->getEscapedUsername()}</strong>?",
