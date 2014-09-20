@@ -114,13 +114,11 @@ class EventPusher implements MessageComponentInterface
         // Send e-mails
         if ($event->type == 'message') {
             foreach ($event->data->recipients as $recipient) {
-                $recipient = new Player($recipient);
-
                 // Only send an email to users who aren't currently logged in
-                if ($recipient->isVerified() && !in_array($recipient->getId(), $received)) {
+                if (!in_array($recipient, $received)) {
                     $this->subscriber->sendEmails(
                         'New message received',
-                        array($recipient->getId()),
+                        array($recipient),
                         'message',
                         array('message' => new \Message($event->data->message))
                     );

@@ -46,6 +46,17 @@ class ProfileFormCreator extends ModelFormCreator
                 'label' => 'E-Mail Address',
                 'required' => false
             ))
+            ->add('receive', 'choice', array(
+                'choices' => array(
+                    'nothing' => 'Nothing',
+                    'messages' => 'Messages only',
+                    'everything' => 'Everything'
+                ),
+                'data' => $this->editing->getReceives(),
+                'label' => 'Receive notifications about',
+                'disabled' => !$this->editing->isVerified(),
+                'expanded' => true,
+            ))
             ->add('timezone', new TimezoneType(), array(
                 'constraints' => new NotBlank(),
                 'data' => $this->editing->getTimezone()

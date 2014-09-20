@@ -67,7 +67,7 @@ class EventSubscriber implements EventSubscriberInterface {
         // the sender of the message is excluded
         $group = $event->getMessage()->getGroup();
         $author = $event->getMessage()->getAuthor()->getId();
-        $recipients = $group->getReadMemberIDs($author);
+        $recipients = $group->getWaitingForEmailIDs($author);
 
         // The websocket will handle emails if it is enabled
         if (!WebSocketAdapter::isEnabled()) {
@@ -100,7 +100,7 @@ class EventSubscriber implements EventSubscriberInterface {
      * Send emails to a list of recipients
      *
      * @param string $subject The subject of the messages
-     * @param \int[] $recipients The IDs of the players to which the messages will be sent
+     * @param int[] $recipients The IDs of the players to which the messages will be sent
      * @param string $template The twig template name for the e-mail body
      * @param array $params Any extra parameters to pass to twig
      * @return void

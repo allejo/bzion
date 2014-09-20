@@ -65,6 +65,12 @@ class Player extends IdenticonModel implements NamedModel
     protected $verified;
 
     /**
+     * What kind of events the player should be e-mailed about
+     * @var string
+     */
+    protected $receives;
+
+    /**
      * A confirmation code for the player's e-mail address verification
      * @var string
      */
@@ -141,6 +147,7 @@ class Player extends IdenticonModel implements NamedModel
         $this->avatar = $player['avatar'];
         $this->email = $player['email'];
         $this->verified = $player['verified'];
+        $this->receives = $player['receives'];
         $this->confirmCode = $player['confirm_code'];
         $this->description = $player['description'];
         $this->country = $player['country'];
@@ -156,6 +163,7 @@ class Player extends IdenticonModel implements NamedModel
             $this->permissions = array_merge($this->permissions, $role->getPerms());
         }
     }
+
 
     /**
      * Add a player a new role
@@ -251,11 +259,42 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Returns what kind of events the player should be e-mailed about
+     *
+     * @return string The type of notifications
+     */
+    public function getReceives()
+    {
+        return $this->receives;
+    }
+
+    /**
+     * Finds out whether the specified player wants and can receive an e-mail
+     * message
+     *
+     * @return boolean `true` if the player should be sent an e-mail
+     */
+    public function canReceive($type)
+    {
+        if (!$this->email || !$this->isVerified()) {
+            // Unverified e-mail means the user will receive nothing
+            return false;
+        }
+
+        if ($this->receives == 'everything') {
+            return true;
+        }
+
+        return ($this->receives == $type);
+    }
+
+
+    /**
      * Find out whether the specified confirmation code is correct
      *
      * This method protects against timing attacks
      *
-     * @return book `true` for a correct e-mail verification code
+     * @return bool `true` for a correct e-mail verification code
      */
     public function isCorrectConfirmCode($code)
     {
@@ -508,6 +547,17 @@ class Player extends IdenticonModel implements NamedModel
     }
 
     /**
+     * Set what kind of events the player should be e-mailed about
+     *
+     * @param  string $receives The type of notification
+     * @return self
+     */
+    public function setReceives($receives)
+    {
+        return $this->updateProperty($this->receives, 'receives', $receives, 's');
+    }
+
+    /**
      * Set the player's description
      * @param string $description The description
      */
@@ -657,17 +707,6 @@ class Player extends IdenticonModel implements NamedModel
         return self::arrayIdToModel(
             parent::fetchIdsFrom("status", array("active", "test"), "s", false)
         );
-    }
-
-    /**
-     * Send a notification to a player
-     * @param  string       $type    The type of the notification
-     * @param  Event        $event   The event of the notification
-     * @return Notification The sent notification
-     */
-    public function notify($type, $event)
-    {
-        return Notification::newNotification($this->getId(), $type, $event);
     }
 
     /**

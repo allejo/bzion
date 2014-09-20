@@ -20,6 +20,7 @@ class ProfileController extends HTMLController
             $me->setDescription($form->get('description')->getData());
             $me->setTimezone($form->get('timezone')->getData());
             $me->setCountry($form->get('country')->getData());
+            $me->setReceives($form->get('receive')->getData());
 
             $email = $form->get('email')->getData();
             if ($email !== $me->getEmailAddress()) {

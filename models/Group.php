@@ -327,13 +327,21 @@ class Group extends UrlModel
         $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $playerId));
     }
 
-    public function getReadMemberIDs($except)
+    /**
+     * Find out which members of the group should receive an e-mail after a new
+     * message has been sent
+     *
+     * @param  int $except The ID of a player who won't receive an e-mail (e.g. message author)
+     * @return int[] A player ID list
+     */
+    public function getWaitingForEmailIDs($except)
     {
         return $this->fetchIds(
-            'WHERE `group` = ? AND `read` = 1 AND `player` != ?',
+            'LEFT JOIN players ON pg.player = players.id WHERE pg.group = ? AND pg.read = 1 AND pg.player != ?  AND players.verified = 1 AND players.receives != "nothing"',
             'ii',
             array($this->id, $except),
-            'player_groups');
+            'player_groups AS pg',
+            'pg.player');
     }
 
     /**
