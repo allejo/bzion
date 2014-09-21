@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Util\StringUtils;
  * A league player
  * @package    BZiON\Models
  */
-class Player extends IdenticonModel implements NamedModel
+class Player extends AvatarModel implements NamedModel
 {
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
@@ -45,12 +45,6 @@ class Player extends IdenticonModel implements NamedModel
      * @var string
      */
     protected $status;
-
-    /**
-     * The url of the player's profile avatar
-     * @var string
-     */
-    protected $avatar;
 
     /**
      * The player's e-mail address
@@ -184,19 +178,6 @@ class Player extends IdenticonModel implements NamedModel
     public function addRole($role_id)
     {
         return $this->modifyRole($role_id, "add");
-    }
-
-    /**
-     * Get the player's avatar
-     * @return string The URL for the avatar
-     */
-    public function getAvatar()
-    {
-        if (!empty($this->avatar)) {
-            return $this->avatar;
-        }
-
-        return $this->getIdenticon($this->getUsername(), $this->getBZID());
     }
 
     /**
@@ -486,16 +467,6 @@ class Player extends IdenticonModel implements NamedModel
     public function removeRole($role_id)
     {
         return $this->modifyRole($role_id, "remove");
-    }
-
-    /**
-     * Set the player's avatar
-     * @param string $avatar The URL for the avatar
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-        $this->update("avatar", $avatar, 's');
     }
 
     /**

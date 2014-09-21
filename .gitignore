@@ -8,7 +8,6 @@ cache
 logs
 reDB.sh
 assets/imgs/avatars
-assets/imgs/identicons
 !assets/css/vendor
 app/lastupdate.yml
 

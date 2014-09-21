@@ -10,7 +10,7 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends IdenticonModel
+class Team extends AvatarModel
 {
     /**
      * The description of the team written in markdown
@@ -25,13 +25,6 @@ class Team extends IdenticonModel
      * @var string
      */
     protected $description_html;
-
-    /**
-     * The url of the team's avatar
-     *
-     * @var string
-     */
-    protected $avatar;
 
     /**
      * The creation date of the team
@@ -222,20 +215,6 @@ class Team extends IdenticonModel
     public function getActivity()
     {
         return sprintf("%.2f", $this->activity);
-    }
-
-    /**
-     * Get URL for the image used as the team avatar
-     *
-     * @return string The URL for the avatar
-     */
-    public function getAvatar()
-    {
-        if (!empty($this->avatar)) {
-            return $this->avatar;
-        }
-
-        return $this->getIdenticon($this->getName(), $this->getAlias());
     }
 
     /**
@@ -506,23 +485,6 @@ class Team extends IdenticonModel
     }
 
     /**
-     * Change the name for team
-     *
-     * @param  string $newName The new name of the team
-     * @return self
-     */
-    public function setName($newName)
-    {
-        $oldIdenticon = $this->getIdenticonPath($this->getAlias());
-
-        parent::setName($newName);
-
-        rename($oldIdenticon, $this->getIdenticonPath($this->getAlias()));
-
-        return $this;
-    }
-
-    /**
      * Change the status of the team
      *
      * @param  string $newStatus The new status of the team (open, closed, disabled or deleted)
@@ -542,17 +504,6 @@ class Team extends IdenticonModel
     public function setLeader($leader)
     {
         return $this->updateProperty($this->leader, 'leader', $leader, 'i');
-    }
-
-    /**
-     * Change the avatar of the team
-     *
-     * @param  string $avatar The URL to the team's avatar
-     * @return self
-     */
-    public function setAvatar($avatar)
-    {
-        return $this->updateProperty($this->avatar, 'avatar', $avatar, 's');
     }
 
     /**

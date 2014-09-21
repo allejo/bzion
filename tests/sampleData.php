@@ -34,7 +34,7 @@ echo " done!";
 echo "\nSending notifications...";
 foreach (Player::getPlayers() as $player) {
     $event = new WelcomeEvent('Welcome to ' . SITE_TITLE . '!', $player);
-    $event->notify('welcome');
+    Notification::newNotification($player->getId(), 'welcome', $event);
 }
 echo " done!";
 
