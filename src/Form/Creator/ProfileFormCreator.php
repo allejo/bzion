@@ -45,6 +45,7 @@ class ProfileFormCreator extends ModelFormCreator
                 )),
                 'required' => false
             ))
+            ->add('delete_avatar', 'submit')
             ->add('country', 'choice', array(
                 'choices' => \Country::getCountriesWithISO(),
                 'data' => $this->editing->getCountry()->getISO()

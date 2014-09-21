@@ -75,7 +75,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     public function getAvatar($url=false)
     {
         if (empty($this->avatar)) {
-            $this->setAvatar($this->getIdenticon($this->getName()));
+            $this->resetAvatar();
         }
 
         if ($url) {
@@ -98,6 +98,16 @@ abstract class AvatarModel extends AliasModel implements NamedModel
         $imagine->remove($avatar);
 
         return $this->updateProperty($this->avatar, 'avatar', $avatar, 's');
+    }
+
+    /**
+     * Reset the object's avatar to an identicon
+     *
+     * @return self
+     */
+    public function resetAvatar()
+    {
+        return $this->setAvatar($this->getIdenticon($this->getName()));
     }
 
     /**

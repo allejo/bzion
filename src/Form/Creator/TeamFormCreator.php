@@ -41,8 +41,11 @@ class TeamFormCreator extends ModelFormCreator
         ));
 
         if ($this->editing) {
-            $team = $this->editing;
             // We are editing the team, not creating it
+            $team = $this->editing;
+
+            $builder->add('delete_avatar', 'submit');
+
             // Let the user appoint a different leader
             $builder->add('leader', new ModelType('Player', false, function ($query) use ($team) {
                 // Only list players belonging in that team
@@ -101,7 +104,9 @@ class TeamFormCreator extends ModelFormCreator
             $this->controller->newLeader($leader);
         }
 
-        if ($form->get('avatar')->getData()) {
+        if ($form->get('delete_avatar')->isClicked()) {
+            $team->resetAvatar();
+        } else {
             $team->setAvatarFile($form->get('avatar')->getData());
         }
 

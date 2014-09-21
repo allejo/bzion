@@ -22,7 +22,9 @@ class ProfileController extends HTMLController
             $me->setCountry($form->get('country')->getData());
             $me->setReceives($form->get('receive')->getData());
 
-            if ($form->get('avatar')->getData()) {
+            if ($form->get('delete_avatar')->isClicked()) {
+                $me->resetAvatar();
+            } else {
                 $me->setAvatarFile($form->get('avatar')->getData());
             }
 
