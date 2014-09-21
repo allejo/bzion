@@ -39,7 +39,7 @@
                 </section>
 
                 <section class="profile_picture">
-                    {{ player.getAvatarLiteral | raw }}
+                    <img class="player_avatar" src="{{ player.avatar|imagine_filter('huge_thumb') }}">
                 </section>
             </section>
 

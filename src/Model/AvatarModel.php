@@ -67,27 +67,36 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     }
 
     /**
-     * Get the URL for the image used as the team avatar
+     * Get the path for the image used as the object's avatar
      *
-     * @return string The URL for the avatar
+     * @param  boolean $url Whether to return an absolute URL
+     * @return string The path for the avatar
      */
-    public function getAvatar()
+    public function getAvatar($url=false)
     {
         if (empty($this->avatar)) {
             $this->setAvatar($this->getIdenticon($this->getName()));
         }
 
-        return Service::getRequest()->getBaseUrl() . $this->avatar;
+        if ($url) {
+            return Service::getRequest()->getBaseUrl() . $this->avatar;
+        }
+
+        return $this->avatar;
     }
 
     /**
      * Change the avatar of the object
      *
-     * @param  string $avatar The URL to the team's avatar
+     * @param  string $avatar The file name of the avatar
      * @return self
      */
     public function setAvatar($avatar)
     {
+        // Clear the thumbnail cache
+        $imagine = Service::getContainer()->get('liip_imagine.cache.manager');
+        $imagine->remove($avatar);
+
         return $this->updateProperty($this->avatar, 'avatar', $avatar, 's');
     }
 

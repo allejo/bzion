@@ -6,6 +6,7 @@ use BZIon\Twig\PluralFilter;
 use BZIon\Twig\YesNoFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\InvalidTest;
+use Liip\ImagineBundle\Templating\ImagineExtension;
 use RaulFraile\Bundle\LadybugBundle\Twig\Extension\LadybugExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\Forms;
@@ -44,6 +45,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if ($this->getEnvironment() == 'profile') {
@@ -102,6 +104,9 @@ class AppKernel extends Kernel
         $twig->addExtension(new RoutingExtension(Service::getGenerator()));
         $twig->addExtension(
             new FormExtension(new TwigRenderer($formEngine))
+        );
+        $twig->addExtension(
+            new ImagineExtension($this->container->get('liip_imagine.cache.manager'))
         );
 
         if ($this->getEnvironment() == 'profile') {

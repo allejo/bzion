@@ -13,7 +13,7 @@
         <section class="list">
             {% for player in players %}
                 <article>
-                    {{ player.getAvatarLiteral | raw }}
+                    <img class="player_avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
                     <section class="info">
                         <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
                         <p class="team">{{ link_to(player.team) }}</p>

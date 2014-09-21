@@ -218,16 +218,6 @@ class Team extends AvatarModel
     }
 
     /**
-     * Get the team's avatar as an HTML image element
-     *
-     * @return string The HTML for the image
-     */
-    public function getAvatarLiteral()
-    {
-        return '<img class="team_avatar" src="' . $this->getAvatar() . '">';
-    }
-
-    /**
      * Get the creation date of the team
      *
      * @return string The creation date of the team

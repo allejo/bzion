@@ -181,16 +181,6 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
-     * Get the player's avatar as an HTML image element
-     *
-     * @return string The HTML for the image
-     */
-    public function getAvatarLiteral()
-    {
-        return '<img class="player_avatar" src="' . $this->getAvatar() . '">';
-    }
-
-    /**
      * Get the notes admins have left about a player
      * @return string The notes
      */

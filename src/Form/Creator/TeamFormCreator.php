@@ -33,10 +33,8 @@ class TeamFormCreator extends ModelFormCreator
             'required' => false
         ))->add('avatar', 'file', array(
             'constraints' => new Image(array(
-                'minWidth' => 200,
-                'maxWidth' => 800,
-                'minHeight' => 200,
-                'maxHeight' => 800,
+                'minWidth' => 60,
+                'minHeight' => 60,
                 'maxSize' => '4M'
             )),
             'required' => false

@@ -2,6 +2,10 @@ index:
     pattern:  /
     defaults: { _controller: 'Home', _action: 'show' }
 
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    defaults: { _defaultHandler: true }
+
 admin_list:
     pattern:    /admins
     defaults: { _controller: 'Admin', _action: 'list' }

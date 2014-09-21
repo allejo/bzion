@@ -39,10 +39,8 @@ class ProfileFormCreator extends ModelFormCreator
             ))
             ->add('avatar', 'file', array(
                 'constraints' => new Image(array(
-                    'minWidth' => 200,
-                    'maxWidth' => 800,
-                    'minHeight' => 200,
-                    'maxHeight' => 800,
+                    'minWidth' => 50,
+                    'minHeight' => 50,
                     'maxSize' => '4M'
                 )),
                 'required' => false

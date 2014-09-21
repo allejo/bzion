@@ -25,6 +25,29 @@ monolog:
             level: %bzion.log.level%
             channels: [app, mysql]
 
+liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/..
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/..
+                cache_prefix: assets/imgs/avatars/cache
+    filter_sets:
+        cache: ~
+        huge_thumb:
+            filters:
+                background: ~
+                thumbnail: { size: [500, 500], mode: inset }
+        medium_thumb:
+            filters:
+                thumbnail: { size: [60, 60], mode: outbound }
+        small_thumb:
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
+
 services:
     main.warmer.twig_warmer:
         class: BZIon\Twig\TwigCacheWarmer

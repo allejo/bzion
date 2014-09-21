@@ -46,7 +46,7 @@
                 </section>
 
                 <section class="profile_picture">
-                    {{ team.avatarLiteral | raw }}
+                    <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
                 </section>
             </section>
 
