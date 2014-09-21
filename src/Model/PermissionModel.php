@@ -13,40 +13,28 @@
 abstract class PermissionModel extends Model
 {
     /**
-     * Get the permission required to create such a model
-     * @return string|null
+     * The permission required to create such a model
+     * @var string|null
      */
-    public static function getCreatePermission()
-    {
-        return null;
-    }
+    const CREATE_PERMISSION = null;
 
     /**
-     * Get the permission required to edit such a model
-     * @return string|null
+     * The permission required to edit such a model
+     * @var string|null
      */
-    public static function getEditPermission()
-    {
-        return null;
-    }
+    const EDIT_PERMISSION = null;
 
     /**
-     * Get the permission required to mark this model as deleted
-     * @return string|null
+     * The permission required to mark this model as deleted
+     * @var string|null
      */
-    public static function getSoftDeletePermission()
-    {
-        return null;
-    }
+    const SOFT_DELETE_PERMISSION = null;
 
     /**
-     * Get the permission required to delete this model from the database
-     * @return string|null
+     * The permission required to delete this model from the database
+     * @var string|null
      */
-    public static function getHardDeletePermission()
-    {
-        return null;
-    }
+    const HARD_DELETE_PERMISSION = null;
 
     /**
      * Find out whether a player should know that a model exists
@@ -77,51 +65,51 @@ abstract class PermissionModel extends Model
     /**
      * Find out whether a player can create a model of this type
      *
-     * If possible, prefer to override PermissionModel::getCreatePermission()
+     * If possible, prefer to override PermissionModel::CREATE_PERMISSION
      *
      * @return boolean
      */
     public static function canBeCreatedBy($player)
     {
-        return $player->hasPermission(static::getCreatePermission());
+        return $player->hasPermission(static::CREATE_PERMISSION);
     }
 
     /**
      * Find out whether a player can edit this model
      *
-     * If possible, prefer to override PermissionModel::getEditPermission() and/or
+     * If possible, prefer to override PermissionModel::EDIT_PERMISSION and/or
      * PermissionModel::isEditor()
      *
      * @return boolean
      */
     public function canBeEditedBy($player)
     {
-        return $player->hasPermission(static::getEditPermission()) || $this->isEditor($player);
+        return $player->hasPermission(static::EDIT_PERMISSION) || $this->isEditor($player);
     }
 
     /**
      * Find out whether a player can soft delete the model
      *
-     * If possible, prefer to override PermissionModel::getSoftDeletePermission()
+     * If possible, prefer to override PermissionModel::SOFT_DELETE_PERMISSION
      * and/or PermissionModel::isEditor()
      *
      * @return boolean
      */
     public function canBeSoftDeletedBy($player)
     {
-        return $player->hasPermission(static::getSoftDeletePermission()) || $this->isEditor($player);
+        return $player->hasPermission(static::SOFT_DELETE_PERMISSION) || $this->isEditor($player);
     }
 
     /**
      * Find out whether a player can delete this model
      *
-     * If possible, prefer to override PermissionModel::getHardDeletePermission()
+     * If possible, prefer to override PermissionModel::HARD_DELETE_PERMISSION
      *
      * @return boolean
      */
     public function canBeHardDeletedBy($player)
     {
-        return $player->hasPermission(static::getHardDeletePermission());
+        return $player->hasPermission(static::HARD_DELETE_PERMISSION);
     }
 
     /**

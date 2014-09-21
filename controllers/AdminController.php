@@ -14,7 +14,7 @@ class AdminController extends HTMLController
         $models   = array();
 
         foreach ($wipeable as $type) {
-            if (!$me->hasPermission($type::getHardDeletePermission())) {
+            if (!$me->hasPermission($type::HARD_DELETE_PERMISSION)) {
                 continue;
             }
 

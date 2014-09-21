@@ -83,6 +83,11 @@ class Ban extends UrlModel implements NamedModel
      */
     const TABLE = "bans";
 
+    const CREATE_PERMISSION = Permission::ADD_BAN;
+    const EDIT_PERMISSION = Permission::EDIT_BAN;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_BAN;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_BAN;
+
     /**
      * {@inheritDoc}
      */
@@ -469,10 +474,5 @@ class Ban extends UrlModel implements NamedModel
 
         return new Ban($bans[0]);
     }
-
-    public static function getCreatePermission() { return Permission::ADD_BAN; }
-    public static function getEditPermission() { return Permission::EDIT_BAN;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_BAN; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_BAN; }
 
 }

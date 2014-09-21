@@ -65,6 +65,11 @@ class News extends UrlModel implements NamedModel
      */
     const TABLE = "news";
 
+    const CREATE_PERMISSION = Permission::CREATE_NEWS;
+    const EDIT_PERMISSION = Permission::EDIT_NEWS;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_NEWS;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_NEWS;
+
     /**
      * {@inheritDoc}
      */
@@ -359,8 +364,4 @@ class News extends UrlModel implements NamedModel
         ));
     }
 
-    public static function getCreatePermission() { return Permission::CREATE_NEWS; }
-    public static function getEditPermission() { return Permission::EDIT_NEWS;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_NEWS; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_NEWS; }
 }

@@ -68,6 +68,11 @@ class Server extends UrlModel implements NamedModel
      */
     const TABLE = "servers";
 
+    const CREATE_PERMISSION = Permission::ADD_SERVER;
+    const EDIT_PERMISSION = Permission::EDIT_SERVER;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_SERVER;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_SERVER;
+
     /**
      * {@inheritDoc}
      */
@@ -316,10 +321,5 @@ class Server extends UrlModel implements NamedModel
             'name' => 'name'
         ));
     }
-
-    public static function getCreatePermission() { return Permission::EDIT_SERVER; }
-    public static function getEditPermission() { return Permission::EDIT_SERVER;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_SERVER; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_SERVER; }
 
 }

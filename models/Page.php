@@ -53,6 +53,11 @@ class Page extends AliasModel
      */
     const TABLE = "pages";
 
+    const CREATE_PERMISSION = Permission::CREATE_PAGE;
+    const EDIT_PERMISSION = Permission::EDIT_PAGE;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_PAGE;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_PAGE;
+
     /**
      * {@inheritDoc}
      */
@@ -237,10 +242,5 @@ class Page extends AliasModel
     {
         return new Page(parent::fetchIdFrom(1, "home"));
     }
-
-    public static function getCreatePermission() { return Permission::CREATE_PAGE; }
-    public static function getEditPermission() { return Permission::EDIT_PAGE;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_PAGE; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_PAGE; }
 
 }

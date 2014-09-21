@@ -132,6 +132,11 @@ class Match extends PermissionModel implements NamedModel
      */
     const TABLE = "matches";
 
+    const CREATE_PERMISSION = Permission::ENTER_MATCH;
+    const EDIT_PERMISSION = Permission::EDIT_MATCH;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_MATCH;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_MATCH;
+
     /**
      * {@inheritDoc}
      */
@@ -667,8 +672,4 @@ class Match extends PermissionModel implements NamedModel
         }
     }
 
-    public static function getCreatePermission() { return Permission::ENTER_MATCH; }
-    public static function getEditPermission() { return Permission::EDIT_MATCH;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_MATCH; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_MATCH; }
 }

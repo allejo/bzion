@@ -118,6 +118,11 @@ class Team extends IdenticonModel
      */
     const AVATAR_LOCATION = "/assets/imgs/avatars/teams/";
 
+    const CREATE_PERMISSION = Permission::CREATE_TEAM;
+    const EDIT_PERMISSION = Permission::EDIT_TEAM;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_TEAM;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_TEAM;
+
     /**
      * {@inheritDoc}
      */
@@ -661,11 +666,6 @@ class Team extends IdenticonModel
             'name' => 'name',
         ));
     }
-
-    public static function getCreatePermission() { return Permission::CREATE_TEAM; }
-    public static function getEditPermission() { return Permission::EDIT_TEAM;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_TEAM; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_TEAM; }
 
     /**
      * {@inheritDoc}

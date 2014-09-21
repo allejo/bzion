@@ -139,6 +139,10 @@ class Player extends IdenticonModel implements NamedModel
      */
     const AVATAR_LOCATION = "/assets/imgs/avatars/players/";
 
+    const EDIT_PERMISSION = Permission::EDIT_USER;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_USER;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_USER;
+
     /**
      * {@inheritDoc}
      */
@@ -902,9 +906,5 @@ class Player extends IdenticonModel implements NamedModel
     {
         return $model->canBeEditedBy($this);
     }
-
-    public static function getEditPermission() { return Permission::EDIT_USER;  }
-    public static function getSoftDeletePermission() { return Permission::SOFT_DELETE_USER; }
-    public static function getHardDeletePermission() { return Permission::HARD_DELETE_USER; }
 
 }
