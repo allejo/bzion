@@ -102,11 +102,6 @@ class Team extends AvatarModel
     const TABLE = "teams";
 
     /**
-     * The location of identicons will stored in
-     */
-    const IDENTICON_LOCATION = "/assets/imgs/identicons/teams/";
-
-    /**
      * The location where avatars will be stored
      */
     const AVATAR_LOCATION = "/assets/imgs/avatars/teams/";

@@ -124,11 +124,6 @@ class Player extends AvatarModel implements NamedModel
     const TABLE = "players";
 
     /**
-     * The location of identicons will stored in
-     */
-    const IDENTICON_LOCATION = "/assets/imgs/identicons/players/";
-
-    /**
      * The location where avatars will be stored
      */
     const AVATAR_LOCATION = "/assets/imgs/avatars/players/";
