@@ -3,7 +3,7 @@
 {% block title %}Players :: {{ player.username }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/tipsy/src/stylesheets/tipsy.css" />
+    <link rel="stylesheet" href="{{ asset('includes/tipsy/src/stylesheets/tipsy.css') }}" />
 {% endblock %}
 
 {% block content %}
@@ -95,8 +95,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ request.getBaseURL() }}/includes/chartjs/Chart.min.js"></script>
-    <script src="{{ request.getBaseURL() }}/includes/tipsy/src/javascripts/jquery.tipsy.js"></script>
+    <script src="{{ asset('includes/chartjs/Chart.min.js') }}"></script>
+    <script src="{{ asset('includes/tipsy/src/javascripts/jquery.tipsy.js') }}/"></script>
     <script>
         $("#prev_callsigns").tipsy({gravity: 's'});
         $("#known_ips").tipsy({gravity: 's'});

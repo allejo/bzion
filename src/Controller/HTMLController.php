@@ -28,12 +28,20 @@ abstract class HTMLController extends Controller
 
         // Add global variables to the twig templates
         $twig = Service::getTemplateEngine();
-        $twig->addGlobal("request",    $request);
-        $twig->addGlobal("session",    $request->getSession());
-        $twig->addGlobal("pages",      Page::getPages());
-        $twig->addGlobal("controller", $this);
         $twig->addGlobal("me",         $this->getMe());
         $twig->addGlobal("model",      new ModelFetcher());
+        $twig->addGlobal("pages",      Page::getPages());
+        $twig->addGlobal("request",    $request);
+        $twig->addGlobal("session",    $request->getSession());
+        $twig->addGlobal("siteTitle",  $this->container->getParameter('bzion.site.name'));
+        $twig->addGlobal("controller", $this);
+        $twig->addGlobal("environment", $this->container->getParameter('kernel.environment'));
+        $twig->addGlobal("socket", array(
+            "websocket" => array(
+                "enabled" => $this->container->getParameter('bzion.notifications.websocket.enabled'),
+                "port" => $this->container->getParameter('bzion.notifications.websocket.push_port')
+            )
+        ));
 
         $this->prepareTwig();
 
@@ -97,7 +105,7 @@ abstract class HTMLController extends Controller
         } catch (Exception $e) {
             // Let PHP handle the exception on the dev environment
             if (DEVELOPMENT) throw $e;
-            return $this->forward("Error", array("message" => "An error occured"));
+            return $this->forward("Error", array("message" => "An error occurred"));
         }
     }
 
@@ -166,7 +174,7 @@ abstract class HTMLController extends Controller
         $urls = $request->getSession()->get('previous_paths', array());
         foreach ($urls as $url)
             if ($url != $request->getPathInfo()) // Don't redirect to the same page
-                return $request->getBasePath() . $url;
+                return $request->getBaseUrl() . $url;
 
         // No stored URLs found, just redirect them to the home page
         return $this->getHomeURL();

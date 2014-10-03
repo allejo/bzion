@@ -9,8 +9,8 @@ class PluralFilter
      * Make sure that a number is accompanied with the appropriate grammatical
      * number
      *
-     * @param number      $number
-     * @param string      $singular The noun in its singular form
+     * @param number $number
+     * @param string $singular The noun in its singular form
      */
     public function __invoke($singular, $number = null)
     {

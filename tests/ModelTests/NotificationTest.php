@@ -10,8 +10,7 @@ class NotificationTest extends TestCase
 
     protected function setUp()
     {
-        global $db;
-        $db = new Database(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
+        $this->connectToDatabase();
 
         $this->player = $this->getNewPlayer();
     }

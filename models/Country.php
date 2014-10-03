@@ -107,7 +107,7 @@ class Country extends Model
      * Given a country's ISO, get its ID
      *
      * @param  string $iso The two-letter ISO code of the country
-     * @return int The country's database ID
+     * @return int    The country's database ID
      */
     public static function getIdFromISO($iso)
     {

@@ -3,7 +3,7 @@ module.exports = function(grunt) {
         autoprefixer: {
             dist: {
                 files: {
-                    'assets/css/styles.css': 'assets/css/styles.css'
+                    'web/assets/css/styles.css': 'web/assets/css/styles.css'
                 }
             }
         },
@@ -13,8 +13,8 @@ module.exports = function(grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'assets/css/styles.css': 'assets/css/styles.scss',
-                    'assets/css/reset.css' : 'assets/css/reset.scss'
+                    'web/assets/css/styles.css': 'web/assets/css/styles.scss',
+                    'web/assets/css/reset.css' : 'web/assets/css/reset.scss'
                 }
             }
         },
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
                 },
                 reporter: require('jshint-stylish')
             },
-            all: ['Gruntfile.js', 'assets/js/*.js']
+            all: ['Gruntfile.js', 'web/assets/js/*.js']
         },
         uglify: {
             options: {
@@ -35,14 +35,14 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'assets/js/min/main-ck.js' :  [ 'assets/js/main.js' ],
-                    'assets/js/min/teams-ck.js':  [ 'assets/js/teams.js' ]
+                    'web/assets/js/min/main-ck.js' :  [ 'web/assets/js/main.js' ],
+                    'web/assets/js/min/teams-ck.js':  [ 'web/assets/js/teams.js' ]
                 }
             }
         },
         watch: {
             styles: {
-                files: [ 'assets/css/**/*.scss' ],
+                files: [ 'web/assets/css/**/*.scss' ],
                 tasks: [ 'css' ]
             }
         }

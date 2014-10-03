@@ -38,7 +38,7 @@ class MatchController extends CRUDController
         $messages = parent::getMessages($type, $name);
 
         // Don't show the match info on the successful create/edit message
-        foreach($messages as &$action) {
+        foreach ($messages as &$action) {
             foreach ($action as &$status) {
                 if (isset($status['named'])) {
                     $status['named'] = $status['unnamed'];

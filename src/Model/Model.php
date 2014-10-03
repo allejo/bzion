@@ -45,7 +45,6 @@ abstract class Model extends CachedModel
         return in_array($this->getStatus(), $this->getActiveStatuses());
     }
 
-
     /**
      * Get the models's status
      *

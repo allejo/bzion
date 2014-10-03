@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event thrown each time a new message is sent or a conversation is created
  */
-class NewMessageEvent extends Event {
+class NewMessageEvent extends Event
+{
     /**
      * @var \Message
      */
@@ -25,7 +26,7 @@ class NewMessageEvent extends Event {
      * Create a new event
      *
      * @param \Message $message The new message
-     * @param boolean $first Whether the message is the first in its discussion
+     * @param boolean  $first   Whether the message is the first in its discussion
      */
     public function __construct(\Message $message, $first)
     {

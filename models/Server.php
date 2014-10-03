@@ -91,10 +91,10 @@ class Server extends UrlModel implements NamedModel
     /**
      * Add a new server
      *
-     * @param  string $name    The name of the server
-     * @param  string $address The address of the server (e.g: server.com:5155)
-     * @param  int    $country The ID of the country
-     * @param  int    $owner   The ID of the server owner
+     * @param string $name    The name of the server
+     * @param string $address The address of the server (e.g: server.com:5155)
+     * @param int    $country The ID of the country
+     * @param int    $owner   The ID of the server owner
      *
      * @return Server An object that represents the sent message
      */
@@ -135,7 +135,8 @@ class Server extends UrlModel implements NamedModel
     private function updateOnline()
     {
         $online = false;
-        $servers = file(LIST_SERVER);
+        $listServer = Service::getParameter('bzion.miscellaneous.list_server');
+        $servers = file($listServer);
 
         foreach ($servers as $server) {
             list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
@@ -193,7 +194,7 @@ class Server extends UrlModel implements NamedModel
     public function staleInfo()
     {
         $update_time = $this->updated->copy();
-        $update_time->addMinutes(UPDATE_INTERVAL);
+        $update_time->modify(Service::getParameter('bzion.miscellaneous.update_interval'));
 
         return TimeDate::now() >= $update_time;
     }

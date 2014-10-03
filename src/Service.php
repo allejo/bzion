@@ -92,6 +92,17 @@ abstract class Service
     }
 
     /**
+     * Gets a parameter
+     *
+     * @param  string $name The parameter name
+     * @return mixed  The parameter value
+     */
+    public static function getParameter($name)
+    {
+        return self::getContainer()->getParameter($name);
+    }
+
+    /**
      * @param SessionInterface $session
      */
     public static function setSession($session)

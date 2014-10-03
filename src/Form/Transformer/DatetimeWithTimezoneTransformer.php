@@ -1,7 +1,6 @@
 <?php
 namespace BZIon\Form\Transformer;
 
-use BZIon\Form\Type\TimezoneType;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class DatetimeWithTimezoneTransformer implements DataTransformerInterface
@@ -29,7 +28,7 @@ class DatetimeWithTimezoneTransformer implements DataTransformerInterface
      * Take the timestamp from the time field and the timezone that the user
      * provided and combine them into a single timezoned TimeDate
      *
-     * @param  array $data
+     * @param  array     $data
      * @return \TimeDate
      */
     public function reverseTransform($data)

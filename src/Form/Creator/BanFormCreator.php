@@ -107,7 +107,7 @@ class BanFormCreator extends ModelFormCreator
     /**
      * Get the expiration time of the ban based on the fields of the form
      *
-     * @param  Form $form The form
+     * @param  Form          $form The form
      * @return TimeDate|null
      */
     private function getExpiration($form)

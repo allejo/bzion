@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <title>{% spaceless %}{% block title %}BZiON{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css">
-        <link rel="stylesheet" href="{{ request.baseURL }}/vendor/ivaynberg/select2/select2.css">
-        <link rel="stylesheet" href="{{ request.baseURL }}/includes/ladda/dist/ladda.min.css" />
-        <link rel="stylesheet" href="{{ request.baseURL }}/assets/css/reset.css">
-        <link rel="stylesheet" href="{{ request.baseURL }}/assets/css/styles.css">
+        <link rel="stylesheet" href="{{ asset('components/select2/select2.css') }}">
+        <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
-        <link rel="shortcut icon" href="{{ request.baseURL }}/favicon.ico" />
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
         {% block stylesheets %}
 
@@ -21,8 +21,8 @@
             <section>
                 <h1>
                     <a href="{{ path('index') }}">
-                        <img src="{{ request.baseURL }}/assets/imgs/bzflag_icon.png" />
-                        <span>{{ constant("SITE_TITLE") }}</span>
+                        <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
+                        <span>{{ siteTitle }}</span>
                     </a>
                 </h1>
 
@@ -45,6 +45,10 @@
         <footer>
             <span>BZiON &copy; 2014</span>
 
+            {% if constant('DEVELOPMENT') %}
+                <span>&nbsp;<i class="fa fa-wrench"></i> {{ environment }}</span>
+            {% endif %}
+
             <ul>
                 {% for page in pages %}
                     {% if not page.isHomePage %}
@@ -63,9 +67,9 @@
             var baseURL = "{{ request.schemeAndHTTPHost|e('js') }}";
 
             var config  = {
-                {% if constant('ENABLE_WEBSOCKET') %}
+                {% if socket.websocket.enabled %}
                     websocket: {
-                        port: {{ constant('WEBSOCKET_PUSH_PORT') }}
+                        port: {{ socket.websocket.port }}
                     }
                 {% else %}
                     websocket: false
@@ -74,13 +78,15 @@
         </script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="{{ request.baseURL }}/includes/favicojs/favico-0.3.4.min.js"></script>
-        <script src="{{ request.baseURL }}/assets/js/min/main-ck.js"></script>
-        <script src="{{ request.baseURL }}/assets/js/events.js"></script>
+        <script src="{{ asset('includes/favicojs/favico-0.3.5.min.js') }}"></script>
+        <script src="{{ asset('assets/js/min/main-ck.js') }}"></script>
+        <script src="{{ asset('assets/js/events.js') }}"></script>
 
         {% if constant('DEVELOPMENT') %}
-            <script src="{{ request.baseURL }}/assets/js/debug.js"></script>
+            <script src="{{ asset('assets/js/debug.js') }}"></script>
         {% endif %}
+
+        {{ configuration.count }}
 
         {% block javascripts %}
 

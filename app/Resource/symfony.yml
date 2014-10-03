@@ -1,5 +1,6 @@
 imports:
     - {  resource: "bzion_config_bridge.php" }
+    - {  resource: "../config.yml" }
 
 framework:
     secret: "toast"
@@ -16,13 +17,13 @@ monolog:
     handlers:
         api:
             type: stream
-            path: "%bzion.log.dir%/api.log"
-            level: %bzion.log.level%
+            path: "%bzion.logging.directory%/api.log"
+            level: %bzion.logging.level%
             channels: [api]
         main:
             type: stream
-            path: "%bzion.log.dir%/main.log"
-            level: %bzion.log.level%
+            path: "%bzion.logging.directory%/main.log"
+            level: %bzion.logging.level%
             channels: [app, mysql]
 
 liip_imagine:
@@ -33,7 +34,7 @@ liip_imagine:
     resolvers:
         default:
             web_path:
-                web_root: %kernel.root_dir%/..
+                web_root: %kernel.root_dir%/../web
                 cache_prefix: assets/imgs/avatars/cache
     filter_sets:
         cache: ~
@@ -55,9 +56,11 @@ services:
             - { name: kernel.cache_warmer, priority: 0 }
     kernel.subscriber.bzion_subscriber:
         class: BZIon\Event\EventSubscriber
-        arguments: [@mailer]
+        arguments: [@mailer, %bzion.email.from%, %bzion.site.name%]
         tags:
             - { name: kernel.event_subscriber }
+    bzion.config:
+        class: stdClass
     bzion.command.install_command:
         class: BZIon\Command\InstallCommand
         tags:

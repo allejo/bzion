@@ -41,15 +41,15 @@ A demo BZiON installation can be found at [http://bzpro.net/bzion/](http://bzpro
 
 4. Use the `DATABASE.sql` file to create the necessary database structure
 
-5. Configure the settings in the `bzion-config.php` file
+5. Configure the settings in the `app/config.yml` file
 
-6. Make sure that the app/cache, app/logs and assets/imgs/avatars/ directories
+6. Make sure that the app/cache, app/logs and web/assets/imgs/avatars/ directories
    are writeable by you and the web server:
 
    <sub>_Example for Apache2 on Ubuntu_</sub>
    ```
-   sudo setfacl -R  -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs assets/imgs/avatars/
-   sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs assets/imgs/avatars/
+   sudo setfacl -R  -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
+   sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
    ```
 
 ## Contributing

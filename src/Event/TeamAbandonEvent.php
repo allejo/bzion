@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event dispatched whenever someone leaves a team
  */
-class TeamAbandonEvent extends Event {
+class TeamAbandonEvent extends Event
+{
     /**
      * @var \Team
      */
@@ -24,7 +25,7 @@ class TeamAbandonEvent extends Event {
     /**
      * Create a new event
      *
-     * @param \Team $team The team that the player left
+     * @param \Team   $team   The team that the player left
      * @param \Player $player The player who abandoned the team
      */
     public function __construct(\Team $team, \Player $player)

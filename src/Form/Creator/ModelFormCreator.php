@@ -36,8 +36,8 @@ abstract class ModelFormCreator implements FormCreatorInterface
     /**
      * Create a new ModelFormCreator
      *
-     * @param \Model|null $editing The model that's being edited
-     * @param \Player|null $me The user who is submitting the form
+     * @param \Model|null      $editing    The model that's being edited
+     * @param \Player|null     $me         The user who is submitting the form
      * @param \Controller|null $controller The controller showing the form
      */
     public function __construct($editing = null, $me = null, $controller = null)
@@ -88,7 +88,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
      *
      * Override this in your form
      *
-     * @param  Form $form The form to use
+     * @param  Form   $form  The form to use
      * @param  \Model $model The model to update
      * @return void
      */
@@ -99,7 +99,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
 
     /**
      * Enter the data of a valid form into the database
-     * @param  Form $form The submitted form
+     * @param  Form   $form The submitted form
      * @return \Model
      */
     public function enter($form)

@@ -203,7 +203,7 @@ class Notification extends Model
      */
     public function getActions($email=false)
     {
-        switch($this->type) {
+        switch ($this->type) {
             case Events::TEAM_INVITE:
                 return array(
                     ($email) ? 'Accept invitation' : 'Accept' => $this->event->getInvitation()->getUrl('accept', $email)

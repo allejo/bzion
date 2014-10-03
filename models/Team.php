@@ -104,7 +104,7 @@ class Team extends AvatarModel
     /**
      * The location where avatars will be stored
      */
-    const AVATAR_LOCATION = "/assets/imgs/avatars/teams/";
+    const AVATAR_LOCATION = "/web/assets/imgs/avatars/teams/";
 
     const CREATE_PERMISSION = Permission::CREATE_TEAM;
     const EDIT_PERMISSION = Permission::EDIT_TEAM;
@@ -483,7 +483,7 @@ class Team extends AvatarModel
     /**
      * Change the leader of the team
      *
-     * @param  int $leader The ID of the new leader of the team
+     * @param  int  $leader The ID of the new leader of the team
      * @return self
      */
     public function setLeader($leader)
@@ -494,7 +494,7 @@ class Team extends AvatarModel
     /**
      * Find if a specific match is the team's last one
      *
-     * @param  int $matchID The ID of the match
+     * @param  int  $matchID The ID of the match
      * @return bool
      */
     public function isLastMatch($matchID)

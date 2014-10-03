@@ -4,7 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-require_once 'includes/checkToken.php';
+require_once __DIR__ . '/../includes/checkToken.php';
 
 class LoginController extends HTMLController
 {

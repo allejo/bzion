@@ -257,8 +257,7 @@ class Match extends PermissionModel implements NamedModel
      */
     public function getTimestamp($format = "")
     {
-        if (empty($format))
-        {
+        if (empty($format)) {
             return $this->timestamp->diffForHumans();
         }
 
@@ -582,8 +581,8 @@ class Match extends PermissionModel implements NamedModel
             $diff = 50*(0-$prob);
         }
 
-        // Apply ELO modifiers from bzion-config.php
-        $durations = unserialize(DURATION);
+        // Apply ELO modifiers from `config.yml`
+        $durations = Service::getParameter('bzion.league.duration');
         $diff *= (isset($durations[$duration])) ? $durations[$duration] : 1;
 
         if (abs($diff) < 1 && $diff != 0) {

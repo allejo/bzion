@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event dispatched whenever someone joins a team
  */
-class TeamJoinEvent extends Event {
+class TeamJoinEvent extends Event
+{
     /**
      * @var \Team
      */
@@ -24,7 +25,7 @@ class TeamJoinEvent extends Event {
     /**
      * Create a new event
      *
-     * @param \Team $team The team that the player joined
+     * @param \Team   $team   The team that the player joined
      * @param \Player $player The player who joined the team
      */
     public function __construct(\Team $team, \Player $player)

@@ -6,17 +6,13 @@ use BZIon\Event\WelcomeEvent;
 
 require_once(__DIR__ . "/../bzion-load.php");
 
-if (!DEVELOPMENT) {
-    die("Populating the database with sample data isn't allowed in Production mode.\n");
-}
+$kernel = new AppKernel("dev", true);
+$kernel->boot();
 
-$testPlayer = Player::getFromBZID(55976);
+$testPlayer = Player::getFromBZID(3030);
 if ($testPlayer->isValid()) {
     die("Please clear your current data in the database or you'll end up with duplicate entries.\n");
 }
-
-$db = Database::getInstance();
-Service::setModelCache(new ModelCache());
 
 echo "Adding players...";
 $alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description", 84);
@@ -33,7 +29,7 @@ echo " done!";
 
 echo "\nSending notifications...";
 foreach (Player::getPlayers() as $player) {
-    $event = new WelcomeEvent('Welcome to ' . SITE_TITLE . '!', $player);
+    $event = new WelcomeEvent('Welcome to ' . Service::getParameter('bzion.site.name') . '!', $player);
     Notification::newNotification($player->getId(), 'welcome', $event);
 }
 echo " done!";

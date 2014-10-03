@@ -6,7 +6,6 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use BZIon\Event\Event;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
@@ -126,7 +125,7 @@ class Player extends AvatarModel implements NamedModel
     /**
      * The location where avatars will be stored
      */
-    const AVATAR_LOCATION = "/assets/imgs/avatars/players/";
+    const AVATAR_LOCATION = "/web/assets/imgs/avatars/players/";
 
     const EDIT_PERMISSION = Permission::EDIT_USER;
     const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_USER;
@@ -262,7 +261,6 @@ class Player extends AvatarModel implements NamedModel
 
         return ($this->receives == $type);
     }
-
 
     /**
      * Find out whether the specified confirmation code is correct
@@ -815,8 +813,8 @@ class Player extends AvatarModel implements NamedModel
     /**
      * Find whether the player can delete a model
      *
-     * @param  PermissionModel $model The model that will be seen
-     * @param  boolean $showDeleted Whether to show deleted models to admins
+     * @param  PermissionModel $model       The model that will be seen
+     * @param  boolean         $showDeleted Whether to show deleted models to admins
      * @return boolean
      */
     public function canSee($model, $showDeleted=false)
@@ -828,8 +826,8 @@ class Player extends AvatarModel implements NamedModel
      * Find whether the player can delete a model
      *
      * @param  PermissionModel $model The model that will be deleted
-     * @param  boolean $hard Whether to check for hard-delete perms, as opposed
-     *                       to soft-delete ones
+     * @param  boolean         $hard  Whether to check for hard-delete perms, as opposed
+     *                                to soft-delete ones
      * @return boolean
      */
     public function canDelete($model, $hard=false)

@@ -3,7 +3,6 @@
 use BZIon\Form\Creator\ModelFormCreator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * A controller with actions for creating, reading, updating and deleting models
@@ -79,9 +78,9 @@ abstract class CRUDController extends JSONController
      * for the model
      *
      * @throws ForbiddenException
-     * @param  Player $me   The user who wants to create the model
-     * @param  string $type The type of the model being created
-     * @return mixed  The response to show to the user
+     * @param  Player             $me   The user who wants to create the model
+     * @param  string             $type The type of the model being created
+     * @return mixed              The response to show to the user
      */
     protected function create(Player $me)
     {
@@ -143,9 +142,9 @@ abstract class CRUDController extends JSONController
     /**
      * Find whether a player can delete a model
      *
-     * @param  Player $player The player who wants to delete the model
+     * @param  Player          $player The player who wants to delete the model
      * @param  PermissionModel $model  The model that will be deleted
-     * @param  boolean $hard Whether to hard-delete the model instead of soft-deleting it
+     * @param  boolean         $hard   Whether to hard-delete the model instead of soft-deleting it
      * @return boolean
      */
     protected function canDelete($player, $model, $hard=false)
@@ -213,7 +212,7 @@ abstract class CRUDController extends JSONController
     /**
      * Dynamically get the form to show to the user
      *
-     * @param  \Model|null $model The model being edited, `null` if we're creating one
+     * @param  \Model|null      $model The model being edited, `null` if we're creating one
      * @return ModelFormCreator
      */
     private function getFormCreator($model=null)
@@ -230,8 +229,8 @@ abstract class CRUDController extends JSONController
     /**
      * Get a message to show to the user
      * @param  \ModelInterface|string $model  The model (or type) to show a message for
-     * @param  string $action The action that will be performed (softDelete, hardDelete, create or edit)
-     * @param  string $status The message's status (confirm, error or success)
+     * @param  string                 $action The action that will be performed (softDelete, hardDelete, create or edit)
+     * @param  string                 $status The message's status (confirm, error or success)
      * @return string
      */
     private function getMessage($model, $action, $status, $escape=true)

@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event thrown each time a new notification for a user is created
  */
-class NewNotificationEvent extends Event {
+class NewNotificationEvent extends Event
+{
     /**
      * @var \Notification
      */

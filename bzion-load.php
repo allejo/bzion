@@ -1,11 +1,7 @@
 <?php
 
-if (!@include("bzion-config.php")) {
-    define('NO_CONFIG', true);
-}
-
 require("vendor/autoload.php");
 
-mb_internal_encoding("UTF-8");
+DEFINE("DOC_ROOT", dirname(__FILE__));
 
-$db = Database::getInstance();
+mb_internal_encoding("UTF-8");

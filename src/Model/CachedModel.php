@@ -6,8 +6,6 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use BZIon\Cache\ModelCache;
-
 /**
  * A database object with the ability to be cached in the memory
  * @package    BZiON\Models

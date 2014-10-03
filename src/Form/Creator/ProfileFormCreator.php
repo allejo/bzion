@@ -30,7 +30,6 @@ class ProfileFormCreator extends ModelFormCreator
             $emailConstraints[] = new Email();
         }
 
-
         return $builder
             ->add('description', 'textarea', array(
                 'constraints' => new Length(array('max' => 8000)),

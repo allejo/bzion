@@ -16,8 +16,8 @@ use Symfony\Component\Debug\Debug;
 
 $input = new ArgvInput();
 
-$defaultEnvironment = AppKernel::guessEnvironment()?: 'dev';
-$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: $defaultEnvironment);
+// Find the environment based on console options and environment variables
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: AppKernel::guessDevEnvironment());
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 if ($debug) {

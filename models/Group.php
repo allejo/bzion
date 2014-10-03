@@ -164,7 +164,7 @@ class Group extends UrlModel
     /**
      * Mark the last message in the group as unread by the group's members
      *
-     * @param  int $except The ID of a player to exclude
+     * @param  int  $except The ID of a player to exclude
      * @return void
      */
     public function markUnread($except)
@@ -331,7 +331,7 @@ class Group extends UrlModel
      * Find out which members of the group should receive an e-mail after a new
      * message has been sent
      *
-     * @param  int $except The ID of a player who won't receive an e-mail (e.g. message author)
+     * @param  int   $except The ID of a player who won't receive an e-mail (e.g. message author)
      * @return int[] A player ID list
      */
     public function getWaitingForEmailIDs($except)

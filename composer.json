@@ -19,6 +19,7 @@
         "symfony/config"             : ">=2.5.0",
         "symfony/console"            : ">=2.5.0",
         "symfony/event-dispatcher"   : ">=2.5.0",
+        "symfony/expression-language": ">=2.5.0",
         "symfony/framework-bundle"   : ">=2.5.0",
         "symfony/finder"             : ">=2.5.0",
         "symfony/form"               : ">=2.5.0",
@@ -89,9 +90,12 @@
         "classmap": [ "tests/" ]
     },
     "archive": {
-        "exclude": ["/bzion-config.php", "bzion_errors.log", ".sass_cache"]
+        "exclude": ["app/config.yml", "bzion_errors.log", ".sass_cache"]
     },
     "replace": {
         "symfony/swiftmailer-bridge": "*"
+    },
+    "config": {
+        "component-dir": "web/components"
     }
 }

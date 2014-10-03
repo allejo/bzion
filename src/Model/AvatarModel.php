@@ -29,7 +29,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     /**
      * Get the identicon for a model. This function will overwrite the previous avatar
      *
-     * @param string $idData    The data (name or id) that will be used to generate an identicon
+     * @param string $idData The data (name or id) that will be used to generate an identicon
      *
      * @return string The path to the generated identicon
      */
@@ -70,7 +70,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      * Get the path for the image used as the object's avatar
      *
      * @param  boolean $url Whether to return an absolute URL
-     * @return string The path for the avatar
+     * @return string  The path for the avatar
      */
     public function getAvatar($url=false)
     {

@@ -1,14 +1,15 @@
 # BZiON files #
 ###############
-bzion-config.php
+app/config.yml
 update.php
 vendor
 components
 cache
 logs
 reDB.sh
-assets/imgs/avatars
-!assets/css/vendor
+web/assets/imgs/avatars
+!web/assets/css/vendor
+web/bundles
 app/lastupdate.yml
 
 # Test files #

@@ -39,7 +39,7 @@ abstract class PermissionModel extends Model
     /**
      * Find out whether a player should know that a model exists
      *
-     * @param  Player  $player The player in question
+     * @param  Player  $player      The player in question
      * @param  boolean $showDeleted false to hide deleted models even from admins
      * @return boolean
      */

@@ -5,17 +5,16 @@ if [[ $BZION_HHVM -eq 1 ]]; then
    COMPOSER_ARGS="-v"
 fi
 
-php composer.phar install $COMPOSER_ARGS
+php composer.phar install $COMPOSER_ARGS --prefer-source
 
-FILE=bzion-config.php
-cp bzion-config-example.php $FILE
+FILE=app/config.yml
+cp app/config.example.yml $FILE
 
 mysql -e "CREATE DATABASE IF NOT EXISTS bzion;" -uroot;
 mysql -uroot bzion < DATABASE.sql
 
 sed -i 's/bzion_admin/root/' $FILE
-sed -i 's/password//' $FILE
-sed -i 's/\$_SERVER\[\"HTTP_HOST\"\]/\"http:\/\/localhost\/bzion\"/' $FILE
-sed -i 's/"DEVELOPMENT", FALSE/"DEVELOPMENT", TRUE/' $FILE
+sed -i 's/password:\s*password/password:/' $FILE
+sed -i 's/development:\s*false/development: force/' $FILE
 
-echo "error_reporting (E_ALL | E_STRICT | E_DEPRECATED);" >> $FILE
+echo "error_reporting (E_ALL | E_STRICT | E_DEPRECATED);" >> bzion-load.php

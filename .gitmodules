@@ -1,12 +1,12 @@
-[submodule "includes/ladda"]
-	path = includes/ladda
+[submodule "web/includes/ladda"]
+	path = web/includes/ladda
 	url = https://github.com/hakimel/Ladda.git
-[submodule "includes/chartjs"]
-	path = includes/chartjs
+[submodule "web/includes/chartjs"]
+	path = web/includes/chartjs
 	url = https://github.com/nnnick/Chart.js.git
-[submodule "includes/tipsy"]
-	path = includes/tipsy
+[submodule "web/includes/tipsy"]
+	path = web/includes/tipsy
 	url = https://github.com/jaz303/tipsy.git
-[submodule "includes/favicojs"]
-	path = includes/favicojs
+[submodule "web/includes/favicojs"]
+	path = web/includes/favicojs
 	url = https://github.com/ejci/favico.js.git

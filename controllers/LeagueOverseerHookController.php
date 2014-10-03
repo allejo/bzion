@@ -27,7 +27,7 @@ class LeagueOverseerHookController extends PlainTextController
 
         // To prevent abuse of the automated system, we need to make sure that
         // the IP making the request is one of the IPs we allowed in the config
-        $allowedIPs = array_map('trim', explode(',', ALLOWED_IPS));
+        $allowedIPs = array_map('trim', $this->container->getParameter('bzion.api.allowed_ips'));
         $clientIP   = $request->getClientIp();
 
         if (DEVELOPMENT < 1 && // Don't care about IPs if we're in debug mode
