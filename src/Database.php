@@ -69,7 +69,12 @@ class Database
     public static function getInstance()
     {
         if (!self::$Database) {
-            self::$Database = new Database(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
+            self::$Database = new Database(
+                Service::getParameter('bzion.mysql.host'),
+                Service::getParameter('bzion.mysql.username'),
+                Service::getParameter('bzion.mysql.password'),
+                Service::getParameter('bzion.mysql.database')
+            );
         }
 
         return self::$Database;

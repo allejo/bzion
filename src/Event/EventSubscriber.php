@@ -13,7 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * An event subscriber for bzion events
  */
-class EventSubscriber implements EventSubscriberInterface {
+class EventSubscriber implements EventSubscriberInterface
+{
     /**
      * @var \Swift_Mailer
      */
@@ -25,16 +26,33 @@ class EventSubscriber implements EventSubscriberInterface {
     protected $twig;
 
     /**
+     * The FROM e-mail address
+     * @var string
+     */
+    protected $from;
+
+    /**
+     * The title of the website
+     * @var string
+     */
+    protected $siteTitle;
+
+    /**
      * Constructor
      *
      * You will probably not need to instantiate an object of this class,
      * Symfony already does the hard work for us
      *
-     * @param \Swift_Mailer $mailer The mailer
+     * @param \Swift_Mailer $mailer    The mailer
+     * @param string        $from      The FROM e-mail address
+     * @param string        $siteTitle The title of the website
      */
-    public function __construct(\Swift_Mailer $mailer) {
+    public function __construct(\Swift_Mailer $mailer, $from, $siteTitle)
+    {
         $this->mailer = $mailer;
         $this->twig   = \Service::getTemplateEngine();
+        $this->from   = $from;
+        $this->siteTitle = $siteTitle;
     }
 
     /**
@@ -103,11 +121,10 @@ class EventSubscriber implements EventSubscriberInterface {
         $event->getNotification()->push();
     }
 
-
     /**
      * Called when an event needs to notify a user
-     * @param Event $event The event
-     * @param string $type The event's type
+     * @param Event  $event The event
+     * @param string $type  The event's type
      */
     public function notify(Event $event, $name)
     {
@@ -136,17 +153,17 @@ class EventSubscriber implements EventSubscriberInterface {
     /**
      * Send emails to a list of recipients
      *
-     * @param string $subject The subject of the messages
-     * @param int[] $recipients The IDs of the players to which the messages will be sent
-     * @param string $template The twig template name for the e-mail body
-     * @param array $params Any extra parameters to pass to twig
+     * @param  string $subject    The subject of the messages
+     * @param  int[]  $recipients The IDs of the players to which the messages will be sent
+     * @param  string $template   The twig template name for the e-mail body
+     * @param  array  $params     Any extra parameters to pass to twig
      * @return void
      */
     public function sendEmails($subject, $recipients, $template, $params = array())
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom(array(EMAIL_FROM => SITE_TITLE))
+            ->setFrom(array($this->from => $this->siteTitle))
             ->setBody($this->twig->render("Email/$template.txt.twig",  $params))
             ->addPart($this->twig->render("Email/$template.html.twig", $params), 'text/html')
         ;

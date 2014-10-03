@@ -1,0 +1,47 @@
+bzion:
+    mysql:
+        host: localhost
+        database: bzion
+        username: bzion_admin
+        password: password
+    site:
+        name: "BZiON: A League Management System"
+    league:
+        duration:
+            30: 3/3 # 30 minute match gets full ELO
+            20: 2/3 # 20 minute match is 2/3rds of a normal match's ELO
+    email:
+        # The e-mail address that will be shown in the 'From:' field when sending messages
+        from: noreply@local.host
+    api:
+        allowed_ips:
+            # list of IP addresses which are allowed to report matches
+            - 127.0.0.1
+            - 127.0.0.2
+    logging:
+        # The directory where log files will be written
+        directory: "%bzion.root_dir%/app/logs"
+        # The minimum log level (can be debug, info, notice, warning, error, critical, alert or emergency)
+        level: notice
+    notifications:
+        pusher:
+            enabled: false
+            app_id: 54321
+            key: 123456789
+            secret: 123456789
+        websocket:
+            # true to enable PHP's socket for real-time notifications
+            enabled: false
+            # If these ports are reserved in your machine, set them to another
+            # free value
+            pull_port: 8591
+            push_port: 8592
+    miscellaneous:
+        # BZFlag List Server
+        list_server: "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"
+        # Server polling interval
+        update_interval: 5 minutes
+        # Whether to enable some functions which make debugging easier (false, true or force)
+        # WARNING: Setting this to anything other than false WILL introduce significant
+        # security risks and should NOT be used in a production environment
+        development: false

@@ -22,11 +22,16 @@ class MatchFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
+        $durations = \Service::getParameter('bzion.league.duration');
+        foreach ($durations as $duration => &$value) {
+            $durations[$duration] = $duration;
+        }
+
         return $builder
             ->add('first_team', new MatchTeamType())
             ->add('second_team', new MatchTeamType())
             ->add('duration', 'choice', array(
-                'choices' => array_keys(unserialize(DURATION)),
+                'choices' => $durations,
                 'constraints' => new NotBlank(),
                 'expanded' => true
             ))

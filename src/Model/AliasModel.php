@@ -87,6 +87,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     public function resetAlias()
     {
         $alias = static::generateAlias($this->name, $this->id);
+
         return $this->updateProperty($this->alias, 'alias', $alias, 's');
     }
 
@@ -129,8 +130,8 @@ abstract class AliasModel extends UrlModel implements NamedModel
     /**
      * Generate a URL-friendly unique alias for an object name
      *
-     * @param  string   $name The original object name
-     * @param  int|Null $id   The ID of the object, if it's being edited and not created
+     * @param  string      $name The original object name
+     * @param  int|Null    $id   The ID of the object, if it's being edited and not created
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
     public static function generateAlias($name, $id=null)
@@ -166,7 +167,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      * Make sure that the generated alias provided is unique
      *
      * @param  string $alias The alias
-     * @param  int    $id The ID of the object, if it's being edited and not created
+     * @param  int    $id    The ID of the object, if it's being edited and not created
      * @return string An alias that is guaranteed to be unique
      */
     private static function getUniqueAlias($alias, $id=0)

@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event announced when someone a player is kicked from a team
  */
-class TeamKickEvent extends Event {
+class TeamKickEvent extends Event
+{
     /**
      * @var \Team
      */
@@ -29,7 +30,7 @@ class TeamKickEvent extends Event {
     /**
      * Create a new event
      *
-     * @param \Team $team The team from which the player was kicked
+     * @param \Team   $team   The team from which the player was kicked
      * @param \Player $kicked The player who was kicked
      * @param \Player $kicker The player who issued the kick
      */

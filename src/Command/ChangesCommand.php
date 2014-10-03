@@ -91,9 +91,9 @@ class ChangesCommand extends ContainerAwareCommand
     /**
      * Parse the command line options concerning the date of the last update
      *
-     * @param  string $lastUpdatePath The path to the last update file
-     * @param  string $date|null      The date command line argument
-     * @param  OutputInterface $output The command's output
+     * @param  string          $lastUpdatePath The path to the last update file
+     * @param  string          $date|null      The date command line argument
+     * @param  OutputInterface $output         The command's output
      * @return void
      */
     private function parseOptions($lastUpdatePath, $date, $output)
@@ -203,7 +203,7 @@ class ChangesCommand extends ContainerAwareCommand
     /**
      * Show a list of changes in a user-readable format
      *
-     * @param  array[] $listed The changes that should be listed
+     * @param  array[]         $listed The changes that should be listed
      * @param  OutputInterface $output The command's output
      * @return void
      */
@@ -252,7 +252,7 @@ class ChangesCommand extends ContainerAwareCommand
     /**
      * Recursively find out if an array is empty
      *
-     * @param  array $array The array to test
+     * @param  array   $array The array to test
      * @return boolean
      */
     private function isEmpty(array $array)

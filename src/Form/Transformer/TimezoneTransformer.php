@@ -41,7 +41,7 @@ class TimezoneTransformer implements DataTransformerInterface
     /**
      * Return a timezone ready to use internally
      *
-     * @param  array $data Symfony's form data
+     * @param  array  $data Symfony's form data
      * @return string
      */
     public function reverseTransform($data)

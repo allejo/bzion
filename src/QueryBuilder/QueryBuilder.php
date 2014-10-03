@@ -387,7 +387,7 @@ class QueryBuilder implements Countable
      * consideration for performance purposes, so you will have to override this
      * in your query builder if necessary.
      *
-     * @param  Player  $player The player in question
+     * @param  Player  $player      The player in question
      * @param  boolean $showDeleted false to hide deleted models even from admins
      * @return self
      */
@@ -580,7 +580,7 @@ class QueryBuilder implements Countable
         if ($this->conditions) {
             // Add parentheses around the conditions to prevent conflicts due
             // to the order of operations
-            $conditions = array_map(function($value) { return "($value)"; }, $this->conditions);
+            $conditions = array_map(function ($value) { return "($value)"; }, $this->conditions);
 
             return 'WHERE ' . implode(' AND ', $conditions);
         }

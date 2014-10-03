@@ -347,7 +347,7 @@ abstract class Controller extends ContainerAware
     /**
      * Gets the monolog logger
      *
-     * @param  string $channel The log channel, defaults to the Controller's default
+     * @param  string         $channel The log channel, defaults to the Controller's default
      * @return Monolog\Logger
      */
     protected static function getLogger($channel=null)
@@ -371,7 +371,7 @@ abstract class Controller extends ContainerAware
     /**
      * Uses symfony's dispatcher to announce an event
      * @param  string $eventName The name of the event to dispatch.
-     * @param  Event  $event The event to pass to the event handlers/listeners.
+     * @param  Event  $event     The event to pass to the event handlers/listeners.
      * @return Event
      */
     protected function dispatch($eventName, Event $event = null)

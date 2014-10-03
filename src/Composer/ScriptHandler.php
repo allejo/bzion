@@ -38,16 +38,16 @@ class ScriptHandler
     }
 
     /**
-    * Copy bzion-config-example.php to bzion-config.php
+    * Copy config.example.yml to config.yml
     *
     * @param $event Event Composer's event
     */
     public static function prepareConfig(Event $event)
     {
-        $path = __DIR__ . '/../../bzion-config.php';
+        $path = __DIR__ . '/../../app/config.yml';
 
         if (!file_exists($path)) {
-            copy(__DIR__ . '/../../bzion-config-example.php', $path);
+            copy(__DIR__ . '/../../app/config.example.yml', $path);
         }
     }
 
@@ -56,7 +56,7 @@ class ScriptHandler
      *
      * @param  Event Composer's event
      * @param  string $command The command to execute
-     * @param  int $timeout The timeout of the command in seconds
+     * @param  int    $timeout The timeout of the command in seconds
      * @return void
      */
     protected static function executeCommand(Event $event, $command, $timeout = 300)

@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event dispatched whenever a new user is created
  */
-class WelcomeEvent extends Event {
+class WelcomeEvent extends Event
+{
     /**
      * @var string
      */
@@ -24,8 +25,8 @@ class WelcomeEvent extends Event {
     /**
      * Create a new event
      *
-     * @param string $message The welcome message
-     * @param \Player $player The new player
+     * @param string  $message The welcome message
+     * @param \Player $player  The new player
      */
     public function __construct($message, \Player $player)
     {

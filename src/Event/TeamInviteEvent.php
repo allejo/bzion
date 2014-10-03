@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event dispatched when someone invites a player to a team
  */
-class TeamInviteEvent extends Event {
+class TeamInviteEvent extends Event
+{
     /**
      * @var \Invitation
      */

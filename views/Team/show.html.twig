@@ -3,7 +3,7 @@
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ request.getBaseURL() }}/includes/tipsy/src/stylesheets/tipsy.css" />
+    <link rel="stylesheet" href="{{ asset('includes/tipsy/src/stylesheets/tipsy.css') }}" />
 {% endblock %}
 
 {% block content %}
@@ -125,8 +125,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ request.getBaseURL() }}/includes/chartjs/Chart.min.js"></script>
-    <script src="{{ request.getBaseURL() }}/includes/tipsy/src/javascripts/jquery.tipsy.js"></script>
+    <script src="{{ asset('includes/chartjs/Chart.min.js') }}"></script>
+    <script src="{{ asset('includes/tipsy/src/javascripts/jquery.tipsy.js') }}/"></script>
     <script>
         var teamWins   = {{ team.matchesWon }};
         var teamLosses = {{ team.matchesLost }};
@@ -135,5 +135,5 @@
         $("#match_stats").tipsy({gravity: 's'});
         $("#activity_stats").tipsy({gravity: 's'});
     </script>
-    <script src="{{ request.getBaseURL() }}/assets/js/min/teams-ck.js"></script>
+    <script src="{{ asset('assets/js/min/teams-ck.js') }}"></script>
 {% endblock %}

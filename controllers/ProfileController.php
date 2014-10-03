@@ -60,6 +60,7 @@ class ProfileController extends HTMLController
         $me->setVerified(true);
 
         $this->getFlashBag()->add('success', "Your e-mail address has been successfully verified");
+
         return new RedirectResponse($me->getUrl());
     }
 
@@ -79,9 +80,11 @@ class ProfileController extends HTMLController
             return;
         }
 
+        $title = $this->container->getParameter('bzion.site.name');
+
         $message = Swift_Message::newInstance()
-            ->setSubject(SITE_TITLE . ' Email Confirmation')
-            ->setFrom(array(EMAIL_FROM => SITE_TITLE))
+            ->setSubject($title . ' Email Confirmation')
+            ->setFrom(array($this->container->getParameter('bzion.email.from') => $title))
             ->setTo($player->getEmailAddress())
             ->setBody($this->render('Email/confirm.txt.twig',  array('player' => $player)))
             ->addPart($this->render('Email/confirm.html.twig', array('player' => $player)), 'text/html');

@@ -1,5 +1,5 @@
 imports:
-    - { resource: config.yml }
+    - { resource: symfony.yml }
 
 services:
     bzion.command.log_command:

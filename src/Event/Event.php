@@ -19,11 +19,13 @@ use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
  * change the parameter names or non-abstract model type hints without writing
  * the appropriate database migrations first.
  */
-abstract class Event extends SymfonyEvent implements \Serializable {
+abstract class Event extends SymfonyEvent implements \Serializable
+{
     /**
      * Serialize an event so that it can be stored in the database
      */
-    public function serialize() {
+    public function serialize()
+    {
         $class = new \ReflectionObject($this);
         $params = $class->getConstructor()->getParameters();
 
@@ -101,7 +103,7 @@ abstract class Event extends SymfonyEvent implements \Serializable {
     /**
      * Find out if the specified parameter of the Event's constructor needs a Model
      *
-     * @param \ReflectionParameter $param The constructor's parameter
+     * @param  \ReflectionParameter $param The constructor's parameter
      * @return boolean
      */
     private function isModel($param)

@@ -35,7 +35,7 @@ Feature: Matches
        And I fill in "16" for "form_first_team_score"
        And I select "Subpar Fusillade" from "form_second_team_team"
        And I fill in "2" for "form_second_team_score"
-       And I select "1" from "form_duration_0"
+       And I select "30" from "form_duration_0"
        And I press "Enter"
        Then I should be on "/matches"
        And I should see "The match was created successfully"

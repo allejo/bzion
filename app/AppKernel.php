@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Cache\ModelCache;
+use BZIon\Session\DatabaseSessionHandler;
 use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\PluralFilter;
 use BZIon\Twig\YesNoFilter;
@@ -17,10 +18,12 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
@@ -35,12 +38,13 @@ class AppKernel extends Kernel
 {
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/Resource/config_'. $this->getEnvironment() . '.yml');
+        $loader->load(__DIR__.'/Resource/symfony_'. $this->getEnvironment() . '.yml');
     }
 
     public function registerBundles()
     {
         $bundles = array(
+            new BZIon\Config\ConfigBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -61,29 +65,52 @@ class AppKernel extends Kernel
     {
         parent::boot();
 
+        if (!$this->container->getParameter('bzion.miscellaneous.development')) {
+            if ($this->getEnvironment() != 'prod' || $this->isDebug()) {
+                throw new ForbiddenDeveloperAccessException(
+                    'You are not allowed to access this page in a non-production '.
+                    'environment. Please change the "development" configuration '.
+                    'value and clear the cache before proceeding.'
+                );
+            }
+        }
+
+        if ($this->getEnvironment() == 'profile') {
+            Debug::enable();
+        }
+
         Service::setGenerator($this->container->get('router')->getGenerator());
         Service::setEnvironment($this->getEnvironment());
         Service::setModelCache(new ModelCache());
         Service::setContainer($this->container);
         $this->setUpTwig();
 
-        Notification::initializeAdapters();
-
-        if ($this->getEnvironment() == 'profile') {
-            Debug::enable();
+        // Ratchet doesn't support PHP's native session storage, so use our own
+        // if we need it
+        if (Service::getParameter('bzion.notifications.websocket.enabled') &&
+            $this->getEnvironment() !== 'test') {
+            $storage = new NativeSessionStorage(array(), new DatabaseSessionHandler());
+            $session = new Session($storage);
+            Service::getContainer()->set('session', $session);
         }
+
+        Notification::initializeAdapters();
     }
 
-    public static function guessEnvironment()
+    /**
+     * Find out whether the `dev` or the `profile` environment should be used
+     * for development, depending on the existance of the profiler bundle
+     *
+     * @return string The suggested kernel environment
+     */
+    public static function guessDevEnvironment()
     {
-        if (!defined('DEVELOPMENT'))
-            return false;
-
-        switch (DEVELOPMENT) {
-            case 1: return "dev";
-            case 2: return "profile";
-            default: return "prod";
+        // If there is a profiler, use the environment with the profiler
+        if (class_exists('Symfony\Bundle\WebProfilerBundle\WebProfilerBundle')) {
+            return 'profile';
         }
+
+        return 'dev';
     }
 
     private function setUpTwig()
@@ -107,6 +134,9 @@ class AppKernel extends Kernel
         );
         $twig->addExtension(
             new ImagineExtension($this->container->get('liip_imagine.cache.manager'))
+        );
+        $twig->addExtension(
+            new AssetsExtension($this->container, $this->container->get('router')->getContext())
         );
 
         if ($this->getEnvironment() == 'profile') {
@@ -143,11 +173,18 @@ class AppKernel extends Kernel
         Service::setFormFactory($formFactoryBuilder->getFormFactory());
     }
 
-    public function handle(Request $request, $type=1, $catch=true)
+    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
         if (false === $this->booted) {
             $this->boot();
         }
+
+        if (!defined('DEVELOPMENT')) {
+            define('DEVELOPMENT', ($this->isDebug()));
+        }
+
+        $this->container->enterScope('request');
+        $this->container->set('request', $request, 'request');
 
         $event = new GetResponseEvent($this, $request, $type);
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::REQUEST, $event);
@@ -158,8 +195,6 @@ class AppKernel extends Kernel
 
         $session = $this->container->get('session');
         $session->start();
-        $request->setSession($session);
-
         $this->setUpFormFactory($session);
 
         Service::setRequest($request);
@@ -173,8 +208,8 @@ class AppKernel extends Kernel
         // Do not lose the session data when the client's browser redirects too
         // fast, without allowing the session handler to store the session
         if ($type == Kernel::MASTER_REQUEST) {
-            if ($this->getContainer()->get('session')->isStarted()) {
-                $this->getContainer()->get('session')->save();
+            if ($session->isStarted()) {
+                $session->save();
             }
         }
 

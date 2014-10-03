@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event list
  */
-class Events {
+class Events
+{
     /**
      * The message event is thrown each time a new message is sent or a
      * conversation is created

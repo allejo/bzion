@@ -149,7 +149,7 @@ class EventPusher implements MessageComponentInterface
      * Send some data to the client
      *
      * @param ConnectionInterface $client The client that will receive the data
-     * @param array $data The data to send
+     * @param array               $data   The data to send
      */
     protected function send(ConnectionInterface $client, $data)
     {

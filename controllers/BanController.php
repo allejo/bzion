@@ -1,6 +1,5 @@
 <?php
 
-use BZIon\Form\Creator\BanFormCreator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

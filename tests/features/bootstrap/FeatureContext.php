@@ -19,6 +19,12 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     private $crawler = null;
     private $me = null;
 
+    /**
+     * A random avatar URL
+     * @var string
+     */
+    private $avatarUrl = "web/assets/imgs/avatars/players/1.png";
+
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
@@ -121,7 +127,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iHaveATeamCalled($name)
     {
-        return Team::createTeam($name, $this->getUserId(), "Avatar", "Description", "open");
+        return Team::createTeam($name, $this->getUserId(), $this->avatarUrl, "Description", "open");
     }
 
     /**
@@ -213,7 +219,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iCreateATeamCalled($name)
     {
-        Team::createTeam($name, $this->me->getId(), "Avatar", "Description");
+        Team::createTeam($name, $this->me->getId(), $this->avatarUrl, "Description");
     }
 
     /**
@@ -241,8 +247,13 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
             $db->query('SET foreign_key_checks = 1');
         }
 
-        $dsn = 'mysql:dbname=' . MYSQL_DB_NAME . ';host=' . MYSQL_HOST .';charset=UTF8';
-        $pdo = new PDO($dsn, MYSQL_USER, MYSQL_PASSWORD);
+        $host = Service::getParameter('bzion.mysql.host');
+        $username = Service::getParameter('bzion.mysql.username');
+        $password = Service::getParameter('bzion.mysql.password');
+        $database = Service::getParameter('bzion.mysql.database');
+
+        $dsn = 'mysql:dbname=' . $database . ';host=' . $host .';charset=UTF8';
+        $pdo = new PDO($dsn, $username, $password);
         $pdo->exec(file_get_contents('DATABASE.sql'));
 
         if ($modelCache = Service::getModelCache())

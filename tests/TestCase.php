@@ -20,9 +20,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public static function connectToDatabase()
     {
-        global $db;
-        $db = new Database(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
-        return $db;
+        return Database::getInstance();
     }
 
     /**

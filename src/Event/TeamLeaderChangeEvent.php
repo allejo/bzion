@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event thrown when a player gets the leadership of a team
  */
-class TeamLeaderChangeEvent extends Event {
+class TeamLeaderChangeEvent extends Event
+{
     /**
      * @var \Team
      */
@@ -29,7 +30,7 @@ class TeamLeaderChangeEvent extends Event {
     /**
      * Create a new event
      *
-     * @param \Team $team The team in question
+     * @param \Team   $team      The team in question
      * @param \Player $newLeader The new leader of the team
      * @param \Player $oldLeader The former leader of the team
      */

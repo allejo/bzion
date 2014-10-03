@@ -10,7 +10,8 @@ namespace BZIon\Event;
 /**
  * Event announced when a team is deleted
  */
-class TeamDeleteEvent extends Event {
+class TeamDeleteEvent extends Event
+{
     /**
      * @var \Team
      */
@@ -29,8 +30,8 @@ class TeamDeleteEvent extends Event {
     /**
      * Create a new event
      *
-     * @param \Team $team The team that was deleted
-     * @param \Player $deleter The player who deleted the team
+     * @param \Team     $team    The team that was deleted
+     * @param \Player   $deleter The player who deleted the team
      * @param \Player[] $members The members of the deleted team
      */
     public function __construct(\Team $team, \Player $deleter, array $members=null)
