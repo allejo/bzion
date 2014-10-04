@@ -38,7 +38,8 @@
         "symfony/yaml"               : ">=2.5.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "dev-master",
-        "yzalis/identicon"           : "1.1.*@dev"
+        "yzalis/identicon"           : "1.1.*@dev",
+        "incenteev/composer-parameter-handler": "~2.1"
     },
     "require-dev": {
         "behat/behat": "3.0.*@stable",
@@ -57,13 +58,14 @@
     "scripts": {
         "post-create-project-cmd": [
             "git submodule update --init",
-            "BZIon\\Composer\\ScriptHandler::prepareConfig"
+            "BZIon\\Composer\\ScriptHandler::buildConfig"
         ],
         "upgrade": [
             "git pull origin",
             "git submodule sync",
             "git submodule update --init",
             "app/upgrade.sh --no-dev --ansi install",
+            "BZIon\\Composer\\ScriptHandler::buildConfig",
             "BZIon\\Composer\\ScriptHandler::clearCache",
             "BZIon\\Composer\\ScriptHandler::showChangelog"
         ]
@@ -97,5 +99,12 @@
     },
     "config": {
         "component-dir": "web/components"
+    },
+    "extra": {
+        "incenteev-parameters": {
+            "file": "app/config.yml",
+            "dist-file": "app/config.example.yml",
+            "parameter-key": "bzion"
+        }
     }
 }

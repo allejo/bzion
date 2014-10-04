@@ -3,7 +3,6 @@
  * This file contains scripts that are run on composer events and commands - for
  * example, you might want to regenerate the cache after updating
  *
- * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
@@ -18,37 +17,34 @@ use Composer\Script\Event;
 class ScriptHandler
 {
     /**
-    * Clears the Symfony cache.
-    *
-    * @param $event Event Composer's event
-    */
+     * Clears the Symfony cache.
+     *
+     * @param $event Event Composer's event
+     */
     public static function clearCache(Event $event)
     {
         static::executeCommand($event, 'cache:clear');
     }
 
     /**
-    * Shows what changed since the last update
-    *
-    * @param $event Event Composer's event
-    */
+     * Shows what changed since the last update
+     *
+     * @param $event Event Composer's event
+     */
     public static function showChangelog(Event $event)
     {
         static::executeCommand($event, 'bzion:changes');
     }
 
     /**
-    * Copy config.example.yml to config.yml
-    *
-    * @param $event Event Composer's event
-    */
-    public static function prepareConfig(Event $event)
+     * Migrate the config.yml file
+     *
+     * @param $event Event Composer's event
+     */
+    public static function buildConfig(Event $event)
     {
-        $path = __DIR__ . '/../../app/config.yml';
-
-        if (!file_exists($path)) {
-            copy(__DIR__ . '/../../app/config.example.yml', $path);
-        }
+        $configHandler = new ConfigHandler($event);
+        $configHandler->build();
     }
 
     /**
