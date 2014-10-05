@@ -7,7 +7,7 @@ php:
 
 matrix:
     include:
-        - php: "hhvm-nightly"
+        - php: "hhvm"
           env:
             - NO_COVERAGE=1
             - BZION_HHVM=1
