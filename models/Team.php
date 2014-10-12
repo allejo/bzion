@@ -550,6 +550,7 @@ class Team extends AvatarModel
         ), 'ssssidiiiisss', 'created');
 
         $team->addMember($leader);
+        $team->getIdenticon($team->getId());
 
         return $team;
     }

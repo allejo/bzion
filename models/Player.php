@@ -764,6 +764,7 @@ class Player extends AvatarModel implements NamedModel
         ), 'iisssssisss');
 
         $player->addRole($role_id);
+        $player->getIdenticon($player->getId());
 
         return $player;
     }
