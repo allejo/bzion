@@ -6,6 +6,9 @@ use BZIon\Event\WelcomeEvent;
 
 require_once(__DIR__ . "/../bzion-load.php");
 
+// Because we're never calling index.php or dev.php, our DEVELOPMENT constant is never set
+DEFINE('DEVELOPMENT', true);
+
 $kernel = new AppKernel("dev", true);
 $kernel->boot();
 
