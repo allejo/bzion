@@ -17,6 +17,15 @@
     </head>
 
     <body>
+        {% if constant('DEVELOPMENT') %}
+            <section class="css-dev">
+                <div class="desktop">Desktop</div>
+                <div class="tablet">Tablet</div>
+                <div class="phablet">Phablet</div>
+                <div class="phone">Phone</div>
+            </section>
+        {% endif %}
+
         <header>
             <section>
                 <h1>

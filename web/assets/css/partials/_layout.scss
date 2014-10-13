@@ -49,6 +49,12 @@ main {
             }
         }
     }
+
+    @include respond-to(phones) {
+        @include box-sizing(border-box);
+
+        padding: 0 10px;
+    }
 }
 
 .clearfix {
@@ -63,6 +69,56 @@ main {
 
     &:after {
         clear: both;
+    }
+}
+
+.css-dev {
+    @include box-sizing(border-box);
+
+    background-color: red;
+    color: $White;
+    display: block;
+    font-family: $sansSerifFont;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+
+    .tablet, .phablet, .phone {
+        display: none;
+    }
+
+    .desktop {
+        display: block;
+    }
+
+    @include respond-to(tablets) {
+        .desktop, .phablet, .phone {
+            display: none;
+        }
+
+        .tablet {
+            display: block;
+        }
+    }
+
+    @include respond-to(phablets) {
+        .desktop, .tablet, .phone {
+            display: none;
+        }
+
+        .phablet {
+            display: block;
+        }
+    }
+
+    @include respond-to(phones) {
+        .desktop, .tablet, .phablet {
+            display: none;
+        }
+
+        .phone {
+            display: block;
+        }
     }
 }
 
