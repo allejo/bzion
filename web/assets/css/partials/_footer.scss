@@ -9,16 +9,63 @@ body {
         margin: 0 auto;
         padding: 20px 10px;
 
+        .information {
+            @extend .clearfix;
+
+            float: left;
+
+            .copyright{
+                float: left;
+            }
+
+            .development {
+                float: left;
+                margin-left: 5px;
+
+                @include respond-to(phablets) {
+                    float: right;
+
+                    i {
+                        float: right;
+                        margin-left: 6px;
+                        margin-top: 4px;
+                    }
+                }
+            }
+
+            @include respond-to(phablets) {
+                float: none;
+            }
+        }
+
         span {
             float: left;
         }
 
         ul {
             float: right;
+            padding-left: 0;
 
             li {
                 display: inline-block;
                 margin-left: 20px;
+
+                @include respond-to(phablets) {
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                }
+
+                @include respond-to(phones) {
+                    display: block;
+                    margin: 0 0 5px 0;
+                }
+            }
+
+            @include respond-to(phablets) {
+                display: block;
+                float: none;
+                margin-bottom: 20px;
             }
         }
     }

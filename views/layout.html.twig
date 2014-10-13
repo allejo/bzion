@@ -50,12 +50,6 @@
         {% endblock %}
 
         <footer>
-            <span>BZiON &copy; 2014</span>
-
-            {% if constant('DEVELOPMENT') %}
-                <span>&nbsp;<i class="fa fa-wrench"></i> {{ environment }}</span>
-            {% endif %}
-
             <ul>
                 {% for page in pages %}
                     {% if not page.isHomePage %}
@@ -67,6 +61,14 @@
                 <li><a href="{{ path('admin_list') }}">Admins</a></li>
                 <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
             </ul>
+
+            <section class="information">
+                <p class="copyright">BZiON &copy; 2014</p>
+
+                {% if constant('DEVELOPMENT') %}
+                    <p class="development"><i class="fa fa-wrench"></i> {{ environment }}</p>
+                {% endif %}
+            </section>
         </footer>
 
         {% if constant('DEVELOPMENT') %}

@@ -54,12 +54,12 @@ main {
 
             padding-left: 10px;
         }
-    }
 
-    @include respond-to(phones) {
-        @include box-sizing(border-box);
+        @include respond-to(phones) {
+            @include box-sizing(border-box);
 
-        padding: 0 10px;
+            margin-bottom: 10px;
+        }
     }
 }
 
@@ -86,9 +86,9 @@ main {
     color: $White;
     display: block;
     font-family: $sansSerifFont;
-    position: absolute;
+    padding: 0 5px;
+    position: fixed;
     text-align: center;
-    width: 100%;
 
     .tablet, .phablet, .phone {
         display: none;

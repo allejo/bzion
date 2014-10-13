@@ -76,6 +76,10 @@ main {
                 padding: 0 10px;
                 width: 100%;
             }
+
+            @include respond-to(phones) {
+                margin-bottom: 10px;
+            }
         }
 
         .profile {
