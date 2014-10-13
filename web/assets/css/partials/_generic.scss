@@ -119,6 +119,14 @@ hr {
     height: 1px;
     margin: 30px auto;
     width: $global_width;
+
+    @include respond-to(tablets) {
+        width: 100%;
+    }
+
+    @include respond-to(phablets) {
+        margin: 15px auto;
+    }
 }
 
 ol {

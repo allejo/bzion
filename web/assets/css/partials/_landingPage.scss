@@ -1,8 +1,7 @@
 main {
     &.landing {
         .cover {
-            background: url("../imgs/cover_photo.png") no-repeat center center fixed;
-            background-position: 0 -225px;
+            background: url("../imgs/cover_photo.png") no-repeat fixed 0 -225px;
             background-size: cover;
             display: table;
             height: 350px;
@@ -24,7 +23,13 @@ main {
 
                 h1 {
                     font-size: 48px;
+                    line-height: 48px;
                     margin-bottom: 20px;
+
+                    @include respond-to(phones) {
+                        font-size: 36px;
+                        line-height: 36px;
+                    }
                 }
 
                 h2 {
@@ -35,6 +40,16 @@ main {
                     margin-top: 40px;
                 }
             }
+
+            @include respond-to(tablets) {
+                background-attachment: scroll;
+                background-position: center center;
+                height: 250px;
+            }
+
+            @include respond-to(phones) {
+                height: 200px;
+            }
         }
 
         .key_points {
@@ -44,6 +59,7 @@ main {
                 @extend .wrapper;
 
                 font-family: $sansSerifFont;
+                padding-left: 0;
                 text-align: center;
 
                 li {
@@ -66,6 +82,10 @@ main {
                         //
                         &.fa-gamepad {
                             padding: 21px 19px 17px 19px;
+
+                            @include respond-to(phablets) {
+                                margin-top: 0;
+                            }
                         }
 
                         &.fa-info {
@@ -75,14 +95,55 @@ main {
                         &.fa-list-ul {
                             padding: 25px 19px 13px 19px;
                         }
+
+                        @include respond-to(phablets) {
+                            border: none;
+                            float: left;
+
+                            &.fa-gamepad, &.fa-info, &.fa-list-ul {
+                                padding-bottom: 0;
+                                padding-top: 0;
+                                text-align: center;
+                                width: 1.28571429em; // Magic number gotten from the Font Awesome ".fa-fw" class to keep icons with a fixed width
+                            }
+                        }
                     }
 
-                    h3 {
-                        font-size: 24px;
-                        font-weight: 400;
-                        margin: 10px 0;
+                    div {
+                        h3 {
+                            font-size: 24px;
+                            font-weight: 400;
+                            margin: 10px 0;
+                        }
+
+                        @include respond-to(phablets) {
+                            float: left;
+                        }
+
+                        @include respond-to(phones) {
+                            // @TODO Find a better solution to word wrapping that doesn't involve a hard coded percentage
+                            width: 70%; // A hateful magic number
+                        }
+                    }
+
+                    @include respond-to(tablets) {
+                        margin: 0 20px;
+                        width: 190px;
+                    }
+
+                    @include respond-to(phablets) {
+                        margin: 5px 0;
+                        width: 100%;
                     }
                 }
+
+                @include respond-to(phablets) {
+                    text-align: left;
+                }
+            }
+
+            @include respond-to(phablets) {
+                padding-top: 20px;
             }
         }
 
@@ -123,9 +184,19 @@ main {
                         }
                     }
                 }
+
+                @include respond-to(tablets) {
+                    @include box-sizing(border-box);
+
+                    float: none;
+                    padding: 0 10px;
+                    width: 100%;
+                }
             }
 
             section {
+                @extend .clearfix;
+
                 float: right;
                 width: 55%;
 
@@ -168,8 +239,36 @@ main {
                                 margin-top: 15px;
                                 text-transform: uppercase;
                             }
+
+                            @include respond-to(tablets) {
+                                border: none;
+                                float: left;
+                                width: 33%;
+                            }
+
+                            @include respond-to(phablets) {
+                                width: 50%;
+                            }
+                        }
+
+                        @include respond-to(tablets) {
+                            display: block;
                         }
                     }
+
+                    @include respond-to(tablets) {
+                        float: none;
+                        margin: 0;
+                        width: 100%;
+                    }
+                }
+
+                @include respond-to(tablets) {
+                    @include box-sizing(border-box);
+
+                    float: none;
+                    padding: 0 10px;
+                    width: 100%;
                 }
             }
         }
