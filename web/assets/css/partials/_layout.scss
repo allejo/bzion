@@ -76,10 +76,11 @@ main {
     @include box-sizing(border-box);
 
     background-color: red;
+    bottom: 0;
     color: $White;
     display: block;
     font-family: $sansSerifFont;
-    padding: 10px 0;
+    position: absolute;
     text-align: center;
     width: 100%;
 
@@ -147,4 +148,8 @@ main {
 .wrapper {
     margin: 0 auto;
     width: $global_width;
+
+    @include respond-to(tablets) {
+        width: 100%;
+    }
 }

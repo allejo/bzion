@@ -39,3 +39,9 @@ function notify(message, type) {
 
     not.delay(2000).fadeOut(1000);
 }
+
+$(function () {
+    $("#mobile-menu").click(function() {
+        $("#menu-pages").slideToggle();
+    });
+});

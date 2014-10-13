@@ -1,25 +1,50 @@
 body {
-    >header {
+    > header {
         @include linear-gradient($White, #F2F2F2);
 
+        // 56px is a magic number. It's the height of the menu links with the padding and font-size
+        // calculated together
+        $line-height: 56px;
+
         box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
-        border-bottom: 1px solid #D4D4D4;
+        border-bottom: 1px solid $Another_Grey;
 
         section {
             @extend .clearfix;
             @extend .wrapper;
 
+            .mobile {
+                float: left;
+                display: none;
+                margin-right: 20px;
+                padding-left: 10px;
+
+                li {
+                    line-height: $line-height;
+                    list-style: none;
+                }
+
+                @include respond-to(tablets) {
+                    display: block;
+                }
+            }
+
             h1 {
                 float: left;
                 font-family: $collegia;
                 font-size: 36px;
-                margin: 10px 20px 10px 0;
+                line-height: $line-height;
+                margin-right: 20px;
 
                 a {
                     color: #000000;
 
                     img {
                         vertical-align: middle;
+
+                        @include respond-to(tablets) {
+                            display: none;
+                        }
                     }
                 }
             }
@@ -80,6 +105,28 @@ body {
 
                     &.pages {
                         float: left;
+
+                        @include respond-to(tablets) {
+                            background-color: $Almost_White;
+                            border-bottom: 1px solid $Another_Grey;
+                            border-top: 1px solid $Another_Grey;
+                            display: none;
+                            left: 0;
+                            position: absolute;
+                            top: $line-height;
+                            width: 100%;
+
+                            li {
+                                display: block;
+                                float: none;
+                                width: 100%;
+
+                                a {
+                                    padding: 15px 15px 15px 25px;
+                                }
+                            }
+                        }
+
                     }
 
                     &.user {

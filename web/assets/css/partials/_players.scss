@@ -58,6 +58,20 @@ main {
                         }
                     }
                 }
+
+                @include respond-to(phablets) {
+                    width: 50%;
+                }
+
+                @include respond-to(phones) {
+                    display: block;
+                    float: none;
+                    width: 100%;
+                }
+            }
+
+            @include respond-to(phones) {
+                width: 100%;
             }
         }
 
