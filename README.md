@@ -23,7 +23,7 @@ These individuals have assisted significantly with guiding the project in its cu
 
 ### Demo
 
-A demo BZiON installation can be found at [http://bzpro.net/bzion/web/dev.php](http://bzpro.net/bzion/web/dev.php) with the latest version of the master branch and sample data.
+A demo BZiON installation can be found at [BZPro](http://bzpro.net/bzion/web/dev.php) with the latest version of the master branch and sample data.
 
 ### Installation
 
@@ -70,7 +70,7 @@ This is an open source project and everyone is welcome to hack on the project. D
 
 ### Bugs and Issues
 
-If you're not comfortable with hacking on BZiON or you're not a coder, we are always looking for assistance in finding bugs and weird issues. As developers, we only imagine our code to be used the way it's intended but that's never the case! If you found a way to break our code, please [let us know](https://github.com/allejo/bzion/pulls)!
+If you're not comfortable with hacking on BZiON or you're not a coder, we are always looking for assistance in finding bugs and weird issues. As developers, we only imagine our code to be used the way it's intended but that's never the case! If you found a way to break our code, please [let us know](https://github.com/allejo/bzion/issues)!
 
 ### Documentation
 
