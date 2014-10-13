@@ -3,9 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        
+
         <title>{% spaceless %}{% block title %}BZiON{% endblock %}{% endspaceless %}</title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css">
         <link rel="stylesheet" href="{{ asset('components/select2/select2.css') }}">
         <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}">
@@ -30,7 +29,7 @@
                 <h1>
                     <a href="{{ path('index') }}">
                         <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
-                        <span>{{ siteTitle }}</span>
+                        {{ siteTitle }}
                     </a>
                 </h1>
 

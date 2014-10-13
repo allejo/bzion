@@ -31,15 +31,17 @@ body {
 
             h1 {
                 float: left;
-                font-family: $collegia;
-                font-size: 36px;
-                line-height: $line-height;
+                font-family: $sansSerifFont;
                 margin-right: 20px;
 
                 a {
                     color: #000000;
+                    font-size: 26px;
+                    line-height: 56px;
 
                     img {
+                        margin-right: 3px;
+                        margin-top: -7px;
                         vertical-align: middle;
 
                         @include respond-to(tablets) {
