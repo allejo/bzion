@@ -99,6 +99,11 @@ body {
                             &:hover {
                                 color: $Black;
                             }
+
+                            @include respond-to(phones) {
+                                padding-left: 5px;
+                                padding-right: 5px;
+                            }
                         }
 
                         &.active {

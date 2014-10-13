@@ -27,13 +27,18 @@ main {
                     margin-bottom: 20px;
 
                     @include respond-to(phones) {
-                        font-size: 36px;
-                        line-height: 36px;
+                        font-size: 30px;
+                        line-height: 30px;
+                        margin-bottom: 15px;
                     }
                 }
 
                 h2 {
                     font-size: 24px;
+
+                    @include respond-to(phones) {
+                        font-size: 22px;
+                    }
                 }
 
                 .button {
@@ -86,14 +91,26 @@ main {
                             @include respond-to(phablets) {
                                 margin-top: 0;
                             }
+
+                            @include respond-to(phones) {
+                                padding-top: 10px;
+                            }
                         }
 
                         &.fa-info {
                             padding: 27px 19px 11px 19px;
+
+                            @include respond-to(phones) {
+                                padding-top: 15px;
+                            }
                         }
 
                         &.fa-list-ul {
                             padding: 25px 19px 13px 19px;
+
+                            @include respond-to(phones) {
+                                padding-top: 20px;
+                            }
                         }
 
                         @include respond-to(phablets) {
@@ -102,7 +119,6 @@ main {
 
                             &.fa-gamepad, &.fa-info, &.fa-list-ul {
                                 padding-bottom: 0;
-                                padding-top: 0;
                                 text-align: center;
                                 width: 1.28571429em; // Magic number gotten from the Font Awesome ".fa-fw" class to keep icons with a fixed width
                             }
@@ -122,7 +138,7 @@ main {
 
                         @include respond-to(phones) {
                             // @TODO Find a better solution to word wrapping that doesn't involve a hard coded percentage
-                            width: 70%; // A hateful magic number
+                            width: 60%; // A hateful magic number
                         }
                     }
 
@@ -231,6 +247,10 @@ main {
                                     display: block;
                                     text-align: center;
                                 }
+
+                                @include respond-to(phones) {
+                                    margin: 0 30px;
+                                }
                             }
 
                             .stats {
@@ -248,6 +268,10 @@ main {
 
                             @include respond-to(phablets) {
                                 width: 50%;
+                            }
+
+                            @include respond-to(phones) {
+                                width: 100%;
                             }
                         }
 
