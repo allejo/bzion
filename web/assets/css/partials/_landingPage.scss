@@ -247,10 +247,6 @@ main {
                                     display: block;
                                     text-align: center;
                                 }
-
-                                @include respond-to(phones) {
-                                    margin: 0 30px;
-                                }
                             }
 
                             .stats {
@@ -266,12 +262,10 @@ main {
                                 width: 33%;
                             }
 
-                            @include respond-to(phablets) {
-                                width: 50%;
-                            }
-
                             @include respond-to(phones) {
-                                width: 100%;
+                                height: auto;
+                                padding: 20px 0;
+                                width: 50%;
                             }
                         }
 
