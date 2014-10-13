@@ -12,7 +12,7 @@ main {
         margin: 0 0 30px;
         padding: 20px 0;
 
-        >article {
+        > article {
             @extend .clearfix;
             @extend .wrapper;
 
@@ -47,6 +47,12 @@ main {
                 margin-right: 5px;
                 margin-top: 10px;
             }
+        }
+
+        @include respond-to(tablets) {
+            @include box-sizing(border-box);
+
+            padding-left: 10px;
         }
     }
 

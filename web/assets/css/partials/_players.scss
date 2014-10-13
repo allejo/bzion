@@ -70,7 +70,10 @@ main {
                 }
             }
 
-            @include respond-to(phones) {
+            @include respond-to(tablets) {
+                @include box-sizing(border-box);
+
+                padding: 0 10px;
                 width: 100%;
             }
         }
