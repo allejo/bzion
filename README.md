@@ -23,7 +23,7 @@ These individuals have assisted significantly with guiding the project in its cu
 
 ### Demo
 
-A demo BZiON installation can be found at [http://bzpro.net/bzion/](http://bzpro.net/bzion/) with the latest version of the master branch and sample data.
+A demo BZiON installation can be found at [http://bzpro.net/bzion/web/dev.php](http://bzpro.net/bzion/web/dev.php) with the latest version of the master branch and sample data.
 
 ### Installation
 
