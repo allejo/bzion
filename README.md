@@ -8,9 +8,9 @@ BZiON is a modern content management system (CMS) written for BZFlag leagues to 
 
 These individuals have made multiple significant contributions to the project on a sustained basis. They become actively involved on improving and adding new features to the project.
 
-- Vladimir Jimenez ([allejo](https://github.com/allejo))  
-- Konstantinos Kanavouras ([kongr45gpen/alezakos](https://github.com/kongr45gpen))  
-- Matthew Pavia ([tw1sted](https://github.com/mattpavia))  
+- Vladimir Jimenez ([allejo](https://github.com/allejo))
+- Konstantinos Kanavouras ([kongr45gpen/alezakos](https://github.com/kongr45gpen))
+- Matthew Pavia ([tw1sted](https://github.com/mattpavia))
 - Ashvala Vinay ([ashvala](https://github.com/Ashvala))
 
 ### Thanks to
@@ -42,13 +42,27 @@ A demo BZiON installation can be found at [http://bzpro.net/bzion/](http://bzpro
 4. Use the `DATABASE.sql` file to create the necessary database structure
 
 5. Make sure that the app/cache, app/logs and web/assets/imgs/avatars/ directories
-   are writeable by you and the web server:
+   are writable by you and the web server:
+   
+   1. First get the current web server user.
+   
+      ```
+      HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+      ```
 
-   <sub>_Example for Apache2 on Ubuntu_</sub>
-   ```
-   sudo setfacl -R  -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
-   sudo setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
-   ```
+   2. Set the permissions for the appropriate directories.
+
+      <sub>_Example for Apache2 on Ubuntu_</sub>  
+      ```
+      sudo setfacl -R  -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
+      sudo setfacl -dR -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
+      ```
+      
+      <sub>_Example for Apache2 on OS X_</sub>  
+      ```
+      sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
+      sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
+      ```
 
 ## Contributing
 
