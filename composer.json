@@ -38,8 +38,7 @@
         "symfony/yaml"               : ">=2.5.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "dev-master",
-        "yzalis/identicon"           : "1.1.*@dev",
-        "incenteev/composer-parameter-handler": "~2.1"
+        "yzalis/identicon"           : "1.1.*@dev"
     },
     "require-dev": {
         "behat/behat": "3.0.*@stable",
@@ -68,6 +67,9 @@
             "BZIon\\Composer\\ScriptHandler::buildConfig",
             "BZIon\\Composer\\ScriptHandler::clearCache",
             "BZIon\\Composer\\ScriptHandler::showChangelog"
+        ],
+        "it": [
+            "BZIon\\Composer\\ScriptHandler::buildConfig"
         ]
     },
     "autoload": {

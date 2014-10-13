@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a2020fef80184f2b39ad918d748eb8ec",
+    "hash": "64728c39f179ee6d65138415c30ed686",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -581,69 +581,17 @@
             "time": "2014-06-16 20:53:48"
         },
         {
-            "name": "incenteev/composer-parameter-handler",
-            "version": "v2.1.0",
-            "target-dir": "Incenteev/ParameterHandler",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Incenteev/ParameterHandler.git",
-                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/143272a0a09c62616a3c8011fc165a10c6b35241",
-                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "symfony/yaml": "~2.0"
-            },
-            "require-dev": {
-                "composer/composer": "1.0.*@dev",
-                "phpspec/prophecy-phpunit": "~1.0",
-                "symfony/filesystem": "~2.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Incenteev\\ParameterHandler": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Coevoet",
-                    "email": "stof@notk.org"
-                }
-            ],
-            "description": "Composer script handling your ignored parameter file",
-            "homepage": "https://github.com/Incenteev/ParameterHandler",
-            "keywords": [
-                "parameters management"
-            ],
-            "time": "2013-12-07 10:10:39"
-        },
-        {
             "name": "ivaynberg/select2",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "c5c42eaf72d55e7b802b7efc9a5a6b192a88647d"
+                "reference": "073f4cb087b99c5fb780fbbaefe4c1a23f8902c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/c5c42eaf72d55e7b802b7efc9a5a6b192a88647d",
-                "reference": "c5c42eaf72d55e7b802b7efc9a5a6b192a88647d",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/073f4cb087b99c5fb780fbbaefe4c1a23f8902c8",
+                "reference": "073f4cb087b99c5fb780fbbaefe4c1a23f8902c8",
                 "shasum": ""
             },
             "require": {
@@ -673,7 +621,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-09-25 20:45:59"
+            "time": "2014-10-10 16:05:26"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -3116,12 +3064,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "9fb15e343e881c9a89b97ee2262d7b8fbf512c6e"
+                "reference": "875a56c8fa1a763d63d42b89f904aeaa5be44838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/9fb15e343e881c9a89b97ee2262d7b8fbf512c6e",
-                "reference": "9fb15e343e881c9a89b97ee2262d7b8fbf512c6e",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/875a56c8fa1a763d63d42b89f904aeaa5be44838",
+                "reference": "875a56c8fa1a763d63d42b89f904aeaa5be44838",
                 "shasum": ""
             },
             "require": {
@@ -3165,7 +3113,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-01 17:51:59"
+            "time": "2014-10-13 12:33:18"
         },
         {
             "name": "yzalis/identicon",
@@ -3474,12 +3422,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkExtension.git",
-                "reference": "06a4cb56614b047d8d15ea5cd392d19fd3d856e8"
+                "reference": "2ab8c00c59995824c6ebcd50617f8c3a4d78d2d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkExtension/zipball/06a4cb56614b047d8d15ea5cd392d19fd3d856e8",
-                "reference": "06a4cb56614b047d8d15ea5cd392d19fd3d856e8",
+                "url": "https://api.github.com/repos/Behat/MinkExtension/zipball/2ab8c00c59995824c6ebcd50617f8c3a4d78d2d9",
+                "reference": "2ab8c00c59995824c6ebcd50617f8c3a4d78d2d9",
                 "shasum": ""
             },
             "require": {
@@ -3489,7 +3437,7 @@
                 "symfony/config": "~2.2"
             },
             "require-dev": {
-                "behat/mink-goutte-driver": "~1.0",
+                "behat/mink-goutte-driver": "~1.1@dev",
                 "phpspec/phpspec": "~2.0"
             },
             "type": "behat-extension",
@@ -3525,7 +3473,7 @@
                 "test",
                 "web"
             ],
-            "time": "2014-09-23 10:59:27"
+            "time": "2014-10-08 08:13:38"
         },
         {
             "name": "behat/symfony2-extension",
@@ -3533,12 +3481,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Symfony2Extension.git",
-                "reference": "068ce12e9a6d93f1c752eb161a672c3f586cca7b"
+                "reference": "f9030db6d34a46b104c76efff5db761b688b0400"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/068ce12e9a6d93f1c752eb161a672c3f586cca7b",
-                "reference": "068ce12e9a6d93f1c752eb161a672c3f586cca7b",
+                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/f9030db6d34a46b104c76efff5db761b688b0400",
+                "reference": "f9030db6d34a46b104c76efff5db761b688b0400",
                 "shasum": ""
             },
             "require": {
@@ -3585,7 +3533,7 @@
                 "framework",
                 "symfony"
             ],
-            "time": "2014-09-14 21:27:24"
+            "time": "2014-10-07 15:41:44"
         },
         {
             "name": "behat/transliterator",
@@ -5320,17 +5268,17 @@
         },
         {
             "name": "raulfraile/ladybug-bundle",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "target-dir": "RaulFraile/Bundle/LadybugBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/LadybugBundle.git",
-                "reference": "e2ef2c979444300e8fe85eee292bb43d87ea908c"
+                "reference": "0a3171f1d15194aadaba12fd9c81c11707c6b1c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/e2ef2c979444300e8fe85eee292bb43d87ea908c",
-                "reference": "e2ef2c979444300e8fe85eee292bb43d87ea908c",
+                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/0a3171f1d15194aadaba12fd9c81c11707c6b1c3",
+                "reference": "0a3171f1d15194aadaba12fd9c81c11707c6b1c3",
                 "shasum": ""
             },
             "require": {
@@ -5371,7 +5319,7 @@
                 "tree",
                 "twig"
             ],
-            "time": "2014-08-29 20:43:09"
+            "time": "2014-10-10 06:09:15"
         },
         {
             "name": "raulfraile/ladybug-installer",
@@ -5543,16 +5491,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "f7069ee51fa9fb6c038e16a9d0e3439f5449dcf2"
+                "reference": "e54a01c0da1b87db3c5a3c4c5277ddf331da4aef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/f7069ee51fa9fb6c038e16a9d0e3439f5449dcf2",
-                "reference": "f7069ee51fa9fb6c038e16a9d0e3439f5449dcf2",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/e54a01c0da1b87db3c5a3c4c5277ddf331da4aef",
+                "reference": "e54a01c0da1b87db3c5a3c4c5277ddf331da4aef",
                 "shasum": ""
             },
             "require": {
@@ -5580,11 +5528,6 @@
             ],
             "authors": [
                 {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                },
-                {
                     "name": "Jeff Welch",
                     "email": "whatthejeff@gmail.com"
                 },
@@ -5595,6 +5538,10 @@
                 {
                     "name": "Bernhard Schussek",
                     "email": "bschussek@2bepublished.at"
+                },
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Provides the functionality to compare PHP values for equality",
@@ -5604,7 +5551,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2014-05-02 07:05:58"
+            "time": "2014-05-11 23:00:21"
         },
         {
             "name": "sebastian/diff",
@@ -5660,28 +5607,28 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "79517609ec01139cd7e9fded0dd7ce08c952ef6a"
+                "reference": "6288ebbf6fa3ed2b2ff2d69c356fbaaf4f0971a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/79517609ec01139cd7e9fded0dd7ce08c952ef6a",
-                "reference": "79517609ec01139cd7e9fded0dd7ce08c952ef6a",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6288ebbf6fa3ed2b2ff2d69c356fbaaf4f0971a7",
+                "reference": "6288ebbf6fa3ed2b2ff2d69c356fbaaf4f0971a7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.0.*@dev"
+                "phpunit/phpunit": "~4.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -5696,8 +5643,7 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Provides functionality to handle HHVM/PHP environments",
@@ -5707,27 +5653,27 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2014-02-18 16:17:19"
+            "time": "2014-10-07 09:23:16"
         },
         {
             "name": "sebastian/exporter",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "1f9a98e6f5dfe0524cb8c6166f7c82f3e9ae1529"
+                "reference": "c7d59948d6e82818e1bdff7cadb6c34710eb7dc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/1f9a98e6f5dfe0524cb8c6166f7c82f3e9ae1529",
-                "reference": "1f9a98e6f5dfe0524cb8c6166f7c82f3e9ae1529",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/c7d59948d6e82818e1bdff7cadb6c34710eb7dc0",
+                "reference": "c7d59948d6e82818e1bdff7cadb6c34710eb7dc0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.0.*@dev"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -5746,11 +5692,6 @@
             ],
             "authors": [
                 {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                },
-                {
                     "name": "Jeff Welch",
                     "email": "whatthejeff@gmail.com"
                 },
@@ -5759,12 +5700,16 @@
                     "email": "github@wallbash.com"
                 },
                 {
-                    "name": "Adam Harvey",
-                    "email": "aharvey@php.net"
-                },
-                {
                     "name": "Bernhard Schussek",
                     "email": "bschussek@2bepublished.at"
+                },
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                },
+                {
+                    "name": "Adam Harvey",
+                    "email": "aharvey@php.net"
                 }
             ],
             "description": "Provides the functionality to export PHP variables for visualization",
@@ -5773,7 +5718,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2014-02-16 08:26:31"
+            "time": "2014-09-10 00:51:36"
         },
         {
             "name": "sebastian/version",
