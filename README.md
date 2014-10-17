@@ -64,6 +64,12 @@ A demo BZiON installation can be found at [BZPro](http://bzpro.net/bzion/web/dev
       sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
       ```
 
+### Information
+
+#### BZiON & CloudFlare
+
+Cloudflare acts like a proxy to your website, so a visitor's IP address will appear to be Cloudflare's IP address. During authentication, visitor IPs are checked to be the same by BZiON and the BZFlag login system so with different IP addresses coming from seperate websites, an error will occur while authenticating. To fix this error, you must use Cloudflare's mod_cloudflare for Apache, which can be found on [CloudFlare's Resources and Downloads](https://www.cloudflare.com/resources-downloads) under "Logging Real Visitor IP Addresses: mod_cloudflare for Apache httpd."
+
 ## Contributing
 
 This is an open source project and everyone is welcome to hack on the project. Don't see a feature you want? Write it and submit a pull request! Can't write code? Request it as a feature!
