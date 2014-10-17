@@ -13,6 +13,10 @@ class LoginController extends HTMLController
         if ($me->isValid())
             throw new ForbiddenException("You are already logged in!");
 
+        // If bzion is behind CloudFlare, than CloudFlare replaces "REMOTE_ADDR" with its own IP address, so in order to get the client's
+        // actually IP address, we'll replace it with the special variable CloudFlare gives us with the client's IP
+        $_SERVER['REMOTE_ADDR'] = isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
+
         $query = $request->query;
         $session = $request->getSession();
 
