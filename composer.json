@@ -68,7 +68,7 @@
             "BZIon\\Composer\\ScriptHandler::clearCache",
             "BZIon\\Composer\\ScriptHandler::showChangelog"
         ],
-        "it": [
+        "update-config": [
             "BZIon\\Composer\\ScriptHandler::buildConfig"
         ]
     },

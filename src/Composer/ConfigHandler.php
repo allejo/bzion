@@ -9,16 +9,14 @@
 namespace BZIon\Composer;
 
 use BZIon\Config\Configuration;
-use Symfony\Component\Process\Process;
 use Composer\Script\Event;
-
-
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\Config\Definition\ArrayNode;
 use Symfony\Component\Config\Definition\ScalarNode;
 use Symfony\Component\Config\Definition\EnumNode;
 use Symfony\Component\Config\Definition\PrototypedArrayNode;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Inline;
 use Symfony\Component\Yaml\Yaml;
 
@@ -49,7 +47,7 @@ class ConfigHandler
         $tree = $configuration->getConfigTreeBuilder()->buildTree();
 
         $action = $exists ? 'Updating' : 'Creating';
-        $this->io->write("<info>$action the \"$file\" file</info>");
+        $this->io->write(" <info>$action the \"$file\" file</info>\n");
 
         // Load the configuration file if it exists
         $config = $exists ? Yaml::parse($file) : array();
@@ -59,6 +57,8 @@ class ConfigHandler
         }
 
         $this->writeNode($tree, $config);
+
+        $this->io->write("<bg=green;options=bold>\n\n [OK] The configuration file is up to date\n</>");
 
         file_put_contents($file, Yaml::dump($config, 4));
     }
@@ -81,36 +81,94 @@ class ConfigHandler
 
         if (!$node instanceof ArrayNode) {
             if (!array_key_exists($node->getName(), $config)) {
-                if ($info = $node->getInfo()) {
-                    $this->io->write("\n<info>$info</info>");
-                }
-
-                if ($node->hasDefaultValue()) {
-                    $default = Inline::dump($node->getDefaultValue());
-
-                    $question = "<question>$name</question> (<comment>$default</comment>): ";
-                    $value = $this->io->ask($question, $default);
-                } else {
-                    $value = $this->io->ask("<question>$name</question>: ");
-                }
-
-                $config[$node->getName()] = Inline::parse($value);
+                $config[$node->getName()] = $this->writeNodeQuestion($node, $name);
             }
         } else {
             if (!isset($config[$node->getName()])) {
                 $config[$node->getName()] = array();
-
-                if ($info = $node->getInfo()) {
-                    $this->io->write(array(
-                        "\n<fg=blue;options=bold>$info",
-                        str_repeat('-', strlen($info)) . "</fg=blue;options=bold>",
-                    ));
-                }
+                $this->writeHeaderNode($node);
             }
 
             foreach ($node->getChildren() as $childNode) {
                 $this->writeNode($childNode, $config[$node->getName()], $name);
             }
         }
+    }
+
+    /**
+     * Write a header for a node
+     *
+     * @param ArrayNode $node The node for which the header should be written
+     */
+    private function writeHeaderNode($node)
+    {
+        if ($info = $node->getInfo()) {
+            $this->io->write(array(
+                "\n<fg=blue;options=bold>$info",
+                str_repeat('-', strlen($info)) . "</fg=blue;options=bold>",
+            ));
+        }
+    }
+
+    /**
+     * Present a node question to the user
+     *
+     * @param  VariableNode $node The node in question
+     * @param  string $name The name of the node
+     * @return mixed The new value of the node
+     */
+    private function writeNodeQuestion($node, $name)
+    {
+        if ($info = $node->getInfo()) {
+            $this->io->write(" $info");
+        }
+
+        if ($example = $node->getExample()) {
+            // We use Inline::dump() to convert the value to the YAML
+            // format so that it is readable by the user (as an example,
+            // false values are converted to 'false' instead of an empty
+            // string)
+            $example = Inline::dump($example);
+            $this->io->write(" Example: <comment>$example</comment>");
+        }
+
+        $question = " <fg=green>$name";
+
+        if ($node instanceof EnumNode) {
+            // Create list of possible values for enum configuration parameters
+            $values = $node->getValues();
+
+            foreach ($values as &$value) {
+                $value = Inline::dump($value);
+            }
+
+            $question .= ' (' . implode(', ', $values) . ')';
+        }
+
+        $question .= "</fg=green>";
+
+        if ($node->hasDefaultValue()) {
+            // Show the default value of the parameter
+            $default = Inline::dump($node->getDefaultValue());
+            $question .= " [<comment>$default</comment>]";
+        } else {
+            $default = null;
+        }
+
+        // Show a user-friendly prompt
+        $question .= ":\n > ";
+
+        $value = $this->io->askAndValidate($question, function($value) use ($node) {
+            $value = Inline::parse($value);
+
+            // Make sure that there are no errors
+            $node->finalize($value);
+
+            return $value;
+        }, false, $default);
+
+        $this->io->write("");
+
+        return $value;
     }
 }

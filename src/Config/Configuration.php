@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->children()
                         ->scalarNode('host')->defaultValue('localhost')->isRequired()->end()
-                        ->scalarNode('database')->isRequired()->end()
+                        ->scalarNode('database')->defaultValue('bzion')->isRequired()->end()
                         ->scalarNode('username')->isRequired()->end()
                         ->scalarNode('password')->isRequired()->end()
                     ->end()
@@ -37,7 +37,7 @@ class Configuration implements ConfigurationInterface
 
                 ->arrayNode('site')
                     ->children()
-                        ->scalarNode('name')->defaultValue('BZiON')->end()
+                        ->scalarNode('name')->defaultValue('BZiON: A League Management System')->info('The name of the website')->end()
                     ->end()
                 ->end()
 
@@ -56,7 +56,11 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('email')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('from')->defaultNull()->end()
+                        ->scalarNode('from')
+                            ->defaultNull()
+                            ->info("The e-mail address that will be shown in the 'From:' field when sending messages")
+                            ->example('noreply@example.com')
+                        ->end()
                     ->end()
                 ->end()
 
@@ -64,14 +68,17 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('allowed_ips')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array('127.0.0.1'))
+                            ->defaultValue(array('127.0.0.1', '127.0.1.1'))
                         ->end()
                     ->end()
                 ->end()
 
                 ->arrayNode('logging')
                     ->children()
-                        ->scalarNode('directory')->end()
+                        ->scalarNode('directory')
+                            ->defaultValue('%bzion.root_dir%/app/logs')
+                            ->info('The directory where BZiON log files will be stored')
+                        ->end()
                         ->enumNode('level')
                             ->values(array(
                                 'debug',
@@ -94,6 +101,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('pusher')
                             ->addDefaultsIfNotSet()
                             ->canBeEnabled()
+                            ->info("Settings for the Pusher notification service")
                             ->children()
                                 ->scalarNode('app_id')->end()
                                 ->scalarNode('key')->end()
@@ -103,6 +111,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('websocket')
                             ->addDefaultsIfNotSet()
                             ->canBeEnabled()
+                            ->info("Settings for the PHP web socket")
                             ->children()
                                 ->integerNode('pull_port')->defaultValue(8591)->end()
                                 ->integerNode('push_port')->defaultValue(8592)->end()
@@ -114,11 +123,28 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('miscellaneous')
                     ->isRequired()
                     ->children()
-                        ->scalarNode('list_server')->isRequired()->end()
-                        ->scalarNode('update_interval')->isRequired()->end()
+                        ->scalarNode('list_server')
+                            ->defaultValue('http://my.bzflag.org/db/?action=LIST&version=BZFS0221')
+                            ->info('Path to the BZFlag List Server')
+                            ->isRequired()
+                        ->end()
+                        ->scalarNode('update_interval')
+                            ->defaultValue('5 minutes')
+                            ->info('BZFlag server polling interval')
+                            ->isRequired()
+                        ->end()
                         ->enumNode('development')
                             ->values(array(false, true, 'force'))
                             ->defaultFalse()
+                            ->info(<<<INFO
+Whether to enable some functions which make debugging easier
+<warning>
+
+ ! [CAUTION] Setting this to anything other than false WILL introduce significant
+ ! security risks and should NOT be done in a production environment
+</>
+INFO
+                            )
                         ->end()
                     ->end()
                 ->end()
