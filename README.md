@@ -27,39 +27,42 @@ A demo BZiON installation can be found at [BZPro](http://bzpro.net/bzion/web/dev
 
 ### Installation
 
-1. Go to the directory where you want to install BZiON
+1. If you do not have PHP Composer installed, install it
+
+    ```bash
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer # Optional - if you don't run this step, you will need to use the path of the new composer.phar file every time you invoke it
+    ```
+
+2. Go to the directory where you want to install BZiON
 
       `cd league`
 
-2. If you do not have PHP Composer installed, install it
-
-      `curl -sS https://getcomposer.org/installer | php`
-
 3. Install the required libraries using Composer via the `composer.phar` file
 
-      `php composer.phar create-project allejo/bzion --keep-vcs --no-dev -s dev .`
+      `composer create-project allejo/bzion --keep-vcs --no-dev -s dev .`
 
 4. Use the `DATABASE.sql` file to create the necessary database structure
 
 5. Make sure that the app/cache, app/logs and web/assets/imgs/avatars/ directories
    are writable by you and the web server:
-   
+
    1. First get the current web server user.
-   
-      ```
+
+      ```bash
       HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
       ```
 
    2. Set the permissions for the appropriate directories.
 
-      <sub>_Example for Apache2 on Ubuntu_</sub>  
-      ```
+      <sub>_Example for Ubuntu_</sub>  
+      ```bash
       sudo setfacl -R  -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
       sudo setfacl -dR -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
       ```
-      
-      <sub>_Example for Apache2 on OS X_</sub>  
-      ```
+
+      <sub>_Example for OS X_</sub>  
+      ```bash
       sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
       sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
       ```
