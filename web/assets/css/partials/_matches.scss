@@ -10,6 +10,7 @@ main {
         }
 
         .matches {
+            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 
@@ -33,6 +34,7 @@ main {
                         .column {
                             border: none;
                             color: $Medium_Grey;
+                            height: auto;
                             padding: 5px 20px;
                             text-align: left;
 
@@ -44,15 +46,47 @@ main {
                                 text-align: right;
                             }
 
+                            &.winner, &.loser {
+                                @include respond-to(phablets) {
+                                    float: left;
+                                    text-align: left;
+                                    width: 80%;
+                                }
+                            }
+
                             &.win-points {
                                 text-align: right;
                             }
 
                             &.win-points, &.loss-points {
                                 width: 15%;
+
+                                @include respond-to(phablets) {
+                                    float: right;
+                                    text-align: right;
+                                    width: 20%;
+                                }
+                            }
+
+                            @include respond-to(phablets) {
+                                padding: 5px 0;
                             }
                         }
+
+                        @include respond-to(phablets) {
+                            display: block;
+                        }
                     }
+
+                    @include respond-to(phablets) {
+                        display: block;
+                    }
+                }
+
+                @include respond-to(phablets) {
+                    border-bottom: 1px dotted $Off_White;
+                    margin-bottom: 5px;
+                    padding-bottom: 5px;
                 }
             }
         }

@@ -52,7 +52,8 @@ main {
         @include respond-to(tablets) {
             @include box-sizing(border-box);
 
-            padding-left: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         @include respond-to(phones) {

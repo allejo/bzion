@@ -29,10 +29,15 @@
             {% set lastMatchDate = "" %}
 
             {% for match in matches %}
-                {% set currentMatch = match.timestamp(dateFormat) %}
+                {% set currentMatchDate = match.timestamp(dateFormat) %}
 
-                {% if lastMatchDate != currentMatch %}
-                    <h4>{{ currentMatch }}</h4>
+                {% if lastMatchDate != currentMatchDate %}
+                    {% if not loop.first %}
+                        </section>
+                    {% endif %}
+
+                    <h4>{{ currentMatchDate }}</h4>
+                    <section>
                 {% endif %}
 
                 <article>
