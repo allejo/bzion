@@ -143,6 +143,10 @@ body {
 
                     &.user {
                         float: right;
+
+                        @include respond-to(tablets) {
+                            margin-right: 10px;
+                        }
                     }
                 }
             }
