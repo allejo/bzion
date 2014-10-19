@@ -28,6 +28,8 @@ class ConfigHandler
     private $event;
     private $io;
 
+    const CAUTION_LINE_LENGTH = 60;
+
     public function __construct($event) {
         $this->event = $event;
         $this->io = $event->getIO();
@@ -79,34 +81,18 @@ class ConfigHandler
             $name = $parent . '.' . $name;
         }
 
-        if (!$node instanceof ArrayNode) {
+        if (!$node instanceof ArrayNode || $node instanceof PrototypedArrayNode) {
             if (!array_key_exists($node->getName(), $config)) {
                 $config[$node->getName()] = $this->writeNodeQuestion($node, $name);
             }
         } else {
             if (!isset($config[$node->getName()])) {
                 $config[$node->getName()] = array();
-                $this->writeHeaderNode($node);
             }
 
             foreach ($node->getChildren() as $childNode) {
                 $this->writeNode($childNode, $config[$node->getName()], $name);
             }
-        }
-    }
-
-    /**
-     * Write a header for a node
-     *
-     * @param ArrayNode $node The node for which the header should be written
-     */
-    private function writeHeaderNode($node)
-    {
-        if ($info = $node->getInfo()) {
-            $this->io->write(array(
-                "\n<fg=blue;options=bold>$info",
-                str_repeat('-', strlen($info)) . "</fg=blue;options=bold>",
-            ));
         }
     }
 
@@ -119,6 +105,12 @@ class ConfigHandler
      */
     private function writeNodeQuestion($node, $name)
     {
+        if (!$node->getAttribute('asked')) {
+            return $node->getDefaultValue();
+        }
+
+        $this->writeWarning($node);
+
         if ($info = $node->getInfo()) {
             $this->io->write(" $info");
         }
@@ -170,5 +162,33 @@ class ConfigHandler
         $this->io->write("");
 
         return $value;
+    }
+
+    /**
+     * Write a warning
+     */
+    private function writeWarning($node)
+    {
+        if (!$node->hasAttribute('warning')) {
+            return;
+        }
+
+        // Split warning into words so that we can apply wrapping
+        $words = preg_split('/\s+/', $node->getAttribute('warning'));
+
+        $caution = ' ! [CAUTION]';
+        $currentLength = 0;
+
+        foreach ($words as $word) {
+            if ($currentLength > self::CAUTION_LINE_LENGTH) {
+                $caution .= "\n !";
+                $currentLength = 0;
+            }
+
+            $caution .= ' ' . $word;
+            $currentLength += strlen($word) + 1;
+        }
+
+        $this->io->write("<warning>\n\n$caution\n</>");
     }
 }

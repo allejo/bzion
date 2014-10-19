@@ -28,16 +28,16 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('mysql')
                     ->isRequired()
                     ->children()
-                        ->scalarNode('host')->defaultValue('localhost')->isRequired()->end()
-                        ->scalarNode('database')->defaultValue('bzion')->isRequired()->end()
-                        ->scalarNode('username')->isRequired()->end()
-                        ->scalarNode('password')->isRequired()->end()
+                        ->scalarNode('host')->defaultValue('localhost')->isRequired()->attribute('asked', true)->end()
+                        ->scalarNode('database')->defaultValue('bzion')->isRequired()->attribute('asked', true)->end()
+                        ->scalarNode('username')->defaultValue('bzion_admin')->isRequired()->attribute('asked', true)->end()
+                        ->scalarNode('password')->isRequired()->attribute('asked', true)->end()
                     ->end()
                 ->end()
 
                 ->arrayNode('site')
                     ->children()
-                        ->scalarNode('name')->defaultValue('BZiON: A League Management System')->info('The name of the website')->end()
+                        ->scalarNode('name')->defaultValue('BZiON: A League Management System')->info('The name of the website')->attribute('asked', true)->end()
                     ->end()
                 ->end()
 
@@ -47,6 +47,10 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('duration')
                             ->isRequired()
                             ->requiresAtLeastOneElement()
+                            ->defaultValue(array(
+                                20 => '2/3',
+                                30 => '3/3'
+                            ))
                             ->useAttributeAsKey('minutes')
                             ->prototype('scalar')->end()
                         ->end()
@@ -58,6 +62,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('from')
                             ->defaultNull()
+                            ->attribute('asked', true)
                             ->info("The e-mail address that will be shown in the 'From:' field when sending messages")
                             ->example('noreply@example.com')
                         ->end()
@@ -136,14 +141,11 @@ class Configuration implements ConfigurationInterface
                         ->enumNode('development')
                             ->values(array(false, true, 'force'))
                             ->defaultFalse()
-                            ->info(<<<INFO
-Whether to enable some functions which make debugging easier
-<warning>
-
- ! [CAUTION] Setting this to anything other than false WILL introduce significant
- ! security risks and should NOT be done in a production environment
-</>
-INFO
+                            ->attribute('asked', true)
+                            ->info('Whether to enable some functions which make debugging easier')
+                            ->attribute(
+                                'warning',
+                                'Setting this to anything other than false WILL introduce significant security risks and should NOT be done in a production environment'
                             )
                         ->end()
                     ->end()
