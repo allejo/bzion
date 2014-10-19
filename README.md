@@ -71,7 +71,15 @@ A demo BZiON installation can be found at [BZPro](http://bzpro.net/bzion/web/dev
 
 #### BZiON & CloudFlare
 
-Cloudflare acts like a proxy to your website, so a visitor's IP address will appear to be Cloudflare's IP address. During authentication, visitor IPs are checked to be the same by BZiON and the BZFlag login system so with different IP addresses coming from seperate websites, an error will occur while authenticating. To fix this error, you must use Cloudflare's mod_cloudflare for Apache, which can be found on [CloudFlare's Resources and Downloads](https://www.cloudflare.com/resources-downloads) under "Logging Real Visitor IP Addresses: mod_cloudflare for Apache httpd."
+Cloudflare acts like a proxy to your website, so a visitor's IP address will appear to be Cloudflare's IP address. During authentication, visitor IPs are checked to be the same by BZiON and the BZFlag login system so with different IP addresses coming from seperate websites, an error will occur while authenticating.
+
+##### Apache
+
+If you're using Apache, you must use Cloudflare's mod_cloudflare, which can be found on [CloudFlare's Resources and Downloads](https://www.cloudflare.com/resources-downloads) under "Logging Real Visitor IP Addresses: mod_cloudflare for Apache httpd."
+
+##### Nginx
+
+If you're using Nginx, use [Nginx's RealIP module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and CloudFlare's IP addresses as explained on [CloudFlare's support page](https://support.cloudflare.com/hc/en-us/articles/200170706-Does-CloudFlare-have-an-IP-module-for-Nginx-).
 
 ## Contributing
 
