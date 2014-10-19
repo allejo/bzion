@@ -8,63 +8,6 @@
     }
 }
 
-@mixin remove_gradient($color: transparent) {
-    background-color: $color;
-    background-image: none;
-    background-repeat: no-repeat;
-    filter: none;
-}
-
-@mixin ion_btn($color: red, $text_color: white) {
-    border: solid 1px darken($color, 18%);
-    border-radius: 0.5em;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    color: $text_color !important;
-    cursor: pointer;
-    display: inline-block;
-    font: 14px/100% Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    outline: none;
-    padding: .5em 2em .55em;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: 0 1px 1px rgba(0,0,0,.3);
-
-    @include linear-gradient(saturate($color, 15%), darken($color, 15%));
-
-    &:active {
-        &:not(.noclick) {
-            @include linear-gradient(saturate($color, 15%), lighten($color, 15%));
-
-            color: saturate($color, 15%);
-            position: relative;
-            top: 1px;
-        }
-    }
-
-    &:hover {
-        text-decoration: none;
-
-        &:not(.nohover) {
-            @include linear-gradient(saturate($color, 5%), darken($color, 5%));
-
-            background: saturate($color, 10%);
-        }
-    }
-
-    &.flat {
-        @include remove_gradient($color);
-    }
-
-    &.noclick {
-        cursor: default;
-    }
-
-    &.notextshadow {
-        text-shadow: none;
-    }
-}
-
 @mixin respond-to($media) {
     @if $media == phones {
         @media only screen and (max-width: 30em) { @content; }

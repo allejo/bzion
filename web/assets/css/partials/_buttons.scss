@@ -1,38 +1,77 @@
-.button {
-    &.red {
-        @include ion_btn(#FF0000, $White);
+@mixin buttonColor($colorParam, $textColor: $White) {
+    $color: $colorParam;
+    $dark_color: darken($color, 7%);
+
+    @include linear-gradient($color, $dark_color);
+    border: 1px solid $dark_color;
+
+    @if $textColor != $White {
+        color: $textColor;
     }
 
-    &.green {
-        @include ion_btn(#00d319, $White);
+    &:hover {
+        color: $textColor;
+        text-decoration: none;
+
+        &:not(.nohover) {
+            $hoverColor: $dark_color;
+            $hoverDarkColor: darken($hoverColor, 3%);
+
+            @include linear-gradient($hoverColor, $hoverDarkColor);
+            border: 1px solid $hoverDarkColor;
+        }
+    }
+}
+
+.button {
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 1em;
+    padding: .2em 2em .25em;
+    text-align: center;
+    text-decoration: none !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    // Colors
+    &.black {
+        @include buttonColor(#4F4F4F);
     }
 
     &.blue {
-        @include ion_btn(#2f79ff, $White);
+        @include buttonColor(#3460cf);
     }
 
-    &.yellow {
-        @include ion_btn(#fff400, $White);
-    }
-
-    &.orange {
-        @include ion_btn(#ff6700, $White);
+    &.green {
+        @include buttonColor(#14BA2C);
     }
 
     &.grey {
-        @include ion_btn(#fafafa, $Medium_Grey);
+        @include buttonColor(#E9E9E9, #595959);
     }
 
+    &.orange {
+        @include buttonColor(#ff8400);
+    }
+
+    &.red {
+        @include buttonColor(#FF5549);
+    }
+
+    &.yellow {
+        @include buttonColor(#FFB608);
+    }
+
+    // Additional classes
     &.skinny {
-        padding: 0.3em 2em .35em;
+        padding: 0.1em 2em .20em;
     }
 
-    &.square {
-        border-radius: 0;
-    }
-
-    &.noshadow {
-        box-shadow: 0 0 0 0;
-        text-shadow: none;
+    &.noclick {
+        cursor: default;
     }
 }
+
