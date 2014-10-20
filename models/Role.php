@@ -32,6 +32,24 @@ class Role extends Model
     protected $protected;
 
     /**
+     * Whether or not to display this role on the 'Admins' page where it lists the league's leaders
+     * @var bool
+     */
+    protected $display;
+
+    /**
+     * The collective name the group will be called if this role is displayed on the 'Admins' page
+     * @var string
+     */
+    protected $displayName;
+
+    /**
+     * The order in which the role will be displayed on the 'Admins' page
+     * @var int
+     */
+    protected $displayOrder;
+
+    /**
      * An array of permissions a role has
      * @var bool[]
      */
@@ -47,10 +65,13 @@ class Role extends Model
      */
     protected function assignResult($role)
     {
-        $this->name        = $role['name'];
-        $this->reusable    = $role['reusable'];
-        $this->protected   = $role['protected'];
-        $this->permissions = array();
+        $this->name         = $role['name'];
+        $this->reusable     = $role['reusable'];
+        $this->protected    = $role['protected'];
+        $this->display      = $role['display'];
+        $this->displayName  = $role['display_name'];
+        $this->displayOrder = $role['display_order'];
+        $this->permissions  = array();
 
         $permissions = parent::fetchIds(
             "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?", "i",
@@ -59,6 +80,82 @@ class Role extends Model
         foreach ($permissions as $permission) {
             $this->permissions[$permission] = true;
         }
+    }
+
+    /**
+     * Check whether or not this role should appear on the "Admins" page
+     *
+     * @return bool True if the role should be displayed on the "Admins" page
+     */
+    public function displayAsLeader()
+    {
+        return $this->display;
+    }
+
+    /**
+     * Get the "display name" of a role. The display name differs from the name of the role where the "Administrators"
+     * role can be displayed as "League Council" when the role is used to displayed players assigned to this role.
+     *
+     * @return string Returns the display name. If the display name is blank, the role name will be returned.
+     */
+    public function getDisplayName()
+    {
+        return (empty($this->displayName)) ? $this->getName() : $this->displayName;
+    }
+
+    /**
+     * Get the order this role should be displayed on the "Admins" page
+     *
+     * @return int The order the role should be displayed on the "Admins" page
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+
+    /**
+     * Get an array of players who have this role assigned to them
+     *
+     * @return Player[] An array of players with this role assigned to them
+     */
+    public function getUsers()
+    {
+        return Player::arrayIdToModel(
+            parent::fetchIds(
+                "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.role_id = ?", "i",
+                array($this->getId()), "roles", "roles.id"
+            )
+        );
+    }
+
+    /**
+     * Get the name of the role as displayed in the admin interface
+     *
+     * @return string The name of the group
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Check if this role is for a group of users or if it's a role for a single user
+     *
+     * @return bool True if multiple users can be assigned this role
+     */
+    public function isReusable()
+    {
+        return $this->reusable;
+    }
+
+    /**
+     * Check if this role is protected from being deleted
+     *
+     * @return bool True if this role is protected from being deleted
+     */
+    public function isProtected()
+    {
+        return $this->protected;
     }
 
     /**
@@ -143,18 +240,24 @@ class Role extends Model
     /**
      * Create a new role
      *
-     * @param string $name     The name of new role to be created
-     * @param bool   $reusable Whether or not to have the role
+     * @param string $name         The name of new role to be created
+     * @param bool   $reusable     Whether or not to have the role
+     * @param bool   $display      Whether or not to display the role on the 'Admins' page
+     * @param null   $displayName  The name that will be used on the 'Admins' page, if $display is set to true
+     * @param int    $displayOrder The order the role will be displayed on, if $display is set to true
      *
      * @return \Role
      */
-    public static function createNewRole($name, $reusable)
+    public static function createNewRole($name, $reusable, $display = false, $displayName = null, $displayOrder = 0)
     {
         return self::create(array(
             'name' => $name,
             'reusable' => $reusable,
             'protected' => 0,
-        ), 'sii');
+            'display' => $display,
+            'display_name' => $displayName,
+            'display_order' => $displayOrder
+        ), 'siiisi');
     }
 
     /**
@@ -169,7 +272,22 @@ class Role extends Model
         return parent::arrayIdToModel(
             parent::fetchIds(
                 "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.user_id = ?", "i",
-                array($user_id), "roles", "roles.id")
+                array($user_id), "roles", "roles.id"
+            )
+        );
+    }
+
+    /**
+     * Get the roles that should be displayed on the "Admins" page
+     *
+     * @return Role[] An array of Roles that should be displayed on the "Admins" page
+     */
+    public static function getLeaderRoles()
+    {
+        return parent::arrayIdToModel(
+            parent::fetchIds(
+                "WHERE display = 1 ORDER BY display_order ASC"
+            )
         );
     }
 }

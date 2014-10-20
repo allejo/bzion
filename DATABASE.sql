@@ -760,21 +760,24 @@ CREATE TABLE `roles` (
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'The name of the role',
   `reusable` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the group is reusable, this will be used for players with custom permissions',
   `protected` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not this entry can be deleted via PHP',
+  `display` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not to display group members under admins page',
+  `display_name` varchar(50) NULL DEFAULT '' COMMENT 'The name that will be displayed on the admins page',
+  `display_order` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT 'The order the group will be displayed on the admins page',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 
-INSERT INTO `roles` (`id`, `name`, `reusable`, `protected`)
+INSERT INTO `roles` (`id`, `name`, `reusable`, `protected`, `display`, `display_name`, `display_order`)
 VALUES
-	(NULL,'Developer',1,1),
-	(NULL,'Administrator',1,1),
-	(NULL,'Cop',1,1),
-	(NULL,'Referee',1,1),
-	(NULL,'System Administrator',1,1),
-	(NULL,'Player',1,1),
-	(NULL,'Player - No Private Messages',1,1);
+	(NULL,'Developer',1,1,1,'Developers',4),
+	(NULL,'Administrator',1,1,1,'League Council',1),
+	(NULL,'Cop',1,1,1,'Cops',2),
+	(NULL,'Referee',1,1,1,'Referees',3),
+	(NULL,'System Administrator',1,1,0,null,null),
+	(NULL,'Player',1,1,0,null,null),
+	(NULL,'Player - No Private Messages',1,1,0,null,null);
 
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
