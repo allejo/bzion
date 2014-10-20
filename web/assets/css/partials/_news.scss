@@ -32,6 +32,10 @@ main {
                         color: $Blue;
                         font-size: 25px;
                         margin-bottom: 5px;
+
+                        @include respond-to(tablets) {
+                            text-align: left;
+                        }
                     }
 
                     .post_date {
@@ -63,17 +67,14 @@ main {
                         }
                     }
 
-                    @include respond-to(tablets) {
-                        padding-right: 0;
-                    }
-
                     &:last-child {
                         margin-bottom: 0;
                     }
-                }
 
-                @include respond-to(tablets) {
-                    width: 100%;
+                    @include respond-to(tablets) {
+                        padding-right: 0;
+                        margin-bottom: 20px;
+                    }
                 }
             }
 
@@ -131,6 +132,17 @@ main {
                             border-bottom: none;
                         }
                     }
+                }
+
+                @include respond-to(tablets) {
+                    display: none;
+                    margin-bottom: 10px;
+                }
+            }
+
+            .article_container, aside {
+                @include respond-to(tablets) {
+                    width: 100%;
                 }
             }
         }
