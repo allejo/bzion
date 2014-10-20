@@ -2,6 +2,7 @@ main {
     &.news {
         @extend .clearfix;
 
+        font-family: $sansSerifFont;
         text-align: justify;
 
         .content_header {
@@ -10,72 +11,124 @@ main {
             }
         }
 
-        .articles {
+        .container {
+            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 
-            > section {
+            .article_container {
                 float: left;
-                width: 750px;
+                width: 800px;
 
                 > article {
                     @include box-sizing(border-box);
 
                     float: left;
-                    margin-bottom: 50px;
+                    margin-bottom: 40px;
                     padding-right: 60px;
-                    width: 750px;
+                    width: 100%;
 
                     h1 {
                         color: $Blue;
-                        font-weight: bold;
+                        font-size: 25px;
+                        margin-bottom: 5px;
+                    }
+
+                    .post_date {
+                        color: $Medium_Grey;
+                        font-size: 13px;
                     }
 
                     .post {
                         padding: 15px 0;
 
                         > p {
-                            margin: 15px 0;
+                            margin: 5px 0 10px;
                         }
                     }
 
                     .meta {
-                        border-bottom: 1px solid $Off_White;
                         font-size: 14px;
-                        padding: 10px 0;
+                        padding: 5px 0 10px;
 
                         li {
-                            color: $Light_Grey;
+                            color: $Medium_Grey;
                             display: inline-block;
-                            margin-left: 3px;
-                            margin-right: 10px;
+                            margin-left: 0;
+                            margin-right: 15px;
+
+                            i {
+                                margin-right: 3px;
+                            }
                         }
                     }
+
+                    @include respond-to(tablets) {
+                        padding-right: 0;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                @include respond-to(tablets) {
+                    width: 100%;
                 }
             }
 
             aside {
                 @extend .wrapper;
-                float: left;
-                width: 250px;
+                float: right;
+                width: 200px;
 
                 h2 {
+                    font-size: 24px;
                     margin-bottom: 15px;
                 }
 
                 ul {
+                    border: 1px solid $Off_White;
+                    border-radius: 3px;
+                    padding-left: 0;
+
                     li {
+                        border-bottom: 1px solid $Off_White;
                         font-size: 14px;
-                        padding: 7px 10px;
+                        list-style: none;
+
+                        a {
+                            display: block;
+                            padding: 10px;
+
+                            i {
+                                color: $Medium_Grey;
+                                margin-right: 10px;
+                            }
+                        }
+
+                        &.active, &:hover {
+                            border-right: 2px solid $Orange;
+
+                            &:first-child {
+                                border-top-right-radius: 3px;
+                            }
+
+                            &:last-child {
+                                border-bottom-right-radius: 3px;
+                            }
+                        }
 
                         &.active {
                             background-color: $Almost_White;
-                            border-right: 2px solid $Orange;
                         }
 
                         &:hover {
                             background-color: lighten($Almost_White, 1%);
-                            border-right: 2px solid $Orange;
+                        }
+
+                        &:last-child {
+                            border-bottom: none;
                         }
                     }
                 }

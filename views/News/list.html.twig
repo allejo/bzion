@@ -29,16 +29,28 @@
             </article>
         </section>
 
-        <section class="articles">
-            <section>
+        <section class="container">
+            <aside>
+                <ul>
+                    <li><a href="{{ path('news_list') }}"><i class="fa fa-tag"></i> All Posts</a></li>
+
+                    {% for category in categories %}
+                        <li><a href="{{ category.url }}"><i class="fa fa-tag"></i> {{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </aside>
+
+            <section class="article_container">
                 {% for article in news %}
                     <article>
                         <h1>{{ link_to(article) }}</h1>
+                        <p class="post_date">{{ article.created | date("F d, Y") }}</p>
+
+                        <section class="post">
+                            {{ article.content }}
+                        </section>
 
                         <ul class="meta">
-                            <li>
-                                <i class="fa fa-calendar"></i> {{ article.createdLiteral | raw }}
-                            </li>
                             <li>
                                 <i class="fa fa-user"></i> {{ link_to(article.author) }}
                             </li>
@@ -46,19 +58,9 @@
                                 <i class="fa fa-tag"></i> {{ link_to(article.category) }}
                             </li>
                         </ul>
-
-                        <section class="post">
-                            {{ article.content }}
-                        </section>
                     </article>
                 {% endfor %}
             </section>
-
-            <aside>
-                <h2>Categories</h2>
-
-                {% include "News/categories.html.twig" %}
-            </aside>
         </section>
     </main>
 {% endblock %}

@@ -1,7 +1,0 @@
-<ul>
-    <li><a href="{{ path('news_list') }}">All Posts</a></li>
-
-    {% for category in categories %}
-        <li><a href="{{ category.url }}">{{ category.name }}</a></li>
-    {% endfor %}
-</ul>
