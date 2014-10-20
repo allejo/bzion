@@ -9,7 +9,6 @@ main {
 
         border-bottom: 1px solid $Off_White;
         font-family: $sansSerifFont;
-        margin: 0 0 30px;
         padding: 20px 0;
 
         > article {
@@ -55,10 +54,12 @@ main {
             padding-left: 15px;
             padding-right: 15px;
         }
+    }
+
+    > section {
+        margin-bottom: 30px;
 
         @include respond-to(phones) {
-            @include box-sizing(border-box);
-
             margin-bottom: 10px;
         }
     }
@@ -153,7 +154,8 @@ main {
 }
 
 .wrapper {
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: $global_width;
 
     @include respond-to(tablets) {

@@ -3,8 +3,17 @@
 {% block title %}{{ page.name }}{% endblock %}
 
 {% block content %}
-    <article>
-        <h1>{{ page.name }}</h1>
-        <p>{{ page.content | raw }}</p>
-    </article>
+    <main class="custom_page">
+        <section class="content_header">
+            <article class="wrapper">
+                <div>
+                    <h1>{{ page.name }}</h1>
+                </div>
+            </article>
+        </section>
+
+        <section class="content">
+            {{ page.content | raw }}
+        </section>
+    </main>
 {% endblock %}
