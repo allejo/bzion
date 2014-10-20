@@ -38,6 +38,20 @@ class Role extends Model
     protected $display;
 
     /**
+     * A Font Awesome CSS class for the icon to be used for the group
+     *
+     * @var string
+     */
+    protected $displayIcon;
+
+    /**
+     * A CSS class that will represent the color of the group in their tab
+     *
+     * @var string
+     */
+    protected $displayColor;
+
+    /**
      * The collective name the group will be called if this role is displayed on the 'Admins' page
      * @var string
      */
@@ -69,6 +83,8 @@ class Role extends Model
         $this->reusable     = $role['reusable'];
         $this->protected    = $role['protected'];
         $this->display      = $role['display'];
+        $this->displayIcon  = $role['display_icon'];
+        $this->displayColor = $role['display_color'];
         $this->displayName  = $role['display_name'];
         $this->displayOrder = $role['display_order'];
         $this->permissions  = array();
@@ -93,6 +109,17 @@ class Role extends Model
     }
 
     /**
+     * Get the color this role will have as the background in their badge
+     *
+     * @return string The color this role will have in their badge. If there is no color set, it will return green which has chosen
+     *                randomly by a fair dice roll.
+     */
+    public function getDisplayColor()
+    {
+        return (empty($this->displayColor)) ? "green" : $this->displayColor;
+    }
+
+    /**
      * Get the "display name" of a role. The display name differs from the name of the role where the "Administrators"
      * role can be displayed as "League Council" when the role is used to displayed players assigned to this role.
      *
@@ -114,6 +141,16 @@ class Role extends Model
     }
 
     /**
+     * Get the Font Awesome class that will be used as the symbol for the role on the "Admins" page
+     *
+     * @return string The Font Awesome class for the symbol
+     */
+    public function getDisplayIcon()
+    {
+        return (empty($this->displayIcon)) ? null : $this->displayIcon;
+    }
+
+    /**
      * Get an array of players who have this role assigned to them
      *
      * @return Player[] An array of players with this role assigned to them
@@ -123,7 +160,7 @@ class Role extends Model
         return Player::arrayIdToModel(
             parent::fetchIds(
                 "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.role_id = ?", "i",
-                array($this->getId()), "roles", "roles.id"
+                array($this->getId()), "roles", "player_roles.user_id"
             )
         );
     }

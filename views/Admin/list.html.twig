@@ -1,26 +1,36 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Players{% endblock %}
+{% block title %}League Administration{% endblock %}
 
 {% block content %}
-    <div class="table players">
-        <ul>
-            <li>Name</li>
-            <li>Team</li>
-            <li>Joined</li>
-        </ul>
+    <main class="match_list">
+        <section class="content_header">
+            <article class="wrapper">
+                <div>
+                    <h1>League Administration</h1>
+                </div>
+            </article>
+        </section>
 
-    {% for player in admins %}
-        <ul>
-            <li><a href="{{ player.url }}">{{ player.username }}</a>
-            <li>
-                {% if player.team is valid %}
-                    <a href="{{ player.team.link }}">{{ player.team.name }}</a>
-                {% endif %}
-            </li>
-            <li>{{ player.joinedDate }}</li>
-        </ul>
-    {% endfor %}
+        {% for section in role_sections %}
+            <section class="admins">
+                <p class="button {{ section.role.displayColor }} skinny square nohover noclick">
+                    {% if section.role.displayIcon is not null %}
+                        <i class="fa {{ section.role.displayIcon }}"></i>
+                    {% endif %}
 
-    </div>
+                    <span>{{ section.role.displayName }}</span>
+                </p>
+
+                <ul>
+                    {% for player in section.members %}
+                        <li>
+                            <img class="player_avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
+                            <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endfor %}
+    </main>
 {% endblock %}

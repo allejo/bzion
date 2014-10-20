@@ -4,8 +4,23 @@ class AdminController extends HTMLController
 {
     public function listAction()
     {
-        // @TODO Make a function to display actual admins
-        return array("admins" => Player::getPlayers());
+        $rolesToDisplay = Role::getLeaderRoles();
+        $roles = array();
+
+        foreach ($rolesToDisplay as $role)
+        {
+            $roleMembers = (new Role($role->getId()))->getUsers();
+
+            if (count($roleMembers) > 0)
+            {
+                $roles[] = array(
+                    "role" => $role,
+                    "members" => $roleMembers
+                );
+            }
+        }
+
+        return array("role_sections" => $roles);
     }
 
     public function wipeAction(Player $me)
