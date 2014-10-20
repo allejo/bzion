@@ -1,5 +1,7 @@
 main {
     &.administration {
+        font-family: $sansSerifFont;
+
         .admins {
             @extend .clearfix;
             @extend .wrapper;
@@ -13,6 +15,8 @@ main {
             ul {
                 @extend .clearfix;
 
+                padding-left: 0;
+
                 li {
                     @extend .clearfix;
                     @include box-sizing(border-box);
@@ -21,9 +25,22 @@ main {
                     padding: 20px 10px;
                     width: 25%;
 
-                    img {
-                        margin-right: 10px;
-                        vertical-align: middle;
+                    .player_avatar {
+                        $avatarSize: 50px;
+
+                        height: $avatarSize;
+                        width: $avatarSize;
+                    }
+
+                    .info {
+                        display: inline-block;
+                        margin: 10px;
+                        vertical-align: top;
+
+                        .callsign {
+                            display: inline-block;
+                            font-size: 18px;
+                        }
                     }
                 }
             }

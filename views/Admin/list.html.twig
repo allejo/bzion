@@ -3,7 +3,7 @@
 {% block title %}League Administration{% endblock %}
 
 {% block content %}
-    <main class="match_list">
+    <main class="administration">
         <section class="content_header">
             <article class="wrapper">
                 <div>
@@ -26,7 +26,9 @@
                     {% for player in section.members %}
                         <li>
                             <img class="player_avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
-                            <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+                            <section class="info">
+                                <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+                            </section>
                         </li>
                     {% endfor %}
                 </ul>
