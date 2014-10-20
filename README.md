@@ -1,4 +1,4 @@
-# BZiON [![Build Status](https://travis-ci.org/allejo/bzion.png?branch=master)](https://travis-ci.org/allejo/bzion) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/allejo/bzion/badges/quality-score.png?s=291afbdf9d3ff68b2e2f44e9d02533795bcbf107)](https://scrutinizer-ci.com/g/allejo/bzion/)
+# BZiON [![Build Status](https://travis-ci.org/allejo/bzion.png?branch=master)](https://travis-ci.org/allejo/bzion) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/allejo/bzion/badges/quality-score.png?s=291afbdf9d3ff68b2e2f44e9d02533795bcbf107)](https://scrutinizer-ci.com/g/allejo/bzion/) [![Code Coverage](https://scrutinizer-ci.com/g/allejo/bzion/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/allejo/bzion/?branch=master)
 
 BZiON is a modern content management system (CMS) written for BZFlag leagues to manage players, teams, matches, and tournaments.
 
@@ -55,13 +55,13 @@ A demo BZiON installation can be found at [BZPro](http://bzpro.net/bzion/web/dev
 
    2. Set the permissions for the appropriate directories.
 
-      <sub>_Example for Ubuntu_</sub>  
+      <sub>_Example for Ubuntu_</sub>
       ```bash
       sudo setfacl -R  -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
       sudo setfacl -dR -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
       ```
 
-      <sub>_Example for OS X_</sub>  
+      <sub>_Example for OS X_</sub>
       ```bash
       sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
       sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
