@@ -12,6 +12,10 @@ DEFINE('DEVELOPMENT', true);
 $kernel = new AppKernel("dev", true);
 $kernel->boot();
 
+$role = Role::createNewRole("Sample Leader Role", true, true, "fa-gavel", "blue", "Sample Leaders", 1);
+$role->addPerm("add_team");
+$role->hasPerm("add_team");
+
 $testPlayer = Player::getFromBZID(3030);
 if ($testPlayer->isValid()) {
     die("Please clear your current data in the database or you'll end up with duplicate entries.\n");

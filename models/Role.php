@@ -105,7 +105,7 @@ class Role extends Model
      */
     public function displayAsLeader()
     {
-        return $this->display;
+        return (bool)$this->display;
     }
 
     /**
@@ -116,7 +116,7 @@ class Role extends Model
      */
     public function getDisplayColor()
     {
-        return (empty($this->displayColor)) ? "green" : $this->displayColor;
+        return (!$this->displayAsLeader()) ? null : $this->displayColor;
     }
 
     /**
@@ -137,7 +137,7 @@ class Role extends Model
      */
     public function getDisplayOrder()
     {
-        return $this->displayOrder;
+        return (!$this->displayAsLeader()) ? -1 : $this->displayOrder;
     }
 
     /**
@@ -147,7 +147,7 @@ class Role extends Model
      */
     public function getDisplayIcon()
     {
-        return (empty($this->displayIcon)) ? null : $this->displayIcon;
+        return (!$this->displayAsLeader()) ? null : $this->displayIcon;
     }
 
     /**
@@ -182,7 +182,7 @@ class Role extends Model
      */
     public function isReusable()
     {
-        return $this->reusable;
+        return (bool)$this->reusable;
     }
 
     /**
@@ -192,7 +192,7 @@ class Role extends Model
      */
     public function isProtected()
     {
-        return $this->protected;
+        return (bool)$this->protected;
     }
 
     /**
@@ -257,15 +257,23 @@ class Role extends Model
             return false;
         }
 
-        $permission = new Permission($perm_name);
+        $permission = Permission::getPermissionFromName($perm_name);
 
-        if ($permission->isValid()) {
-            if ($action == "add") {
-                $this->db->query("INSERT INTO role_permissions (role_id, perm_id) VALUES (?, ?)", "ii",
+        if ($permission->isValid())
+        {
+            if ($action == "add")
+            {
+                $this->db->query("INSERT INTO role_permission (role_id, perm_id) VALUES (?, ?)", "ii",
                     array($this->getId(), $permission->getId()));
-            } elseif ($action == "remove") {
+
+                $this->permissions[$perm_name] = true;
+            }
+            elseif ($action == "remove")
+            {
                 $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
                     array($this->getId(), $permission->getId()));
+
+                unset($this->permissions[$perm_name]);
             }
 
             return true;
@@ -280,21 +288,25 @@ class Role extends Model
      * @param string $name         The name of new role to be created
      * @param bool   $reusable     Whether or not to have the role
      * @param bool   $display      Whether or not to display the role on the 'Admins' page
+     * @param string $displayIcon
+     * @param string $displayColor
      * @param null   $displayName  The name that will be used on the 'Admins' page, if $display is set to true
      * @param int    $displayOrder The order the role will be displayed on, if $display is set to true
      *
      * @return \Role
      */
-    public static function createNewRole($name, $reusable, $display = false, $displayName = null, $displayOrder = 0)
+    public static function createNewRole($name, $reusable, $display = false, $displayIcon = "", $displayColor = "", $displayName = null, $displayOrder = 0)
     {
         return self::create(array(
             'name' => $name,
             'reusable' => $reusable,
             'protected' => 0,
             'display' => $display,
+            'display_icon' => $displayIcon,
+            'display_color' => $displayColor,
             'display_name' => $displayName,
             'display_order' => $displayOrder
-        ), 'siiisi');
+        ), 'siiisssi');
     }
 
     /**
