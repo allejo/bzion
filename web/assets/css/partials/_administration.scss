@@ -3,6 +3,7 @@ main {
         font-family: $sansSerifFont;
 
         .admins {
+            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 
@@ -41,6 +42,14 @@ main {
                             display: inline-block;
                             font-size: 18px;
                         }
+                    }
+
+                    @include respond-to(tablets) {
+                        width: 50%;
+                    }
+
+                    @include respond-to(phablets) {
+                        width: 100%;
                     }
                 }
             }
