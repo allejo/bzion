@@ -15,6 +15,7 @@
         "nesbot/carbon"              : ">=1.8.0",
         "pusher/pusher-php-server"   : "dev-master",
         "rhumsaa/array_column"       : "~1.1",
+        "robmorgan/phinx"            : "~0.3",
         "symfony/class-loader"       : ">=2.5.0",
         "symfony/config"             : ">=2.5.0",
         "symfony/console"            : ">=2.5.0",
@@ -57,7 +58,9 @@
     "scripts": {
         "post-create-project-cmd": [
             "git submodule update --init",
-            "BZIon\\Composer\\ScriptHandler::buildConfig"
+            "BZIon\\Composer\\ScriptHandler::buildConfig",
+            "BZIon\\Composer\\ScriptHandler::createDatabase",
+            "BZIon\\Composer\\ScriptHandler::clearCache"
         ],
         "upgrade": [
             "git pull origin",
@@ -101,12 +104,5 @@
     },
     "config": {
         "component-dir": "web/components"
-    },
-    "extra": {
-        "incenteev-parameters": {
-            "file": "app/config.yml",
-            "dist-file": "app/config.example.yml",
-            "parameter-key": "bzion"
-        }
     }
 }

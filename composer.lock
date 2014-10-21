@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b9d0b61c1a0a1e3d4bf718032de5cf28",
+    "hash": "d1d0ba03c4220ec3ca1df5f51e57ed63",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -699,17 +699,17 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "target-dir": "Liip/ImagineBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "017bd4509091fc69727273164e3d16ea071e52a5"
+                "reference": "7d0e79706bbae63e09587d592bb96e7f5d9e43bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/017bd4509091fc69727273164e3d16ea071e52a5",
-                "reference": "017bd4509091fc69727273164e3d16ea071e52a5",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/7d0e79706bbae63e09587d592bb96e7f5d9e43bd",
+                "reference": "7d0e79706bbae63e09587d592bb96e7f5d9e43bd",
                 "shasum": ""
             },
             "require": {
@@ -727,7 +727,7 @@
                 "doctrine/mongodb-odm": "1.0.*",
                 "doctrine/orm": "~2.3",
                 "ext-gd": "*",
-                "phpunit/phpunit": "~3.7",
+                "phpunit/phpunit": "~4.3",
                 "psr/log": "~1.0",
                 "symfony/browser-kit": "~2.3",
                 "symfony/console": "~2.3",
@@ -769,7 +769,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2014-09-17 09:53:36"
+            "time": "2014-10-18 17:48:27"
         },
         {
             "name": "michelf/php-markdown",
@@ -1235,6 +1235,63 @@
             ],
             "description": "Allows installation of Components via Composer.",
             "time": "2013-08-31 23:46:48"
+        },
+        {
+            "name": "robmorgan/phinx",
+            "version": "v0.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robmorgan/phinx.git",
+                "reference": "589319c8bd7f819580bbab11a8987fb38853bfe7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/589319c8bd7f819580bbab11a8987fb38853bfe7",
+                "reference": "589319c8bd7f819580bbab11a8987fb38853bfe7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/class-loader": "2.*",
+                "symfony/config": "2.*",
+                "symfony/console": "2.*",
+                "symfony/yaml": "2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "dev-phpcs-fixer"
+            },
+            "bin": [
+                "bin/phinx"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Phinx": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Morgan",
+                    "email": "robbym@gmail.com",
+                    "homepage": "http://robmorgan.id.au",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Phinx makes it ridiculously easy to manage the database migrations for your PHP app.",
+            "homepage": "http://phinx.org",
+            "keywords": [
+                "database",
+                "database migrations",
+                "db",
+                "migrations",
+                "phinx"
+            ],
+            "time": "2014-10-06 09:27:17"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3066,13 +3123,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fabpot/Twig.git",
-                "reference": "5e4abadb4a7a1fe76dcbf20d7ecc67203ff0cf53"
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "e37fc6b059f558ebf1320d3e7e8ba1d786ce657d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/5e4abadb4a7a1fe76dcbf20d7ecc67203ff0cf53",
-                "reference": "5e4abadb4a7a1fe76dcbf20d7ecc67203ff0cf53",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e37fc6b059f558ebf1320d3e7e8ba1d786ce657d",
+                "reference": "e37fc6b059f558ebf1320d3e7e8ba1d786ce657d",
                 "shasum": ""
             },
             "require": {
@@ -3107,7 +3164,7 @@
                 },
                 {
                     "name": "Twig Team",
-                    "homepage": "https://github.com/fabpot/Twig/graphs/contributors",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
                     "role": "Contributors"
                 }
             ],
@@ -3116,7 +3173,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-17 13:00:03"
+            "time": "2014-10-21 14:58:01"
         },
         {
             "name": "yzalis/identicon",
