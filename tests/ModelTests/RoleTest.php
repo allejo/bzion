@@ -69,4 +69,10 @@ class RoleTest extends TestCase
 
         $this->assertArrayContainsModel($role, Role::getRoles($this->player_b->getId()));
     }
+
+    public function tearDown()
+    {
+        $this->wipe($this->player_a, $this->player_b, $this->leaderRole, $this->normalRole);
+        parent::tearDown();
+    }
 }
