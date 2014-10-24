@@ -37,6 +37,8 @@ class RoleTest extends TestCase
 
         $this->assertArrayContainsModel($this->player_a, $role->getUsers());
 
+        $this->assertFalse($role->addPerm("some_permission_that_does_not_exist"));
+
         $this->assertTrue($role->addPerm("add_team"));
         $this->assertTrue($role->hasPerm("add_team"));
 
