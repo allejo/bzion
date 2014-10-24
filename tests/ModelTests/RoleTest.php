@@ -40,11 +40,13 @@ class RoleTest extends TestCase
         $this->assertFalse($role->addPerm("some_permission_that_does_not_exist"));
 
         $this->assertTrue($role->addPerm("add_team"));
+        $this->assertFalse($role->addPerm("add_team"));
         $this->assertTrue($role->hasPerm("add_team"));
 
         $this->assertArrayHasKey("add_team", $role->getPerms());
 
         $this->assertTrue($role->removePerm("add_team"));
+        $this->assertFalse($role->removePerm("add_team"));
         $this->assertNotTrue($role->hasPerm("add_team"));
 
         $this->assertArrayNotHasKey("add_team", $role->getPerms());
