@@ -28,6 +28,13 @@ class ConfigHandler
     private $event;
     private $io;
 
+    /**
+     * Whether the user has received the short notice about configuration values
+     * being able to get edited later on app/config.yml
+     * @var bool
+     */
+    private $questionInfoShown;
+
     const CAUTION_LINE_LENGTH = 60;
 
     public function __construct($event) {
@@ -110,6 +117,15 @@ SUCCESS
      */
     private function writeNodeQuestion($node, $name)
     {
+        if (!$this->questionInfoShown) {
+            $this->io->write(array(
+                "<comment> ! [NOTE] You can change all the configuration options later",
+                " ! on the config.yml file in the app folder</>\n"
+            ));
+
+            $this->questionInfoShown = true;
+        }
+
         if (!$node->getAttribute('asked')) {
             return $node->getDefaultValue();
         }
