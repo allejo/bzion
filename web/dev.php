@@ -23,8 +23,6 @@ try {
     }
 }
 
-DEFINE('DEVELOPMENT', true);
-
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

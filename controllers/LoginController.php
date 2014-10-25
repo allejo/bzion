@@ -23,7 +23,7 @@ class LoginController extends HTMLController
             throw new BadRequestException();
 
         // Don't check whether IPs match if we're on a development environment
-        $checkIP = !DEVELOPMENT;
+        $checkIP = !$this->isDebug();
         $info = validate_token($token, $username, array(), $checkIP);
 
         if (!isset($info))

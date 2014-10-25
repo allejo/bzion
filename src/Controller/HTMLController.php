@@ -29,6 +29,7 @@ abstract class HTMLController extends Controller
         // Add global variables to the twig templates
         $twig = Service::getTemplateEngine();
         $twig->addGlobal("me",         $this->getMe());
+        $twig->addGlobal("debug",      $this->container->getParameter('kernel.debug'));
         $twig->addGlobal("model",      new ModelFetcher());
         $twig->addGlobal("pages",      Page::getPages());
         $twig->addGlobal("request",    $request);
@@ -104,7 +105,7 @@ abstract class HTMLController extends Controller
                                            "code" => $e->getErrorCode()));
         } catch (Exception $e) {
             // Let PHP handle the exception on the dev environment
-            if (DEVELOPMENT) throw $e;
+            if ($this->isDebug()) throw $e;
             return $this->forward("Error", array("message" => "An error occurred"));
         }
     }

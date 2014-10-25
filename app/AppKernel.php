@@ -179,10 +179,6 @@ class AppKernel extends Kernel
             $this->boot();
         }
 
-        if (!defined('DEVELOPMENT')) {
-            define('DEVELOPMENT', ($this->isDebug()));
-        }
-
         $this->container->enterScope('request');
         $this->container->set('request', $request, 'request');
 

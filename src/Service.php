@@ -184,4 +184,9 @@ abstract class Service
     {
         return self::$container->get('event_dispatcher');
     }
+
+    public static function isDebug()
+    {
+        return self::getParameter('kernel.debug');
+    }
 }

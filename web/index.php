@@ -12,10 +12,6 @@ if ($kernel->getContainer()->getParameter('bzion.miscellaneous.development') ===
     // Create a new dev kernel
     $kernel = new AppKernel(AppKernel::guessDevEnvironment(), true);
     $kernel->boot();
-
-    DEFINE('DEVELOPMENT', true);
-} else {
-    DEFINE('DEVELOPMENT', false);
 }
 
 $response = $kernel->handle($request);

@@ -345,6 +345,16 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * Find out whether debugging is enabled
+     *
+     * @return boolean
+     */
+    public function isDebug()
+    {
+        return $this->container->getParameter('kernel.debug');
+    }
+
+    /**
      * Gets the monolog logger
      *
      * @param  string         $channel The log channel, defaults to the Controller's default

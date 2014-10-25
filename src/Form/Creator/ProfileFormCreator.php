@@ -24,7 +24,7 @@ class ProfileFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         $emailConstraints = array(new Length(array('max' => 255)));
-        if (!DEVELOPMENT) {
+        if (!\Service::isDebug()) {
             // Don't validate e-mails when developing, for example to allow
             // messaging anyone@localhost
             $emailConstraints[] = new Email();

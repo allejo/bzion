@@ -30,7 +30,7 @@ class LeagueOverseerHookController extends PlainTextController
         $allowedIPs = array_map('trim', $this->container->getParameter('bzion.api.allowed_ips'));
         $clientIP   = $request->getClientIp();
 
-        if (DEVELOPMENT < 1 && // Don't care about IPs if we're in debug mode
+        if (!$this->isDebug() && // Don't care about IPs if we're in debug mode
            !in_array($clientIP, $allowedIPs)) {
             // If server making the request isn't an official server, then log the unauthorized attempt and kill the script
 
@@ -44,7 +44,7 @@ class LeagueOverseerHookController extends PlainTextController
         if (!$this->params->has('query')) {
             // There seems to be nothing in $_POST. If we are in debug mode
             // however, we might have a debug request with data in $_GET
-            if (DEVELOPMENT && $request->query->has('query')) {
+            if ($this->isDebug() && $request->query->has('query')) {
                 $this->params = $request->query; // $_GET
             } else {
                 throw new BadRequestException();

@@ -20,7 +20,7 @@ abstract class PlainTextController extends Controller
             return new Response($e->getMessage());
         } catch (Exception $e) {
             // Let PHP handle the exception on the dev environment
-            if (DEVELOPMENT) throw $e;
+            if ($this->isDebug()) throw $e;
             return new Response("An error occured");
         }
     }

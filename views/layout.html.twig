@@ -65,13 +65,13 @@
             <section class="information">
                 <p class="copyright">BZiON &copy; 2014</p>
 
-                {% if constant('DEVELOPMENT') %}
+                {% if debug %}
                     <p class="development"><i class="fa fa-wrench"></i> {{ environment }}</p>
                 {% endif %}
             </section>
         </footer>
 
-        {% if constant('DEVELOPMENT') %}
+        {% if debug %}
             <section class="css-dev">
                 <div class="desktop">Desktop</div>
                 <div class="tablet">Tablet</div>
@@ -100,7 +100,7 @@
         <script src="{{ asset('assets/js/min/main-ck.js') }}"></script>
         <script src="{{ asset('assets/js/events.js') }}"></script>
 
-        {% if constant('DEVELOPMENT') %}
+        {% if debug %}
             <script src="{{ asset('assets/js/debug.js') }}"></script>
         {% endif %}
 
