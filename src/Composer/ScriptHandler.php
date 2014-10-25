@@ -8,9 +8,11 @@
 
 namespace BZIon\Composer;
 
+use Composer\Script\Event;
+use Phinx\Console\PhinxApplication;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Yaml;
-use Composer\Script\Event;
 
 /**
  * A manager for composer events
@@ -49,29 +51,42 @@ class ScriptHandler
     }
 
     /*
-     * Create the database schema
+     * Create and update the database schema
      *
      * @param $event Event Composer's event
      */
-    public static function createDatabase(Event $event)
+    public static function migrateDatabase(Event $event)
     {
-        $basepath = __DIR__ . '/../../';
-
-        // Read the database data from the configuration file
-        $configPath = realpath($basepath . 'app') . '/config.yml';
-        if (!is_file($configPath)) {
-            $event->getIO()->write("<bg=red>\n\n [WARNING] The configuration file could not be read, the database won't be updated\n</>");
+        try {
+            $config = self::getDatabaseConfig();
+        } catch(Exception $e) {
+            $event->getIO()->write("<bg=red>\n\n [WARNING] " . $e->getMessage() . ", the database won't be updated\n</>");
             return;
         }
 
-        $config = Yaml::parse($configPath);
-        $config = $config['bzion']['mysql'];
+        // If the database doesn't exist, ask the user to create it and perform
+        // the necessary migrations (unless the user didn't agree to
+        // create the database)
+        if (self::createDatabase($event, $config['host'], $config['username'], $config['password'], $config['database'])) {
+            $event->getIO()->write(''); // newline
 
-        $host     = $config['host'];
-        $username = $config['username'];
-        $password = $config['password'];
-        $database = $config['database'];
+            $arguments = array('migrate', '-e' => 'main');
+            $app = new PhinxApplication('0.3.8');
+            $app->run(new ArrayInput($arguments));
+        }
+    }
 
+    /**
+     * Create the database schema if needed
+     *
+     * @param string $event    Composer's event
+     * @param string $host     The database host
+     * @param string $username The username for the MySQL user
+     * @param string $password The password for the MySQL user
+     * @param string $database The name of the database
+     */
+    private static function createDatabase($event, $host, $username, $password, $database)
+    {
         $dsn = 'mysql:host=' . $host .';charset=UTF8';
         $pdo = new \PDO($dsn, $username, $password);
 
@@ -91,9 +106,11 @@ class ScriptHandler
 
             if ($answer) {
                 $pdo->query("CREATE DATABASE `$database` COLLATE utf8_unicode_ci");
-                // $pdo->query("USE `$database`");
+                $pdo->query("USE `$database`");
 
                 $event->getIO()->write(" <fg=green>New database created</>");
+            } else {
+                return false;
             }
         } elseif (!$status) {
             throw new \Exception("Unable to connect to database: " . $errors[2]);
@@ -108,6 +125,8 @@ class ScriptHandler
 
             $event->getIO()->write("<fg=green>done.</>");
         }
+
+        return true;
     }
 
     /**
@@ -132,6 +151,27 @@ class ScriptHandler
         if (!$process->isSuccessful()) {
             throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', escapeshellarg($command)));
         }
+    }
+
+    /**
+     * Get the database's configuration
+     *
+     * @return array The configuration as defined in the config.yml file
+     */
+    public static function getDatabaseConfig()
+    {
+        $basepath = __DIR__ . '/../../';
+
+        // Read the database data from the configuration file
+        $configPath = realpath($basepath . 'app') . '/config.yml';
+        if (!is_file($configPath)) {
+            throw new Exception("The configuration file could not be read");
+        }
+
+        $config = Yaml::parse($configPath);
+        $config = $config['bzion']['mysql'];
+
+        return $config;
     }
 
 }

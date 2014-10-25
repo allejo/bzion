@@ -76,6 +76,8 @@ class LogCommand extends ContainerAwareCommand
         $this->sort($changelog);
 
         $yaml = Yaml::dump($changelog, 3);
+
+        // Prevent yaml from unnecessarily quoting strings
         $yaml = preg_replace('/^\'([[:print:]]+)\':$/m', '$1:', $yaml);
         $yaml = preg_replace('/^( {8}- )\'(.*)\'$/m', '$1$2', $yaml);
         $yaml = str_replace("''", "'", $yaml);
@@ -92,7 +94,7 @@ class LogCommand extends ContainerAwareCommand
     /**
      * Get a type name to put into the YAML file from whatever the user gave us
      *
-     * @param  string            $type The user's input
+     * @param  string $type The user's input
      * @return string
      * @throws \RuntimeException
      */

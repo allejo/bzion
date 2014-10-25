@@ -59,7 +59,7 @@
         "post-create-project-cmd": [
             "git submodule update --init",
             "BZIon\\Composer\\ScriptHandler::buildConfig",
-            "BZIon\\Composer\\ScriptHandler::createDatabase",
+            "BZIon\\Composer\\ScriptHandler::migrateDatabase",
             "BZIon\\Composer\\ScriptHandler::clearCache"
         ],
         "upgrade": [
@@ -68,11 +68,13 @@
             "git submodule update --init",
             "app/upgrade.sh --no-dev --ansi install",
             "BZIon\\Composer\\ScriptHandler::buildConfig",
+            "BZIon\\Composer\\ScriptHandler::migrateDatabase",
             "BZIon\\Composer\\ScriptHandler::clearCache",
             "BZIon\\Composer\\ScriptHandler::showChangelog"
         ],
-        "update-config": [
-            "BZIon\\Composer\\ScriptHandler::buildConfig"
+        "migrate": [
+            "BZIon\\Composer\\ScriptHandler::buildConfig",
+            "BZIon\\Composer\\ScriptHandler::migrateDatabase"
         ]
     },
     "autoload": {
