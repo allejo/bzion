@@ -63,10 +63,6 @@ services:
         arguments: [@mailer, %bzion.email.from%, %bzion.site.name%]
         tags:
             - { name: kernel.event_subscriber }
-    bzion.command.install_command:
-        class: BZIon\Command\InstallCommand
-        tags:
-            -  { name: console.command }
     bzion.command.changes_command:
         class: BZIon\Command\ChangesCommand
         tags:
