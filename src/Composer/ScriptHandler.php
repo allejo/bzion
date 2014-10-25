@@ -58,7 +58,7 @@ class ScriptHandler
         $basepath = __DIR__ . '/../../';
 
         // Read the database data from the configuration file
-        $configPath = realpath($basepath . 'app/config.yml');
+        $configPath = realpath($basepath . 'app') . '/config.yml';
         if (!is_file($configPath)) {
             $event->getIO()->write("<bg=red>\n\n [WARNING] The configuration file could not be read, the database won't be updated\n</>");
             return;

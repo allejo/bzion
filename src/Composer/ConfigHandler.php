@@ -42,7 +42,7 @@ class ConfigHandler
      */
     public function build()
     {
-        $file = realpath(__DIR__ . '/../../app/config.yml');
+        $file = realpath(__DIR__ . '/../../app') . '/config.yml';
         $exists = is_file($file);
 
         $configuration = new Configuration();
@@ -60,9 +60,9 @@ class ConfigHandler
 
         $this->writeNode($tree, $config);
 
-        $this->io->write("<bg=green;options=bold>\n\n [OK] The configuration file is up to date\n</>");
-
         file_put_contents($file, Yaml::dump($config, 4));
+
+        $this->io->write("<bg=green;options=bold>\n\n [OK] The configuration file is up to date\n</>");
     }
 
     /**

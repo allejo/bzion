@@ -10,7 +10,9 @@ namespace BZIon\Config;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Symfony bundle for bzion configurationsymfony bundle for bzion configuration
+ * Symfony bundle for bzion configuration
+ *
+ * Allows parsing and validating a configuration file with a complex structure
  */
 class ConfigBundle extends Bundle
 {
