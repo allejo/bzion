@@ -120,7 +120,7 @@ class ScriptHandler
         if ($pdo->query('SHOW TABLES')->rowCount() === 0) {
             $event->getIO()->write(" <fg=green>Creating database schema...</> ", false);
 
-            $sqlPath = realpath($basepath . 'DATABASE.sql');
+            $sqlPath = realpath(__DIR__ . '/../../' . 'DATABASE.sql');
             $pdo->exec(file_get_contents($sqlPath));
 
             $event->getIO()->write("<fg=green>done.</>");
@@ -160,10 +160,8 @@ class ScriptHandler
      */
     public static function getDatabaseConfig()
     {
-        $basepath = __DIR__ . '/../../';
-
         // Read the database data from the configuration file
-        $configPath = realpath($basepath . 'app') . '/config.yml';
+        $configPath = realpath(__DIR__ . '/../../app') . '/config.yml';
         if (!is_file($configPath)) {
             throw new Exception("The configuration file could not be read");
         }
