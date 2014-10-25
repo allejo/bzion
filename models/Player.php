@@ -627,6 +627,13 @@ class Player extends AvatarModel implements NamedModel
 
         if ($role->isValid()) {
             if ($action == "add") {
+                // Make sure the player doesn't already have the role
+                foreach($this->roles as $playerRole) {
+                    if ($playerRole->getId() == $role_id) {
+                        return false;
+                    }
+                }
+
                 $this->db->query("INSERT INTO player_roles (user_id, role_id) VALUES (?, ?)", "ii", array($this->getId(), $role_id));
             } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));

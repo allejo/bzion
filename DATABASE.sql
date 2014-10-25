@@ -578,6 +578,7 @@ CREATE TABLE `player_roles` (
   `user_id` int(10) unsigned NOT NULL COMMENT 'The player ID we''re referencing',
   `role_id` int(10) unsigned NOT NULL COMMENT 'The role a player belongs too',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `user_role` (`user_id` ,`role_id`),
   KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `player_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,

@@ -181,8 +181,7 @@ SUCCESS
      */
     public static function getDatabaseConfig()
     {
-        // Read the database data from the configuration file
-        $configPath = realpath(__DIR__ . '/../../app') . '/config.yml';
+        $configPath = ConfigHandler::getConfigurationPath();
         if (!is_file($configPath)) {
             throw new \Exception("The configuration file could not be read");
         }

@@ -42,8 +42,8 @@ A demo BZiON installation can be found at [BZPro](http://bzion.bzpro.net/dev.php
 
       `composer create-project allejo/bzion --keep-vcs --no-dev -s dev .`
 
-4. Make sure that the app/cache, app/logs and web/assets/imgs/avatars/ directories
-   are writable by you and the web server:
+4. Make sure that the app and web/assets/imgs/avatars/ directories are writable
+   by you and the web server:
 
    1. First get the current web server user.
 
@@ -55,14 +55,14 @@ A demo BZiON installation can be found at [BZPro](http://bzion.bzpro.net/dev.php
 
       <sub>_Example for Ubuntu_</sub>
       ```bash
-      sudo setfacl -R  -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
-      sudo setfacl -dR -m u:$HTTPDUSER:rwX -m u:`whoami`:rwX app/cache app/logs web/assets/imgs/avatars/
+      sudo setfacl -R  -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app web/assets/imgs/avatars/
+      sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app web/assets/imgs/avatars/
       ```
 
       <sub>_Example for OS X_</sub>
       ```bash
-      sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
-      sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs web/assets/imgs/avatars/
+      sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app web/assets/imgs/avatars/
+      sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app web/assets/imgs/avatars/
       ```
 
 5. Point your web server to the `web` folder in the BZiON root directory

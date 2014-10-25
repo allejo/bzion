@@ -39,6 +39,8 @@ bzion:
     miscellaneous:
         # BZFlag List Server
         list_server: "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"
+        # The BZFlag callsign of the website's administrator
+        admin: brad
         # Server polling interval
         update_interval: 5 minutes
         # Whether to enable some functions which make debugging easier (false, true or force)

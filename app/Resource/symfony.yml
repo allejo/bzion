@@ -71,3 +71,5 @@ services:
         class: BZIon\Command\ServerCommand
         tags:
             -  { name: console.command }
+    monolog.logger.app:
+        alias: logger

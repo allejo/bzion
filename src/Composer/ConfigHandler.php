@@ -49,7 +49,7 @@ class ConfigHandler
      */
     public function build()
     {
-        $file = realpath(__DIR__ . '/../../app') . '/config.yml';
+        $file = $this->getConfigurationPath();
         $exists = is_file($file);
 
         $configuration = new Configuration();
@@ -186,7 +186,9 @@ SUCCESS
     }
 
     /**
-     * Write a warning
+     * Write a warning if necessary
+     *
+     * @param VariableNode $node The node with the warning
      */
     private function writeWarning($node)
     {
@@ -211,5 +213,15 @@ SUCCESS
         }
 
         $this->io->write("<warning>\n\n$caution\n</>");
+    }
+
+    /**
+     * Returns the path to the configuration file
+     *
+     * @return string
+     */
+    public static function getConfigurationPath()
+    {
+        return realpath(__DIR__ . '/../../app') . '/config.yml';
     }
 }
