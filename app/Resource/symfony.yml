@@ -25,6 +25,8 @@ monolog:
             path: "%bzion.logging.directory%/main.log"
             level: %bzion.logging.level%
             channels: [app, mysql]
+        console:
+            type: console
 
 liip_imagine:
     loaders:
