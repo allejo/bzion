@@ -11,6 +11,7 @@ namespace BZIon\Composer;
 use Composer\Script\Event;
 use Phinx\Console\PhinxApplication;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Yaml;
 
@@ -59,7 +60,7 @@ class ScriptHandler
     {
         try {
             $config = self::getDatabaseConfig();
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $event->getIO()->write("<bg=red>\n\n [WARNING] " . $e->getMessage() . ", the database won't be updated\n</>");
             return;
         }
@@ -72,14 +73,34 @@ class ScriptHandler
 
             $arguments = array('migrate', '-e' => 'main');
             $app = new PhinxApplication('0.3.8');
-            $app->run(new ArrayInput($arguments));
+            $app->doRun(new ArrayInput($arguments), new ConsoleOutput());
         }
+    }
+
+    /**
+     * Shows an installation success message
+     *
+     * @param $event Event Composer's event
+     */
+    public static function showSuccessMessage(Event $event)
+    {
+        $event->getIO()->write(<<<SUCCESS
+
+<bg=green;options=bold>
+
+ [OK] BZiON has been successfully installed, enjoy!
+</>
+<comment>
+ ! [NOTE] Before using BZiON, make sure that you have properly set
+ ! up directory permissions as specified on the README.md file</>
+SUCCESS
+        );
     }
 
     /**
      * Create the database schema if needed
      *
-     * @param string $event    Composer's event
+     * @param Event  $event    Composer's event
      * @param string $host     The database host
      * @param string $username The username for the MySQL user
      * @param string $password The password for the MySQL user
@@ -163,7 +184,7 @@ class ScriptHandler
         // Read the database data from the configuration file
         $configPath = realpath(__DIR__ . '/../../app') . '/config.yml';
         if (!is_file($configPath)) {
-            throw new Exception("The configuration file could not be read");
+            throw new \Exception("The configuration file could not be read");
         }
 
         $config = Yaml::parse($configPath);

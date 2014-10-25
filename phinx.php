@@ -19,8 +19,7 @@ return array(
             'host' => $config['host'],
             'name' => $config['database'],
             'user' => $config['username'],
-            'pass' => $config['password'],
-            // 'port' => 3306
+            'pass' => $config['password']
         )
     )
 );

@@ -62,7 +62,12 @@ class ConfigHandler
 
         file_put_contents($file, Yaml::dump($config, 4));
 
-        $this->io->write("<bg=green;options=bold>\n\n [OK] The configuration file is up to date\n</>");
+        $this->io->write(<<<SUCCESS
+<bg=green;options=bold>                                            </>
+<bg=green;options=bold> [OK] The configuration file is up to date  </>
+<bg=green;options=bold>                                            </>
+SUCCESS
+        );
     }
 
     /**

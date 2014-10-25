@@ -60,7 +60,8 @@
             "git submodule update --init",
             "BZIon\\Composer\\ScriptHandler::buildConfig",
             "BZIon\\Composer\\ScriptHandler::migrateDatabase",
-            "BZIon\\Composer\\ScriptHandler::clearCache"
+            "BZIon\\Composer\\ScriptHandler::clearCache",
+            "BZIon\\Composer\\ScriptHandler::showSuccessMessage"
         ],
         "upgrade": [
             "git pull origin",
@@ -74,7 +75,8 @@
         ],
         "migrate": [
             "BZIon\\Composer\\ScriptHandler::buildConfig",
-            "BZIon\\Composer\\ScriptHandler::migrateDatabase"
+            "BZIon\\Composer\\ScriptHandler::migrateDatabase",
+            "BZIon\\Composer\\ScriptHandler::showChangelog"
         ]
     },
     "autoload": {
