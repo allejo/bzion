@@ -56,6 +56,12 @@ class ChangesCommand extends ContainerAwareCommand
                 InputOption::VALUE_OPTIONAL,
                 'Show all the changes made since the given date, overrides the lastupdate file'
             )
+            ->addOption(
+                'read',
+               null,
+               InputOption::VALUE_NONE,
+               'Mark all the changes made before the current date as read'
+            )
         ;
     }
 
@@ -66,7 +72,8 @@ class ChangesCommand extends ContainerAwareCommand
     {
         $lastUpdatePath = $input->getOption('lastupdate');
         $date           = $input->getOption('date');
-        $changelog      = Yaml::parse(file_get_contents($input->getOption('changelog')));
+        $markRead       = $input->getOption('read');
+        $changelog      = Yaml::parse($input->getOption('changelog'));
 
         $this->parseOptions($lastUpdatePath, $date, $output);
 
@@ -74,11 +81,13 @@ class ChangesCommand extends ContainerAwareCommand
         LogCommand::sort($changelog);
         $listed = $this->parseChangelog($changelog);
 
-        if ($this->isEmpty($listed)) {
-            $output->writeln("No significant changes since the last update.");
-        } else {
-            $output->writeln("Changes since last update:");
-            $this->renderChangeList($listed, $output);
+        if (!$markRead) {
+            if ($this->isEmpty($listed)) {
+                $output->writeln("No significant changes since the last update.");
+            } else {
+                $output->writeln("Changes since last update:");
+                $this->renderChangeList($listed, $output);
+            }
         }
 
         $this->storeLastUpdate($lastUpdatePath, $date);

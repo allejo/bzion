@@ -41,6 +41,17 @@ class ScriptHandler
     }
 
     /**
+     * Initialize the last update file so that when the user updates and asks
+     * for the changelog, the entries added before the installation are not shown
+     *
+     * @param $event Event Composer's event
+     */
+    public static function initializeChangelog(Event $event)
+    {
+        static::executeCommand($event, 'bzion:changes --read');
+    }
+
+    /**
      * Migrate the config.yml file
      *
      * @param $event Event Composer's event

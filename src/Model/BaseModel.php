@@ -197,7 +197,7 @@ abstract class BaseModel implements ModelInterface
      * @param string          $table            The database table that will be searched
      * @param string|string[] $select           The column that will be returned
      *
-     * @return int[]
+     * @return mixed[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id')
     {
@@ -239,7 +239,7 @@ abstract class BaseModel implements ModelInterface
      * @param string          $additional_query Additional parameters to be passed to the MySQL query (e.g. `WHERE id = 5`)
      * @param string          $table            The database table which will be used for queries
      *
-     * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
+     * @return mixed[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id')
     {

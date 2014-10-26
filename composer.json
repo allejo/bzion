@@ -61,6 +61,7 @@
             "BZIon\\Composer\\ScriptHandler::buildConfig",
             "BZIon\\Composer\\ScriptHandler::migrateDatabase",
             "BZIon\\Composer\\ScriptHandler::clearCache",
+            "BZIon\\Composer\\ScriptHandler::initializeChangelog",
             "BZIon\\Composer\\ScriptHandler::showSuccessMessage"
         ],
         "upgrade": [
