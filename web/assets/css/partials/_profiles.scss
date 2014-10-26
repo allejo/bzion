@@ -1,6 +1,7 @@
 main {
     &.players, &.teams {
         .profile {
+            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 
@@ -41,8 +42,38 @@ main {
                     }
 
                     &.profile_picture {
+                        float: right;
                         padding: 0;
                         width: 25%;
+
+                        .player_avatar, .team_avatar {
+                            max-height: 250px;
+                            max-width: 250px;
+
+                            @include respond-to(phones) {
+                                width: 50%;
+                            }
+                        }
+
+                        @include respond-to(phones) {
+                            margin: 15px 0;
+                            text-align: center;
+                        }
+                    }
+
+                    &.information, &.profile_picture {
+                        @include respond-to(phones) {
+                            width: 100%;
+                        }
+                    }
+
+                    @include respond-to(phablets) {
+                        margin: 10px 0;
+                        width: 100%;
+                    }
+
+                    @include respond-to(phones) {
+                        padding: 0;
                     }
                 }
             }

@@ -17,6 +17,10 @@
 
         <section class="profile">
             <section class="row">
+                <section class="profile_picture">
+                    <img class="player_avatar" src="{{ player.avatar|imagine_filter('huge_thumb') }}">
+                </section>
+
                 <section class="information">
                     <p>
                         {% if player.id == player.team.leader.id %}
@@ -36,10 +40,6 @@
                     {% if player.description is not empty %}
                         <p class="description">{{ player.description }}</p>
                     {% endif %}
-                </section>
-
-                <section class="profile_picture">
-                    <img class="player_avatar" src="{{ player.avatar|imagine_filter('huge_thumb') }}">
                 </section>
             </section>
 

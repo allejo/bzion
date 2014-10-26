@@ -38,15 +38,15 @@
 
         <section class="profile">
             <section class="row">
+                <section class="profile_picture">
+                    <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
+                </section>
+
                 <section class="information">
                     <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
                     <article class="description">
                         {{ team.description | raw }}
                     </article>
-                </section>
-
-                <section class="profile_picture">
-                    <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
                 </section>
             </section>
 

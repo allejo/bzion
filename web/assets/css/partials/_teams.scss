@@ -126,6 +126,10 @@ main {
                             float: left;
                             height: $size;
                             width: $size;
+
+                            @include respond-to(phones) {
+                                margin-top: 10px;
+                            }
                         }
 
                         .legend {
@@ -156,6 +160,17 @@ main {
                                         background-color: #8FDC00;
                                     }
                                 }
+
+                                @include respond-to(phones) {
+                                    float: left;
+                                    margin: 0 5px;
+                                }
+                            }
+
+                            @include respond-to(phones) {
+                                margin: 20px 0 0;
+                                text-align: center;
+                                width: 100%;
                             }
                         }
                     }
@@ -189,6 +204,10 @@ main {
                                         }
                                     }
                                 }
+                            }
+
+                            @include respond-to(phablets) {
+                                margin-left: 0;
                             }
                         }
                     }
