@@ -47,22 +47,30 @@ main {
                         width: 25%;
 
                         .player_avatar, .team_avatar {
-                            max-height: 250px;
-                            max-width: 250px;
+                            max-height: 100%;
+                            max-width: 100%;
+
+                            @include respond-to(phablets) {
+                                width: 25%;
+                            }
 
                             @include respond-to(phones) {
                                 width: 50%;
                             }
                         }
 
+                        @include respond-to(phablets) {
+                            margin: 0;
+                            text-align: center;
+                        }
+
                         @include respond-to(phones) {
                             margin: 15px 0;
-                            text-align: center;
                         }
                     }
 
                     &.information, &.profile_picture {
-                        @include respond-to(phones) {
+                        @include respond-to(phablets) {
                             width: 100%;
                         }
                     }
