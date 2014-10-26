@@ -30,15 +30,7 @@
         </section>
 
         <section class="container">
-            <aside>
-                <ul>
-                    <li><a href="{{ path('news_list') }}"><i class="fa fa-tag"></i> All Posts</a></li>
-
-                    {% for category in categories %}
-                        <li><a href="{{ category.url }}"><i class="fa fa-tag"></i> {{ category.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            </aside>
+            {% include "News/categories.html.twig" %}
 
             <section class="article_container">
                 {% for article in news %}
