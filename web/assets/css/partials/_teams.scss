@@ -161,13 +161,13 @@ main {
                                     }
                                 }
 
-                                @include respond-to(phones) {
-                                    float: left;
+                                @include respond-to(tablets) {
+                                    display: inline-block;
                                     margin: 0 5px;
                                 }
                             }
 
-                            @include respond-to(phones) {
+                            @include respond-to(tablets) {
                                 margin: 20px 0 0;
                                 text-align: center;
                                 width: 100%;
