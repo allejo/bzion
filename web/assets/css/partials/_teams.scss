@@ -18,9 +18,8 @@ main {
         }
 
         .list {
+            @extend %mobile_padding;
             @extend .wrapper;
-
-            padding-left: 0;
 
             li {
                 @extend .clearfix;
@@ -43,6 +42,12 @@ main {
                             .name {
                                 float: left;
                                 font-size: 24px;
+
+                                @include respond-to(phones) {
+                                    display: block;
+                                    float: none;
+                                    font-size: 20px;
+                                }
                             }
 
                             .elo {
@@ -56,6 +61,12 @@ main {
                                 &:after {
                                     content: ')';
                                 }
+
+                                @include respond-to(phones) {
+                                    display: block;
+                                    float: none;
+                                    margin: 0;
+                                }
                             }
                         }
 
@@ -64,6 +75,10 @@ main {
 
                             a {
                                 color: darkgrey;
+                            }
+
+                            @include respond-to(phones) {
+                                display: none;
                             }
                         }
                     }
@@ -81,8 +96,22 @@ main {
                             a {
                                 color: darkgrey;
                             }
+
+                            @include respond-to(phones) {
+                                display: block;
+                                float: none;
+                                margin-right: 0;
+                            }
                         }
                     }
+
+                    @include respond-to(phones) {
+                        margin: 0;
+                    }
+                }
+
+                @include respond-to(phones) {
+                    margin: 10px 0;
                 }
             }
         }
