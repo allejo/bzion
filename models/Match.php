@@ -302,6 +302,7 @@ class Match extends PermissionModel implements NamedModel
 
     /**
      * Get an array of players based on a string representation
+     * @param string $playerString
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
     private static function parsePlayers($playerString)
@@ -386,7 +387,7 @@ class Match extends PermissionModel implements NamedModel
 
     /**
      * Get the name of the map where the match was played on
-     * @return string|null Returns null if the league doesn't host multiple maps
+     * @return string Returns null if the league doesn't host multiple maps
      */
     public function getMapPlayed()
     {
@@ -418,7 +419,7 @@ class Match extends PermissionModel implements NamedModel
     /**
      * Get the name of the replay file for this specific map
      * @param  int         $length The length of the replay file name; it will be truncated
-     * @return string|null Returns null if there was no replay file name recorded
+     * @return string Returns null if there was no replay file name recorded
      */
     public function getReplayFileName($length = 0)
     {

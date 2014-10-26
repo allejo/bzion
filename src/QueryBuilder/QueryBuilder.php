@@ -427,6 +427,7 @@ class QueryBuilder implements Countable
      * Perform the query and get back the results in a list of arrays
      *
      * @param string|string[] The column(s) that should be returned
+     * @param string $columns
      * @return array[]
      */
     public function getArray($columns)

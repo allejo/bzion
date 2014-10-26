@@ -55,6 +55,7 @@ abstract class HTMLController extends Controller
 
     /**
      * {@inheritDoc}
+     * @param string $view
      */
     protected function render($view, $parameters=array())
     {
@@ -215,7 +216,7 @@ abstract class HTMLController extends Controller
      * query into consideration to find out if the user wants to see deleted
      * models or not.
      *
-     * @param  Model The Model in question
+     * @param  Model Model Model in question
      * @return boolean
      */
     public static function canSee($model)

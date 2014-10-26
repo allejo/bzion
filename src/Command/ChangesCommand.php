@@ -253,7 +253,7 @@ class ChangesCommand extends ContainerAwareCommand
      * Recursively find out if an array is empty
      *
      * @param  array   $array The array to test
-     * @return boolean
+     * @return boolean|null
      */
     private function isEmpty(array $array)
     {

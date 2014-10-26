@@ -217,7 +217,7 @@ class Group extends UrlModel
     /**
      * Get a list containing the IDs of each member of the group
      * @param  int|null $hide The ID of a player to ignore
-     * @return int      An array of player IDs
+     * @return integer[]      An array of player IDs
      */
     public function getMemberIds($hide=null)
     {

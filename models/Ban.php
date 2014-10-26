@@ -135,7 +135,7 @@ class Ban extends UrlModel implements NamedModel
      * Set the IP addresses of the ban
      *
      * @todo   Is it worth making this faster?
-     * @param  string[] $ipAddress The new IP addresses of the ban
+     * @param  string[] $ipAddresses The new IP addresses of the ban
      * @return self
      */
     public function setIPs($ipAddresses)
@@ -216,7 +216,7 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Get the IP address of the banned player
-     * @return string
+     * @return string[]
      */
     public function getIpAddresses()
     {
@@ -303,7 +303,7 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Set the expiration date of the ban
-     * @param  mixed $expiration The expiration
+     * @param  TimeDate $expiration The expiration
      * @return self
      */
     public function setExpiration($expiration)
@@ -368,13 +368,13 @@ class Ban extends UrlModel implements NamedModel
      *
      * @param int      $playerID        The ID of the victim of the ban
      * @param int      $authorID        The ID of the player responsible for the ban
-     * @param mixed    $expiration      The expiration of the ban (set to NULL so that it never expires)
+     * @param BZIon\Form\Creator\TimeDate|null    $expiration      The expiration of the ban (set to NULL so that it never expires)
      * @param string   $reason          The full reason for the ban
      * @param string   $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
      * @param string[] $ipAddresses     An array of IPs that have been banned
      * @param bool     $allowServerJoin Whether or not the player is allowed to join match servers
      *
-     * @return Ban|bool An object representing the ban that was just entered or false if the ban was not created
+     * @return Ban An object representing the ban that was just entered or false if the ban was not created
      */
     public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
     {

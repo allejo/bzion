@@ -2,7 +2,6 @@
 
 use BZIon\Event\Events;
 use BZIon\Event as Event;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

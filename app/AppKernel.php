@@ -16,7 +16,6 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Router;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
 use Symfony\Component\Debug\Debug;

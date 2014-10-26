@@ -1,7 +1,6 @@
 <?php
 namespace BZIon\Form\Type;
 
-use Model;
 use Player;
 use BZIon\Form\Transformer\PlayerTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -219,7 +218,7 @@ class PlayerType extends AbstractType
      *
      * @throws InvalidNameException
      * @param  int                  $id The player ID
-     * @return Player|null
+     * @return Player
      */
     private function idToModel($id)
     {

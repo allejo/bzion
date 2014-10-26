@@ -1,6 +1,6 @@
 <?php
 
-require("vendor/autoload.php");
+require 'vendor/autoload.php';
 
 DEFINE("DOC_ROOT", dirname(__FILE__));
 

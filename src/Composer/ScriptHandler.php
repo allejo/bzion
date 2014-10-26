@@ -60,8 +60,9 @@ class ScriptHandler
     {
         try {
             $config = self::getDatabaseConfig();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $event->getIO()->write("<bg=red>\n\n [WARNING] " . $e->getMessage() . ", the database won't be updated\n</>");
+
             return;
         }
 

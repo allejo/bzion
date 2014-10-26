@@ -48,7 +48,6 @@ abstract class AliasModel extends UrlModel implements NamedModel
     /**
      * Change the object's name
      *
-     * @param  string $username The new name of the object
      * @return self
      */
     public function setName($name)

@@ -6,7 +6,6 @@ use BZIon\Form\Creator\GroupFormCreator;
 use BZIon\Form\Creator\GroupInviteFormCreator;
 use BZIon\Form\Creator\GroupRenameFormCreator;
 use BZIon\Form\Creator\MessageFormCreator;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
@@ -134,6 +133,10 @@ class MessageController extends JSONController
             "Player {$player->getUsername()} has been kicked from the conversation", "Kick");
     }
 
+    /**
+     * @param Group $discussion
+     * @param Player $me
+     */
     private function showInviteForm($discussion, $me)
     {
         $creator = new GroupInviteFormCreator($discussion);
@@ -157,6 +160,10 @@ class MessageController extends JSONController
         return $form;
     }
 
+    /**
+     * @param Group $discussion
+     * @param Player $me
+     */
     private function showRenameForm($discussion, $me)
     {
         $creator = new GroupRenameFormCreator($discussion);
@@ -171,6 +178,10 @@ class MessageController extends JSONController
         return $form;
     }
 
+    /**
+     * @param Group $discussion
+     * @param Player $me
+     */
     private function showMessageForm($discussion, $me)
     {
         // Create the form to send a message to the discussion
@@ -218,7 +229,7 @@ class MessageController extends JSONController
      * @param  Group         $to      The group that will receive the message
      * @param  Form          $form    The message's form
      * @param  Form          $form    The form before it handled the request
-     * @param  string        $message The message to send
+     * @param Form $cloned
      * @return void
      */
     private function sendMessage(Player &$from, Group &$to, &$form, &$cloned)
@@ -239,6 +250,9 @@ class MessageController extends JSONController
         $this->dispatch(Events::MESSAGE_NEW, $event);
     }
 
+    /**
+     * @return string|null
+     */
     private function getErrorMessage(Form &$form)
     {
         foreach ($form->all() as $child) {

@@ -246,6 +246,7 @@ class Player extends AvatarModel implements NamedModel
      * Finds out whether the specified player wants and can receive an e-mail
      * message
      *
+     * @param string $type
      * @return boolean `true` if the player should be sent an e-mail
      */
     public function canReceive($type)
@@ -328,7 +329,7 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Get all of the callsigns a player has used to log in to the website
-     * @return string[] An array containing all of the past callsigns recorded for a player
+     * @return integer[] An array containing all of the past callsigns recorded for a player
      */
     public function getPastCallsigns()
     {
@@ -454,7 +455,6 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Set the player's email address and reset their verification status
-     * @param string $description The address
      */
     public function setEmailAddress($email)
     {
@@ -628,7 +628,7 @@ class Player extends AvatarModel implements NamedModel
         if ($role->isValid()) {
             if ($action == "add") {
                 // Make sure the player doesn't already have the role
-                foreach($this->roles as $playerRole) {
+                foreach ($this->roles as $playerRole) {
                     if ($playerRole->getId() == $role_id) {
                         return false;
                     }
@@ -809,7 +809,7 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Alphabetical order function for use in usort (case-insensitive)
-     * @return callable The sort function
+     * @return Closure The sort function
      */
     public static function getAlphabeticalSort()
     {

@@ -1,7 +1,6 @@
 <?php
 
 use BZIon\Composer\ScriptHandler;
-use Symfony\Component\Yaml\Yaml;
 
 require("vendor/autoload.php");
 

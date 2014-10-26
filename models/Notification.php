@@ -114,7 +114,7 @@ class Notification extends Model
 
     /**
      * Show the number of notifications the user hasn't read yet
-     * @param  int $id The ID of the user
+     * @param integer $receiver
      * @return int
      */
     public static function countUnreadNotifications($receiver)
@@ -138,7 +138,7 @@ class Notification extends Model
      * Do not use Notification::getType(), as it returns the name of the class
      * (i.e. notification)
      *
-     * @return string
+     * @return integer
      */
     public function getCategory()
     {
@@ -198,7 +198,6 @@ class Notification extends Model
     /**
      * Get the available actions for the notification
      *
-     * @param  boolean $absolute Whether to return an action list appropriate for e-mail messages
      * @return array
      */
     public function getActions($email=false)

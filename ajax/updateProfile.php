@@ -1,6 +1,6 @@
 <?php
 
-include("../bzion-load.php");
+include '../bzion-load.php';
 
 $error = false;
 $message = "Your profile was successfully updated";

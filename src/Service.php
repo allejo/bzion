@@ -95,7 +95,7 @@ abstract class Service
      * Gets a parameter
      *
      * @param  string $name The parameter name
-     * @return mixed  The parameter value
+     * @return string  The parameter value
      */
     public static function getParameter($name)
     {
@@ -135,6 +135,9 @@ abstract class Service
         return self::$templateEngine;
     }
 
+    /**
+     * @param Twig_Environment $templateEngine
+     */
     public static function setTemplateEngine($templateEngine)
     {
         self::$templateEngine = $templateEngine;
@@ -145,6 +148,9 @@ abstract class Service
         return self::$formFactory;
     }
 
+    /**
+     * @param FormFactory $formFactory
+     */
     public static function setFormFactory($formFactory)
     {
         self::$formFactory = $formFactory;
@@ -155,6 +161,9 @@ abstract class Service
         return self::$environment;
     }
 
+    /**
+     * @param string $environment
+     */
     public static function setEnvironment($environment)
     {
         self::$environment = $environment;
@@ -165,6 +174,9 @@ abstract class Service
         return self::$modelCache;
     }
 
+    /**
+     * @param BZIon\Cache\ModelCache $modelCache
+     */
     public static function setModelCache($modelCache)
     {
         self::$modelCache = $modelCache;

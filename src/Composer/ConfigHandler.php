@@ -10,13 +10,10 @@ namespace BZIon\Composer;
 
 use BZIon\Config\Configuration;
 use Composer\Script\Event;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\Config\Definition\ArrayNode;
-use Symfony\Component\Config\Definition\ScalarNode;
 use Symfony\Component\Config\Definition\EnumNode;
 use Symfony\Component\Config\Definition\PrototypedArrayNode;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Inline;
 use Symfony\Component\Yaml\Yaml;
 
@@ -111,7 +108,7 @@ SUCCESS
     /**
      * Present a node question to the user
      *
-     * @param  VariableNode $node The node in question
+     * @param  NodeInterface $node The node in question
      * @param  string $name The name of the node
      * @return mixed The new value of the node
      */

@@ -129,7 +129,7 @@ abstract class Model extends CachedModel
 
     /**
      * Takes a CamelCase string and converts it to a snake_case one
-     * @param $input The string to convert
+     * @param string $input The string to convert
      * @return string
      */
     private static function toSnakeCase($input)

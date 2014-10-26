@@ -18,6 +18,9 @@ class ModelNotFoundException extends NotFoundException
      */
     private $type = '';
 
+    /**
+     * @param string $type
+     */
     public function __construct($type, $code = 0, Exception $previous = null)
     {
         $this->type = strtolower($type);

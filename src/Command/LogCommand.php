@@ -94,7 +94,7 @@ class LogCommand extends ContainerAwareCommand
     /**
      * Get a type name to put into the YAML file from whatever the user gave us
      *
-     * @param  string $type The user's input
+     * @param  string            $type The user's input
      * @return string
      * @throws \RuntimeException
      */
@@ -123,6 +123,8 @@ class LogCommand extends ContainerAwareCommand
      * change, add them to it
      *
      * @param array $changelog The parsed YAML file
+     * @param string $date
+     * @param string $category
      */
     private function addMissingArrays(&$changelog, $date, $category)
     {

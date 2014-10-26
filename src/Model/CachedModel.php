@@ -96,6 +96,7 @@ abstract class CachedModel extends BaseModel
 
     /**
      * {@inheritDoc}
+     * @param string $types
      */
     protected static function create($params, $types, $now=null, $table='')
     {
@@ -107,6 +108,7 @@ abstract class CachedModel extends BaseModel
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function update($name, $value, $type='i')
     {

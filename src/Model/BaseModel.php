@@ -60,7 +60,6 @@ abstract class BaseModel implements ModelInterface
      * invalid object will be returned
      *
      * @param int    $id     The ID of the object to look for
-     * @param string $column The column to use to identify separate database entries
      */
     public function __construct($id)
     {

@@ -105,6 +105,9 @@ class Permission extends Model
         );
     }
 
+    /**
+     * @param string $perm_name
+     */
     public static function getPermissionFromName($perm_name)
     {
         return new self(

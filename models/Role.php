@@ -105,7 +105,7 @@ class Role extends Model
      */
     public function displayAsLeader()
     {
-        return (bool)$this->display;
+        return (bool) $this->display;
     }
 
     /**
@@ -182,7 +182,7 @@ class Role extends Model
      */
     public function isReusable()
     {
-        return (bool)$this->reusable;
+        return (bool) $this->reusable;
     }
 
     /**
@@ -192,7 +192,7 @@ class Role extends Model
      */
     public function isProtected()
     {
-        return (bool)$this->protected;
+        return (bool) $this->protected;
     }
 
     /**

@@ -10,8 +10,7 @@ class IpTransformer implements DataTransformerInterface
     /**
      * Transforms an object (model) to an integer (int) .
      *
-     * @param  Model|null $model
-     * @return int
+     * @return string
      */
     public function transform($ips)
     {
@@ -24,7 +23,6 @@ class IpTransformer implements DataTransformerInterface
     /**
      * Transforms an ID to an object
      *
-     * @param  int                           $id
      * @return Model
      * @throws TransformationFailedException if the team is not found.
      */

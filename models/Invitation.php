@@ -145,7 +145,9 @@ class Invitation extends UrlModel
     /**
      * Find whether there are unexpired invitations for a player and a team
      *
-     * @return boolean
+     * @param integer $player
+     * @param integer $team
+     * @return integer
      */
     public static function hasOpenInvitation($player, $team)
     {

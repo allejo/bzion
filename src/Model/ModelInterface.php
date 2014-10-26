@@ -18,10 +18,12 @@ interface ModelInterface
      * Please note that this does not delete the object entirely from the database,
      * it only hides it from users. You should overload this function if your object
      * does not have a 'status' column which can be set to 'deleted'.
+     * @return void
      */
     public function delete();
     /**
      * Permanently delete the object from the database
+     * @return void
      */
     public function wipe();
 

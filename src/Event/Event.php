@@ -140,6 +140,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
      * @param mixed A single player/ID or a player/ID list
      * @param string $type The type of the event
      * @param null|Player|int A player who should not receive a notification
+     * @param \Player $except
      */
     protected function doNotify($players, $type, $except = null)
     {

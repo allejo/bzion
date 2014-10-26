@@ -14,7 +14,7 @@ interface FormCreatorInterface
 {
     /**
      * Create the form
-     * @return Form
+     * @return \Symfony\Component\Form\Form
      */
     public function create();
 }

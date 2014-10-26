@@ -124,7 +124,6 @@ class EventSubscriber implements EventSubscriberInterface
     /**
      * Called when an event needs to notify a user
      * @param Event  $event The event
-     * @param string $type  The event's type
      */
     public function notify(Event $event, $name)
     {

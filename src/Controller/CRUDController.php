@@ -79,7 +79,6 @@ abstract class CRUDController extends JSONController
      *
      * @throws ForbiddenException
      * @param  Player             $me   The user who wants to create the model
-     * @param  string             $type The type of the model being created
      * @return mixed              The response to show to the user
      */
     protected function create(Player $me)

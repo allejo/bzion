@@ -139,7 +139,7 @@ class Team extends AvatarModel
      *
      * @param int $id The id of the player to add to the team
      *
-     * @return bool True if both the player was added to the team AND the team member count was incremented
+     * @return boolean|null True if both the player was added to the team AND the team member count was incremented
      */
     public function addMember($id)
     {

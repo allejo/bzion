@@ -11,7 +11,7 @@ class TimezoneTransformer implements DataTransformerInterface
      * user can see it
      *
      * @param  string $timezone The timezone
-     * @return array
+     * @return null|string
      */
     public function transform($timezone)
     {

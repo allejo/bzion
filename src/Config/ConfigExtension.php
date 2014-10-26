@@ -7,7 +7,6 @@
 
 namespace BZIon\Config;
 
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;

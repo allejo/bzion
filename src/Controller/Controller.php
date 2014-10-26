@@ -304,6 +304,7 @@ abstract class Controller extends ContainerAware
      *
      * @param  string|null The model whose query builder we should get (null
      *                     to get the builder of the controller's model)
+     * @param string $type
      * @return QueryBuilder
      */
     public static function getQueryBuilder($type = null)
