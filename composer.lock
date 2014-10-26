@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e539fc7f370d72ad161f586c55007a9e",
+    "hash": "516ff56e3fa5e7b49b4379113c06cd50",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -4207,12 +4207,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "a93ff7bec117b4b87a52f83182a483fa7c757b4f"
+                "reference": "1e4689525d311b46fae49bb97a89af7dbf6658cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/a93ff7bec117b4b87a52f83182a483fa7c757b4f",
-                "reference": "a93ff7bec117b4b87a52f83182a483fa7c757b4f",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/1e4689525d311b46fae49bb97a89af7dbf6658cf",
+                "reference": "1e4689525d311b46fae49bb97a89af7dbf6658cf",
                 "shasum": ""
             },
             "require": {
@@ -4297,7 +4297,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-10-15 19:13:02"
+            "time": "2014-10-26 17:36:41"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -6759,7 +6759,9 @@
             "time": "2013-12-19 11:40:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "ivaynberg/select2": 20,
@@ -6779,5 +6781,7 @@
         "php": ">=5.3.0",
         "ext-gd": "*"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

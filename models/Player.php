@@ -171,6 +171,13 @@ class Player extends AvatarModel implements NamedModel
      */
     public function addRole($role_id)
     {
+        // Make sure the player doesn't already have the role
+        foreach($this->roles as $playerRole) {
+            if ($playerRole->getId() == $role_id) {
+                return false;
+            }
+        }
+
         return $this->modifyRole($role_id, "add");
     }
 
@@ -329,7 +336,7 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Get all of the callsigns a player has used to log in to the website
-     * @return integer[] An array containing all of the past callsigns recorded for a player
+     * @return string[] An array containing all of the past callsigns recorded for a player
      */
     public function getPastCallsigns()
     {
@@ -455,6 +462,7 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Set the player's email address and reset their verification status
+     * @param string $email The address
      */
     public function setEmailAddress($email)
     {
@@ -627,13 +635,6 @@ class Player extends AvatarModel implements NamedModel
 
         if ($role->isValid()) {
             if ($action == "add") {
-                // Make sure the player doesn't already have the role
-                foreach ($this->roles as $playerRole) {
-                    if ($playerRole->getId() == $role_id) {
-                        return false;
-                    }
-                }
-
                 $this->db->query("INSERT INTO player_roles (user_id, role_id) VALUES (?, ?)", "ii", array($this->getId(), $role_id));
             } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));

@@ -77,6 +77,15 @@
             "BZIon\\Composer\\ScriptHandler::buildConfig",
             "BZIon\\Composer\\ScriptHandler::migrateDatabase",
             "BZIon\\Composer\\ScriptHandler::showChangelog"
+        ],
+        "migrate-database": [
+            "BZIon\\Composer\\ScriptHandler::migrateDatabase"
+        ],
+        "update-configuration": [
+            "BZIon\\Composer\\ScriptHandler::buildConfig"
+        ],
+        "success": [
+            "BZIon\\Composer\\ScriptHandler::showSuccessMessage"
         ]
     },
     "autoload": {
