@@ -100,7 +100,7 @@ class LoginController extends HTMLController
         }
 
         if (strtolower($player->getUsername()) === strtolower($adminUsername)) {
-            $player->addRole(Player::S_ADMIN);
+            $player->addRole(Player::DEVELOPER);
 
             // Remove the username from the configuration file so that we don't
             // give admin permissions to the wrong person in case callsign
