@@ -60,7 +60,13 @@ abstract class ModelFormCreator implements FormCreatorInterface
      */
     public function create()
     {
-        $builder = \Service::getFormFactory()->createNamedBuilder($this->getName());
+        $builder = \Service::getFormFactory()->createNamedBuilder(
+            $this->getName(),
+            'form',
+            null,
+            $this->getFormOptions()
+        );
+
         $form = $this->build($builder)->getForm();
 
         if ($this->editing) {
@@ -114,6 +120,15 @@ abstract class ModelFormCreator implements FormCreatorInterface
     protected function isEdit()
     {
         return (bool) $this->editing;
+    }
+
+    /**
+     * Get the options for the form
+     * @return array
+     */
+    protected function getFormOptions()
+    {
+        return array();
     }
 
     /**

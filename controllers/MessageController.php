@@ -6,6 +6,7 @@ use BZIon\Form\Creator\GroupFormCreator;
 use BZIon\Form\Creator\GroupInviteFormCreator;
 use BZIon\Form\Creator\GroupRenameFormCreator;
 use BZIon\Form\Creator\MessageFormCreator;
+use BZIon\Form\Creator\MessageSearchFormCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
@@ -23,6 +24,11 @@ class MessageController extends JSONController
     {
         $groups = Group::getGroups($this->getMe()->getId());
         Service::getTemplateEngine()->addGlobal("groups", $groups);
+
+        $creator = new MessageSearchFormCreator();
+        $searchForm = $creator->create();
+        Service::getTemplateEngine()->addGlobal("searchForm", $searchForm->createView());
+
     }
 
     public function composeAction(Player $me, Request $request)

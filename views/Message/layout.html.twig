@@ -21,15 +21,15 @@
 
         <section class="messages">
             <section class="conversations">
-                <form class="search">
+                {{ form_start(searchForm, { attr: { class: "search" } } ) }}
                     <div class="icon">
                         <i class="fa fa-search"></i>
                     </div>
-                    <input type="text" class="field" name="search" data-id="new" placeholder="Search..." />
+                    {{ form_widget(searchForm.q, { attr: { class: "field", placeholder: "Search..."} } ) }}
                     <div class="icon">
                         <i class="fa fa-cog"></i>
                     </div>
-                </form>
+                {{ form_end(searchForm) }}
 
                 <section class="chat_messages">
                     <ul class="chats">

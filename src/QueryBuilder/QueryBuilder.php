@@ -228,7 +228,6 @@ class QueryBuilder implements Countable
      */
     public function isOneOf($strings)
     {
-        $table = $this->getTable();
         $count = count($strings);
         $types = str_repeat('s', $count);
         $questionMarks = str_repeat(',?', $count);
@@ -530,8 +529,6 @@ class QueryBuilder implements Countable
         if (!is_array($value)) {
             $value = array($value);
         }
-
-        $table = $this->getTable();
 
         $this->conditions[] = "{$this->currentColumn} $condition";
         $this->parameters   = array_merge($this->parameters, $value);
