@@ -3,6 +3,7 @@
 use BZIon\Form\Creator\PlayerAdminNotesFormCreator as FormCreator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlayerController extends JSONController
 {
@@ -49,7 +50,7 @@ class PlayerController extends JSONController
         $query->sortBy('username');
 
         if ($this->isJson())
-            return new JSONResponse(array('players' => $query->getArray('username')));
+            return new JsonResponse(array('players' => $query->getArray('username')));
         else
             return array('players' => $query->getModels());
     }

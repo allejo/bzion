@@ -4,6 +4,8 @@
     <ul>
         {% for message in messages %}
             <li><code>{{ message.content }}</code> sent by {{ link_to(message.author) }} in {{ link_to(message.group) }}</li>
+        {% else %}
+            <li><em>No messages found</em></li>
         {% endfor %}
     </ul>
 {% endblock %}

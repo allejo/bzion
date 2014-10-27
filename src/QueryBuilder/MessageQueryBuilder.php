@@ -14,6 +14,31 @@
  */
 class MessageQueryBuilder extends QueryBuilder
 {
+    /**
+     * Only return messages that are sent from/to a specific player
+     *
+     * @param  Player $player The player related to the messages
+     * @return self
+     */
+    public function forPlayer($player)
+    {
+        $this->extras .= '
+            LEFT JOIN `groups` ON groups.id = messages.group_to
+            LEFT JOIN `player_groups` ON player_groups.group=groups.id
+        ';
+
+        $this->column('player_groups.player')->is($player);
+        $this->column('groups.status')->isOneOf(Group::getActiveStatuses());
+
+        return $this;
+    }
+
+    /**
+     * Locate messages that contain keywords in a search string
+     *
+     * @param  string $query The search query
+     * @return self
+     */
     public function search($query)
     {
         $keywords = preg_split('/\s+/', trim($query));

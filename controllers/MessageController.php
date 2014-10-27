@@ -135,15 +135,19 @@ class MessageController extends JSONController
 
     public function searchAction(Player $me, Request $request)
     {
-        $query = $request->query->get('q');
+        $search = $request->query->get('q');
 
-        if (strlen($query) < 3 && !$this->isDebug()) {
+        if (strlen($search) < 3 && !$this->isDebug()) {
             // TODO: Find a better error message
             throw new BadRequestException('The search term you have provided is too short');
         }
 
+        $query = $this->getQueryBuilder()
+            ->forPlayer($me)
+            ->search($search);
+
         return array(
-            'messages' => $this->getQueryBuilder()->search($query)->getModels()
+            'messages' => $query->getModels()
         );
     }
 

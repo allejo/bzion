@@ -22,8 +22,7 @@ class NotificationQueryBuilder extends QueryBuilder
     {
         $cloned = clone $this;
 
-        $type   = $cloned->type;
-        $table  = $type::TABLE;
+        $table  = $this->getTable();
         $params = $cloned->createQueryParams();
 
         Database::getInstance()->query(
