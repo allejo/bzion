@@ -55,6 +55,19 @@ class NewsTest extends TestCase
         $this->assertEquals($this->newsCategory->getId(), $news->getCategoryID());
         $this->assertEquals($this->player_a->getId(), $news->getAuthorID());
 
+        $this->assertEquals($news->getLastEdit(), $news->getCreated());
+        $this->assertEquals($news->getAuthor(), $news->getLastEditor());
+        $this->assertEquals($news->getAuthorID(), $news->getLastEditorID());
+
+        $newSubject = "A New Subject";
+        $newContent = "Butter and toast";
+
+        $news->updateSubject($newSubject);
+        $news->updateContent($newContent);
+
+        $this->assertEquals($newSubject, $news->getSubject());
+        $this->assertEquals($newContent, $news->getContent());
+
         $this->wipe($news);
     }
 
