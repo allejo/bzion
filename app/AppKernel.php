@@ -49,6 +49,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
         );
 
         if ($this->getEnvironment() == 'profile') {

@@ -9,6 +9,7 @@
         "cboden/ratchet"             : "0.2.*",
         "doctrine/inflector"         : "~1.0",
         "ext-gd"                     : "*",
+        "friendsofsymfony/elastica-bundle": "~3.0",
         "ivaynberg/select2"          : "dev-master",
         "liip/imagine-bundle"        : "~1.0",
         "michelf/php-markdown"       : ">=1.4.1",
