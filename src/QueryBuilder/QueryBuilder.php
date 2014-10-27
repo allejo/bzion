@@ -68,6 +68,12 @@ class QueryBuilder implements Countable
     protected $paginationTypes = '';
 
     /**
+     * Extra MySQL query string to pass
+     * @var string
+     */
+    protected $extras = '';
+
+    /**
      * A column based on which we should sort the results
      * @var string|null
      */
@@ -159,7 +165,7 @@ class QueryBuilder implements Countable
         if (!isset($this->columns[$column]))
             throw new InvalidArgumentException("Unknown column '$column'");
 
-        $this->currentColumn = $this->columns[$column];
+        $this->column($this->columns[$column]);
 
         return $this;
     }
@@ -222,16 +228,15 @@ class QueryBuilder implements Countable
      */
     public function isOneOf($strings)
     {
-        $count         = count($strings);
+        $table = $this->getTable();
+        $count = count($strings);
+        $types = str_repeat('s', $count);
         $questionMarks = str_repeat(',?', $count);
-        $types         = str_repeat('s', $count);
 
         // Remove first comma from questionMarks so that MySQL can read our query
         $questionMarks = ltrim($questionMarks, ',');
 
-        $this->conditions[] = "`{$this->currentColumn}` IN ($questionMarks)";
-        $this->types       .= $types;
-        $this->parameters   = array_merge($this->parameters, $strings);
+        $this->addColumnCondition("IN ($questionMarks)", $strings, $types);
 
         return $this;
     }
@@ -348,11 +353,10 @@ class QueryBuilder implements Countable
             return $this;
         }
 
-        $this->currentColumn = $this->sortBy;
+        $this->column($this->sortBy);
         $this->limited = true;
         $column = $this->currentColumn;
-        $type   = $this->type;
-        $table  = $type::TABLE;
+        $table  = $this->getTable();
 
         $comparison  = $this->reverseSort ^ $reverse;
         $comparison  = ($comparison) ? '>' : '<';
@@ -462,8 +466,7 @@ class QueryBuilder implements Countable
      */
     public function count()
     {
-        $type   = $this->type;
-        $table  = $type::TABLE;
+        $table  = $this->getTable();
         $params = $this->createQueryParams();
         $db     = Database::getInstance();
 
@@ -489,19 +492,49 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Select a column to perform opeations on
+     *
+     * This is identical to the `where()` method, except that the column is
+     * specified as a MySQL column and not as a column name given by the model
+     *
+     * @param  string $column The column to select
+     * @return self
+     */
+    protected function column($column)
+    {
+        if (strpos($column, '.') === FALSE) {
+            // Add the table name to the column if it isn't there already so that
+            // MySQL knows what to do when handling multiple tables
+            $table = $this->getTable();
+            $this->currentColumn = "`$table`.`$column`";
+        } else {
+            $this->currentColumn = $column;
+        }
+
+        return $this;
+    }
+
+    /**
      * Add a condition for the column
      * @param  string $condition The MySQL condition
-     * @param  mixed  $value     A value to pass to MySQL
-     * @param  string $type      The type of the value
+     * @param  mixed  $value     Value(s) to pass to MySQL
+     * @param  string $type      The type of the values
      * @return void
      */
     protected function addColumnCondition($condition, $value, $type)
     {
-        if (!$this->currentColumn)
+        if (!$this->currentColumn) {
             throw new Exception("You haven't selected a column!");
+        }
 
-        $this->conditions[] = "`{$this->currentColumn}` $condition";
-        $this->parameters[] = $value;
+        if (!is_array($value)) {
+            $value = array($value);
+        }
+
+        $table = $this->getTable();
+
+        $this->conditions[] = "{$this->currentColumn} $condition";
+        $this->parameters   = array_merge($this->parameters, $value);
         $this->types       .= $type;
 
         $this->currentColumn = null;
@@ -513,11 +546,12 @@ class QueryBuilder implements Countable
      */
     protected function createQueryParams()
     {
+        $extras     = $this->extras;
         $conditions = $this->createQueryConditions();
         $order      = $this->createQueryOrder();
         $pagination = $this->createQueryPagination();
 
-        return "$conditions $order $pagination";
+        return "$extras $conditions $order $pagination";
     }
 
     /**
@@ -538,6 +572,18 @@ class QueryBuilder implements Countable
     protected function getTypes()
     {
         return $this->types . $this->paginationTypes;
+    }
+
+    /**
+     * Get the table of the model
+     *
+     * @return string
+     */
+    protected function getTable()
+    {
+        $type = $this->type;
+
+        return $type::TABLE;
     }
 
     /**
@@ -562,11 +608,13 @@ class QueryBuilder implements Countable
      */
     private function createQueryColumns($columns = array())
     {
-        $columnStrings = array('id');
+        $type = $this->type;
+        $table = $type::TABLE;
+        $columnStrings = array("`$table`.id");
 
         foreach ($columns as $returnName) {
             $dbName = $this->columns[$returnName];
-            $columnStrings[] = "`$dbName` as `$returnName`";
+            $columnStrings[] = "`$table`.`$dbName` as `$returnName`";
         }
 
         return implode(',', $columnStrings);
