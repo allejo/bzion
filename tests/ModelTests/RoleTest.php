@@ -52,6 +52,8 @@ class RoleTest extends TestCase
         $this->assertArrayNotHasKey("add_team", $role->getPerms());
 
         $this->assertArrayContainsModel($role, Role::getLeaderRoles());
+
+        $this->wipe($role);
     }
 
     public function testNormalRole()
@@ -72,6 +74,8 @@ class RoleTest extends TestCase
         $this->assertEquals(-1, $role->getDisplayOrder());
 
         $this->assertArrayContainsModel($role, Role::getRoles($this->player_b->getId()));
+
+        $this->wipe($role);
     }
 
     public function tearDown()
