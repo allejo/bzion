@@ -160,11 +160,18 @@ class News extends UrlModel implements NamedModel
 
     /**
      * Get the time when the article was last updated
+     *
+     * @param string $format The date format. Leave blank if you want a relative time (e.g. 2 days ago)
+     *
      * @return string The article's last update time in a human-readable form
      */
-    public function getLastEdit()
+    public function getLastEdit($format = "")
     {
-        return $this->updated->diffForHumans();
+        if (empty($format)) {
+            return $this->updated->diffForHumans();
+        }
+
+        return $this->updated->format($format);
     }
 
     /**

@@ -47,7 +47,11 @@ class NewsTest extends TestCase
         $news = News::addNews($newsSubject, $newsContent, $this->player_a->getId(), $this->newsCategory->getId());
 
         $this->assertNotFalse($news);
+        $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getCreated());
 
+        $createdLiteral = '<span title="' . $news->getCreated(TimeDate::DATE_FULL) . '">' . $news->getCreated() . '</span>';
+
+        $this->assertEquals($createdLiteral, $news->getCreatedLiteral());
         $this->assertEquals($newsSubject, $news->getSubject());
         $this->assertEquals($newsContent, $news->getContent());
         $this->assertEquals($this->newsCategory, $news->getCategory());
@@ -67,6 +71,23 @@ class NewsTest extends TestCase
 
         $this->assertEquals($newSubject, $news->getSubject());
         $this->assertEquals($newContent, $news->getContent());
+
+        $unorgCategory = new NewsCategory(1);
+
+        $news->updateCategory($unorgCategory->getId());
+        $this->assertEquals($unorgCategory, $news->getCategory());
+
+        $this->assertEquals("published", $news->getStatus());
+        $news->updateStatus("draft");
+        $this->assertEquals("draft", $news->getStatus());
+
+        $player_b = $this->getNewPlayer();
+
+        $news->updateLastEditor($player_b->getId());
+        $this->assertEquals($player_b, $news->getLastEditor());
+
+        $news->updateEditTimestamp();
+        $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getLastEdit());
 
         $this->wipe($news);
     }
