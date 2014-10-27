@@ -60,6 +60,8 @@ class NewsTest extends TestCase
         $this->assertEquals($this->player_a->getId(), $news->getAuthorID());
 
         $this->assertEquals($news->getLastEdit(), $news->getCreated());
+        $this->assertEquals($news->getLastEdit(TimeDate::DATE_FULL), $news->getCreated(TimeDate::DATE_FULL));
+
         $this->assertEquals($news->getAuthor(), $news->getLastEditor());
         $this->assertEquals($news->getAuthorID(), $news->getLastEditorID());
 
