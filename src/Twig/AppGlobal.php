@@ -81,8 +81,8 @@ class AppGlobal
     {
         return array(
             'websocket' => array(
-                'enabled' => $this->container->getParameter('bzion.notifications.websocket.enabled'),
-                'port' => $this->container->getParameter('bzion.notifications.websocket.push_port')
+                'enabled' => $this->container->getParameter('bzion.features.websocket.enabled'),
+                'port' => $this->container->getParameter('bzion.features.websocket.push_port')
             )
         );
     }

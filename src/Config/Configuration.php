@@ -100,7 +100,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
-                ->arrayNode('notifications')
+                ->arrayNode('features')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('pusher')

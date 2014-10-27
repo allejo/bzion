@@ -24,9 +24,9 @@ class PusherAdapter extends NotificationAdapter
     public function __construct()
     {
         $this->pusher = new Pusher(
-            \Service::getParameter('bzion.notifications.pusher.key'),
-            \Service::getParameter('bzion.notifications.pusher.secret'),
-            \Service::getParameter('bzion.notifications.pusher.app_id')
+            \Service::getParameter('bzion.features.pusher.key'),
+            \Service::getParameter('bzion.features.pusher.secret'),
+            \Service::getParameter('bzion.features.pusher.app_id')
         );
     }
 
@@ -50,6 +50,6 @@ class PusherAdapter extends NotificationAdapter
         if (!parent::isEnabled())
             return false;
 
-        return \Service::getParameter('bzion.notifications.pusher.enabled');
+        return \Service::getParameter('bzion.features.pusher.enabled');
     }
 }

@@ -23,7 +23,7 @@ bzion:
         directory: "%bzion.root_dir%/app/logs"
         # The minimum log level (can be debug, info, notice, warning, error, critical, alert or emergency)
         level: notice
-    notifications:
+    features:
         pusher:
             enabled: false
             app_id: 54321

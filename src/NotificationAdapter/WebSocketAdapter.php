@@ -23,7 +23,7 @@ class WebSocketAdapter extends NotificationAdapter
     {
         \Debug::startStopwatch("notification.trigger.websocket");
 
-        $port = \Service::getParameter('bzion.notifications.websocket.pull_port');
+        $port = \Service::getParameter('bzion.features.websocket.pull_port');
 
         $fp = @stream_socket_client("tcp://127.0.0.1:". $port, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
 
@@ -47,6 +47,6 @@ class WebSocketAdapter extends NotificationAdapter
         if (!parent::isEnabled())
             return false;
 
-        return \Service::getParameter('bzion.notifications.websocket.enabled');
+        return \Service::getParameter('bzion.features.websocket.enabled');
     }
 }

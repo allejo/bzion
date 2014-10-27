@@ -86,7 +86,7 @@ class AppKernel extends Kernel
 
         // Ratchet doesn't support PHP's native session storage, so use our own
         // if we need it
-        if (Service::getParameter('bzion.notifications.websocket.enabled') &&
+        if (Service::getParameter('bzion.features.websocket.enabled') &&
             $this->getEnvironment() !== 'test') {
             $storage = new NativeSessionStorage(array(), new DatabaseSessionHandler());
             $session = new Session($storage);

@@ -47,10 +47,10 @@ class ServerCommand extends Command
         $pusher = new EventPusher();
 
         $pushPort = ($input->getOption('push')) ?: $this->getContainer()
-            ->getParameter('bzion.notifications.websocket.push_port');
+            ->getParameter('bzion.features.websocket.push_port');
 
         $pullPort = ($input->getOption('pull')) ?: $this->getContainer()
-            ->getParameter('bzion.notifications.websocket.pull_port');
+            ->getParameter('bzion.features.websocket.pull_port');
 
         $pullSocket = new Server($loop);
         $pullSocket->on('connection', function ($conn) use ($pusher) {
