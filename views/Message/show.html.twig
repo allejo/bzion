@@ -1,5 +1,7 @@
 {% extends 'Message/layout.html.twig' %}
 
+{% form_theme form _self %}
+
 {% block messages %}
     <section id="groupMessages" class="chat_area" data-id="{{ group.id }}">
         <div class="dimmable">
@@ -36,7 +38,7 @@
                 {{ form_errors(form) }}
                 <div class="quick_reply">
                     {{ form_errors(form.message) }}
-                    {{ form_widget(form.message, {id: 'composeArea', attr: {class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
+                    {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
 
                     {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
                 </div>

@@ -1,0 +1,9 @@
+{% extends 'Message/layout.html.twig' %}
+
+{% block messages %}
+    <ul>
+        {% for message in messages %}
+            <li><code>{{ message.content }}</code> sent by {{ link_to(message.author) }} in {{ link_to(message.group) }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

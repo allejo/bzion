@@ -161,7 +161,7 @@ class Message extends Model
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Message', array(
+        return new MessageQueryBuilder('Message', array(
             'columns' => array(
                 'group'  => 'group_to',
                 'time'   => 'timestamp',

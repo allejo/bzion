@@ -1,7 +1,7 @@
 <?php
 namespace BZIon\Twig;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * A twig global that provides information about the app
@@ -16,7 +16,7 @@ class AppGlobal
 
     /**
      * Symfony's container
-     * @var Container
+     * @var ContainerInterface
      */
     private $container;
 
@@ -24,9 +24,9 @@ class AppGlobal
      * Create new AppGlobal
      *
      * @param Controller $controller The controller handling the request
-     * @param Container  $container  Symfony's service container
+     * @param ContainerInterface $container Symfony's service container
      */
-    public function __construct(\Controller $controller, Container $container)
+    public function __construct(\Controller $controller, ContainerInterface $container)
     {
         $this->controller = $controller;
         $this->container  = $container;

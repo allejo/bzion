@@ -10,7 +10,7 @@
  * A discussion (group of messages)
  * @package    BZiON\Models
  */
-class Group extends UrlModel
+class Group extends UrlModel implements NamedModel
 {
     /**
      * The subject of the group
@@ -198,6 +198,14 @@ class Group extends UrlModel
     public static function getActiveStatuses()
     {
         return array('active', 'reported');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return $this->getSubject();
     }
 
     /**

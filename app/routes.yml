@@ -78,6 +78,10 @@ message_list:
     pattern:    /messages
     defaults: { _controller: 'Message', _action: 'compose' }
 
+message_search:
+    pattern:    /messages/search
+    defaults: { _controller: 'Message', _action: 'search' }
+
 message_discussion_show:
     pattern:    /messages/{discussion}
     defaults: { _controller: 'Message', _action: 'show' }

@@ -21,7 +21,7 @@ class MessageController extends JSONController
 
     protected function prepareTwig()
     {
-        $groups = Group::getGroups($this->getRequest()->getSession()->get("playerId"));
+        $groups = Group::getGroups($this->getMe()->getId());
         Service::getTemplateEngine()->addGlobal("groups", $groups);
     }
 
@@ -131,6 +131,20 @@ class MessageController extends JSONController
             return new RedirectResponse($discussion->getUrl());
         },  "Are you sure you want to kick {$player->getEscapedUsername()} from the discussion?",
             "Player {$player->getUsername()} has been kicked from the conversation", "Kick");
+    }
+
+    public function searchAction(Player $me, Request $request)
+    {
+        $query = $request->query->get('q');
+
+        if (strlen($query) < 3 && !$this->isDebug()) {
+            // TODO: Find a better error message
+            throw new BadRequestException('The search term you have provided is too short');
+        }
+
+        return array(
+            'messages' => $this->getQueryBuilder()->search($query)->getModels()
+        );
     }
 
     /**
