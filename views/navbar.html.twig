@@ -10,7 +10,7 @@
 {% macro page(title, controller_name, path, icon) %}
     {% set class = '' %}
 
-    {% if controller.name == controller_name %}
+    {% if app.controller.name == controller_name %}
         {% set class = ' class="active"' %}
     {% endif %}
 

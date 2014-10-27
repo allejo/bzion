@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Form\Creator\ConfirmationFormCreator;
+use BZIon\Twig\AppGlobal;
 use BZIon\Twig\ModelFetcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,21 +29,12 @@ abstract class HTMLController extends Controller
 
         // Add global variables to the twig templates
         $twig = Service::getTemplateEngine();
-        $twig->addGlobal("me",         $this->getMe());
-        $twig->addGlobal("debug",      $this->container->getParameter('kernel.debug'));
-        $twig->addGlobal("model",      new ModelFetcher());
-        $twig->addGlobal("pages",      Page::getPages());
-        $twig->addGlobal("request",    $request);
-        $twig->addGlobal("session",    $request->getSession());
-        $twig->addGlobal("siteTitle",  $this->container->getParameter('bzion.site.name'));
-        $twig->addGlobal("controller", $this);
-        $twig->addGlobal("environment", $this->container->getParameter('kernel.environment'));
-        $twig->addGlobal("socket", array(
-            "websocket" => array(
-                "enabled" => $this->container->getParameter('bzion.notifications.websocket.enabled'),
-                "port" => $this->container->getParameter('bzion.notifications.websocket.push_port')
-            )
-        ));
+        $twig->addGlobal("me",      $this->getMe());
+        $twig->addGlobal("model",   new ModelFetcher());
+        $twig->addGlobal("request", $request);
+        $twig->addGlobal("session", $request->getSession());
+
+        $twig->addGlobal("app", new AppGlobal($this, $this->container));
 
         $this->prepareTwig();
 

@@ -29,7 +29,7 @@
                 <h1>
                     <a href="{{ path('index') }}">
                         <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
-                        {{ siteTitle }}
+                        {{ app.siteTitle }}
                     </a>
                 </h1>
 
@@ -51,7 +51,7 @@
 
         <footer>
             <ul>
-                {% for page in pages %}
+                {% for page in app.pages %}
                     {% if not page.isHomePage %}
                         <li>{{ link_to(page) }}</li>
                     {% endif %}
@@ -65,13 +65,13 @@
             <section class="information">
                 <p class="copyright">BZiON &copy; 2014</p>
 
-                {% if debug %}
-                    <p class="development"><i class="fa fa-wrench"></i> {{ environment }}</p>
+                {% if app.debug %}
+                    <p class="development"><i class="fa fa-wrench"></i> {{ app.environment }}</p>
                 {% endif %}
             </section>
         </footer>
 
-        {% if debug %}
+        {% if app.debug %}
             <section class="css-dev">
                 <div class="desktop">Desktop</div>
                 <div class="tablet">Tablet</div>
@@ -85,9 +85,9 @@
             var baseURL = "{{ request.schemeAndHTTPHost|e('js') }}";
 
             var config  = {
-                {% if socket.websocket.enabled %}
+                {% if app.socket.websocket.enabled %}
                     websocket: {
-                        port: {{ socket.websocket.port }}
+                        port: {{ app.socket.websocket.port }}
                     }
                 {% else %}
                     websocket: false
@@ -100,7 +100,7 @@
         <script src="{{ asset('assets/js/min/main-ck.js') }}"></script>
         <script src="{{ asset('assets/js/events.js') }}"></script>
 
-        {% if debug %}
+        {% if app.debug %}
             <script src="{{ asset('assets/js/debug.js') }}"></script>
         {% endif %}
 

@@ -21,7 +21,7 @@ class LinkToFunction
             $content = \Model::escape($this->getModelName($model));
         }
 
-        if ($model instanceof \UrlModel && ($linkAll || !isset($context['controller']) || $context['controller']->canSee($model))) {
+        if ($model instanceof \UrlModel && ($linkAll || !isset($context['app']) || $context['app']->getController()->canSee($model))) {
             $params = array();
             if ($linkAll) {
                 $params['showDeleted'] = true;
