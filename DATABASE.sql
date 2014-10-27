@@ -429,7 +429,7 @@ CREATE TABLE `news_categories` (
   `alias` varchar(50) NOT NULL DEFAULT '' COMMENT 'The URL slug of the category',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'The name of the category to be used on the website',
   `protected` tinyint(1) NOT NULL COMMENT 'Whether or not the category is protected from being deleted from the database via PHP',
-  `status` set('enabled','deleted') NOT NULL DEFAULT 'enabled' COMMENT 'The status of the category',
+  `status` set('enabled','disabled','deleted') NOT NULL DEFAULT 'enabled' COMMENT 'The status of the category',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

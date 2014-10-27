@@ -283,6 +283,17 @@ class Role extends Model
     }
 
     /**
+     * Set the content of the page
+     *
+     * @param  boolean $display
+     * @return self
+     */
+    public function setDisplayAsLeader($display)
+    {
+        return $this->updateProperty($this->display, "display", $display, 'i');
+    }
+
+    /**
      * Create a new role
      *
      * @param string $name         The name of new role to be created
