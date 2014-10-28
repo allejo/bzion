@@ -53,6 +53,25 @@ liip_imagine:
                 background: ~
                 thumbnail: { size: [50, 50], mode: outbound }
 
+fos_elastica:
+    clients:
+        default:
+            host: %bzion.features.elasticsearch.host%
+            port: %bzion.features.elasticsearch.port%
+    indexes:
+
+        search:
+            finder: ~
+            types:
+                group:
+                    mappings:
+                        members: ~
+                message:
+                    mappings:
+                        content: ~
+                        group: {_parent: { type: "group", identifier: "id" } }
+
+
 services:
     main.warmer.twig_warmer:
         class: BZIon\Twig\TwigCacheWarmer
@@ -71,5 +90,21 @@ services:
         class: BZIon\Command\ServerCommand
         tags:
             -  { name: console.command }
+    bzion.search_provider.message:
+        class: BZIon\Search\MessageProvider
+        arguments:
+            - @fos_elastica.index.search.message
+        tags:
+            - { name: fos_elastica.provider, index: search, type: message }
+    bzion.search_provider.group:
+        class: BZIon\Search\GroupProvider
+        arguments:
+            - @fos_elastica.index.search.message
+        tags:
+            - { name: fos_elastica.provider, index: search, type: group }
+    bzion.search_transformer.message:
+        class: BZIon\Search\MessageTransformer
+        tags:
+            - { name: fos_elastica.elastica_to_model_transformer, index: search, type: message }
     monolog.logger.app:
         alias: logger

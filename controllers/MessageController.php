@@ -7,6 +7,7 @@ use BZIon\Form\Creator\GroupInviteFormCreator;
 use BZIon\Form\Creator\GroupRenameFormCreator;
 use BZIon\Form\Creator\MessageFormCreator;
 use BZIon\Form\Creator\MessageSearchFormCreator;
+use BZIon\Search\MessageSearch;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
@@ -141,19 +142,18 @@ class MessageController extends JSONController
 
     public function searchAction(Player $me, Request $request)
     {
-        $search = $request->query->get('q');
+        $query = $request->query->get('q');
 
-        if (strlen($search) < 3 && !$this->isDebug()) {
+        if (strlen($query) < 3 && !$this->isDebug()) {
             // TODO: Find a better error message
             throw new BadRequestException('The search term you have provided is too short');
         }
 
-        $query = $this->getQueryBuilder()
-            ->forPlayer($me)
-            ->search($search);
+        $search  = new MessageSearch($this->getQueryBuilder());
+        $results = $search->search($query);
 
         return array(
-            'messages' => $query->getModels()
+            'messages' => $results
         );
     }
 

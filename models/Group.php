@@ -375,4 +375,17 @@ class Group extends UrlModel implements NamedModel
         return false;
     }
 
+    /**
+     * Get a query builder for groups
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Group', array(
+            'columns' => array(
+                'status' => 'status'
+            ),
+            'name' => 'subject',
+        ));
+    }
 }
