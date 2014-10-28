@@ -127,6 +127,7 @@ body {
                             position: absolute;
                             top: $line-height;
                             width: 100%;
+                            z-index: 100;
 
                             li {
                                 display: block;
