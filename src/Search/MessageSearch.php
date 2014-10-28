@@ -10,6 +10,8 @@ namespace BZIon\Search;
 use FOS\ElasticaBundle\Provider\ProviderInterface;
 use Elastica\Type;
 use Elastica\Document;
+use Elastica\Query\Bool;
+use Elastica\Query\Fuzzy;
 
 /**
  * Performs a search on messages
@@ -61,12 +63,15 @@ class MessageSearch {
     private function elasticSearch($query)
     {
         $finder = \Service::getContainer()->get('fos_elastica.finder.search');
+        $boolQuery = new Bool();
 
         // We have only stored "active" messages and groups on Elasticsearch's
         // database, so there is no check for that again
-        $results = $finder->find($query);
+        $fieldQuery = new Fuzzy();
+        $fieldQuery->setField('content', $query);
+        $boolQuery->addShould($fieldQuery);
 
-        return $results;
+        return $finder->find($boolQuery);
 
     }
 
