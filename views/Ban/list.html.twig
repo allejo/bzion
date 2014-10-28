@@ -29,23 +29,23 @@
                 </div>
                 {% for ban in bans %}
                     <div class="row">
-                        <div class="column">
+                        <div class="column creation">
                             {{ ban.created }}
                         </div>
-                        <div class="column">
+                        <div class="column victim">
                             {{ link_to(ban.victim) }}
                         </div>
-                        <div class="column">
+                        <div class="column author">
                             {{ link_to(ban.author) }}
                         </div>
-                        <div class="column">
+                        <div class="column expiration">
                             {% if ban.willExpire %}
                                 {{ ban.expiration.format(constant('TimeDate::DATE_FULL')) }}
                             {% else %}
                                 <em>Never</em>
                             {% endif %}
                         </div>
-                        <div class="column">
+                        <div class="column info">
                             {{ link_to(ban, icon='info-circle') }}
                         </div>
                     </div>

@@ -3,6 +3,7 @@ main {
         @extend .clearfix;
 
         .punishments {
+            @extend %mobile_padding;
             @extend .wrapper;
 
             .ban_list {
@@ -11,17 +12,89 @@ main {
                 .row {
                     &.header {
                         border-bottom: 1px dotted #EFEFEF;
+
+                        @include respond-to(phones) {
+                            display: none;
+                        }
                     }
 
                     .column {
                         border: none;
                         padding: 10px;
+
+                        &.creation, &.victim, &.author, &.expiration, &.info {
+                            @include respond-to(phones) {
+                                &:before {
+                                    font-weight: bold;
+                                    text-align: left;
+                                }
+                            }
+                        }
+
+                        &.creation {
+                            @include respond-to(phones) {
+                                &:before {
+                                    content: 'Ban issued ';
+                                }
+                            }
+                        }
+
+                        &.victim {
+                            @include respond-to(phones) {
+                                &:before {
+                                    content: 'Ban Victim: ';
+                                }
+                            }
+                        }
+
+                        &.author {
+                            @include respond-to(phones) {
+                                &:before {
+                                    content: 'Banner: ';
+                                }
+                            }
+                        }
+
+                        &.expiration {
+                            @include respond-to(phones) {
+                                &:before {
+                                    content: 'Expiration: ';
+                                }
+                            }
+                        }
+
+                        &.info {
+                            @include respond-to(phones) {
+                                padding-bottom: 20px;
+
+                                &:before {
+                                    content: 'Ban details: ';
+                                }
+                            }
+                        }
+
+                        @include respond-to(phones) {
+                            display: block;
+                            height: auto;
+                            padding: 0;
+                        }
+                    }
+
+                    &:last-child {
+                        .column {
+                            &.info {
+                                @include respond-to(phones) {
+                                    padding-bottom: 0;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
 
         .summary {
+            @extend %mobile_padding;
             @extend .wrapper;
 
             h2, h3 {
