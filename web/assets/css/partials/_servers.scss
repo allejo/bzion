@@ -3,6 +3,7 @@ main {
         font-family: $sansSerifFont;
 
         .servers {
+            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 
@@ -10,12 +11,16 @@ main {
 
             .server {
                 display: inline-block;
-                margin: 10px;
                 overflow: auto;
                 width: 100%;
 
                 .dimmable {
                     padding: 10px;
+
+                    @include respond-to(phablets) {
+                        margin: 10px 0;
+                        padding: 0;
+                    }
                 }
 
                 // HTML needs to be restructured, until then this class won't
@@ -78,6 +83,10 @@ main {
                         }
                     }
                 }
+            }
+
+            @include respond-to(phablets) {
+                @include columns(1 3em);
             }
         }
     }
