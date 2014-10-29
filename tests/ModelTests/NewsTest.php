@@ -131,6 +131,10 @@ class NewsTest extends TestCase
         $this->newsCategory->delete();
         $this->assertNotEquals("deleted", $this->newsCategory->getStatus());
 
+        $article->wipe();
+        $this->newsCategory->delete();
+        $this->assertEquals("deleted", $this->newsCategory->getStatus());
+
         $this->wipe($article);
     }
 
