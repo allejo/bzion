@@ -7,7 +7,12 @@ class NewsTest extends TestCase
     /**
      * @var Player
      */
-    protected $player_a;
+    protected $player_with_create_perms;
+
+    /**
+     * @var Player
+     */
+    protected $player_without_create_perms;
 
     /**
      * @var NewsCategory
@@ -18,7 +23,10 @@ class NewsTest extends TestCase
     {
         $this->connectToDatabase();
 
-        $this->player_a = $this->getNewPlayer();
+        $this->player_with_create_perms = $this->getNewPlayer();
+        $this->player_without_create_perms = $this->getNewPlayer();
+
+        $this->player_with_create_perms->addRole(2);
 
         $this->newsCategory = NewsCategory::addCategory("Sample Category");
     }
@@ -38,9 +46,9 @@ class NewsTest extends TestCase
 
     public function testCreateNewsWithoutPermissions()
     {
-        $this->assertFalse($this->player_a->hasPermission(News::CREATE_PERMISSION));
+        $this->assertFalse($this->player_without_create_perms->hasPermission(News::CREATE_PERMISSION));
 
-        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_a->getId(), $this->newsCategory->getId());
+        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_without_create_perms->getId(), $this->newsCategory->getId());
 
         $this->assertFalse($news);
         $this->wipe($news);
@@ -48,9 +56,7 @@ class NewsTest extends TestCase
 
     public function testCreateNewsWithPermissions ()
     {
-        $this->player_a->addRole(2);
-
-        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_a->getId(), $this->newsCategory->getId());
+        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
 
         $this->assertNotFalse($news);
         $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getCreated());
@@ -61,9 +67,9 @@ class NewsTest extends TestCase
         $this->assertEquals(StringMocks::SampleTitleOne, $news->getSubject());
         $this->assertEquals(StringMocks::LargeContent, $news->getContent());
         $this->assertEquals($this->newsCategory, $news->getCategory());
-        $this->assertEquals($this->player_a, $news->getAuthor());
+        $this->assertEquals($this->player_with_create_perms, $news->getAuthor());
         $this->assertEquals($this->newsCategory->getId(), $news->getCategoryID());
-        $this->assertEquals($this->player_a->getId(), $news->getAuthorID());
+        $this->assertEquals($this->player_with_create_perms->getId(), $news->getAuthorID());
 
         $this->assertEquals($news->getLastEdit(), $news->getCreated());
         $this->assertEquals($news->getLastEdit(TimeDate::DATE_FULL), $news->getCreated(TimeDate::DATE_FULL));
@@ -80,11 +86,9 @@ class NewsTest extends TestCase
         $this->wipe($news);
     }
 
-    public function testCategory ()
+    public function testNewsStatuses ()
     {
-        $this->player_a->addRole(2);
-
-        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_a->getId(), $this->newsCategory->getId());
+        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
         $unorgCategory = new NewsCategory(1);
 
         $news->updateCategory($unorgCategory->getId());
