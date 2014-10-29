@@ -42,6 +42,10 @@ class NewsTest extends TestCase
 
         $this->newsCategory->enableCategory();
         $this->assertEquals("enabled", $this->newsCategory->getStatus());
+
+        $this->assertEquals(array("enabled"), $this->newsCategory->getActiveStatuses());
+        $this->assertEquals("category", $this->newsCategory->getParamName());
+        $this->assertEquals("news category", $this->newsCategory->getTypeForHumans());
     }
 
     public function testCreateNewsWithoutPermissions()
@@ -107,6 +111,27 @@ class NewsTest extends TestCase
         $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getLastEdit());
 
         $this->wipe($news);
+    }
+
+    public function testFetchingNews ()
+    {
+        $publishedNewsArticle = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
+        $draftedNewsArticle = News::addNews(StringMocks::SampleTitleOne, StringMocks::ShortContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId(), "draft");
+
+        $this->assertArrayContainsModel($publishedNewsArticle, $this->newsCategory->getNews());
+        $this->assertArrayContainsModel($draftedNewsArticle, $this->newsCategory->getNews(0, 5, true));
+
+        $this->wipe($publishedNewsArticle, $draftedNewsArticle);
+    }
+
+    public function testDeletingCategory ()
+    {
+        $article = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
+
+        $this->newsCategory->delete();
+        $this->assertNotEquals("deleted", $this->newsCategory->getStatus());
+
+        $this->wipe($article);
     }
 
     public function tearDown()
