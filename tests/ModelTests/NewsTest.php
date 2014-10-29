@@ -1,5 +1,7 @@
 <?php
 
+include 'Mocks/StringMocks.php';
+
 class NewsTest extends TestCase
 {
     /**
@@ -17,12 +19,12 @@ class NewsTest extends TestCase
         $this->connectToDatabase();
 
         $this->player_a = $this->getNewPlayer();
+
+        $this->newsCategory = NewsCategory::addCategory("Sample Category");
     }
 
-    public function testCreateNewCategoryAndNews ()
+    public function testCreateNewCategory()
     {
-        $this->newsCategory = NewsCategory::addCategory("Sample Category");
-
         $this->assertArrayContainsModel($this->newsCategory, NewsCategory::getCategories());
         $this->assertFalse($this->newsCategory->isProtected());
         $this->assertEquals("enabled", $this->newsCategory->getStatus());
@@ -32,19 +34,23 @@ class NewsTest extends TestCase
 
         $this->newsCategory->enableCategory();
         $this->assertEquals("enabled", $this->newsCategory->getStatus());
+    }
 
-        $newsSubject = "Sample News Article";
-        $newsContent = "Some really awesome and important message that requires an entry.";
-
+    public function testCreateNewsWithoutPermissions()
+    {
         $this->assertFalse($this->player_a->hasPermission(News::CREATE_PERMISSION));
 
-        $news = News::addNews($newsSubject, $newsContent, $this->player_a->getId(), $this->newsCategory->getId());
+        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_a->getId(), $this->newsCategory->getId());
 
         $this->assertFalse($news);
+        $this->wipe($news);
+    }
 
+    public function testCreateNewsWithPermissions ()
+    {
         $this->player_a->addRole(2);
 
-        $news = News::addNews($newsSubject, $newsContent, $this->player_a->getId(), $this->newsCategory->getId());
+        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_a->getId(), $this->newsCategory->getId());
 
         $this->assertNotFalse($news);
         $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getCreated());
@@ -52,8 +58,8 @@ class NewsTest extends TestCase
         $createdLiteral = '<span title="' . $news->getCreated(TimeDate::DATE_FULL) . '">' . $news->getCreated() . '</span>';
 
         $this->assertEquals($createdLiteral, $news->getCreatedLiteral());
-        $this->assertEquals($newsSubject, $news->getSubject());
-        $this->assertEquals($newsContent, $news->getContent());
+        $this->assertEquals(StringMocks::SampleTitleOne, $news->getSubject());
+        $this->assertEquals(StringMocks::LargeContent, $news->getContent());
         $this->assertEquals($this->newsCategory, $news->getCategory());
         $this->assertEquals($this->player_a, $news->getAuthor());
         $this->assertEquals($this->newsCategory->getId(), $news->getCategoryID());
@@ -65,15 +71,20 @@ class NewsTest extends TestCase
         $this->assertEquals($news->getAuthor(), $news->getLastEditor());
         $this->assertEquals($news->getAuthorID(), $news->getLastEditorID());
 
-        $newSubject = "A New Subject";
-        $newContent = "Butter and toast";
+        $news->updateSubject(StringMocks::SampleTitleTwo);
+        $news->updateContent(StringMocks::MediumContent);
 
-        $news->updateSubject($newSubject);
-        $news->updateContent($newContent);
+        $this->assertEquals(StringMocks::SampleTitleTwo, $news->getSubject());
+        $this->assertEquals(StringMocks::MediumContent, $news->getContent());
 
-        $this->assertEquals($newSubject, $news->getSubject());
-        $this->assertEquals($newContent, $news->getContent());
+        $this->wipe($news);
+    }
 
+    public function testCategory ()
+    {
+        $this->player_a->addRole(2);
+
+        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_a->getId(), $this->newsCategory->getId());
         $unorgCategory = new NewsCategory(1);
 
         $news->updateCategory($unorgCategory->getId());
@@ -96,7 +107,7 @@ class NewsTest extends TestCase
 
     public function tearDown()
     {
-        $this->wipe($this->player_a, $this->newsCategory);
+        $this->wipe($this->newsCategory);
         parent::tearDown();
     }
 }
