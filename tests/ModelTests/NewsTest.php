@@ -1,7 +1,5 @@
 <?php
 
-include 'Mocks/StringMocks.php';
-
 class NewsTest extends TestCase
 {
     /**

@@ -4435,19 +4435,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "beb8dd6eb77edfa61dc221658afe93c8301ebefc"
+                "reference": "3c1e24b4cc48fcb80074415008d8e91863767de5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/beb8dd6eb77edfa61dc221658afe93c8301ebefc",
-                "reference": "beb8dd6eb77edfa61dc221658afe93c8301ebefc",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/3c1e24b4cc48fcb80074415008d8e91863767de5",
+                "reference": "3c1e24b4cc48fcb80074415008d8e91863767de5",
                 "shasum": ""
             },
             "require": {
                 "cilex/cilex": "~1.0",
                 "dompdf/dompdf": "~0.6",
                 "erusev/parsedown": "~1.0",
-                "herrera-io/phar-update": "~1.0",
+                "herrera-io/phar-update": "1.0.3",
                 "jms/serializer": "~0.12",
                 "monolog/monolog": "~1.6",
                 "php": ">=5.3.3",
@@ -4499,7 +4499,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "2.6-dev"
+                    "dev-develop": "2.9-dev"
                 }
             },
             "autoload": {
@@ -4526,7 +4526,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-10-27 13:16:14"
+            "time": "2014-10-29 09:32:58"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -7034,9 +7034,7 @@
             "time": "2013-12-19 11:40:00"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "ivaynberg/select2": 20,
@@ -7056,7 +7054,5 @@
         "php": ">=5.3.0",
         "ext-gd": "*"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
