@@ -149,7 +149,7 @@ class MessageController extends JSONController
             throw new BadRequestException('The search term you have provided is too short');
         }
 
-        $search  = new MessageSearch($this->getQueryBuilder());
+        $search  = new MessageSearch($this->getQueryBuilder(), $me);
         $results = $search->search($query);
 
         return array(

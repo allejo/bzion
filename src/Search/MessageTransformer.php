@@ -46,7 +46,7 @@ class MessageTransformer implements ElasticaToModelTransformerInterface
      *
      * @return string
      */
-    function getObjectClass()
+    public function getObjectClass()
     {
         return '\Message';
     }
@@ -56,7 +56,7 @@ class MessageTransformer implements ElasticaToModelTransformerInterface
      *
      * @return string the identifier field
      */
-    function getIdentifierField()
+    public function getIdentifierField()
     {
         return 'id';
     }

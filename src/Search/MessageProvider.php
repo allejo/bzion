@@ -50,10 +50,11 @@ class MessageProvider implements ProviderInterface
         foreach ($messages as $message) {
             $data = array(
                 'content' => $message->getContent(),
-                'group' => $message->getGroup()->getId()
             );
 
-            $documents[] = new Document($message->getId(), $data);
+            $document = new Document($message->getId(), $data);
+            $document->setParent($message->getGroup()->getId());
+            $documents[] = $document;
         }
 
         $this->messageType->addDocuments($documents);

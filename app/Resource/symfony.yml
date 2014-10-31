@@ -69,7 +69,8 @@ fos_elastica:
                 message:
                     mappings:
                         content: ~
-                        group: {_parent: { type: "group", identifier: "id" } }
+                    _parent:
+                        type: group
 
 
 services:
@@ -99,7 +100,7 @@ services:
     bzion.search_provider.group:
         class: BZIon\Search\GroupProvider
         arguments:
-            - @fos_elastica.index.search.message
+            - @fos_elastica.index.search.group
         tags:
             - { name: fos_elastica.provider, index: search, type: group }
     bzion.search_transformer.message:
