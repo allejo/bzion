@@ -219,6 +219,10 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
 
         $group = Group::createGroup("Subject", $sender->getId(), $participants);
         $message = $group->sendMessage($sender, $content);
+
+        // Empty message so that the results are not skewed by showing the
+        // contents of the message in the sidebar
+        $group->sendMessage($sender, '--');
     }
 
     /**
