@@ -96,17 +96,7 @@ class ScriptHandler
      */
     public static function showSuccessMessage(Event $event)
     {
-        $event->getIO()->write(<<<SUCCESS
-
-<bg=green;options=bold>
-
- [OK] BZiON has been successfully installed, enjoy!
-</>
-<comment>
- ! [NOTE] Before using BZiON, make sure that you have properly set
- ! up directory permissions as specified on the README.md file</>
-SUCCESS
-        );
+        static::executeCommand($event, 'bzion:success');
     }
 
     /**

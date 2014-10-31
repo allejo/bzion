@@ -91,6 +91,10 @@ services:
         class: BZIon\Command\ServerCommand
         tags:
             -  { name: console.command }
+    bzion.command.success_command:
+        class: BZIon\Command\SuccessCommand
+        tags:
+            -  { name: console.command }
     bzion.search_provider.message:
         class: BZIon\Search\MessageProvider
         arguments:
