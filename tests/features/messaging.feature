@@ -58,3 +58,13 @@ Feature: Messaging
       And I fill in "composeArea" with "Hey"
       And I press "Send"
       Then I should see "Hey"
+
+   Scenario: Search messages
+      Given I am logged in
+      And there is a player called "Getatable"
+      And there is a player called "Surreptitious"
+      When "Getatable" sends me a message about "cats as pets"
+      And "Surreptitious" sends "Getatable" a message about "dogs as pets"
+      And I go to "/messages/search?q=pet"
+      Then I should see "cats"
+      But I should not see "dogs"

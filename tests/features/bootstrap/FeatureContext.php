@@ -195,14 +195,30 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
-     * @When :username sends me a message
+     * @When :sender sends :recipient a message
      */
-    public function sendsMeAMessage($username)
+    public function sendsMeAMessage($sender, $recipient)
     {
-        $player = Player::getFromUsername($username);
-        $participants = array($player->getId(), $this->me->getId());
-        $group = Group::createGroup("Subject", $player->getId(), $participants);
-        $message = $group->sendMessage($player, "Message");
+        $this->sendsAMessageAbout($sender, $recipient, 'Message');
+    }
+
+    /**
+     * @When :sender sends :recipient a message about :content
+     */
+    public function sendsAMessageAbout($sender, $recipient, $content)
+    {
+        $sender = Player::getFromUsername($sender);
+
+        if ($recipient === 'me') {
+            $recipient = $this->me;
+        } else {
+            $recipient = Player::getFromUsername($recipient);
+        }
+
+        $participants = array($sender->getId(), $recipient->getId());
+
+        $group = Group::createGroup("Subject", $sender->getId(), $participants);
+        $message = $group->sendMessage($sender, $content);
     }
 
     /**
