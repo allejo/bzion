@@ -19,67 +19,11 @@ These individuals have assisted significantly with guiding the project in its cu
 
 - [blast007](https://github.com/blast007)
 
-## Setting Up
+## Installation
 
-### Demo
+The installation process is documented on the [BZiON wiki](https://github.com/allejo/bzion/wiki/Installation) and the [requirements](https://github.com/allejo/bzion/wiki/Installation-Requirements) for installation are documented as well. If you're having issues during your installation, common issues are also documented on the [wiki](https://github.com/allejo/bzion/wiki/Installation-Troubleshooting) as well.
 
 A demo BZiON installation can be found at [BZPro](http://bzion.bzpro.net/dev.php) with the latest version of the master branch and sample data.
-
-### Installation
-
-1. If you do not have PHP Composer installed, install it
-
-    ```bash
-    curl -sS https://getcomposer.org/installer | php
-    sudo mv composer.phar /usr/local/bin/composer # Optional - if you don't run this step, you will need to use the path of the new composer.phar file every time you invoke it
-    ```
-
-2. Go to the directory where you want to install BZiON
-
-      `cd league`
-
-3. Install the required libraries using Composer via the `composer.phar` file
-
-      `composer create-project allejo/bzion --keep-vcs --no-dev -s dev .`
-
-4. Make sure that the app and web/assets/imgs/avatars/ directories are writable
-   by you and the web server:
-
-   1. First get the current web server user.
-
-      ```bash
-      HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-      ```
-
-   2. Set the permissions for the appropriate directories.
-
-      <sub>_Example for Ubuntu_</sub>
-      ```bash
-      sudo setfacl -R  -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app web/assets/imgs/avatars/
-      sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app web/assets/imgs/avatars/
-      ```
-
-      <sub>_Example for OS X_</sub>
-      ```bash
-      sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app web/assets/imgs/avatars/
-      sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app web/assets/imgs/avatars/
-      ```
-
-5. Point your web server to the `web` folder in the BZiON root directory
-
-### Information
-
-#### BZiON & CloudFlare
-
-Cloudflare acts like a proxy to your website, so a visitor's IP address will appear to be Cloudflare's IP address. During authentication, visitor IPs are checked to be the same by BZiON and the BZFlag login system so with different IP addresses coming from seperate websites, an error will occur while authenticating.
-
-##### Apache
-
-If you're using Apache, you must use Cloudflare's mod_cloudflare, which can be found on [CloudFlare's Resources and Downloads](https://www.cloudflare.com/resources-downloads) under "Logging Real Visitor IP Addresses: mod_cloudflare for Apache httpd."
-
-##### Nginx
-
-If you're using Nginx, use [Nginx's RealIP module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and CloudFlare's IP addresses as explained on [CloudFlare's support page](https://support.cloudflare.com/hc/en-us/articles/200170706-Does-CloudFlare-have-an-IP-module-for-Nginx-).
 
 ## Contributing
 
