@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "dd323687f3324f9b89d73375777793d7f4c0ad13"
+                "reference": "f16eb6c6218fac2a8b157e99f797aea4b6d50dfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/dd323687f3324f9b89d73375777793d7f4c0ad13",
-                "reference": "dd323687f3324f9b89d73375777793d7f4c0ad13",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/f16eb6c6218fac2a8b157e99f797aea4b6d50dfd",
+                "reference": "f16eb6c6218fac2a8b157e99f797aea4b6d50dfd",
                 "shasum": ""
             },
             "require": {
@@ -710,7 +710,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-10-24 22:27:25"
+            "time": "2014-10-30 15:51:11"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -788,17 +788,17 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "1.0.8",
+            "version": "1.1.0",
             "target-dir": "Liip/ImagineBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "fe51d50896434d4c1393a5de1504cc174b9049bd"
+                "reference": "4530ca6fe10885e70cbff9ce992d82752743ea6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/fe51d50896434d4c1393a5de1504cc174b9049bd",
-                "reference": "fe51d50896434d4c1393a5de1504cc174b9049bd",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/4530ca6fe10885e70cbff9ce992d82752743ea6a",
+                "reference": "4530ca6fe10885e70cbff9ce992d82752743ea6a",
                 "shasum": ""
             },
             "require": {
@@ -858,7 +858,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2014-10-22 06:27:33"
+            "time": "2014-10-29 18:48:33"
         },
         {
             "name": "michelf/php-markdown",
@@ -3943,16 +3943,16 @@
         },
         {
             "name": "erusev/parsedown",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "c62365adc4488e1c35a8f45ea86f7d4a22bd58a0"
+                "reference": "da5d75e97e1ed19e57bd54fa6cb595a6a0879a67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/c62365adc4488e1c35a8f45ea86f7d4a22bd58a0",
-                "reference": "c62365adc4488e1c35a8f45ea86f7d4a22bd58a0",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/da5d75e97e1ed19e57bd54fa6cb595a6a0879a67",
+                "reference": "da5d75e97e1ed19e57bd54fa6cb595a6a0879a67",
                 "shasum": ""
             },
             "type": "library",
@@ -3978,7 +3978,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2014-09-25 23:06:16"
+            "time": "2014-10-29 20:29:46"
         },
         {
             "name": "herrera-io/json",
@@ -4583,12 +4583,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "3c1e24b4cc48fcb80074415008d8e91863767de5"
+                "reference": "a44e9e62a766610171e7e336013556610aee54c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/3c1e24b4cc48fcb80074415008d8e91863767de5",
-                "reference": "3c1e24b4cc48fcb80074415008d8e91863767de5",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/a44e9e62a766610171e7e336013556610aee54c8",
+                "reference": "a44e9e62a766610171e7e336013556610aee54c8",
                 "shasum": ""
             },
             "require": {
@@ -4674,7 +4674,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-10-29 09:32:58"
+            "time": "2014-10-29 19:53:37"
         },
         {
             "name": "phpdocumentor/reflection",
