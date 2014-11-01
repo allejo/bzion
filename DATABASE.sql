@@ -304,6 +304,21 @@ VALUES
 /*!40000 ALTER TABLE `countries` ENABLE KEYS */;
 UNLOCK TABLES;
 
+# Dump of table group_events
+# ------------------------------------------------------------
+
+CREATE TABLE `group_events` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `group` int(10) unsigned NOT NULL COMMENT 'The ID of the group where the event occured',
+  `event` text NOT NULL COMMENT 'The serialized data of the event',
+  `timestamp` datetime NOT NULL COMMENT 'The timestamp of when the event took place',
+  `status` set('visible','deleted') NOT NULL DEFAULT 'visible' COMMENT 'That status of the group event',
+  PRIMARY KEY (`id`),
+  KEY `group` (`group`),
+  CONSTRAINT `group_event_ibfk_1` FOREIGN KEY (`group`) REFERENCES `groups` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 # Dump of table groups
 # ------------------------------------------------------------
