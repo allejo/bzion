@@ -106,7 +106,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
      * @param  \ReflectionParameter $param The constructor's parameter
      * @return boolean
      */
-    private function isModel($param)
+    private static function isModel($param)
     {
         $class = $param->getClass();
 

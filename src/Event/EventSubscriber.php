@@ -64,6 +64,7 @@ class EventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
+            'group.rename' => 'group',
             'message.new'  => 'onNewMessage',
             'notification.new'  => 'onNewNotification',
             'team.delete'  => 'notify',
@@ -123,11 +124,23 @@ class EventSubscriber implements EventSubscriberInterface
 
     /**
      * Called when an event needs to notify a user
+     *
      * @param Event  $event The event
+     * @param string $name  The name of the event
      */
     public function notify(Event $event, $name)
     {
         $event->notify($name);
+    }
+
+    /**
+     * Called when a group event needs to be stored in the database
+     *
+     * @param Event $event The event
+     */
+    public function group(Event $event)
+    {
+        \GroupEvent::storeEvent($event->getGroup()->getId(), $event);
     }
 
     /**

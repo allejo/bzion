@@ -13,6 +13,16 @@ namespace BZIon\Event;
 class Events
 {
     /**
+     * The new notification event is dispatched each time a new notification is
+     * sent to a player
+     *
+     * The event listener receives a BZIon\Event\GroupRenameEvent instance
+     *
+     * @var string
+     */
+    const GROUP_RENAME = 'group.rename';
+
+    /**
      * The message event is thrown each time a new message is sent or a
      * conversation is created
      *

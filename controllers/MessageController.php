@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Event\Events;
+use BZIon\Event\GroupRenameEvent;
 use BZIon\Event\NewMessageEvent;
 use BZIon\Form\Creator\GroupFormCreator;
 use BZIon\Form\Creator\GroupInviteFormCreator;
@@ -195,7 +196,13 @@ class MessageController extends JSONController
 
         if ($form->isValid()) {
             $this->assertCanEdit($me, $discussion);
-            $discussion->setSubject($form->get('subject')->getData());
+
+            $newName = $form->get('subject')->getData();
+
+            $event = new GroupRenameEvent($discussion, $discussion->getSubject(), $newName, $me);
+            $discussion->setSubject($newName);
+            Service::getDispatcher()->dispatch(Events::GROUP_RENAME, $event);
+
             $this->getFlashBag()->add('success', "The conversation has been updated");
         }
 
