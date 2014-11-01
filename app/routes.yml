@@ -210,7 +210,7 @@ custom_page_create:
     pattern:    /pages/new
     defaults: { _controller: 'Page', _action: 'create' }
 
-custom_page:
+custom_page_show:
     pattern:    /{page}
     defaults: { _controller: 'Page', _action: 'show' }
 

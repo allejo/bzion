@@ -187,7 +187,7 @@ class Page extends AliasModel
      */
     public static function getRouteName($action='show')
     {
-        return "custom_page";
+        return "custom_page_$action";
     }
 
     /**

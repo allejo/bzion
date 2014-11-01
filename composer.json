@@ -85,9 +85,6 @@
         ],
         "update-configuration": [
             "BZIon\\Composer\\ScriptHandler::buildConfig"
-        ],
-        "success": [
-            "BZIon\\Composer\\ScriptHandler::showSuccessMessage"
         ]
     },
     "autoload": {
