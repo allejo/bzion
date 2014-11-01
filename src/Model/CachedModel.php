@@ -65,9 +65,9 @@ abstract class CachedModel extends BaseModel
 
     /**
      * Fetch a model's data from the database again
-     * @return Model The new model
+     * @return static The new model
      */
-    protected function refresh()
+    public function refresh()
     {
         $this->getFromDatabase();
 

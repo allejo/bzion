@@ -325,6 +325,17 @@ abstract class BaseModel implements ModelInterface
     }
 
     /**
+     * Fetch a model's data from the database again
+     * @return static The new model
+     */
+    public function refresh()
+    {
+        parent::__construct($this->id);
+
+        return $this;
+    }
+
+    /**
      * Generate an invalid object
      *
      * <code>
