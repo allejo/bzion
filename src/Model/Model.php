@@ -85,6 +85,21 @@ abstract class Model extends CachedModel
     }
 
     /**
+     * Converts an array of Models to an array of IDs
+     *
+     * All model type information is lost
+     *
+     * @param  ModelInterface[] $modelArray The list of models
+     * @return int[] An array of IDs
+     */
+    public static function mapToIDs($modelArray)
+    {
+        return array_map(function(ModelInterface $model) {
+            return $model->getId();
+        }, $modelArray);
+    }
+
+    /**
      * Update a property and the corresponding database column
      *
      * @param  mixed  $property The protected class property to update

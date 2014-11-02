@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Event\Events;
+use BZIon\Event\GroupJoinEvent;
 use BZIon\Event\GroupRenameEvent;
 use BZIon\Event\NewMessageEvent;
 use BZIon\Form\Creator\GroupFormCreator;
@@ -169,11 +170,18 @@ class MessageController extends JSONController
 
         if ($form->isValid()) {
             $this->assertCanEdit($me, $discussion);
+            $invitees = array();
 
             foreach ($form->get('players')->getData() as $player) {
                 if (!$discussion->isMember($player->getId())) {
                     $discussion->addMember($player->getId());
+                    $invitees[] = $player;
                 }
+            }
+
+            if (!empty($invitees)) {
+                $event = new GroupJoinEvent($discussion, $invitees);
+                Service::getDispatcher()->dispatch(Events::GROUP_JOIN, $event);
             }
 
             $this->getFlashBag()->add('success', "The conversation has been updated");

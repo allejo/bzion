@@ -13,14 +13,23 @@ namespace BZIon\Event;
 class Events
 {
     /**
-     * The new notification event is dispatched each time a new notification is
-     * sent to a player
+     * The group rename event is dispatched each time a new notification is sent
+     * to a player
      *
      * The event listener receives a BZIon\Event\GroupRenameEvent instance
      *
      * @var string
      */
     const GROUP_RENAME = 'group.rename';
+
+    /**
+     * The group join event is announced whenever new players join a group
+     *
+     * The event listener receives a BZIon\Event\GroupJoinEvent instance
+     *
+     * @var string
+     */
+    const GROUP_JOIN = 'group.join';
 
     /**
      * The message event is thrown each time a new message is sent or a

@@ -59,11 +59,12 @@ class EventSubscriber implements EventSubscriberInterface
      * Returns all the events that this subscriber handles, and which method
      * handles each one
      *
-     * @return string
+     * @return array
      */
     public static function getSubscribedEvents()
     {
         return array(
+            'group.join'   => 'group',
             'group.rename' => 'group',
             'message.new'  => 'onNewMessage',
             'notification.new'  => 'onNewNotification',
