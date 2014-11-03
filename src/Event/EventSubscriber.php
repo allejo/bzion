@@ -66,6 +66,7 @@ class EventSubscriber implements EventSubscriberInterface
         return array(
             'group.abandon' => 'group',
             'group.join'   => 'group',
+            'group.kick'   => 'group',
             'group.rename' => 'group',
             'message.new'  => 'onNewMessage',
             'notification.new'  => 'onNewNotification',

@@ -3,6 +3,7 @@
 use BZIon\Event\Events;
 use BZIon\Event\GroupAbandonEvent;
 use BZIon\Event\GroupJoinEvent;
+use BZIon\Event\GroupKickEvent;
 use BZIon\Event\GroupRenameEvent;
 use BZIon\Event\NewMessageEvent;
 use BZIon\Form\Creator\GroupFormCreator;
@@ -138,8 +139,11 @@ class MessageController extends JSONController
         if (!$discussion->isMember($player->getId()))
             throw new ForbiddenException("The specified player is not a member of this conversation.");
 
-        return $this->showConfirmationForm(function () use ($discussion, $player) {
+        return $this->showConfirmationForm(function () use ($discussion, $player, $me) {
             $discussion->removeMember($player->getId());
+
+            $event = new GroupKickEvent($discussion, $player, $me);
+            Service::getDispatcher()->dispatch(Events::GROUP_KICK, $event);
 
             return new RedirectResponse($discussion->getUrl());
         },  "Are you sure you want to kick {$player->getEscapedUsername()} from the discussion?",
