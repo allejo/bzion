@@ -64,6 +64,7 @@ class EventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
+            'group.abandon' => 'group',
             'group.join'   => 'group',
             'group.rename' => 'group',
             'message.new'  => 'onNewMessage',

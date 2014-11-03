@@ -32,6 +32,15 @@ class Events
     const GROUP_JOIN = 'group.join';
 
     /**
+     * The group abandon event is thrown when a player leaves a group
+     *
+     * The event listener receives a BZIon\Event\GroupAbandonEvent instance
+     *
+     * @var string
+     */
+    CONST GROUP_ABANDON = 'group.abandon';
+
+    /**
      * The message event is thrown each time a new message is sent or a
      * conversation is created
      *

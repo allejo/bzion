@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Event\Events;
+use BZIon\Event\GroupAbandonEvent;
 use BZIon\Event\GroupJoinEvent;
 use BZIon\Event\GroupRenameEvent;
 use BZIon\Event\NewMessageEvent;
@@ -118,6 +119,9 @@ class MessageController extends JSONController
 
         return $this->showConfirmationForm(function () use (&$discussion, &$me) {
             $discussion->removeMember($me->getId());
+
+            $event = new GroupAbandonEvent($discussion, $me);
+            Service::getDispatcher()->dispatch(Events::GROUP_ABANDON, $event);
 
             return new RedirectResponse(Service::getGenerator()->generate('message_list'));
         },  "Are you sure you want to abandon this discussion?",
