@@ -36,6 +36,11 @@ bzion:
             # free value
             pull_port: 8591
             push_port: 8592
+        elasticsearch:
+            # true to enable elasticsearch integration for advanced message searching
+            enabled: false
+            host: localhost
+            port: 9200
     miscellaneous:
         # BZFlag List Server
         list_server: "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"

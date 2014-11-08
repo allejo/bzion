@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "4e19d879276a2639e76af07f56832a8646283d87"
+                "reference": "6d029f3f2fe69be6211c4c0dbf9444c23e8e3e29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/4e19d879276a2639e76af07f56832a8646283d87",
-                "reference": "4e19d879276a2639e76af07f56832a8646283d87",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/6d029f3f2fe69be6211c4c0dbf9444c23e8e3e29",
+                "reference": "6d029f3f2fe69be6211c4c0dbf9444c23e8e3e29",
                 "shasum": ""
             },
             "require": {
@@ -710,7 +710,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-11-01 18:43:38"
+            "time": "2014-11-05 22:48:33"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -6244,12 +6244,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "3d7b900225882063cf179ce1d41bb8b1450a5a17"
+                "reference": "bc5e96bb4faf6bee7121085951d11b89488952f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/3d7b900225882063cf179ce1d41bb8b1450a5a17",
-                "reference": "3d7b900225882063cf179ce1d41bb8b1450a5a17",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/bc5e96bb4faf6bee7121085951d11b89488952f5",
+                "reference": "bc5e96bb4faf6bee7121085951d11b89488952f5",
                 "shasum": ""
             },
             "require": {
@@ -6288,7 +6288,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-10-01 06:52:36"
+            "time": "2014-11-03 21:16:34"
         },
         {
             "name": "sensiolabs/security-checker",
