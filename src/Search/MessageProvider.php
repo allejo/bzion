@@ -18,9 +18,17 @@ class MessageProvider implements ProviderInterface
 {
     /**
      * The elastica type of the Message
+     *
      * @var Type
      */
     protected $messageType;
+
+    /**
+     * The transformer that converts our models to elastica objects
+     *
+     * @var MessageToElasticaTransformer
+     */
+    protected $transformer;
 
     /**
      * Load the dependencies for the MessageProvider
@@ -30,6 +38,7 @@ class MessageProvider implements ProviderInterface
     public function __construct(Type $messageType)
     {
         $this->messageType = $messageType;
+        $this->transformer = new MessageToElasticaTransformer();
     }
 
     /**
@@ -48,13 +57,7 @@ class MessageProvider implements ProviderInterface
         $documents = array();
 
         foreach ($messages as $message) {
-            $data = array(
-                'content' => $message->getContent(),
-            );
-
-            $document = new Document($message->getId(), $data);
-            $document->setParent($message->getGroup()->getId());
-            $documents[] = $document;
+            $documents[] = $this->transformer->transform($message);
         }
 
         $this->messageType->addDocuments($documents);

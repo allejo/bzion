@@ -95,6 +95,13 @@ services:
         class: BZIon\Command\SuccessCommand
         tags:
             -  { name: console.command }
+    bzion.search_listener:
+        class: BZIon\Search\ElasticaEventSubscriber
+        arguments:
+            - @fos_elastica.index.search.group
+            - @fos_elastica.index.search.message
+        tags:
+            - { name: kernel.event_subscriber }
     bzion.search_provider.message:
         class: BZIon\Search\MessageProvider
         arguments:
@@ -107,8 +114,8 @@ services:
             - @fos_elastica.index.search.group
         tags:
             - { name: fos_elastica.provider, index: search, type: group }
-    bzion.search_transformer.message:
-        class: BZIon\Search\MessageTransformer
+    bzion.search_transformer.elastica_to_message:
+        class: BZIon\Search\ElasticaToMessageTransformer
         tags:
             - { name: fos_elastica.elastica_to_model_transformer, index: search, type: message }
     monolog.logger.app:

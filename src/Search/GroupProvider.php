@@ -18,9 +18,17 @@ class GroupProvider implements ProviderInterface
 {
     /**
      * The elastica type of the Group
+     *
      * @var Type
      */
     protected $groupType;
+
+    /**
+     * The transformer that converts our models to elastica objects
+     *
+     * @var GroupToElasticaTransformer
+     */
+    protected $transformer;
 
     /**
      * Load the dependencies for the MessageProvider
@@ -30,6 +38,7 @@ class GroupProvider implements ProviderInterface
     public function __construct(Type $groupType)
     {
         $this->groupType = $groupType;
+        $this->transformer = new GroupToElasticaTransformer();
     }
 
     /**
@@ -48,11 +57,7 @@ class GroupProvider implements ProviderInterface
         $documents = array();
 
         foreach ($groups as $group) {
-            $data = array(
-                'members' => $group->getMemberIDs()
-            );
-
-            $documents[] = new Document($group->getId(), $data);
+            $documents[] = $this->transformer->transform($group, array());
         }
 
         $this->groupType->addDocuments($documents);

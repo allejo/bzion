@@ -15,7 +15,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 /**
  * Maps Elastica documents with BZIon models
  */
-class MessageTransformer implements ElasticaToModelTransformerInterface
+class ElasticaToMessageTransformer implements ElasticaToModelTransformerInterface
 {
     /**
      * Transforms an array of elastica objects into an array of
