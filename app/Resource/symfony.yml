@@ -12,6 +12,10 @@ framework:
     session:
         handler_id: ~
 
+twig:
+    paths:
+        "%kernel.root_dir%/../views": bzion
+
 monolog:
     channels: ["app", "api", "mysql"]
     handlers:
@@ -78,6 +82,10 @@ services:
         class: BZIon\Twig\TwigCacheWarmer
         tags:
             - { name: kernel.cache_warmer, priority: 0 }
+    data_collector.bzion_database_collector:
+        class: BZIon\Profiler\DatabaseDataCollector
+        tags:
+            - { name: data_collector, template: "@bzion/Profiler/database", id: "database"  }
     kernel.subscriber.bzion_subscriber:
         class: BZIon\Event\EventSubscriber
         arguments: [@mailer, %bzion.email.from%, %bzion.site.name%]

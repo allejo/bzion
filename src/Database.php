@@ -153,11 +153,7 @@ class Database
         $return = $this->doQuery($queryText, $typeDef, $params);
 
         $duration = Debug::finishStopwatch($eventName);
-        Debug::log("Database $queryType query", array(
-            "query" => $queryText,
-            "params" => $params,
-            "duration" => "$duration ms"
-        ), 'mysql');
+        Debug::logQuery($queryText, $typeDef, $params, $duration);
 
         return $return;
     }
