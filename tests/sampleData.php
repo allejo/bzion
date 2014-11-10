@@ -2,6 +2,8 @@
 <?php
 
 use BZIon\Cache\ModelCache;
+use BZIon\Event\Events;
+use BZIon\Event\GroupRenameEvent;
 use BZIon\Event\WelcomeEvent;
 
 require_once(__DIR__ . "/../bzion-load.php");
@@ -93,6 +95,12 @@ $group_to = Group::createGroup("New blog", $snake->getId(), array(
     $snake->getId(),
     $tw1sted->getId()
 ));
+
+$event = new GroupRenameEvent($group_to, "New message", "New blorg", $snake);
+GroupEvent::storeEvent($group_to->getId(), $event, Events::GROUP_RENAME);
+$event = new GroupRenameEvent($group_to, "New blorg", "New blog", $snake);
+GroupEvent::storeEvent($group_to->getId(), $event, Events::GROUP_RENAME);
+
 $group_to->sendMessage($snake, "Check out my new blog!");
 echo " done!";
 
