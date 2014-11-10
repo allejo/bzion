@@ -10,7 +10,7 @@
  * A message between players or teams
  * @package    BZiON\Models
  */
-class Message extends Model
+class Message extends Model implements GroupEventInterface
 {
 
     /**
@@ -105,6 +105,15 @@ class Message extends Model
     }
 
     /**
+     * Get the time when the message was sent
+     * @return TimeDate
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    /**
      * Gets a human-readable representation of the time when the message was sent
      * @return string
      */
@@ -170,4 +179,11 @@ class Message extends Model
         ));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function isMessage()
+    {
+        return true;
+    }
 }

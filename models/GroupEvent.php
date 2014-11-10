@@ -13,7 +13,7 @@ use BZIon\Event\Event;
  * An event that happened in a group
  * @package    BZiON\Models
  */
-class GroupEvent extends Model
+class GroupEvent extends Model implements GroupEventInterface
 {
 
     /**
@@ -127,4 +127,11 @@ class GroupEvent extends Model
         ));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function isMessage()
+    {
+        return false;
+    }
 }
