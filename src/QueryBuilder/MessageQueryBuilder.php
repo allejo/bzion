@@ -120,7 +120,7 @@ class MessageQueryBuilder extends QueryBuilder
             $this->types .= 's';
         }
 
-        $this->conditions[] = $this->rawConditions[] = $query;
+        $this->conditions[] = $query;
         return $this;
     }
 
