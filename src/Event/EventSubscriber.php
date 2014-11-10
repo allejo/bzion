@@ -140,10 +140,11 @@ class EventSubscriber implements EventSubscriberInterface
      * Called when a group event needs to be stored in the database
      *
      * @param Event $event The event
+     * @param string $name  The name of the event
      */
-    public function group(Event $event)
+    public function group(Event $event, $name)
     {
-        \GroupEvent::storeEvent($event->getGroup()->getId(), $event);
+        \GroupEvent::storeEvent($event->getGroup()->getId(), $event, $name);
     }
 
     /**
