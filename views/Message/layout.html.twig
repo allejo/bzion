@@ -16,7 +16,7 @@
         <section class="content_header">
             <article class="wrapper">
                 <h1>Messages</h1>
-                {% if renameForm %}
+                {% if renameForm and inviteForm %}
                     {{ form(renameForm)}}
                     {{ form(inviteForm)}}
                 {% endif %}
@@ -59,7 +59,10 @@
                                     </p>
 
                                     <article class="last_message">
-                                        <strong>{{ group.lastmessage.author.username }}:</strong> {{ group.lastmessage.summary(50) }}
+                                        {% set lastmessage = group.lastmessage %}
+                                        {% if lastmessage is valid %}
+                                            <strong>{{ lastmessage.author.username }}:</strong> {{ lastmessage.summary(50) }}
+                                        {% endif %}
                                     </article>
                                 </a>
                             </li>

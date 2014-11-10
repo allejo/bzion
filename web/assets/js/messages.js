@@ -84,7 +84,7 @@ function initPage() {
 
                 $.get(olderMessageLink + "&nolayout", function(data) {
                     // Properly scroll the message view
-                    var firstMessage = messageView.find("li").eq(0);
+                    var firstMessage = messageView.find("li.message").eq(0);
                     var curOffset = firstMessage.offset().top - messageView.scrollTop();
 
                     html = $($.parseHTML(data));
@@ -241,8 +241,8 @@ function sendMessage(form, onSuccess, spinners) {
             groupMessages.stopSpinners();
         }
     }).error(function( jqXHR, textStatus, errorThrown ) {
+        // TODO: Catch bad JSON
         var message = (errorThrown === "") ? textStatus : errorThrown;
-        // stopSpinners();
         notify(message, "error");
     }).complete(function() {
         if (l)

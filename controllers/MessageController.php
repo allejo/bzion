@@ -92,14 +92,15 @@ class MessageController extends JSONController
                   ->limit(10)->fromPage($request->query->get('page', 1))
                   ->startAt($request->query->get('end'))
                   ->endAt($request->query->get('start'))
-                  ->getModels();
+                  ->getAllEvents();
 
         $params = array(
             "form"       => $form->createView(),
             "inviteForm" => $inviteForm->createView(),
             "renameForm" => $renameForm->createView(),
             "group"      => $discussion,
-            "messages"   => $messages,
+            "messages"   => $messages['messages'],
+            "events"     => $messages['events']
         );
 
         if ($request->query->has('nolayout')) {
