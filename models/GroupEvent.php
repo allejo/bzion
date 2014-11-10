@@ -29,6 +29,12 @@ class GroupEvent extends Model implements GroupEventInterface
     protected $timestamp;
 
     /**
+     * The type of the event
+     * @var string
+     */
+    protected $type;
+
+    /**
      * The event
      * @var Event
      */
@@ -52,8 +58,9 @@ class GroupEvent extends Model implements GroupEventInterface
      */
     protected function assignResult($event)
     {
-        $this->group = $event['group'];
+        $this->group = $event['group_to'];
         $this->event = unserialize($event['event']);
+        $this->type = $event['type'];
         $this->timestamp = new TimeDate($event['timestamp']);
         $this->status = $event['status'];
     }
@@ -65,6 +72,19 @@ class GroupEvent extends Model implements GroupEventInterface
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Get the type of the event
+     *
+     * Do not use GroupEvent::getType(), as it returns the name of the class
+     * (i.e. groupEvent)
+     *
+     * @return integer
+     */
+    public function getCategory()
+    {
+        return $this->type;
     }
 
     /**
@@ -102,14 +122,15 @@ class GroupEvent extends Model implements GroupEventInterface
      * @param  string $status The status of the event
      * @return GroupEvent
      */
-    public static function storeEvent($group, $event, $timestamp = 'now', $status = 'visible')
+    public static function storeEvent($group, $event, $type, $timestamp = 'now', $status = 'visible')
     {
         return self::create(array(
-            "group"     => $group,
+            "group_to"  => $group,
             "event"     => serialize($event),
+            "type"      => $type,
             "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
-        ), 'isss');
+        ), 'issss');
     }
 
     /**
@@ -120,7 +141,7 @@ class GroupEvent extends Model implements GroupEventInterface
     {
         return new QueryBuilder('GroupEvent', array(
             'columns' => array(
-                'group'  => 'group',
+                'group'  => 'group_to',
                 'time'   => 'timestamp',
                 'status' => 'status'
             )

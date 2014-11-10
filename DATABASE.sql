@@ -309,13 +309,14 @@ UNLOCK TABLES;
 
 CREATE TABLE `group_events` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group` int(10) unsigned NOT NULL COMMENT 'The ID of the group where the event occured',
+  `group_to` int(10) unsigned NOT NULL COMMENT 'The ID of the group where the event occured',
   `event` text NOT NULL COMMENT 'The serialized data of the event',
+  `type` varchar(50) NOT NULL COMMENT 'The type of the event',
   `timestamp` datetime NOT NULL COMMENT 'The timestamp of when the event took place',
   `status` set('visible','deleted') NOT NULL DEFAULT 'visible' COMMENT 'That status of the group event',
   PRIMARY KEY (`id`),
-  KEY `group` (`group`),
-  CONSTRAINT `group_event_ibfk_1` FOREIGN KEY (`group`) REFERENCES `groups` (`id`)
+  KEY `group_to` (`group_to`),
+  CONSTRAINT `group_event_ibfk_1` FOREIGN KEY (`group_to`) REFERENCES `groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

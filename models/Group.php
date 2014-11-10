@@ -130,6 +130,10 @@ class Group extends UrlModel implements NamedModel
     {
         $ids = self::fetchIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
+        if (!isset($ids[0])) {
+            return Message::invalid();
+        }
+
         return new Message($ids[0]);
     }
 
