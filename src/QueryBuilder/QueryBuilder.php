@@ -196,6 +196,38 @@ class QueryBuilder implements Countable
         return $this;
     }
 
+    /**
+     * Request that a timestamp is before the specified time
+     *
+     * @param string|TimeDate $time The timestamp to compare to
+     * @param bool $inclusive Whether to include the given timestamp
+     * @param bool $reverse   Whether to reverse the results
+     */
+    public function isBefore($time, $inclusive = false, $reverse = false)
+    {
+        return $this->isAfter($time, $inclusive, !$reverse);
+    }
+
+    /**
+     * Request that a timestamp is after the specified time
+     *
+     * @param string|TimeDate $time The timestamp to compare to
+     * @param bool $inclusive Whether to include the given timestamp
+     * @param bool $reverse   Whether to reverse the results
+     */
+    public function isAfter($time, $inclusive = false, $reverse = false)
+    {
+        if ($time instanceof TimeDate) {
+            $time = $time->toMysql();
+        }
+
+        $comparison  = ($reverse)   ? '<' : '>';
+        $comparison .= ($inclusive) ? '=' : '';
+
+        $this->addColumnCondition("$comparison ?",  $time, 's');
+
+        return $this;
+    }
 
     /**
      * Request that a column equals a number
