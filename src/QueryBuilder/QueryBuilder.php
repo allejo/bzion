@@ -92,6 +92,13 @@ class QueryBuilder implements Countable
     private $currentColumn = null;
 
     /**
+     * The currently selected column without the table name (unless it was
+     * explicitly provided)
+     * @var string|null
+     */
+    protected $currentColumnRaw = null;
+
+    /**
      * A column to consider the name of the model
      * @var string|null
      */
@@ -119,7 +126,7 @@ class QueryBuilder implements Countable
      * The number of elements on every page
      * @var int
      */
-    private $resultsPerPage = 30;
+    protected $resultsPerPage = 30;
 
     /**
      * Create a new QueryBuilder
@@ -542,6 +549,8 @@ class QueryBuilder implements Countable
             $this->currentColumn = $column;
         }
 
+        $this->currentColumnRaw = $column;
+
         return $this;
     }
 
@@ -567,6 +576,7 @@ class QueryBuilder implements Countable
         $this->types       .= $type;
 
         $this->currentColumn = null;
+        $this->currentColumnRaw = null;
     }
 
     /**
@@ -620,7 +630,7 @@ class QueryBuilder implements Countable
      * @param  string[] $columns The columns that should be included (without the ID)
      * @return string   The query
      */
-    private function createQuery($columns = array())
+    protected function createQuery($columns = array())
     {
         $type     = $this->type;
         $table    = $type::TABLE;
@@ -642,8 +652,13 @@ class QueryBuilder implements Countable
         $columnStrings = array("`$table`.id");
 
         foreach ($columns as $returnName) {
-            $dbName = $this->columns[$returnName];
-            $columnStrings[] = "`$table`.`$dbName` as `$returnName`";
+            if (strpos($returnName, ' ') === FALSE) {
+                $dbName = $this->columns[$returnName];
+                $columnStrings[] = "`$table`.`$dbName` as `$returnName`";
+            } else {
+                // "Column" contains a space, pass it as is
+                $columnStrings[] = $returnName;
+            }
         }
 
         return implode(',', $columnStrings);
@@ -700,7 +715,7 @@ class QueryBuilder implements Countable
 
         $offset = '';
         if ($this->page) {
-            $firstElement       = ($this->page - 1) * $this->resultsPerPage;
+            $firstElement = ($this->page - 1) * $this->resultsPerPage;
             $this->paginationParameters[] = $firstElement;
             $this->paginationTypes       .= 'i';
 
