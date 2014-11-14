@@ -6,6 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use BZIon\Debug\Debug;
 use Monolog\Logger;
 
 /**

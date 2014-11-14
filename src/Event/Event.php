@@ -7,6 +7,7 @@
 
 namespace BZIon\Event;
 
+use BZIon\Debug\Debug;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
 
 /**
@@ -144,7 +145,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
      */
     protected function doNotify($players, $type, $except = null)
     {
-        \Debug::log("Notifying about $type", array(
+        Debug::log("Notifying about $type", array(
             'players' => $players,
             'except'  => $except
         ));

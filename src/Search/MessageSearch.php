@@ -7,6 +7,7 @@
 
 namespace BZIon\Search;
 
+use BZIon\Debug\Debug;
 use FOS\ElasticaBundle\Provider\ProviderInterface;
 use Elastica\Type;
 use Elastica\Document;
@@ -51,7 +52,7 @@ class MessageSearch {
      */
     public function search($query)
     {
-        \Debug::startStopwatch('search.messages');
+        Debug::startStopwatch('search.messages');
 
         if (\Service::getParameter('bzion.features.elasticsearch.enabled')) {
             $results = $this->elasticSearch($query);
@@ -59,7 +60,7 @@ class MessageSearch {
             $results = $this->mysqlSearch($query);
         }
 
-        \Debug::finishStopwatch('search.messages');
+        Debug::finishStopwatch('search.messages');
 
         return $results;
     }

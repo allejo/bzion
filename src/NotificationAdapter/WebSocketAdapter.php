@@ -8,6 +8,8 @@
 
 namespace BZIon\NotificationAdapter;
 
+use BZIon\Debug\Debug;
+
 /**
  * An interface to our websocket
  * @package    BZiON\NotificationAdapters
@@ -21,7 +23,7 @@ class WebSocketAdapter extends NotificationAdapter
      */
     public function trigger($channel, $message)
     {
-        \Debug::startStopwatch("notification.trigger.websocket");
+        Debug::startStopwatch("notification.trigger.websocket");
 
         $port = \Service::getParameter('bzion.features.websocket.pull_port');
 
@@ -36,7 +38,7 @@ class WebSocketAdapter extends NotificationAdapter
 
         // Don't fclose() the connection because of a weird bug with React
 
-        \Debug::finishStopwatch("notification.trigger.websocket");
+        Debug::finishStopwatch("notification.trigger.websocket");
     }
 
     /**

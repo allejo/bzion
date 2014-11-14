@@ -8,6 +8,8 @@
 
 namespace BZIon\NotificationAdapter;
 
+use BZIon\Debug\Debug;
+
 /**
  * An interface to the pusher.com service
  * @todo Perform an asynchronous request?

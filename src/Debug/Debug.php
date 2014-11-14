@@ -6,6 +6,8 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+namespace BZIon\Debug;
+
 /**
  * Useful debugging functions (will only waste time on a development environment)
  */
@@ -18,10 +20,10 @@ abstract class Debug
      */
     public static function startStopwatch($event)
     {
-        if (!Service::getContainer())
+        if (!\Service::getContainer())
             return;
 
-        $stopwatch = Service::getContainer()->get('debug.stopwatch', null);
+        $stopwatch = \Service::getContainer()->get('debug.stopwatch', null);
 
         if ($stopwatch)
             $stopwatch->start($event);
@@ -34,10 +36,10 @@ abstract class Debug
      */
     public static function finishStopwatch($event)
     {
-        if (!Service::getContainer())
+        if (!\Service::getContainer())
             return 0;
 
-        $stopwatch = Service::getContainer()->get('debug.stopwatch', null);
+        $stopwatch = \Service::getContainer()->get('debug.stopwatch', null);
 
         if (!$stopwatch)
             return 0;
@@ -66,7 +68,7 @@ abstract class Debug
             "duration" => "$duration ms"
         ), 'mysql');
 
-        $collector = Service::getContainer()->get('data_collector.bzion_database_collector', null);
+        $collector = \Service::getContainer()->get('data_collector.bzion_database_collector', null);
 
         if ($collector) {
             $collector->logQuery($query);
@@ -82,10 +84,10 @@ abstract class Debug
      */
     public static function log($message, array $context=array(), $channel='app')
     {
-        if (!Service::getContainer())
+        if (!\Service::getContainer())
             return;
 
-        $logger = Service::getContainer()->get("monolog.logger.$channel", null);
+        $logger = \Service::getContainer()->get("monolog.logger.$channel", null);
 
         if (!$logger)
             return;

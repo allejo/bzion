@@ -96,7 +96,6 @@
             "src/Model",
             "src/QueryBuilder",
             "src/Database.php",
-            "src/Debug.php",
             "src/Service.php",
             "src/TimeDate.php"
         ],
