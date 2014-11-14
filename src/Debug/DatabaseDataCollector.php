@@ -37,7 +37,7 @@ class DatabaseDataCollector implements DataCollectorInterface
     /**
      * Log a database query
      *
-     * @param string $query The query
+     * @param DatabaseQuery $query The query
      */
     public function logQuery($query) {
         $this->queries[] = $query;
@@ -46,7 +46,7 @@ class DatabaseDataCollector implements DataCollectorInterface
     /**
      * Get the queries made to the database
      *
-     * @return string[]
+     * @return DatabaseQuery[]
      */
     public function getQueries()
     {

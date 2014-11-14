@@ -6,7 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use BZIon\Debug\Debug;
+use BZIon\Debug\DatabaseQuery;
 use Monolog\Logger;
 
 /**
@@ -146,15 +146,11 @@ class Database
      */
     public function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
-        $queryType = strtok($queryText, ' ');
-        $eventName = "database.query.$queryType";
-
-        Debug::startStopwatch($eventName);
+        $debug = new DatabaseQuery($queryText, $typeDef, $params);
 
         $return = $this->doQuery($queryText, $typeDef, $params);
 
-        $duration = Debug::finishStopwatch($eventName);
-        Debug::logQuery($queryText, $typeDef, $params, $duration);
+        $debug->finish($return);
 
         return $return;
     }

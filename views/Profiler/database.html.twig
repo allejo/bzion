@@ -47,7 +47,7 @@
     <ul class="alt">
         {% for query in collector.queries %}
         <li>
-            <pre>{{ query }}</pre>
+            <pre>{{ query.query }}</pre> in <b>{{ query.duration|number_format }}</b> &micro;s
         </li>
         {% endfor %}
 </ul>
