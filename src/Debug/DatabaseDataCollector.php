@@ -54,6 +54,22 @@ class DatabaseDataCollector implements DataCollectorInterface
     }
 
     /**
+     * Get the total duration of the database queries in milliseconds
+     *
+     * @return float
+     */
+    public function getDuration()
+    {
+        $sum = 0;
+
+        foreach ($this->data['queries'] as $query) {
+            $sum += $query->getDuration();
+        }
+
+        return $sum / 1000;
+    }
+
+    /**
      * Returns the name of the collector.
      *
      * @return string The collector name

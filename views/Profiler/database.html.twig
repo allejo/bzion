@@ -10,6 +10,9 @@
     {% set icon %}
         <img width="20" height="28" alt="Database" style="border-width: 0; vertical-align: middle; margin-right: 0;" src="{{ imageData }}" />
         <span class="sf-toolbar-status{% if query_count > 0 %} sf-toolbar-status-green{% endif %}">{{ query_count }}</span>
+        {% if query_count > 0 %}
+            in {{ collector.duration|round }} ms
+        {% endif %}
     {% endset %}
     {% set text %}
         <div class="sf-toolbar-info-piece">
@@ -37,6 +40,7 @@
         <strong>Database</strong>
         <span class="count">
             <span>{{ collector.queries|length }}</span>
+            <span>{{ collector.duration|round }} ms</span>
         </span>
     </span>
 {% endblock %}
