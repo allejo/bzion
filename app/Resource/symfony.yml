@@ -83,7 +83,7 @@ services:
         tags:
             - { name: kernel.cache_warmer, priority: 0 }
     data_collector.bzion_database_collector:
-        class: BZIon\Profiler\DatabaseDataCollector
+        class: BZIon\Debug\DatabaseDataCollector
         tags:
             - { name: data_collector, template: "@bzion/Profiler/database", id: "database"  }
     kernel.subscriber.bzion_subscriber:

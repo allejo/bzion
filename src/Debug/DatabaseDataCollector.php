@@ -5,7 +5,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-namespace BZIon\Profiler;
+namespace BZIon\Debug;
 
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpFoundation\Request;
