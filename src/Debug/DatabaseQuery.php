@@ -83,7 +83,7 @@ class DatabaseQuery
     {
         $this->query  = $query;
         $this->types  = ($types !== false) ? $types : null;
-        $this->params = ($params !== false) ? $params: null;
+        $this->params = ($params !== false) ? array_values($params) : null;
 
         $this->queryType = strtok($query, ' ');
         $this->eventName = 'database.query.' . $this->queryType;
@@ -153,12 +153,24 @@ class DatabaseQuery
         return $this->types;
     }
 
+     /**
+     * Get the parameters of the query
+     *
+     * Alias for DatabaseQuery::getParams()
+     *
+     * @return array|null
+     */
+    public function getParams()
+    {
+        return $this->getParameters();
+    }
+
     /**
      * Get the parameters of the query
      *
      * @return array|null
      */
-    public function getParams()
+    public function getParameters()
     {
         return $this->params;
     }
@@ -181,5 +193,15 @@ class DatabaseQuery
     public function getResults()
     {
         return $this->results;
+    }
+
+    /**
+     * Get the query string parts
+     *
+     * @return array
+     */
+    public function getQueryParts()
+    {
+        return explode("?", $this->query);
     }
 }

@@ -51,7 +51,19 @@
     <ul class="alt">
         {% for query in collector.queries %}
         <li>
-            <pre>{{ query.query }}</pre> in <b>{{ query.duration|number_format }}</b> &micro;s
+            <pre>
+                {%- for key, part in query.queryParts -%}
+                    {{- part -}}
+                    {%- if query.params[key] is defined -%}
+                        {%- if query.types[key:1] in ['s', 'b'] -%}
+                            <b>"{{ query.params[key]|escape('html_attr') }}"</b>
+                        {%- else -%}
+                            <b>{{ query.params[key] }}</b>
+                        {%- endif -%}
+                    {%- endif -%}
+                {%- endfor -%}
+            </pre> in <b>{{ query.duration|number_format(1) }}</b> &micro;s
+            {#{{ query|ladybug_dump() }}#}
         </li>
         {% endfor %}
 </ul>

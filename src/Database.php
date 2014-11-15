@@ -146,6 +146,10 @@ class Database
      */
     public function query($queryText, $typeDef = FALSE, $params = FALSE)
     {
+        if (!is_array($params)) {
+            $params = array($params);
+        }
+
         $debug = new DatabaseQuery($queryText, $typeDef, $params);
 
         $return = $this->doQuery($queryText, $typeDef, $params);
@@ -159,16 +163,13 @@ class Database
      * Perform a query
      * @param  string      $queryText The prepared SQL statement that will be executed
      * @param  bool|string $typeDef   (Optional) The types of values that will be passed through the prepared statement. One letter per parameter
-     * @param  mixed|array $params    (Optional) The array of values that will be binded to the prepared statement
+     * @param  bool|array  $params    (Optional) The array of values that will be binded to the prepared statement
      * @return mixed       Returns an array of the values received from the query or returns false on empty
      */
     private function doQuery($queryText, $typeDef = FALSE, $params = FALSE)
     {
         $multiQuery = true;
         if ($stmt = $this->dbc->prepare($queryText)) {
-            if (!is_array($params)) {
-                $params = array($params);
-            }
             if (count($params) == count($params, 1)) {
                 $params = array($params);
                 $multiQuery = false;

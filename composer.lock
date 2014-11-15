@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "a8377e3681ee808335bbf746ff1f55d391b2b112"
+                "reference": "69e8e6e355957e472702b8e80f3ebd501a5e42ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/a8377e3681ee808335bbf746ff1f55d391b2b112",
-                "reference": "a8377e3681ee808335bbf746ff1f55d391b2b112",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/69e8e6e355957e472702b8e80f3ebd501a5e42ca",
+                "reference": "69e8e6e355957e472702b8e80f3ebd501a5e42ca",
                 "shasum": ""
             },
             "require": {
@@ -710,7 +710,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-11-13 22:56:14"
+            "time": "2014-11-14 22:38:28"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -4584,12 +4584,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "fa6ce1a70b222b0c077b4642f7ec308ca1d9e04c"
+                "reference": "9bc9fdb84c1ecc704a6801b32afc113dd336bfc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/fa6ce1a70b222b0c077b4642f7ec308ca1d9e04c",
-                "reference": "fa6ce1a70b222b0c077b4642f7ec308ca1d9e04c",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/9bc9fdb84c1ecc704a6801b32afc113dd336bfc7",
+                "reference": "9bc9fdb84c1ecc704a6801b32afc113dd336bfc7",
                 "shasum": ""
             },
             "require": {
@@ -4675,7 +4675,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-11-14 09:42:25"
+            "time": "2014-11-14 20:58:31"
         },
         {
             "name": "phpdocumentor/reflection",
