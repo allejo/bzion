@@ -581,7 +581,9 @@ CREATE TABLE `player_groups` (
   `read` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Whether the last message in the group has been read by the player',
   PRIMARY KEY (`id`),
   KEY `player` (`player`),
-  CONSTRAINT `player_groups_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`)
+  KEY `group` (`group`),
+  CONSTRAINT `player_groups_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`),
+  CONSTRAINT `player_groups_ibfk_2` FOREIGN KEY (`group`) REFERENCES `groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
