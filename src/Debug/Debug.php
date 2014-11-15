@@ -70,4 +70,19 @@ abstract class Debug
 
         $logger->debug($message, $context);
     }
+
+    /**
+     * Log a cache fetch in the data collector
+     * @param string $type The type of the fetched model
+     * @param int    $id   The ID of the fetched model
+     */
+    public static function logCacheFetch($type, $id)
+    {
+        if (\Service::isDebug() && \Service::getContainer()) {
+            $collector = \Service::getContainer()->get('data_collector.bzion_database_collector', null);
+            if ($collector) {
+                $collector->logCacheFetch($type, $id);
+            }
+        }
+    }
 }

@@ -17,7 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DatabaseDataCollector implements DataCollectorInterface
 {
-    protected $queries;
+    public $data;
+    protected $queries = array();
+    protected $cacheFetches = array();
 
     /**
      * Collects data for the given Request and Response, so that it can be
@@ -31,6 +33,8 @@ class DatabaseDataCollector implements DataCollectorInterface
     {
         $this->data = array(
             'queries' => $this->queries,
+            'cachedModels' => \Service::getModelCache()->all(),
+            'cacheFetches' => $this->cacheFetches
         );
     }
 
@@ -39,8 +43,69 @@ class DatabaseDataCollector implements DataCollectorInterface
      *
      * @param DatabaseQuery $query The query
      */
-    public function logQuery($query) {
+    public function logQuery($query)
+    {
         $this->queries[] = $query;
+    }
+
+    /**
+     * Log a fetch from the Model Cache
+     *
+     * @param string $type The type of the model
+     * @param int    $id   The ID of the model
+     */
+    public function logCacheFetch($type, $id)
+    {
+        if (isset($this->cacheFetches[$type])) {
+            $this->cacheFetches[$type]++;
+        } else {
+            $this->cacheFetches[$type] = 1;
+        }
+    }
+
+    /**
+     * Get the sorted catche fetches by Model type
+     *
+     * @return array
+     */
+    public function getCacheFetches()
+    {
+        arsort($this->data['cacheFetches']);
+        return $this->data['cacheFetches'];
+    }
+
+    /**
+     * Get the total number of catche fetches
+     *
+     * @return int
+     */
+    public function getTotalCacheFetches()
+    {
+        return array_sum($this->data['cacheFetches']);
+    }
+
+    /**
+     * Get an estimate of the time that the model cache saved in milliseconds
+     *
+     * @return number
+     */
+    public function estimateTimeSaved()
+    {
+        $sum = 0;
+        $count = 0;
+
+        foreach($this->data['queries'] as $query) {
+            if (0 === strpos(trim($query->getQuery()), 'SELECT *')) {
+                $sum += $query->getDuration();
+                $count++;
+            }
+        }
+
+        if ($count == 0) {
+            return 0;
+        } else {
+            return array_sum($this->data['cacheFetches']) * $sum/$count/1000;
+        }
     }
 
     /**

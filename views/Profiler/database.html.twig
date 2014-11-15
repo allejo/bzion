@@ -25,6 +25,44 @@
 
 {% block head %}
     {{ parent() }}
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.1', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table, instantiates the pie
+      // chart, passes in the data and draws it.
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['', {% for type, count in collector.cacheFetches %}'{{ type  }}',{% endfor %}],
+            [null, {% for count in collector.cacheFetches %}{{ count }},{% endfor %}],
+        ]);
+
+        var options = {
+            width: 600,
+            height: 15,
+            theme: 'maximized',
+            legend: { position: "none" },
+            bar: { groupWidth: '100%' },
+            hAxis: {
+                baselineColor: 'transparent',
+                gridlines: { color: 'transparent' }
+            },
+            tooltip: {isHtml: true},
+            isStacked: true,
+        };
+
+        // Instantiate and draw our chart, passing in the specified options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
 {% endblock %}
 
 {% block menu %}
@@ -51,7 +89,24 @@
 
     <table>
         <tr>
-            <th>Resolve query parameters</th>
+            <th colspan="2">Cache</th>
+        </tr>
+        <tr>
+            <th style="width:20%">Total fetches</th>
+            <td>{{ collector.totalCacheFetches }}</td>
+        </tr>
+        <tr>
+            <th>Total time saved (estimate)</th>
+            <td>{{ collector.estimateTimeSaved|number_format() }} ms</td>
+        </tr>
+        <tr>
+            <th>Most accessed models</th>
+            <td><div id="chart_div"></div></td>
+    </table>
+
+    <table>
+        <tr>
+            <th style="width: 15%">Resolve query parameters</th>
             <td>
                 <form id="options-form" action="" method="get" style="display: inline">
                     <input type="hidden" name="panel" value="database">
@@ -84,7 +139,6 @@
                     {%- endfor -%}
                 {% endif %}
             </pre> in <b>{{ query.duration|number_format(1) }}</b> &micro;s
-            {#{{ query|ladybug_dump() }}#}
         </li>
         {% endfor %}
 </ul>

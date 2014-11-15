@@ -7,6 +7,8 @@
 
 namespace BZIon\Cache;
 
+use BZIon\Debug\Debug;
+
 /**
  * A Model cache that can speed up data retrieval from the database
  */
@@ -48,6 +50,8 @@ class ModelCache
         if (!$this->has($type, $id))
             return $default;
 
+        Debug::logCacheFetch($type, $id);
+
         return $this->models[$type][$id];
     }
 
@@ -60,6 +64,24 @@ class ModelCache
     public function has($type, $id)
     {
         return isset($this->models[$type][$id]);
+    }
+
+    /**
+     * Get all the cached models
+     * @param string|null $type A specific type of models to look for
+     * @return array
+     */
+    public function all($type=null)
+    {
+        if ($type === null) {
+            return $this->models;
+        }
+
+        if (!isset($models[$type])) {
+            return array();
+        }
+
+        return $models[$type];
     }
 
     /**
