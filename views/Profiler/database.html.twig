@@ -19,12 +19,41 @@
             <b>Queries</b>
             <span>{{ query_count }}</span>
         </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Duration</b>
+            <span>{{ collector.duration|number_format(2) }} ms</span>
+        </div>
     {% endset %}
     {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': true } %}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
+
+    <style>
+        span.database-query {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC3klEQVQ4ja2TS0sbYRSGP7oquA3UCooLIagohVK3BekPqKhUcWs3NtoWi1YF8UJcNGBtayN0ZVdtcSG40KjYXGqT1GQStabzTSaZmLG5TBInY0ZjoiVvF2pQ3HTRA2d5Hs5zXg4h/6luarXa+uampsc6nW5Er9dPGQwGo+GVwWgwnPXExMQbnU430tLS0qnVauuvTA8ODj4J8vxhNBJBSBDA+/3wUwruUlOWBWVZcJTCZrUeaTSa20XAzMzMy2w2++fk5AQHigJFUZDJZCDvy0gmk4jH4wgEeLhdLjidTljM5tOysrKKImBoaKgnFosd5/N5qKoKNZMpAhKShGg0Cj/HgWEY/HA6YVpaOtZoNGVFQG9vb7eHYbIB3g+e9yMkCAjv7iIUEhAMBMBxFJteL76vr8P8dQ1zc3NXAUajsT+bzZ7mcjnI+zLS6TQODg7OFBIJSJIEIRiEx+OBa2PjusLw8PDTeCx2nLukoJ4rpJJJiOEwGLcbyyYTTEtLWFxczF3ZoK+vr2drc/PYTykoZRHgeQjBIIRgEJRlsbK8DKvVAovZjIWFBXz5/AlVVVX3i4Dp6ekrCvK+DEVRkEqlYLNawTAMWMrB7XbDbneAcTPoaG9/X1paWkMIIWR8fPx5IiHl8vk8MucJHKoq9vb24LDbIYq/QVmKra0tOB0O2Gw2uDY20NDQ0HkR47NfPl8uJAgICQLEcBixaBTfbFZwHAdJkrAnivg4OwuL2Qy3ywWH3Y62trbpaymk02ko6TRUVUU4vAvG5YKqqkgmEvB6vfi5vQ3fjg82qw2PWlvfEUIIGR0d7ZZl+QgAUCigUCgAAFKpFLwMA1EUcXGfSCQCjlKsra6isrKyeMibtbW1Nc3Nze1dXV29AwMD+rGxsdd6vf7tQH//h9WVlSOnw5GR4nH4dnYwPz+fulNX11FSUnLrn161oqLibnl5+b2pyUlPXXX1wweNjS8IITcIIeQvJVxrZAwadncAAAAASUVORK5CYII=');
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+
+        span.select-query  {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC0ElEQVQ4ja2TP0gbcRTHf6NQukVoM9QxtIKri0Ind9Ghxbr1D7Ux2gZSq2AVq9BmaAsSQbDYpekqtvl3/rmLkEZizAmmudwlFxNr/lySyyXRM9E03w7VoBTapQ/e9t4HPnzfI+Q/VZNOp2vr6e5+oNfrJ6anp9+ZzWaL+Y3ZYjb/7pmZmfd6vX6it7f3vk6na7u0PTo6+iQqCIfJgwPERBECz4PnOIQvNBcKgQuFEOY4uBnmSKPRXG8A5ubmRlRVrZ2cnKCoKFAUBaVSCXJeRjabRTqdRiQiYMvng9frBb2+fqrVam80AGNjY4ZUKnVcrVZRLpdRLpUaACmTQTKZBB8Ow+/3Y9PrhcNhP9ZoNNoGwGg0Dm77/WpE4CEIPGKiiPjeHmIxEdFIBOEwBzYQwDePBy6nA5+tVrW5uflaA2CxWJ6rqnpaqVQg52UUCgUUi8WGQiaTBs+HYbfbsEJRWKUo3O7s1DcA4+PjQ+lU6rhyQaF8riBJSKdSYGgaOywLKSNBzsv1RDx+2tHRMUAIIcRkMhl2WPaY5zhwXAgRQYAYjSIaESDwPAKBbVAuF9hAAGwggB2WreXyuc35+Xk3IYSQ2dnZSwpyXoaiKMjlcshmsxBFEZTLBYamQdM0GJr+6fP5Pn1cXGQIIYRMTU09laRMpVqtonSWwLlCVpKQTqWxtrqK9bU1UBSFpaUl1U3TG/39/W/PYxz+HgxWYqKImCgiEY/jx/4+EvE49hMJbHq9sH+1wW6zwW634cvyMh4/eviBEHLljxQKhQKUsxTK5TKCwSCcDgesVis8Hg/cDAOXw3n5kCYnJwdlWT4CANTrQL2OWq2GUCiEDbcbTocDYjQKgecR3N3FCkUdXjplQkhTa2vrrZ6enrsDAwNGk8n0cmFhgfFvbeHFyIjHYDC8fjY8/Kqvr8/Y1dV1p6Wl5eY/37O9vf3ekGHIRQi5+re5X38UYKrQriqqAAAAAElFTkSuQmCC');
+        }
+
+        span.update-query {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACzElEQVQ4ja2TW0hTARjHD0TQuwPJQujGtIXviVEPFT3Ug80XL0FBFtimxcBriZdp4YIyx4ygIDBYTSQrr6BzqTCzOX2wndvOZrWzi9s5247u4mr/Hsrl8KWHPvi/fPD94MefjyD+0+yTy+VFytLSapVK1dbV1fVYp9MZdD06g073O93d3b0qlaqtrKzsulwuL8q6bm5uvuVkmA3e44GL48DQNGiSBLUjpMMB0uEARZL4aLFsymSy/RlAf39/YywW+7G1tYVIOIxwOIxoNAohJGB9fR0+nw8sy+Dz4iKsVitmzOZUXl5efgbQ0tJS6/V648lkEpIkQYpGM4CA3w+e50FTFGw2GxasVoyPjcVlMlleBqDRaNRLNluMZWgwDA0Xx2HN7YbLxcHJsqAoEst2O+bn5mCenoLJZMoGGAyGhlgslkokEhBCAkRRRCQSyVZgWKzYl7D4aWG3Qmtra53P640ndihI2wqBAHiex5qTxfCHMcxaZjA5MZHIyck5kAHU19fXriwvx2mSBEk6wDIMOKcTTpYBQ1NgKQcGhkZQ3GLCtYdGDL9+Fc9qQa/XZykIIQFhUUQoGIQUEZGIhNBnHMWp+2aU9MxD3Tf4Mz8393AG0NnZeScQ8CeSySSifxrYkCQE/H6YJucwMD6HgeFJ3HjyFpdfUrj4nETxlYZBgiD2btd4+8vqasLFcXBxHL6urYH3eEA7VnH6ngkntdO49NSGq29YVA+5UWVyo2okipJy1bNdLYiiiLAoQpIk8N+/4WrvO1Top1A3YEWdcQnqUQ+qx4KofLEQOXi04AxBEATR3t6uFgRhEwCQTiOdTgMAUqkUwkIQYsAH8+w86o0L0JgjUA+upg8VnDif9UwKheK4Uqksr6mp0TQ1NXV1dHQ80mq1fd1abV9rc+ODytq77zWWDaiMdulYYeG5f//Tv7PnbMXN/iOKogs7l78AbBdHztRjA9UAAAAASUVORK5CYII=');
+        }
+
+        span.insert-query {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC2UlEQVQ4ja2TXUhTARiGd9m9u0itLroZZRgmXgVZdNVFhWxEBRWREuj8iYF/qzExJzbTRN3oRxMLMyydU1MD08mKma1Nce3snO1sy3R/es5+8nimtbeLcji6Cvrgvfnge+Dh5RMI/tPsEYlE2eKCgiKpVKpsaGh4oFarNep7ao1a/TsqlapNKpUqJRJJoUgkyk65rq2tLXFR1PfVlRW4aRoUSYIkCDh2hbDbQdjtcBAEZg2GDaFQmJ4EaLXaao7jfmxtbSESDiMcDiMajYJZZxAKheD3++F0Uvg0Pw+TyYSZ6entjIyMA0mAXC4v8/l8m/F4HLFYDLFoNAkIBgJYXV0F6XDAbDZjzmTCxPj4plAozEgCZDJZ6WezmXNSJCiKhJum4fV44HbTcDmdcDgIWC0WvDcaMf1uCgMDA6kAjUZTxXHcNs/zYNYZsCyLSCSSouB101iyWmA1z8MwM5OqoFAoyv0+3ya/SyG2oxAMIuD3Y8pgRFe/Dt39Q9Dr9XxaWlpmElBZWVm2YLVukgQBgrDDSVGgXS64nE5QJAkPZYesvR+58lEcV+jwqKubT1Ho6OhIUUhqhFlsRBhsR0K42zuG/JY5nGmdxdDg6+3MzMx9SUB9ff2tYDDAx+NxRP80wHMcPloWUN8zgvsvJlHYOYqzjxdxuXcJd57ofuZfreg7evq8YqfGii82G++mabhpGl+9XqwF/OgbnkBujR4nm42Q9CzhxisXioaXcX0kiCuTPCQt49RfLbAsizDLYovnoHtrwAmlDgWdRhS9tKNE70XpmxWUji3j5sQaLjYPkgKBQCCoq6srZRhmAwCQSCCRSAAA1tcZWGwO2OwOtA3NonwigKpxD7RPn3NHjuVd2Lv/YF7ymbKysg6LxeJLxcXFspqamgalUtna2Khqb2pUtSvlVY2y1p7F6g9x3J4JIScn59y/fqvglORaU9kzY6jk4di39PT0Qzv7X8BTTv/3hH2qAAAAAElFTkSuQmCC');
+        }
+
+        span.delete-query {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACt0lEQVQ4ja2TT0ySYRzHudVZuYTZwU24tOzSpUNbHbzURSe1nHUqWW2CXaSpB8DFlqPX6Rx4a5HTyvzTnKFOxAIbCYJU8PLCi7iVAq/AAy/zFUT27aCRunlo67s9h+fw++z5/L57RKL/lLO1tbWXmxobFUqlUqfX6wcoijIZDAaTwWAwURRl0uv1A0qlUieXy1ulUmndsenu7u62jWhUiG1tYT0SARMMgg4EDo8ftN9fvjM0DYfdLojF4nNlgNFoVAuCUCzu7SGbzSCbyYDneRBCkNzeRiKRAMuycLtccDqdsNlsRYlEcqEM0Gg07fF4PF8oFJDL5ZDjefA8j3QqDY7jEIvFEGJCWHW78dXpxKzFkheLxZIyQK1Wq3w+3y4TDCJI02DDYayvRxBhWYRCDGg6AI9nFQ67HTarFZMTE8cBg4ODakEQioVCASRFQEga2UwGqWQSHMchHouBZdnyC5ZOKuh0mvZEIvFX4VCDEHJEgSkD5mZn85WVlVVlQEdHh3JtbW03xDAIMcFjCuFQCDRNw+vxYNnhgM1qxcT4+OkK6VQa6RRBJnPQxk6WIJvcxq9oBN89LnhXnFheWixWVVScLwN6enqecByX3zvSwq4gwPvtB54Pz6B/bAH9b+dBjVpAjVrw7OVU6drdx68uXb/ZKRKJRKKurq72gN+fj7As2HAY0WgUia1NvJuew1WtBbdMbrSMMGid3MCj6U3cH/+JezM8mqiP4RMKeRBCQAhBYVfAzMJn3NBO4c7QMh6+9kD13g/VRBCKsSAefNhE84vxA4BWq20jhOzgMKVSCaX9fcTjcbg8Xri9PnxxrsD2yY75hUUMj7wRLtbV3a6urr7yZw1nZDKZrKGhQa5QKFRarVYzNDTUazab+8xmc5/RaOzt7HyqaWlpVtXX1zfV1NRI//W3nprfHe1LnVFcHTkAAAAASUVORK5CYII=');
+        }
+    </style>
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -106,12 +135,14 @@
 
     <table>
         <tr>
-            <th style="width: 15%">Resolve query parameters</th>
+            <th style="width: 15%">Options</th>
             <td>
                 <form id="options-form" action="" method="get" style="display: inline">
                     <input type="hidden" name="panel" value="database">
+
                     <label for="noresolve">Don't resolve parameters</label>
                     <input type="checkbox" name="resolve" id="noresolve" {% if noresolve %}checked{% endif %} onchange="document.getElementById('options-form').submit();" />
+
                     <noscript>
                         <input type="submit" value="refresh">
                     </noscript>
@@ -120,26 +151,37 @@
         </tr>
     </table>
 
-    <ul class="alt">
+    <table>
+        <tr>
+            <th style="text-align: center">T<br />y<br />p<br />e</th>
+            <th>Duration</th>
+            <th>Query</th>
+        </tr>
         {% for query in collector.queries %}
-        <li>
-            <pre>
-                {%- if noresolve -%}
-                    {{- query.query -}}
-                {%- else -%}
-                    {%- for key, part in query.queryParts -%}
-                        {{- part -}}
-                        {%- if query.params[key] is defined -%}
-                            {%- if query.types[key:1] in ['s', 'b'] -%}
-                                <b>"{{ query.params[key]|escape('html_attr') }}"</b>
-                            {%- else -%}
-                                <b>{{ query.params[key] }}</b>
+            <tr>
+                <th>
+                    <span class="database-query {{ query.queryType|lower }}-query" title="{{ query.queryType|upper }} query" />
+                </th>
+                <td>
+                    <b>{{ query.duration|number_format(1) }}</b> &micro;s
+                </td>
+                <td><pre>
+                    {%- if noresolve -%}
+                        {{- query.query -}}
+                    {%- else -%}
+                        {%- for key, part in query.queryParts -%}
+                            {{- part -}}
+                            {%- if query.params[key] is defined -%}
+                                {%- if query.types[key:1] in ['s', 'b'] -%}
+                                    <b>"{{ query.params[key]|escape('html_attr') }}"</b>
+                                {%- else -%}
+                                    <b>{{ query.params[key] }}</b>
+                                {%- endif -%}
                             {%- endif -%}
-                        {%- endif -%}
-                    {%- endfor -%}
-                {% endif %}
-            </pre> in <b>{{ query.duration|number_format(1) }}</b> &micro;s
-        </li>
+                        {%- endfor -%}
+                    {% endif %}
+                </pre></td>
+            </tr>
         {% endfor %}
-</ul>
+    </table>
 {% endblock %}
