@@ -318,7 +318,7 @@ abstract class BaseModel implements ModelInterface
     /**
      * Load all the properties of the model that haven't been loaded yet
      *
-     * @return void
+     * @return self
      */
     protected function lazyLoad()
     {
@@ -332,8 +332,10 @@ abstract class BaseModel implements ModelInterface
                 throw new Exception("The model has mysteriously disappeared");
             }
 
-            $this->assignLazyResult($results);
+            $this->assignLazyResult($results[0]);
         }
+
+        return $this;
     }
 
     /**

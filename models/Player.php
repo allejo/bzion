@@ -142,16 +142,7 @@ class Player extends AvatarModel implements NamedModel
         $this->team = $player['team'];
         $this->status = $player['status'];
         $this->avatar = $player['avatar'];
-        $this->email = $player['email'];
-        $this->verified = $player['verified'];
-        $this->receives = $player['receives'];
-        $this->confirmCode = $player['confirm_code'];
-        $this->description = $player['description'];
         $this->country = $player['country'];
-        $this->timezone = $player['timezone'];
-        $this->joined = new TimeDate($player['joined']);
-        $this->last_login = new TimeDate($player['last_login']);
-        $this->admin_notes = $player['admin_notes'];
     }
 
     /**
@@ -159,6 +150,16 @@ class Player extends AvatarModel implements NamedModel
      */
     protected function assignLazyResult($player)
     {
+        $this->email = $player['email'];
+        $this->verified = $player['verified'];
+        $this->receives = $player['receives'];
+        $this->confirmCode = $player['confirm_code'];
+        $this->description = $player['description'];
+        $this->timezone = $player['timezone'];
+        $this->joined = new TimeDate($player['joined']);
+        $this->last_login = new TimeDate($player['last_login']);
+        $this->admin_notes = $player['admin_notes'];
+
         $this->roles = Role::getRoles($this->id);
         $this->permissions = array();
 
@@ -194,6 +195,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getAdminNotes()
     {
+        $this->lazyLoad();
+
         return $this->admin_notes;
     }
 
@@ -223,6 +226,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getEmailAddress()
     {
+        $this->lazyLoad();
+
         return $this->email;
     }
 
@@ -233,6 +238,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function isVerified()
     {
+        $this->lazyLoad();
+
         return $this->verified;
     }
 
@@ -243,6 +250,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getConfirmCode()
     {
+        $this->lazyLoad();
+
         return $this->confirmCode;
     }
 
@@ -253,6 +262,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getReceives()
     {
+        $this->lazyLoad();
+
         return $this->receives;
     }
 
@@ -265,6 +276,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function canReceive($type)
     {
+        $this->lazyLoad();
+
         if (!$this->email || !$this->isVerified()) {
             // Unverified e-mail means the user will receive nothing
             return false;
@@ -286,6 +299,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function isCorrectConfirmCode($code)
     {
+        $this->lazyLoad();
+
         if ($this->confirmCode === null) {
             return false;
         }
@@ -299,6 +314,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getDescription()
     {
+        $this->lazyLoad();
+
         return htmlspecialchars($this->description);
     }
 
@@ -311,6 +328,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getJoinedDate($format = "")
     {
+        $this->lazyLoad();
+
         if (empty($format)) {
             return $this->joined->diffForHumans();
         }
@@ -335,6 +354,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getLastLogin($human = true)
     {
+        $this->lazyLoad();
+
         if ($human)
             return $this->last_login->diffForHumans();
         else
@@ -356,6 +377,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getRawDescription()
     {
+        $this->lazyLoad();
+
         return $this->description;
     }
 
@@ -374,6 +397,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getTimezone()
     {
+        $this->lazyLoad();
+
         return ($this->timezone) ?: date_default_timezone_get();
     }
 
@@ -476,6 +501,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setEmailAddress($email)
     {
+        $this->lazyLoad();
+
         if ($this->email == $email) {
             // The e-mail hasn't changed, don't do anything
             return;
@@ -496,6 +523,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setVerified($verified)
     {
+        $this->lazyLoad();
+
         if ($verified) {
             $this->setConfirmCode(null);
         }
@@ -733,9 +762,17 @@ class Player extends AvatarModel implements NamedModel
     /**
      * {@inheritDoc}
      */
+    public static function getEagerColumns()
+    {
+        return 'id,bzid,team,username,alias,status,avatar,country';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public static function getLazyColumns()
     {
-        return '0';
+        return 'email,verified,receives,confirm_code,description,timezone,joined,last_login,admin_notes';
     }
 
     /**

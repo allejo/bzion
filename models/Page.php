@@ -65,13 +65,19 @@ class Page extends AliasModel
     {
         $this->name = $page['name'];
         $this->alias = $page['alias'];
-        $this->content = $page['content'];
-        $this->created = new TimeDate($page['created']);
-        $this->updated = new TimeDate($page['updated']);
         $this->author = $page['author'];
         $this->home = $page['home'];
         $this->status = $page['status'];
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    protected function assignLazyResult($page)
+    {
+        $this->content = $page['content'];
+        $this->created = new TimeDate($page['created']);
+        $this->updated = new TimeDate($page['updated']);
     }
 
     /**
@@ -80,6 +86,8 @@ class Page extends AliasModel
      */
     public function getContent()
     {
+        $this->lazyLoad();
+
         return $this->content;
     }
 
@@ -89,6 +97,8 @@ class Page extends AliasModel
      */
     public function getCreated()
     {
+        $this->lazyLoad();
+
         return $this->created->diffForHumans();
     }
 
@@ -98,6 +108,8 @@ class Page extends AliasModel
      */
     public function getUpdated()
     {
+        $this->lazyLoad();
+
         return $this->updated->diffForHumans();
     }
 
@@ -217,6 +229,22 @@ class Page extends AliasModel
     public static function getActiveStatuses()
     {
         return array('live', 'revision');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getEagerColumns()
+    {
+        return 'id,parent_id,name,alias,author,home,status';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getLazyColumns()
+    {
+        return 'content,created,updated';
     }
 
     /**
