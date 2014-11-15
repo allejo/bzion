@@ -582,8 +582,8 @@ CREATE TABLE `player_groups` (
   PRIMARY KEY (`id`),
   KEY `player` (`player`),
   KEY `group` (`group`),
-  CONSTRAINT `player_groups_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`),
-  CONSTRAINT `player_groups_ibfk_2` FOREIGN KEY (`group`) REFERENCES `groups` (`id`)
+  CONSTRAINT `player_groups_ibfk_1` FOREIGN KEY (`player`) REFERENCES `players` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `player_groups_ibfk_2` FOREIGN KEY (`group`) REFERENCES `groups` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
