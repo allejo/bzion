@@ -44,6 +44,12 @@ abstract class BaseModel implements ModelInterface
     protected $db;
 
     /**
+     * Whether the lazy parameters of the model have been loaded
+     * @var boolean
+     */
+    private $loaded = false;
+
+    /**
      * The name of the database table used for queries
      * You can use this constant in static methods as such:
      * static::TABLE
@@ -65,6 +71,8 @@ abstract class BaseModel implements ModelInterface
     {
         $this->db = Database::getInstance();
 
+        $this->table = static::TABLE;
+
         if ($id == 0) {
             $this->valid  = false;
             $this->result = array();
@@ -73,9 +81,9 @@ abstract class BaseModel implements ModelInterface
         }
 
         $this->id = $id;
-        $this->table = static::TABLE;
 
-        $results = $this->db->query("SELECT * FROM " . $this->table . " WHERE id = ? LIMIT 1", "i", array($id));
+        $columns = static::getEagerColumns();
+        $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($id));
 
         if (count($results) < 1) {
             $this->valid  = false;
@@ -269,7 +277,63 @@ abstract class BaseModel implements ModelInterface
         }
 
         return self::fetchIds($conditionString, $types, $possible_values, $table, $select);
+    }
 
+    /**
+     * Get the MySQL columns that will be loaded as soon as the model is created
+     *
+     * @return string The columns in a format readable by MySQL
+     */
+    protected static function getEagerColumns()
+    {
+        return '*';
+    }
+
+    /**
+     * Get the MySQL columns that will be loaded only when a corresponding
+     * parameter of the model is requested
+     *
+     * This is done in order to reduce the time needed to load parameters that
+     * will not be requested (e.g player activation codes or permissions)
+     *
+     * @return string The columns in a format readable by MySQL
+     */
+    protected static function getLazyColumns()
+    {
+        throw new Exception("You need to specify a Model::getLazyColumns() method");
+    }
+
+    /**
+     * Load all the parameters of the model that were not loaded during the first
+     * fetch from the database
+     *
+     * @param array $result MySQL's result set
+     * @return void
+     */
+    protected function assignLazyResult($result)
+    {
+        throw new Exception("You need to specify a Model::lazyLoad() method");
+    }
+
+    /**
+     * Load all the properties of the model that haven't been loaded yet
+     *
+     * @return void
+     */
+    protected function lazyLoad()
+    {
+        if (!$this->loaded && $this->valid) {
+            $this->loaded = true;
+
+            $columns = $this->getLazyColumns();
+            $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($this->id));
+
+            if (count($results) < 1) {
+                throw new Exception("The model has mysteriously disappeared");
+            }
+
+            $this->assignLazyResult($results);
+        }
     }
 
     /**

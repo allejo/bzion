@@ -152,7 +152,13 @@ class Player extends AvatarModel implements NamedModel
         $this->joined = new TimeDate($player['joined']);
         $this->last_login = new TimeDate($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    protected function assignLazyResult($player)
+    {
         $this->roles = Role::getRoles($this->id);
         $this->permissions = array();
 
@@ -160,7 +166,6 @@ class Player extends AvatarModel implements NamedModel
             $this->permissions = array_merge($this->permissions, $role->getPerms());
         }
     }
-
 
     /**
      * Add a player a new role
@@ -171,6 +176,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function addRole($role_id)
     {
+        $this->lazyLoad();
+
         // Make sure the player doesn't already have the role
         foreach($this->roles as $playerRole) {
             if ($playerRole->getId() == $role_id) {
@@ -379,6 +386,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function hasPermission($permission)
     {
+        $this->lazyLoad();
+
         if ($permission === null) {
             return false;
         }
@@ -457,6 +466,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function removeRole($role_id)
     {
+        $this->lazyLoad();
         return $this->modifyRole($role_id, "remove");
     }
 
@@ -718,6 +728,14 @@ class Player extends AvatarModel implements NamedModel
     public static function getActiveStatuses()
     {
         return array('active', 'reported', 'test');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getLazyColumns()
+    {
+        return '0';
     }
 
     /**
