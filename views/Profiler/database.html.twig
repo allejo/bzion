@@ -46,22 +46,43 @@
 {% endblock %}
 
 {% block panel %}
+    {% set noresolve = request.query.get('resolve', 0) %}
     <h2>Database</h2>
+
+    <table>
+        <tr>
+            <th>Resolve query parameters</th>
+            <td>
+                <form id="options-form" action="" method="get" style="display: inline">
+                    <input type="hidden" name="panel" value="database">
+                    <label for="noresolve">Don't resolve parameters</label>
+                    <input type="checkbox" name="resolve" id="noresolve" {% if noresolve %}checked{% endif %} onchange="document.getElementById('options-form').submit();" />
+                    <noscript>
+                        <input type="submit" value="refresh">
+                    </noscript>
+                </form>
+            </td>
+        </tr>
+    </table>
 
     <ul class="alt">
         {% for query in collector.queries %}
         <li>
             <pre>
-                {%- for key, part in query.queryParts -%}
-                    {{- part -}}
-                    {%- if query.params[key] is defined -%}
-                        {%- if query.types[key:1] in ['s', 'b'] -%}
-                            <b>"{{ query.params[key]|escape('html_attr') }}"</b>
-                        {%- else -%}
-                            <b>{{ query.params[key] }}</b>
+                {%- if noresolve -%}
+                    {{- query.query -}}
+                {%- else -%}
+                    {%- for key, part in query.queryParts -%}
+                        {{- part -}}
+                        {%- if query.params[key] is defined -%}
+                            {%- if query.types[key:1] in ['s', 'b'] -%}
+                                <b>"{{ query.params[key]|escape('html_attr') }}"</b>
+                            {%- else -%}
+                                <b>{{ query.params[key] }}</b>
+                            {%- endif -%}
                         {%- endif -%}
-                    {%- endif -%}
-                {%- endfor -%}
+                    {%- endfor -%}
+                {% endif %}
             </pre> in <b>{{ query.duration|number_format(1) }}</b> &micro;s
             {#{{ query|ladybug_dump() }}#}
         </li>
