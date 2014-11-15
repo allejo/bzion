@@ -296,7 +296,8 @@ abstract class BaseModel implements ModelInterface
      * This is done in order to reduce the time needed to load parameters that
      * will not be requested (e.g player activation codes or permissions)
      *
-     * @return string The columns in a format readable by MySQL
+     * @return string|null The columns in a format readable by MySQL or null to
+     *                     fetch no columns at all
      */
     protected static function getLazyColumns()
     {
@@ -326,13 +327,18 @@ abstract class BaseModel implements ModelInterface
             $this->loaded = true;
 
             $columns = $this->getLazyColumns();
-            $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($this->id));
 
-            if (count($results) < 1) {
-                throw new Exception("The model has mysteriously disappeared");
+            if ($columns !== null) {
+                $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($this->id));
+
+                if (count($results) < 1) {
+                    throw new Exception("The model has mysteriously disappeared");
+                }
+
+                $this->assignLazyResult($results[0]);
+            } else {
+                $this->assignLazyResult(array());
             }
-
-            $this->assignLazyResult($results[0]);
         }
 
         return $this;

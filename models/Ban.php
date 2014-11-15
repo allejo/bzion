@@ -104,7 +104,13 @@ class Ban extends UrlModel implements NamedModel
         $this->updated = new TimeDate($ban['updated']);
         $this->author = $ban['author'];
         $this->status = $ban['status'];
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    protected function assignLazyResult($result)
+    {
         $this->ipAddresses = parent::fetchIds("WHERE ban_id = ?", 'i', array($this->getId()), "banned_ips", "ip_address");
     }
 
@@ -115,6 +121,8 @@ class Ban extends UrlModel implements NamedModel
      */
     public function addIP($ipAddress)
     {
+        $this->lazyLoad();
+
         $this->ipAddresses[] = $ipAddress;
         $this->db->query("INSERT INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
     }
@@ -126,6 +134,8 @@ class Ban extends UrlModel implements NamedModel
      */
     public function removeIP($ipAddress)
     {
+        $this->lazyLoad();
+
         // Remove $ipAddress from $this->ipAddresses
         $this->ipAddresses = array_diff($this->ipAddresses, array($ipAddress));
         $this->db->query("DELETE FROM banned_ips WHERE ban_id = ? AND ip_address = ?", "is", array($this->getId(), $ipAddress));
@@ -140,6 +150,8 @@ class Ban extends UrlModel implements NamedModel
      */
     public function setIPs($ipAddresses)
     {
+        $this->lazyLoad();
+
         $oldIPs = $this->ipAddresses;
         $this->ipAddresses = $ipAddresses;
 
@@ -220,6 +232,8 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getIpAddresses()
     {
+        $this->lazyLoad();
+
         return $this->ipAddresses;
     }
 
@@ -448,6 +462,14 @@ class Ban extends UrlModel implements NamedModel
     public static function getActiveStatuses()
     {
         return array('public');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getLazyColumns()
+    {
+        return null;
     }
 
     /**
