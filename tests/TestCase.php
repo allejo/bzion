@@ -96,10 +96,28 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected function getNewPlayer()
     {
         ++$this->lastBzid;
+
         $player = Player::newPlayer($this->lastBzid, "Sample player" . $this->lastBzid - 1);
         $this->playersCreated[] = $player->getId();
 
         return $player;
+    }
+
+    /**
+     * Reset any properties changed on a model that are unrelated to its data
+     *
+     * @param Model $c,... The object(s) to reset
+     */
+    protected function reset()
+    {
+        foreach (func_get_args() as $model) {
+            if ($model instanceof BaseModel) {
+                $refObject   = new ReflectionObject($model);
+                $refProperty = new ReflectionProperty('BaseModel', 'loaded');
+                $refProperty->setAccessible(true);
+                $refProperty->setValue($model, false);
+            }
+        }
     }
 
     /**

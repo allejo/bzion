@@ -13,6 +13,7 @@ class NotificationTest extends TestCase
         $this->connectToDatabase();
 
         $this->player = $this->getNewPlayer();
+        $this->reset($this->player);
     }
 
     public function testNotification()

@@ -69,7 +69,7 @@ class NewsTest extends TestCase
         $this->assertEquals(StringMocks::SampleTitleOne, $news->getSubject());
         $this->assertEquals(StringMocks::LargeContent, $news->getContent());
         $this->assertEquals($this->newsCategory, $news->getCategory());
-        $this->assertEquals($this->player_with_create_perms, $news->getAuthor());
+        $this->assertEquals($this->player_with_create_perms->getID(), $news->getAuthor()->getID());
         $this->assertEquals($this->newsCategory->getId(), $news->getCategoryID());
         $this->assertEquals($this->player_with_create_perms->getId(), $news->getAuthorID());
 
@@ -103,7 +103,7 @@ class NewsTest extends TestCase
         $player_b = $this->getNewPlayer();
 
         $news->updateLastEditor($player_b->getId());
-        $this->assertEquals($player_b, $news->getLastEditor());
+        $this->assertEquals($player_b->getId(), $news->getLastEditor()->getId());
 
         $news->updateEditTimestamp();
         $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getLastEdit());
