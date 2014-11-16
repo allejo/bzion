@@ -53,12 +53,40 @@
         span.delete-query {
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACt0lEQVQ4ja2TT0ySYRzHudVZuYTZwU24tOzSpUNbHbzURSe1nHUqWW2CXaSpB8DFlqPX6Rx4a5HTyvzTnKFOxAIbCYJU8PLCi7iVAq/AAy/zFUT27aCRunlo67s9h+fw++z5/L57RKL/lLO1tbWXmxobFUqlUqfX6wcoijIZDAaTwWAwURRl0uv1A0qlUieXy1ulUmndsenu7u62jWhUiG1tYT0SARMMgg4EDo8ftN9fvjM0DYfdLojF4nNlgNFoVAuCUCzu7SGbzSCbyYDneRBCkNzeRiKRAMuycLtccDqdsNlsRYlEcqEM0Gg07fF4PF8oFJDL5ZDjefA8j3QqDY7jEIvFEGJCWHW78dXpxKzFkheLxZIyQK1Wq3w+3y4TDCJI02DDYayvRxBhWYRCDGg6AI9nFQ67HTarFZMTE8cBg4ODakEQioVCASRFQEga2UwGqWQSHMchHouBZdnyC5ZOKuh0mvZEIvFX4VCDEHJEgSkD5mZn85WVlVVlQEdHh3JtbW03xDAIMcFjCuFQCDRNw+vxYNnhgM1qxcT4+OkK6VQa6RRBJnPQxk6WIJvcxq9oBN89LnhXnFheWixWVVScLwN6enqecByX3zvSwq4gwPvtB54Pz6B/bAH9b+dBjVpAjVrw7OVU6drdx68uXb/ZKRKJRKKurq72gN+fj7As2HAY0WgUia1NvJuew1WtBbdMbrSMMGid3MCj6U3cH/+JezM8mqiP4RMKeRBCQAhBYVfAzMJn3NBO4c7QMh6+9kD13g/VRBCKsSAefNhE84vxA4BWq20jhOzgMKVSCaX9fcTjcbg8Xri9PnxxrsD2yY75hUUMj7wRLtbV3a6urr7yZw1nZDKZrKGhQa5QKFRarVYzNDTUazab+8xmc5/RaOzt7HyqaWlpVtXX1zfV1NRI//W3nprfHe1LnVFcHTkAAAAASUVORK5CYII=');
         }
+
+        .query-results {
+            white-space: pre !important;
+            overflow-x: auto;
+            max-width: 25vw;
+        }
     </style>
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
-      // Load the Visualization API and the piechart package.
+    function showResults(link) {
+        var sections = link.children,
+            target = link.getAttribute('data-target-id'),
+            targetId = target.replace('code', ''),
+            queryResults = document.getElementById('original-query' + targetId);
+
+        if (queryResults.style.display != 'none') {
+            queryResults.style.display = 'none';
+            sections[0].style.display = 'inline';
+            sections[1].style.display = 'none';
+
+            link.setAttribute('data-state', 'expanded');
+        } else {
+            queryResults.style.display = 'block';
+            sections[0].style.display = 'none';
+            sections[1].style.display = 'inline';
+
+            link.setAttribute('data-state', 'collapsed');
+        }
+
+        return false;
+    }
+
       google.load('visualization', '1.1', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
@@ -156,6 +184,7 @@
             <th style="text-align: center">T<br />y<br />p<br />e</th>
             <th>Duration</th>
             <th>Query</th>
+            <th>Results</th>
         </tr>
         {% for query in collector.queries %}
             <tr>
@@ -181,6 +210,15 @@
                         {%- endfor -%}
                     {% endif %}
                 </pre></td>
+                <td>
+                    <div class="query-section" data-state="collapsed" onclick="return showResults(this);" title="Show results" data-target-id="code-{{ loop.index }}" style="cursor: pointer;">
+                        <img alt="+" style="display: inline;" src="data:image/gif;base64,R0lGODlhEgASAMQTANft99/v+Ga44bHb8ITG52S44dXs9+z1+uPx+YvK6WC24G+944/M6W28443L6dnu+Ge54v/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAASABIAQAVS4DQBTiOd6LkwgJgeUSzHSDoNaZ4PU6FLgYBA5/vFID/DbylRGiNIZu74I0h1hNsVxbNuUV4d9SsZM2EzWe1qThVzwWFOAFCQFa1RQq6DJB4iIQA7" />
+                        <img alt="-" style="display: none;" src="data:image/gif;base64,R0lGODlhEgASAMQSANft94TG57Hb8GS44ez1+mC24IvK6ePx+Wa44dXs92+942e54o3L6W2844/M6dnu+P/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABIALAAAAAASABIAQAVCoCQBTBOd6Kk4gJhGBCTPxysJb44K0qD/ER/wlxjmisZkMqBEBW5NHrMZmVKvv9hMVsO+hE0EoNAstEYGxG9heIhCADs=" />
+                    </div>
+
+                    <pre id="original-query-{{ loop.index }}" class="query-results" style="display:none">
+                        {{- query.results|yaml_encode(2) -}}
+                    </pre>
             </tr>
         {% endfor %}
     </table>
