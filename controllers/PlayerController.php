@@ -50,7 +50,7 @@ class PlayerController extends JSONController
         $query->sortBy('username');
 
         if ($this->isJson())
-            return new JsonResponse(array('players' => $query->getArray('username')));
+            return new JsonResponse(array('players' => $query->getArray(array('username', 'outdated'))));
         else
             return array('players' => $query->getModels());
     }

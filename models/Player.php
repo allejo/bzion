@@ -70,6 +70,12 @@ class Player extends AvatarModel implements NamedModel
     protected $confirmCode;
 
     /**
+     * Whether the callsign of the player is outdated
+     * @var boolean
+     */
+    protected $outdated;
+
+    /**
      * The player's profile description
      * @var string
      */
@@ -154,6 +160,7 @@ class Player extends AvatarModel implements NamedModel
         $this->verified = $player['verified'];
         $this->receives = $player['receives'];
         $this->confirmCode = $player['confirm_code'];
+        $this->outdated = $player['outdated'];
         $this->description = $player['description'];
         $this->timezone = $player['timezone'];
         $this->joined = new TimeDate($player['joined']);
@@ -411,13 +418,28 @@ class Player extends AvatarModel implements NamedModel
      */
     public function hasPermission($permission)
     {
-        $this->lazyLoad();
-
         if ($permission === null) {
             return false;
         }
 
+        $this->lazyLoad();
+
         return isset($this->permissions[$permission]);
+    }
+
+    /**
+     * Check whether the callsign of the player is outdated
+     *
+     * Returns true if this player has probably changed their callsign, making
+     * the current username stored in the database obsolete
+     *
+     * @return bool Whether or not the player is disabled
+     */
+    public function isOutdated()
+    {
+        $this->lazyLoad();
+
+        return $this->outdated;
     }
 
     /**
@@ -565,6 +587,17 @@ class Player extends AvatarModel implements NamedModel
     public function setReceives($receives)
     {
         return $this->updateProperty($this->receives, 'receives', $receives, 's');
+    }
+
+    /**
+     * Set whether the callsign of the player is outdated
+     *
+     * @param  boolean $outdated Whether the callsign is outdated
+     * @return self
+     */
+    public function setOutdated($outdated)
+    {
+        return $this->updateProperty($this->outdated, 'outdated', $outdated, 'i');
     }
 
     /**
@@ -772,7 +805,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getLazyColumns()
     {
-        return 'email,verified,receives,confirm_code,description,timezone,joined,last_login,admin_notes';
+        return 'email,verified,receives,confirm_code,outdated,description,timezone,joined,last_login,admin_notes';
     }
 
     /**
@@ -785,6 +818,7 @@ class Player extends AvatarModel implements NamedModel
             'columns' => array(
                 'username' => 'username',
                 'team' => 'team',
+                'outdated' => 'outdated',
                 'status' => 'status'
             ),
             'name' => 'username',
@@ -851,10 +885,28 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setUsername($username)
     {
+        // The player's username was just fetched from BzDB, it's definitely not
+        // outdated
+        $this->setOutdated(false);
+
+        // Players who have this player's username are considered outdated
+        $this->db->query("UPDATE {$this->table} SET outdated = 1 WHERE username = ? AND id != ?", "si", array($username, $this->id));
+
         if ($username === $this->name) {
             // The player's username hasn't changed, no need to do anything
             return $this;
         }
+
+        // Players who used to have our player's username are not outdated anymore,
+        // unless they are more than one.
+        // Even though we are sure that the old and new usernames are not equal,
+        // MySQL makes a different type of string equality tests, which is why we
+        // also check IDs to make sure not to affect our own player's outdatedness.
+        $this->db->query("
+            UPDATE {$this->table} SET outdated =
+                (SELECT (COUNT(*)>1) FROM (SELECT 1 FROM {$this->table} WHERE username = ? AND id != ?) t)
+            WHERE username = ? AND id != ?",
+            "sisi", array($this->name, $this->id, $this->name, $this->id));
 
         $this->updateProperty($this->name, 'username', $username, 's');
         $this->db->query("INSERT IGNORE INTO past_callsigns (player, username) VALUES (?, ?)", "is", array($this->id, $username));

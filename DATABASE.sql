@@ -620,6 +620,7 @@ CREATE TABLE `players` (
   `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Whether the player''s e-mail address has been verified',
   `receives` set('nothing', 'messages', 'everything') NOT NULL DEFAULT 'messages' COMMENT 'What kind of notifications the user has decided to receive on their e-mail',
   `confirm_code` varchar(32) DEFAULT NULL COMMENT 'A confirmation code used to verify the player''s email address',
+  `outdated` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Whether the player''s callsign is outdated',
   `description` text NOT NULL COMMENT 'The description or biography of a player',
   `country` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'The country a player belongs to',
   `timezone` varchar(40) NOT NULL COMMENT 'The PHP identifier of the timezone a player belongs to',
