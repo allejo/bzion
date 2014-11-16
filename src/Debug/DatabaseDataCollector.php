@@ -109,6 +109,40 @@ class DatabaseDataCollector implements DataCollectorInterface
     }
 
     /**
+     * Get the number of times each query was sent to the server
+     *
+     * @return array An array with resolved queries as keys and frequencies as values
+     */
+    public function getQueryFrequencies()
+    {
+        $return = array();
+
+        foreach($this->data['queries'] as $query) {
+            $resolved = $query->getResolvedQuery();
+
+            if (!isset($return[$resolved])) {
+                $return[$resolved] = 1;
+            } else {
+                $return[$resolved]++;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Get the number of duplicated queries
+     *
+     * @return int
+     */
+    public function getDuplicatedQueryCount()
+    {
+        $frequencies = $this->getQueryFrequencies();
+
+        return array_sum($frequencies) - count($frequencies);
+    }
+
+    /**
      * Get the queries made to the database
      *
      * @return DatabaseQuery[]

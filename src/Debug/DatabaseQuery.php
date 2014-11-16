@@ -204,4 +204,36 @@ class DatabaseQuery
     {
         return explode("?", $this->query);
     }
+
+    /**
+     * Get the resolved query strings (where all `?`s are replaced with the
+     * actual parameter values)
+     *
+     * @return string
+     */
+    public function getResolvedQuery()
+    {
+        $query = '';
+
+        foreach ($this->getQueryParts() as $i => $part) {
+            $query .= $part;
+
+            if (array_key_exists($i, $this->params)) {
+                // We are not going to execute the query, so there is no need
+                // to use anything safer than mysql_escape_string()
+                $param = mysql_escape_string($this->params[$i]);
+
+                if ($param === null) {
+                    $query .= 'null';
+                } elseif ($this->types[$i] == 's' || $this->types[$i] == 'b') {
+                    // Strings will be quoted
+                    $query .= '"' . $param . '"';
+                } else {
+                    $query .= $param;
+                }
+            }
+        }
+
+        return $query;
+    }
 }

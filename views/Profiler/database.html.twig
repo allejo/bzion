@@ -23,6 +23,10 @@
             <b>Duration</b>
             <span>{{ collector.duration|number_format(2) }} ms</span>
         </div>
+        <div class="sf-toolbar-info-piece">
+            <b title="The number of duplicated queries">Redundant</b>
+            <span>{{ collector.duplicatedQueryCount }}</span>
+        </div>
     {% endset %}
     {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': true } %}
 {% endblock %}
@@ -159,11 +163,16 @@
         <tr>
             <th>Most accessed models</th>
             <td><div id="chart_div"></div></td>
-    </table>
-
-    <table>
+        </tr>
         <tr>
-            <th style="width: 15%">Options</th>
+            <th colspan="2">Misc</th>
+        </tr>
+        <tr>
+            <th>Duplicated queries</th>
+            <td>{{ collector.duplicatedQueryCount }}</td>
+        </tr>
+        <tr>
+            <th style="width: 15%">View settings</th>
             <td>
                 <form id="options-form" action="" method="get" style="display: inline">
                     <input type="hidden" name="panel" value="database">
