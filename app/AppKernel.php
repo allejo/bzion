@@ -201,14 +201,6 @@ class AppKernel extends Kernel
         $event = new FilterResponseEvent($this, $request, $type, $response);
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::RESPONSE, $event);
 
-        // Do not lose the session data when the client's browser redirects too
-        // fast, without allowing the session handler to store the session
-        if ($type == Kernel::MASTER_REQUEST) {
-            if ($session->isStarted()) {
-                $session->save();
-            }
-        }
-
         return $response;
     }
 }
