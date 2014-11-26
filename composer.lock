@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7b1b7f9534a681d7de48dbbd8ea12580",
+    "hash": "5da47e5dae913e79673886f9f37e6a50",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivaynberg/select2.git",
-                "reference": "69e8e6e355957e472702b8e80f3ebd501a5e42ca"
+                "reference": "48ae56a2b6bb2cadafd39777945f002920b3eb56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/69e8e6e355957e472702b8e80f3ebd501a5e42ca",
-                "reference": "69e8e6e355957e472702b8e80f3ebd501a5e42ca",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/48ae56a2b6bb2cadafd39777945f002920b3eb56",
+                "reference": "48ae56a2b6bb2cadafd39777945f002920b3eb56",
                 "shasum": ""
             },
             "require": {
@@ -710,7 +710,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "http://ivaynberg.github.io/select2/",
-            "time": "2014-11-14 22:38:28"
+            "time": "2014-11-25 17:48:21"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -4582,16 +4582,16 @@
         },
         {
             "name": "phpdocumentor/phpdocumentor",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "9bc9fdb84c1ecc704a6801b32afc113dd336bfc7"
+                "reference": "a7d832d1c302903889ea441ca75323e315294094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/9bc9fdb84c1ecc704a6801b32afc113dd336bfc7",
-                "reference": "9bc9fdb84c1ecc704a6801b32afc113dd336bfc7",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/a7d832d1c302903889ea441ca75323e315294094",
+                "reference": "a7d832d1c302903889ea441ca75323e315294094",
                 "shasum": ""
             },
             "require": {
@@ -4632,7 +4632,7 @@
                 "zetacomponents/document": ">=1.3.1"
             },
             "require-dev": {
-                "behat/behat": "~2.4",
+                "behat/behat": "~3.0",
                 "mikey179/vfsstream": "~1.2",
                 "mockery/mockery": "~0.9@dev",
                 "phpunit/phpunit": "~4.0",
@@ -4677,7 +4677,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2014-11-14 20:58:31"
+            "time": "2014-11-26 07:08:02"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -6247,12 +6247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "6a87cdf2878a50bfdcc4f5ed5d6292cb0fe4c30e"
+                "reference": "ca188a500a7bef815a46f19f8616f0a775e7dbf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/6a87cdf2878a50bfdcc4f5ed5d6292cb0fe4c30e",
-                "reference": "6a87cdf2878a50bfdcc4f5ed5d6292cb0fe4c30e",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/ca188a500a7bef815a46f19f8616f0a775e7dbf2",
+                "reference": "ca188a500a7bef815a46f19f8616f0a775e7dbf2",
                 "shasum": ""
             },
             "require": {
@@ -6291,7 +6291,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-11-20 08:28:22"
+            "time": "2014-11-23 18:30:35"
         },
         {
             "name": "sensiolabs/security-checker",

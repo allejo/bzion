@@ -51,7 +51,7 @@
         "symfony/browser-kit": ">=2.5.0",
         "symfony/web-profiler-bundle": ">=2.5.0",
         "phpunit/phpunit": "4.1.*",
-        "phpdocumentor/phpdocumentor": "dev-develop",
+        "phpdocumentor/phpdocumentor": "dev-master",
         "sensio/distribution-bundle": "3.0.*@dev",
         "raulfraile/ladybug-bundle": "~1.0"
     },
