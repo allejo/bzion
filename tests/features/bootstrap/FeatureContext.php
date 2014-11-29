@@ -195,6 +195,20 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
+    * @Given there is no player called :username
+    */
+    public function thereIsNoPlayerCalled($username)
+    {
+        while($player = Player::getFromUsername($username)) {
+            if (!$player->isValid()) {
+                break;
+            }
+
+            $player->wipe();
+        }
+    }
+
+    /**
      * @When :sender sends :recipient a message
      */
     public function sendsMeAMessage($sender, $recipient)

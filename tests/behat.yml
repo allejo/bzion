@@ -1,6 +1,8 @@
 default:
     extensions:
-        Behat\Symfony2Extension\ServiceContainer\Symfony2Extension: ~
+        Behat\Symfony2Extension\ServiceContainer\Symfony2Extension:
+            kernel:
+                debug: no
         Behat\MinkExtension:
             default_session: 'symfony2'
             sessions:
