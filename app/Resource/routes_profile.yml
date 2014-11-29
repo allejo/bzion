@@ -18,4 +18,4 @@ test_login:
     defaults: { _controller: 'Login', _action: 'loginAsTestUser' }
 
 _main:
-    resource: ../routes.yml
+    resource: routes_dev.yml

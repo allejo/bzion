@@ -21,8 +21,10 @@ use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
@@ -38,6 +40,8 @@ require_once __DIR__ . '/../bzion-load.php';
 
 class AppKernel extends Kernel
 {
+    private $request = null;
+
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/Resource/symfony_'. $this->getEnvironment() . '.yml');
@@ -78,7 +82,7 @@ class AppKernel extends Kernel
             }
         }
 
-        if ($this->getEnvironment() == 'profile') {
+        if (in_array($this->getEnvironment(), array('profile', 'dev'), true)) {
             Debug::enable();
         }
 
@@ -185,8 +189,25 @@ class AppKernel extends Kernel
             $this->boot();
         }
 
+        if ($catch && !$this->isDebug()) {
+            try {
+                return $this->handleRaw($request, $type, $catch);
+            } catch(Exception $e) {
+                return $this->handleException($e, $request, $type);
+            }
+        } else {
+            return $this->handleRaw($request, $type, $catch);
+        }
+    }
+
+    private function handleRaw(Request $request, $type = self::MASTER_REQUEST, $catch = true)
+    {
         $this->container->enterScope('request');
         $this->container->set('request', $request, 'request');
+
+        if ($type === self::MASTER_REQUEST) {
+            $this->request = $request;
+        }
 
         $event = new GetResponseEvent($this, $request, $type);
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::REQUEST, $event);
@@ -218,15 +239,39 @@ class AppKernel extends Kernel
         );
     }
 
-    public function terminateWithException(\Exception $exception)
+    public function terminateWithException(Exception $exception)
     {
-        if (!$request = $this->requestStack->getMasterRequest()) {
-            throw new \LogicException('Request stack is empty', 0, $exception);
+        return false;
+    }
+
+    private function handleException(Exception $e, $request, $type)
+    {
+        $event = new GetResponseForExceptionEvent($this, $request, $type, $e);
+        $this->container->get('event_dispatcher')->dispatch(KernelEvents::EXCEPTION, $event);
+
+        // a listener might have replaced the exception
+        $e = $event->getException();
+        if (!$event->hasResponse()) {
+            throw $e;
         }
 
-        $response = $this->handleException($exception, $request, self::MASTER_REQUEST);
-        $response->sendHeaders();
-        $response->sendContent();
-        $this->terminate($request, $response);
+        $response = $event->getResponse();
+
+        if ($response->headers->has('X-Status-Code')) {
+            // the developer asked for a specific status code
+            $response->setStatusCode($response->headers->get('X-Status-Code'));
+            $response->headers->remove('X-Status-Code');
+        } elseif (!$response->isClientError() && !$response->isServerError() && !$response->isRedirect()) {
+            // ensure that we actually have an error response
+            if ($e instanceof HttpExceptionInterface) {
+                // keep the HTTP status code and headers
+                $response->setStatusCode($e->getStatusCode());
+                $response->headers->add($e->getHeaders());
+            } else {
+                $response->setStatusCode(500);
+            }
+        }
+
+        return $response;
     }
 }

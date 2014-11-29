@@ -23,12 +23,12 @@ monolog:
             type: stream
             path: "%bzion.logging.directory%/api.log"
             level: %bzion.logging.level%
-            channels: [api]
+            channels: api
         main:
             type: stream
             path: "%bzion.logging.directory%/main.log"
             level: %bzion.logging.level%
-            channels: [app, mysql]
+            channels: ["!api"]
         console:
             type: console
 
@@ -76,6 +76,8 @@ fos_elastica:
                     _parent:
                         type: group
 
+parameters:
+    twig.exception_listener.class: BZIon\Event\ExceptionListener
 
 services:
     main.warmer.twig_warmer:

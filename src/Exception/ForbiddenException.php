@@ -12,7 +12,7 @@
  */
 class ForbiddenException extends HTTPException
 {
-    public static function getErrorCode()
+    public function getStatusCode()
     {
         return 200;
     }

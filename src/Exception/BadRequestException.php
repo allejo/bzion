@@ -14,7 +14,7 @@ class BadRequestException extends HTTPException
 {
     protected $message = "Bad request";
 
-    public static function getErrorCode()
+    public function getStatusCode()
     {
         return 200;
     }

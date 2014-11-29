@@ -12,7 +12,7 @@
  */
 class NotFoundException extends HTTPException
 {
-    public static function getErrorCode()
+    public function getStatusCode()
     {
         return 404;
     }

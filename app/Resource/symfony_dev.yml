@@ -5,4 +5,8 @@ services:
     bzion.command.log_command:
         class: BZIon\Command\LogCommand
         tags:
+
             -  { name: console.command }
+framework:
+    router:
+        resource: "%kernel.root_dir%/Resource/routes_dev.yml"

@@ -106,8 +106,9 @@ abstract class Controller extends ContainerAware
      */
     public function callAction($action=null)
     {
-        if (!$action)
-            $action = $this->parameters->get('_action');
+        if (!$action) {
+            $action = $this->parameters->get('_action') ?: 'default';
+        }
 
         $this->setup();
         $response = $this->forward($action);
