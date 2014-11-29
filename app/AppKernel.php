@@ -12,6 +12,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Bridge\Twig\Extension\DumpExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\StopwatchExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\HttpKernel\Kernel;
@@ -139,6 +140,9 @@ class AppKernel extends Kernel
         );
         $twig->addExtension(
             new AssetsExtension($this->container, $this->container->get('router')->getContext())
+        );
+        $twig->addExtension(
+            new StopwatchExtension($this->container->get('debug.stopwatch', null))
         );
 
         if ($this->getEnvironment() == 'profile') {
