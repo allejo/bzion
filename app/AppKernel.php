@@ -8,9 +8,9 @@ use BZIon\Twig\YesNoFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\InvalidTest;
 use Liip\ImagineBundle\Templating\ImagineExtension;
-use RaulFraile\Bundle\LadybugBundle\Twig\Extension\LadybugExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\Forms;
+use Symfony\Bridge\Twig\Extension\DumpExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
@@ -57,7 +57,7 @@ class AppKernel extends Kernel
         if ($this->getEnvironment() == 'profile') {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
+            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
         }
 
         return $bundles;
@@ -142,7 +142,7 @@ class AppKernel extends Kernel
         );
 
         if ($this->getEnvironment() == 'profile') {
-            $twig->addExtension(new LadybugExtension($this->container->get('ladybug.dumper')));
+            $twig->addExtension(new DumpExtension($this->container->get('var_dumper.cloner')));
         }
 
         $twig->addFunction(LinkToFunction::get());
