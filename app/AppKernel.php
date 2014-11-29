@@ -21,9 +21,11 @@ use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
@@ -202,5 +204,25 @@ class AppKernel extends Kernel
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::RESPONSE, $event);
 
         return $response;
+    }
+
+    public function terminate(Request $request, Response $response)
+    {
+        $this->container->get('event_dispatcher')->dispatch(
+            KernelEvents::TERMINATE,
+            new PostResponseEvent($this, $request, $response)
+        );
+    }
+
+    public function terminateWithException(\Exception $exception)
+    {
+        if (!$request = $this->requestStack->getMasterRequest()) {
+            throw new \LogicException('Request stack is empty', 0, $exception);
+        }
+
+        $response = $this->handleException($exception, $request, self::MASTER_REQUEST);
+        $response->sendHeaders();
+        $response->sendContent();
+        $this->terminate($request, $response);
     }
 }
