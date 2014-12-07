@@ -163,6 +163,10 @@ class Configuration implements ConfigurationInterface
                                 'Setting this to anything other than false WILL introduce significant security risks and should NOT be done in a production environment'
                             )
                         ->end()
+                        ->booleanNode('maintenance')
+                            ->defaultFalse()
+                            ->info('Whether the website is in maintenance mode')
+                        ->end()
                     ->end()
                 ->end()
             ->end()

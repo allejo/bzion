@@ -15,7 +15,7 @@ _configurator:
 
 test_login:
     pattern:    /login/{user}
-    defaults: { _controller: 'Login', _action: 'loginAsTestUser' }
+    defaults: { _controller: 'Login', _action: 'loginAsTestUser', _noMaint: true }
 
 _main:
     resource: routes_dev.yml

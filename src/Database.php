@@ -246,8 +246,7 @@ class Database
     }
 
     /**
-     * Calls the two debug functions (debug to file & screen), feeding them
-     * with fancy messages
+     * Uses monolog to log an error message
      *
      * @param string $error The error string
      * @param int    $id    The error ID

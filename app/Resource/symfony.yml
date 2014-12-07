@@ -63,7 +63,6 @@ fos_elastica:
             host: %bzion.features.elasticsearch.host%
             port: %bzion.features.elasticsearch.port%
     indexes:
-
         search:
             finder: ~
             types:
@@ -128,5 +127,10 @@ services:
         class: BZIon\Search\ElasticaToMessageTransformer
         tags:
             - { name: fos_elastica.elastica_to_model_transformer, index: search, type: message }
+    bzion.listener.maintenance:
+        class: BZIon\Event\MaintenanceListener
+        arguments: [%bzion.miscellaneous.maintenance%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     monolog.logger.app:
         alias: logger

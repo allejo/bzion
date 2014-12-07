@@ -23,6 +23,7 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -216,6 +217,11 @@ class AppKernel extends Kernel
             return parent::handle($request, $type, $catch);
         }
 
+        // An event may have given a response
+        if ($event->hasResponse()) {
+            return $this->filterResponse($event->getResponse(), $request, $type);
+        }
+
         $session = $this->container->get('session');
         $session->start();
         $this->setUpFormFactory($session);
@@ -225,10 +231,27 @@ class AppKernel extends Kernel
         $con = Controller::getController($request->attributes);
         $response = $con->callAction();
 
+        return $this->filterResponse($response, $request, $type);
+    }
+
+    /**
+     * Filters a response object.
+     *
+     * @param Response $response A Response instance
+     * @param Request $request An error message in case the response is not a Response object
+     * @param int $type The type of the request (one of HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST)
+     *
+     * @return Response The filtered Response instance
+     */
+    private function filterResponse(Response $response, Request $request, $type)
+    {
         $event = new FilterResponseEvent($this, $request, $type, $response);
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::RESPONSE, $event);
 
-        return $response;
+        $requestEvent = new FinishRequestEvent($this, $request, $type);
+        $this->container->get('event_dispatcher')->dispatch(KernelEvents::FINISH_REQUEST, $requestEvent);
+
+        return $event->getResponse();
     }
 
     public function terminate(Request $request, Response $response)

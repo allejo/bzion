@@ -48,11 +48,11 @@ invitation_accept:
 
 login:
     pattern:    /login
-    defaults: { _controller: 'Login', _action: 'login' }
+    defaults: { _controller: 'Login', _action: 'login', _noMaint: true }
 
 logout:
     pattern:    /logout
-    defaults: { _controller: 'Login', _action: 'logout' }
+    defaults: { _controller: 'Login', _action: 'logout', _noMaint: true }
 
 match_list:
     pattern:    /matches

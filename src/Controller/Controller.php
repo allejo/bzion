@@ -75,25 +75,25 @@ abstract class Controller extends ContainerAware
 
     /**
      *
-     * @param ParameterBag $parameters The array returned by $router->matchRequest()
+     * @param ParameterBag $parameters The array returned by $request->attributes
      */
     public function __construct($parameters)
     {
         $this->parameters = $parameters;
+
+        $this->setContainer(Service::getContainer());
     }
 
     /**
      * Returns the controller that is assigned to a route
      *
-     * @param  ParameterBag $parameters The array returned by $router->matchRequest()
+     * @param  ParameterBag $parameters The array returned by $request->attributes
      * @return Controller   The controller
      */
     public static function getController($parameters)
     {
         $ref = new ReflectionClass($parameters->get('_controller') . 'Controller');
         $controller = $ref->newInstance($parameters);
-
-        $controller->setContainer(Service::getContainer());
 
         return $controller;
     }

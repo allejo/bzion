@@ -52,3 +52,5 @@ bzion:
         # WARNING: Setting this to anything other than false WILL introduce significant
         # security risks and should NOT be used in a production environment
         development: false
+        # Set to true to enable maintenance mode
+        maintenance: false
