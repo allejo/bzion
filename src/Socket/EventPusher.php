@@ -5,6 +5,8 @@ use Player;
 use BZIon\Event\EventSubscriber;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
+use React\EventLoop\LoopInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class EventPusher implements MessageComponentInterface
 {
@@ -21,10 +23,25 @@ class EventPusher implements MessageComponentInterface
     protected $subscriber;
 
     /**
+     * The event loop
+     * @var LoopInterface
+     */
+    protected $loop;
+
+    /**
+     * The console output
+     * @var OutputInterface|null
+     */
+    protected $output;
+
+    /**
      * Create a new event pusher handler
      */
-    public function __construct()
+    public function __construct(LoopInterface $loop, OutputInterface $output = null)
     {
+        $this->loop = $loop;
+        $this->output = $output;
+
         $this->clients = new \SplObjectStorage;
         $this->subscriber = \Service::getContainer()->get('kernel.subscriber.bzion_subscriber');
     }
@@ -40,6 +57,15 @@ class EventPusher implements MessageComponentInterface
 
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
+
+        $this->log(
+            sprintf(
+                "<fg=cyan>Client #{$conn->resourceId} connected from {$conn->remoteAddress}\t ({$conn->Player->getUsername()})</>",
+                $conn->resourceId,
+                $conn->remoteAddress,
+                $conn->Player->getUsername()
+            ), OutputInterface::VERBOSITY_VERBOSE
+        );
     }
 
     /**
@@ -62,6 +88,15 @@ class EventPusher implements MessageComponentInterface
     {
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
+
+        $this->log(
+            sprintf(
+                "<fg=yellow>Client #{$conn->resourceId} disconnected from {$conn->remoteAddress}\t ({$conn->Player->getUsername()})</>",
+                $conn->resourceId,
+                $conn->remoteAddress,
+                $conn->Player->getUsername()
+            ), OutputInterface::VERBOSITY_VERBOSE
+        );
     }
 
     /**
@@ -110,6 +145,8 @@ class EventPusher implements MessageComponentInterface
         foreach ($event->data->recipients as $recipient) {
             // Only send an email to users who aren't currently logged in
             if (!in_array($recipient, $received)) {
+                $this->log("<fg=green>E-mailing player {$recipient->getId()} ({$recipient->getUsername()})</>");
+
                 $this->subscriber->sendEmails(
                     'New message received',
                     array($recipient),
@@ -141,6 +178,7 @@ class EventPusher implements MessageComponentInterface
         }
 
         if (!$active) {
+            $this->log("<fg=green>E-mailing player {$client->Player->getId()} ({$client->Player->getUsername()})</>");
             $this->subscriber->emailNotification($notification);
         }
     }
@@ -153,6 +191,8 @@ class EventPusher implements MessageComponentInterface
      */
     protected function send(ConnectionInterface $client, $data)
     {
+        $this->log("<fg=green>Notifying #{$client->resourceId} ({$client->Player->getUsername()})</>");
+
         $data->notification_count = $client->Player->countUnreadNotifications();
         $data->message_count      = $client->Player->countUnreadMessages();
 
@@ -169,15 +209,35 @@ class EventPusher implements MessageComponentInterface
 
         switch ($event->type) {
             case 'message':
+                $this->log("New message received", OutputInterface::VERBOSITY_VERY_VERBOSE);
                 $this->onMessageServerEvent($event);
                 break;
             case 'notification':
+                $this->log("New notification received", OutputInterface::VERBOSITY_VERY_VERBOSE);
                 $this->onNotificationServerEvent($event);
                 break;
             default:
+                $this->log("Generic message received", OutputInterface::VERBOSITY_VERY_VERBOSE);
                 foreach ($this->clients as $client) {
                     $this->send($client, $event);
                 }
+        }
+    }
+
+    /**
+     * Log a debugging message to the console
+     *
+     * @param string $message The message to log
+     * @param int    $level   The output verbosity level of the message
+     */
+    private function log($message, $level = OutputInterface::VERBOSITY_DEBUG)
+    {
+        if (!$this->output) {
+            return;
+        }
+
+        if ($level <= $this->output->getVerbosity()) {
+            $this->output->writeln($message);
         }
     }
 }

@@ -53,7 +53,7 @@ class ServerCommand extends Command
         }
 
         $loop = EventLoopFactory::create();
-        $pusher = new EventPusher();
+        $pusher = new EventPusher($loop, $output);
 
         $pushPort = ($input->getOption('push')) ?: $this->getContainer()
             ->getParameter('bzion.features.websocket.push_port');
