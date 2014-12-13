@@ -33,13 +33,25 @@ class MaintenanceListener
 
     public function onKernelRequest(GetResponseEvent $event)
     {
+        if (!$this->maintenance) {
+            return;
+        }
+
         $attributes = $event->getRequest()->attributes;
 
-        if (!$this->maintenance || $attributes->get('_defaultHandler') || $attributes->get('_noMaint')) {
+        // Some paths (like /login or the profiler) might not want to be blocked
+        // on maintenance
+        if ($attributes->get('_defaultHandler') || $attributes->get('_noMaint')) {
             return;
         }
 
         $controller = new \MaintenanceController($attributes);
+
+        // Admins should be able to see the website even on maintenance
+        if ($controller->getMe()->hasPermission(\Permission::BYPASS_MAINTENANCE)) {
+            return;
+        }
+
         $event->setResponse($controller->callAction('show'));
     }
 }

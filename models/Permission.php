@@ -49,6 +49,7 @@ class Permission extends Model
     const SOFT_DELETE_USER   = "del_user";
     const VIEW_SERVER_LIST   = "view_server_list";
     const VIEW_VISITOR_LOG   = "view_visitor_log";
+    const BYPASS_MAINTENANCE = "bypass_maintenance";
 
     /**
      * The name of the permission

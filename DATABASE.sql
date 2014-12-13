@@ -565,7 +565,8 @@ VALUES
 	(NULL,'wipe_role','The ability to wipe a role from the database'),
 	(NULL,'send_pm','The ability to send private messages'),
 	(NULL,'view_visitor_log','The ability to see a player''s visits and their IP addresses'),
-	(NULL,'view_server_list','The ability to view the available official league servers');
+	(NULL,'view_server_list','The ability to view the available official league servers'),
+	(NULL,'bypass_maintenance','The ability to browse the instance even when maintenance is enabled');
 
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -694,6 +695,7 @@ VALUES
 	(NULL,1,35),
 	(NULL,1,36),
 	(NULL,1,37),
+	(NULL,1,38),
 	(NULL,5,1),
 	(NULL,5,2),
 	(NULL,5,3),
@@ -723,6 +725,7 @@ VALUES
 	(NULL,5,35),
 	(NULL,5,36),
 	(NULL,5,37),
+	(NULL,5,38),
 	(NULL,2,1),
 	(NULL,2,2),
 	(NULL,2,3),
@@ -746,6 +749,7 @@ VALUES
 	(NULL,2,35),
 	(NULL,2,36),
 	(NULL,2,37),
+	(NULL,5,38),
 	(NULL,3,5),
 	(NULL,3,6),
 	(NULL,3,9),

@@ -63,6 +63,16 @@ class AppGlobal
     }
 
     /**
+     * Find out whether maintenance mode is enabled for users of the website
+     *
+     * @return boolean
+     */
+    public function isMaintenance()
+    {
+        return $this->container->getParameter('bzion.miscellaneous.maintenance');
+    }
+
+    /**
      * Get the name of the website
      *
      * @return string

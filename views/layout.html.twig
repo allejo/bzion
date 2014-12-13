@@ -68,6 +68,10 @@
                 {% if app.debug %}
                     <p class="development"><i class="fa fa-wrench"></i> {{ app.environment }}</p>
                 {% endif %}
+
+                {% if app.maintenance and app.controller.name != "Maintenance" %}
+                    <p class="development"><i class="fa fa-plug "></i> Maintenance mode enabled</p>
+                {% endif %}
             </section>
         </footer>
 

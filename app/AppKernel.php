@@ -210,6 +210,8 @@ class AppKernel extends Kernel
             $this->request = $request;
         }
 
+        Service::setRequest($request);
+
         $event = new GetResponseEvent($this, $request, $type);
         $this->container->get('event_dispatcher')->dispatch(KernelEvents::REQUEST, $event);
 
@@ -225,8 +227,6 @@ class AppKernel extends Kernel
         $session = $this->container->get('session');
         $session->start();
         $this->setUpFormFactory($session);
-
-        Service::setRequest($request);
 
         $con = Controller::getController($request->attributes);
         $response = $con->callAction();
