@@ -43,6 +43,15 @@ class ServerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // Make sure that websockets are enabled in the config so that the proper
+        // session storage handler is used
+        if (!$this->getContainer()->getParameter('bzion.features.websocket.enabled')) {
+            $message = "You need to enable websockets in your config before using the push server";
+            $output->writeln("<bg=red;options=bold>\n\n [ERROR] $message\n</>");
+
+            return;
+        }
+
         $loop = EventLoopFactory::create();
         $pusher = new EventPusher();
 
