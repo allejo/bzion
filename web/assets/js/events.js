@@ -61,6 +61,11 @@ $(document).ready(function() {
         var conn = new WebSocket('ws://' + window.location.hostname + ':' + config.websocket.port);
 
         conn.onmessage = function(e) {
+            if (e.data === "ping") {
+                conn.send("pong");
+                return;
+            }
+
             var data = JSON.parse(e.data).event;
 
             if (data.message) {

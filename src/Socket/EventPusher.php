@@ -35,6 +35,12 @@ class EventPusher implements MessageComponentInterface
     protected $output;
 
     /**
+     * Max pong time and interval between pings in seconds
+     * @var integer
+     */
+    const KEEP_ALIVE = 300;
+
+    /**
      * Create a new event pusher handler
      */
     public function __construct(LoopInterface $loop, OutputInterface $output = null)
@@ -42,8 +48,11 @@ class EventPusher implements MessageComponentInterface
         $this->loop = $loop;
         $this->output = $output;
 
-        $this->clients = new \SplObjectStorage;
+        $this->clients = $clients = new \SplObjectStorage;
         $this->subscriber = \Service::getContainer()->get('kernel.subscriber.bzion_subscriber');
+
+        // Ping timer
+        $loop->addPeriodicTimer(self::KEEP_ALIVE, array($this, 'ping'));
     }
 
     /**
@@ -54,6 +63,8 @@ class EventPusher implements MessageComponentInterface
     {
         // Find which player opened the connection
         $conn->Player = new Player($conn->Session->get('playerId'));
+
+        $conn->pong = true;
 
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
@@ -75,9 +86,10 @@ class EventPusher implements MessageComponentInterface
      */
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        // The client isn't supposed to send messages -
-        // probably a user is messing with the console, just close the connection
-        $from->close();
+        $this->log("Received message from #{$from->resourceId}");
+
+        // Record the reception of the message to prevent a ping timeout
+        $from->pong = true;
     }
 
     /**
@@ -178,7 +190,9 @@ class EventPusher implements MessageComponentInterface
         }
 
         if (!$active) {
-            $this->log("<fg=green>E-mailing player {$client->Player->getId()} ({$client->Player->getUsername()})</>");
+            $player = $notification->getReceiver();
+            $this->log("<fg=green>E-mailing player {$player->getId()} ({$player->getUsername()})</>");
+
             $this->subscriber->emailNotification($notification);
         }
     }
@@ -238,6 +252,27 @@ class EventPusher implements MessageComponentInterface
 
         if ($level <= $this->output->getVerbosity()) {
             $this->output->writeln($message);
+        }
+    }
+
+    /**
+     * Send a ping message to all clients and kick those who didn't respond
+     */
+    public function ping()
+    {
+        $this->log("Sending pings");
+
+        foreach($this->clients as $client) {
+            if (!$client->pong) {
+                $this->log("Dropping #{$client->resourceId}");
+
+                $client->close();
+                continue;
+            }
+
+            $this->log("Pinging #{$client->resourceId}");
+            $client->send('ping');
+            $client->pong = false;
         }
     }
 }
