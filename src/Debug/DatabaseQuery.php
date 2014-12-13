@@ -126,11 +126,16 @@ class DatabaseQuery
     /**
      * Get the value the MySQL query
      *
+     * @param  boolean $highlight Whether HTML should be used to highlight to the query
      * @return string
      */
-    public function getQuery()
+    public function getQuery($highlight = false)
     {
-        return $this->query;
+        if ($highlight) {
+            return \SqlFormatter::highlight($this->query);
+        } else {
+            return $this->query;
+        }
     }
 
     /**
@@ -198,24 +203,26 @@ class DatabaseQuery
     /**
      * Get the query string parts
      *
+     * @param  boolean $highlight Whether HTML should be used to highlight to the query
      * @return array
      */
-    public function getQueryParts()
+    public function getQueryParts($highlight = false)
     {
-        return explode("?", $this->query);
+        return explode("?", $this->getQuery($highlight));
     }
 
     /**
      * Get the resolved query strings (where all `?`s are replaced with the
      * actual parameter values)
      *
+     * @param  boolean $highlight Whether HTML should be used to highlight to the query
      * @return string
      */
-    public function getResolvedQuery()
+    public function getResolvedQuery($highlight = false)
     {
         $query = '';
 
-        foreach ($this->getQueryParts() as $i => $part) {
+        foreach ($this->getQueryParts($highlight) as $i => $part) {
             $query .= $part;
 
             if (array_key_exists($i, $this->params)) {

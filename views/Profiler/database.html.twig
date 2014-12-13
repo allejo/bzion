@@ -203,22 +203,24 @@
                 <td>
                     <b>{{ query.duration|number_format(1) }}</b> &micro;s
                 </td>
-                <td><pre>
+                <td>
                     {%- if noresolve -%}
-                        {{- query.query -}}
+                        {{- query.query(true)|raw -}}
                     {%- else -%}
-                        {%- for key, part in query.queryParts -%}
-                            {{- part -}}
+                        {%- for key, part in query.queryParts(true) -%}
+                            {{- part|raw -}}
                             {%- if query.params[key] is defined -%}
-                                {%- if query.types[key:1] in ['s', 'b'] -%}
-                                    <b>"{{ query.params[key]|escape('html_attr') }}"</b>
-                                {%- else -%}
-                                    <b>{{ query.params[key] }}</b>
-                                {%- endif -%}
+                                <b><i>
+                                    {%- if query.types[key:1] in ['s', 'b'] -%}
+                                        "{{ query.params[key]|escape('html_attr') }}"
+                                    {%- else -%}
+                                        {{ query.params[key] }}
+                                    {%- endif -%}
+                                </i></b>
                             {%- endif -%}
                         {%- endfor -%}
                     {% endif %}
-                </pre></td>
+                </td>
                 <td>
                     <div class="query-section" data-state="collapsed" onclick="return showResults(this);" title="Show results" data-target-id="code-{{ loop.index }}" style="cursor: pointer;">
                         <img alt="+" style="display: inline;" src="data:image/gif;base64,R0lGODlhEgASAMQTANft99/v+Ga44bHb8ITG52S44dXs9+z1+uPx+YvK6WC24G+944/M6W28443L6dnu+Ge54v/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAASABIAQAVS4DQBTiOd6LkwgJgeUSzHSDoNaZ4PU6FLgYBA5/vFID/DbylRGiNIZu74I0h1hNsVxbNuUV4d9SsZM2EzWe1qThVzwWFOAFCQFa1RQq6DJB4iIQA7" />
