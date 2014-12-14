@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * A controller with the capability of responding with JSON data
@@ -8,6 +9,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 abstract class JSONController extends HTMLController
 {
+    /**
+     * Values to be included in the JSON response
+     */
+    protected $attributes;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct($parameters)
+    {
+        $this->attributes = new ParameterBag;
+
+        parent::__construct($parameters);
+    }
+
     /**
      * Finds whether the client has requested a JSON document
      *
@@ -28,36 +44,12 @@ abstract class JSONController extends HTMLController
     /**
      * {@inheritDoc}
      */
-    public function notFoundAction(ModelNotFoundException $exception)
-    {
-        if (!$this->isJson())
-            return parent::notFoundAction($exception);
-        return $this->errorAction($exception->getMessage(), 404);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function errorAction($message, $code=500)
-    {
-        if (!$this->isJson())
-            return parent::errorAction($message, $code);
-
-        return new JSONResponse(array(
-            "success" => false,
-            "message" => $message,
-        ), $code);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected function handleReturnValue($return, $action)
     {
         // Format strings nicely with JSON, if the client wants that
         if ($this->isJson()) {
             if (!$return instanceof JsonResponse) {
-                $response = array("success" => true);
+                $response = array('success' => true);
 
                 $flashbag = $this->getFlashBag();
                 if ($flashbag->has('success')) {
@@ -68,6 +60,8 @@ abstract class JSONController extends HTMLController
                 $response['content'] = (is_array($return))
                                      ? $this->renderDefault($return, $action)
                                      : $return;
+
+                $response = array_replace($response, $this->attributes->all());
 
                 $return = new JsonResponse($response);
             }

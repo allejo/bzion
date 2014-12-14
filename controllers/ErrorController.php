@@ -1,8 +1,9 @@
 <?php
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ErrorController extends HTMLController
+class ErrorController extends JSONController
 {
     /**
      * Show an error message, provided that the ecxception is stored in the
@@ -33,6 +34,13 @@ class ErrorController extends HTMLController
      */
     public function genericErrorAction($message = 'An error occured')
     {
+        if ($this->isJson()) {
+            return new JSONResponse(array(
+                "success" => false,
+                "message" => $message,
+            ));
+        }
+
         return $this->render('Error/genericError.html.twig', array(
             'message' => $message
         ));
@@ -45,8 +53,15 @@ class ErrorController extends HTMLController
     * @param  string $message The error message to show
     * @return array
     */
-    public function modelNotFoundAction($type = '', $message = 'The specified model was not found')
+    public function modelNotFoundAction($type = '', $message = 'The specified object was not found')
     {
+        if ($this->isJson()) {
+            return new JSONResponse(array(
+                "success" => false,
+                "message" => $message,
+            ));
+        }
+
         return $this->render('Error/modelNotFound.html.twig', array(
             "message" => $message,
             "type" => $type
