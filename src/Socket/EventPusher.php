@@ -48,7 +48,7 @@ class EventPusher implements MessageComponentInterface
         $this->loop = $loop;
         $this->output = $output;
 
-        $this->clients = $clients = new \SplObjectStorage;
+        $this->clients = new \SplObjectStorage;
         $this->subscriber = \Service::getContainer()->get('kernel.subscriber.bzion_subscriber');
 
         // Ping timer

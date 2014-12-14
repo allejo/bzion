@@ -21,10 +21,16 @@ class MessageQueryBuilder extends QueryBuilder
     private $eventQuery;
 
     /**
+    * Whether the query was specified to start at a specific Message
+    * @var boolean
+    */
+    private $start = false;
+
+    /**
      * Whether the query was specified to end at a specific Message
      * @var boolean
      */
-    private $end;
+    private $end = false;
 
     /**
      * {@inheritDoc}
@@ -51,14 +57,14 @@ class MessageQueryBuilder extends QueryBuilder
      */
     public function startAt($model, $inclusive=false, $reverse=false)
     {
-        if ($reverse) {
-            if (!$model) {
-                $this->end = false;
-            } elseif ($model instanceof Model && !$model->isValid()) {
-                $this->end = false;
-            } else {
-                $this->end = true;
-            }
+            if ($model) {
+                if (!($model instanceof Model) || $model->isValid()) {
+                    if ($reverse) {
+                        $this->end = true;
+                    } else {
+                        $this->start = true;
+                    }
+                }
         }
 
         return parent::startAt($model, $inclusive, $reverse);
@@ -155,6 +161,9 @@ class MessageQueryBuilder extends QueryBuilder
             // Pop the added element unless it's the last one in the discussion
             if (count($messages) == $this->resultsPerPage) {
                 $oldest = array_pop($messages);
+                $events->where('time')->isAfter($oldest->getTimestamp());
+            } elseif ($this->start) {
+                $oldest = end($messages);
                 $events->where('time')->isAfter($oldest->getTimestamp());
             }
 
