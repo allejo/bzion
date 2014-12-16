@@ -1,20 +1,20 @@
 body {
     > header {
-        @include linear-gradient($White, #F2F2F2);
+        @include linear-gradient($Color-White, #F2F2F2);
 
         // 56px is a magic number. It's the height of the menu links with the padding and font-size
         // calculated together
         $line-height: 56px;
 
         box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
-        border-bottom: 1px solid $Another_Grey;
+        border-bottom: 1px solid $Color-Another_Grey;
 
         section {
             @extend .clearfix;
             @extend .wrapper;
 
             .mobile {
-                color: $Medium_Grey;
+                color: $Color-Medium_Grey;
                 float: left;
                 display: none;
                 margin-right: 15px;
@@ -32,11 +32,10 @@ body {
 
             h1 {
                 float: left;
-                font-family: $sansSerifFont;
                 margin-right: 20px;
 
                 a {
-                    color: $Medium_Grey;
+                    color: $Color-Medium_Grey;
                     font-size: 26px;
                     line-height: 56px;
 
@@ -66,11 +65,10 @@ body {
 
                     li {
                         float: left;
-                        font-family: $sansSerifFont;
                         list-style: none;
 
                         a {
-                            color: $Medium_Grey;
+                            color: $Color-Medium_Grey;
                             display: block;
                             padding: 17px 15px;
 
@@ -97,7 +95,7 @@ body {
                             }
 
                             &:hover {
-                                color: $Black;
+                                color: $Color-Black;
                             }
 
                             @include respond-to(phones) {
@@ -119,9 +117,9 @@ body {
                         float: left;
 
                         @include respond-to(tablets) {
-                            background-color: $Almost_White;
-                            border-bottom: 1px solid $Another_Grey;
-                            border-top: 1px solid $Another_Grey;
+                            background-color: $Color-Almost_White;
+                            border-bottom: 1px solid $Color-Another_Grey;
+                            border-top: 1px solid $Color-Another_Grey;
                             display: none;
                             left: 0;
                             position: absolute;
@@ -157,8 +155,8 @@ body {
         .notification {
             @include border-bottom-radius(5px);
 
-            background-color: $White;
-            border: 2px solid $Black;
+            background-color: $Color-White;
+            border: 2px solid $Color-Black;
             border-top: none;
             display: none;
             left: 25em;

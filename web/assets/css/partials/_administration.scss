@@ -1,6 +1,6 @@
 main {
     &.administration {
-        font-family: $sansSerifFont;
+        font-family: $Font-Sans_Serif;
 
         .admins {
             @extend %mobile_padding;

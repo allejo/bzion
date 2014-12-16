@@ -1,5 +1,5 @@
 body {
-    font-family: $serifFont;
+    font-family: $Font-Sans_Serif;
     line-height: 1.4em;
 }
 
@@ -7,8 +7,7 @@ main {
     .content_header {
         @extend .clearfix;
 
-        border-bottom: 1px solid $Off_White;
-        font-family: $sansSerifFont;
+        border-bottom: 1px solid $Color-Off_White;
         padding: 20px 0;
 
         > article {
@@ -85,9 +84,8 @@ main {
 
     background-color: red;
     bottom: 0;
-    color: $White;
+    color: $Color-White;
     display: block;
-    font-family: $sansSerifFont;
     padding: 0 5px;
     position: fixed;
     text-align: center;
@@ -149,14 +147,13 @@ main {
 }
 
 .tipsy {
-    font-family: $sansSerifFont;
     font-size: 16px;
 }
 
 .wrapper {
     margin-left: auto;
     margin-right: auto;
-    width: $global_width;
+    width: $Settings-Global_Width;
 
     @include respond-to(tablets) {
         width: 100%;

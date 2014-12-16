@@ -1,7 +1,5 @@
 main {
     &.players {
-        font-family: $sansSerifFont;
-
         .content_header {
             article {
                 .flag {
@@ -19,7 +17,6 @@ main {
             @extend .clearfix;
             @extend .wrapper;
 
-            font-family: $sansSerifFont;
             margin-bottom: 30px;
 
             article {
@@ -50,10 +47,10 @@ main {
                         font-size: 14px;
 
                         a {
-                            color: $Medium_Grey;
+                            color: $Color-Medium_Grey;
 
                             &:hover {
-                                color: lighten($Medium_Grey, 15%);
+                                color: lighten($Color-Medium_Grey, 15%);
                             }
                         }
                     }

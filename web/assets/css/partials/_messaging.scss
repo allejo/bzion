@@ -2,8 +2,6 @@ main {
     &.messaging {
         @extend .clearfix;
 
-        font-family: $sansSerifFont;
-
         .content_header {
             margin-bottom: 0;
         }
@@ -105,7 +103,7 @@ main {
 
                                 .members {
                                     color: #99A0A3;
-                                    font-family: $serifFont;
+                                    font-family: $Font-Serif;
                                     font-size: 12px;
                                 }
 
@@ -142,7 +140,7 @@ main {
                 .conversation_details {
                     @include box-sizing(border-box);
 
-                    background-color: $Sky_Blue;
+                    background-color: $Color-Sky_Blue;
                     border-bottom: 1px solid #EFEFEF;
                     color: #FFFFFF;
                     min-height: 45px;
@@ -227,7 +225,7 @@ main {
                                     width: 100%;
 
                                     .author {
-                                        color: $Grey;
+                                        color: $Color-Grey;
                                         float: left;
                                     }
 
@@ -338,7 +336,7 @@ main {
                         text-align: right;
 
                         .ladda-button {
-                            background-color: $Sky_Blue;
+                            background-color: $Color-Sky_Blue;
                             border-radius: 0;
                             font-size: 16px;
                             padding: 5px;
@@ -376,7 +374,7 @@ main {
                         background-color: #fff;
                         border: 1px solid #eee;
                         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-                        color: $Dark_Grey;
+                        color: $Color-Dark_Grey;
                         display: block;
                         font-size: 1em;
                         height: 100px;
@@ -394,7 +392,7 @@ main {
                 .reply_form {
                     @include box-sizing(border-box);
 
-                    background-color: $Blue_Grey;
+                    background-color: $Color-Blue_Grey;
                     bottom: 0;
                     height: 150px;
                     padding: 20px;
@@ -406,7 +404,7 @@ main {
                         textarea {
                             @include box-sizing(border-box);
 
-                            border: 1px solid $Light_Grey;
+                            border: 1px solid $Color-Light_Grey;
                             font-family: Open Sans;
                             font-size: 13px;
                             padding: 5px;

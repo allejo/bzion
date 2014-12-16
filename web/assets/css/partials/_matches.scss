@@ -1,6 +1,5 @@
 main {
     &.match_list {
-        font-family: $sansSerifFont;
         margin-bottom: 20px;
 
         .content_header {
@@ -33,13 +32,13 @@ main {
                     .row {
                         .column {
                             border: none;
-                            color: $Medium_Grey;
+                            color: $Color-Medium_Grey;
                             height: auto;
                             padding: 5px 20px;
                             text-align: left;
 
                             a {
-                                color: $Medium_Grey;
+                                color: $Color-Medium_Grey;
                             }
 
                             &.winner {
@@ -84,7 +83,7 @@ main {
                 }
 
                 @include respond-to(phablets) {
-                    border-bottom: 1px dotted $Off_White;
+                    border-bottom: 1px dotted $Color-Off_White;
                     margin-bottom: 5px;
                     padding-bottom: 5px;
                 }

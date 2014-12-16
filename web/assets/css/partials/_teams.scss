@@ -1,7 +1,5 @@
 main {
     &.teams {
-        font-family: $sansSerifFont;
-
         .content_header {
             .rank {
                 float: left;
@@ -142,7 +140,7 @@ main {
                                 .block {
                                     $block_size: 10px;
 
-                                    border: 1px solid $Off_White;
+                                    border: 1px solid $Color-Off_White;
                                     float: left;
                                     height: $block_size;
                                     margin: 5px 10px;
@@ -187,16 +185,16 @@ main {
                                     padding: 5px;
 
                                     a {
-                                        color: $Black;
+                                        color: $Color-Black;
 
                                         &:hover {
-                                            color: $Sky_Blue;
+                                            color: $Color-Sky_Blue;
                                         }
                                     }
 
                                     i {
                                         &.fa-eject {
-                                            color: $Medium_Grey;
+                                            color: $Color-Medium_Grey;
                                         }
 
                                         &.fa-star {

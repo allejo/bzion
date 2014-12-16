@@ -1,9 +1,9 @@
 a {
-    color: $Sky_Blue;
+    color: $Color-Sky_Blue;
     text-decoration: none;
 
     &:hover {
-        color: darken($Sky_Blue, 15%);
+        color: darken($Color-Sky_Blue, 15%);
     }
 
     // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
@@ -21,7 +21,6 @@ a {
 }
 
 blockquote {
-    font-family: $sansSerifFont;
     margin-bottom: 10px;
     margin-left: 30px;
     margin-top: 20px;
@@ -29,7 +28,7 @@ blockquote {
     vertical-align: top;
 
     span {
-        color: $Light_Grey;
+        color: $Color-Light_Grey;
         font-size: 16px;
         font-style: italic;
 
@@ -41,7 +40,7 @@ blockquote {
     }
 
     article {
-        color: darken($Light_Grey, 10%);
+        color: darken($Color-Light_Grey, 10%);
         display: inline;
 
         > p {
@@ -51,7 +50,7 @@ blockquote {
 
     &:before {
         content: '\f10d';
-        color: $Medium_Grey;
+        color: $Color-Medium_Grey;
         float: left;
         font-family: FontAwesome;
         font-size: 30px;
@@ -61,8 +60,12 @@ blockquote {
     }
 }
 
+body {
+    font-family: $Font-Sans_Serif;
+}
+
 code {
-    background-color: $Off_White;
+    background-color: $Color-Off_White;
     border: 1px dotted;
     display: block;
     font-family: monospace;
@@ -80,32 +83,28 @@ form {
     textarea {
         @include box-sizing(border-box);
 
-        border: 1px solid $Light_Grey;
+        border: 1px solid $Color-Light_Grey;
         outline: none;
 
         &:focus {
-            border: 1px solid $Blue;
+            border: 1px solid $Color-Blue;
         }
     }
 }
 
 h1 {
-    font-family: $sansSerifFont;
     font-size: 30px;
 }
 
 h2 {
-    font-family: $sansSerifFont;
     font-size: 24px;
 }
 
 h3 {
-    font-family: $sansSerifFont;
     font-size: 20px;
 }
 
 h4 {
-    font-family: $sansSerifFont;
     font-size: 18px;
     font-weight: bold;
 }
@@ -118,7 +117,7 @@ hr {
     border: 0;
     height: 1px;
     margin: 30px auto;
-    width: $global_width;
+    width: $Settings-Global_Width;
 
     @include respond-to(tablets) {
         width: 100%;

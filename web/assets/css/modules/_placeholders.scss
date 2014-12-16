@@ -1,0 +1,24 @@
+%clearfix {
+    *zoom: 1;
+    &:after {
+        content: '';
+        display: table;
+        line-height: 0;
+        clear: both;
+    }
+}
+
+%margin-center {
+    margin: {
+        left: auto;
+        right: auto;
+    }
+}
+
+%no-padding-ul {
+    padding-left: 0;
+}
+
+%wrapper {
+    width: $Settings-Global-Width;
+}

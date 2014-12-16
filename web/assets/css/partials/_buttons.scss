@@ -1,11 +1,11 @@
-@mixin buttonColor($colorParam, $textColor: $White) {
+@mixin buttonColor($colorParam, $textColor: $Color-White) {
     $color: $colorParam;
     $dark_color: darken($color, 7%);
 
     @include linear-gradient($color, $dark_color);
     border: 1px solid $dark_color;
 
-    @if $textColor != $White {
+    @if $textColor != $Color-White {
         color: $textColor;
     }
 

@@ -17,7 +17,6 @@ main {
 
                 h1, h2 {
                     color: #fff;
-                    font-family: $sansSerifFont;
                     text-shadow: 0 1px 10px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.9);
                 }
 
@@ -63,7 +62,6 @@ main {
             ul {
                 @extend .wrapper;
 
-                font-family: $sansSerifFont;
                 padding-left: 0;
                 text-align: center;
 
@@ -73,12 +71,11 @@ main {
                     width: 200px;
 
                     i {
-                        $iconSize: 70px;
+                        $iconSize: 100px;
 
                         border: 1px solid #000000;
                         border-radius: 50%;
                         height: $iconSize;
-                        font-size: $iconSize - 10px;
                         width: $iconSize;
 
                         //
@@ -86,19 +83,17 @@ main {
                         //    (all of these icons will end up being 110px by 110px)
                         //
                         &.fa-gamepad {
-                            padding: 21px 19px 17px 19px;
+                            font-size: 70px;
+                            padding-top: 10px;
 
                             @include respond-to(phablets) {
                                 margin-top: 0;
                             }
-
-                            @include respond-to(phones) {
-                                padding-top: 10px;
-                            }
                         }
 
                         &.fa-info {
-                            padding: 27px 19px 11px 19px;
+                            font-size: 50px;
+                            padding-top: 25px;
 
                             @include respond-to(phones) {
                                 padding-top: 15px;
@@ -106,7 +101,8 @@ main {
                         }
 
                         &.fa-list-ul {
-                            padding: 25px 19px 13px 19px;
+                            font-size: 60px;
+                            padding-top: 22px;
 
                             @include respond-to(phones) {
                                 padding-top: 20px;
@@ -166,8 +162,6 @@ main {
         .content {
             @extend .clearfix;
             @extend .wrapper;
-
-            font-family: $sansSerifFont;
 
             aside {
                 float: left;

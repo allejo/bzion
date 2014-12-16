@@ -2,7 +2,6 @@ main {
     &.news {
         @extend .clearfix;
 
-        font-family: $sansSerifFont;
         text-align: justify;
 
         .content_header {
@@ -29,7 +28,7 @@ main {
                     width: 100%;
 
                     h1 {
-                        color: $Blue;
+                        color: $Color-Blue;
                         font-size: 25px;
                         margin-bottom: 5px;
 
@@ -39,7 +38,7 @@ main {
                     }
 
                     .post_date {
-                        color: $Medium_Grey;
+                        color: $Color-Medium_Grey;
                         font-size: 13px;
                     }
 
@@ -56,7 +55,7 @@ main {
                         padding: 5px 0 10px;
 
                         li {
-                            color: $Medium_Grey;
+                            color: $Color-Medium_Grey;
                             display: inline-block;
                             margin-left: 0;
                             margin-right: 15px;
@@ -89,12 +88,12 @@ main {
                 }
 
                 ul {
-                    border: 1px solid $Off_White;
+                    border: 1px solid $Color-Off_White;
                     border-radius: 3px;
                     padding-left: 0;
 
                     li {
-                        border-bottom: 1px solid $Off_White;
+                        border-bottom: 1px solid $Color-Off_White;
                         font-size: 14px;
                         list-style: none;
 
@@ -103,13 +102,13 @@ main {
                             padding: 10px;
 
                             i {
-                                color: $Medium_Grey;
+                                color: $Color-Medium_Grey;
                                 margin-right: 10px;
                             }
                         }
 
                         &.active, &:hover {
-                            border-right: 2px solid $Orange;
+                            border-right: 2px solid $Color-Orange;
 
                             &:first-child {
                                 border-top-right-radius: 3px;
@@ -121,11 +120,11 @@ main {
                         }
 
                         &.active {
-                            background-color: $Almost_White;
+                            background-color: $Color-Almost_White;
                         }
 
                         &:hover {
-                            background-color: lighten($Almost_White, 1%);
+                            background-color: lighten($Color-Almost_White, 1%);
                         }
 
                         &:last-child {

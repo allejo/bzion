@@ -1,7 +1,5 @@
 main {
     &.server_list {
-        font-family: $sansSerifFont;
-
         .servers {
             @extend %mobile_padding;
             @extend .clearfix;
