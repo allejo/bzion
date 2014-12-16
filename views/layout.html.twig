@@ -17,8 +17,8 @@
     </head>
 
     <body>
-        <header>
-            <section>
+        <header class="page-header">
+            <section class="menu-bar">
                 <ul class="mobile">
                     <li>
                         <span id="mobile-menu" class="bars"><i class="fa fa-bars"></i></span>
@@ -33,11 +33,11 @@
                 </h1>
 
                 {% include "navbar.html.twig" %}
-
-                <div class="notification">
-                    <i class="fa fa-check"></i><span></span>
-                </div>
             </section>
+
+            <div class="notification">
+                <i class="fa fa-check"></i><span></span>
+            </div>
         </header>
 
         {% for message in session.flashbag.all %}

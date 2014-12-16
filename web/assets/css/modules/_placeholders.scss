@@ -20,5 +20,7 @@
 }
 
 %wrapper {
+    @extend %margin-center;
+
     width: $Settings-Global-Width;
 }
