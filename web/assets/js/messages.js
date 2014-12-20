@@ -1,3 +1,92 @@
+var sentMessage = null;
+
+/**
+ * A Queue for AJAX requests related to messages
+ */
+var Queue = function() {
+    var lastPromise = null;
+    var count = 0;
+
+    var setCount = function(d) {
+        count = count + d;
+    }
+
+    var setup = function() {
+        var queueDeferred = $.Deferred();
+
+        // when the previous method returns, resolve this one
+        $.when(lastPromise).always(function() {
+            queueDeferred.resolve();
+        });
+
+        return queueDeferred.promise();
+    }
+
+    this.add = function(callback) {
+        // Increase count when a callback is added to the queue and decrease it
+        // when it's over
+        setCount(1);
+
+        var methodDeferred = $.Deferred();
+        var queueDeferred = setup();
+
+        methodDeferred.always(function() {
+            setCount(-1);
+        });
+
+        // execute next queue method
+        queueDeferred.done(function() {
+            if (callback.apply(methodDeferred)) {
+                methodDeferred.resolve();
+            };
+        });
+
+        lastPromise = methodDeferred.promise();
+    };
+
+    /**
+     * Whether the currently running callback is the last in the queue
+     * @return boolean
+     */
+    this.isLast = function() {
+        return count <= 1;
+    };
+
+    /**
+     * Schedule a refresh
+     * @param {int} id The ID of the new message about which we were notified by the event server
+     */
+    this.addRefresh = function(id) {
+        var queue = this;
+
+        this.add(function() {
+            var deferred = this;
+
+            // The refresh is going to take place later in the queue, there is
+            // no need to refresh if there are items waiting in the queue
+            if (!queue.isLast()) {
+                return true;
+            }
+
+            // If the server informs us about a message we've already sent, don't refresh again
+            if (sentMessage === id) {
+                return true;
+            }
+
+            $.get(document.URL, { end: getLastID() }, function(data) {
+                html = $($.parseHTML(data));
+                updateLastMessage(html);
+
+                deferred.resolve();
+            }, "html").error(function() {
+                deferred.reject();
+            });
+        });
+    }
+};
+
+var q = new Queue();
+
 reactor.addEventListener("push-event", function(data) {
     if (data.type != 'message') {
         return;
@@ -6,14 +95,7 @@ reactor.addEventListener("push-event", function(data) {
     groupId = $("#groupMessages").attr("data-id");
 
     if (groupId && groupId == data.data.discussion) {
-        // Find the ID of the last message, so we can fetch anything sent after
-        // it
-        var lastId = $( "#messageView li:last-child" ).attr('data-id');
-
-        $.get(document.URL, { end: lastId }, function(data) {
-            html = $($.parseHTML(data));
-            updateLastMessage(html);
-        }, "html");
+        q.addRefresh(data.data.message);
     } else {
         updateSelectors([".conversations", "nav"]);
     }
@@ -178,11 +260,23 @@ pageSelector.on("submit", ".reply_form", function(event) {
     // AJAX will handle the click
     event.preventDefault();
 
-    sendMessage($(this), function(msg, form) {
-        html = $(msg.content);
-        updateLastMessage(html);
-        form[0].reset();
-    }, false);
+    var selector = $(this);
+
+    q.add(function() {
+        var deferred = this;
+
+        sendMessage(selector, function(msg, form) {
+            sentMessage = msg.id;
+
+            html = $(msg.content);
+            updateLastMessage(html);
+            form[0].reset();
+
+            deferred.resolve();
+        }, function() {
+            deferred.reject();
+        }, false);
+    });
 });
 
 // Discussion create event
@@ -211,11 +305,17 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
     }
 });
 
+/**
+ * Get the ID of the last sent message
+ */
+function getLastID() {
+    return groupMessages.find("li.message").last().attr('data-id');
+}
 
 /**
  * Perform an AJAX request to send a message
  */
-function sendMessage(form, onSuccess, spinners) {
+function sendMessage(form, onSuccess, onError, spinners) {
     if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( form.find('button').get()[0] );
         l.start();
@@ -227,7 +327,7 @@ function sendMessage(form, onSuccess, spinners) {
 
     $.ajax({
         type: form.attr('method'),
-        url: form.attr('action') + "?end=" + groupMessages.find("li").last().attr('data-id'),
+        url: form.attr('action') + "?end=" + getLastID(),
         data: form.serialize() + "&format=json",
         dataType: "json"
     }).done(function( msg ) {
@@ -244,6 +344,10 @@ function sendMessage(form, onSuccess, spinners) {
         // TODO: Catch bad JSON
         var message = (errorThrown === "") ? textStatus : errorThrown;
         notify(message, "error");
+
+        if (onError !== undefined) {
+            onError.apply();
+        }
     }).complete(function() {
         if (l)
             l.stop();

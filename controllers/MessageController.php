@@ -290,6 +290,9 @@ class MessageController extends JSONController
 
         $this->getFlashBag()->add('success', "Your message was sent successfully");
 
+        // Let javascript know the message's ID
+        $this->attributes->set('id', $message->getId());
+
         // Reset the form
         $form = $cloned;
 

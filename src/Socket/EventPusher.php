@@ -134,9 +134,7 @@ class EventPusher implements MessageComponentInterface
 
         $group = new \Group($event->data->discussion);
 
-        // Don't notify the sender of the message, Javascript will
-        // automatically refresh the page
-        $groupMembers = $group->getMemberIds($event->data->author);
+        $groupMembers = $group->getMemberIds();
 
         foreach ($this->clients as $client) {
             $player = $client->Player;
