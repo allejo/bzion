@@ -401,7 +401,13 @@ class QueryBuilder implements Countable
         $comparison .= ($inclusive)  ? '=' : '';
         $id = ($model instanceof Model) ? $model->getId() : $model;
 
-        $this->addColumnCondition("$comparison (SELECT $column FROM $table WHERE id = ?)",  $id, 'i');
+        // Compare an element's timestamp to the timestamp of $model; if it's the
+        // same, perform the comparison using IDs
+        $this->addColumnCondition(
+            "$comparison (SELECT $column FROM $table WHERE id = ?) OR ($column = (SELECT $column FROM $table WHERE id = ?) AND id $comparison ?)",
+            array($id, $id, $id),
+            'iii'
+        );
 
         return $this;
     }
