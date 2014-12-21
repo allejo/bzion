@@ -14,7 +14,6 @@
         "liip/imagine-bundle"        : "~1.0",
         "michelf/php-markdown"       : ">=1.4.1",
         "nesbot/carbon"              : ">=1.8.0",
-        "pusher/pusher-php-server"   : "dev-master",
         "rhumsaa/array_column"       : "~1.1",
         "robmorgan/phinx"            : "~0.3",
         "symfony/class-loader"       : "~2.6",

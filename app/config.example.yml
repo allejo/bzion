@@ -24,11 +24,6 @@ bzion:
         # The minimum log level (can be debug, info, notice, warning, error, critical, alert or emergency)
         level: notice
     features:
-        pusher:
-            enabled: false
-            app_id: 54321
-            key: 123456789
-            secret: 123456789
         websocket:
             # true to enable PHP's socket for real-time notifications
             enabled: false

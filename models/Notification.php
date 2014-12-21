@@ -260,7 +260,6 @@ class Notification extends Model
         }
 
         $adapters = array(
-            'BZIon\NotificationAdapter\PusherAdapter',
             'BZIon\NotificationAdapter\WebSocketAdapter'
         );
 

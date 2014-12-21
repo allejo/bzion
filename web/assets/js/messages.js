@@ -9,7 +9,7 @@ var Queue = function() {
 
     var setCount = function(d) {
         count = count + d;
-    }
+    };
 
     var setup = function() {
         var queueDeferred = $.Deferred();
@@ -20,7 +20,7 @@ var Queue = function() {
         });
 
         return queueDeferred.promise();
-    }
+    };
 
     this.add = function(callback) {
         // Increase count when a callback is added to the queue and decrease it
@@ -38,7 +38,7 @@ var Queue = function() {
         queueDeferred.done(function() {
             if (callback.apply(methodDeferred)) {
                 methodDeferred.resolve();
-            };
+            }
         });
 
         lastPromise = methodDeferred.promise();
@@ -82,7 +82,7 @@ var Queue = function() {
                 deferred.reject();
             });
         });
-    }
+    };
 };
 
 var q = new Queue();
