@@ -85,12 +85,25 @@ class Database
     public static function getInstance()
     {
         if (!self::$Database) {
-            self::$Database = new Database(
-                Service::getParameter('bzion.mysql.host'),
-                Service::getParameter('bzion.mysql.username'),
-                Service::getParameter('bzion.mysql.password'),
-                Service::getParameter('bzion.mysql.database')
-            );
+            if (Service::getEnvironment() == 'test') {
+                if (!Service::getParameter('bzion.testing.enabled')) {
+                    throw new Exception('You have to specify a MySQL database for testing in the bzion.testing section of your configuration file.');
+                }
+
+                self::$Database = new Database(
+                    Service::getParameter('bzion.testing.host'),
+                    Service::getParameter('bzion.testing.username'),
+                    Service::getParameter('bzion.testing.password'),
+                    Service::getParameter('bzion.testing.database')
+                );
+            } else {
+                self::$Database = new Database(
+                    Service::getParameter('bzion.mysql.host'),
+                    Service::getParameter('bzion.mysql.username'),
+                    Service::getParameter('bzion.mysql.password'),
+                    Service::getParameter('bzion.mysql.database')
+                );
+            }
         }
 
         return self::$Database;

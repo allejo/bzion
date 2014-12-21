@@ -283,10 +283,10 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
             $db->query('SET foreign_key_checks = 1');
         }
 
-        $host = Service::getParameter('bzion.mysql.host');
-        $username = Service::getParameter('bzion.mysql.username');
-        $password = Service::getParameter('bzion.mysql.password');
-        $database = Service::getParameter('bzion.mysql.database');
+        $host = Service::getParameter('bzion.testing.host');
+        $username = Service::getParameter('bzion.testing.username');
+        $password = Service::getParameter('bzion.testing.password');
+        $database = Service::getParameter('bzion.testing.database');
 
         $dsn = 'mysql:dbname=' . $database . ';host=' . $host . ';charset=UTF8';
         $pdo = new PDO($dsn, $username, $password);

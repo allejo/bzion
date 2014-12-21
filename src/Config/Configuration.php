@@ -124,6 +124,17 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                ->arrayNode('testing')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('host')->defaultValue('localhost')->isRequired()->attribute('manual', true)->end()
+                        ->scalarNode('database')->defaultValue('bzion_test')->isRequired()->attribute('manual', true)->end()
+                        ->scalarNode('username')->defaultValue('bzion_test_admin')->isRequired()->attribute('manual', true)->end()
+                        ->scalarNode('password')->isRequired()->attribute('manual', true)->end()
+                    ->end()
+                    ->attribute('manual', true)
+                ->end()
+
                 ->arrayNode('miscellaneous')
                     ->isRequired()
                     ->children()

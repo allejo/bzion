@@ -85,6 +85,10 @@ SUCCESS
      */
     private function writeNode(NodeInterface $node, array &$config = array(), $parent = null)
     {
+        if ($node->getAttribute('manual')) {
+            return;
+        }
+
         $name = $node->getName();
 
         if ($parent) {
