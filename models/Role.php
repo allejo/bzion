@@ -252,24 +252,19 @@ class Role extends Model
     private function modifyPerm($perm_name, $action)
     {
         if (($action == "remove" && !$this->hasPerm($perm_name)) ||
-            ($action == "add" && $this->hasPerm($perm_name)))
-        {
+            ($action == "add" && $this->hasPerm($perm_name))) {
             return false;
         }
 
         $permission = Permission::getPermissionFromName($perm_name);
 
-        if ($permission->isValid())
-        {
-            if ($action == "add")
-            {
+        if ($permission->isValid()) {
+            if ($action == "add") {
                 $this->db->query("INSERT INTO role_permission (role_id, perm_id) VALUES (?, ?)", "ii",
                     array($this->getId(), $permission->getId()));
 
                 $this->permissions[$perm_name] = true;
-            }
-            elseif ($action == "remove")
-            {
+            } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
                     array($this->getId(), $permission->getId()));
 
@@ -309,13 +304,13 @@ class Role extends Model
     public static function createNewRole($name, $reusable, $display = false, $displayIcon = "", $displayColor = "", $displayName = null, $displayOrder = 0)
     {
         return self::create(array(
-            'name' => $name,
-            'reusable' => $reusable,
-            'protected' => 0,
-            'display' => $display,
-            'display_icon' => $displayIcon,
+            'name'          => $name,
+            'reusable'      => $reusable,
+            'protected'     => 0,
+            'display'       => $display,
+            'display_icon'  => $displayIcon,
             'display_color' => $displayColor,
-            'display_name' => $displayName,
+            'display_name'  => $displayName,
             'display_order' => $displayOrder
         ), 'siiisssi');
     }

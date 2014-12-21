@@ -220,7 +220,7 @@ class News extends UrlModel implements NamedModel
     /**
      * {@inheritDoc}
      */
-    public static function getRouteName($action='show')
+    public static function getRouteName($action = 'show')
     {
         return "news_$action";
     }
@@ -318,11 +318,11 @@ class News extends UrlModel implements NamedModel
         if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS)) {
             return self::create(array(
                 'category' => $categoryId,
-                'subject' => $subject,
-                'content' => $content,
-                'author' => $authorID,
-                'editor' => $authorID,
-                'status' => $status,
+                'subject'  => $subject,
+                'content'  => $content,
+                'author'   => $authorID,
+                'editor'   => $authorID,
+                'status'   => $status,
             ), 'issiis', array('created', 'updated'));
         }
 
@@ -370,5 +370,4 @@ class News extends UrlModel implements NamedModel
             'name' => 'subject'
         ));
     }
-
 }

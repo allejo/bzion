@@ -21,9 +21,9 @@ class MessageQueryBuilder extends QueryBuilder
     private $eventQuery;
 
     /**
-    * Whether the query was specified to start at a specific Message
-    * @var boolean
-    */
+     * Whether the query was specified to start at a specific Message
+     * @var boolean
+     */
     private $start = false;
 
     /**
@@ -35,7 +35,7 @@ class MessageQueryBuilder extends QueryBuilder
     /**
      * {@inheritDoc}
      */
-    public function __construct($type, $options=array())
+    public function __construct($type, $options = array())
     {
         $this->eventQuery = GroupEvent::getQueryBuilder();
 
@@ -55,16 +55,16 @@ class MessageQueryBuilder extends QueryBuilder
     /**
      * {@inheritDoc}
      */
-    public function startAt($model, $inclusive=false, $reverse=false)
+    public function startAt($model, $inclusive = false, $reverse = false)
     {
-            if ($model) {
-                if (!($model instanceof Model) || $model->isValid()) {
-                    if ($reverse) {
-                        $this->end = true;
-                    } else {
-                        $this->start = true;
-                    }
+        if ($model) {
+            if (!($model instanceof Model) || $model->isValid()) {
+                if ($reverse) {
+                    $this->end = true;
+                } else {
+                    $this->start = true;
                 }
+            }
         }
 
         return parent::startAt($model, $inclusive, $reverse);
@@ -170,7 +170,7 @@ class MessageQueryBuilder extends QueryBuilder
             // Only show events that have occured after the message if that
             // message is the last one in the discussion
             if ($this->end) {
-                $events->where('time')->isBefore($newest->getTimestamp(), true) ;
+                $events->where('time')->isBefore($newest->getTimestamp(), true);
             }
 
             $events = $events->getModels();
@@ -178,7 +178,7 @@ class MessageQueryBuilder extends QueryBuilder
 
         // Merge and sort events and messages
         $results = array_merge($messages, $events);
-        usort($results, function(GroupEventInterface $a, GroupEventInterface $b) {
+        usort($results, function (GroupEventInterface $a, GroupEventInterface $b) {
             $timeA = $a->getTimestamp();
             $timeB = $b->getTimestamp();
 
@@ -189,7 +189,7 @@ class MessageQueryBuilder extends QueryBuilder
         });
 
         return array(
-            'events' => $results,
+            'events'   => $results,
             'messages' => $messages
         );
     }

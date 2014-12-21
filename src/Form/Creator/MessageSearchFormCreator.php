@@ -7,7 +7,6 @@
 
 namespace BZIon\Form\Creator;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for searching messages

@@ -23,7 +23,7 @@ class GroupInviteFormCreator extends ModelFormCreator
         return $builder
             ->add('players', new PlayerType(), array(
                 'constraints' => new NotBlank(),
-                'multiple' => true,
+                'multiple'    => true,
             ))
             ->add('Invite', 'submit')
             ->setAction($this->editing->getUrl());

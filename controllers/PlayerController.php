@@ -2,8 +2,8 @@
 
 use BZIon\Form\Creator\PlayerAdminNotesFormCreator as FormCreator;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PlayerController extends JSONController
 {
@@ -26,12 +26,12 @@ class PlayerController extends JSONController
         }
 
         return array(
-            "player" => $player,
+            "player"         => $player,
             "adminNotesForm" => $formView,
         );
     }
 
-    public function listAction(Request $request, Player $me, Team $team=null)
+    public function listAction(Request $request, Player $me, Team $team = null)
     {
         $query = $this->getQueryBuilder();
 
@@ -49,10 +49,11 @@ class PlayerController extends JSONController
 
         $query->sortBy('username');
 
-        if ($this->isJson())
+        if ($this->isJson()) {
             return new JsonResponse(array('players' => $query->getArray(array('username', 'outdated'))));
-        else
+        } else {
             return array('players' => $query->getModels());
+        }
     }
 
     /**

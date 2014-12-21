@@ -7,10 +7,10 @@
 
 namespace BZIon\Form\Creator;
 
-use BZIon\Form\Type\MatchTeamType;
 use BZIon\Form\Type\DatetimeWithTimezoneType;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use BZIon\Form\Type\MatchTeamType;
 use Symfony\Component\Validator\Constraints\LessThan;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for matches
@@ -31,13 +31,13 @@ class MatchFormCreator extends ModelFormCreator
             ->add('first_team', new MatchTeamType())
             ->add('second_team', new MatchTeamType())
             ->add('duration', 'choice', array(
-                'choices' => $durations,
+                'choices'     => $durations,
                 'constraints' => new NotBlank(),
-                'expanded' => true
+                'expanded'    => true
             ))
             ->add('server_address', 'text', array(
                 'required' => false,
-                'attr' => array('placeholder' => 'brad.guleague.org:5100'),
+                'attr'     => array('placeholder' => 'brad.guleague.org:5100'),
             ))
             ->add('time', new DatetimeWithTimezoneType(), array(
                 'constraints' => array(
@@ -69,9 +69,9 @@ class MatchFormCreator extends ModelFormCreator
         }
 
         $match = \Match::enterMatch(
-            $firstTeam ->get('team')->getData()->getId(),
+            $firstTeam->get('team')->getData()->getId(),
             $secondTeam->get('team')->getData()->getId(),
-            $firstTeam ->get('score')->getData(),
+            $firstTeam->get('score')->getData(),
             $secondTeam->get('score')->getData(),
             $form->get('duration')->getData(),
             $this->me->getId(),

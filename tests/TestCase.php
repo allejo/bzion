@@ -54,9 +54,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public static function assertArrayContainsModel($id, $array, $message = '')
     {
-    if ($id instanceof Model) {
-        $id = $id->getId();
-    } elseif (!is_int($id)) {
+        if ($id instanceof Model) {
+            $id = $id->getId();
+        } elseif (!is_int($id)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
         }
 
@@ -65,9 +65,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         }
 
         foreach ($array as $e) {
-        if (!$e instanceof Model) {
-          throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array of models');
-        }
+            if (!$e instanceof Model) {
+                throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array of models');
+            }
         }
 
         $constraint = new ArrayContainsModelWithIdConstraint($id);
@@ -83,8 +83,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected static function wipe()
     {
         foreach (func_get_args() as $a) {
-            if ($a)
+            if ($a) {
                 $a->wipe();
+            }
         }
     }
 

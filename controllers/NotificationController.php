@@ -39,7 +39,7 @@ class NotificationController extends HTMLController
             if ($index == -1 || $result[$index]['date'] != $date) {
                 $result[] = array(
                     'notifications' => array(),
-                    'date' => $date
+                    'date'          => $date
                 );
 
                 $index++;

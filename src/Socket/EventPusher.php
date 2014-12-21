@@ -1,8 +1,8 @@
 <?php
 namespace BZIon\Socket;
 
-use Player;
 use BZIon\Event\EventSubscriber;
+use Player;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 use React\EventLoop\LoopInterface;
@@ -48,7 +48,7 @@ class EventPusher implements MessageComponentInterface
         $this->loop = $loop;
         $this->output = $output;
 
-        $this->clients = new \SplObjectStorage;
+        $this->clients = new \SplObjectStorage();
         $this->subscriber = \Service::getContainer()->get('kernel.subscriber.bzion_subscriber');
 
         // Ping timer
@@ -260,7 +260,7 @@ class EventPusher implements MessageComponentInterface
     {
         $this->log("Sending pings");
 
-        foreach($this->clients as $client) {
+        foreach ($this->clients as $client) {
             if (!$client->pong) {
                 $this->log("Dropping #{$client->resourceId}");
 

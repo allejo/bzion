@@ -106,7 +106,7 @@ class LeagueOverseerHookController extends PlainTextController
             }
 
             $teamArray[] = array(
-                "team" => preg_replace("/&[^\s]*;/", "", $team->getName()),
+                "team"    => preg_replace("/&[^\s]*;/", "", $team->getName()),
                 "members" => rtrim($memberList, ",")
             );
         }
@@ -168,11 +168,11 @@ class LeagueOverseerHookController extends PlainTextController
 
         $log->addNotice("Match reported automatically", array(
             'winner' => array(
-                'name' => $match->getWinner()->getName(),
+                'name'  => $match->getWinner()->getName(),
                 'score' => $match->getScore($match->getWinner()),
             ),
             'loser' => array(
-                'name' => $match->getLoser()->getName(),
+                'name'  => $match->getLoser()->getName(),
                 'score' => $match->getScore($match->getLoser())
             ),
             'eloDiff' => $match->getEloDiff()

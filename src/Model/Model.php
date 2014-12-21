@@ -29,8 +29,9 @@ abstract class Model extends CachedModel
      */
     public function isDeleted()
     {
-        if (!$this->isValid() || $this->getStatus() == 'deleted')
+        if (!$this->isValid() || $this->getStatus() == 'deleted') {
             return true;
+        }
 
         return false;
     }
@@ -94,7 +95,7 @@ abstract class Model extends CachedModel
      */
     public static function mapToIDs($modelArray)
     {
-        return array_map(function(ModelInterface $model) {
+        return array_map(function (ModelInterface $model) {
             return $model->getId();
         }, $modelArray);
     }
@@ -144,7 +145,7 @@ abstract class Model extends CachedModel
 
     /**
      * Takes a CamelCase string and converts it to a snake_case one
-     * @param string $input The string to convert
+     * @param  string $input The string to convert
      * @return string
      */
     private static function toSnakeCase($input)

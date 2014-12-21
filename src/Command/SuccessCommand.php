@@ -17,8 +17,7 @@ class SuccessCommand extends Command
     {
         $this
             ->setName('bzion:success')
-            ->setDescription('Show a success message to make sure everything works')
-        ;
+            ->setDescription('Show a success message to make sure everything works');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

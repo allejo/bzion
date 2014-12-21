@@ -7,8 +7,8 @@
 
 namespace BZIon\Form\Creator;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for pages
@@ -33,7 +33,7 @@ class PageFormCreator extends ModelFormCreator
             ))
             ->add('status', 'choice', array(
                 'choices' => array(
-                    'live' => 'Public',
+                    'live'     => 'Public',
                     'revision' => 'Revision',
                     'disabled' => 'Disabled',
                 ),

@@ -12,10 +12,10 @@ use BZIon\Form\Creator\GroupRenameFormCreator;
 use BZIon\Form\Creator\MessageFormCreator;
 use BZIon\Form\Creator\MessageSearchFormCreator;
 use BZIon\Search\MessageSearch;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class MessageController extends JSONController
@@ -33,13 +33,13 @@ class MessageController extends JSONController
         $creator = new MessageSearchFormCreator();
         $searchForm = $creator->create();
         Service::getTemplateEngine()->addGlobal("searchForm", $searchForm->createView());
-
     }
 
     public function composeAction(Player $me, Request $request)
     {
-        if (!$me->hasPermission(Permission::SEND_PRIVATE_MSG))
+        if (!$me->hasPermission(Permission::SEND_PRIVATE_MSG)) {
             throw new ForbiddenException("You are not allowed to send messages");
+        }
 
         $creator = new GroupFormCreator($me);
         $form = $creator->create()->handleRequest($request);
@@ -63,15 +63,18 @@ class MessageController extends JSONController
                 $event = new NewMessageEvent($message, true);
                 $this->dispatch(Events::MESSAGE_NEW, $event);
 
-                if ($this->isJson())
+                if ($this->isJson()) {
                     return new JsonResponse(array(
                         'success' => true,
                         'message' => 'Your message was sent successfully',
                         'id'      => $group_to->getId()
                     ));
-                else return new RedirectResponse($group_to->getUrl());
-            } elseif ($this->isJson())
+                } else {
+                    return new RedirectResponse($group_to->getUrl());
+                }
+            } elseif ($this->isJson()) {
                 throw new BadRequestException($this->getErrorMessage($form));
+            }
         }
 
         return array("form" => $form->createView());
@@ -134,11 +137,13 @@ class MessageController extends JSONController
     {
         $this->assertCanEdit($me, $discussion, "You are not allowed to kick a player off that discussion!");
 
-        if ($discussion->isCreator($player->getId()))
+        if ($discussion->isCreator($player->getId())) {
             throw new ForbiddenException("You can't leave your own discussion.");
+        }
 
-        if (!$discussion->isMember($player->getId()))
+        if (!$discussion->isMember($player->getId())) {
             throw new ForbiddenException("The specified player is not a member of this conversation.");
+        }
 
         return $this->showConfirmationForm(function () use ($discussion, $player, $me) {
             $discussion->removeMember($player->getId());
@@ -169,7 +174,7 @@ class MessageController extends JSONController
     }
 
     /**
-     * @param Group $discussion
+     * @param Group  $discussion
      * @param Player $me
      */
     private function showInviteForm($discussion, $me)
@@ -203,7 +208,7 @@ class MessageController extends JSONController
     }
 
     /**
-     * @param Group $discussion
+     * @param Group  $discussion
      * @param Player $me
      */
     private function showRenameForm($discussion, $me)
@@ -227,7 +232,7 @@ class MessageController extends JSONController
     }
 
     /**
-     * @param Group $discussion
+     * @param Group  $discussion
      * @param Player $me
      */
     private function showMessageForm($discussion, $me)
@@ -244,8 +249,9 @@ class MessageController extends JSONController
         if ($form->isValid()) {
             // The player wants to send a message
             $this->sendMessage($me, $discussion, $form, $cloned);
-        } elseif ($form->isSubmitted() && $this->isJson())
+        } elseif ($form->isSubmitted() && $this->isJson()) {
             throw new BadRequestException($this->getErrorMessage($form));
+        }
 
         return $form;
     }
@@ -262,28 +268,30 @@ class MessageController extends JSONController
      * @return void
      */
     private function assertCanParticipate(Player $player, Group $group,
-        $message="You are not allowed to participate in that discussion"
+        $message = "You are not allowed to participate in that discussion"
     ) {
-        if (!$group->isMember($player->getId()))
+        if (!$group->isMember($player->getId())) {
             throw new ForbiddenException($message);
+        }
     }
 
     /**
      * Sends a message to a group
      *
      * @throws HTTPException Thrown if the user doesn't have the
-     *                               SEND_PRIVATE_MSG permission
-     * @param  Player        $from    The sender
-     * @param  Group         $to      The group that will receive the message
-     * @param  Form          $form    The message's form
-     * @param  Form          $form    The form before it handled the request
-     * @param Form $cloned
+     *                              SEND_PRIVATE_MSG permission
+     * @param  Player        $from   The sender
+     * @param  Group         $to     The group that will receive the message
+     * @param  Form          $form   The message's form
+     * @param  Form          $form   The form before it handled the request
+     * @param  Form          $cloned
      * @return void
      */
     private function sendMessage(Player $from, Group $to, &$form, $cloned)
     {
-        if (!$from->hasPermission(Permission::SEND_PRIVATE_MSG))
+        if (!$from->hasPermission(Permission::SEND_PRIVATE_MSG)) {
             throw new ForbiddenException("You are not allowed to send messages");
+        }
 
         $message = $form->get('message')->getData();
         $message = $to->sendMessage($from, $message);
@@ -329,9 +337,10 @@ class MessageController extends JSONController
      * @param  string        $message The error message to show
      * @return void
      */
-    private function assertCanEdit(Player $player, Group $group, $message="You are not allowed to edit the discussion")
+    private function assertCanEdit(Player $player, Group $group, $message = "You are not allowed to edit the discussion")
     {
-        if ($group->getCreator()->getId() != $player->getId())
-                throw new ForbiddenException($message);
+        if ($group->getCreator()->getId() != $player->getId()) {
+            throw new ForbiddenException($message);
+        }
     }
 }

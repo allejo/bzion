@@ -32,8 +32,9 @@ class Command extends ContainerAwareCommand
      */
     protected function advance()
     {
-        if (!$this->progress)
+        if (!$this->progress) {
             return;
+        }
 
         $this->progress->advance();
     }
@@ -44,8 +45,9 @@ class Command extends ContainerAwareCommand
      */
     protected function finishProgress()
     {
-        if (!$this->progress)
+        if (!$this->progress) {
             return;
+        }
 
         $this->progress->finish();
     }
@@ -56,7 +58,7 @@ class Command extends ContainerAwareCommand
 
         foreach (array('cache:clear', 'cache:warmup') as $commandName) {
             $command = $this->getApplication()->find($commandName);
-            $arguments = array ( 'command' => $commandName );
+            $arguments = array( 'command' => $commandName );
             $input = new ArrayInput($arguments);
             $command->run($input, $commandOutput);
             $this->advance();
@@ -70,14 +72,15 @@ class Command extends ContainerAwareCommand
      */
     protected function getBufferFunction($output)
     {
-        if (!$output->isVerbose())
+        if (!$output->isVerbose()) {
             return null;
+        }
 
         return function ($type, $buffer) {
             if (Process::ERR === $type) {
-                echo 'ERR > '.$buffer;
+                echo 'ERR > ' . $buffer;
             } else {
-                echo 'OUT > '.$buffer;
+                echo 'OUT > ' . $buffer;
             }
         };
     }

@@ -7,8 +7,8 @@
 
 namespace BZIon\Form\Creator;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for group renames

@@ -34,7 +34,6 @@ class ProfileController extends HTMLController
                 $me->setEmailAddress($email);
                 $this->sendConfirmationMessage($me);
             }
-
         }
 
         return array("player" => $me, "form" => $form->createView());

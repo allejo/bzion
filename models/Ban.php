@@ -220,8 +220,9 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getServerMessage()
     {
-        if ($this->allowedServerJoin())
+        if ($this->allowedServerJoin()) {
             return '';
+        }
 
         return $this->srvmsg;
     }
@@ -380,13 +381,13 @@ class Ban extends UrlModel implements NamedModel
     /**
      * Add a new ban
      *
-     * @param int      $playerID        The ID of the victim of the ban
-     * @param int      $authorID        The ID of the player responsible for the ban
-     * @param BZIon\Form\Creator\TimeDate|null    $expiration      The expiration of the ban (set to NULL so that it never expires)
-     * @param string   $reason          The full reason for the ban
-     * @param string   $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
-     * @param string[] $ipAddresses     An array of IPs that have been banned
-     * @param bool     $allowServerJoin Whether or not the player is allowed to join match servers
+     * @param int                              $playerID        The ID of the victim of the ban
+     * @param int                              $authorID        The ID of the player responsible for the ban
+     * @param BZIon\Form\Creator\TimeDate|null $expiration      The expiration of the ban (set to NULL so that it never expires)
+     * @param string                           $reason          The full reason for the ban
+     * @param string                           $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
+     * @param string[]                         $ipAddresses     An array of IPs that have been banned
+     * @param bool                             $allowServerJoin Whether or not the player is allowed to join match servers
      *
      * @return Ban An object representing the ban that was just entered or false if the ban was not created
      */
@@ -406,12 +407,12 @@ class Ban extends UrlModel implements NamedModel
         }
 
         $ban = self::create(array(
-            'player' => $playerID,
-            'expiration' => $expiration,
-            'server_message' => $srvmsg,
-            'reason' => $reason,
+            'player'            => $playerID,
+            'expiration'        => $expiration,
+            'server_message'    => $srvmsg,
+            'reason'            => $reason,
             'allow_server_join' => $allowServerJoin,
-            'author' => $authorID,
+            'author'            => $authorID,
         ), 'isssii', array('created', 'updated'));
 
         if (is_array($ipAddresses)) {
@@ -433,7 +434,7 @@ class Ban extends UrlModel implements NamedModel
     {
         return new QueryBuilder('Ban', array(
             'columns' => array(
-                'status' => 'status',
+                'status'  => 'status',
                 'updated' => 'updated'
             ),
         ));
@@ -496,5 +497,4 @@ class Ban extends UrlModel implements NamedModel
 
         return new Ban($bans[0]);
     }
-
 }

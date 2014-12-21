@@ -1,22 +1,25 @@
 <?php
 
 use BZIon\Event\Events;
-use BZIon\Event\TeamJoinEvent;
 use BZIon\Event\TeamInviteEvent;
+use BZIon\Event\TeamJoinEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class InvitationController extends CRUDController
 {
     public function acceptAction(Invitation $invitation, Player $me)
     {
-        if (!$me->isTeamless())
+        if (!$me->isTeamless()) {
             throw new ForbiddenException("You can't join a new team until you leave your current one.");
+        }
 
-        if ($invitation->getInvitedPlayer()->getId() != $me->getId())
+        if ($invitation->getInvitedPlayer()->getId() != $me->getId()) {
             throw new ForbiddenException("This invitation isn't for you!");
+        }
 
-        if ($invitation->getExpiration()->lt(TimeDate::now()))
+        if ($invitation->getExpiration()->lt(TimeDate::now())) {
             throw new ForbiddenException("This invitation has expired");
+        }
 
         $inviter = $invitation->getSentBy()->getEscapedUsername();
         $team    = $invitation->getTeam();

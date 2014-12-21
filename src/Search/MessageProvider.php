@@ -7,9 +7,8 @@
 
 namespace BZIon\Search;
 
-use FOS\ElasticaBundle\Provider\ProviderInterface;
 use Elastica\Type;
-use Elastica\Document;
+use FOS\ElasticaBundle\Provider\ProviderInterface;
 
 /**
  * Stores messages so that elastica can read them

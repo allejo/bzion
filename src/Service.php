@@ -6,12 +6,12 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class Service
 {
@@ -21,10 +21,10 @@ abstract class Service
      */
     private static $generator;
 
-     /**
-      * Symfony's Request class
-      * @var Request
-      */
+    /**
+     * Symfony's Request class
+     * @var Request
+     */
     private static $request;
 
     /**
@@ -95,7 +95,7 @@ abstract class Service
      * Gets a parameter
      *
      * @param  string $name The parameter name
-     * @return string  The parameter value
+     * @return string The parameter value
      */
     public static function getParameter($name)
     {

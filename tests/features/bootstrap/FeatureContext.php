@@ -34,10 +34,10 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
-    * Prepare system for the test suite before it runs
-    *
-    * @BeforeSuite
-    */
+     * Prepare system for the test suite before it runs
+     *
+     * @BeforeSuite
+     */
     public static function prepare($event)
     {
         self::clearDatabase();
@@ -53,21 +53,22 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     {
     }
 
-    protected function getNewUser($username="Sam", $role=Player::PLAYER)
+    protected function getNewUser($username = "Sam", $role = Player::PLAYER)
     {
         // Try to find a valid bzid
         $bzid = 300;
         while (Player::getFromBZID($bzid)->isValid()) {
             $bzid++;
 
-            if ($bzid > 15000)
+            if ($bzid > 15000) {
                 throw new Exception("bzid too big");
+            }
         }
 
         return Player::newPlayer($bzid, $username, null, "test", $role);
     }
 
-    protected function getUserId($username="Sam", $role=Player::PLAYER)
+    protected function getUserId($username = "Sam", $role = Player::PLAYER)
     {
         return $this->getNewUser($username, $role)->getId();
     }
@@ -107,8 +108,9 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function iLogIn()
     {
-        if (!$this->me)
+        if (!$this->me) {
             $this->me = $this->getNewUser();
+        }
 
         $this->visit('/login/' . $this->me->getId());
     }
@@ -195,11 +197,11 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
-    * @Given there is no player called :username
-    */
+     * @Given there is no player called :username
+     */
     public function thereIsNoPlayerCalled($username)
     {
-        while($player = Player::getFromUsername($username)) {
+        while ($player = Player::getFromUsername($username)) {
             if (!$player->isValid()) {
                 break;
             }
@@ -277,7 +279,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
 
         if (count($tables) > 0) {
             $db->query('SET foreign_key_checks = 0');
-            $db->query('DROP TABLES ' . implode($tables , ','));
+            $db->query('DROP TABLES ' . implode($tables, ','));
             $db->query('SET foreign_key_checks = 1');
         }
 
@@ -286,11 +288,12 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         $password = Service::getParameter('bzion.mysql.password');
         $database = Service::getParameter('bzion.mysql.database');
 
-        $dsn = 'mysql:dbname=' . $database . ';host=' . $host .';charset=UTF8';
+        $dsn = 'mysql:dbname=' . $database . ';host=' . $host . ';charset=UTF8';
         $pdo = new PDO($dsn, $username, $password);
         $pdo->exec(file_get_contents('DATABASE.sql'));
 
-        if ($modelCache = Service::getModelCache())
+        if ($modelCache = Service::getModelCache()) {
             $modelCache->clear();
+        }
     }
 }

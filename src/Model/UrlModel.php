@@ -17,7 +17,7 @@ abstract class UrlModel extends PermissionModel
      * @param  string $action The route's suffix
      * @return string
      */
-    public static function getRouteName($action='show')
+    public static function getRouteName($action = 'show')
     {
         return self::getParamName() . "_$action";
     }
@@ -49,7 +49,7 @@ abstract class UrlModel extends PermissionModel
      *
      * @return string A link
      */
-    public function getURL($action='show', $absolute=false, $params=array())
+    public function getURL($action = 'show', $absolute = false, $params = array())
     {
         return static::getPermaLink($action, $absolute, $params);
     }
@@ -63,7 +63,7 @@ abstract class UrlModel extends PermissionModel
      *
      * @return string A permanent link
      */
-    public function getPermaLink($action='show', $absolute=false, $params=array())
+    public function getPermaLink($action = 'show', $absolute = false, $params = array())
     {
         return $this->getLink($this->getId(), $action, $absolute, $params);
     }

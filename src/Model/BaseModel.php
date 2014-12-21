@@ -65,7 +65,7 @@ abstract class BaseModel implements ModelInterface
      * $this->db->query function. If the $id is specified as 0, then an
      * invalid object will be returned
      *
-     * @param int    $id     The ID of the object to look for
+     * @param int $id The ID of the object to look for
      */
     public function __construct($id)
     {
@@ -104,9 +104,9 @@ abstract class BaseModel implements ModelInterface
      *
      * @return void
      */
-    public function update($name, $value, $type='i')
+    public function update($name, $value, $type = 'i')
     {
-        $this->db->query("UPDATE ". static::TABLE . " SET `$name` = ? WHERE id = ?", $type."i", array($value, $this->id));
+        $this->db->query("UPDATE " . static::TABLE . " SET `$name` = ? WHERE id = ?", $type . "i", array($value, $this->id));
     }
 
     /**
@@ -154,8 +154,9 @@ abstract class BaseModel implements ModelInterface
      */
     public function isDeleted()
     {
-        if (isset($this->status))
+        if (isset($this->status)) {
             return $this->status == "deleted";
+        }
         return false;
     }
 
@@ -169,7 +170,7 @@ abstract class BaseModel implements ModelInterface
      * @param  string $column           Only count the entries where `$column` is not `NULL` (or all if `$column` is `*`)
      * @return int
      */
-    protected static function fetchCount($additional_query='', $types='', $params=array(), $table='', $column='*')
+    protected static function fetchCount($additional_query = '', $types = '', $params = array(), $table = '', $column = '*')
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
@@ -188,7 +189,7 @@ abstract class BaseModel implements ModelInterface
      * @param  string $type   The type of the value, can be 's' (string) , 'i' (integer) , 'd' (double) or 'b' (blob)
      * @return int    The ID of the object
      */
-    protected static function fetchIdFrom($value, $column, $type="s")
+    protected static function fetchIdFrom($value, $column, $type = "s")
     {
         $results = self::fetchIdsFrom($column, $value, $type, false, "LIMIT 1");
 
@@ -207,14 +208,15 @@ abstract class BaseModel implements ModelInterface
      *
      * @return mixed[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function fetchIds($additional_query='', $types='', $params=array(), $table = "", $select='id')
+    protected static function fetchIds($additional_query = '', $types = '', $params = array(), $table = "", $select = 'id')
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
         // If $select is an array, convert it into a comma-separated list that MySQL will accept
-        if (is_array($select))
+        if (is_array($select)) {
             $select = implode(",", $select);
+        }
 
         $results = $db->query("SELECT $select FROM $table $additional_query", $types, $params);
 
@@ -227,11 +229,12 @@ abstract class BaseModel implements ModelInterface
         // For example, if $select is "groups.id", we should convert it to
         // "id", because that's how MySQLi stores column names in the $results
         // array.
-        $selectArray = explode(".",$select);
+        $selectArray = explode(".", $select);
         $select = end($selectArray);
 
-        if (!$results)
+        if (!$results) {
             return array();
+        }
 
         return array_column($results, $select);
     }
@@ -249,7 +252,7 @@ abstract class BaseModel implements ModelInterface
      *
      * @return mixed[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function fetchIdsFrom($column, $possible_values, $type, $negate=false, $additional_query="", $table = "", $select='id')
+    protected static function fetchIdsFrom($column, $possible_values, $type, $negate = false, $additional_query = "", $table = "", $select = 'id')
     {
         $question_marks = array();
         $types = "";
@@ -308,7 +311,7 @@ abstract class BaseModel implements ModelInterface
      * Load all the parameters of the model that were not loaded during the first
      * fetch from the database
      *
-     * @param array $result MySQL's result set
+     * @param  array $result MySQL's result set
      * @return void
      */
     protected function assignLazyResult($result)
@@ -369,7 +372,7 @@ abstract class BaseModel implements ModelInterface
      *                              table
      * @return static       The new entry
      */
-    protected static function create($params, $types, $now=null, $table='')
+    protected static function create($params, $types, $now = null, $table = '')
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
@@ -381,8 +384,9 @@ abstract class BaseModel implements ModelInterface
         $question_marks = rtrim($question_marks, ','); // Remove last comma
 
         if ($now) {
-            if (!is_array($now)) // Convert $now to an array if it's a string
+            if (!is_array($now)) {// Convert $now to an array if it's a string
                 $now = array($now);
+            }
 
             foreach ($now as $column) {
                 $columns .= ",$column";

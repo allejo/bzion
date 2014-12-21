@@ -104,7 +104,7 @@ abstract class Controller extends ContainerAware
      * @param  string|null $action The action name to call, null to invoke the default one
      * @return Response    The action's response
      */
-    public function callAction($action=null)
+    public function callAction($action = null)
     {
         if (!$action) {
             $action = $this->parameters->get('_action') ?: 'default';
@@ -128,7 +128,7 @@ abstract class Controller extends ContainerAware
      * @param  array    $params An additional associative array of parameters to provide to the action
      * @return Response
      */
-    protected function forward($action, $params=array())
+    protected function forward($action, $params = array())
     {
         $args = clone $this->parameters;
         $args->add($params);
@@ -166,7 +166,7 @@ abstract class Controller extends ContainerAware
      * @param  string       $method     The name of the method
      * @param  ParameterBag $parameters The parameter bag representing the route's parameters
      * @return mixed        The return value of the called method
-    */
+     */
     protected function callMethod($method, $parameters)
     {
         $ref = new ReflectionMethod($this, $method);
@@ -199,13 +199,14 @@ abstract class Controller extends ContainerAware
         $paramName  = $modelParameter->getName();
 
         // $me -> currently logged in user
-        if ($paramName == "me")
+        if ($paramName == "me") {
             return self::getMe();
+        }
 
-        if ($refClass === null)
-            // No class provived by the method's definition, we don't know
+        if ($refClass === null) {// No class provived by the method's definition, we don't know
             // what we should pass
             return null;
+        }
 
         switch ($refClass->getName()) {
             case "Symfony\Component\HttpFoundation\Request":
@@ -220,9 +221,9 @@ abstract class Controller extends ContainerAware
                 return Service::getFormFactory();
         }
 
-        if ($refClass->isSubclassOf("Model"))
-            // Look for the object's ID/slugs in the routeParameters array
+        if ($refClass->isSubclassOf("Model")) {// Look for the object's ID/slugs in the routeParameters array
             return $this->findModelInParameters($modelParameter, $routeParameters);
+        }
 
         return null;
     }
@@ -249,8 +250,9 @@ abstract class Controller extends ContainerAware
             return $refClass->getMethod("fetchFromSlug")->invoke(null, $parameter);
         }
 
-        if ($routeParameters->has($paramName . 'Id'))
+        if ($routeParameters->has($paramName . 'Id')) {
             return $refClass->newInstance($routeParameters->get($paramName . 'Id'));
+        }
     }
 
     /**
@@ -274,8 +276,9 @@ abstract class Controller extends ContainerAware
      */
     protected function handleReturnValue($return, $action)
     {
-        if ($return instanceof Response)
+        if ($return instanceof Response) {
             return $return;
+        }
 
         $content = null;
         if (is_array($return)) {
@@ -317,22 +320,22 @@ abstract class Controller extends ContainerAware
             ->visibleTo(static::getMe(), static::getRequest()->get('showDeleted'));
     }
 
-    /**
-     * Generates a URL from the given parameters.
-     * @param  string  $name       The name of the route
-     * @param  mixed   $parameters An array of parameters
-     * @param  boolean $absolute   Whether to generate an absolute URL
-     * @return string  The generated URL
-     */
+     /**
+      * Generates a URL from the given parameters.
+      * @param  string  $name       The name of the route
+      * @param  mixed   $parameters An array of parameters
+      * @param  boolean $absolute   Whether to generate an absolute URL
+      * @return string  The generated URL
+      */
      public static function generate($name, $parameters = array(), $absolute = false)
      {
-        return Service::getGenerator()->generate($name, $parameters, $absolute);
+         return Service::getGenerator()->generate($name, $parameters, $absolute);
      }
 
-     /**
-      * Gets the browser's request
-      * @return Symfony\Component\HttpFoundation\Request
-      */
+    /**
+     * Gets the browser's request
+     * @return Symfony\Component\HttpFoundation\Request
+     */
     public static function getRequest()
     {
         return Service::getRequest();
@@ -363,7 +366,7 @@ abstract class Controller extends ContainerAware
      * @param  string         $channel The log channel, defaults to the Controller's default
      * @return Monolog\Logger
      */
-    protected static function getLogger($channel=null)
+    protected static function getLogger($channel = null)
     {
         if (!$channel) {
             $channel = static::getLogChannel();
@@ -398,7 +401,7 @@ abstract class Controller extends ContainerAware
      * @param  array  $parameters An array of parameters to pass to the view
      * @return string The rendered view
      */
-    protected function render($view, $parameters=array())
+    protected function render($view, $parameters = array())
     {
         Debug::startStopwatch('view.render');
 

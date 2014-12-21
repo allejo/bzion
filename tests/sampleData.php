@@ -1,12 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-use BZIon\Cache\ModelCache;
 use BZIon\Event\Events;
 use BZIon\Event\GroupRenameEvent;
 use BZIon\Event\WelcomeEvent;
 
-require_once(__DIR__ . "/../bzion-load.php");
+require_once __DIR__ . "/../bzion-load.php";
 
 $kernel = new AppKernel("dev", true);
 $kernel->boot();

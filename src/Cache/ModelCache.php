@@ -29,8 +29,9 @@ class ModelCache
     {
         $type = get_class($model);
 
-        if (!isset($this->models[$type]))
+        if (!isset($this->models[$type])) {
             $this->models[$type] = array();
+        }
 
         $this->models[$type][$model->getId()] = $model;
 
@@ -45,10 +46,11 @@ class ModelCache
      * @return mixed  The Model if it exists in the cache, or $default if it
      *                        wasn't found
      */
-    public function get($type, $id, $default=null)
+    public function get($type, $id, $default = null)
     {
-        if (!$this->has($type, $id))
+        if (!$this->has($type, $id)) {
             return $default;
+        }
 
         Debug::logCacheFetch($type, $id);
 
@@ -68,10 +70,10 @@ class ModelCache
 
     /**
      * Get all the cached models
-     * @param string|null $type A specific type of models to look for
+     * @param  string|null $type A specific type of models to look for
      * @return array
      */
-    public function all($type=null)
+    public function all($type = null)
     {
         if ($type === null) {
             return $this->models;
@@ -92,5 +94,4 @@ class ModelCache
     {
         $this->models = array();
     }
-
 }

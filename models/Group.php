@@ -93,10 +93,11 @@ class Group extends UrlModel implements NamedModel
      */
     public function getLastActivity($human = true)
     {
-        if ($human)
+        if ($human) {
             return $this->last_activity->diffForHumans();
-        else
+        } else {
             return $this->last_activity;
+        }
     }
 
     /**
@@ -183,7 +184,7 @@ class Group extends UrlModel implements NamedModel
     /**
      * {@inheritDoc}
      */
-    public static function getRouteName($action='show')
+    public static function getRouteName($action = 'show')
     {
         return "message_discussion_$action";
     }
@@ -217,7 +218,7 @@ class Group extends UrlModel implements NamedModel
      * @param  int|null $hide The ID of a player to ignore
      * @return Player[] An array of players
      */
-    public function getMembers($hide=null)
+    public function getMembers($hide = null)
     {
         // Sort players alphabetically by their username
         $members = Player::arrayIdToModel($this->getMemberIds($hide));
@@ -228,10 +229,10 @@ class Group extends UrlModel implements NamedModel
 
     /**
      * Get a list containing the IDs of each member of the group
-     * @param  int|null $hide The ID of a player to ignore
-     * @return integer[]      An array of player IDs
+     * @param  int|null  $hide The ID of a player to ignore
+     * @return integer[] An array of player IDs
      */
-    public function getMemberIds($hide=null)
+    public function getMemberIds($hide = null)
     {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
@@ -254,7 +255,7 @@ class Group extends UrlModel implements NamedModel
      * @param  array  $members   A list of IDs representing the group's members
      * @return Group  An object that represents the created group
      */
-    public static function createGroup($subject, $creatorId, $members=array())
+    public static function createGroup($subject, $creatorId, $members = array())
     {
         $group = self::create(array(
             'subject' => $subject,
@@ -279,7 +280,7 @@ class Group extends UrlModel implements NamedModel
      * @param  string  $status  The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
      */
-    public function sendMessage($from, $message, $status='sent')
+    public function sendMessage($from, $message, $status = 'sent')
     {
         $message = Message::sendMessage($this->getId(), $from->getId(), $message, $status);
 
@@ -369,7 +370,6 @@ class Group extends UrlModel implements NamedModel
         $me = new Player($id);
 
         foreach ($groups as $group) {
-
             // THIS DOESNT WORK
             if ($me->getLastlogin(false)->gt($group->getLastActivity(false))) {
                 return true;

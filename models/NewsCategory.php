@@ -141,10 +141,10 @@ class NewsCategory extends AliasModel
         // @TODO Check for permissions
 
         return self::create(array(
-            'alias' => self::generateAlias($name),
-            'name' => $name,
+            'alias'     => self::generateAlias($name),
+            'name'      => $name,
             'protected' => 0,
-            'status' => 'enabled'
+            'status'    => 'enabled'
         ), 'ssis');
     }
 

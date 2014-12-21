@@ -12,7 +12,6 @@
  */
 class Visit extends Model
 {
-
     /**
      * The id of the visiting user
      * @var int
@@ -65,7 +64,6 @@ class Visit extends Model
         $this->user_agent = $visit['user_agent'];
         $this->referer = $visit['referer'];
         $this->timestamp = new DateTime($visit['timestamp']);
-
     }
 
     /**
@@ -91,5 +89,4 @@ class Visit extends Model
             'timestamp' => $timestamp->toMysql(),
         ), 'isssss');
     }
-
 }

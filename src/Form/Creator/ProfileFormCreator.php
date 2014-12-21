@@ -10,8 +10,8 @@ namespace BZIon\Form\Creator;
 use BZIon\Form\Type\TimezoneType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator to allow users to edit their profiles
@@ -33,42 +33,42 @@ class ProfileFormCreator extends ModelFormCreator
         return $builder
             ->add('description', 'textarea', array(
                 'constraints' => new Length(array('max' => 8000)),
-                'data' => $this->editing->getDescription(),
-                'required' => false
+                'data'        => $this->editing->getDescription(),
+                'required'    => false
             ))
             ->add('avatar', 'file', array(
                 'constraints' => new Image(array(
-                    'minWidth' => 50,
+                    'minWidth'  => 50,
                     'minHeight' => 50,
-                    'maxSize' => '4M'
+                    'maxSize'   => '4M'
                 )),
                 'required' => false
             ))
             ->add('delete_avatar', 'submit')
             ->add('country', 'choice', array(
                 'choices' => \Country::getCountriesWithISO(),
-                'data' => $this->editing->getCountry()->getISO()
+                'data'    => $this->editing->getCountry()->getISO()
             ))
             ->add('email', 'email', array(
                 'constraints' => $emailConstraints,
-                'data' => $this->editing->getEmailAddress(),
-                'label' => 'E-Mail Address',
-                'required' => false
+                'data'        => $this->editing->getEmailAddress(),
+                'label'       => 'E-Mail Address',
+                'required'    => false
             ))
             ->add('receive', 'choice', array(
                 'choices' => array(
-                    'nothing' => 'Nothing',
-                    'messages' => 'Messages only',
+                    'nothing'    => 'Nothing',
+                    'messages'   => 'Messages only',
                     'everything' => 'Everything'
                 ),
-                'data' => $this->editing->getReceives(),
-                'label' => 'Receive notifications about',
+                'data'     => $this->editing->getReceives(),
+                'label'    => 'Receive notifications about',
                 'disabled' => !$this->editing->isVerified(),
                 'expanded' => true,
             ))
             ->add('timezone', new TimezoneType(), array(
                 'constraints' => new NotBlank(),
-                'data' => $this->editing->getTimezone()
+                'data'        => $this->editing->getTimezone()
             ))
             ->add('enter', 'submit');
     }

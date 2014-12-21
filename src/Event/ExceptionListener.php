@@ -1,9 +1,9 @@
 <?php
 /**
-* This file contains a class that responds to an event
-*
-* @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
-*/
+ * This file contains a class that responds to an event
+ *
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
 namespace BZIon\Event;
 
@@ -23,9 +23,9 @@ class ExceptionListener extends BaseListener
     {
         $attributes = array(
             '_controller' => 'Error',
-            '_action' => 'error',
-            'logger' => $this->logger instanceof DebugLoggerInterface ? $this->logger : null,
-            'exception' => $exception
+            '_action'     => 'error',
+            'logger'      => $this->logger instanceof DebugLoggerInterface ? $this->logger : null,
+            'exception'   => $exception
         );
 
         $request = $request->duplicate(null, null, $attributes);
@@ -33,9 +33,9 @@ class ExceptionListener extends BaseListener
         return $request;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+     /**
+      * {@inheritDoc}
+      */
      protected function logException(\Exception $exception, $message, $original = true)
      {
          $isCritical = !$exception instanceof HttpExceptionInterface || $exception->getStatusCode() >= 500;

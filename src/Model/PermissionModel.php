@@ -43,7 +43,7 @@ abstract class PermissionModel extends Model
      * @param  boolean $showDeleted false to hide deleted models even from admins
      * @return boolean
      */
-    public function canBeSeenBy($player, $showDeleted=false)
+    public function canBeSeenBy($player, $showDeleted = false)
     {
         if ($this->isDeleted()) {
             if (!$showDeleted) {
@@ -80,7 +80,7 @@ abstract class PermissionModel extends Model
      * If possible, prefer to override PermissionModel::EDIT_PERMISSION and/or
      * PermissionModel::isEditor()
      *
-     * @param Player $player
+     * @param  Player  $player
      * @return boolean
      */
     public function canBeEditedBy($player)
@@ -94,7 +94,7 @@ abstract class PermissionModel extends Model
      * If possible, prefer to override PermissionModel::SOFT_DELETE_PERMISSION
      * and/or PermissionModel::isEditor()
      *
-     * @param Player $player
+     * @param  Player  $player
      * @return boolean
      */
     public function canBeSoftDeletedBy($player)
@@ -107,7 +107,7 @@ abstract class PermissionModel extends Model
      *
      * If possible, prefer to override PermissionModel::HARD_DELETE_PERMISSION
      *
-     * @param Player $player
+     * @param  Player  $player
      * @return boolean
      */
     public function canBeHardDeletedBy($player)

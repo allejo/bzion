@@ -22,8 +22,9 @@ abstract class HTMLController extends Controller
      */
     private function addTwigGlobals()
     {
-        if ($this->twigReady)
+        if ($this->twigReady) {
             return;
+        }
 
         $request = $this->getRequest();
 
@@ -49,7 +50,7 @@ abstract class HTMLController extends Controller
      * {@inheritDoc}
      * @param string $view
      */
-    protected function render($view, $parameters=array())
+    protected function render($view, $parameters = array())
     {
         $this->addTwigGlobals();
 
@@ -82,7 +83,7 @@ abstract class HTMLController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function callAction($action=null)
+    public function callAction($action = null)
     {
         $response = parent::callAction($action);
         if (!$response->isRedirection()) {
@@ -104,8 +105,9 @@ abstract class HTMLController extends Controller
         array_unshift($urls, $this->getRequest()->getPathInfo());
 
         // No need to have more than 4 urls stored on the array
-        while (count($urls) > 4)
+        while (count($urls) > 4) {
             array_pop($urls);
+        }
 
         // Store the URLs in the session, removing any duplicate entries
         $session->set('previous_paths', array_unique($urls));
@@ -129,9 +131,11 @@ abstract class HTMLController extends Controller
         $request = $this->getRequest();
 
         $urls = $request->getSession()->get('previous_paths', array());
-        foreach ($urls as $url)
-            if ($url != $request->getPathInfo()) // Don't redirect to the same page
+        foreach ($urls as $url) {
+            if ($url != $request->getPathInfo()) {// Don't redirect to the same page
                 return $request->getBaseUrl() . $url;
+            }
+        }
 
         // No stored URLs found, just redirect them to the home page
         return $this->getHomeURL();
@@ -190,12 +194,13 @@ abstract class HTMLController extends Controller
      * @return void
      */
     protected function requireLogin(
-        $message="You need to be signed in to do this"
+        $message = "You need to be signed in to do this"
     ) {
         $me = new Player($this->getRequest()->getSession()->get('playerId'));
 
-        if (!$me->isValid())
+        if (!$me->isValid()) {
             throw new ForbiddenException($message);
+        }
     }
 
     /**
@@ -237,7 +242,7 @@ abstract class HTMLController extends Controller
         }
 
         return $this->render('confirmation.html.twig', array(
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
             'message' => $message
         ));
     }

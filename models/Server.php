@@ -6,7 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-include_once(DOC_ROOT . "/includes/bzfquery.php");
+include_once DOC_ROOT . "/includes/bzfquery.php";
 
 /**
  * A BZFlag server
@@ -14,7 +14,6 @@ include_once(DOC_ROOT . "/includes/bzfquery.php");
  */
 class Server extends UrlModel implements NamedModel
 {
-
     /**
      * The name of the server
      * @var string
@@ -101,11 +100,11 @@ class Server extends UrlModel implements NamedModel
     public static function addServer($name, $address, $country, $owner)
     {
         $server = self::create(array(
-            'name' => $name,
+            'name'    => $name,
             'address' => $address,
             'country' => $country,
-            'owner' => $owner,
-            'status' => 'active',
+            'owner'   => $owner,
+            'status'  => 'active',
         ), 'ssiis', 'updated');
         $server->forceUpdate();
 
@@ -181,8 +180,9 @@ class Server extends UrlModel implements NamedModel
      */
     public function getPlayers()
     {
-        if (isset($this->info['player']))
+        if (isset($this->info['player'])) {
             return $this->info['player'];
+        }
 
         return array();
     }
@@ -316,11 +316,10 @@ class Server extends UrlModel implements NamedModel
     {
         return new QueryBuilder('Server', array(
             'columns' => array(
-                'name' => 'name',
+                'name'   => 'name',
                 'status' => 'status'
             ),
             'name' => 'name'
         ));
     }
-
 }

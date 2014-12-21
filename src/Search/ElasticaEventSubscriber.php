@@ -10,8 +10,8 @@ namespace BZIon\Search;
 use BZIon\Event\NewMessageEvent;
 use Elastica\Type;
 use FOS\ElasticaBundle\Persister\ObjectPersister;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * An event subscriber for events that should update the Elasticsearch index

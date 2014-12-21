@@ -19,7 +19,7 @@ abstract class JSONController extends HTMLController
      */
     public function __construct($parameters)
     {
-        $this->attributes = new ParameterBag;
+        $this->attributes = new ParameterBag();
 
         parent::__construct($parameters);
     }

@@ -8,8 +8,8 @@
 namespace BZIon\Config;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
  * A configuration extension for bzion which makes sure that configuration
@@ -56,7 +56,7 @@ class ConfigExtension extends ConfigurableExtension
     private function store($name, $value)
     {
         if (is_array($value)) {
-            foreach ($value as $key=>$val) {
+            foreach ($value as $key => $val) {
                 if (is_int($key)) {
                     // Non-associative arrays are stored as arrays and don't get
                     // expanded further into parameters
@@ -68,6 +68,5 @@ class ConfigExtension extends ConfigurableExtension
         } else {
             $this->conf[$name] = $value;
         }
-
     }
 }

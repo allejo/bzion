@@ -13,7 +13,7 @@ class LinkToFunction
      * @param  string  $class   The CSS class(es) to apply to the link
      * @return string  The HTML link
      */
-    public function __invoke($context, \Model $model, $icon=null, $action='show', $linkAll=false, $class='')
+    public function __invoke($context, \Model $model, $icon = null, $action = 'show', $linkAll = false, $class = '')
     {
         if ($icon) {
             $content = "<i class=\"fa fa-$icon\"></i>";
@@ -32,7 +32,7 @@ class LinkToFunction
             return '<a' . $this->getClass($class) . ' href="' . $url . '">' . $content . '</a>';
         }
 
-        return '<span' .  $this->getClass("$class disabled-link") .'>' . $content . '</a>';
+        return '<span' . $this->getClass("$class disabled-link") . '>' . $content . '</a>';
     }
 
     /**
@@ -43,10 +43,12 @@ class LinkToFunction
      */
     private function getModelName(\Model $model)
     {
-        if ($model instanceof \NamedModel)
+        if ($model instanceof \NamedModel) {
             return $model->getName();
-        if ($model instanceof \AliasModel)
+        }
+        if ($model instanceof \AliasModel) {
             return $model->getAlias();
+        }
 
         return $model->getId();
     }
@@ -68,7 +70,7 @@ class LinkToFunction
     public static function get()
     {
         return new \Twig_SimpleFunction('link_to', new self(), array(
-            'is_safe' => array('html'),
+            'is_safe'       => array('html'),
             'needs_context' => true
         ));
     }

@@ -12,7 +12,6 @@
  */
 class Match extends PermissionModel implements NamedModel
 {
-
     /**
      * The ID of the first team of the match
      * @var int
@@ -31,7 +30,7 @@ class Match extends PermissionModel implements NamedModel
      */
     protected $team_a_points;
 
-     /**
+    /**
      * The match points Team B scored
      * @var int
      */
@@ -49,13 +48,13 @@ class Match extends PermissionModel implements NamedModel
      */
     protected $team_b_players;
 
-     /**
+    /**
      * The ELO score of Team A after the match
      * @var int
      */
     protected $team_a_elo_new;
 
-     /**
+    /**
      * The ELO score of Team B after the match
      * @var int
      */
@@ -168,7 +167,7 @@ class Match extends PermissionModel implements NamedModel
      * @param  string $action The route's suffix
      * @return string
      */
-    public static function getRouteName($action='list')
+    public static function getRouteName($action = 'list')
     {
         return "match_$action";
     }
@@ -418,7 +417,7 @@ class Match extends PermissionModel implements NamedModel
 
     /**
      * Get the name of the replay file for this specific map
-     * @param  int         $length The length of the replay file name; it will be truncated
+     * @param  int    $length The length of the replay file name; it will be truncated
      * @return string Returns null if there was no replay file name recorded
      */
     public function getReplayFileName($length = 0)
@@ -518,9 +517,9 @@ class Match extends PermissionModel implements NamedModel
      * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch(
-        $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp="now",
-        $a_players=array(), $b_players=array(), $server=null, $port=null,
-        $replayFile=null, $mapPlayed=null
+        $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now",
+        $a_players = array(), $b_players = array(), $server = null, $port = null,
+        $replayFile = null, $mapPlayed = null
     ) {
         $team_a = new Team($a);
         $team_b = new Team($b);
@@ -534,23 +533,23 @@ class Match extends PermissionModel implements NamedModel
         $team_b->changeElo(-$diff);
 
         $match = self::create(array(
-            'team_a' => $a,
-            'team_b' => $b,
-            'team_a_points' => $a_points,
-            'team_b_points' => $b_points,
+            'team_a'         => $a,
+            'team_b'         => $b,
+            'team_a_points'  => $a_points,
+            'team_b_points'  => $b_points,
             'team_a_players' => implode(',', $a_players),
             'team_b_players' => implode(',', $b_players),
             'team_a_elo_new' => $team_a->getElo(),
             'team_b_elo_new' => $team_b->getElo(),
-            'elo_diff' => $diff,
-            'timestamp' => TimeDate::from($timestamp)->toMysql(),
-            'duration' => $duration,
-            'entered_by' => $entered_by,
-            'server' => $server,
-            'port' => $port,
-            'replay_file' => $replayFile,
-            'map_played' => $mapPlayed,
-            'status' => 'entered'
+            'elo_diff'       => $diff,
+            'timestamp'      => TimeDate::from($timestamp)->toMysql(),
+            'duration'       => $duration,
+            'entered_by'     => $entered_by,
+            'server'         => $server,
+            'port'           => $port,
+            'replay_file'    => $replayFile,
+            'map_played'     => $mapPlayed,
+            'status'         => 'entered'
         ), 'iiiissiiisiisisss', 'updated');
 
         $match->updateMatchCount();
@@ -611,12 +610,12 @@ class Match extends PermissionModel implements NamedModel
     {
         return new MatchQueryBuilder('Match', array(
             'columns' => array(
-                'firstTeam' => 'team_a',
-                'secondTeam' => 'team_b',
-                'firstTeamPoints' => 'team_a_points',
+                'firstTeam'        => 'team_a',
+                'secondTeam'       => 'team_b',
+                'firstTeamPoints'  => 'team_a_points',
                 'secondTeamPoints' => 'team_b_points',
-                'time' => 'timestamp',
-                'status' => 'status'
+                'time'             => 'timestamp',
+                'status'           => 'status'
             ),
         ));
     }
@@ -671,5 +670,4 @@ class Match extends PermissionModel implements NamedModel
             $this->getLoser()->changeMatchCount($diff, 'loss');
         }
     }
-
 }

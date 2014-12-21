@@ -61,8 +61,7 @@ class ChangesCommand extends ContainerAwareCommand
                null,
                InputOption::VALUE_NONE,
                'Mark all the changes made before the current date as read'
-            )
-        ;
+            );
     }
 
     /**
@@ -251,7 +250,7 @@ class ChangesCommand extends ContainerAwareCommand
         }
 
         $data = array(
-            'date' => $this->lastUpdateDate->toFormattedDateString(),
+            'date'    => $this->lastUpdateDate->toFormattedDateString(),
             'changes' => $this->alreadyListedChanges
         );
 

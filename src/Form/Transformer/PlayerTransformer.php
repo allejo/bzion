@@ -6,7 +6,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PlayerTransformer implements DataTransformerInterface
 {
-
     /**
      * Transforms a value assigned to the form using setData() into something we
      * can read

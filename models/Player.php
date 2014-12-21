@@ -187,7 +187,7 @@ class Player extends AvatarModel implements NamedModel
         $this->lazyLoad();
 
         // Make sure the player doesn't already have the role
-        foreach($this->roles as $playerRole) {
+        foreach ($this->roles as $playerRole) {
             if ($playerRole->getId() == $role_id) {
                 return false;
             }
@@ -278,7 +278,7 @@ class Player extends AvatarModel implements NamedModel
      * Finds out whether the specified player wants and can receive an e-mail
      * message
      *
-     * @param string $type
+     * @param  string  $type
      * @return boolean `true` if the player should be sent an e-mail
      */
     public function canReceive($type)
@@ -363,10 +363,11 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        if ($human)
+        if ($human) {
             return $this->last_login->diffForHumans();
-        else
+        } else {
             return $this->last_login;
+        }
     }
 
     /**
@@ -692,7 +693,6 @@ class Player extends AvatarModel implements NamedModel
         return $this->setUsername($username);
     }
 
-
     /**
      * Give or remove a role to/form a player
      *
@@ -817,9 +817,9 @@ class Player extends AvatarModel implements NamedModel
         return new QueryBuilder('Player', array(
             'columns' => array(
                 'username' => 'username',
-                'team' => 'team',
+                'team'     => 'team',
                 'outdated' => 'outdated',
-                'status' => 'status'
+                'status'   => 'status'
             ),
             'name' => 'username',
         ));
@@ -840,24 +840,24 @@ class Player extends AvatarModel implements NamedModel
      * @param  string|\TimeDate $last_login  The timestamp of the player's last login
      * @return Player           An object representing the player that was just entered
      */
-    public static function newPlayer($bzid, $username, $team=null, $status="active", $role_id=self::PLAYER, $avatar="", $description="", $country=1, $timezone=null, $joined="now", $last_login="now")
+    public static function newPlayer($bzid, $username, $team = null, $status = "active", $role_id = self::PLAYER, $avatar = "", $description = "", $country = 1, $timezone = null, $joined = "now", $last_login = "now")
     {
         $joined = TimeDate::from($joined);
         $last_login = TimeDate::from($last_login);
         $timezone = ($timezone) ?: date_default_timezone_get();
 
         $player = self::create(array(
-            'bzid' => $bzid,
-            'team' => $team,
-            'username' => $username,
-            'alias' => self::generateAlias($username),
-            'status' => $status,
-            'avatar' => $avatar,
+            'bzid'        => $bzid,
+            'team'        => $team,
+            'username'    => $username,
+            'alias'       => self::generateAlias($username),
+            'status'      => $status,
+            'avatar'      => $avatar,
             'description' => $description,
-            'country' => $country,
-            'timezone' => $timezone,
-            'joined' => $joined->toMysql(),
-            'last_login' => $last_login->toMysql(),
+            'country'     => $country,
+            'timezone'    => $timezone,
+            'joined'      => $joined->toMysql(),
+            'last_login'  => $last_login->toMysql(),
         ), 'iisssssisss');
 
         $player->addRole($role_id);
@@ -933,7 +933,7 @@ class Player extends AvatarModel implements NamedModel
      * @param  boolean         $showDeleted Whether to show deleted models to admins
      * @return boolean
      */
-    public function canSee($model, $showDeleted=false)
+    public function canSee($model, $showDeleted = false)
     {
         return $model->canBeSeenBy($this, $showDeleted);
     }
@@ -946,7 +946,7 @@ class Player extends AvatarModel implements NamedModel
      *                                to soft-delete ones
      * @return boolean
      */
-    public function canDelete($model, $hard=false)
+    public function canDelete($model, $hard = false)
     {
         if ($hard) {
             return $model->canBeHardDeletedBy($this);
@@ -976,5 +976,4 @@ class Player extends AvatarModel implements NamedModel
     {
         return $model->canBeEditedBy($this);
     }
-
 }

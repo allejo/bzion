@@ -72,7 +72,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      * @param  boolean $url Whether to return an absolute URL
      * @return string  The path for the avatar
      */
-    public function getAvatar($url=false)
+    public function getAvatar($url = false)
     {
         if (empty($this->avatar)) {
             $this->resetAvatar();
@@ -119,5 +119,4 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     {
         return $this->id . ".png";
     }
-
 }

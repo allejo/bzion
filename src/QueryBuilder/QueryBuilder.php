@@ -148,15 +148,17 @@ class QueryBuilder implements Countable
      * @param string $type    The type of the Model (e.g. "Player" or "Match")
      * @param array  $options The options to pass to the builder (see above)
      */
-    public function __construct($type, $options=array())
+    public function __construct($type, $options = array())
     {
         $this->type = $type;
 
-        if (isset($options['columns']))
+        if (isset($options['columns'])) {
             $this->columns += $options['columns'];
+        }
 
-        if (isset($options['name']))
+        if (isset($options['name'])) {
             $this->nameColumn = $options['name'];
+        }
     }
 
     /**
@@ -169,8 +171,9 @@ class QueryBuilder implements Countable
      */
     public function where($column)
     {
-        if (!isset($this->columns[$column]))
+        if (!isset($this->columns[$column])) {
             throw new InvalidArgumentException("Unknown column '$column'");
+        }
 
         $this->column($this->columns[$column]);
 
@@ -206,9 +209,9 @@ class QueryBuilder implements Countable
     /**
      * Request that a timestamp is before the specified time
      *
-     * @param string|TimeDate $time The timestamp to compare to
-     * @param bool $inclusive Whether to include the given timestamp
-     * @param bool $reverse   Whether to reverse the results
+     * @param string|TimeDate $time      The timestamp to compare to
+     * @param bool            $inclusive Whether to include the given timestamp
+     * @param bool            $reverse   Whether to reverse the results
      */
     public function isBefore($time, $inclusive = false, $reverse = false)
     {
@@ -218,9 +221,9 @@ class QueryBuilder implements Countable
     /**
      * Request that a timestamp is after the specified time
      *
-     * @param string|TimeDate $time The timestamp to compare to
-     * @param bool $inclusive Whether to include the given timestamp
-     * @param bool $reverse   Whether to reverse the results
+     * @param string|TimeDate $time      The timestamp to compare to
+     * @param bool            $inclusive Whether to include the given timestamp
+     * @param bool            $reverse   Whether to reverse the results
      */
     public function isAfter($time, $inclusive = false, $reverse = false)
     {
@@ -314,8 +317,9 @@ class QueryBuilder implements Countable
      */
     public function sortBy($column)
     {
-        if (!isset($this->columns[$column]))
+        if (!isset($this->columns[$column])) {
             throw new Exception("Unknown column");
+        }
 
         $this->sortBy = $this->columns[$column];
 
@@ -370,7 +374,7 @@ class QueryBuilder implements Countable
      * @param  boolean   $reverse   Whether to reverse the results
      * @return self
      */
-    public function endAt($model, $inclusive=false, $reverse=false)
+    public function endAt($model, $inclusive = false, $reverse = false)
     {
         return $this->startAt($model, $inclusive, !$reverse);
     }
@@ -383,7 +387,7 @@ class QueryBuilder implements Countable
      * @param  boolean   $reverse   Whether to reverse the results
      * @return self
      */
-    public function startAt($model, $inclusive=false, $reverse=false)
+    public function startAt($model, $inclusive = false, $reverse = false)
     {
         if (!$model) {
             return $this;
@@ -463,8 +467,9 @@ class QueryBuilder implements Countable
      */
     public function getNames()
     {
-        if (!$this->nameColumn)
+        if (!$this->nameColumn) {
             throw new Exception("You haven't specified a name column");
+        }
 
         $results = $this->getArray($this->nameColumn);
 
@@ -475,13 +480,14 @@ class QueryBuilder implements Countable
      * Perform the query and get back the results in a list of arrays
      *
      * @param string|string[] The column(s) that should be returned
-     * @param string $columns
+     * @param  string  $columns
      * @return array[]
      */
     public function getArray($columns)
     {
-        if (!is_array($columns))
+        if (!is_array($columns)) {
             $columns = array($columns);
+        }
 
         $db = Database::getInstance();
 
@@ -546,7 +552,7 @@ class QueryBuilder implements Countable
      */
     protected function column($column)
     {
-        if (strpos($column, '.') === FALSE) {
+        if (strpos($column, '.') === false) {
             // Add the table name to the column if it isn't there already so that
             // MySQL knows what to do when handling multiple tables
             $table = $this->getTable();
@@ -658,7 +664,7 @@ class QueryBuilder implements Countable
         $columnStrings = array("`$table`.id");
 
         foreach ($columns as $returnName) {
-            if (strpos($returnName, ' ') === FALSE) {
+            if (strpos($returnName, ' ') === false) {
                 $dbName = $this->columns[$returnName];
                 $columnStrings[] = "`$table`.`$dbName` as `$returnName`";
             } else {
@@ -695,8 +701,9 @@ class QueryBuilder implements Countable
     {
         if ($this->sortBy) {
             $order = 'ORDER BY ' . $this->sortBy;
-            if ($this->reverseSort)
+            if ($this->reverseSort) {
                 $order .= ' DESC';
+            }
         } else {
             $order = '';
         }
@@ -733,5 +740,4 @@ class QueryBuilder implements Countable
 
         return "LIMIT $offset ?";
     }
-
 }

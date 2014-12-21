@@ -1,14 +1,14 @@
 <?php
 namespace BZIon\Twig;
 
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Service;
+use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class TwigCacheWarmer implements CacheWarmerInterface
 {
     public function warmUp($cacheDir)
     {
-        $directory = __DIR__.'/../../views';
+        $directory = __DIR__ . '/../../views';
 
         $twig = Service::getTemplateEngine();
 
@@ -16,7 +16,7 @@ class TwigCacheWarmer implements CacheWarmerInterface
 
         foreach ($iterator as $i) {
             $matches = array();
-            if (preg_match('/^(' . preg_quote($directory,'/') . '\\/)(.+\.twig)$/i', $i, $matches)) {
+            if (preg_match('/^(' . preg_quote($directory, '/') . '\\/)(.+\.twig)$/i', $i, $matches)) {
                 $twig->loadTemplate($matches[2]);
             }
         }

@@ -1,9 +1,9 @@
 <?php
 
+use Behat\Behat\ApplicationFactory as BehatFactory;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Behat\Behat\ApplicationFactory as BehatFactory;
 
 class BehatTest extends TestCase
 {
@@ -15,7 +15,7 @@ class BehatTest extends TestCase
         try {
             $factory = new BehatFactory();
 
-            $arguments = array ('-c' => 'tests/behat.yml');
+            $arguments = array('-c' => 'tests/behat.yml');
             $input = new ArrayInput($arguments);
             $application = $factory->createApplication();
 

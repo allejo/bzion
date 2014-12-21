@@ -8,8 +8,8 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for news
@@ -36,8 +36,8 @@ class NewsFormCreator extends ModelFormCreator
             ->add('status', 'choice', array(
                 'choices' => array(
                     'published' => 'Public',
-                    'revision' => 'Revision',
-                    'draft' => 'Draft',
+                    'revision'  => 'Revision',
+                    'draft'     => 'Draft',
                 ),
             ))
             ->add('enter', 'submit');

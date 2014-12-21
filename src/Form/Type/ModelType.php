@@ -4,8 +4,8 @@ namespace BZIon\Form\Type;
 use BZIon\Form\Transformer\ModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * A Model type for use in Symphony's forms
@@ -37,7 +37,7 @@ class ModelType extends AbstractType
      * @param callable|null $modifier  A function which modifies the query builder
      *                                 used to fetch the Models
      */
-    public function __construct($type, $emptyElem=true, $modifier=null)
+    public function __construct($type, $emptyElem = true, $modifier = null)
     {
         $this->type = "$type";
         $this->emptyElem = $emptyElem;
@@ -59,7 +59,7 @@ class ModelType extends AbstractType
 
         $resolver->setDefaults(array(
             'attr' => array(
-                'class' => "$type-select",
+                'class'            => "$type-select",
                 'data-placeholder' => "Select a $type..."
             ),
             'choices' => $names,

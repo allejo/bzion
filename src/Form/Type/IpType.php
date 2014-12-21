@@ -3,13 +3,11 @@ namespace BZIon\Form\Type;
 
 use BZIon\Form\Transformer\IpTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class IpType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new IpTransformer();

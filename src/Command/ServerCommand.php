@@ -10,8 +10,8 @@ namespace BZIon\Command;
 
 use BZIon\Session\DatabaseSessionHandler;
 use BZIon\Socket\EventPusher;
-use Ratchet\Session\SessionProvider;
 use Ratchet\Server\IoServer;
+use Ratchet\Session\SessionProvider;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Factory as EventLoopFactory;
 use React\Socket\Server;
@@ -37,8 +37,7 @@ class ServerCommand extends Command
                 'l',
                 InputOption::VALUE_OPTIONAL,
                 'The pull port'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

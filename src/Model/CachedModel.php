@@ -30,8 +30,9 @@ abstract class CachedModel extends BaseModel
      */
     protected function existsInCache()
     {
-        if (!Service::getModelCache())
+        if (!Service::getModelCache()) {
             return false;
+        }
 
         return Service::getModelCache()->has(get_class($this), $this->id);
     }
@@ -42,8 +43,9 @@ abstract class CachedModel extends BaseModel
      */
     protected function storeInCache()
     {
-        if (!Service::getModelCache())
+        if (!Service::getModelCache()) {
             return;
+        }
 
         Service::getModelCache()->save($this);
     }
@@ -55,7 +57,9 @@ abstract class CachedModel extends BaseModel
      */
     protected function retrieveFromCache()
     {
-        if (!$this->existsInCache()) return false;
+        if (!$this->existsInCache()) {
+            return false;
+        }
 
         $cachedModel = Service::getModelCache()->get(get_class($this), $this->id);
         $this->copy($cachedModel);
@@ -98,7 +102,7 @@ abstract class CachedModel extends BaseModel
      * {@inheritDoc}
      * @param string $types
      */
-    protected static function create($params, $types, $now=null, $table='')
+    protected static function create($params, $types, $now = null, $table = '')
     {
         $model = parent::create($params, $types, $now, $table);
         $model->storeInCache();
@@ -110,7 +114,7 @@ abstract class CachedModel extends BaseModel
      * {@inheritDoc}
      * @param string $name
      */
-    public function update($name, $value, $type='i')
+    public function update($name, $value, $type = 'i')
     {
         parent::update($name, $value, $type);
         $this->storeInCache();

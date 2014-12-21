@@ -25,8 +25,8 @@ class GroupJoinEvent extends Event
     /**
      * Create a new event
      *
-     * @param \Group  $group   The group in question
-     * @param \Player[] $players  The players who joined the group
+     * @param \Group    $group   The group in question
+     * @param \Player[] $players The players who joined the group
      */
     public function __construct(\Group $group, array $players)
     {
@@ -60,7 +60,7 @@ class GroupJoinEvent extends Event
     public function serialize()
     {
         return serialize(array(
-            'group' => $this->group->getId(),
+            'group'   => $this->group->getId(),
             'players' => \Player::mapToIDs($this->players)
         ));
     }

@@ -6,7 +6,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class IpTransformer implements DataTransformerInterface
 {
-
     /**
      * Transforms an object (model) to an integer (int) .
      *
@@ -14,8 +13,9 @@ class IpTransformer implements DataTransformerInterface
      */
     public function transform($ips)
     {
-        if (!$ips)
+        if (!$ips) {
             return '';
+        }
 
         return implode(', ', $ips);
     }

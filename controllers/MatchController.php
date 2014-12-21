@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MatchController extends CRUDController
 {
-    public function listAction(Request $request, Team $team=null, $type=null)
+    public function listAction(Request $request, Team $team = null, $type = null)
     {
         $query = $this->getQueryBuilder()
                ->sortBy('time')->reverse()
@@ -33,7 +33,7 @@ class MatchController extends CRUDController
     /**
      * {@inheritDoc}
      */
-    protected function getMessages($type, $name='')
+    protected function getMessages($type, $name = '')
     {
         $messages = parent::getMessages($type, $name);
 
@@ -56,8 +56,9 @@ class MatchController extends CRUDController
         $firstTeam  = $form->get('first_team')->get('team')->getData();
         $secondTeam = $form->get('second_team')->get('team')->getData();
 
-        if (!$firstTeam || !$secondTeam)
+        if (!$firstTeam || !$secondTeam) {
             return;
+        }
 
         if ($firstTeam->getId() == $secondTeam->getId()) {
             $message = "You can't report a match where a team played against itself!";

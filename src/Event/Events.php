@@ -19,7 +19,7 @@ class Events
      *
      * @var string
      */
-    CONST GROUP_ABANDON = 'group.abandon';
+    const GROUP_ABANDON = 'group.abandon';
 
     /**
      * The group join event is announced whenever new players join a group

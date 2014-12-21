@@ -35,10 +35,10 @@ class GroupRenameEvent extends Event
     /**
      * Create a new event
      *
-     * @param \Group  $group   The group in question
+     * @param \Group  $group      The group in question
      * @param string  $oldSubject The old name of the Group
      * @param string  $newSubject The new name of the group
-     * @param \Player $player  The player who made the change
+     * @param \Player $player     The player who made the change
      */
     public function __construct(\Group $group, $oldSubject, $newSubject, \Player $player)
     {

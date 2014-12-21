@@ -50,8 +50,9 @@ abstract class CRUDController extends JSONController
             $action = 'Delete';
         }
 
-        if (!$this->canDelete($me, $model, $hard))
+        if (!$this->canDelete($me, $model, $hard)) {
             throw new ForbiddenException($this->getMessage($model, $message, 'forbidden'));
+        }
 
         $successMessage = $this->getMessage($model, $message, 'success');
         $redirection    = $this->redirectToList($model);
@@ -78,13 +79,14 @@ abstract class CRUDController extends JSONController
      * for the model
      *
      * @throws ForbiddenException
-     * @param  Player             $me   The user who wants to create the model
+     * @param  Player             $me The user who wants to create the model
      * @return mixed              The response to show to the user
      */
     protected function create(Player $me)
     {
-        if (!$this->canCreate($me))
+        if (!$this->canCreate($me)) {
             throw new ForbiddenException($this->getMessage($this->getName(), 'create', 'forbidden'));
+        }
 
         $creator = $this->getFormCreator();
         $form = $creator->create()->handleRequest($this->getRequest());
@@ -118,8 +120,9 @@ abstract class CRUDController extends JSONController
      */
     protected function edit(PermissionModel $model, Player $me, $type)
     {
-        if (!$this->canEdit($me, $model))
+        if (!$this->canEdit($me, $model)) {
             throw new ForbiddenException($this->getMessage($model, 'edit', 'forbidden'));
+        }
 
         $creator = $this->getFormCreator($model);
         $form = $creator->create()->handleRequest($this->getRequest());
@@ -146,7 +149,7 @@ abstract class CRUDController extends JSONController
      * @param  boolean         $hard   Whether to hard-delete the model instead of soft-deleting it
      * @return boolean
      */
-    protected function canDelete($player, $model, $hard=false)
+    protected function canDelete($player, $model, $hard = false)
     {
         return $player->canDelete($model, $hard);
     }
@@ -214,7 +217,7 @@ abstract class CRUDController extends JSONController
      * @param  \Model|null      $model The model being edited, `null` if we're creating one
      * @return ModelFormCreator
      */
-    private function getFormCreator($model=null)
+    private function getFormCreator($model = null)
     {
         $type = ($model instanceof Model) ? $model->getType() : $this->getName();
         $type = ucfirst($type);
@@ -232,7 +235,7 @@ abstract class CRUDController extends JSONController
      * @param  string                 $status The message's status (confirm, error or success)
      * @return string
      */
-    private function getMessage($model, $action, $status, $escape=true)
+    private function getMessage($model, $action, $status, $escape = true)
     {
         if ($model instanceof Model) {
             $type = strtolower($model->getTypeForHumans());
@@ -240,8 +243,9 @@ abstract class CRUDController extends JSONController
             if ($model instanceof NamedModel) {
                 // Twig will not escape the message on confirmation forms
                 $name = $model->getName();
-                if ($status == 'confirm')
+                if ($status == 'confirm') {
                     $name = Model::escape($name);
+                }
 
                 $messages = $this->getMessages($type, $name);
 
@@ -264,7 +268,7 @@ abstract class CRUDController extends JSONController
      * @param  string $name The name of the model
      * @return array
      */
-    protected function getMessages($type, $name='')
+    protected function getMessages($type, $name = '')
     {
         return array(
             'hardDelete' => array(
@@ -316,7 +320,7 @@ WARNING
             ),
             'create' => array(
                 'forbidden' => "You are not allowed to create a new $type",
-                'success' => array(
+                'success'   => array(
                     'named'   => "The $type $name was created successfully",
                     'unnamed' => "The $type was created successfully",
                 ),

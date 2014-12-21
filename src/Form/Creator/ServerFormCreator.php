@@ -8,8 +8,8 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\PlayerType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for servers

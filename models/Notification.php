@@ -99,22 +99,22 @@ class Notification extends Model
      * @param  bool           $onlyUnread False to show both unread & read notifications
      * @return Notification[]
      */
-    public static function getNotifications($receiver, $onlyUnread=false)
+    public static function getNotifications($receiver, $onlyUnread = false)
     {
         $statuses = array('unread');
-        if (!$onlyUnread)
+        if (!$onlyUnread) {
             $statuses[] = 'read';
+        }
 
         return self::getQueryBuilder()
             ->where('status')->isOneOf($statuses)
             ->where('receiver')->is($receiver)
             ->getModels();
-
     }
 
     /**
      * Show the number of notifications the user hasn't read yet
-     * @param integer $receiver
+     * @param  integer $receiver
      * @return int
      */
     public static function countUnreadNotifications($receiver)
@@ -180,8 +180,9 @@ class Notification extends Model
      */
     public function markAsRead()
     {
-        if ($this->status == "deleted")
+        if ($this->status == "deleted") {
             return;
+        }
 
         $this->update('status', $this->status = "read", 's');
     }
@@ -200,7 +201,7 @@ class Notification extends Model
      *
      * @return array
      */
-    public function getActions($email=false)
+    public function getActions($email = false)
     {
         switch ($this->type) {
             case Events::TEAM_INVITE:
@@ -218,7 +219,7 @@ class Notification extends Model
      * @param  mixed  $data The data for the event
      * @return void
      */
-    public static function pushEvent($type, $data=null)
+    public static function pushEvent($type, $data = null)
     {
         switch ($type) {
             case 'message':
@@ -231,8 +232,8 @@ class Notification extends Model
                 break;
             case 'notification':
                 $message = array(
-                    'type' => $data->getType(),
-                    'receiver' => $data->getReceiver()->getId(),
+                    'type'         => $data->getType(),
+                    'receiver'     => $data->getReceiver()->getId(),
                     'notification' => $data->getId()
                 );
                 break;
@@ -265,7 +266,7 @@ class Notification extends Model
 
         foreach ($adapters as $adapter) {
             if ($adapter::isEnabled()) {
-                self::$adapters[] = new $adapter;
+                self::$adapters[] = new $adapter();
             }
         }
     }

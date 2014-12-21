@@ -7,8 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Yaml\Yaml;
 
 class LogCommand extends ContainerAwareCommand
@@ -41,8 +41,7 @@ class LogCommand extends ContainerAwareCommand
                 InputOption::VALUE_OPTIONAL,
                 'The path to the changelog file',
                 dirname(dirname(__DIR__)) . '/app/changelog.yml'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -122,7 +121,7 @@ class LogCommand extends ContainerAwareCommand
      * If the changelog.yml file doesn't contain the date and the type of the
      * change, add them to it
      *
-     * @param array $changelog The parsed YAML file
+     * @param array  $changelog The parsed YAML file
      * @param string $date
      * @param string $category
      */

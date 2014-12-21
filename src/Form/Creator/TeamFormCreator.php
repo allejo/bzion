@@ -8,9 +8,9 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for teams
@@ -33,9 +33,9 @@ class TeamFormCreator extends ModelFormCreator
             'required' => false
         ))->add('avatar', 'file', array(
             'constraints' => new Image(array(
-                'minWidth' => 60,
+                'minWidth'  => 60,
                 'minHeight' => 60,
-                'maxSize' => '4M'
+                'maxSize'   => '4M'
             )),
             'required' => false
         ));

@@ -17,7 +17,7 @@ class NewsTest extends TestCase
      */
     protected $newsCategory;
 
-    protected function setUp ()
+    protected function setUp()
     {
         $this->connectToDatabase();
 
@@ -56,7 +56,7 @@ class NewsTest extends TestCase
         $this->wipe($news);
     }
 
-    public function testCreateNewsWithPermissions ()
+    public function testCreateNewsWithPermissions()
     {
         $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
 
@@ -88,7 +88,7 @@ class NewsTest extends TestCase
         $this->wipe($news);
     }
 
-    public function testNewsStatuses ()
+    public function testNewsStatuses()
     {
         $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
         $unorgCategory = new NewsCategory(1);
@@ -111,7 +111,7 @@ class NewsTest extends TestCase
         $this->wipe($news);
     }
 
-    public function testFetchingNews ()
+    public function testFetchingNews()
     {
         $publishedNewsArticle = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
         $draftedNewsArticle = News::addNews(StringMocks::SampleTitleOne, StringMocks::ShortContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId(), "draft");
@@ -122,7 +122,7 @@ class NewsTest extends TestCase
         $this->wipe($publishedNewsArticle, $draftedNewsArticle);
     }
 
-    public function testDeletingCategory ()
+    public function testDeletingCategory()
     {
         $article = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
 

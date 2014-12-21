@@ -17,11 +17,11 @@ class MatchQueryBuilder extends QueryBuilder
     /**
      * Only include matches where a specific team played
      *
-     * @param  Team $team   Team        The team which played the matches
+     * @param  Team   $team   Team        The team which played the matches
      * @param  string $result string|null The outcome of the matches (win, draw or loss)
      * @return self
      */
-    public function with($team, $result=null)
+    public function with($team, $result = null)
     {
         if (!$team || !$team->isValid()) {
             return $this;

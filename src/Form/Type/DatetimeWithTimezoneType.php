@@ -3,8 +3,8 @@ namespace BZIon\Form\Type;
 
 use BZIon\Form\Transformer\DatetimeWithTimezoneTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DatetimeWithTimezoneType extends AbstractType
 {
@@ -22,7 +22,7 @@ class DatetimeWithTimezoneType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'compound' => true,
+            'compound'   => true,
             'data_class' => null,
         ));
     }

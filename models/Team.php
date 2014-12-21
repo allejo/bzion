@@ -145,12 +145,12 @@ class Team extends AvatarModel
     {
         $player = new Player($id);
 
-        if (!$player->isTeamless())
+        if (!$player->isTeamless()) {
             throw new Exception("The player already belongs in a team");
+        }
 
         $player->setTeam($this->getId());
         $this->update('members', ++$this->members, "i");
-
     }
 
     /**
@@ -240,7 +240,7 @@ class Team extends AvatarModel
      * @param  boolean $md false for HTML format, true for the original markdown
      * @return string  The description of the team
      */
-    public function getDescription($md=false)
+    public function getDescription($md = false)
     {
         return ($md) ? $this->description_md : $this->description_html;
     }
@@ -336,10 +336,12 @@ class Team extends AvatarModel
 
         usort($members, function ($a, $b) use ($leader) {
             // Leader always goes first
-            if ($a->getId() == $leader)
+            if ($a->getId() == $leader) {
                 return -1;
-            if ($b->getId() == $leader)
+            }
+            if ($b->getId() == $leader) {
                 return 1;
+            }
 
             // Sort the rest of the players alphabetically
             $sort = Player::getAlphabeticalSort();
@@ -357,8 +359,9 @@ class Team extends AvatarModel
      */
     public function getName()
     {
-        if (!$this->valid)
+        if (!$this->valid) {
             return "None";
+        }
         return $this->name;
     }
 
@@ -369,8 +372,9 @@ class Team extends AvatarModel
      */
     public function getEscapedName()
     {
-        if (!$this->valid)
+        if (!$this->valid) {
             return "<em>None</em>";
+        }
         return $this->escape($this->name);
     }
 
@@ -448,12 +452,13 @@ class Team extends AvatarModel
      */
     public function removeMember($id)
     {
-        if (!$this->isMember($id))
+        if (!$this->isMember($id)) {
             throw new Exception("The player is not a member of that team");
+        }
 
         $player = new Player($id);
 
-        $player->update("team", NULL, "s");
+        $player->update("team", null, "s");
         $this->update('members', --$this->members, "i");
     }
 
@@ -531,22 +536,22 @@ class Team extends AvatarModel
      * @param  string $status      The team's status (open, closed, disabled or deleted)
      * @return Team   An object that represents the newly created team
      */
-    public static function createTeam($name, $leader, $avatar, $description, $status='closed')
+    public static function createTeam($name, $leader, $avatar, $description, $status = 'closed')
     {
         $team = self::create(array(
-            'name' => $name,
-            'alias' => self::generateAlias($name),
-            'description_md' => $description,
+            'name'             => $name,
+            'alias'            => self::generateAlias($name),
+            'description_md'   => $description,
             'description_html' => parent::mdTransform($description),
-            'elo' => 1200,
-            'activity' => 0.00,
-            'matches_won' => 0,
-            'matches_draw' => 0,
-            'matches_lost' => 0,
-            'members' => 0,
-            'avatar' => $avatar,
-            'leader' => $leader,
-            'status' => $status
+            'elo'              => 1200,
+            'activity'         => 0.00,
+            'matches_won'      => 0,
+            'matches_draw'     => 0,
+            'matches_lost'     => 0,
+            'members'          => 0,
+            'avatar'           => $avatar,
+            'leader'           => $leader,
+            'status'           => $status
         ), 'ssssidiiiisss', 'created');
 
         $team->addMember($leader);

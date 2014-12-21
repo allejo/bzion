@@ -39,7 +39,6 @@ class NotificationTest extends TestCase
         $this->assertTrue($this->notification->isRead());
     }
 
-
     public function tearDown()
     {
         $this->wipe($this->notification);

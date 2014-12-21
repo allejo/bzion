@@ -7,9 +7,9 @@
 
 namespace BZIon\Debug;
 
-use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 /**
  * A data collector that collects database data that will be shown on the
@@ -32,7 +32,7 @@ class DatabaseDataCollector implements DataCollectorInterface
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
-            'queries' => $this->queries,
+            'queries'      => $this->queries,
             'cachedModels' => \Service::getModelCache()->all(),
             'cacheFetches' => $this->cacheFetches
         );
@@ -94,7 +94,7 @@ class DatabaseDataCollector implements DataCollectorInterface
         $sum = 0;
         $count = 0;
 
-        foreach($this->data['queries'] as $query) {
+        foreach ($this->data['queries'] as $query) {
             if (0 === strpos(trim($query->getQuery()), 'SELECT *')) {
                 $sum += $query->getDuration();
                 $count++;
@@ -117,7 +117,7 @@ class DatabaseDataCollector implements DataCollectorInterface
     {
         $return = array();
 
-        foreach($this->data['queries'] as $query) {
+        foreach ($this->data['queries'] as $query) {
             $resolved = $query->getResolvedQuery();
 
             if (!isset($return[$resolved])) {

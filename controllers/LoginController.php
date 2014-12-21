@@ -1,8 +1,8 @@
 <?php
 
 use BZIon\Composer\ConfigHandler;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Yaml\Yaml;
 
@@ -12,8 +12,9 @@ class LoginController extends HTMLController
 {
     public function loginAction(Request $request, Player $me)
     {
-        if ($me->isValid())
+        if ($me->isValid()) {
             throw new ForbiddenException("You are already logged in!");
+        }
 
         $query = $request->query;
         $session = $request->getSession();
@@ -21,15 +22,17 @@ class LoginController extends HTMLController
         $token = $query->get("token");
         $username = $query->get("username");
 
-        if (!$token || !$username)
+        if (!$token || !$username) {
             throw new BadRequestException();
+        }
 
         // Don't check whether IPs match if we're on a development environment
         $checkIP = !$this->isDebug();
         $info = validate_token($token, $username, array(), $checkIP);
 
-        if (!isset($info))
+        if (!isset($info)) {
             throw new ForbiddenException("There was an error processing your login. Please go back and try again.");
+        }
 
         $session->set("username", $info['username']);
         $session->set("groups", $info['groups']);
@@ -77,8 +80,9 @@ class LoginController extends HTMLController
 
     public function loginAsTestUserAction(Session $session, Player $user)
     {
-        if (!$user->isTestUser())
+        if (!$user->isTestUser()) {
             throw new Exception("The player you specified is not a test user!");
+        }
 
         $session->set("playerId", $user->getId());
         $session->set("username", $user->getUsername());

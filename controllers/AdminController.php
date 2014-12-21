@@ -7,14 +7,12 @@ class AdminController extends HTMLController
         $rolesToDisplay = Role::getLeaderRoles();
         $roles = array();
 
-        foreach ($rolesToDisplay as $role)
-        {
+        foreach ($rolesToDisplay as $role) {
             $roleMembers = (new Role($role->getId()))->getUsers();
 
-            if (count($roleMembers) > 0)
-            {
+            if (count($roleMembers) > 0) {
                 $roles[] = array(
-                    "role" => $role,
+                    "role"    => $role,
                     "members" => $roleMembers
                 );
             }

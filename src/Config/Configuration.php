@@ -7,8 +7,8 @@
 
 namespace BZIon\Config;
 
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * BZIon's configuration
@@ -159,8 +159,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

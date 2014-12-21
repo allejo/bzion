@@ -12,7 +12,7 @@ abstract class PlainTextController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function callAction($action=null)
+    public function callAction($action = null)
     {
         try {
             return parent::callAction($action);
@@ -20,7 +20,9 @@ abstract class PlainTextController extends Controller
             return new Response($e->getMessage());
         } catch (Exception $e) {
             // Let PHP handle the exception on the dev environment
-            if ($this->isDebug()) throw $e;
+            if ($this->isDebug()) {
+                throw $e;
+            }
             return new Response("An error occured");
         }
     }

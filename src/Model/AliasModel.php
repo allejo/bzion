@@ -40,8 +40,10 @@ abstract class AliasModel extends UrlModel implements NamedModel
      */
     public function getEscapedName()
     {
-        if (!$this->valid)
+        if (!$this->valid) {
             return "<em>None</em>";
+        }
+
         return $this->escape($this->name);
     }
 
@@ -64,8 +66,10 @@ abstract class AliasModel extends UrlModel implements NamedModel
      */
     public function getAlias()
     {
-        if ($this->alias !== null && $this->alias != "")
+        if ($this->alias !== null && $this->alias != "") {
             return $this->alias;
+        }
+
         return $this->getId();
     }
 
@@ -93,10 +97,11 @@ abstract class AliasModel extends UrlModel implements NamedModel
     /**
      * {@inheritDoc}
      */
-    public function getURL($action='show', $absolute=false, $params=array())
+    public function getURL($action = 'show', $absolute = false, $params = array())
     {
-        if (!$this->isValid())
+        if (!$this->isValid()) {
             return "";
+        }
 
         return $this->getLink($this->getAlias(), $action, $absolute, $params);
     }
@@ -133,7 +138,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      * @param  int|Null    $id   The ID of the object, if it's being edited and not created
      * @return string|Null The generated alias, or Null if we couldn't make one
      */
-    public static function generateAlias($name, $id=null)
+    public static function generateAlias($name, $id = null)
     {
         // Convert name to lowercase
         $name = strtolower($name);
@@ -156,7 +161,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
         // indistinguishable from an ID. If it does, add a dash in the end.
         // Also prevent aliases from taking names such as "new",
         while (preg_match("/^[0-9]+$/", $name)) {
-            $name = $name . '-';
+            $name = $name.'-';
         }
 
         return self::getUniqueAlias($name, ($id) ?: 0);
@@ -169,7 +174,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      * @param  int    $id    The ID of the object, if it's being edited and not created
      * @return string An alias that is guaranteed to be unique
      */
-    private static function getUniqueAlias($alias, $id=0)
+    private static function getUniqueAlias($alias, $id = 0)
     {
         // Try to find duplicates
         $db = Database::getInstance();

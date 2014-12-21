@@ -2,39 +2,39 @@
 
 use BZIon\Cache\ModelCache;
 use BZIon\Session\DatabaseSessionHandler;
+use BZIon\Twig\InvalidTest;
 use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\PluralFilter;
-use BZIon\Twig\YesNoFilter;
 use BZIon\Twig\ValidTest;
-use BZIon\Twig\InvalidTest;
+use BZIon\Twig\YesNoFilter;
 use Liip\ImagineBundle\Templating\ImagineExtension;
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Form\Forms;
 use Symfony\Bridge\Twig\Extension\DumpExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\Extension\StopwatchExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Debug\Debug;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
 use Symfony\Component\Form\Extension\DataCollector\DataCollectorExtension;
+use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Validator\Validation;
 
 require_once __DIR__ . '/../bzion-load.php';
@@ -45,7 +45,7 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/Resource/symfony_'. $this->getEnvironment() . '.yml');
+        $loader->load(__DIR__ . '/Resource/symfony_' . $this->getEnvironment() . '.yml');
     }
 
     public function registerBundles()
@@ -76,8 +76,8 @@ class AppKernel extends Kernel
         if (!$this->container->getParameter('bzion.miscellaneous.development')) {
             if ($this->getEnvironment() != 'prod' || $this->isDebug()) {
                 throw new ForbiddenDeveloperAccessException(
-                    'You are not allowed to access this page in a non-production '.
-                    'environment. Please change the "development" configuration '.
+                    'You are not allowed to access this page in a non-production ' .
+                    'environment. Please change the "development" configuration ' .
                     'value and clear the cache before proceeding.'
                 );
             }
@@ -126,7 +126,7 @@ class AppKernel extends Kernel
         $cacheDir = $this->isDebug() ? null : $this->getCacheDir() . '/twig';
 
         // Set up the twig templating environment to parse views
-        $loader = new Twig_Loader_Filesystem(__DIR__.'/../views');
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../views');
 
         $twig = new Twig_Environment($loader, array(
             'cache' => $cacheDir,
@@ -159,8 +159,9 @@ class AppKernel extends Kernel
         $twig->addFilter(YesNoFilter::get());
         $twig->addTest(ValidTest::get());
         $twig->addTest(InvalidTest::get());
-        if ($this->isDebug())
+        if ($this->isDebug()) {
             $twig->addExtension(new Twig_Extension_Debug());
+        }
 
         Service::setTemplateEngine($twig);
     }
@@ -193,7 +194,7 @@ class AppKernel extends Kernel
         if ($catch && !$this->isDebug()) {
             try {
                 return $this->handleRaw($request, $type, $catch);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 return $this->handleException($e, $request, $type);
             }
         } else {
@@ -238,8 +239,8 @@ class AppKernel extends Kernel
      * Filters a response object.
      *
      * @param Response $response A Response instance
-     * @param Request $request An error message in case the response is not a Response object
-     * @param int $type The type of the request (one of HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST)
+     * @param Request  $request  An error message in case the response is not a Response object
+     * @param int      $type     The type of the request (one of HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST)
      *
      * @return Response The filtered Response instance
      */

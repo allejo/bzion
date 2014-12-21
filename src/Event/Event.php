@@ -50,7 +50,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
                     // The parameter is an abstract model class, we need to
                     // store the model's type as well
                     $value = array(
-                        'id' => $value->getId(),
+                        'id'   => $value->getId(),
                         'type' => get_class($value)
                     );
                 }
@@ -139,7 +139,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
      * Sends a notification to some players
      *
      * @param mixed A single player/ID or a player/ID list
-     * @param string $type The type of the event
+     * @param string  $type   The type of the event
      * @param null|Player|int A player who should not receive a notification
      * @param \Player $except
      */

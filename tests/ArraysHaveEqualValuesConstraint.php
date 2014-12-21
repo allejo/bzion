@@ -32,8 +32,9 @@ class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint
      */
     public function matches($other)
     {
-        if (count($this->value) != count($other))
+        if (count($this->value) != count($other)) {
             return false;
+        }
 
         return count(array_diff($this->value, $other)) == 0;
     }

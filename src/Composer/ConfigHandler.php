@@ -10,9 +10,9 @@ namespace BZIon\Composer;
 
 use BZIon\Config\Configuration;
 use Composer\Script\Event;
-use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\Config\Definition\ArrayNode;
 use Symfony\Component\Config\Definition\EnumNode;
+use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\Config\Definition\PrototypedArrayNode;
 use Symfony\Component\Yaml\Inline;
 use Symfony\Component\Yaml\Yaml;
@@ -34,7 +34,8 @@ class ConfigHandler
 
     const CAUTION_LINE_LENGTH = 60;
 
-    public function __construct($event) {
+    public function __construct($event)
+    {
         $this->event = $event;
         $this->io = $event->getIO();
     }
@@ -77,9 +78,9 @@ SUCCESS
     /**
      * Write the node in the configuration array
      *
-     * @param  NodeInterface $node The node to write
-     * @param  array $config The parsed configuration
-     * @param  string $parent The name of the parent nodes
+     * @param  NodeInterface $node   The node to write
+     * @param  array         $config The parsed configuration
+     * @param  string        $parent The name of the parent nodes
      * @return void
      */
     private function writeNode(NodeInterface $node, array &$config = array(), $parent = null)
@@ -168,7 +169,7 @@ SUCCESS
         // Show a user-friendly prompt
         $question .= ":\n > ";
 
-        $value = $this->io->askAndValidate($question, function($value) use ($node) {
+        $value = $this->io->askAndValidate($question, function ($value) use ($node) {
             $value = Inline::parse($value);
 
             // Make sure that there are no errors

@@ -19,7 +19,7 @@ class DatetimeWithTimezoneTransformer implements DataTransformerInterface
         }
 
         return array(
-            'time' => $this->createTimeDate($time),
+            'time'     => $this->createTimeDate($time),
             'timezone' => $time->timezone->getName()
         );
     }
@@ -44,7 +44,7 @@ class DatetimeWithTimezoneTransformer implements DataTransformerInterface
      *                               to the PHP's default)
      * @return \TimeDate
      */
-    private function createTimeDate($from, $timezone=null)
+    private function createTimeDate($from, $timezone = null)
     {
         if ($from === null) {
             return null;

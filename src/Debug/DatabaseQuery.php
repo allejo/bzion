@@ -75,8 +75,8 @@ class DatabaseQuery
     /**
      * Debug a database query
      *
-     * @param string $query  The MySQL query
-     * @param string $types  The query types
+     * @param string     $query  The MySQL query
+     * @param string     $types  The query types
      * @param array|null $params The query parameters
      */
     public function __construct(&$query, &$types, &$params)
@@ -105,8 +105,8 @@ class DatabaseQuery
     {
         $duration = Debug::finishStopwatch($this->eventName);
         Debug::log("Database {$this->queryType} query", array(
-            "query" => $this->query,
-            "params" => $this->params,
+            "query"    => $this->query,
+            "params"   => $this->params,
             "duration" => "$duration ms"
         ), 'mysql');
 
@@ -158,7 +158,7 @@ class DatabaseQuery
         return $this->types;
     }
 
-     /**
+    /**
      * Get the parameters of the query
      *
      * Alias for DatabaseQuery::getParams()

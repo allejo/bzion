@@ -64,19 +64,19 @@ class EventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'group.abandon' => 'group',
-            'group.join'   => 'group',
-            'group.kick'   => 'group',
-            'group.rename' => 'group',
-            'message.new'  => 'onNewMessage',
-            'notification.new'  => 'onNewNotification',
-            'team.delete'  => 'notify',
-            'team.abandon' => 'notify',
-            'team.kick'    => 'notify',
-            'team.join'    => 'notify',
-            'team.invite'  => 'notify',
+            'group.abandon'      => 'group',
+            'group.join'         => 'group',
+            'group.kick'         => 'group',
+            'group.rename'       => 'group',
+            'message.new'        => 'onNewMessage',
+            'notification.new'   => 'onNewNotification',
+            'team.delete'        => 'notify',
+            'team.abandon'       => 'notify',
+            'team.kick'          => 'notify',
+            'team.join'          => 'notify',
+            'team.invite'        => 'notify',
             'team.leader_change' => 'notify',
-            'welcome'      => 'notify',
+            'welcome'            => 'notify',
         );
     }
 
@@ -104,7 +104,7 @@ class EventSubscriber implements EventSubscriberInterface
 
         $event->getMessage()->getGroup()->markUnread($author);
         \Notification::pushEvent('message', array(
-            'message' => $event->getMessage(),
+            'message'    => $event->getMessage(),
             'recipients' => $recipients
         ));
     }
@@ -139,7 +139,7 @@ class EventSubscriber implements EventSubscriberInterface
     /**
      * Called when a group event needs to be stored in the database
      *
-     * @param Event $event The event
+     * @param Event  $event The event
      * @param string $name  The name of the event
      */
     public function group(Event $event, $name)
@@ -181,8 +181,7 @@ class EventSubscriber implements EventSubscriberInterface
             ->setSubject($subject)
             ->setFrom(array($this->from => $this->siteTitle))
             ->setBody($this->twig->render("Email/$template.txt.twig",  $params))
-            ->addPart($this->twig->render("Email/$template.html.twig", $params), 'text/html')
-        ;
+            ->addPart($this->twig->render("Email/$template.html.twig", $params), 'text/html');
 
         foreach ($recipients as $recipient) {
             $recipient = new \Player($recipient);

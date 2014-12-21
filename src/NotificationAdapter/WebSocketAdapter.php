@@ -27,14 +27,14 @@ class WebSocketAdapter extends NotificationAdapter
 
         $port = \Service::getParameter('bzion.features.websocket.pull_port');
 
-        $fp = @stream_socket_client("tcp://127.0.0.1:". $port, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
+        $fp = @stream_socket_client("tcp://127.0.0.1:" . $port, $errno, $errstr, 1, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT);
 
         @fwrite($fp, json_encode(array(
             'event' => array(
                 'type' => $channel,
                 'data' => $message,
             )
-        ))."\n");
+        )) . "\n");
 
         // Don't fclose() the connection because of a weird bug with React
 
@@ -46,8 +46,9 @@ class WebSocketAdapter extends NotificationAdapter
      */
     public static function isEnabled()
     {
-        if (!parent::isEnabled())
+        if (!parent::isEnabled()) {
             return false;
+        }
 
         return \Service::getParameter('bzion.features.websocket.enabled');
     }

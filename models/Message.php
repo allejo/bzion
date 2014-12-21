@@ -12,7 +12,6 @@
  */
 class Message extends Model implements GroupEventInterface
 {
-
     /**
      * The ID of the group this message belongs to
      * @var int
@@ -72,9 +71,9 @@ class Message extends Model implements GroupEventInterface
     }
 
     /**
-    * Get the receiving group for the message
-    * @return Group
-    */
+     * Get the receiving group for the message
+     * @return Group
+     */
     public function getGroup()
     {
         return new Group($this->group_to);
@@ -85,12 +84,13 @@ class Message extends Model implements GroupEventInterface
      * @param  int    $maxlength The maximum characters of the summary
      * @return string
      */
-    public function getSummary($maxlength=50)
+    public function getSummary($maxlength = 50)
     {
         $message = $this->message;
 
-        if (mb_strlen($this->message) > $maxlength)
+        if (mb_strlen($this->message) > $maxlength) {
             return trim(mb_substr($message, 0, $maxlength-1)) . "...";
+        }
 
         return $message;
     }
@@ -135,13 +135,13 @@ class Message extends Model implements GroupEventInterface
      * @param  string  $status  The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
      */
-    public static function sendMessage($to, $from, $message, $status='sent')
+    public static function sendMessage($to, $from, $message, $status = 'sent')
     {
         return self::create(array(
-            'group_to' => $to,
+            'group_to'    => $to,
             'player_from' => $from,
-            'message' => $message,
-            'status' => $status,
+            'message'     => $message,
+            'status'      => $status,
         ), 'iiss', 'timestamp');
     }
 

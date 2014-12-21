@@ -22,8 +22,9 @@ class TimeDate extends Carbon\Carbon
      */
     public function diffForHumans(Carbon\Carbon $other = null)
     {
-        if (self::diffInSeconds($other, true) < 4)
-                return "now";
+        if (self::diffInSeconds($other, true) < 4) {
+            return "now";
+        }
         return parent::diffForHumans($other);
     }
 
@@ -47,18 +48,19 @@ class TimeDate extends Carbon\Carbon
      */
     public static function from($time)
     {
-        if ($time instanceof DateTime)
+        if ($time instanceof DateTime) {
             return self::instance($time);
+        }
 
         return new self($time);
     }
 
-   /**
-    * Get a Carbon instance for the current date and time
-    *
-    * @param  DateTimeZone|string $timezone
-    * @return TimeDate
-    */
+    /**
+     * Get a Carbon instance for the current date and time
+     *
+     * @param  DateTimeZone|string $timezone
+     * @return TimeDate
+     */
     public static function now($timezone = null)
     {
         return parent::now($timezone);

@@ -34,7 +34,7 @@ class TeamDeleteEvent extends Event
      * @param \Player   $deleter The player who deleted the team
      * @param \Player[] $members The members of the deleted team
      */
-    public function __construct(\Team $team, \Player $deleter, array $members=null)
+    public function __construct(\Team $team, \Player $deleter, array $members = null)
     {
         $this->team = $team;
         $this->deleter = $deleter;
@@ -85,7 +85,7 @@ class TeamDeleteEvent extends Event
     public function serialize()
     {
         return serialize(array(
-            'team' => $this->team->getId(),
+            'team'    => $this->team->getId(),
             'deleter' => $this->deleter->getId()
         ));
     }

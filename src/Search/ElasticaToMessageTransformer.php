@@ -7,10 +7,7 @@
 
 namespace BZIon\Search;
 
-use FOS\ElasticaBundle\HybridResult;
 use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
-use FOS\ElasticaBundle\Transformer\HighlightableModelInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * Maps Elastica documents with BZIon models

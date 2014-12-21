@@ -20,13 +20,15 @@ abstract class Debug
      */
     public static function startStopwatch($event)
     {
-        if (!\Service::getContainer())
+        if (!\Service::getContainer()) {
             return;
+        }
 
         $stopwatch = \Service::getContainer()->get('debug.stopwatch', null);
 
-        if ($stopwatch)
+        if ($stopwatch) {
             $stopwatch->start($event);
+        }
     }
 
     /**
@@ -36,13 +38,15 @@ abstract class Debug
      */
     public static function finishStopwatch($event)
     {
-        if (!\Service::getContainer())
+        if (!\Service::getContainer()) {
             return 0;
+        }
 
         $stopwatch = \Service::getContainer()->get('debug.stopwatch', null);
 
-        if (!$stopwatch)
+        if (!$stopwatch) {
             return 0;
+        }
 
         $event = $stopwatch->stop($event);
         $periods = $event->getPeriods();
@@ -58,15 +62,17 @@ abstract class Debug
      * @param  string $channel The channel to store the log into
      * @return void
      */
-    public static function log($message, array $context=array(), $channel='app')
+    public static function log($message, array $context = array(), $channel = 'app')
     {
-        if (!\Service::getContainer())
+        if (!\Service::getContainer()) {
             return;
+        }
 
         $logger = \Service::getContainer()->get("monolog.logger.$channel", null);
 
-        if (!$logger)
+        if (!$logger) {
             return;
+        }
 
         $logger->debug($message, $context);
     }

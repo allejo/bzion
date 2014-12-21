@@ -110,7 +110,7 @@ class ScriptHandler
      */
     private static function createDatabase($event, $host, $username, $password, $database)
     {
-        $dsn = 'mysql:host=' . $host .';charset=UTF8';
+        $dsn = 'mysql:host=' . $host . ';charset=UTF8';
         $pdo = new \PDO($dsn, $username, $password);
 
         $statement = $pdo->prepare("USE `$database`");
@@ -162,7 +162,7 @@ class ScriptHandler
      */
     protected static function executeCommand(Event $event, $command, $timeout = 300)
     {
-        $console = escapeshellarg(__DIR__ .'/../../app/console');
+        $console = escapeshellarg(__DIR__ . '/../../app/console');
 
         if ($event->getIO()->isDecorated()) {
             $console .= ' --ansi';
@@ -193,5 +193,4 @@ class ScriptHandler
 
         return $config;
     }
-
 }

@@ -171,7 +171,6 @@ class Page extends AliasModel
         return $this->updateProperty($this->updated, "updated", TimeDate::now(), 's');
     }
 
-
     /**
      * Create a new Page
      *
@@ -185,19 +184,19 @@ class Page extends AliasModel
     public static function addPage($title, $content, $authorID, $status = "live")
     {
         return self::create(array(
-            'name' => $title,
-            'alias' => self::generateAlias($title),
+            'name'    => $title,
+            'alias'   => self::generateAlias($title),
             'content' => $content,
-            'author' => $authorID,
-            'home' => 0,
-            'status' => $status,
+            'author'  => $authorID,
+            'home'    => 0,
+            'status'  => $status,
         ), 'sssiis', array('created', 'updated'));
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getRouteName($action='show')
+    public static function getRouteName($action = 'show')
     {
         return "custom_page_$action";
     }
@@ -213,7 +212,7 @@ class Page extends AliasModel
         );
     }
 
-     /**
+    /**
      * {@inheritDoc}
      */
     protected static function getDisallowedAliases()
@@ -255,7 +254,7 @@ class Page extends AliasModel
     {
         return new QueryBuilder('Page', array(
             'columns' => array(
-                'name' => 'name',
+                'name'   => 'name',
                 'status' => 'status'
             ),
             'name' => 'name'
@@ -270,5 +269,4 @@ class Page extends AliasModel
     {
         return new Page(parent::fetchIdFrom(1, "home"));
     }
-
 }

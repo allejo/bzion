@@ -23,8 +23,8 @@ class AppGlobal
     /**
      * Create new AppGlobal
      *
-     * @param Controller $controller The controller handling the request
-     * @param ContainerInterface $container Symfony's service container
+     * @param Controller         $controller The controller handling the request
+     * @param ContainerInterface $container  Symfony's service container
      */
     public function __construct(\Controller $controller, ContainerInterface $container)
     {
@@ -92,7 +92,7 @@ class AppGlobal
         return array(
             'websocket' => array(
                 'enabled' => $this->container->getParameter('bzion.features.websocket.enabled'),
-                'port' => $this->container->getParameter('bzion.features.websocket.push_port')
+                'port'    => $this->container->getParameter('bzion.features.websocket.push_port')
             )
         );
     }

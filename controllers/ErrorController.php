@@ -21,7 +21,7 @@ class ErrorController extends JSONController
             return $this->genericErrorAction('Sorry, the page you are looking for could not be found.');
         } elseif ($exception instanceof HTTPException) {
             return $this->genericErrorAction($exception->getMessage());
-        }  else {
+        } else {
             return $this->genericErrorAction();
         }
     }
@@ -47,12 +47,12 @@ class ErrorController extends JSONController
     }
 
     /**
-    * Show an error message for a model that wasn't found
-    *
-    * @param  string $type    The type of the missing model
-    * @param  string $message The error message to show
-    * @return array
-    */
+     * Show an error message for a model that wasn't found
+     *
+     * @param  string $type    The type of the missing model
+     * @param  string $message The error message to show
+     * @return array
+     */
     public function modelNotFoundAction($type = '', $message = 'The specified object was not found')
     {
         if ($this->isJson()) {
@@ -64,7 +64,7 @@ class ErrorController extends JSONController
 
         return $this->render('Error/modelNotFound.html.twig', array(
             "message" => $message,
-            "type" => $type
+            "type"    => $type
         ));
     }
 }

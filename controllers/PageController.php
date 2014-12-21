@@ -8,8 +8,9 @@ class PageController extends CRUDController
     {
         $page = Page::getHomePage();
 
-        if ($page->isValid())
+        if ($page->isValid()) {
             return $this->forward("show", array("page" => $page));
+        }
 
         return $this->render("Page/default.html.twig");
     }

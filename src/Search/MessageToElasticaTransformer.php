@@ -8,10 +8,7 @@
 namespace BZIon\Search;
 
 use Elastica\Document;
-use FOS\ElasticaBundle\HybridResult;
 use FOS\ElasticaBundle\Transformer\ModelToElasticaTransformerInterface;
-use FOS\ElasticaBundle\Transformer\HighlightableModelInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * Maps Elastica documents with BZIon models
@@ -22,7 +19,7 @@ class MessageToElasticaTransformer implements ModelToElasticaTransformerInterfac
      * Transforms an object into an elastica object
      *
      * @param \Message $message the object to convert
-     * @param array $fields the keys we want to have in the returned array
+     * @param array    $fields  the keys we want to have in the returned array
      *
      * @return Document
      **/

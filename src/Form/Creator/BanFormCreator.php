@@ -9,8 +9,8 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\IpType;
 use BZIon\Form\Type\PlayerType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for bans
@@ -28,7 +28,7 @@ class BanFormCreator extends ModelFormCreator
             ))
             ->add(
                 $builder->create('automatic_expiration', 'checkbox', array(
-                    'data' => true,
+                    'data'     => true,
                     'required' => false,
                 ))->setDataLocked(false) // Don't lock the data so we can change
                                          // the default value later if needed
@@ -42,11 +42,11 @@ class BanFormCreator extends ModelFormCreator
                 'constraints' => new NotBlank(),
             ))
             ->add('server_join_allowed', 'checkbox', array(
-                'data' => true,
+                'data'     => true,
                 'required' => false,
             ))
             ->add('server_message', 'text', array(
-                'required' => false,
+                'required'    => false,
                 'constraints' => new Length(array(
                     'max' => 150,
                 ))

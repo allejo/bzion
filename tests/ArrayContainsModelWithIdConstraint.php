@@ -33,8 +33,9 @@ class ArrayContainsModelWithIdConstraint extends PHPUnit_Framework_Constraint
     public function matches($other)
     {
         foreach ($other as $model) {
-        if ($this->value == $model->getId())
-          return true;
+            if ($this->value == $model->getId()) {
+                return true;
+            }
         }
 
         return false;

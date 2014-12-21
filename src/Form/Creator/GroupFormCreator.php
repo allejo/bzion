@@ -28,7 +28,7 @@ class GroupFormCreator extends ModelFormCreator
                     'message' => 'You need to specify the recipients of your message'
                 )),
                 'multiple' => true,
-                'include' => $this->editing,
+                'include'  => $this->editing,
             ))
             ->add('Subject', 'text', $notBlank)
             ->add('Message', 'textarea', $notBlank)

@@ -147,12 +147,10 @@ class MatchTest extends TestCase
 
         $this->assertEquals($this->team_a->getId(), $this->match->getOpponent($this->team_b->getId())->getId());
 
-
         $matches = Match::getMatches();
         $this->assertArrayContainsModel($this->match, $matches);
         $this->assertArrayContainsModel($this->match_b, $matches);
         $this->assertEquals(2, count($matches) - count($old_matches));
-
     }
 
     public function tearDown()

@@ -1,10 +1,9 @@
 <?php
 namespace BZIon\Form\Type;
 
-use Player;
 use BZIon\Form\Transformer\PlayerTransformer;
+use Player;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -12,6 +11,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PlayerType extends AbstractType
 {
@@ -35,11 +35,13 @@ class PlayerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (isset($options['include']))
+        if (isset($options['include'])) {
             $this->include = $options['include'];
+        }
 
-        if (isset($options['multiple']))
+        if (isset($options['multiple'])) {
             $this->multiple = $options['multiple'];
+        }
 
         $placeholder = ($this->multiple) ? 'brad, kierra, ...' : null;
 
@@ -48,10 +50,10 @@ class PlayerType extends AbstractType
         $builder->add(
             $builder->create('players', 'text', array(
                 'attr' => array(
-                    'class' => 'player-select',
+                    'class'       => 'player-select',
                     'placeholder' => $placeholder,
                 ),
-                'label' => ucfirst($builder->getName()) . ': ',
+                'label'    => ucfirst($builder->getName()) . ': ',
                 'required' => false
             ))->addViewTransformer($transformer)
         );
@@ -98,7 +100,7 @@ class PlayerType extends AbstractType
         // Array that the javascript will parse to fill select2's list
         $json = json_encode($this->reverseTransform($data,
             function ($player) { return array(
-                'id' => $player->getId(),
+                'id'       => $player->getId(),
                 'username' => $player->getUsername()
             );
         }));
@@ -185,8 +187,9 @@ class PlayerType extends AbstractType
             }
         }
 
-        if ($this->include)
+        if ($this->include) {
             $models[] = $this->include;
+        }
 
         return $models;
     }
@@ -202,13 +205,15 @@ class PlayerType extends AbstractType
      */
     private function usernameToModel($username)
     {
-        if (empty($username)) return;
+        if (empty($username)) {
+            return;
+        }
 
         $player = Player::getFromUsername($username);
 
-        if (!\HTMLController::canSee($player))
-            // Symfony auto-escapes $username
+        if (!\HTMLController::canSee($player)) {// Symfony auto-escapes $username
             throw new InvalidNameException("There is no player called $username");
+        }
 
         return $player;
     }
@@ -225,8 +230,9 @@ class PlayerType extends AbstractType
         $id = (int) $id;
         $player = new Player($id);
 
-        if (!\HTMLController::canSee($player))
+        if (!\HTMLController::canSee($player)) {
             throw new InvalidNameException("There is no player with ID $id");
+        }
 
         return $player;
     }
@@ -240,11 +246,13 @@ class PlayerType extends AbstractType
      */
     public function reverseTransform($models, $getName)
     {
-        if (null === $models)
+        if (null === $models) {
             return $models;
+        }
 
-        if (!is_array($models))
+        if (!is_array($models)) {
             return $getName($models);
+        }
 
         // Remove the player that we have to always include
         // Since he's always going to be there, don't show him to the user
@@ -275,7 +283,7 @@ class PlayerType extends AbstractType
         $resolver->setOptional(array('include'));
         $resolver->setDefaults(array(
             'compound' => true,
-            'label' => false,
+            'label'    => false,
             'multiple' => false,
         ));
     }
@@ -291,4 +299,6 @@ class PlayerType extends AbstractType
     }
 }
 
-class InvalidNameException extends \Exception {}
+class InvalidNameException extends \Exception
+{
+}

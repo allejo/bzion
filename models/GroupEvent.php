@@ -15,7 +15,6 @@ use BZIon\Event\Event;
  */
 class GroupEvent extends Model implements GroupEventInterface
 {
-
     /**
      * The ID of the group where the event took place
      * @var int
@@ -88,9 +87,9 @@ class GroupEvent extends Model implements GroupEventInterface
     }
 
     /**
-    * Get the group where the event took place
-    * @return Group
-    */
+     * Get the group where the event took place
+     * @return Group
+     */
     public function getGroup()
     {
         return new Group($this->group);
@@ -116,10 +115,10 @@ class GroupEvent extends Model implements GroupEventInterface
     /**
      * Store a group event in the database
      *
-     * @param  int $group The ID of the group
-     * @param  Event $event The event
-     * @param  mixed $timestamp The timestamp when the event took place
-     * @param  string $status The status of the event
+     * @param  int        $group     The ID of the group
+     * @param  Event      $event     The event
+     * @param  mixed      $timestamp The timestamp when the event took place
+     * @param  string     $status    The status of the event
      * @return GroupEvent
      */
     public static function storeEvent($group, $event, $type, $timestamp = 'now', $status = 'visible')
