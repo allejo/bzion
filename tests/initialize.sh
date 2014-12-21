@@ -13,8 +13,13 @@ cp app/config.example.yml $FILE
 mysql -e "CREATE DATABASE IF NOT EXISTS bzion;" -uroot;
 mysql -uroot bzion < DATABASE.sql
 
-sed -i 's/bzion_admin/root/' $FILE
-sed -i 's/password:\s*password/password:/' $FILE
 sed -i 's/development:\s*false/development: force/' $FILE
+cat << EOF >> $FILE
+    testing:
+        host: localhost
+        database: bzion
+        username: root
+        password:
+EOF
 
 echo "error_reporting (E_ALL | E_STRICT | E_DEPRECATED);" >> bzion-load.php
