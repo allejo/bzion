@@ -10,3 +10,11 @@
 [submodule "web/includes/favicojs"]
 	path = web/includes/favicojs
 	url = https://github.com/ejci/favico.js.git
+[submodule "web/assets/css/vendor/bourbon"]
+	path = web/assets/css/vendor/bourbon
+	url = https://github.com/Sujevo/lib-bourbon
+	branch = v4_0
+[submodule "web/assets/css/vendor/neat"]
+	path = web/assets/css/vendor/neat
+	url = https://github.com/Sujevo/lib-neat
+	branch = v1_7
