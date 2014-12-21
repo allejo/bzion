@@ -18,6 +18,20 @@ header {
             @extend %wrapper;
             @include display(flex);
 
+            .mobile-menu {
+                color: $Color-Medium_Grey;
+                display: none;
+                line-height: $Settings-Line_Height;
+                margin: {
+                    left: 17px;
+                    right: 15px;
+                }
+
+                @include respond-to(tablets) {
+                    display: block;
+                }
+            }
+
             h1 {
                 @include flex(initial);
 
@@ -93,23 +107,6 @@ header {
 body {
     > header {
         section {
-            .mobile {
-                color: $Color-Medium_Grey;
-                float: left;
-                display: none;
-                margin-right: 15px;
-                padding-left: 17px;
-
-                li {
-                    line-height: $Settings-Line_Height;
-                    list-style: none;
-                }
-
-                @include respond-to(tablets) {
-                    display: block;
-                }
-            }
-
             nav {
                 // CSS hack to tame the floated <h1>. This will allow us to take up the reset of the <header> without
                 // having to calculate the remaining width with either JavaScript or CSS' calc().

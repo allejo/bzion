@@ -23,4 +23,8 @@
     @extend %margin-center;
 
     width: $Settings-Global-Width;
+
+    @include respond-to(tablets) {
+        width: 100%;
+    }
 }
