@@ -69,8 +69,13 @@ class ScriptHandler
      */
     public static function migrateDatabase(Event $event)
     {
+        $arguments = $event->getArguments();
+
+        $testingArguments = array('testing', '--testing', '-t');
+        $testing = count(array_intersect($arguments, $testingArguments)) > 0;
+
         try {
-            $config = self::getDatabaseConfig();
+            $config = self::getDatabaseConfig($testing);
         } catch (\Exception $e) {
             $event->getIO()->write("<bg=red>\n\n [WARNING] " . $e->getMessage() . ", the database won't be updated\n</>");
 
@@ -110,6 +115,8 @@ class ScriptHandler
      */
     private static function createDatabase($event, $host, $username, $password, $database)
     {
+        $event->getIO()->write(" Connecting to MySQL database $database@$host");
+
         $dsn = 'mysql:host=' . $host . ';charset=UTF8';
         $pdo = new \PDO($dsn, $username, $password);
 
@@ -179,17 +186,20 @@ class ScriptHandler
     /**
      * Get the database's configuration
      *
-     * @return array The configuration as defined in the config.yml file
+     * @param  boolean $testing Whether to retrieve the test database credentials
+     * @return array   The configuration as defined in the config.yml file
      */
-    public static function getDatabaseConfig()
+    public static function getDatabaseConfig($testing = false)
     {
         $configPath = ConfigHandler::getConfigurationPath();
         if (!is_file($configPath)) {
             throw new \Exception("The configuration file could not be read");
         }
 
+        $path = $testing ? 'testing' : 'mysql';
+
         $config = Yaml::parse($configPath);
-        $config = $config['bzion']['mysql'];
+        $config = $config['bzion'][$path];
 
         return $config;
     }
