@@ -187,7 +187,7 @@ abstract class Service
         return self::$container;
     }
 
-    public static function setContainer(&$container)
+    public static function setContainer($container)
     {
         self::$container = $container;
     }

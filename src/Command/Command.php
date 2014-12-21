@@ -18,7 +18,7 @@ class Command extends ContainerAwareCommand
      * @param  int    $count  The number of steps
      * @return void
      */
-    protected function initProgress(&$output, $count)
+    protected function initProgress($output, $count)
     {
         $this->progress = new ProgressBar($output, $count);
 
@@ -50,7 +50,7 @@ class Command extends ContainerAwareCommand
         $this->progress->finish();
     }
 
-    protected function clearCache(&$output)
+    protected function clearCache($output)
     {
         $commandOutput = ($output->isVerbose()) ? $output : new NullOutput();
 
@@ -68,7 +68,7 @@ class Command extends ContainerAwareCommand
      * of a process live on our screen
      * @return null|\Closure
      */
-    protected function getBufferFunction(&$output)
+    protected function getBufferFunction($output)
     {
         if (!$output->isVerbose())
             return null;

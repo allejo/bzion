@@ -334,7 +334,7 @@ class Team extends AvatarModel
         $leader = $this->leader;
         $members = Player::getTeamMembers($this->id);
 
-        usort($members, function (&$a, &$b) use ($leader) {
+        usort($members, function ($a, $b) use ($leader) {
             // Leader always goes first
             if ($a->getId() == $leader)
                 return -1;

@@ -41,7 +41,7 @@ class LinkToFunction
      * @param  \Model $model
      * @return string The name of the model
      */
-    private function getModelName(\Model &$model)
+    private function getModelName(\Model $model)
     {
         if ($model instanceof \NamedModel)
             return $model->getName();

@@ -165,7 +165,7 @@ class AppKernel extends Kernel
         Service::setTemplateEngine($twig);
     }
 
-    private function setUpFormFactory(&$session)
+    private function setUpFormFactory($session)
     {
         $csrfProvider = new SessionCsrfProvider($session, "secret");
         $validator = Validation::createValidator();

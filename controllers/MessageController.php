@@ -119,7 +119,7 @@ class MessageController extends JSONController
             throw new ForbiddenException("You can't abandon the conversation you started!");
         }
 
-        return $this->showConfirmationForm(function () use (&$discussion, &$me) {
+        return $this->showConfirmationForm(function () use ($discussion, $me) {
             $discussion->removeMember($me->getId());
 
             $event = new GroupAbandonEvent($discussion, $me);
@@ -261,7 +261,7 @@ class MessageController extends JSONController
      * @param  string        $message The error message to show
      * @return void
      */
-    private function assertCanParticipate(Player &$player, Group &$group,
+    private function assertCanParticipate(Player $player, Group $group,
         $message="You are not allowed to participate in that discussion"
     ) {
         if (!$group->isMember($player->getId()))
@@ -280,7 +280,7 @@ class MessageController extends JSONController
      * @param Form $cloned
      * @return void
      */
-    private function sendMessage(Player &$from, Group &$to, &$form, &$cloned)
+    private function sendMessage(Player $from, Group $to, &$form, $cloned)
     {
         if (!$from->hasPermission(Permission::SEND_PRIVATE_MSG))
             throw new ForbiddenException("You are not allowed to send messages");
@@ -304,7 +304,7 @@ class MessageController extends JSONController
     /**
      * @return string|null
      */
-    private function getErrorMessage(Form &$form)
+    private function getErrorMessage(Form $form)
     {
         foreach ($form->all() as $child) {
             foreach ($child->getErrors() as $error) {
