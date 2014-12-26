@@ -108,7 +108,7 @@
         "classmap": [ "tests/" ]
     },
     "archive": {
-        "exclude": ["app/config.yml", "bzion_errors.log", ".sass_cache"]
+        "exclude": [ "!/vendor", "!/web/bundles", "!/web/components" ]
     },
     "config": {
         "component-dir": "web/components"
