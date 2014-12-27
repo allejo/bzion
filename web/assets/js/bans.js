@@ -13,4 +13,8 @@ $(document).ready(function() {
     checkbox.click(clickAction);
 
     clickAction();
+
+    $("#form_player").playerlist({
+        exceptMe: true
+    });
 });

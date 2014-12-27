@@ -42,6 +42,10 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            scripts: {
+                files: [ 'web/assets/js/main.js', 'web/assets/js/teams.js'],
+                tasks: [ 'js' ]
+            },
             styles: {
                 files: [ 'web/assets/css/**/*.scss' ],
                 tasks: [ 'css' ]

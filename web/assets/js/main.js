@@ -45,3 +45,53 @@ $(function () {
         $("#menu-pages").slideToggle();
     });
 });
+
+(function( $ ){
+    var format = function(item) {
+        return item.username;
+    };
+
+    $.fn.playerlist = function(opts) {
+        var players = this.find(".player-select");
+        var selectType = this.find(".player-select-type");
+
+        var options = $.extend({
+            exceptMe: false
+        }, opts);
+
+        players.attr('placeholder', 'Enter player...')
+            .css('width', '400px')
+            .select2({
+                ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                    url: baseURLNoHost + "/players",
+                    dataType: 'json',
+                    data: function (term, page) {
+                        var data = {
+                            format: 'json',
+                            startsWith: term, // search term
+                        };
+
+                        if (options.exceptMe) {
+                            data.exceptMe = null;
+                        }
+
+                        return data;
+                    },
+                    results: function (data, page) {
+                        return {results: data.players};
+                    },
+                },
+                formatSelection: format,
+                formatResult: format,
+        });
+
+        // Make sure that PHP knows we are sending player IDs, not usernames
+        selectType.attr('value', '0');
+
+        if (players.attr('data-value') !== undefined) {
+            players.select2("data", JSON.parse(players.attr('data-value')));
+        }
+
+        return this;
+    };
+})( jQuery );
