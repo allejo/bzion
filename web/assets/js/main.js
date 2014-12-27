@@ -48,7 +48,13 @@ $(function () {
 
 (function( $ ){
     var format = function(item) {
-        return item.username;
+        var escaped = $('<div/>').text(item.username).html();
+
+        if (item.outdated) {
+            escaped = '<small style="float:right">(outdated)</small> ' + escaped;
+        }
+
+        return escaped;
     };
 
     $.fn.playerlist = function(opts) {
