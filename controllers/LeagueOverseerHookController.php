@@ -62,13 +62,16 @@ class LeagueOverseerHookController extends PlainTextController
      */
     public function queryAction()
     {
+        $teamNameQuery = $this->version == 1 ? 'teamNameQuery' : 'teamName';
+        $teamNameDumpQuery = $this->version == 1 ? 'teamNameDump' : 'teamDump';
+
         switch ($this->params->get('query')) {
             case 'reportMatch':
                 return $this->forward('reportMatch');
-            case 'teamNameQuery':
+            case $teamNameQuery:
                 return $this->forward('teamName');
-            case 'teamDump':
-                return $this->forward('teamDump');
+            case $teamNameDumpQuery:
+                return $this->forward('teamNameDump');
             default:
                 throw new BadRequestException();
             }
@@ -80,7 +83,9 @@ class LeagueOverseerHookController extends PlainTextController
             throw new BadRequestException();
         }
 
-        $bzid = $this->params->get('teamPlayers');
+        $param = $this->version == 1 ? 'teamPlayers' : 'bzid';
+
+        $bzid = $this->params->get($param);
         $team = Player::getFromBZID($bzid)->getTeam();
 
         return new JsonResponse(array(
@@ -89,7 +94,7 @@ class LeagueOverseerHookController extends PlainTextController
         ));
     }
 
-    public function teamDumpAction()
+    public function teamNameDumpAction()
     {
         if ($this->version < 1) {
             throw new BadRequestException();
