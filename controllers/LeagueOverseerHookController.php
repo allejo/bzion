@@ -62,12 +62,13 @@ class LeagueOverseerHookController extends PlainTextController
      */
     public function queryAction()
     {
+        $matchReportQuery = $this->version == 1 ? 'reportMatch' : 'matchReport';
         $teamNameQuery = $this->version == 1 ? 'teamNameQuery' : 'teamName';
         $teamNameDumpQuery = $this->version == 1 ? 'teamNameDump' : 'teamDump';
 
         switch ($this->params->get('query')) {
-            case 'reportMatch':
-                return $this->forward('reportMatch');
+            case $matchReportQuery:
+                return $this->forward('matchReport');
             case $teamNameQuery:
                 return $this->forward('teamName');
             case $teamNameDumpQuery:
@@ -119,7 +120,7 @@ class LeagueOverseerHookController extends PlainTextController
         return new JsonResponse(array("teamDump" => $teamArray));
     }
 
-    public function reportMatchAction(Logger $log, Request $request)
+    public function matchReportAction(Logger $log, Request $request)
     {
         $log->addNotice("Match data received from " . $request->getClientIp());
 
