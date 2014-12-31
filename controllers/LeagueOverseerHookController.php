@@ -64,7 +64,7 @@ class LeagueOverseerHookController extends PlainTextController
     {
         $matchReportQuery = $this->version == 1 ? 'reportMatch' : 'matchReport';
         $teamNameQuery = $this->version == 1 ? 'teamNameQuery' : 'teamName';
-        $teamNameDumpQuery = $this->version == 1 ? 'teamNameDump' : 'teamDump';
+        $teamNameDumpQuery = $this->version == 1 ? 'teamDump' : 'teamNameDump';
 
         switch ($this->params->get('query')) {
             case $matchReportQuery:
