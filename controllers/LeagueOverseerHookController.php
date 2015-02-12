@@ -93,13 +93,13 @@ class LeagueOverseerHookController extends PlainTextController
 
         return new JsonResponse(array(
             // API v1 legacy support
-            "bzid" => &$bzid,     // Replaced with "team_name" in API v2+
-            "team" => &$teamName, // Replaced with "player_bzid" in API v2+
+            "bzid" => $bzid,     // Replaced with "team_name" in API v2+
+            "team" => $teamName, // Replaced with "player_bzid" in API v2+
 
             // API v2+
-            "player_bzid" => &$bzid,
+            "player_bzid" => $bzid,
             "team_id" => $team->getId(),
-            "team_name" => &$teamName,
+            "team_name" => $teamName,
         ));
     }
 
@@ -119,20 +119,19 @@ class LeagueOverseerHookController extends PlainTextController
                 $memberList .= $member->getBZID() . ",";
             }
 
-            $team    = preg_replace("/&[^\s]*;/", "", $team->getName()),
-            $id      = $team->getId(),
-            $members = rtrim($memberList, ",")
+            $teamName    = preg_replace("/&[^\s]*;/", "", $team->getName());
+            $teamID      = $team->getId();
+            $teamMembers = rtrim($memberList, ",");
 
             $teamArray[] = array(
                 // API v1 legacy support
-                "team"    => &$team,
-                "id"      => &$id,
-                "members" => &$members,
+                "team"    => $teamName,
+                "members" => $teamMembers,
 
                 // API v2+
-                "team_id"   => &$id,
-                "team_name" => &$team,
-                "team_members" => &$members
+                "team_id"   => $teamID,
+                "team_name" => $teamName,
+                "team_members" => $teamMembers
             );
         }
 
