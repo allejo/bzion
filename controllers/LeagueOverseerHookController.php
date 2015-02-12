@@ -64,7 +64,7 @@ class LeagueOverseerHookController extends PlainTextController
     {
         $matchReportQuery = $this->version == 1 ? 'reportMatch' : 'matchReport';
         $teamNameQuery = $this->version == 1 ? 'teamNameQuery' : 'teamName';
-        $teamNameDumpQuery = $this->version == 1 ? 'teamDump' : 'teamNameDump';
+        $teamNameDumpQuery = $this->version == 1 ? 'teamDump' : 'teamInfoDump';
 
         switch ($this->params->get('query')) {
             case $matchReportQuery:
@@ -89,9 +89,17 @@ class LeagueOverseerHookController extends PlainTextController
         $bzid = $this->params->get($param);
         $team = Player::getFromBZID($bzid)->getTeam();
 
+        $teamName = ($team->isValid()) ? preg_replace("/&[^\s]*;/", "", $team->getName()) : '';
+
         return new JsonResponse(array(
-            "bzid" => $bzid,
-            "team" => ($team->isValid()) ? preg_replace("/&[^\s]*;/", "", $team->getName()) : ''
+            // API v1 legacy support
+            "bzid" => &$bzid,     // Replaced with "team_name" in API v2+
+            "team" => &$teamName, // Replaced with "player_bzid" in API v2+
+
+            // API v2+
+            "player_bzid" => &$bzid,
+            "team_id" => $team->getId(),
+            "team_name" => &$teamName,
         ));
     }
 
@@ -111,13 +119,30 @@ class LeagueOverseerHookController extends PlainTextController
                 $memberList .= $member->getBZID() . ",";
             }
 
+            $team    = preg_replace("/&[^\s]*;/", "", $team->getName()),
+            $id      = $team->getId(),
+            $members = rtrim($memberList, ",")
+
             $teamArray[] = array(
-                "team"    => preg_replace("/&[^\s]*;/", "", $team->getName()),
-                "members" => rtrim($memberList, ",")
+                // API v1 legacy support
+                "team"    => &$team,
+                "id"      => &$id,
+                "members" => &$members,
+
+                // API v2+
+                "team_id"   => &$id,
+                "team_name" => &$team,
+                "team_members" => &$members
             );
         }
 
-        return new JsonResponse(array("teamDump" => $teamArray));
+        return new JsonResponse(array(
+            // API v1 legacy support
+            "teamDump" => &$teamArray,
+
+            // API v2+
+            "team_list" => &$teamArray
+        ));
     }
 
     public function matchReportAction(Logger $log, Request $request)
