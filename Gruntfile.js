@@ -43,11 +43,23 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: [ 'web/assets/js/main.js', 'web/assets/js/teams.js'],
-                tasks: [ 'js' ]
+                tasks: [ 'js' ],
+                options: {
+                    livereload: true
+                }
             },
             styles: {
                 files: [ 'web/assets/css/**/*.scss' ],
-                tasks: [ 'css' ]
+                tasks: [ 'css' ],
+                options: {
+                    livereload: true
+                }
+            },
+            views: {
+                files: [ 'views/**/*.html.twig' ],
+                options: {
+                    livereload: true
+                }
             }
         }
     });

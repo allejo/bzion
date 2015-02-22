@@ -58,7 +58,7 @@
             </ul>
 
             <section class="information">
-                <p class="copyright">BZiON &copy; 2014</p>
+                <p class="copyright">BZiON &copy; {{ "now" | date("Y") }}</p>
 
                 {% if app.debug %}
                     <p class="development"><i class="fa fa-wrench"></i> {{ app.environment }}</p>
@@ -101,6 +101,7 @@
 
         {% if app.debug %}
             <script src="{{ asset('assets/js/debug.js') }}"></script>
+            <script src="//localhost:35729/livereload.js"></script>
         {% endif %}
 
         {{ configuration.count }}
