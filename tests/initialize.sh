@@ -22,4 +22,4 @@ EOF
 echo "error_reporting (E_ALL | E_STRICT | E_DEPRECATED);" >> bzion-load.php
 
 mysql -e "CREATE DATABASE IF NOT EXISTS bzion;" -uroot;
-php composer.phar migrate-database --testing
+php composer.phar migrate-database testing
