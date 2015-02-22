@@ -14,8 +14,7 @@ module.exports = function(grunt) {
                     sourcemap: 'auto'
                 },
                 files: {
-                    'web/assets/css/styles.css': 'web/assets/css/styles.scss',
-                    'web/assets/css/reset.css' : 'web/assets/css/reset.scss'
+                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
                 }
             }
         },
