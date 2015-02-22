@@ -23,6 +23,7 @@ ocular.phar
 ast.dump
 doc
 doc-cache
+sassdoc
 
 # OS generated files #
 ######################

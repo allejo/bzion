@@ -26,6 +26,11 @@ module.exports = function(grunt) {
                 }
             }
         },
+        sassdoc: {
+            default: {
+                src: [ 'web/assets/css/modules', 'web/assets/css/partials' ]
+            }
+        },
         jshint: {
             options: {
                 eqnull: true,
@@ -83,4 +88,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-sassdoc');
 };
