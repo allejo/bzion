@@ -17,6 +17,13 @@
     </head>
 
     <body>
+        <!--[if lte IE 9]>
+            <div class="fuck-ie">
+                <h1>You're using an unsupported browser</h1>
+                <p>You are browsing this website with an unsupported browser both by BZiON and its vendor. Please consider using a real browser such as <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>, <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>, <a href="http://ultronbrowser.info/">Google Ultron</a>, or Safari.</p>
+            </div>
+        <![endif]-->
+
         <header class="page-header">
             <section class="menu-bar">
                 <span id="mobile-menu" class="mobile-menu"><i class="fa fa-bars"></i></span>
@@ -45,7 +52,19 @@
         {% endblock %}
 
         <footer>
-            <ul>
+            <section class="copyright">
+                <span>BZiON &copy; {{ "now" | date("Y") }}</span>
+
+                {% if app.debug %}
+                    <span class="development"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
+                {% endif %}
+
+                {% if app.maintenance and app.controller.name != "Maintenance" %}
+                    <span class="development"><i class="fa fa-plug "></i> Maintenance mode</span>
+                {% endif %}
+            </section>
+
+            <ul class="pages horizontal">
                 {% for page in app.pages %}
                     {% if not page.isHomePage %}
                         <li>{{ link_to(page) }}</li>
@@ -56,18 +75,6 @@
                 <li><a href="{{ path('admin_list') }}">Admins</a></li>
                 <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
             </ul>
-
-            <section class="information">
-                <p class="copyright">BZiON &copy; {{ "now" | date("Y") }}</p>
-
-                {% if app.debug %}
-                    <p class="development"><i class="fa fa-wrench"></i> {{ app.environment }}</p>
-                {% endif %}
-
-                {% if app.maintenance and app.controller.name != "Maintenance" %}
-                    <p class="development"><i class="fa fa-plug "></i> Maintenance mode enabled</p>
-                {% endif %}
-            </section>
         </footer>
 
         {% if app.debug %}

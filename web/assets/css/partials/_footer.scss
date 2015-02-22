@@ -1,71 +1,46 @@
 body {
     footer {
-        @extend .clearfix;
         @extend .wrapper;
-        @include box-sizing(border-box);
+        @include display(flex);
 
         border-top: 1px solid #E9E9E9;
-        margin: 0 auto;
         padding: 20px 10px;
 
-        .information {
-            @extend .clearfix;
-
-            float: left;
-
-            .copyright{
-                float: left;
-            }
-
+        .copyright {
             .development {
-                float: left;
-                margin-left: 5px;
-
-                @include respond-to(phablets) {
-                    float: right;
-
-                    i {
-                        float: right;
-                        margin-left: 6px;
-                        margin-top: 4px;
-                    }
-                }
+                font-size: 0.9em;
+                margin-left: 10px;
+                text-transform: lowercase;
             }
 
             @include respond-to(phablets) {
-                float: none;
             }
         }
 
-        span {
-            float: left;
-        }
+        .pages {
+            @include flex(1);
 
-        ul {
-            float: right;
-            padding-left: 0;
+            text-align: right;
 
             li {
-                display: inline-block;
                 margin-left: 20px;
 
                 @include respond-to(phablets) {
-                    &:first-child {
-                        margin-left: 0;
+                    margin: {
+                        bottom: 10px;
+                        left: 0;
+                        right: 20px;
                     }
-                }
-
-                @include respond-to(phones) {
-                    display: block;
-                    margin: 0 0 5px 0;
                 }
             }
 
             @include respond-to(phablets) {
-                display: block;
-                float: none;
-                margin-bottom: 20px;
+                text-align: left;
             }
+        }
+
+        @include respond-to(phablets) {
+            @include flex-direction(column-reverse);
         }
     }
 }
