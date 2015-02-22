@@ -13,3 +13,25 @@
         @media only screen and (max-width: 60em) { @content; }
     }
 }
+
+@mixin desktop-columns($columns) {
+    @include span-columns($columns);
+}
+
+@mixin tablet-columns($columns) {
+    @include respond-to(tablets) {
+        @include span-columns($columns);
+    }
+}
+
+@mixin phablet-columns($columns) {
+    @include respond-to(phablets) {
+        @include span-columns($columns);
+    }
+}
+
+@mixin phone-columns($columns) {
+    @include respond-to(phones) {
+        @include span-columns($columns);
+    }
+}
