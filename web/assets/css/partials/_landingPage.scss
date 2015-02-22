@@ -67,6 +67,8 @@ main {
             }
 
             ul {
+                @include phablet-container;
+
                 padding-left: 0;
 
                 li {
