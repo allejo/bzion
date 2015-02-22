@@ -8,8 +8,12 @@
 
 namespace BZIon\Composer;
 
+use Composer\IO\ConsoleIO;
+use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Phinx\Console\PhinxApplication;
+use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
@@ -65,19 +69,32 @@ class ScriptHandler
     /*
      * Create and update the database schema
      *
-     * @param $event Event Composer's event
+     * @param $event   Event|null Composer's event
+     * @param $testing boolean    Whether to migrate the testing database (only applicable when $event is null)
      */
-    public static function migrateDatabase(Event $event)
+    public static function migrateDatabase(Event $event = null, $testing = false)
     {
-        $arguments = $event->getArguments();
+        if ($event) {
+            // Use the event's IO
+            $io = $event->getIO();
 
-        $testingArguments = array('testing', '--testing', '-t');
-        $testing = count(array_intersect($arguments, $testingArguments)) > 0;
+            $arguments = $event->getArguments();
+
+            $testingArguments = array('testing', '--testing', '-t');
+            $testing = count(array_intersect($arguments, $testingArguments)) > 0;
+        } else {
+            // Create our own IO
+            $input = new ArrayInput(array());
+            $output = new ConsoleOutput();
+            $helperSet = new HelperSet(array(new DialogHelper()));
+
+            $io = new ConsoleIO($input, $output, $helperSet);
+        }
 
         try {
             $config = self::getDatabaseConfig($testing);
         } catch (\Exception $e) {
-            $event->getIO()->write("<bg=red>\n\n [WARNING] " . $e->getMessage() . ", the database won't be updated\n</>");
+            $io->write("<bg=red>\n\n [WARNING] " . $e->getMessage() . ", the database won't be updated\n</>");
 
             return;
         }
@@ -85,11 +102,11 @@ class ScriptHandler
         // If the database doesn't exist, ask the user to create it and perform
         // the necessary migrations (unless the user didn't agree to
         // create the database)
-        if (self::createDatabase($event, $config['host'], $config['username'], $config['password'], $config['database'])) {
-            $event->getIO()->write(''); // newline
+        if (self::createDatabase($io, $config['host'], $config['username'], $config['password'], $config['database'])) {
+            $io->write(''); // newline
 
             $arguments = array('migrate', '-e' => 'main');
-            $app = new PhinxApplication('0.3.8');
+            $app = new PhinxApplication();
             $app->doRun(new ArrayInput($arguments), new ConsoleOutput());
         }
     }
@@ -107,15 +124,15 @@ class ScriptHandler
     /**
      * Create the database schema if needed
      *
-     * @param Event  $event    Composer's event
-     * @param string $host     The database host
-     * @param string $username The username for the MySQL user
-     * @param string $password The password for the MySQL user
-     * @param string $database The name of the database
+     * @param IOInterface $io       Composer's IO interface
+     * @param string      $host     The database host
+     * @param string      $username The username for the MySQL user
+     * @param string      $password The password for the MySQL user
+     * @param string      $database The name of the database
      */
-    private static function createDatabase($event, $host, $username, $password, $database)
+    private static function createDatabase(IOInterface $io, $host, $username, $password, $database)
     {
-        $event->getIO()->write(" Connecting to MySQL database $database@$host");
+        $io->write(" Connecting to MySQL database $database@$host");
 
         $dsn = 'mysql:host=' . $host . ';charset=UTF8';
         $pdo = new \PDO($dsn, $username, $password);
@@ -130,7 +147,7 @@ class ScriptHandler
         // 1049 is the error code thrown when the database doesn't exist, but
         // the MySQL user has the privilege to see it
         if ($errors[1] == 1049) {
-            $answer = $event->getIO()->askConfirmation(
+            $answer = $io->askConfirmation(
                 " <fg=green>The $database database doesn't exist. Would you like to have it created? (yes/no)</> [<comment>yes</comment>]\n > ",
                 true);
 
@@ -138,7 +155,7 @@ class ScriptHandler
                 $pdo->query("CREATE DATABASE `$database` COLLATE utf8_unicode_ci");
                 $pdo->query("USE `$database`");
 
-                $event->getIO()->write(" <fg=green>New database created</>");
+                $io->write(" <fg=green>New database created</>");
             } else {
                 return false;
             }
@@ -148,12 +165,12 @@ class ScriptHandler
 
         // If the database is empty, fill it
         if ($pdo->query('SHOW TABLES')->rowCount() === 0) {
-            $event->getIO()->write(" <fg=green>Creating database schema...</> ", false);
+            $io->write(" <fg=green>Creating database schema...</> ", false);
 
-            $sqlPath = realpath(__DIR__ . '/../../' . 'DATABASE.sql');
+            $sqlPath = realpath(__DIR__ . '/../../migrations/' . 'DATABASE.sql');
             $pdo->exec(file_get_contents($sqlPath));
 
-            $event->getIO()->write("<fg=green>done.</>");
+            $io->write("<fg=green>done.</>");
         }
 
         return true;

@@ -10,9 +10,6 @@ php composer.phar install $COMPOSER_ARGS --prefer-source
 FILE=app/config.yml
 cp app/config.example.yml $FILE
 
-mysql -e "CREATE DATABASE IF NOT EXISTS bzion;" -uroot;
-mysql -uroot bzion < DATABASE.sql
-
 sed -i 's/development:\s*false/development: force/' $FILE
 cat << EOF >> $FILE
     testing:
@@ -23,3 +20,6 @@ cat << EOF >> $FILE
 EOF
 
 echo "error_reporting (E_ALL | E_STRICT | E_DEPRECATED);" >> bzion-load.php
+
+mysql -e "CREATE DATABASE IF NOT EXISTS bzion;" -uroot;
+php composer.phar migrate-database

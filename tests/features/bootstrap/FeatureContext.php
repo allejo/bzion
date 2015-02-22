@@ -3,6 +3,7 @@
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
+use BZIon\Composer\ScriptHandler;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -283,14 +284,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
             $db->query('SET foreign_key_checks = 1');
         }
 
-        $host = Service::getParameter('bzion.testing.host');
-        $username = Service::getParameter('bzion.testing.username');
-        $password = Service::getParameter('bzion.testing.password');
-        $database = Service::getParameter('bzion.testing.database');
-
-        $dsn = 'mysql:dbname=' . $database . ';host=' . $host . ';charset=UTF8';
-        $pdo = new PDO($dsn, $username, $password);
-        $pdo->exec(file_get_contents('DATABASE.sql'));
+        ScriptHandler::migrateDatabase(null, true);
 
         if ($modelCache = Service::getModelCache()) {
             $modelCache->clear();
