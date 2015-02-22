@@ -17,15 +17,16 @@ class TimeDate extends Carbon\Carbon
      * Get the time difference in a human readable format.
      *
      * @param \Carbon\Carbon|\TimeDate $other
+     * @param bool                     $absolute Removes time difference modifiers ago, after, etc
      *
      * @return string The time as a human readable string
      */
-    public function diffForHumans(Carbon\Carbon $other = null)
+    public function diffForHumans(Carbon\Carbon $other = null, $absolute = false)
     {
         if (self::diffInSeconds($other, true) < 4) {
             return "now";
         }
-        return parent::diffForHumans($other);
+        return parent::diffForHumans($other, $absolute);
     }
 
     /**

@@ -10,12 +10,16 @@
         "doctrine/inflector"         : "~1.0",
         "ext-gd"                     : "*",
         "friendsofsymfony/elastica-bundle": "~3.0",
+        "friendsofsymfony/rest-bundle": "~1.5",
         "ivaynberg/select2"          : "dev-master",
+        "jms/serializer-bundle"      : "~0.13",
         "liip/imagine-bundle"        : "~1.0",
         "michelf/php-markdown"       : ">=1.4.1",
-        "nesbot/carbon"              : ">=1.8.0",
+        "nesbot/carbon"              : "~1.14",
+        "nelmio/api-doc-bundle"      : "~2.7",
         "rhumsaa/array_column"       : "~1.1",
         "robmorgan/phinx"            : "~0.3",
+        "sensio/framework-extra-bundle": "~3.0",
         "symfony/class-loader"       : "~2.6",
         "symfony/config"             : "~2.6",
         "symfony/console"            : "~2.6",
@@ -40,9 +44,7 @@
         "symfony/yaml"               : "~2.6",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "dev-master",
-        "yzalis/identicon"           : "1.1.*@dev",
-        "friendsofsymfony/rest-bundle": "~1.5",
-        "nelmio/api-doc-bundle": "~2.7"
+        "yzalis/identicon"           : "1.1.*@dev"
     },
     "require-dev": {
         "behat/behat": "3.0.*@stable",
