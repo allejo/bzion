@@ -2,6 +2,25 @@
 // Mixins
 //
 
+/// Have the specified content inside of the mixin respond to a specific view size
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
+///
+/// @example scss - Usage
+///   @include respond-to(phablets) {
+///     .phablet-only {
+///       display: block;
+///     }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (max-width: 45em) {
+///     .phablet-only {
+///       display: block;
+///     }
+///   }
+
 @mixin respond-to($media) {
     @if $media == phones {
         @media only screen and (max-width: 30em) { @content; }
@@ -11,6 +30,28 @@
     }
     @else if $media == tablets {
         @media only screen and (max-width: 60em) { @content; }
+    }
+}
+
+@mixin desktop-container {
+    @include outer-container;
+}
+
+@mixin tablet-container {
+    @include respond-to(tablets) {
+        @include outer-container;
+    }
+}
+
+@mixin phablet-container {
+    @include respond-to(phablets) {
+        @include outer-container;
+    }
+}
+
+@mixin phone-container {
+    @include respond-to(phones) {
+        @include outer-container;
     }
 }
 

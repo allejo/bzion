@@ -57,71 +57,50 @@ main {
         }
 
         .key_points {
-            padding: 30px 0 10px;
+            @extend .wrapper;
+            @include desktop-container;
+            @include phablet-container;
+
+            padding: {
+                left: 15px;
+                right: 15px;
+            }
 
             ul {
-                @extend .wrapper;
-
                 padding-left: 0;
-                text-align: center;
 
                 li {
-                    display: inline-block;
-                    margin: 0 50px;
-                    width: 200px;
+                    @include desktop-columns(4);
+                    @include phablet-columns(12);
 
-                    i {
-                        $iconSize: 100px;
+                    text-align: center;
 
-                        border: 1px solid #000000;
-                        border-radius: 50%;
-                        height: $iconSize;
-                        width: $iconSize;
+                    .perfect-alignment {
+                        @include phablet-columns(2);
+                        @include phone-columns(3);
+                        @include set-circular-size(100px);
 
-                        //
-                        // Because the icons aren't always perfectly centered, there are some custom padding rules in order to center them as perfectly as possible
-                        //    (all of these icons will end up being 110px by 110px)
-                        //
-                        &.fa-gamepad {
-                            font-size: 70px;
-                            padding-top: 10px;
-
-                            @include respond-to(phablets) {
-                                margin-top: 0;
-                            }
-                        }
-
-                        &.fa-info {
-                            font-size: 50px;
-                            padding-top: 25px;
-
-                            @include respond-to(phones) {
-                                padding-top: 15px;
-                            }
-                        }
-
-                        &.fa-list-ul {
-                            font-size: 60px;
-                            padding-top: 22px;
-
-                            @include respond-to(phones) {
-                                padding-top: 20px;
-                            }
-                        }
+                        border: 1px solid $Color-Black;
+                        font-size: 55px;
+                        margin-bottom: 10px;
 
                         @include respond-to(phablets) {
-                            border: none;
-                            float: left;
+                            @include set-circular-size(65px);
 
-                            &.fa-gamepad, &.fa-info, &.fa-list-ul {
-                                padding-bottom: 0;
-                                text-align: center;
-                                width: 1.28571429em; // Magic number gotten from the Font Awesome ".fa-fw" class to keep icons with a fixed width
-                            }
+                            border: none;
+                        }
+
+                        @include respond-to(phones) {
+                            @include set-circular-size(45px);
+
+                            font-size: 35px;
                         }
                     }
 
                     div {
+                        @include phablet-columns(10);
+                        @include phone-columns(9);
+
                         h3 {
                             font-size: 24px;
                             font-weight: 400;
@@ -129,33 +108,18 @@ main {
                         }
 
                         @include respond-to(phablets) {
-                            float: left;
+                            padding-left: 10px;
                         }
-
-                        @include respond-to(phones) {
-                            // @TODO Find a better solution to word wrapping that doesn't involve a hard coded percentage
-                            width: 60%; // A hateful magic number
-                        }
-                    }
-
-                    @include respond-to(tablets) {
-                        margin: 0 20px;
-                        width: 190px;
                     }
 
                     @include respond-to(phablets) {
-                        margin: 5px 0;
-                        width: 100%;
+                        margin: {
+                            bottom: 10px;
+                            top: 10px;
+                        }
+                        text-align: left;
                     }
                 }
-
-                @include respond-to(phablets) {
-                    text-align: left;
-                }
-            }
-
-            @include respond-to(phablets) {
-                padding-top: 20px;
             }
         }
 
