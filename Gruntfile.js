@@ -7,11 +7,19 @@ module.exports = function(grunt) {
                 }
             }
         },
+        'check-gems': {
+            dist: {
+                files: [{
+                    src: '.'
+                }]
+            }
+        },
         sass: {
             dist: {
                 options: {
                     style: 'compressed',
-                    sourcemap: 'auto'
+                    sourcemap: 'auto',
+                    require: 'sass-media_query_combiner'
                 },
                 files: {
                     'web/assets/css/styles.css': 'web/assets/css/styles.scss'
@@ -66,9 +74,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('css', [ 'sass' ]);
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
+    grunt.registerTask('check', [ 'check-gems' ]);
     grunt.registerTask('default', [ 'css', 'js' ]);
 
     grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-check-gems');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-jshint');
