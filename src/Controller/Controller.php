@@ -114,6 +114,16 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * Get the controller's default action name
+     *
+     * @return string The action's name without the `Action` suffix
+     */
+    protected function getDefaultActionName()
+    {
+        return $this->parameters->get('_action') ?: 'default';
+    }
+
+    /**
      * Get a controller's action
      *
      * @param  string|null       $action The action name to call (e.g. `show`), null to invoke the default one
@@ -122,7 +132,7 @@ abstract class Controller extends ContainerAware
     public function getAction($action = null)
     {
         if (!$action) {
-            $action = $this->parameters->get('_action') ?: 'default';
+            $action = $this->getDefaultActionName();
         }
 
         return new ReflectionMethod($this, $action . 'Action');
@@ -141,6 +151,10 @@ abstract class Controller extends ContainerAware
      */
     protected function forward($action, $params = array())
     {
+        if (!$action) {
+            $action = $this->getDefaultActionName();
+        }
+
         $args = clone $this->parameters;
         $args->add($params);
 

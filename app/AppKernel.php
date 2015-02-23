@@ -267,7 +267,6 @@ class AppKernel extends Kernel
 
     public function terminateWithException(Exception $exception)
     {
-    //    var_dump("term with e");
         return false;
     }
 

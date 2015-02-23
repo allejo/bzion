@@ -17,7 +17,7 @@
                 <p class="members">
                     {% if group.members is not empty %}
                         {% for member in group.members %}
-                            {{- member.username -}}
+                            {{- link_to(member) -}}
                             {%- if not loop.last -%}
                                 {{- ', ' -}}
                             {%- endif -%}
