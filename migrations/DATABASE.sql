@@ -7,6 +7,66 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Dump of table api_key_permissions
+# ------------------------------------------------------------
+
+CREATE TABLE `api_key_permissions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `key_id` int(11) unsigned NOT NULL,
+  `perm_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `key_id` (`key_id`),
+  KEY `perm_id` (`perm_id`),
+  CONSTRAINT `api_key_permissions_ibfk_1` FOREIGN KEY (`key_id`) REFERENCES `api_keys` (`id`),
+  CONSTRAINT `api_key_permissions_ibfk_2` FOREIGN KEY (`perm_id`) REFERENCES `api_permissions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table api_keys
+# ------------------------------------------------------------
+
+CREATE TABLE `api_keys` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `owner` int(10) unsigned NOT NULL,
+  `key` varchar(24) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`),
+  CONSTRAINT `api_keys_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `players` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table api_permissions
+# ------------------------------------------------------------
+
+CREATE TABLE `api_permissions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `description` varchar(256) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `api_permissions` WRITE;
+/*!40000 ALTER TABLE `api_permissions` DISABLE KEYS */;
+
+INSERT INTO `api_permissions` (`id`, `name`, `description`)
+VALUES
+  (NULL,'report_ban','The ability to report a new ban'),
+  (NULL,'report_match','The ability to report official matches'),
+  (NULL,'report_mute','The ability to report a new mute'),
+  (NULL,'register_user','The ability to register new players'),
+  (NULL,'view_banlist','The ability to view the ban list'),
+  (NULL,'view_mutelist','The ability to view the mute list'),
+  (NULL,'view_player_info','The ability to view a player\'s information'),
+  (NULL,'view_team_info','The ability to view a team\'s information');
+
+/*!40000 ALTER TABLE `api_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
 # Dump of table banned_ips
 # ------------------------------------------------------------
 
@@ -344,7 +404,7 @@ CREATE TABLE `invitations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `invited_player` int(10) unsigned NOT NULL COMMENT 'The player being invited to join a team',
   `sent_by` int(10) unsigned NOT NULL COMMENT 'The player who sent the invitation',
-  `team` int(10) unsigned NOT NULL COMMENT 'The team that the player is being invted to',
+  `team` int(10) unsigned NOT NULL COMMENT 'The team that the player is being invited to',
   `expiration` datetime NOT NULL COMMENT 'The time the invitation will expire',
   `text` text NOT NULL COMMENT 'The message sent when inviting a player to a team',
   PRIMARY KEY (`id`),
@@ -398,7 +458,7 @@ CREATE TABLE `matches` (
 
 CREATE TABLE `messages` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_to` int(10) unsigned NOT NULL COMMENT 'The group message this invidividual message is being sent to',
+  `group_to` int(10) unsigned NOT NULL COMMENT 'The group message this individual message is being sent to',
   `player_from` int(10) unsigned NOT NULL COMMENT 'The author of the message',
   `timestamp` datetime NOT NULL COMMENT 'The timestamp of when the message was sent',
   `message` text NOT NULL COMMENT 'The actual message being sent',
@@ -417,10 +477,10 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) unsigned DEFAULT NULL COMMENT 'The ID of the original news post. If this coulmn is set, then it is a revision',
+  `parent_id` int(11) unsigned DEFAULT NULL COMMENT 'The ID of the original news post. If this column is set, then it is a revision',
   `category` int(11) unsigned NOT NULL DEFAULT '1' COMMENT 'The ID of the category this post will use',
-  `subject` varchar(100) NOT NULL DEFAULT '' COMMENT 'The subjec of the post',
-  `content` text NOT NULL COMMENT 'The content of the psot',
+  `subject` varchar(100) NOT NULL DEFAULT '' COMMENT 'The subject of the post',
+  `content` text NOT NULL COMMENT 'The content of the post',
   `created` datetime NOT NULL COMMENT 'The timestamp the post was created',
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the post was last updated',
   `author` int(10) unsigned NOT NULL COMMENT 'The ID of the author',
@@ -482,7 +542,7 @@ CREATE TABLE `notifications` (
 
 CREATE TABLE `pages` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) unsigned DEFAULT NULL COMMENT 'The ID of the original page. If this coulmn is set, then it is a revision',
+  `parent_id` int(10) unsigned DEFAULT NULL COMMENT 'The ID of the original page. If this column is set, then it is a revision',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT 'The name of the page',
   `alias` varchar(32) DEFAULT NULL COMMENT 'The URL slug used for the page',
   `content` text NOT NULL COMMENT 'The content of the page',
@@ -538,7 +598,7 @@ VALUES
 	(NULL,'del_team','The ability to mark a team as deleted without being the leader of it'),
 	(NULL,'wipe_team','The ability to entirely wipe a team from the database'),
 	(NULL,'add_match','The ability to enter a match'),
-	(NULL,'edit_match','The ability to edit an exisitng match'),
+	(NULL,'edit_match','The ability to edit an existing match'),
 	(NULL,'del_match','The ability to mark a match as deleted'),
 	(NULL,'wipe_match','The ability to wipe a match from the database'),
 	(NULL,'add_page','The ability to create new pages for the website as drafts'),
@@ -548,8 +608,8 @@ VALUES
 	(NULL,'publish_page','The ability to publish a page marked as a draft'),
 	(NULL,'add_news','The ability to create news content as drafts'),
 	(NULL,'publish_news','The ability to publish news articles'),
-	(NULL,'edit_news','The abliity to edit news articles written by other people'),
-	(NULL,'del_news','The abliity to delete news articles written by the author or other users'),
+	(NULL,'edit_news','The ability to edit news articles written by other people'),
+	(NULL,'del_news','The ability to delete news articles written by the author or other users'),
 	(NULL,'wipe_news','The ability to wipe a news article from the database'),
 	(NULL,'add_ban','The ability to create a new ban'),
 	(NULL,'edit_ban','The ability to edit an existing ban'),
@@ -821,11 +881,14 @@ CREATE TABLE `servers` (
   `owner` int(10) unsigned NOT NULL COMMENT 'The owner of the server',
   `online` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the server is listed on the public server list',
   `info` text NULL COMMENT 'Information regarding the server',
+  `api_key` int(11) unsigned NOT NULL,
   `updated` datetime NOT NULL COMMENT 'The timestamp of when the server was last pinged',
   `status` set('active','disabled','deleted') NOT NULL DEFAULT 'active' COMMENT 'The status of the server relative to BZiON',
   PRIMARY KEY (`id`),
   KEY `country` (`country`),
-  CONSTRAINT `servers_ibfk_1` FOREIGN KEY (`country`) REFERENCES `countries` (`id`)
+  KEY `api_key` (`api_key`),
+  CONSTRAINT `servers_ibfk_1` FOREIGN KEY (`country`) REFERENCES `countries` (`id`),
+  CONSTRAINT `servers_ibfk_2` FOREIGN KEY (`api_key`) REFERENCES `api_keys` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -878,7 +941,7 @@ CREATE TABLE `visits` (
   `ip` varchar(46) NOT NULL DEFAULT '' COMMENT 'The IPv4 (or IPv6) of the player',
   `host` varchar(100) NOT NULL DEFAULT '' COMMENT 'The host of the player',
   `user_agent` text NOT NULL COMMENT 'The browser''s user agent',
-  `referer` varchar(200) DEFAULT NULL,
+  `referrer` varchar(200) DEFAULT NULL,
   `timestamp` datetime NOT NULL COMMENT 'The timestamp this host was used to visit the website',
   PRIMARY KEY (`id`),
   KEY `player` (`player`),

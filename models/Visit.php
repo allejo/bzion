@@ -62,7 +62,7 @@ class Visit extends Model
         $this->ip = $visit['ip'];
         $this->host = $visit['host'];
         $this->user_agent = $visit['user_agent'];
-        $this->referer = $visit['referer'];
+        $this->referer = $visit['referrer'];
         $this->timestamp = new DateTime($visit['timestamp']);
     }
 
@@ -85,7 +85,7 @@ class Visit extends Model
             'ip' => $ip,
             'host' => $host,
             'user_agent' => $user_agent,
-            'referer' => $referrer,
+            'referrer' => $referrer,
             'timestamp' => $timestamp->toMysql(),
         ), 'isssss');
     }
