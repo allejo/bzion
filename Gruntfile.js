@@ -54,6 +54,10 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            docs: {
+                files: [ 'web/assets/css/modules/**/*.scss', 'web/assets/css/partials/**/*.scss' ],
+                tasks: [ 'sassdoc' ]
+            },
             scripts: {
                 files: [ 'web/assets/js/main.js', 'web/assets/js/teams.js'],
                 tasks: [ 'js' ],

@@ -1,0 +1,170 @@
+//
+// Mobile responsive mixins and convenience mixins that use Neat's column structure
+//
+
+/// Have the specified content inside of the mixin respond to a specific view size
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
+///
+/// @example scss - Usage
+///   @include respond-to(phablets) {
+///       .phablet-only {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (max-width: 45em) {
+///       .phablet-only {
+///           display: block;
+///       }
+///   }
+
+@mixin respond-to($media) {
+    @if $media == phones {
+        @media only screen and (max-width: 30em) { @content; }
+    }
+    @else if $media == phablets {
+        @media only screen and (max-width: 45em) { @content; }
+    }
+    @else if $media == tablets {
+        @media only screen and (max-width: 60em) { @content; }
+    }
+}
+
+/// A mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin for a desktop to keep it consistent with the other mixins
+///
+/// @param {Number [unit]} $width [em(1088)]
+///   The max width to be applied to the element. Can be a percentage or a measure.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+///
+/// @example scss - SCSS Equivalent
+///   @include outer-container;
+
+@mixin desktop-container($width: $max-width) {
+    @include outer-container($width);
+}
+
+/// A convenience mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin that will only be included once we hit a tablet view or smaller
+///
+/// @param {Number [unit]} $width [em(1088)]
+///   The max width to be applied to the element. Can be a percentage or a measure.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(tablets) {
+///       @include outer-container($width);
+///   }
+
+@mixin tablet-container($width: $max-width) {
+    @include respond-to(tablets) {
+        @include outer-container($width);
+    }
+}
+
+/// A convenience mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin that will only be included once we hit a phablet view or smaller
+///
+/// @param {Number [unit]} $width [em(1088)]
+///   The max width to be applied to the element. Can be a percentage or a measure.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phablets) {
+///       @include outer-container($width);
+///   }
+
+@mixin phablet-container($width: $max-width) {
+    @include respond-to(phablets) {
+        @include outer-container($width);
+    }
+}
+
+/// A convenience mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin that will only be included once we hit a phone view
+///
+/// @param {Number [unit]} $width [em(1088)]
+///   The max width to be applied to the element. Can be a percentage or a measure.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phones) {
+///       @include outer-container($width);
+///   }
+
+@mixin phone-container($width: $max-width) {
+    @include respond-to(phones) {
+        @include outer-container($width);
+    }
+}
+
+/// A mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin for a desktop to keep it consistent with the other mixins
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include span-columns($columns);
+
+@mixin desktop-columns($columns) {
+    @include span-columns($columns);
+}
+
+/// A convenience mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin that will only be included once we hit a tablet view or smaller
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(tablets) {
+///       @include span-columns($columns);
+///   }
+
+@mixin tablet-columns($columns) {
+    @include respond-to(tablets) {
+        @include span-columns($columns);
+    }
+}
+
+/// A convenience mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin that will only be included once we hit a phablet view or smaller
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phablets) {
+///       @include span-columns($columns);
+///   }
+
+@mixin phablet-columns($columns) {
+    @include respond-to(phablets) {
+        @include span-columns($columns);
+    }
+}
+
+/// A convenience mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin that will only be included once we hit a phone view
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phones) {
+///       @include span-columns($columns);
+///   }
+
+@mixin phone-columns($columns) {
+    @include respond-to(phones) {
+        @include span-columns($columns);
+    }
+}
