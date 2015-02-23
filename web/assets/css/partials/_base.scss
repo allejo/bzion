@@ -5,7 +5,7 @@ $Settings-Global_Width: 1000px;
 $Color-White: #FFFFFF;
 $Color-Almost_White: #F7F7F7;
 $Color-Blue_Grey: #F4F7FB;
-$Color-Off_White: #E9E9E9;
+$Color-Off_White: #E9E9E9; // Deprecated; Use $Border-Light_Color instead
 $Color-Light_Grey: #A1A1A1;
 $Color-Medium_Grey: #656565;
 $Color-Grey: #515051;
@@ -14,6 +14,8 @@ $Color-Black: #000000;
 $Color-Sky_Blue: #009EFF;
 $Color-Blue: #258EC9;
 $Color-Orange: #ff6700;
+
+$Border-Light_Color: #E9E9E9;
 
 // Typography
 $Font-Sans_Serif: 'Lato', sans-serif;

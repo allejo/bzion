@@ -3,7 +3,7 @@ body {
         @extend %wrapper;
         @include display(flex);
 
-        border-top: 1px solid #E9E9E9;
+        border-top: 1px solid $Border-Light_Color;
         padding: 20px 10px;
 
         .copyright {
@@ -11,9 +11,6 @@ body {
                 font-size: 0.9em;
                 margin-left: 10px;
                 text-transform: lowercase;
-            }
-
-            @include respond-to(phablets) {
             }
         }
 
