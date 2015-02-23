@@ -1,6 +1,7 @@
 <?php
 
 use Monolog\Logger;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,6 +59,13 @@ class LeagueOverseerHookController extends PlainTextController
     }
 
     /**
+     * @ApiDoc(
+     *  description="Query the LeagueOverseer API",
+     *  parameters={
+     *      {"name"="query", "dataType"="string", "required"=true, "description"="query type"},
+     *      {"name"="apiVersion", "dataType"="integer", "required"=false, "description"="LeagueOverseer API version"}
+     *  }
+     * )
      * @todo Test/improve/revoke support for API version 0
      */
     public function queryAction()

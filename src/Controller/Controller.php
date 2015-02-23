@@ -101,20 +101,31 @@ abstract class Controller extends ContainerAware
     /**
      * Call the controller's action specified by the $parameters array
      *
-     * @param  string|null $action The action name to call, null to invoke the default one
+     * @param  string|null $action The action name to call (e.g. `show`), null to invoke the default one
      * @return Response    The action's response
      */
     public function callAction($action = null)
     {
-        if (!$action) {
-            $action = $this->parameters->get('_action') ?: 'default';
-        }
-
         $this->setup();
         $response = $this->forward($action);
         $this->cleanup();
 
         return $response->prepare($this->getRequest());
+    }
+
+    /**
+     * Get a controller's action
+     *
+     * @param  string|null       $action The action name to call (e.g. `show`), null to invoke the default one
+     * @return \ReflectionMethod The action method
+     */
+    public function getAction($action = null)
+    {
+        if (!$action) {
+            $action = $this->parameters->get('_action') ?: 'default';
+        }
+
+        return new ReflectionMethod($this, $action . 'Action');
     }
 
     /**
@@ -133,7 +144,7 @@ abstract class Controller extends ContainerAware
         $args = clone $this->parameters;
         $args->add($params);
 
-        $ret = $this->callMethod($action . 'Action', $args);
+        $ret = $this->callMethod($this->getAction($action), $args);
 
         return $this->handleReturnValue($ret, $action);
     }
@@ -163,16 +174,15 @@ abstract class Controller extends ContainerAware
      * definition - check the description of the Controller class for more
      * information
      *
-     * @param  string       $method     The name of the method
-     * @param  ParameterBag $parameters The parameter bag representing the route's parameters
-     * @return mixed        The return value of the called method
+     * @param  \ReflectionMethod $method     The method
+     * @param  ParameterBag      $parameters The parameter bag representing the route's parameters
+     * @return mixed             The return value of the called method
      */
     protected function callMethod($method, $parameters)
     {
-        $ref = new ReflectionMethod($this, $method);
         $params = array();
 
-        foreach ($ref->getParameters() as $p) {
+        foreach ($method->getParameters() as $p) {
             if ($model = $this->getObjectFromParameters($p, $parameters)) {
                 $params[] = $model;
             } elseif ($parameters->has($p->name)) {
@@ -184,7 +194,7 @@ abstract class Controller extends ContainerAware
             }
         }
 
-        return $ref->invokeArgs($this, $params);
+        return $method->invokeArgs($this, $params);
     }
 
     /**

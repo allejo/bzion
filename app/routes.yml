@@ -222,6 +222,11 @@ custom_page_delete:
     pattern:    /{page}/delete
     defaults: { _controller: 'Page', _action: 'delete' }
 
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+    defaults: { _defaultHandler: true }
+
 trailing_slash:
     path: /{url}
     defaults: { _controller: 'Redirecting', _action: 'removeTrailingSlash' }

@@ -75,7 +75,12 @@ fos_elastica:
                     _parent:
                         type: group
 
+nelmio_api_doc: ~
+
 parameters:
+    nelmio_api_doc.extractor.api_doc_extractor.class: BZIon\ApiDoc\Extractor
+    router.options.matcher_base_class: BZIon\Routing\RedirectableUrlMatcher
+    router.options.matcher_class: BZIon\Routing\RedirectableUrlMatcher
     twig.exception_listener.class: BZIon\Event\ExceptionListener
 
 services:

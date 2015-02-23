@@ -27,7 +27,7 @@ class LoginController extends HTMLController
         }
 
         // Don't check whether IPs match if we're on a development environment
-        $checkIP = !$this->isDebug();
+        $checkIP = !$this->isDebug()&&0;
         $info = validate_token($token, $username, array(), $checkIP);
 
         if (!isset($info)) {

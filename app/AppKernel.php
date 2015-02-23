@@ -58,6 +58,8 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if ($this->getEnvironment() == 'profile') {
@@ -265,6 +267,7 @@ class AppKernel extends Kernel
 
     public function terminateWithException(Exception $exception)
     {
+    //    var_dump("term with e");
         return false;
     }
 
