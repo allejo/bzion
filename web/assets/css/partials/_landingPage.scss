@@ -57,7 +57,7 @@ main {
         }
 
         .key_points {
-            @extend .wrapper;
+            @extend %wrapper;
             @include desktop-container;
             @include phablet-container;
 
