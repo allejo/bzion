@@ -9,6 +9,7 @@ We choose to use SASS, Bourbon, and Neat as our main languages because of the fr
 
 - **modules/**
     - This folder contains all of the partial SASS files that don't have actual CSS classes but instead only provide mixins or placeholders.
+    - Documentation for all of custom mixins used throughout the project is provided through SassDoc, which is [hosted by alezakos](http://helit.org/bziondoc/sassdoc/).
 - **partials/**
     - This folder contains all of the partial SASS files that contain all of the CSS classes and rules that make up the BZiON stylesheet.
     - Partial files in this folder are typically named appropriately based on the page they style or the part of the website they style.
