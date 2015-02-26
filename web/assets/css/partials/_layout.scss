@@ -95,56 +95,6 @@ main {
     }
 }
 
-.css-dev {
-    @include box-sizing(border-box);
-
-    background-color: red;
-    bottom: 0;
-    color: $Color-White;
-    display: block;
-    padding: 0 5px;
-    position: fixed;
-    text-align: center;
-
-    .tablet, .phablet, .phone {
-        display: none;
-    }
-
-    .desktop {
-        display: block;
-    }
-
-    @include respond-to(tablets) {
-        .desktop, .phablet, .phone {
-            display: none;
-        }
-
-        .tablet {
-            display: block;
-        }
-    }
-
-    @include respond-to(phablets) {
-        .desktop, .tablet, .phone {
-            display: none;
-        }
-
-        .phablet {
-            display: block;
-        }
-    }
-
-    @include respond-to(phones) {
-        .desktop, .tablet, .phablet {
-            display: none;
-        }
-
-        .phone {
-            display: block;
-        }
-    }
-}
-
 .css-table {
     border-collapse: collapse;
     display: table;
