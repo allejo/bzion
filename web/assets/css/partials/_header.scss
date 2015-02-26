@@ -60,6 +60,7 @@ header {
             }
 
             nav {
+                @include display(flex);
                 @include flex(1);
 
                 ul {
@@ -100,8 +101,7 @@ header {
                     }
 
                     &.pages {
-                        float: left;
-
+                        @include flex(1);
                         @include respond-to(tablets) {
                             background-color: $Color-Almost_White;
                             border-bottom: 1px solid $Color-Header_Border;
@@ -127,7 +127,7 @@ header {
                     }
 
                     &.user {
-                        float: right;
+                        margin-left: auto;
 
                         @include respond-to(tablets) {
                             margin-right: 10px;
