@@ -26,6 +26,17 @@ module.exports = function(grunt) {
                 files: {
                     'web/assets/css/styles.css': 'web/assets/css/styles.scss'
                 }
+            },
+            debug: {
+                options: {
+                    style: 'expanded',
+                    sourcemap: 'auto',
+                    lineNumbers: true,
+                    require: 'sass-media_query_combiner'
+                },
+                files: {
+                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
+                }
             }
         },
         sassdoc: {
@@ -83,7 +94,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('css', [ 'sass' ]);
+    grunt.registerTask('css', [ 'sass:dist' ]);
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
     grunt.registerTask('check', [ 'check-gems' ]);
     grunt.registerTask('default', [ 'css', 'js' ]);
