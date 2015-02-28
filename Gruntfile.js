@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         },
         sassdoc: {
             default: {
-                src: [ 'web/assets/css/modules', 'web/assets/css/partials' ]
+                src: [ 'web/assets/css/modules' ]
             }
         },
         jshint: {
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         },
         watch: {
             docs: {
-                files: [ 'web/assets/css/modules/**/*.scss', 'web/assets/css/partials/**/*.scss' ],
+                files: [ 'web/assets/css/modules/**/*.scss' ],
                 tasks: [ 'sassdoc' ]
             },
             scripts: {
