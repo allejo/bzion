@@ -941,7 +941,7 @@ CREATE TABLE `visits` (
   `ip` varchar(46) NOT NULL DEFAULT '' COMMENT 'The IPv4 (or IPv6) of the player',
   `host` varchar(100) NOT NULL DEFAULT '' COMMENT 'The host of the player',
   `user_agent` text NOT NULL COMMENT 'The browser''s user agent',
-  `referrer` varchar(200) DEFAULT NULL,
+  `referer` varchar(200) DEFAULT NULL,
   `timestamp` datetime NOT NULL COMMENT 'The timestamp this host was used to visit the website',
   PRIMARY KEY (`id`),
   KEY `player` (`player`),
