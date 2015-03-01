@@ -17,11 +17,11 @@
 
                 <section class="page--options">
                     {% if me.canEdit(article) %}
-                        <a class="button grey notextshadow" href="{{ article.url('edit') }}"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+                        <a class="button grey notextshadow" href="{{ article.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 
                     {% if me.canDelete(article) %}
-                        <a class="button red" href="{{ article.url('delete') }}"><i class="fa fa-fw fa-trash-o"></i> Delete</a>
+                        <a class="button red" href="{{ article.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
                 </section>
             </div>

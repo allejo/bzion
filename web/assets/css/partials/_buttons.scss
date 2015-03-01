@@ -40,6 +40,10 @@ $Button-Colors: (
     padding: 3px 15px 5px;
     text-decoration: none;
 
+    i {
+        @extend %fa-fw;
+    }
+
     &:hover {
         color: $Color-White;
     }

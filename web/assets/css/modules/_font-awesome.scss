@@ -1,0 +1,39 @@
+/// A magic placeholder for Font Awesome icons to have a fixed width. This uses the same code
+/// as Font Awesome's `.fa-fw` class but is available as a placeholder to be used in SASS
+///
+/// @link https://github.com/FortAwesome/Font-Awesome/blob/v4.3.0/scss/_fixed-width.scss
+
+%fa-fw {
+    width: (18em / 14);
+    text-align: center;
+}
+
+/// Perfectly center a Font Awesome icon both horizontally and vertically
+///
+/// @todo If SASS ever officially supports @extends inside of @media queries, then this should be a placeholder. See [SASS issue #1050](https://github.com/sass/sass/issues/1050)
+
+@mixin fa-perfect-alignment() {
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/// Create a circle around a Font Awesome icon
+///
+/// @param {Number [unit]} $size
+///   The size of the circle
+
+@mixin set-circular-size($size) {
+    @include fa-perfect-alignment();
+
+    height: $size;
+    line-height: $size;
+    width: $size;
+
+    // Stupid fix for "fa-gamepad" that has a weird whitespace on the top that throws off
+    // the perfect centering. 10px is a magic number
+    &.gamepad-lineheight {
+        line-height: $size - 10px;
+    }
+}

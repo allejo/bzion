@@ -77,7 +77,7 @@ main {
 
                     text-align: center;
 
-                    .perfect-alignment {
+                    .circular-icon {
                         @include phablet-columns(2);
                         @include phone-columns(3);
                         @include set-circular-size(100px);
