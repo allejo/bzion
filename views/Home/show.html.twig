@@ -48,7 +48,7 @@
         <hr>
 
         <section class="content">
-            <aside>
+            <aside class="news-container">
                 <h2>Latest News</h2>
                 <ul class="news">
                     {% for post in news %}
@@ -60,31 +60,25 @@
                 </ul>
             </aside>
 
-            <section>
+            <section class="recent-matches-container">
                 <h2>Recent Matches</h2>
-                <article class="css-table">
-                    {# We want two rows of match data, so loop twice #}
-                    {% for i in 0..1 %}
-                        <div class="row">
-                            {# We want to slice our 'matches' array from 0,3 and 3,6; so let's do some math #}
-                            {% set startIndex = loop.index0 * 3 %}
-                            {% set endIndex = (loop.index0 + 1) * 3 %}
-
-                            {# Generate the three columns in the current row #}
-                            {% for match in matches | slice(startIndex, endIndex) %}
-                                <div class="column">
-                                    <div class="team" title="{{ match.winner.name }}">
-                                        <img src="{{ match.winner.avatar | imagine_filter('medium_thumb') }}" class="team_avatar">
-                                        <strong>{{ match.score(match.winner.id) }}</strong>
-                                    </div>
-                                    <div class="team" title="{{ match.loser.name }}">
-                                        <img src="{{ match.loser.avatar | imagine_filter('medium_thumb') }}" class="team_avatar">
-                                        <strong>{{ match.score(match.loser.id) }}</strong>
-                                    </div>
-
-                                    <a class="stats" href="#">Match Stats &raquo;</a>
+                <article class="recent-matches">
+                    {% for match in matches %}
+                        <div class="match">
+                            <div class="team-container">
+                                <div class="team" title="{{ match.winner.name }}">
+                                    <img src="{{ match.winner.avatar | imagine_filter('medium_thumb') }}" class="team_avatar">
+                                    <strong>{{ match.score(match.winner.id) }}</strong>
                                 </div>
-                            {% endfor %}
+                            </div>
+                            <div class="team-container">
+                                <div class="team" title="{{ match.loser.name }}">
+                                    <img src="{{ match.loser.avatar | imagine_filter('medium_thumb') }}" class="team_avatar">
+                                    <strong>{{ match.score(match.loser.id) }}</strong>
+                                </div>
+                            </div>
+
+                            <a class="stats" href="#">Match Stats &raquo;</a>
                         </div>
                     {% endfor %}
                 </article>

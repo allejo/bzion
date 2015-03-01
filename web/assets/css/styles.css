@@ -1049,7 +1049,6 @@ header.page-header {
       color: #656565;
       display: none;
       line-height: 56px;
-      margin-left: 17px;
       margin-right: 15px; }
       @media only screen and (max-width: 992px) {
         header.page-header .menu-bar .mobile-menu {
@@ -1142,8 +1141,8 @@ header.page-header {
         header.page-header .menu-bar nav ul.user {
           margin-left: auto; }
           @media only screen and (max-width: 992px) {
-            header.page-header .menu-bar nav ul.user {
-              margin-right: 10px; } }
+            header.page-header .menu-bar nav ul.user li:last-child a {
+              padding-right: 0; } }
   header.page-header .notification {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -1249,15 +1248,19 @@ body footer {
     background-position: -385px 0px; }
 
 main.landing .cover {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
   background: url("../imgs/cover_photo.png") no-repeat fixed 0 -225px;
   background-size: cover;
-  display: table;
   height: 350px;
   width: 100%; }
   main.landing .cover article {
-    height: 100%;
-    display: table-cell;
-    vertical-align: middle;
+    margin: auto;
     text-align: center; }
     main.landing .cover article h1, main.landing .cover article h2 {
       color: #fff;
@@ -1409,6 +1412,9 @@ main.landing .content {
     content: "";
     display: table;
     clear: both; }
+  main.landing .content .news-container, main.landing .content .recent-matches-container {
+    margin-bottom: 20px;
+    margin-top: 20px; }
   main.landing .content .news-container {
     float: left;
     display: block;
@@ -1424,6 +1430,9 @@ main.landing .content {
         width: 100%; }
         main.landing .content .news-container:last-child {
           margin-right: 0; } }
+    @media only screen and (max-width: 768px) {
+      main.landing .content .news-container {
+        margin-right: 0; } }
     main.landing .content .news-container .news {
       margin-bottom: 15px;
       margin-top: 15px; }

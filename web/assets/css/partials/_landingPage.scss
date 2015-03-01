@@ -1,18 +1,17 @@
 main {
     &.landing {
         .cover {
+            @include display(flex);
+
             background: url("../imgs/cover_photo.png") no-repeat fixed 0 -225px;
             background-size: cover;
-            display: table;
             height: 350px;
             width: 100%;
 
             article {
-                @extend .wrapper;
+                @extend %wrapper;
 
-                height: 100%;
-                display: table-cell;
-                vertical-align: middle;
+                margin: auto;
                 text-align: center;
 
                 h1, h2 {
@@ -126,127 +125,111 @@ main {
         }
 
         .content {
-            @extend .clearfix;
-            @extend .wrapper;
+            @extend %wrapper;
 
-            aside {
-                float: left;
-                width: 400px;
+            @include desktop-container;
 
-                h2 {
-                    margin-bottom: 10px;
+            .news-container,
+            .recent-matches-container {
+                margin: {
+                    bottom: 20px;
+                    top: 20px;
                 }
+            }
+
+            .news-container {
+                @include desktop-columns(5);
+                @include phablet-columns(12);
+                @include phablet-gutter();
 
                 .news {
-                    padding-left: 20px;
+                    @extend %no-padding-ul;
+
+                    margin: {
+                        bottom: 15px;
+                        top: 15px;
+                    }
 
                     li {
                         border-bottom: 1px solid #EFEFEF;
-                        margin: 5px 0;
                         list-style: none;
-                        padding: 10px 0 15px;
+                        padding: 15px 0 15px;
 
                         h3 {
                             font-size: 18px;
                             margin-bottom: 5px;
                         }
 
-                        p {
-                            margin-left: 20px;
+                        &:first-child {
+                            padding-top: 0;
                         }
 
                         &:last-child {
                             border-bottom: none;
+                            padding-bottom: 0;
                         }
                     }
-                }
-
-                @include respond-to(tablets) {
-                    @include box-sizing(border-box);
-
-                    float: none;
-                    padding: 0 10px;
-                    width: 100%;
                 }
             }
 
-            section {
-                @extend .clearfix;
+            .recent-matches-container {
+                @include desktop-columns(7);
+                @include phablet-columns(12);
 
-                float: right;
-                width: 55%;
+                .recent-matches {
+                    @include desktop-container;
 
-                h2 {
-                    margin-bottom: 10px;
-                }
+                    margin: 15px 0;
 
-                article {
-                    $cellSize: 170px;
+                    .match {
+                        @include desktop-container;
+                        @include desktop-columns(4);
+                        @include desktop-gutter(3n);
+                        @include phone-reset-gutter(3n);
+                        @include phone-columns(6);
+                        @include phone-gutter(2n);
 
-                    float: right;
-                    margin: 10px 10px 20px;
+                        &:nth-child(n+4) {
+                            margin-top: 15px;
+                        }
 
-                    .row {
-                        .column {
-                            $paddingSize: 20px;
+                        @include respond-to(phones) {
+                            &:nth-child(n+3) {
+                                margin-top: 15px;
+                            }
+                        }
 
-                            height: $cellSize;
-                            padding: $paddingSize;
-                            text-align: center;
-                            width: $cellSize;
+                        .team-container {
+                            @include desktop-columns(6);
+                            @include desktop-gutter;
+
+                            &:first-child {
+                                padding-right: 5px;
+                                text-align: right;
+                            }
+
+                            &:nth-child(2) {
+                                padding-left: 5px;
+                            }
 
                             .team {
                                 display: inline-block;
+                                text-align: center;
 
-                                .team_avatar {
-                                    height: 60px;
-                                    width: 60px;
-                                }
+                                img {
+                                    @extend %margin-center;
 
-                                strong {
                                     display: block;
-                                    text-align: center;
                                 }
                             }
-
-                            .stats {
-                                display: block;
-                                font-size: 14px;
-                                margin-top: 15px;
-                                text-transform: uppercase;
-                            }
-
-                            @include respond-to(tablets) {
-                                border: none;
-                                float: left;
-                                width: 33%;
-                            }
-
-                            @include respond-to(phones) {
-                                height: auto;
-                                padding: 20px 0;
-                                width: 50%;
-                            }
                         }
 
-                        @include respond-to(tablets) {
-                            display: block;
+                        .stats {
+                            @include desktop-columns(12);
+
+                            text-align: center;
                         }
                     }
-
-                    @include respond-to(tablets) {
-                        float: none;
-                        margin: 0;
-                        width: 100%;
-                    }
-                }
-
-                @include respond-to(tablets) {
-                    @include box-sizing(border-box);
-
-                    float: none;
-                    padding: 0 10px;
-                    width: 100%;
                 }
             }
         }

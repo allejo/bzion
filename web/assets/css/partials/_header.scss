@@ -22,10 +22,7 @@ header {
                 color: $Color-Medium_Grey;
                 display: none;
                 line-height: $Settings-Line_Height;
-                margin: {
-                    left: 17px;
-                    right: 15px;
-                }
+                margin-right: 15px;
 
                 @include respond-to(tablets) {
                     display: block;
@@ -130,7 +127,11 @@ header {
                         margin-left: auto;
 
                         @include respond-to(tablets) {
-                            margin-right: 10px;
+                            li:last-child {
+                                a {
+                                    padding-right: 0;
+                                }
+                            }
                         }
                     }
                 }
