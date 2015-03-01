@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# If the CSS file was committed, then undo it and we'll do it after we compile it
+if git status -s | grep  '^M.\+css$'
+then
+    git reset HEAD web/assets/css/styles.css
+fi
+
+# Are any Sass files changed and added?
+if git status -s | grep  '^M.\+s[ac]ss$'
+then
+    grunt sass:dist & wait
+    git add -f web/assets/css/styles.css
+fi
+
+exit 0

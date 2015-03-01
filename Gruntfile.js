@@ -1,5 +1,10 @@
 module.exports = function(grunt) {
-    require('load-grunt-tasks')(grunt);
+    grunt.task.loadNpmTasks("grunt-sass");
+    grunt.renameTask("sass", "libsass");
+
+    require('load-grunt-tasks')(grunt, {
+        pattern: [ 'grunt-*', '!grunt-sass' ]
+    });
 
     grunt.initConfig({
         autoprefixer: {
@@ -16,22 +21,23 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        libsass: {
+            options: {
+                style: 'expanded',
+                sourceMap: true,
+                lineNumbers: true
+            },
+            debug: {
+                files: {
+                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
+                }
+            }
+        },
         sass: {
             dist: {
                 options: {
                     style: 'compressed',
-                    sourcemap: 'auto',
-                    require: 'sass-media_query_combiner'
-                },
-                files: {
-                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
-                }
-            },
-            debug: {
-                options: {
-                    style: 'expanded',
-                    sourcemap: 'auto',
-                    lineNumbers: true,
+                    sourcemap: 'none',
                     require: 'sass-media_query_combiner'
                 },
                 files: {
@@ -67,29 +73,29 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            options: {
+                livereload: true
+            },
             docs: {
                 files: [ 'web/assets/css/modules/**/*.scss' ],
                 tasks: [ 'sassdoc' ]
             },
             scripts: {
                 files: [ 'web/assets/js/main.js', 'web/assets/js/teams.js'],
-                tasks: [ 'js' ],
-                options: {
-                    livereload: true
-                }
+                tasks: [ 'js' ]
+            },
+            css: {
+                files: [ 'web/assets/css/styles.css' ]
             },
             styles: {
                 files: [ 'web/assets/css/**/*.scss' ],
-                tasks: [ 'css' ],
+                tasks: [ 'libsass' ],
                 options: {
-                    livereload: true
+                    livereload: false
                 }
             },
             views: {
-                files: [ 'views/**/*.html.twig' ],
-                options: {
-                    livereload: true
-                }
+                files: [ 'views/**/*.html.twig' ]
             }
         }
     });
@@ -98,4 +104,14 @@ module.exports = function(grunt) {
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
     grunt.registerTask('check', [ 'check-gems' ]);
     grunt.registerTask('default', [ 'css', 'js' ]);
+    grunt.registerTask('install-hook', function () {
+        var fs = require('fs');
+
+        // my precommit hook is inside the repo as /hooks/pre-commit
+        // copy the hook file to the correct place in the .git directory
+        grunt.file.copy('hooks/pre-commit', '.git/hooks/pre-commit');
+
+        // chmod the file to readable and executable by all
+        fs.chmodSync('.git/hooks/pre-commit', '755');
+    });
 };
