@@ -515,3 +515,107 @@ $desktop-min-size: $tablet-max-size + 1;
 @mixin phone-gutter($nth-child: 0, $gutter: 0) {
     @include set-gutter($nth-child, phones, $gutter);
 }
+
+
+/// Reset the margin to the original value if it has been modified by a `*-gutter` mixin.
+///
+/// @access private
+///
+/// @param {nth-child} $nth-child
+///   The nth-child rule that needs to be reset for the specified view
+///
+/// @param {String} $media
+///   The view size and smaller that the gutter will be reset for. Accepted sizes are
+///   the same as `respond-to`.
+
+@mixin gutter-reset($nth-child, $media) {
+    @include respond-to($media) {
+        &:nth-child(#{$nth-child}) {
+            margin-right: flex-gutter();
+        }
+    }
+}
+
+
+/// Reset the margin to the original value for tablets if it's been modified by a `*-gutter`
+/// mixin.
+///
+/// @param {nth-child} $nth-child
+///   The nth-child rule that needs to be reset for the specified view
+///
+/// @example scss Without gutter-reset
+///   .element {
+///       @include desktop-columns(4);
+///       @include desktop-gutter(3n); // Every 3rd element will not have a gutter
+///       @include tablet-columns(6);
+///       @include tablet-gutter(2n); // Every 2nd and 3rd element will not have a gutter
+///   }
+///
+/// @example scss With gutter-reset
+///   .element {
+///       @include desktop-columns(4);
+///       @include desktop-gutter(3n); // Every 3rd element will not have a gutter
+///       @include tablet-reset-gutter(3n); // Reset it so every element will have a gutter
+///       @include tablet-columns(6);
+///       @include tablet-gutter(2n); // Only every 2nd element will not have a gutter
+///   }
+
+@mixin tablet-reset-gutter($nth-child) {
+    @include gutter-reset($nth-child, tablets);
+}
+
+
+/// Reset the margin to the original value for phablets if it's been modified by a `*-gutter`
+/// mixin.
+///
+/// @param {nth-child} $nth-child
+///   The nth-child rule that needs to be reset for the specified view
+///
+/// @example scss Without gutter-reset
+///   .element {
+///       @include desktop-columns(4);
+///       @include desktop-gutter(3n); // Every 3rd element will not have a gutter
+///       @include phablet-columns(6);
+///       @include phablet-gutter(2n); // Every 2nd and 3rd element will not have a gutter
+///   }
+///
+/// @example scss With gutter-reset
+///   .element {
+///       @include desktop-columns(4);
+///       @include desktop-gutter(3n); // Every 3rd element will not have a gutter
+///       @include phablet-reset-gutter(3n); // Reset it so every element will have a gutter
+///       @include phablet-columns(6);
+///       @include phablet-gutter(2n); // Only every 2nd element will not have a gutter
+///   }
+
+@mixin phablet-reset-gutter($nth-child) {
+    @include gutter-reset($nth-child, phablets);
+}
+
+
+/// Reset the margin to the original value for phones if it's been modified by a `*-gutter`
+/// mixin.
+///
+/// @param {nth-child} $nth-child
+///   The nth-child rule that needs to be reset for the specified view
+///
+/// @example scss Without gutter-reset
+///   .element {
+///       @include desktop-columns(4);
+///       @include desktop-gutter(3n); // Every 3rd element will not have a gutter
+///       @include phone-columns(6);
+///       @include phone-gutter(2n); // Every 2nd and 3rd element will not have a gutter
+///   }
+///
+/// @example scss With gutter-reset
+///   .element {
+///       @include desktop-columns(4);
+///       @include desktop-gutter(3n); // Every 3rd element will not have a gutter
+///       @include phone-reset-gutter(3n); // Reset it so every element will have a gutter
+///       @include phone-columns(6);
+///       @include phone-gutter(2n); // Only every 2nd element will not have a gutter
+///   }
+
+@mixin phone-reset-gutter($nth-child) {
+    @include gutter-reset($nth-child, phones);
+}

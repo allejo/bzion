@@ -76,7 +76,7 @@ table {
   .media-query-setup html:before {
     font-size: inherit; } }
 
-header.page-header .menu-bar, body footer, main.landing .cover article, main.landing .key_points, main.landing .content, main.landing .content .recent-matches-container .recent-matches .match .team {
+header.page-header .menu-bar, body footer, main.landing .cover article, main.landing .key_points, main.landing .content, main.landing .content .recent-matches-container .recent-matches .match .team-container .team img {
   margin-left: auto;
   margin-right: auto; }
 
@@ -1424,16 +1424,21 @@ main.landing .content {
         width: 100%; }
         main.landing .content .news-container:last-child {
           margin-right: 0; } }
-    main.landing .content .news-container .news li {
-      border-bottom: 1px solid #EFEFEF;
-      margin: 5px 0;
-      list-style: none;
-      padding: 10px 0 15px; }
-      main.landing .content .news-container .news li h3 {
-        font-size: 18px;
-        margin-bottom: 5px; }
-      main.landing .content .news-container .news li:last-child {
-        border-bottom: none; }
+    main.landing .content .news-container .news {
+      margin-bottom: 15px;
+      margin-top: 15px; }
+      main.landing .content .news-container .news li {
+        border-bottom: 1px solid #EFEFEF;
+        list-style: none;
+        padding: 15px 0 15px; }
+        main.landing .content .news-container .news li h3 {
+          font-size: 18px;
+          margin-bottom: 5px; }
+        main.landing .content .news-container .news li:first-child {
+          padding-top: 0; }
+        main.landing .content .news-container .news li:last-child {
+          border-bottom: none;
+          padding-bottom: 0; }
   main.landing .content .recent-matches-container {
     float: left;
     display: block;
@@ -1452,7 +1457,8 @@ main.landing .content {
     main.landing .content .recent-matches-container .recent-matches {
       max-width: 68em;
       margin-left: auto;
-      margin-right: auto; }
+      margin-right: auto;
+      margin: 15px 0; }
       main.landing .content .recent-matches-container .recent-matches:after {
         content: "";
         display: table;
@@ -1464,9 +1470,7 @@ main.landing .content {
         float: left;
         display: block;
         margin-right: 2.3576515979%;
-        width: 31.7615656014%;
-        padding: 20px 20px 10px;
-        text-align: center; }
+        width: 31.7615656014%; }
         main.landing .content .recent-matches-container .recent-matches .match:after {
           content: "";
           display: table;
@@ -1475,6 +1479,9 @@ main.landing .content {
           margin-right: 0; }
         main.landing .content .recent-matches-container .recent-matches .match:nth-child(3n) {
           margin-right: 0; }
+        @media only screen and (max-width: 480px) {
+          main.landing .content .recent-matches-container .recent-matches .match:nth-child(3n) {
+            margin-right: 2.3576515979%; } }
         @media only screen and (max-width: 480px) {
           main.landing .content .recent-matches-container .recent-matches .match {
             float: left;
@@ -1486,21 +1493,37 @@ main.landing .content {
         @media only screen and (max-width: 480px) {
           main.landing .content .recent-matches-container .recent-matches .match:nth-child(2n) {
             margin-right: 0; } }
-        main.landing .content .recent-matches-container .recent-matches .match .team {
+        main.landing .content .recent-matches-container .recent-matches .match:nth-child(n+4) {
+          margin-top: 15px; }
+        @media only screen and (max-width: 480px) {
+          main.landing .content .recent-matches-container .recent-matches .match:nth-child(n+3) {
+            margin-top: 15px; } }
+        main.landing .content .recent-matches-container .recent-matches .match .team-container {
           float: left;
           display: block;
           margin-right: 2.3576515979%;
           width: 48.821174201%;
           margin-right: 0; }
-          main.landing .content .recent-matches-container .recent-matches .match .team:last-child {
+          main.landing .content .recent-matches-container .recent-matches .match .team-container:last-child {
             margin-right: 0; }
-          main.landing .content .recent-matches-container .recent-matches .match .team img {
-            display: block; }
+          main.landing .content .recent-matches-container .recent-matches .match .team-container:first-child {
+            padding-right: 5px;
+            text-align: right; }
+          main.landing .content .recent-matches-container .recent-matches .match .team-container:nth-child(2) {
+            padding-left: 5px; }
+          main.landing .content .recent-matches-container .recent-matches .match .team-container .team {
+            display: inline-block;
+            text-align: center; }
+            main.landing .content .recent-matches-container .recent-matches .match .team-container .team img {
+              display: block; }
         main.landing .content .recent-matches-container .recent-matches .match .stats {
-          display: inline-block;
-          font-size: 14px;
-          margin-top: 10px;
-          text-transform: uppercase; }
+          float: left;
+          display: block;
+          margin-right: 2.3576515979%;
+          width: 100%;
+          text-align: center; }
+          main.landing .content .recent-matches-container .recent-matches .match .stats:last-child {
+            margin-right: 0; }
 
 main.administration {
   font-family: 'Lato', sans-serif; }
