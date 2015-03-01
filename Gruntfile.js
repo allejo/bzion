@@ -73,29 +73,29 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            options: {
-                livereload: true
-            },
             docs: {
                 files: [ 'web/assets/css/modules/**/*.scss' ],
                 tasks: [ 'sassdoc' ]
             },
             scripts: {
                 files: [ 'web/assets/js/main.js', 'web/assets/js/teams.js'],
-                tasks: [ 'js' ]
+                tasks: [ 'js' ],
+                options: {
+                    livereload: true
+                }
             },
             css: {
                 files: [ 'web/assets/css/styles.css' ]
             },
             styles: {
                 files: [ 'web/assets/css/**/*.scss' ],
-                tasks: [ 'libsass' ],
-                options: {
-                    livereload: false
-                }
+                tasks: [ 'libsass' ]
             },
             views: {
-                files: [ 'views/**/*.html.twig' ]
+                files: [ 'views/**/*.html.twig' ],
+                options: {
+                    livereload: true
+                }
             }
         }
     });
