@@ -38,12 +38,98 @@ $desktop-min-size: $tablet-max-size + 1;
 //   Mixins we'll be using for our breakpoints
 // ================================================================================
 
-/// Have the specified content inside of the mixin respond to a specific view size
+/// Create a media query that will automatically handle max or min widths. When both $min
+/// and $max are set, both of them will be used and generate a media query with a minimum
+/// and maximum width. This mixin shouldn't be accessed directly but instead should only
+/// be used through one of the convenience mixins that uses this mixin.
+///
+/// @access private
+/// @content
+///
+/// @param {Number [unit]} $min [0]
+///   The minimum width for this media query to consider. When set to 0, a media query
+///   with a max-width will be generated
+///
+/// @param {Number [unit]} $max [0]
+///   The maximum width for this media query to consider. When set to 0, a media query
+///   with a min-width will be generated
+///
+
+@mixin media-size($min: 0, $max: 0) {
+    @if $min == $max {
+        @error "media-size() does not allow $min and $max both be equal to each other."
+    }
+    @else if $min > $max and $max != 0 {
+        @error "media-size() does not allow $min to be greater $max.";
+    }
+    @else if $min < 0 or $max < 0 {
+        @error "media-size() does not allow either $min or $max to be less than 0.";
+    }
+
+    @if $min == 0 and $max != 0 {
+        @media only screen and (max-width: $max) { @content; }
+    }
+    @else if $min != 0 and $max == 0 {
+        @media only screen and (min-width: $min) { @content; }
+    }
+    @else if $min != 0 and $max != 0 {
+        @media only screen and (min-width: $min) and (max-width: $max) { @content; }
+    }
+    @else {
+        @error "media-size() does not allow $min and $max both be 0.";
+    }
+}
+
+
+/// Have the specified content inside of the mixin respond to a specific view size. Because
+/// BZiON is "desktop first," all of the applied styles will also be applied to smaller views.
+///
+/// Passing a random value will cause the CSS rules to be applied to all views. This means you
+/// may pass a value such as `desktops` for consistency but it will be the equivalent of passing
+/// `bacon`.
 ///
 /// @content
 ///
 /// @param {String} $media
 ///   Accepted view sizes: `phones`, `phablets`, `tablets`
+///
+/// @example scss - Usage
+///   @include respond-to(phablets) {
+///       .phablet-and-smaller {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (max-width: 992px) {
+///       .phablet-and-smaller {
+///           display: block;
+///       }
+///   }
+
+@mixin respond-to($media) {
+    @if $media == phones {
+        @include media-size(0, $phone-max-size) { @content; }
+    }
+    @else if $media == phablets {
+        @include media-size(0, $phablet-max-size) { @content; }
+    }
+    @else if $media == tablets {
+        @include media-size(0, $tablet-max-size) { @content; }
+    }
+    @else {
+        @content;
+    }
+}
+
+
+/// Similar to `respond-to` with the exception that instead of smaller views also inheriting
+/// these CSS rules, only a specific view size will able to see the content
+///
+/// @content
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`, `desktops`
 ///
 /// @example scss - Usage
 ///   @include respond-to(phablets) {
@@ -53,21 +139,24 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 ///
 /// @example css - CSS Output
-///   @media only screen and (max-width: 45em) {
+///   @media only screen and (min-width: 481px) and (max-width: 768px) {
 ///       .phablet-only {
 ///           display: block;
 ///       }
 ///   }
 
-@mixin respond-to($media) {
+@mixin respond-only-to($media) {
     @if $media == phones {
-        @media only screen and (max-width: $phone-max-size) { @content; }
+        @include media-size($phone-min-size, $phone-max-size) { @content; }
     }
     @else if $media == phablets {
-        @media only screen and (max-width: $phablet-max-size) { @content; }
+        @include media-size($phablet-min-size, $phablet-max-size) { @content; }
     }
     @else if $media == tablets {
-        @media only screen and (max-width: $tablet-max-size) { @content; }
+        @include media-size($tablet-min-size, $tablet-max-size) { @content; }
+    }
+    @else if $media == desktops {
+        @include media-size($desktop-min-size) { @content; }
     }
 }
 
@@ -233,18 +322,11 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   (Optional) The maximum size a screen should have in order for the specified element to be displayed. If no maximum
 ///   or 0 is specified, then the element will be displayed on a screen size at least `$min` in width.
 
-@mixin set-visibilty($hide, $min, $max: 0) {
+@mixin set-visible($hide, $media) {
     display: if($hide, none, block);
 
-    @if $max == 0 {
-        @media only screen and (min-width: $min) {
-            display: if($hide, block, none);
-        }
-    }
-    @else {
-        @media only screen and (min-width: $min) and (max-width: $max) {
-            display: if($hide, block, none);
-        }
+    @include respond-only-to($media) {
+        display: if($hide, block, none);
     }
 }
 
@@ -257,7 +339,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin invisible-desktop() {
-    @include set-visibilty(false, $desktop-min-size);
+    @include set-visible(false, desktops);
 }
 
 
@@ -269,7 +351,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin invisible-tablet() {
-    @include set-visibilty(false, $tablet-min-size, $tablet-max-size);
+    @include set-visible(false, tablets);
 }
 
 
@@ -281,7 +363,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin invisible-phablet() {
-    @include set-visibilty(false, $phablet-min-size, $phablet-max-size);
+    @include set-visible(false, phablets);
 }
 
 
@@ -293,7 +375,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin invisible-phone() {
-    @include set-visibilty(false, $phone-min-size, $phone-max-size);
+    @include set-visible(false, phones);
 }
 
 
@@ -305,7 +387,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin visible-desktop() {
-    @include set-visibilty(true, $desktop-min-size);
+    @include set-visible(true, desktops);
 }
 
 
@@ -317,7 +399,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin visible-tablet() {
-    @include set-visibilty(true, $tablet-min-size, $tablet-max-size);
+    @include set-visible(true, tablets);
 }
 
 
@@ -329,7 +411,7 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin visible-phablet() {
-    @include set-visibilty(true, $phablet-min-size, $phablet-max-size);
+    @include set-visible(true, phablets);
 }
 
 
@@ -341,5 +423,95 @@ $desktop-min-size: $tablet-max-size + 1;
 ///   }
 
 @mixin visible-phone() {
-    @include set-visibilty(true, $phone-min-size, $phone-max-size);
+    @include set-visible(true, phones);
+}
+
+
+/// Each of columns generated through our `*-columns()` mixins will have a right margin
+/// so this mixin will set the margin.
+///
+/// @access private
+///
+/// @param {0 | nth-child} $nth-child
+///   If `0` is passed then the margin will be removed for all of the elements. Otherwise
+///   this value will be applied to a :nth-child selector.
+///
+/// @param {String} $respond-to
+///   The view size and smaller that the gutter will be removed from. Accepted sizes are
+///   the same as `respond-to`.
+///
+/// @param {Number [unitless]} $gutter
+///   The value for the right margin
+
+@mixin set-gutter($nth-child, $respond-to, $gutter) {
+    @include respond-to($respond-to) {
+        @if ($nth-child == 0) {
+            margin-right: $gutter;
+        }
+        @else {
+            &:nth-child(#{$nth-child}) {
+                margin-right: $gutter;
+            }
+        }
+    }
+}
+
+
+/// Set the gutter, or right margin, of the columns generated by `*-columns()` for desktops
+/// and smaller. By default this mixin will remove the gutter.
+///
+/// @param {0 | nth-child} $nth-child [0]
+///   If `0` is passed then the margin will be removed for all of the elements. Otherwise
+///   this value will be applied to a :nth-child selector.
+///
+/// @param {Number [unit]} $gutter [0]
+///   The new width the right margin will take
+
+@mixin desktop-gutter($nth-child: 0, $gutter: 0) {
+    @include set-gutter($nth-child, desktops, $gutter);
+}
+
+
+/// Set the gutter, or right margin, of the columns generated by `*-columns()` for tablets
+/// and smaller. By default this mixin will remove the gutter.
+///
+/// @param {0 | nth-child} $nth-child [0]
+///   If `0` is passed then the margin will be removed for all of the elements. Otherwise
+///   this value will be applied to a :nth-child selector.
+///
+/// @param {Number [unit]} $gutter [0]
+///   The new width the right margin will take
+
+@mixin tablet-gutter($nth-child: 0, $gutter: 0) {
+    @include set-gutter($nth-child, tablets, $gutter);
+}
+
+
+/// Set the gutter, or right margin, of the columns generated by `*-columns()` for phablets
+/// and smaller. By default this mixin will remove the gutter.
+///
+/// @param {0 | nth-child} $nth-child [0]
+///   If `0` is passed then the margin will be removed for all of the elements. Otherwise
+///   this value will be applied to a :nth-child selector.
+///
+/// @param {Number [unit]} $gutter [0]
+///   The new width the right margin will take
+
+@mixin phablet-gutter($nth-child: 0, $gutter: 0) {
+    @include set-gutter($nth-child, phablets, $gutter);
+}
+
+
+/// Set the gutter, or right margin, of the columns generated by `*-columns()` for phones.
+/// By default this mixin will remove the gutter.
+///
+/// @param {0 | nth-child} $nth-child [0]
+///   If `0` is passed then the margin will be removed for all of the elements. Otherwise
+///   this value will be applied to a :nth-child selector.
+///
+/// @param {Number [unit]} $gutter [0]
+///   The new width the right margin will take
+
+@mixin phone-gutter($nth-child: 0, $gutter: 0) {
+    @include set-gutter($nth-child, phones, $gutter);
 }

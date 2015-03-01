@@ -1,3 +1,9 @@
+//
+// Placeholders that are available to be used across the project
+//
+
+/// A placeholder for the infamous "clearfix" hack to fix floats
+
 %clearfix {
     *zoom: 1;
     &:after {
@@ -8,6 +14,9 @@
     }
 }
 
+
+/// A placeholder that will automatically horizontally center a block element
+
 %margin-center {
     margin: {
         left: auto;
@@ -15,9 +24,17 @@
     }
 }
 
+/// A placeholder that will remove the left padding of an element. This placeholder is intended
+/// to easily remove the padding of `ul` or `ol` elements.
+
 %no-padding-ul {
     padding-left: 0;
 }
+
+
+/// The master width of the website that is set through `$Settings-Global-Width` in `_base.scss`.
+/// Because this project is mobile responsive, any view sizes smaller than a desktop will have
+/// 100% width.
 
 %wrapper {
     @extend %margin-center;
@@ -25,6 +42,10 @@
     width: $Settings-Global-Width;
 
     @include respond-to(tablets) {
+        padding: {
+            left: 20px;
+            right: 20px;
+        }
         width: 100%;
     }
 }
