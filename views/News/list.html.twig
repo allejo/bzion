@@ -21,18 +21,18 @@
                     </h1>
                 </section>
 
-                {% if me.canCreate("News") %}
-                    <section class="page--options">
+                <section class="page--options">
+                    {% if me.canCreate("News") %}
                         <a class="button blue notextshadow" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
-                    </section>
-                {% endif %}
+                    {% endif %}
+                </section>
             </div>
         </section>
 
-        <section class="container">
+        <section class="news-container">
             {% include "News/categories.html.twig" %}
 
-            <section class="article_container">
+            <section class="article-container">
                 {% for article in news %}
                     <article>
                         <h1>{{ link_to(article) }}</h1>
