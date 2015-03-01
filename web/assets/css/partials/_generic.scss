@@ -79,19 +79,6 @@ em {
     font-style: italic;
 }
 
-form {
-    textarea {
-        @include box-sizing(border-box);
-
-        border: 1px solid $Color-Light_Grey;
-        outline: none;
-
-        &:focus {
-            border: 1px solid $Color-Blue;
-        }
-    }
-}
-
 h1 {
     font-size: 30px;
 }

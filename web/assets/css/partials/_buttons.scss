@@ -33,7 +33,7 @@ $Button-Colors: (
 );
 
 .button {
-    border-radius: 3px;
+    border-radius: $Border-Radius;
     color: $Color-White;
     cursor: pointer;
     font-size: 14px;

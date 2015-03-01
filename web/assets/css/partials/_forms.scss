@@ -1,0 +1,93 @@
+// Thanks to ThoughtBot's Bitters for this awesome template
+//
+// https://github.com/thoughtbot/bitters
+
+button {
+    @extend .button;
+    @extend .button.blue;
+}
+
+form {
+    margin-bottom: $Form-Spacing;
+}
+
+fieldset {
+    background-color: lighten($Form-Border_Color, 10%);
+    border: $Border-Default;
+    margin: 0 0 $Form-Small_Spacing;
+    padding: $Form-Small_Spacing;
+}
+
+input,
+label,
+select {
+    display: block;
+    font-family: $Font-Sans_Serif;
+    font-size: 16px;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: $Form-Small_Spacing / 2;
+
+    &.required::after {
+        color: red;
+        content: "*";
+        padding-left: 3px;
+    }
+
+    abbr {
+        display: none;
+    }
+}
+
+#{$all-text-inputs},
+select[multiple=multiple],
+textarea {
+    background-color: $Form-Base_Background_Color;
+    border: $Border-Default;
+    border-radius: $Border-Radius;
+    box-shadow: $Form-Box_Shadow;
+    box-sizing: border-box;
+    font-family: $Font-Sans_Serif;
+    font-size: 16px;
+    margin-bottom: $Form-Spacing / 2;
+    padding: $Form-Spacing / 3;
+    transition: border-color;
+    width: 100%;
+
+    &:hover {
+        border-color: darken($Form-Border_Color, 10%);
+    }
+
+    &:focus {
+        border-color: $Form-Action_Color;
+        box-shadow: $Form-Box_Shadow_Focus;
+        outline: none;
+    }
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="search"] {
+    @include appearance(none);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    display: inline;
+    margin-right: $Form-Small_Spacing / 2;
+}
+
+input[type="file"] {
+    padding-bottom: $Form-Small_Spacing;
+    width: 100%;
+}
+
+select {
+    margin-bottom: $Form-Spacing;
+    max-width: 100%;
+    width: auto;
+}

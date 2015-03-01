@@ -11,11 +11,11 @@ main {
                 .categories {
                     @extend %no-padding-ul;
 
-                    border: 1px solid $Border-Light_Color;
+                    border: $Border-Default;
                     border-radius: 3px;
 
                     li {
-                        border-bottom: 1px solid $Border-Light_Color;
+                        border-bottom: $Border-Default;
                         font-size: 14px;
                         list-style: none;
 
@@ -65,7 +65,7 @@ main {
                 @include phablet-columns(12);
 
                 article {
-                    border-bottom: 1px solid $Border-Light_Color;
+                    border-bottom: $Border-Default;
                     margin-bottom: 20px;
                     padding-bottom: 20px;
 
@@ -114,6 +114,48 @@ main {
                         margin-bottom: 0;
                     }
                 }
+            }
+        }
+
+        .news--editor--container {
+            @extend %wrapper;
+
+            .news--editor {
+                @include desktop-container;
+
+                .news--body,
+                .news--meta {
+                    div {
+                        margin: {
+                            bottom: 15px;
+                            top: 15px;
+                        }
+
+                        label {
+                            display: block;
+                        }
+
+                        &:first-child {
+                            margin-top: 0;
+                        }
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+
+                .news--body {
+                    @include desktop-columns(9);
+                }
+
+                .news--meta {
+                    @include desktop-columns(3);
+                }
+            }
+
+            .news--action {
+
             }
         }
     }

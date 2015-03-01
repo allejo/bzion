@@ -16,6 +16,17 @@ $Color-Blue: #258EC9;
 $Color-Orange: #ff6700;
 
 $Border-Light_Color: #E9E9E9;
+$Border-Default: 1px solid $Border-Light_Color;
+$Border-Radius: 3px;
+
+$Form-Action_Color: $Color-Sky_Blue;
+$Form-Base_Background_Color: $Color-White;
+$Form-Border_Color: #DDDDDD;
+$Form-Border_Radius: 3px;
+$Form-Box_Shadow: inset 0 1px 3px rgba(#000, 0.06);
+$Form-Box_Shadow_Focus: $Form-Box_Shadow, 0 0 5px adjust-color($Form-Action_Color, $lightness: -5%, $alpha: -0.3);
+$Form-Spacing: 1.5em;
+$Form-Small_Spacing: $Form-Spacing / 2;
 
 // Typography
 $Font-Sans_Serif: 'Lato', sans-serif;
