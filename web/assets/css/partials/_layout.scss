@@ -130,14 +130,17 @@ main {
 .page {
     .page--header {
         border-bottom: 1px solid $Border-Light_Color;
-        margin-bottom: 15px;
+        margin-bottom: 25px;
     }
 
     .page--container {
         @extend %wrapper;
         @include display(flex);
 
-        padding: 20px 0;
+        padding: {
+            bottom: 20px;
+            top: 20px;
+        };
     }
 
     .page--title {
