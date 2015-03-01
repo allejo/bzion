@@ -4,7 +4,10 @@ body {
         @include display(flex);
 
         border-top: 1px solid $Border-Light_Color;
-        padding: 20px 10px;
+        padding: {
+            bottom: 20px;
+            top: 20px;
+        }
 
         .copyright {
             .development {
@@ -28,6 +31,10 @@ body {
                         left: 0;
                         right: 20px;
                     }
+                }
+
+                @include respond-to(phones) {
+                    margin-right: 10px;
                 }
             }
 
