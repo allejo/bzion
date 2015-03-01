@@ -7,7 +7,7 @@ $Color-Header_Border: #D4D4D4;
 $Settings-Line_Height: 56px;
 
 header {
-    &.page-header {
+    &.site-header {
         @include linear-gradient($Color-White, #F2F2F2);
 
         box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
