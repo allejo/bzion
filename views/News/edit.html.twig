@@ -14,20 +14,20 @@
             </div>
         </section>
 
-        {{ form_start(form, { 'attr': { 'class': 'news--editor--container' } }) }}
-            <section class="news--editor">
-                <article class="news--body">
+        {{ form_start(form, { 'attr': { 'class': 'form--editor--container' } }) }}
+            <section class="form--editor">
+                <article class="form--body">
                     {{ form_row(form.subject) }}
-                    {{ form_row(form.content) }}
+                    {{ form_row(form.content, { 'attr': { 'class': 'form--body--content' } }) }}
                 </article>
 
-                <aside class="news--meta">
+                <aside class="form--meta">
                     {{ form_row(form.category) }}
                     {{ form_row(form.status) }}
                 </aside>
             </section>
 
-            <section class="news--actions">
+            <section class="form--actions">
                 {{ form_rest(form) }}
             </section>
         {{ form_end(form) }}

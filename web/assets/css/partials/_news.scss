@@ -116,47 +116,5 @@ main {
                 }
             }
         }
-
-        .news--editor--container {
-            @extend %wrapper;
-
-            .news--editor {
-                @include desktop-container;
-
-                .news--body,
-                .news--meta {
-                    div {
-                        margin: {
-                            bottom: 15px;
-                            top: 15px;
-                        }
-
-                        label {
-                            display: block;
-                        }
-
-                        &:first-child {
-                            margin-top: 0;
-                        }
-
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
-                    }
-                }
-
-                .news--body {
-                    @include desktop-columns(9);
-                }
-
-                .news--meta {
-                    @include desktop-columns(3);
-                }
-            }
-
-            .news--action {
-
-            }
-        }
     }
 }

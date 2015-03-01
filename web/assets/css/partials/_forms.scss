@@ -2,6 +2,11 @@
 //
 // https://github.com/thoughtbot/bitters
 
+
+// ==========================================
+// Set up the formatting of the generic items
+// ==========================================
+
 button {
     @extend .button;
     @extend .button.blue;
@@ -90,4 +95,32 @@ select {
     margin-bottom: $Form-Spacing;
     max-width: 100%;
     width: auto;
+}
+
+// ========================================
+// Set up the structure of all of the forms
+// ========================================
+
+.form--editor--container {
+    @extend %wrapper;
+
+    .form--editor {
+        @include desktop-container;
+
+        .form--body {
+            @include desktop-columns(9);
+
+            .form--body--content {
+                min-height: 270px;
+            }
+        }
+
+        .form--meta {
+            @include desktop-columns(3);
+        }
+    }
+
+    .form--actions {
+        text-align: left;
+    }
 }
