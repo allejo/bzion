@@ -1,77 +1,65 @@
-@mixin buttonColor($colorParam, $textColor: $Color-White) {
-    $color: $colorParam;
+@mixin buttonColor($color) {
     $dark_color: darken($color, 7%);
 
     @include linear-gradient($color, $dark_color);
-    border: 1px solid $dark_color;
 
-    @if $textColor != $Color-White {
-        color: $textColor;
-    }
+    border: 1px solid $dark_color;
+    color: set-text-from-color($color);
 
     &:hover {
-        color: $textColor;
         text-decoration: none;
 
         &:not(.nohover) {
-            $hoverColor: $dark_color;
-            $hoverDarkColor: darken($hoverColor, 3%);
+            $hoverColor: darken($color, 3%);
+            $hoverDarkColor: darken($hoverColor, 7%);
 
             @include linear-gradient($hoverColor, $hoverDarkColor);
+
+            color: set-text-from-color($hoverColor);
             border: 1px solid $hoverDarkColor;
         }
     }
 }
 
+$Button-Colors: (
+    red: #DB3434,
+    blue: #3498DB,
+    grey: #dbdbdb,
+    black: #4F4F4F,
+    green: #34DB6D,
+    orange: #ff8400,
+    purple: #6F34DB,
+    yellow: #FFB608
+);
+
 .button {
-    border-radius: 5px;
-    color: white;
+    border-radius: 3px;
+    color: $Color-White;
     cursor: pointer;
-    display: inline-block;
-    font-family: sans-serif;
-    font-size: 1em;
-    padding: .2em 2em .25em;
-    text-align: center;
-    text-decoration: none !important;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 14px;
+    padding: 3px 15px 5px;
+    text-decoration: none;
 
-    // Colors
-    &.black {
-        @include buttonColor(#4F4F4F);
+    i {
+        margin-right: 5px;
     }
 
-    &.blue {
-        @include buttonColor(#3460cf);
-    }
-
-    &.green {
-        @include buttonColor(#14BA2C);
-    }
-
-    &.grey {
-        @include buttonColor(#E9E9E9, #595959);
-    }
-
-    &.orange {
-        @include buttonColor(#ff8400);
-    }
-
-    &.red {
-        @include buttonColor(#FF5549);
-    }
-
-    &.yellow {
-        @include buttonColor(#FFB608);
+    &:hover {
+        color: $Color-White;
     }
 
     // Additional classes
     &.skinny {
-        padding: 0.1em 2em .20em;
+        padding: 1px 15px 3px;
     }
 
     &.noclick {
         cursor: default;
     }
-}
 
+    @each $color, $value in $Button-Colors {
+        &.#{$color} {
+            @include buttonColor($value)
+        }
+    }
+}

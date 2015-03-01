@@ -9,24 +9,24 @@
 {% endblock %}
 
 {% block content %}
-    <main class="news">
-        <section class="content_header">
-            <article class="wrapper">
-                <div>
+    <main class="page news">
+        <section class="page--header">
+            <div class="page--container">
+                <section class="page--title">
                     <h1>
                         League News
                         {% if category %}
                             in '{{ category.name }}' category
                         {% endif %}
                     </h1>
-                </div>
+                </section>
 
                 {% if me.canCreate("News") %}
-                    <div class="buttons">
-                        <a class="button grey notextshadow" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
-                    </div>
+                    <section class="page--options">
+                        <a class="button blue notextshadow" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
+                    </section>
                 {% endif %}
-            </article>
+            </div>
         </section>
 
         <section class="container">
