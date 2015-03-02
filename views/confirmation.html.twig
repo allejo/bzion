@@ -1,6 +1,22 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    {{ message|raw }}
-    {{ form(form) }}
+    <main class="page news">
+        <section class="page--header">
+            <div class="page--container">
+                <section class="page--title">
+                    <h1>Action Confirmation</h1>
+                </section>
+            </div>
+        </section>
+
+        <section class="confirmation--container">
+            <article class="confirmation--message">
+                {{ message|raw }}
+            </article>
+            <div class="confirmation--actions">
+                {{ form(form) }}
+            </div>
+        </section>
+    </main>
 {% endblock %}
