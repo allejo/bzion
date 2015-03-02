@@ -3,5 +3,8 @@
 {% block title %}News :: New Article{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "News/form.html.twig" with {
+        'pageTitle': 'Create News Post',
+        'form': form }
+    %}
 {% endblock %}
