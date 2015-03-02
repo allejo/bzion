@@ -48,4 +48,11 @@
         }
         width: 100%;
     }
+
+    @include respond-to(phones) {
+        padding: {
+            left: 15px;
+            right: 15px;
+        }
+    }
 }

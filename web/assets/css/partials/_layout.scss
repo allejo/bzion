@@ -141,11 +141,22 @@ main {
             bottom: 20px;
             top: 20px;
         };
+
+        @include respond-to(phablets) {
+            padding: {
+                bottom: 15px;
+                top: 15px;
+            }
+        }
     }
 
     .page--title {
         h1 {
             font-size: 24px;
+
+            @include respond-to(phablets) {
+                font-size: 20px;
+            }
         }
     }
 
