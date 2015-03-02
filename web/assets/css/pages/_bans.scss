@@ -3,7 +3,6 @@ main {
         @extend .clearfix;
 
         .punishments {
-            @extend %mobile_padding;
             @extend .wrapper;
 
             .ban_list {
@@ -94,7 +93,6 @@ main {
         }
 
         .summary {
-            @extend %mobile_padding;
             @extend .wrapper;
 
             h2, h3 {

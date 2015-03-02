@@ -16,7 +16,6 @@ main {
         }
 
         .list {
-            @extend %mobile_padding;
             @extend .wrapper;
 
             li {

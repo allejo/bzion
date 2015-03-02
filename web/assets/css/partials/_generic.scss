@@ -1,3 +1,5 @@
+// This files contains styles for all of the generic HTML elements
+
 a {
     color: $Color-Sky_Blue;
     text-decoration: none;
@@ -62,6 +64,7 @@ blockquote {
 
 body {
     font-family: $Font-Sans_Serif;
+    line-height: 1.4em;
 }
 
 code {

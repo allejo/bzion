@@ -1,7 +1,6 @@
 main {
     &.server_list {
         .servers {
-            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 

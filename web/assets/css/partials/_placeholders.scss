@@ -1,9 +1,0 @@
-%mobile_padding {
-    @include respond-to(tablets)
-    {
-        @include box-sizing(border-box);
-
-        padding-left: 15px;
-        padding-right: 15px
-    };
-}

@@ -1,0 +1,79 @@
+// This file contains any generic CSS classes that don't belong anyone and just help styling
+// random objects
+
+.badge {
+     @include background-image(linear-gradient(#F65D5F, #E93631));
+
+     border-radius: 2px;
+     box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 1px rgba(0, 0, 0, 0.2);
+     color: #FFF;
+     display: inline-block;
+     font-size: 11px;
+     line-height: 16px;
+     margin-left: -10px;
+     padding: 0 4px;
+     position: relative;
+     text-shadow: 0 1px #902A27;
+     top: -10px;
+ }
+
+.clearfix {
+    zoom: 1;
+
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+.css-table {
+    border-collapse: collapse;
+    display: table;
+
+    .row {
+        display: table-row;
+
+        .column {
+            @include box-sizing(border-box);
+
+            border: 1px solid #EFEFEF;
+            display: table-cell;
+            height: 20px;
+        }
+    }
+}
+
+.fuck-ie {
+    background-color: #FF7D87;
+    color: $Color-White;
+    padding: 20px;
+
+    a {
+        color: #AD1625;
+        font-weight: bold;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+}
+
+.tipsy {
+    font-size: 16px;
+}
+
+.wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: $Settings-Global_Width;
+
+    @include respond-to(tablets) {
+        width: 100%;
+    }
+}

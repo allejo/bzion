@@ -1,0 +1,46 @@
+.custom_page {
+	.content {
+        @extend .clearfix;
+        @extend .wrapper;
+	}
+}
+
+.page {
+    .page--header {
+        border-bottom: 1px solid $Border-Light_Color;
+        margin-bottom: 25px;
+    }
+
+    .page--container {
+        @extend %wrapper;
+        @include display(flex);
+
+        padding: {
+            bottom: 20px;
+            top: 20px;
+        };
+
+        @include respond-to(phablets) {
+            padding: {
+                bottom: 15px;
+                top: 15px;
+            }
+        }
+    }
+
+    .page--title {
+        h1 {
+            font-size: 24px;
+
+            @include respond-to(phablets) {
+                    font-size: 20px;
+            }
+        }
+    }
+
+    .page--options {
+        @include flex(1);
+
+        text-align: right;
+    }
+}

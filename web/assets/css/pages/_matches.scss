@@ -9,7 +9,6 @@ main {
         }
 
         .matches {
-            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 

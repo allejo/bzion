@@ -1,7 +1,6 @@
 main {
     &.players, &.teams {
         .profile {
-            @extend %mobile_padding;
             @extend .clearfix;
             @extend .wrapper;
 

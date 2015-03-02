@@ -4,6 +4,7 @@
 //
 @import "partials/reset";
 
+
 //
 // Modules and Variables
 //    (things that won't actually output CSS)
@@ -30,31 +31,34 @@
 
 //
 // Partials
-//    (everything that will actually output CSS)
+//    (CSS for parts of the website but not specific to a single page)
 //
 
-// CSS concerning the layout of the entire website in general
-@import "partials/placeholders";
-@import "partials/layout";
+@import "partials/helpers";
 @import "partials/generic";
 @import "partials/typography";
 @import "partials/buttons";
 @import "partials/forms";
-@import "partials/confirmation";
 @import "partials/header";
 @import "partials/footer";
 @import "partials/ranks";
 
-// CSS for specific pages on the website
-@import "partials/landingPage";
-@import "partials/administration";
-@import "partials/news";
-@import "partials/bans";
-@import "partials/matches";
-@import "partials/messaging";
-@import "partials/notifications";
-@import "partials/profiles";
-@import "partials/players";
-@import "partials/teams";
-@import "partials/servers";
-@import "partials/pages";
+
+//
+// Pages
+//    (CSS for specific pages on the website)
+//
+
+@import "pages/administration";
+@import "pages/bans";
+@import "pages/confirmation";
+@import "pages/landingPage";
+@import "pages/matches";
+@import "pages/messaging";
+@import "pages/news";
+@import "pages/notifications";
+@import "pages/pages";
+@import "pages/players";
+@import "pages/profiles";
+@import "pages/teams";
+@import "pages/servers";
