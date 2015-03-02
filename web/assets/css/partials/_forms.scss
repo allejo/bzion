@@ -109,6 +109,8 @@ select {
 
         .form--body {
             @include desktop-columns(9);
+            @include phablet-columns(12);
+            @include phablet-gutter;
 
             .form--body--content {
                 min-height: 270px;
@@ -117,6 +119,18 @@ select {
 
         .form--meta {
             @include desktop-columns(3);
+            @include phablet-columns(12);
+
+            @include respond-to(phablets) {
+                div {
+                    float: left;
+                    margin-right: 15px;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
         }
     }
 
