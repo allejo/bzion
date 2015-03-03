@@ -37,9 +37,14 @@
             }
 
             @include element('options') {
+                @include align-items(center);
+                @include display(flex);
                 @include flex(1);
+                @include justify-content(flex-end);
 
-                text-align: right;
+                .button {
+                    margin-left: 5px;
+                }
             }
         }
     }
