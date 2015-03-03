@@ -3,15 +3,17 @@ Styling BZiON
 
 BZiON's stylesheet is written in SASS and we make the most of it; if you're not familiar with SASS, head on over to the [SASS Getting Started Guide](http://sass-lang.com/guide).
 
-We choose to use SASS, Bourbon, and Neat as our main languages because of the freedom it gave us to control every aspect of the design.
+We choose to use SASS, Bourbon, and Neat because of the freedom it gave us to control every aspect of the design.
 
 ## Stylesheet Structure
 
 - **modules/**
     - This folder contains all of the partial SASS files that don't have actual CSS classes but instead only provide mixins or placeholders.
     - Documentation for all of custom mixins used throughout the project is provided through SassDoc, which is [hosted by alezakos](http://helit.org/bziondoc/sassdoc/).
+- **pages/**
+    - This folder contains all of the partial SASS files that contain all of the CSS classes for specific pages
 - **partials/**
-    - This folder contains all of the partial SASS files that contain all of the CSS classes and rules that make up the BZiON stylesheet.
+    - This folder contains all of the partial SASS files that contain reusable CSS classes or classes that handle a specific element of the website (e.g. header, footer, sidebar, menu, etc.)
     - Partial files in this folder are typically named appropriately based on the page they style or the part of the website they style.
 - **vendor/**
     - This folder contains all of the SASS libraries or helpers that were written by others and are not actively maintained by BZiON developers.
@@ -26,10 +28,16 @@ Support for theming is planned to be supported by version 1.1.0.
 
 ## Questions
 
-### Why not Less?
+### Why not LESS?
 
-We chose to use SASS over Less for several reasons. Our main reason for choosing SASS was the simplicity of its syntax and the capabilities SASS has that Less doesn't; e.g. loops, lack of namespaces, proper mixins, etc.
+We chose to use SASS over LESS for several reasons. Our main reason for choosing SASS was the simplicity of its syntax and the capabilities SASS has that LESS doesn't; e.g. loops, lack of namespaces, proper mixins, etc.
 
 ### Why not Bootstrap?
 
 While Bootstrap definitely has its uses, we choose not to use Bootstrap because it didn't suit our needs. Since we use ThoughtBot's Neat library, it already provides us with a simple to use grid system and we have convenience mixins to perform similar functionality to Bootstrap's mixins so other than that, it's just a lot of bloat.
+
+Bootstrap's grid system is also a limiting factor when styling for specific mobile devices in landspace mode so Neat's grid system gives us full control of handling that. Lastly, Bootstrap is a "mobile-first" library while BZiON is "desktop-first" so that's another limiting factor.
+
+### Why use both Libsass and Ruby SASS?
+
+The Ruby SASS compiler has far more features, is the standard when setting the language specifieds, and supports third-party plug-ins while Libsass does not. For these reasons, Ruby SASS is used to compile the finalized production ready stylesheet while Libsass is used for development as compilation time with Libsass is far faster than with Ruby SASS so changes to the web browser are applied quicker.
