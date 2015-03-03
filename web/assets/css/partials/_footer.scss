@@ -4,6 +4,9 @@ body {
         @include display(flex);
 
         border-top: 1px solid $Border-Light_Color;
+        margin: {
+            top: 25px;
+        }
         padding: {
             bottom: 20px;
             top: 20px;
