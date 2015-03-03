@@ -15,3 +15,27 @@
         @return #ffffff; // Darker background, return light color
     }
 }
+
+
+/// Create a Block Element following the BEM naming scheme
+///
+/// @param {String} $element
+///   Element's name
+
+@mixin element($element) {
+    &__#{$element} {
+        @content;
+    }
+}
+
+
+/// Create a Block Modifier following the BEM naming scheme
+///
+/// @param {String} $modifier
+///   Modifier's name
+
+@mixin modifier($modifier) {
+    &--#{$modifier} {
+        @content;
+    }
+}

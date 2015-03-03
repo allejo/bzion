@@ -8,15 +8,18 @@
 
 {% block content %}
     <main class="teams">
-        <section class="content_header">
-            <article>
-                {{ team.rankImageLiteral | raw }}
-                <div>
-                    <h1>{{ team.name }}</h1>
-                    <small>{{ team.elo }}</small>
-                </div>
+        <section class="page__header">
+            <div class="page__header__container">
+                <section class="page__header__container__title">
+                    {{ team.rankImageLiteral | raw }}
 
-                <div class="buttons">
+                    <div>
+                        <h1>{{ team.name }}</h1>
+                        <small>{{ team.elo }}</small>
+                    </div>
+                </section>
+
+                <section class="page__header__container__options">
                     {% if me.canDelete(team) %}
                         <a class="button red" href="{{ team.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
@@ -32,8 +35,8 @@
                     {% if me is valid and me.team.id == team.id %}
                         <a class="button grey notextshadow" href="{{ team.url('abandon') }}"><i class="fa fa-sign-out"></i> Abandon</a>
                     {% endif %}
-                </div>
-            </article>
+                </section>
+            </div>
         </section>
 
         <section class="profile">

@@ -4,10 +4,18 @@
 
 {% block content %}
     <main class="teams">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>Active Teams</h1>
-            </article>
+        <section class="page__header">
+            <div class="page__header__container">
+                <section class="page__header__container__title">
+                    <h1>Active Teams</h1>
+                </section>
+
+                <section class="page__header__container__options">
+                    {% if me.Team is null and me.canCreate("Team") %}
+                        <a class="button blue notextshadow" href="{{ path('team_new') }}"><i class="fa fa-plus"></i> Create Team</a>
+                    {% endif %}
+                </section>
+            </div>
         </section>
 
         <ul class="list">
