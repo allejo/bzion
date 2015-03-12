@@ -9,10 +9,10 @@
 {% endblock %}
 
 {% block content %}
-    <main class="page news">
-        <section class="page__header">
-            <div class="page__header__container">
-                <section class="page__header__container__title">
+    <main class="o-page news">
+        <section class="o-page__header">
+            <div class="o-page__header__container">
+                <section class="o-page__header__container__title">
                     <h1>
                         League News
                         {% if category %}
@@ -21,7 +21,7 @@
                     </h1>
                 </section>
 
-                <section class="page__header__container__options">
+                <section class="o-page__header__container__options">
                     {% if me.canCreate("News") %}
                         <a class="button blue notextshadow" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
                     {% endif %}
