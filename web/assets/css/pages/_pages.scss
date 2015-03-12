@@ -5,7 +5,7 @@
 	}
 }
 
-.o-page {
+@include object('page'){
     @include element('header') {
         border-bottom: 1px solid $Border-Light_Color;
         margin-bottom: 25px;
