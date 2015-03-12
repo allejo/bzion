@@ -20,6 +20,18 @@ We choose to use SASS, Bourbon, and Neat because of the freedom it gave us to co
 - styles.scss
     - This file is the heart of the stylesheet which just includes all of the partial SASS files
 
+## SASS Practices
+
+### CSS Structure
+
+Even though we use SASS, the generated CSS can still be a pain or nightmare especially when you need to debug. To make life easier, we follow the [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) syntax for our CSS classes. Not only are we using BEM, we have decided to expand on it by using "[namespaces](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/)" in our CSS classes (no, I do not mean LESS namespaces).
+
+### Libsass + Ruby SASS
+
+In order to speed up development, Libsass is used to compile the SASS quickly but due its limitations and lack of plug-in support, it is only used for development. For the production ready stylesheet, Ruby SASS is used with plug-ins to compile everything and reorganize things. Because Libsass is used, all of the SASS written must be supported by the latest official Libsass release meaning some of the latest SASS features may not be supported and should not be used in BZiON.
+
+For more information about Libsass, visit their [homepage](http://libsass.org/).
+
 ## Themes
 
 BZiON will allow anyone to make their own themes or expand on the default theme by writing their own partial SASS files, which can then be compiled to make your own theme and will be automatically loaded by BZiON if it exists.
@@ -28,9 +40,14 @@ Support for theming is planned to be supported by version 1.1.0.
 
 ## Questions
 
-### Why not LESS?
+### Why not LESS or Stylus?
 
-We chose to use SASS over LESS for several reasons. Our main reason for choosing SASS was the simplicity of its syntax and the capabilities SASS has that LESS doesn't; e.g. loops, lack of namespaces, proper mixins, etc.
+We chose to use SASS over LESS and Stylus for several reasons. Our main reason for choosing SASS was the simplicity of its syntax and the capabilities SASS has that LESS and Stylus don't; e.g. loops, lack of namespaces, proper mixins, etc.
+
+- We're not looking to write python-like CSS by using Stylus.
+- We're not looking to write JS-like CSS by using LESS.
+
+We have no intention of abandoning SASS.
 
 ### Why not Bootstrap?
 
@@ -38,6 +55,8 @@ While Bootstrap definitely has its uses, we choose not to use Bootstrap because 
 
 Bootstrap's grid system is also a limiting factor when styling for specific mobile devices in landspace mode so Neat's grid system gives us full control of handling that. Lastly, Bootstrap is a "mobile-first" library while BZiON is "desktop-first" so that's another limiting factor.
 
-### Why use both Libsass and Ruby SASS?
+### Why not &lt;insert framework here&gt;?
 
-The Ruby SASS compiler has far more features, is the standard when setting the language specifieds, and supports third-party plug-ins while Libsass does not. For these reasons, Ruby SASS is used to compile the finalized production ready stylesheet while Libsass is used for development as compilation time with Libsass is far faster than with Ruby SASS so changes to the web browser are applied quicker.
+Similarly to our reasons for not using Bootstrap, Bourbon and Neat give us the freedom to control every aspect of our SASS. It has not been the case where Bourbon or Neat lacked a feature that couldn't be written quickly, so there isn't a need for using a different framework/library.
+
+In addition, Bourbon and Neat are both lightweight and do not affect compilation time as much as other libraries (e.g. Compass, Susy).
