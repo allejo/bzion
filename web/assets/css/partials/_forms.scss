@@ -101,23 +101,23 @@ select {
 // Set up the structure of all of the forms
 // ========================================
 
-.form--editor--container {
+@include component('form') {
     @extend %wrapper;
 
-    .form--editor {
+    @include element('editor') {
         @include desktop-container;
 
-        .form--body {
+        @include element('body') {
             @include desktop-columns(9);
             @include phablet-columns(12);
             @include phablet-gutter;
 
-            .form--body--content {
+            @include element('content') {
                 min-height: 270px;
             }
         }
 
-        .form--meta {
+        @include element('meta') {
             @include desktop-columns(3);
             @include phablet-columns(12);
 
@@ -134,7 +134,7 @@ select {
         }
     }
 
-    .form--actions {
+    @include element('actions') {
         text-align: left;
     }
 }

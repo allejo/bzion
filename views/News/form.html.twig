@@ -1,4 +1,4 @@
-<main class="o-page news editor">
+<main class="o-page news">
     <section class="o-page__header">
         <div class="o-page__header__container">
             <section class="o-page__header__container__title">
@@ -7,21 +7,21 @@
         </div>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'form--editor--container' } }) }}
-    <section class="form--editor">
-        <article class="form--body">
-            {{ form_row(form.subject) }}
-            {{ form_row(form.content, { 'attr': { 'class': 'form--body--content' } }) }}
-        </article>
+    {{ form_start(form, { 'attr': { 'class': 'c-form' } }) }}
+        <section class="c-form__editor">
+            <article class="c-form__editor__body">
+                {{ form_row(form.subject) }}
+                {{ form_row(form.content, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
+            </article>
 
-        <aside class="form--meta">
-            {{ form_row(form.category) }}
-            {{ form_row(form.status) }}
-        </aside>
-    </section>
+            <aside class="c-form__editor__meta">
+                {{ form_row(form.category) }}
+                {{ form_row(form.status) }}
+            </aside>
+        </section>
 
-    <section class="form--actions">
-        {{ form_rest(form) }}
-    </section>
+        <section class="c-form__actions">
+            {{ form_rest(form) }}
+        </section>
     {{ form_end(form) }}
 </main>
