@@ -3,10 +3,10 @@
 {% block title %}News{% endblock %}
 
 {% block content %}
-    <main class="o-page news">
-        <section class="o-page__header">
-            <div class="o-page__header__container">
-                <section class="o-page__header__container__title">
+    <main class="c-page news">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
                     <h1>
                         League News
                         {% if category %}
@@ -15,7 +15,7 @@
                     </h1>
                 </section>
 
-                <section class="o-page__header__container__options">
+                <section class="c-page__header__container__options">
                     {% if me.canEdit(article) %}
                         <a class="button grey notextshadow" href="{{ article.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
