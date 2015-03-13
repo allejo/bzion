@@ -1,53 +1,51 @@
-body {
-    footer {
-        @extend %wrapper;
-        @include display(flex);
+@include component('footer') {
+    @extend %wrapper;
+    @include display(flex);
 
-        border-top: 1px solid $Border-Light_Color;
-        margin: {
-            top: 25px;
+    border-top: 1px solid $Border-Light_Color;
+    margin: {
+        top: 25px;
+    }
+    padding: {
+        bottom: 20px;
+        top: 20px;
+    }
+
+    @include element('copyright') {
+        @include element('development') {
+            font-size: 0.9em;
+            margin-left: 10px;
+            text-transform: lowercase;
         }
-        padding: {
-            bottom: 20px;
-            top: 20px;
-        }
+    }
 
-        .copyright {
-            .development {
-                font-size: 0.9em;
-                margin-left: 10px;
-                text-transform: lowercase;
-            }
-        }
+    @include element('pages') {
+        @include flex(1);
 
-        .pages {
-            @include flex(1);
+        text-align: right;
 
-            text-align: right;
-
-            li {
-                margin-left: 20px;
-
-                @include respond-to(phablets) {
-                    margin: {
-                        bottom: 10px;
-                        left: 0;
-                        right: 20px;
-                    }
-                }
-
-                @include respond-to(phones) {
-                    margin-right: 10px;
-                }
-            }
+        li {
+            margin-left: 20px;
 
             @include respond-to(phablets) {
-                text-align: left;
+                margin: {
+                    bottom: 10px;
+                    left: 0;
+                    right: 20px;
+                }
+            }
+
+            @include respond-to(phones) {
+                margin-right: 10px;
             }
         }
 
         @include respond-to(phablets) {
-            @include flex-direction(column-reverse);
+            text-align: left;
         }
+    }
+
+    @include respond-to(phablets) {
+        @include flex-direction(column-reverse);
     }
 }

@@ -144,7 +144,7 @@ ul {
         list-style-type: circle;
     }
 
-    &.horizontal {
+    @include is('horizontal') {
         padding-left: 0;
 
         li {

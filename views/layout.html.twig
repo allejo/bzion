@@ -51,20 +51,20 @@
 
         {% endblock %}
 
-        <footer>
-            <section class="copyright">
+        <footer class="c-footer">
+            <section class="c-footer__copyright">
                 <span>BZiON &copy; {{ "now" | date("Y") }}</span>
 
                 {% if app.debug %}
-                    <span class="development"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
+                    <span class="c-footer__copyright__development"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
                 {% endif %}
 
                 {% if app.maintenance and app.controller.name != "Maintenance" %}
-                    <span class="development"><i class="fa fa-plug "></i> Maintenance mode</span>
+                    <span class="c-footer__copyright__development"><i class="fa fa-plug "></i> Maintenance mode</span>
                 {% endif %}
             </section>
 
-            <ul class="pages horizontal">
+            <ul class="c-footer__pages is-horizontal">
                 {% for page in app.pages %}
                     {% if not page.isHomePage %}
                         <li>{{ link_to(page) }}</li>
