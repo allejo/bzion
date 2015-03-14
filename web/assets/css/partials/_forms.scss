@@ -8,8 +8,8 @@
 // ==========================================
 
 button {
-    @extend .button;
-    @extend .button.blue;
+    @extend .c-button;
+    @extend .c-button--blue;
 }
 
 form {

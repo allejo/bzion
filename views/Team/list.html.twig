@@ -12,7 +12,7 @@
 
                 <section class="c-page__header__container__options">
                     {% if me.Team is null and me.canCreate("Team") %}
-                        <a class="button blue notextshadow" href="{{ path('team_new') }}"><i class="fa fa-plus"></i> Create Team</a>
+                        <a class="c-button c-button--blue" href="{{ path('team_new') }}"><i class="fa fa-plus"></i> Create Team</a>
                     {% endif %}
                 </section>
             </div>

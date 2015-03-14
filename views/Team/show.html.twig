@@ -21,19 +21,19 @@
 
                 <section class="c-page__header__container__options">
                     {% if me.canDelete(team) %}
-                        <a class="button red" href="{{ team.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
+                        <a class="c-button c-button--red" href="{{ team.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
 
                     {% if me.canEdit(team) %}
-                        <a class="button grey notextshadow" href="{{ team.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
+                        <a class="c-button c-button--grey" href="{{ team.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 
                     {% if me is valid and me.team.id != team.id and me.isTeamless and team.status == 'open' %}
-                        <a class="button grey notextshadow" href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join</a>
+                        <a class="c-button c-button--grey" href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join</a>
                     {% endif %}
 
                     {% if me is valid and me.team.id == team.id %}
-                        <a class="button grey notextshadow" href="{{ team.url('abandon') }}"><i class="fa fa-sign-out"></i> Abandon</a>
+                        <a class="c-button c-button--grey" href="{{ team.url('abandon') }}"><i class="fa fa-sign-out"></i> Abandon</a>
                     {% endif %}
                 </section>
             </div>

@@ -1,58 +1,13 @@
 main {
     &.landing {
-        .cover {
-            @include display(flex);
-
-            background: url("../imgs/cover_photo.png") no-repeat fixed 0 -225px;
-            background-size: cover;
-            height: 350px;
-            width: 100%;
-
-            article {
-                @extend %wrapper;
-
-                margin: auto;
-                text-align: center;
-
-                h1, h2 {
-                    color: #fff;
-                    text-shadow: 0 1px 10px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.9);
-                }
-
-                h1 {
-                    font-size: 48px;
-                    line-height: 48px;
-                    margin-bottom: 20px;
-
-                    @include respond-to(phones) {
-                        font-size: 30px;
-                        line-height: 30px;
-                        margin-bottom: 15px;
-                    }
-                }
-
-                h2 {
-                    font-size: 24px;
-
-                    @include respond-to(phones) {
-                        font-size: 22px;
-                    }
-                }
-
-                .button {
-                    display: inline-block;
-                    margin-top: 40px;
-                }
-            }
+        @include component('jumbotron') {
+            background-attachment: scroll;
+            background-image: url("../imgs/cover_photo.png");
+            background-position: 0 -185px;
+            background-repeat: no-repeat;
 
             @include respond-to(tablets) {
-                background-attachment: scroll;
                 background-position: center center;
-                height: 250px;
-            }
-
-            @include respond-to(phones) {
-                height: 200px;
             }
         }
 

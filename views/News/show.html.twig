@@ -17,11 +17,11 @@
 
                 <section class="c-page__header__container__options">
                     {% if me.canEdit(article) %}
-                        <a class="button grey notextshadow" href="{{ article.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
+                        <a class="c-button c-button--grey" href="{{ article.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
                     {% endif %}
 
                     {% if me.canDelete(article) %}
-                        <a class="button red" href="{{ article.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
+                        <a class="c-button c-button--red" href="{{ article.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
                     {% endif %}
                 </section>
             </div>

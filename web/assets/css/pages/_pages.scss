@@ -15,8 +15,8 @@
             @include display(flex);
 
             padding: {
-                bottom: 20px;
-                top: 20px;
+                bottom: 15px;
+                top: 15px;
             };
 
             @include respond-to(phablets) {
@@ -27,8 +27,11 @@
             }
 
             @include element('title') {
+                @include display(flex);
+
                 h1 {
                     font-size: 24px;
+                    margin: auto;
 
                     @include respond-to(phablets) {
                         font-size: 20px;
@@ -42,7 +45,7 @@
                 @include flex(1);
                 @include justify-content(flex-end);
 
-                .button {
+                @include component('button') {
                     margin-left: 5px;
                 }
             }
