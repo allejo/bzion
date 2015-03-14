@@ -1,0 +1,18 @@
+@mixin make-container() {
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+@mixin make-columns($columns) {
+    $percent: ($rocks-column-width * $columns) * 1%;
+
+    flex-basis: $percent;
+    max-width: $percent;
+}
+
+@mixin offset-columns($columns) {
+    margin-left: ($rocks-column-width * $columns) * 1%;
+}

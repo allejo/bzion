@@ -1,0 +1,6 @@
+$rocks-gutter-width: 1rem !default;
+$rocks-outer-margin: 2rem !default;
+$rocks-column-count: 12 !default;
+
+$rocks-gutter-compensation: ($rocks-gutter-width / 2) * -1;
+$rocks-column-width: 100 / $rocks-column-count;

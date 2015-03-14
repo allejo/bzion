@@ -99,7 +99,7 @@ module.exports = function(grunt) {
                     'web/assets/css/**/*.scss',
                     '!web/assets/css/vendor/**/*.scss'
                 ],
-                tasks: [ 'libsass' ],
+                tasks: [ 'libsass', 'autoprefixer' ],
                 options: {
                     livereload: false,
                     spawn: true
@@ -114,7 +114,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('css', [ 'sass:dist' ]);
+    grunt.registerTask('css', [ 'sass:dist', 'autoprefixer' ]);
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
     grunt.registerTask('check', [ 'check-gems' ]);
     grunt.registerTask('default', [ 'css', 'js' ]);

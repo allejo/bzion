@@ -1,0 +1,14 @@
+@include object('layout') {
+    @extend %wrapper;
+    @include make-container;
+
+    @include element('sidebar') {
+        @include make-columns(3);
+
+        padding-right: 2.5%;
+    }
+
+    @include element('body-with-sidebar') {
+        @include make-columns(9);
+    }
+}

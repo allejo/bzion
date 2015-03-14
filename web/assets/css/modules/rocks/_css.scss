@@ -1,0 +1,25 @@
+.col {
+    .reverse {
+        @include column-reverse;
+    }
+}
+
+.row {
+    @include make-container;
+
+    .reverse {
+        @include row-reverse;
+    }
+}
+
+@for $i from 1 through $rocks-column-count {
+    .col-xs-#{$i} {
+        @include make-columns($i);
+    }
+
+    @if $i < $rocks-column-count {
+        .col-xs-offset-#{$i} {
+            @include offset-columns($i);
+        }
+    }
+}

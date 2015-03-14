@@ -27,27 +27,11 @@
             </div>
         </section>
 
-        <section class="news-container">
+        <section class="o-layout">
             {% include "News/categories.html.twig" %}
 
-            <section class="article-container">
-                <article>
-                    <h1>{{ article.subject }}</h1>
-                    <p class="post_date">{{ article.created | date("F d, Y") }}</p>
-
-                    <section class="post">
-                        {{ article.content }}
-                    </section>
-
-                    <ul class="meta">
-                        <li>
-                            <i class="fa fa-user"></i> {{ link_to(article.author) }}
-                        </li>
-                        <li>
-                            <i class="fa fa-tag"></i> {{ link_to(article.category) }}
-                        </li>
-                    </ul>
-                </article>
+            <section class="o-layout__body-with-sidebar">
+                {% include "News/article.html.twig" with { 'article': article } %}
             </section>
         </section>
     </main>

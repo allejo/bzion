@@ -25,6 +25,7 @@
 
 @import "vendor/bourbon/bourbon";
 @import "vendor/neat/neat";
+@import "modules/rocks/rocks";
 @import "vendor/flags";
 @import "vendor/loaders";
 
@@ -43,6 +44,7 @@
 @import "partials/jumbotron";
 @import "partials/footer";
 @import "partials/ranks";
+@import "partials/layouts";
 
 
 //

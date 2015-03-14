@@ -29,28 +29,12 @@
             </div>
         </section>
 
-        <section class="news-container">
+        <section class="o-layout">
             {% include "News/categories.html.twig" %}
 
-            <section class="article-container">
+            <section class="o-layout__body-with-sidebar">
                 {% for article in news %}
-                    <article>
-                        <h1>{{ link_to(article) }}</h1>
-                        <p class="post_date">{{ article.created | date("F d, Y") }}</p>
-
-                        <section class="post">
-                            {{ article.content }}
-                        </section>
-
-                        <ul class="meta">
-                            <li>
-                                <i class="fa fa-user"></i> {{ link_to(article.author) }}
-                            </li>
-                            <li>
-                                <i class="fa fa-tag"></i> {{ link_to(article.category) }}
-                            </li>
-                        </ul>
-                    </article>
+                    {% include "News/article.html.twig" with { 'article': article } %}
                 {% endfor %}
             </section>
         </section>
