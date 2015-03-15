@@ -3,20 +3,22 @@
 {% block title %}Players{% endblock %}
 
 {% block content %}
-    <main class="players">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>Player List</h1>
-            </article>
+    <main class="s-player-list">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>Player List</h1>
+                </section>
+            </div>
         </section>
 
-        <section class="list">
+        <section class="o-layout c-roll-call">
             {% for player in players %}
-                <article>
-                    <img class="player_avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
-                    <section class="info">
-                        <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
-                        <p class="team">{{ link_to(player.team) }}</p>
+                <article class="o-layout__body--third c-player-badge" data-callsign="{{ player.callsign }}" data-team="{{ player.team }}" data-country="{{ player.country.name }}">
+                    <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
+                    <section class="c-player-badge__info">
+                        <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+                        <p class="c-player-badge__info__team">{{ link_to(player.team) }}</p>
                     </section>
                 </article>
             {% endfor %}

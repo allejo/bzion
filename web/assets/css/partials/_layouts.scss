@@ -2,6 +2,8 @@
     @extend %wrapper;
     @include desktop-container;
 
+    margin-bottom: $Settings-Page_Section-Margin;
+
     @include element('sidebar') {
         @include desktop-columns(3);
         @include phablet-columns(12);
