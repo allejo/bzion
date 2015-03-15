@@ -92,22 +92,23 @@
                 <article class="c-table c-table--no-border c-table--no-hover">
                     {% for player in team.members %}
                         <div class="c-table__row">
-                            <div class="c-table__row__column">
+                            <div class="c-table__row__column c-team__roster__option">
                                 {% if player.id == team.leader.id %}
                                     <i class="fa fa-star" title="Team Leader"></i>
                                 {% endif %}
                             </div>
-                            <div class="c-table__row__column">
-                                {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
-                            </div>
 
                             {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
-                                <div class="c-table__row__column">
+                                <div class="c-table__row__column c-team__roster__option">
                                     <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
                                         <i class="fa fa-eject"></i>
                                     </a>
                                 </div>
                             {% endif %}
+
+                            <div class="c-table__row__column u-callsign-width">
+                                {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
+                            </div>
                         </div>
                     {% endfor %}
                 </article>

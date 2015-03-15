@@ -121,6 +121,11 @@
                                 color: $Color-Sky_Blue;
                             }
                         }
+                    }
+
+                    .c-team__roster__option {
+                        text-align: center;
+                        width: 30px;
 
                         i {
                             &.fa-eject {

@@ -152,6 +152,14 @@ ul {
             list-style: none;
         }
     }
+
+    @include has('no-padding') {
+        padding-left: 0;
+
+        li {
+            list-style-type: none;
+        }
+    }
 }
 
 small {
