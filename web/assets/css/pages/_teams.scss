@@ -24,7 +24,7 @@
             }
 
             @include respond-to(phablets) {
-                order: 2;
+                @include order(2);
             }
         }
 
@@ -34,13 +34,13 @@
             text-align: right;
 
             @include respond-to(phablets) {
-                order: 1;
+                @include order(1);
             }
         }
 
         @include element('match-stats') {
             @include element('visual') {
-                display: flex;
+                @include display(flex);
 
                 @include element('graph') {
                     $size: 150px;
@@ -60,8 +60,8 @@
 
                 @include element('legend') {
                     @extend %no-padding-ul;
+                    @include flex(1);
 
-                    flex: 1;
                     margin: auto;
 
                     > li {
@@ -173,11 +173,11 @@
                     }
 
                     @include utility('opponent') {
-                        flex: 2;
+                        @include flex(2);
                     }
 
                     @include utility('score') {
-                        flex: 1;
+                        @include flex(1);
                     }
 
                     @include element('column') {
@@ -196,7 +196,7 @@
                     }
 
                     @include respond-to(phones) {
-                        flex-wrap: wrap;
+                        @include flex-wrap(wrap);
                     }
                 }
             }
@@ -205,20 +205,20 @@
 }
 
 @include component('team-banner') {
-    display: flex;
+    @include display(flex);
 
     @include component('rank') {
         margin: 3px 10px 0 0;
     }
 
     @include element('team-bio') {
-        flex: 1;
+        @include flex(1);
 
         @include element('info') {
-            display: flex;
+            @include display(flex);
 
             @include element('summary') {
-                flex: 1;
+                @include flex(1);
 
                 @include element('name') {
                     font-size: 24px;

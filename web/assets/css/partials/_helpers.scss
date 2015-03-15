@@ -34,9 +34,10 @@
 
 @include component('table') {
     @include element('row') {
+        @include display(flex);
+
         border-bottom: $Table-Border;
         border-top: $Table-Border;
-        display: flex;
 
         &:hover {
             background-color: $Table-Hover_Color;

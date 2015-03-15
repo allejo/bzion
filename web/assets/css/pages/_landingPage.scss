@@ -17,6 +17,10 @@
 
     @include component('icon-bullet-points') {
         margin-bottom: $Settings-Page_Section-Margin;
+
+        .o-layout__body--third {
+            @include phablet-columns(12);
+        }
     }
 
     @include component('latest-updates') {

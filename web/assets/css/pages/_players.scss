@@ -38,7 +38,8 @@
 }
 
 @include component('player-badge') {
-    display: flex;
+    @include display(flex);
+
     margin-bottom: 10px;
 
     &.o-layout__body--third {
@@ -95,7 +96,8 @@
     }
 
     @include element('info') {
-        flex: 1;
+        @include flex(1);
+
         padding-left: 10px;
         vertical-align: top;
 
