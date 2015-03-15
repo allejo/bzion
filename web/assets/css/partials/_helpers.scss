@@ -32,19 +32,40 @@
     }
 }
 
-.css-table {
-    border-collapse: collapse;
-    display: table;
+@include component('table') {
+    @include element('row') {
+        border-bottom: $Table-Border;
+        border-top: $Table-Border;
+        display: flex;
 
-    .row {
-        display: table-row;
+        &:hover {
+            background-color: $Table-Hover_Color;
+        }
 
-        .column {
+        @include element('column') {
             @include box-sizing(border-box);
 
-            border: 1px solid #EFEFEF;
-            display: table-cell;
-            height: 20px;
+            border-left: $Table-Border;
+            border-right: $Table-Border;
+            flex: 1;
+        }
+    }
+
+    @include modifier('no-border') {
+        .c-table__row {
+            border: none;
+
+            .c-table__row__column {
+                border: none;
+            }
+        }
+    }
+
+    @include modifier('no-hover') {
+        .c-table__row {
+            &:hover {
+                background-color: transparent;
+            }
         }
     }
 }
@@ -62,6 +83,18 @@
     h1 {
         margin-bottom: 10px;
     }
+}
+
+@include utility('text-center') {
+    text-align: center;
+}
+
+@include utility('text-left') {
+    text-align: left;
+}
+
+@include utility('text-right') {
+    text-align: right;
 }
 
 .tipsy {

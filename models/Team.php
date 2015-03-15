@@ -417,7 +417,7 @@ class Team extends AvatarModel
      */
     public function getRankImageLiteral()
     {
-        return '<div class="rank lvl-' . $this->getRankValue() . '"></div>';
+        return '<div class="c-rank c-rank--' . $this->getRankValue() . '"></div>';
     }
 
     /**

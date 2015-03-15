@@ -4,10 +4,7 @@
 
     @include element('sidebar') {
         @include desktop-columns(3);
-
-        @include respond-to(phablets) {
-            display: none;
-        }
+        @include phablet-columns(12);
     }
 
     @include element('body') {

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <main class="c-page teams">
+    <main class="c-page s-team-profile">
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
@@ -39,89 +39,97 @@
             </div>
         </section>
 
-        <section class="profile">
-            <section class="row">
-                <section class="profile_picture">
-                    <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
-                </section>
-
-                <section class="information">
-                    <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
-                    <article class="description">
-                        {{ team.description | raw }}
-                    </article>
-                </section>
+        <section class="o-layout c-team">
+            <section class="o-layout__body--with-sidebar c-team__information">
+                <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
+                <article class="c-team__information__bio s-markdown">
+                    {{ team.description | raw }}
+                </article>
             </section>
 
-            <section class="row">
-                <section class="match_stats">
-                    <h4>
-                        Match Statistics
-                        <small>
-                            [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
-                        </small>
-                    </h4>
-                    <canvas id="teamMatchStats" class="teamMatchStats"></canvas>
-                    <article class="legend">
-                        <div class="item">
-                            <div class="block wins"></div> {{ 'win'|plural(team.matchesWon) }}
-                        </div>
-                        <div class="item">
-                            <div class="block losses"></div> {{ 'loss'|plural(team.matchesLost) }}
-                        </div>
-                        <div class="item">
-                            <div class="block draws"></div> {{ 'draw'|plural(team.matchesDraw) }}
-                        </div>
-                    </article>
-                </section>
-
-                <section class="activity">
-                    <h4>
-                        Team Activity
-                        <small>
-                            [<a id="activity_stats" href="#" original-title="Like activity stats? There's more!">?</a>]
-                        </small>
-                    </h4>
-                </section>
+            <section class="o-layout__sidebar  c-team__profile-picture">
+                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
             </section>
+        </section>
 
-            <section class="row">
-                <section class="members">
-                    <h4>Team Members</h4>
-                    <article class="css-table team_members">
-                        {% for player in team.members %}
-                            <div class="row">
-                                <div class="column">
-                                    {% if player.id == team.leader.id %}
-                                        <i class="fa fa-star" title="Team Leader"></i>
-                                    {% endif %}
-                                </div>
-                                <div class="column">
-                                    {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
-                                </div>
-
-                                {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
-                                    <div class="column">
-                                        <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
-                                            <i class="fa fa-eject"></i>
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    </article>
-                </section>
-
-                <section class="matches">
-                    <h4>Recent Matches</h4>
-                    <ul>
-                        {% for match in team.matches %}
-                            <li>
-                                {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }} {{ match.matchDescription(team.id) }} against {{ link_to(match.opponent(team.id)) }}
-                            </li>
-                        {% endfor %}
+        <section class="o-layout c-team">
+            <section class="o-layout__body--half c-team__match-stats">
+                <h4>
+                    Match Statistics
+                    <small>
+                        [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
+                    </small>
+                </h4>
+                <section class="c-team__match-stats__visual">
+                    <canvas id="teamMatchStats" class="c-team__match-stats__visual__graph"></canvas>
+                    <ul class="c-team__match-stats__visual__legend">
+                        <li>
+                            <div class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
+                        </li>
+                        <li>
+                            <div class="losses"></div> {{ 'loss'|plural(team.matchesLost) }}
+                        </li>
+                        <li>
+                            <div class="draws"></div> {{ 'draw'|plural(team.matchesDraw) }}
+                        </li>
                     </ul>
                 </section>
+            </section>
+
+            <section class="o-layout__body--half c-team__activity">
+                <h4>
+                    Team Activity
+                    <small>
+                        [<a id="activity_stats" href="#" original-title="Like activity stats? There's more!">?</a>]
+                    </small>
+                </h4>
+            </section>
+        </section>
+
+        <section class="o-layout c-team">
+            <section class="o-layout__body--half c-team__roster">
+                <h4>Team Members</h4>
+                <article class="c-table c-table--no-border c-table--no-hover">
+                    {% for player in team.members %}
+                        <div class="c-table__row">
+                            <div class="c-table__row__column">
+                                {% if player.id == team.leader.id %}
+                                    <i class="fa fa-star" title="Team Leader"></i>
+                                {% endif %}
+                            </div>
+                            <div class="c-table__row__column">
+                                {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
+                            </div>
+
+                            {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
+                                <div class="c-table__row__column">
+                                    <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
+                                        <i class="fa fa-eject"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </article>
+            </section>
+
+            <section class="o-layout__body--half c-team__matches">
+                <h4>Recent Matches</h4>
+                <article class="c-table">
+                    {% for match in team.matches %}
+                        <a class="c-table__row" href="#">
+                            <span class="c-table__row__column u-date">
+                                {{ match.timestamp('D, M d') }}
+                            </span>
+                            <span class="c-table__row__column u-opponent">
+                                <strong>vs.</strong> {{ match.opponent(team.id).name }}
+                            </span>
+                            <span class="c-table__row__column u-score">
+                                <strong class="u-match-outcome">{{ match.matchLetter(team.id) }}</strong> {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
+                            </span>
+                        </a>
+                    {% endfor %}
+                </article>
             </section>
         </section>
     </main>

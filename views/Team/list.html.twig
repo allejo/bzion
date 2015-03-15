@@ -3,7 +3,7 @@
 {% block title %}Teams{% endblock %}
 
 {% block content %}
-    <main class="c-page teams">
+    <main class="c-page s-teams">
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
@@ -18,19 +18,19 @@
             </div>
         </section>
 
-        <ul class="list">
+        <section class="o-layout c-roster">
             {% for team in teams %}
-                <li>
+                <article class="o-layout__body--full c-team-banner">
                     {{  team.rankImageLiteral | raw }}
-                    <section>
-                        <article class="team_stats">
-                            <section class="team">
-                                <p class="name">{{ link_to(team) }}</p>
-                                <p class="elo">{{ team.elo }}</p>
+                    <section class="c-team-banner__team-bio">
+                        <article class="c-team-banner__team-bio__info">
+                            <section class="c-team-banner__team-bio__info__summary">
+                                <span class="c-team-banner__team-bio__info__summary__name">{{ link_to(team) }}</span>
+                                <span class="c-team-banner__team-bio__info__summary__elo">{{ team.elo }}</span>
                             </section>
 
-                            <section class="stats">
-                                <p class="match_stats">
+                            <section class="c-team-summary__stats">
+                                <p class="c-team-summary__stats__matches">
                                     <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}">{{ team.matchesWon }}</a> -
                                     <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}">{{ team.matchesLost }}</a> -
                                     <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}">{{ team.matchesDraw }}</a>
@@ -38,14 +38,14 @@
                             </section>
                         </article>
 
-                        <article class="meta">
-                            <p><i class="fa fa-star"></i> {{ link_to(team.leader) }}</p>
-                            <p><i class="fa fa-users"></i> {{ 'member'|plural(team.numMembers) }}</p>
-                            <p><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</p>
+                        <article class="c-team-banner__team-bio__meta">
+                            <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
+                            <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
+                            <span><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</span>
                         </article>
                     </section>
-                </li>
+                </article>
             {% endfor %}
-        </ul>
+        </section>
     </main>
 {% endblock %}

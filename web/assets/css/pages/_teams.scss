@@ -1,213 +1,287 @@
-main {
-    &.teams {
-        .c-page__header__container__title {
-            .rank {
-                float: left;
-                margin-right: 10px;
+@include scope('teams') {
+    margin-bottom: $Settings-Page_Section-Margin;
+
+    @include component('team-banner') {
+        margin-bottom: $Settings-Page_Section-Margin;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@include scope('team-profile') {
+    .c-page__header__container__title {
+        @include component('rank') {
+            margin-right: 10px;
+        }
+    }
+
+    .o-layout {
+        margin-bottom: $Settings-Page_Section-Margin;
+
+        h4 {
+            margin-bottom: 15px;
+        }
+    }
+
+    .o-layout__body--half {
+        @include respond-to(phablets) {
+            margin-bottom: 30px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @include component('team') {
+        @include element('information') {
+            @include element('bio') {
+                margin-top: 15px;
             }
 
-            div {
-                float: left;
+            @include respond-to(phablets) {
+                margin-top: 30px;
+                order: 2;
+            }
+        }
 
-                h1 {
-                    color: #000000;
+        @include element('profile-picture') {
+            text-align: right;
+
+            img {
+                width: 100%;
+
+                @include respond-to(phablets) {
+                    width: 30%;
+                }
+
+                @include respond-to(phones) {
+                    width: 40%;
+                }
+            }
+
+            @include respond-to(phablets) {
+                order: 1;
+                text-align: center;
+            }
+        }
+
+        @include element('match-stats') {
+            @include element('visual') {
+                display: flex;
+
+                @include element('graph') {
+                    $size: 150px;
+
+                    height: $size;
+                    width: $size;
+
+                    @include respond-to(tablets) {
+                        display: block;
+                        margin: 0 auto;
+                    }
+
+                    @include respond-to(phones) {
+                        margin-top: 10px;
+                    }
+                }
+
+                @include element('legend') {
+                    @extend %no-padding-ul;
+
+                    flex: 1;
+                    margin: auto;
+
+                    > li {
+                        > div {
+                            $block_size: 10px;
+
+                            border: 1px solid $Color-Off_White;
+                            float: left;
+                            height: $block_size;
+                            margin: 5px 10px;
+                            width: $block_size;
+
+                            &.wins {
+                                background-color: #EBEBEB;
+                            }
+
+                            &.losses {
+                                background-color: #B6D1D8;
+                            }
+
+                            &.draws {
+                                background-color: #8FDC00;
+                            }
+                        }
+
+                        @include respond-to(tablets) {
+                            display: inline-block;
+                            margin: 0 5px;
+                        }
+                    }
+
+                    @include respond-to(tablets) {
+                        margin: 20px 0 0;
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+
+                @include respond-to(tablets) {
+                    display: block;
                 }
             }
         }
 
-        .list {
-            @extend .wrapper;
+        @include element('roster') {
+            @include component('table') {
+                margin-left: 20px;
 
-            li {
-                @extend .clearfix;
+                @include element('row') {
+                    @include element('column') {
+                        padding: 5px;
 
-                list-style: none;
-                margin: 30px 10px;
+                        a {
+                            color: $Color-Black;
 
-                .rank {
-                    float: left;
-                    margin: 3px 10px 0 0;
-                }
-
-                > section {
-                    overflow: hidden;
-
-                    .team_stats {
-                        @extend .clearfix;
-
-                        .team {
-                            .name {
-                                float: left;
-                                font-size: 24px;
-
-                                @include respond-to(phones) {
-                                    display: block;
-                                    float: none;
-                                    font-size: 20px;
-                                }
-                            }
-
-                            .elo {
-                                float: left;
-                                margin-left: 10px;
-
-                                &:before {
-                                    content: '(';
-                                }
-
-                                &:after {
-                                    content: ')';
-                                }
-
-                                @include respond-to(phones) {
-                                    display: block;
-                                    float: none;
-                                    margin: 0;
-                                }
+                            &:hover {
+                                color: $Color-Sky_Blue;
                             }
                         }
 
-                        .stats {
-                            float: right;
-
-                            a {
-                                color: darkgrey;
+                        i {
+                            &.fa-eject {
+                                color: $Color-Medium_Grey;
                             }
 
-                            @include respond-to(phones) {
-                                display: none;
+                            &.fa-star {
+                                color: #FDCE46;
                             }
                         }
                     }
+                }
 
-                    .meta {
-                        @extend .clearfix;
+                @include respond-to(phablets) {
+                    margin-left: 0;
+                }
+            }
+        }
 
-                        margin-top: 5px;
+        @include element('matches') {
+            @include component('table') {
+                width: 100%;
 
-                        p {
-                            float: left;
-                            font-size: 14px;
-                            margin-right: 25px;
+                @include element('row') {
+                    border: none;
+                    border-bottom: $Border-Default;
+                    color: $Color-Black;
 
-                            a {
-                                color: darkgrey;
-                            }
+                    &:last-child {
+                        border-bottom: none;
+                    }
 
-                            @include respond-to(phones) {
-                                display: block;
-                                float: none;
-                                margin-right: 0;
-                            }
+                    @include respond-to(phones) {
+                        padding: {
+                            bottom: 5px;
+                            top: 5px;
                         }
+                    }
+
+                    @include utility('date') {
+                        @include respond-to(phones) {
+                            flex-basis: 100%;
+                            padding-bottom: 0;
+                        }
+                    }
+
+                    @include utility('opponent') {
+                        flex: 2;
+                    }
+
+                    @include utility('score') {
+                        flex: 1;
+                    }
+
+                    @include element('column') {
+                        border: none;
+                        padding: 5px 10px;
+
+                        @include respond-to(phones) {
+                            padding: 5px 1px 5px;
+                        }
+
+                        @include utility('match-outcome') {
+                            display: inline-block;
+                            text-align: center;
+                            width: 20px;
+                        }
+                    }
+
+                    @include respond-to(phones) {
+                        flex-wrap: wrap;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include component('team-banner') {
+    display: flex;
+
+    @include component('rank') {
+        margin: 3px 10px 0 0;
+    }
+
+    @include element('team-bio') {
+        flex: 1;
+
+        @include element('info') {
+            display: flex;
+
+            @include element('summary') {
+                flex: 1;
+
+                @include element('name') {
+                    font-size: 24px;
+
+                    @include respond-to(phones) {
+                        display: block;
+                        font-size: 20px;
+                    }
+                }
+
+                @include element('elo') {
+                    margin-left: 10px;
+
+                    &:before {
+                        content: '(';
+                    }
+
+                    &:after {
+                        content: ')';
                     }
 
                     @include respond-to(phones) {
                         margin: 0;
                     }
                 }
-
-                @include respond-to(phones) {
-                    margin: 10px 0;
-                }
             }
         }
 
-        .profile {
-            .row {
-                > section {
-                    &.match_stats {
-                        .teamMatchStats {
-                            $size: 150px;
+        @include element('meta') {
+            margin-top: 5px;
 
-                            float: left;
-                            height: $size;
-                            width: $size;
+            span {
+                font-size: 14px;
+                margin-right: 25px;
 
-                            @include respond-to(phones) {
-                                margin-top: 10px;
-                            }
-                        }
-
-                        .legend {
-                            float: left;
-                            margin: 40px 0;
-
-                            .item {
-                                display: block;
-
-                                .block {
-                                    $block_size: 10px;
-
-                                    border: 1px solid $Color-Off_White;
-                                    float: left;
-                                    height: $block_size;
-                                    margin: 5px 10px;
-                                    width: $block_size;
-
-                                    &.wins {
-                                        background-color: #EBEBEB;
-                                    }
-
-                                    &.losses {
-                                        background-color: #B6D1D8;
-                                    }
-
-                                    &.draws {
-                                        background-color: #8FDC00;
-                                    }
-                                }
-
-                                @include respond-to(tablets) {
-                                    display: inline-block;
-                                    margin: 0 5px;
-                                }
-                            }
-
-                            @include respond-to(tablets) {
-                                margin: 20px 0 0;
-                                text-align: center;
-                                width: 100%;
-                            }
-                        }
-                    }
-
-                    &.members {
-                        .team_members {
-                            margin-left: 20px;
-
-                            .row {
-                                border: none;
-
-                                .column {
-                                    border: none;
-                                    padding: 5px;
-
-                                    a {
-                                        color: $Color-Black;
-
-                                        &:hover {
-                                            color: $Color-Sky_Blue;
-                                        }
-                                    }
-
-                                    i {
-                                        &.fa-eject {
-                                            color: $Color-Medium_Grey;
-                                        }
-
-                                        &.fa-star {
-                                            color: #FDCE46;
-                                        }
-                                    }
-                                }
-                            }
-
-                            @include respond-to(phablets) {
-                                margin-left: 0;
-                            }
-                        }
-                    }
+                @include respond-to(phones) {
+                    display: block;
+                    margin-right: 0;
                 }
             }
         }

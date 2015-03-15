@@ -99,5 +99,9 @@
                 border-bottom: none;
             }
         }
+
+        @include respond-to(phablets) {
+            display: none;
+        }
     }
 }

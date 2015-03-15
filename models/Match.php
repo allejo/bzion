@@ -187,7 +187,18 @@ class Match extends PermissionModel implements NamedModel
             return "loss";
         }
 
-        return "draw";
+        return "tie";
+    }
+
+    /**
+     * Get a one letter description of a match relative to a team (i.e. W, L, or T)
+     *
+     * @param int $teamID The team ID we want the noun for
+     *
+     * @return string Either "W", "L", or "T" relative to the team
+     */
+    public function getMatchLetter($teamID) {
+        return strtoupper(substr($this->getMatchDescription($teamID), 0, 1));
     }
 
     /**
