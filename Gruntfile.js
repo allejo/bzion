@@ -7,13 +7,6 @@ module.exports = function(grunt) {
     });
 
     grunt.initConfig({
-        autoprefixer: {
-            dist: {
-                files: {
-                    'web/assets/css/styles.css': 'web/assets/css/styles.css'
-                }
-            }
-        },
         'check-gems': {
             dist: {
                 files: [{
@@ -99,7 +92,7 @@ module.exports = function(grunt) {
                     'web/assets/css/**/*.scss',
                     '!web/assets/css/vendor/**/*.scss'
                 ],
-                tasks: [ 'libsass', 'autoprefixer' ],
+                tasks: [ 'libsass' ],
                 options: {
                     livereload: false,
                     spawn: true
@@ -114,7 +107,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('css', [ 'sass:dist', 'autoprefixer' ]);
+    grunt.registerTask('css', [ 'sass:dist' ]);
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
     grunt.registerTask('check', [ 'check-gems' ]);
     grunt.registerTask('default', [ 'css', 'js' ]);

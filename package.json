@@ -8,7 +8,6 @@
     "grunt-cli": "*",
     "grunt-contrib-watch": "*",
     "grunt-contrib-sass": "*",
-    "grunt-autoprefixer": "*",
     "load-grunt-tasks": "^3.1.0"
   },
   "devDependencies": {
