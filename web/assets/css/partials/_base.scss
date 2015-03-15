@@ -17,6 +17,22 @@ $Color-Sky_Blue: #009EFF;
 $Color-Blue: #258EC9;
 $Color-Orange: #ff6700;
 
+$alert-success-bg: #dff0d8;
+$alert-success-text: #3c763d;
+$alert-success-border: darken(adjust-hue($alert-success-bg, -10), 5%);
+
+$alert-info-bg: #d9edf7;
+$alert-info-text: #31708f;
+$alert-info-border: darken(adjust-hue($alert-info-bg, -10), 7%);
+
+$alert-warning-bg: #fcf8e3;
+$alert-warning-text: #8a6d3b;
+$alert-warning-border: darken(adjust-hue($alert-warning-bg, -10), 5%);
+
+$alert-danger-bg: #f2dede;
+$alert-danger-text: #a94442;
+$alert-danger-border: darken(adjust-hue($alert-danger-bg, -10), 5%);
+
 $Border-Light_Color: #E9E9E9;
 $Border-Default: 1px solid $Border-Light_Color;
 $Border-Radius: 3px;

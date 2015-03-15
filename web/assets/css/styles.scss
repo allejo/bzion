@@ -35,7 +35,9 @@
 //    (CSS for parts of the website but not specific to a single page)
 //
 
+@import "partials/alerts";
 @import "partials/buttons";
+@import "partials/flashbag";
 @import "partials/font-awesome";
 @import "partials/forms";
 @import "partials/footer";

@@ -1,0 +1,32 @@
+@mixin make-alert($background, $border, $text-color) {
+    background-color: $background;
+    border-color: $border;
+    color: $text-color;
+
+    hr {
+        border-top-color: darken($border, 5%);
+    }
+
+    a {
+        color: darken($text-color, 10%);
+        font-weight: bold;
+    }
+}
+
+@include component('alert') {
+    @include modifier('success') {
+        @include make-alert($alert-success-bg, $alert-success-border, $alert-success-text);
+    }
+
+    @include modifier('info') {
+        @include make-alert($alert-info-bg, $alert-info-border, $alert-info-text);
+    }
+
+    @include modifier('warning') {
+        @include make-alert($alert-warning-bg, $alert-warning-border, $alert-warning-text);
+    }
+
+    @include modifier('danger') {
+        @include make-alert($alert-danger-bg, $alert-danger-border, $alert-danger-text);
+    }
+}

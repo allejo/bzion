@@ -43,9 +43,11 @@
             </div>
         </header>
 
-        {% for message in session.flashbag.all %}
-            <p>{{ message.0 }}</p>
-        {% endfor %}
+        <section class="c-flashbag">
+            {% for message in session.flashbag.all %}
+                <p class="c-flashbag__item c-alert c-alert--info">{{ message.0 }}</p>
+            {% endfor %}
+        </section>
 
         {% block content %}
 
