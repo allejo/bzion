@@ -7,17 +7,19 @@
 }
 
 @mixin set-flex($flex, $gutter) {
-    flex-basis: $flex;
+    @include flex-basis($flex);
+
     max-width: $flex;
     margin-right: $gutter;
 }
 
 @mixin make-container() {
+    @include display(flex);
+    @include flex(0 1 auto);
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+
     box-sizing: border-box;
-    display: flex;
-    flex: 0 1 auto;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 
 @mixin make-columns($columns, $gutter: calculate-gutter()) {
