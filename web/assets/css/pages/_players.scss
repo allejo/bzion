@@ -7,6 +7,19 @@
     }
 }
 
+@include scope('player-profile') {
+    .c-page__header__container__title {
+       @include component('flag') {
+            margin-right: 10px;
+            margin-top: 6px;
+        }
+
+        h1 {
+            display: inline;
+        }
+    }
+}
+
 @include component('player-badge') {
     display: flex;
     margin-bottom: 10px;

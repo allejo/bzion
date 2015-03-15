@@ -1,4 +1,4 @@
-.flag {
+@include component('flag') {
     background: url(../imgs/flags.png) no-repeat;
     display: inline-block;
     height: 11px;
@@ -6,1009 +6,1009 @@
     vertical-align: middle;
     width: 16px;
 
-    &.flag-ad {
+    @include modifier('ad') {
         background-position: -16px 0;
     }
 
-    &.flag-ae {
+    @include modifier('ae') {
         background-position: -32px 0;
     }
 
-    &.flag-af {
+    @include modifier('af') {
         background-position: -48px 0;
     }
 
-    &.flag-ag {
+    @include modifier('ag') {
         background-position: -64px 0;
     }
 
-    &.flag-ai {
+    @include modifier('ai') {
         background-position: -80px 0;
     }
 
-    &.flag-al {
+    @include modifier('al') {
         background-position: -96px 0;
     }
 
-    &.flag-am {
+    @include modifier('am') {
         background-position: -112px 0;
     }
 
-    &.flag-an {
+    @include modifier('an') {
         background-position: -128px 0;
     }
 
-    &.flag-ao {
+    @include modifier('ao') {
         background-position: -144px 0;
     }
 
-    &.flag-ar {
+    @include modifier('ar') {
         background-position: -160px 0;
     }
 
-    &.flag-as {
+    @include modifier('as') {
         background-position: -176px 0;
     }
 
-    &.flag-at {
+    @include modifier('at') {
         background-position: -192px 0;
     }
 
-    &.flag-au {
+    @include modifier('au') {
         background-position: -208px 0;
     }
 
-    &.flag-aw {
+    @include modifier('aw') {
         background-position: -224px 0;
     }
 
-    &.flag-az {
+    @include modifier('az') {
         background-position: -240px 0;
     }
 
-    &.flag-ba {
+    @include modifier('ba') {
         background-position: 0 -11px;
     }
 
-    &.flag-bb {
+    @include modifier('bb') {
         background-position: -16px -11px;
     }
 
-    &.flag-bd {
+    @include modifier('bd') {
         background-position: -32px -11px;
     }
 
-    &.flag-be {
+    @include modifier('be') {
         background-position: -48px -11px;
     }
 
-    &.flag-bf {
+    @include modifier('bf') {
         background-position: -64px -11px;
     }
 
-    &.flag-bg {
+    @include modifier('bg') {
         background-position: -80px -11px;
     }
 
-    &.flag-bh {
+    @include modifier('bh') {
         background-position: -96px -11px;
     }
 
-    &.flag-bi {
+    @include modifier('bi') {
         background-position: -112px -11px;
     }
 
-    &.flag-bj {
+    @include modifier('bj') {
         background-position: -128px -11px;
     }
 
-    &.flag-bm {
+    @include modifier('bm') {
         background-position: -144px -11px;
     }
 
-    &.flag-bn {
+    @include modifier('bn') {
         background-position: -160px -11px;
     }
 
-    &.flag-bo {
+    @include modifier('bo') {
         background-position: -176px -11px;
     }
 
-    &.flag-br {
+    @include modifier('br') {
         background-position: -192px -11px;
     }
 
-    &.flag-bs {
+    @include modifier('bs') {
         background-position: -208px -11px;
     }
 
-    &.flag-bt {
+    @include modifier('bt') {
         background-position: -224px -11px;
     }
 
-    &.flag-bv {
+    @include modifier('bv') {
         background-position: -240px -11px;
     }
 
-    &.flag-bw {
+    @include modifier('bw') {
         background-position: 0 -22px;
     }
 
-    &.flag-by {
+    @include modifier('by') {
         background-position: -16px -22px;
     }
 
-    &.flag-bz {
+    @include modifier('bz') {
         background-position: -32px -22px;
     }
 
-    &.flag-ca {
+    @include modifier('ca') {
         background-position: -48px -22px;
     }
 
-    &.flag-catalonia {
+    @include modifier('catalonia') {
         background-position: -64px -22px;
     }
 
-    &.flag-cd {
+    @include modifier('cd') {
         background-position: -80px -22px;
     }
 
-    &.flag-cf {
+    @include modifier('cf') {
         background-position: -96px -22px;
     }
 
-    &.flag-cg {
+    @include modifier('cg') {
         background-position: -112px -22px;
     }
 
-    &.flag-ch {
+    @include modifier('ch') {
         background-position: -128px -22px;
     }
 
-    &.flag-ci {
+    @include modifier('ci') {
         background-position: -144px -22px;
     }
 
-    &.flag-ck {
+    @include modifier('ck') {
         background-position: -160px -22px;
     }
 
-    &.flag-cl {
+    @include modifier('cl') {
         background-position: -176px -22px;
     }
 
-    &.flag-cm {
+    @include modifier('cm') {
         background-position: -192px -22px;
     }
 
-    &.flag-cn {
+    @include modifier('cn') {
         background-position: -208px -22px;
     }
 
-    &.flag-co {
+    @include modifier('co') {
         background-position: -224px -22px;
     }
 
-    &.flag-cr {
+    @include modifier('cr') {
         background-position: -240px -22px;
     }
 
-    &.flag-cu {
+    @include modifier('cu') {
         background-position: 0 -33px;
     }
 
-    &.flag-cv {
+    @include modifier('cv') {
         background-position: -16px -33px;
     }
 
-    &.flag-cw {
+    @include modifier('cw') {
         background-position: -32px -33px;
     }
 
-    &.flag-cy {
+    @include modifier('cy') {
         background-position: -48px -33px;
     }
 
-    &.flag-cz {
+    @include modifier('cz') {
         background-position: -64px -33px;
     }
 
-    &.flag-de {
+    @include modifier('de') {
         background-position: -80px -33px;
     }
 
-    &.flag-dj {
+    @include modifier('dj') {
         background-position: -96px -33px;
     }
 
-    &.flag-dk {
+    @include modifier('dk') {
         background-position: -112px -33px;
     }
 
-    &.flag-dm {
+    @include modifier('dm') {
         background-position: -128px -33px;
     }
 
-    &.flag-do {
+    @include modifier('do') {
         background-position: -144px -33px;
     }
 
-    &.flag-dz {
+    @include modifier('dz') {
         background-position: -160px -33px;
     }
 
-    &.flag-ec {
+    @include modifier('ec') {
         background-position: -176px -33px;
     }
 
-    &.flag-ee {
+    @include modifier('ee') {
         background-position: -192px -33px;
     }
 
-    &.flag-eg {
+    @include modifier('eg') {
         background-position: -208px -33px;
     }
 
-    &.flag-eh {
+    @include modifier('eh') {
         background-position: -224px -33px;
     }
 
-    &.flag-england {
+    @include modifier('england') {
         background-position: -240px -33px;
     }
 
-    &.flag-er {
+    @include modifier('er') {
         background-position: 0 -44px;
     }
 
-    &.flag-es {
+    @include modifier('es') {
         background-position: -16px -44px;
     }
 
-    &.flag-et {
+    @include modifier('et') {
         background-position: -32px -44px;
     }
 
-    &.flag-eu {
+    @include modifier('eu') {
         background-position: -48px -44px;
     }
 
-    &.flag-fi {
+    @include modifier('fi') {
         background-position: -64px -44px;
     }
 
-    &.flag-fj {
+    @include modifier('fj') {
         background-position: -80px -44px;
     }
 
-    &.flag-fk {
+    @include modifier('fk') {
         background-position: -96px -44px;
     }
 
-    &.flag-fm {
+    @include modifier('fm') {
         background-position: -112px -44px;
     }
 
-    &.flag-fo {
+    @include modifier('fo') {
         background-position: -128px -44px;
     }
 
-    &.flag-fr {
+    @include modifier('fr') {
         background-position: -144px -44px;
     }
 
-    &.flag-ga {
+    @include modifier('ga') {
         background-position: -160px -44px;
     }
 
-    &.flag-gb {
+    @include modifier('gb') {
         background-position: -176px -44px;
     }
 
-    &.flag-gd {
+    @include modifier('gd') {
         background-position: -192px -44px;
     }
 
-    &.flag-ge {
+    @include modifier('ge') {
         background-position: -208px -44px;
     }
 
-    &.flag-gf {
+    @include modifier('gf') {
         background-position: -224px -44px;
     }
 
-    &.flag-gg {
+    @include modifier('gg') {
         background-position: -240px -44px;
     }
 
-    &.flag-gh {
+    @include modifier('gh') {
         background-position: 0 -55px;
     }
 
-    &.flag-gi {
+    @include modifier('gi') {
         background-position: -16px -55px;
     }
 
-    &.flag-gl {
+    @include modifier('gl') {
         background-position: -32px -55px;
     }
 
-    &.flag-gm {
+    @include modifier('gm') {
         background-position: -48px -55px;
     }
 
-    &.flag-gn {
+    @include modifier('gn') {
         background-position: -64px -55px;
     }
 
-    &.flag-gp {
+    @include modifier('gp') {
         background-position: -80px -55px;
     }
 
-    &.flag-gq {
+    @include modifier('gq') {
         background-position: -96px -55px;
     }
 
-    &.flag-gr {
+    @include modifier('gr') {
         background-position: -112px -55px;
     }
 
-    &.flag-gs {
+    @include modifier('gs') {
         background-position: -128px -55px;
     }
 
-    &.flag-gt {
+    @include modifier('gt') {
         background-position: -144px -55px;
     }
 
-    &.flag-gu {
+    @include modifier('gu') {
         background-position: -160px -55px;
     }
 
-    &.flag-gw {
+    @include modifier('gw') {
         background-position: -176px -55px;
     }
 
-    &.flag-gy {
+    @include modifier('gy') {
         background-position: -192px -55px;
     }
 
-    &.flag-hk {
+    @include modifier('hk') {
         background-position: -208px -55px;
     }
 
-    &.flag-hm {
+    @include modifier('hm') {
         background-position: -224px -55px;
     }
 
-    &.flag-hn {
+    @include modifier('hn') {
         background-position: -240px -55px;
     }
 
-    &.flag-hr {
+    @include modifier('hr') {
         background-position: 0 -66px;
     }
 
-    &.flag-ht {
+    @include modifier('ht') {
         background-position: -16px -66px;
     }
 
-    &.flag-hu {
+    @include modifier('hu') {
         background-position: -32px -66px;
     }
 
-    &.flag-ic {
+    @include modifier('ic') {
         background-position: -48px -66px;
     }
 
-    &.flag-id {
+    @include modifier('id') {
         background-position: -64px -66px;
     }
 
-    &.flag-ie {
+    @include modifier('ie') {
         background-position: -80px -66px;
     }
 
-    &.flag-il {
+    @include modifier('il') {
         background-position: -96px -66px;
     }
 
-    &.flag-im {
+    @include modifier('im') {
         background-position: -112px -66px;
     }
 
-    &.flag-in {
+    @include modifier('in') {
         background-position: -128px -66px;
     }
 
-    &.flag-io {
+    @include modifier('io') {
         background-position: -144px -66px;
     }
 
-    &.flag-iq {
+    @include modifier('iq') {
         background-position: -160px -66px;
     }
 
-    &.flag-ir {
+    @include modifier('ir') {
         background-position: -176px -66px;
     }
 
-    &.flag-is {
+    @include modifier('is') {
         background-position: -192px -66px;
     }
 
-    &.flag-it {
+    @include modifier('it') {
         background-position: -208px -66px;
     }
 
-    &.flag-je {
+    @include modifier('je') {
         background-position: -224px -66px;
     }
 
-    &.flag-jm {
+    @include modifier('jm') {
         background-position: -240px -66px;
     }
 
-    &.flag-jo {
+    @include modifier('jo') {
         background-position: 0 -77px;
     }
 
-    &.flag-jp {
+    @include modifier('jp') {
         background-position: -16px -77px;
     }
 
-    &.flag-ke {
+    @include modifier('ke') {
         background-position: -32px -77px;
     }
 
-    &.flag-kg {
+    @include modifier('kg') {
         background-position: -48px -77px;
     }
 
-    &.flag-kh {
+    @include modifier('kh') {
         background-position: -64px -77px;
     }
 
-    &.flag-ki {
+    @include modifier('ki') {
         background-position: -80px -77px;
     }
 
-    &.flag-km {
+    @include modifier('km') {
         background-position: -96px -77px;
     }
 
-    &.flag-kn {
+    @include modifier('kn') {
         background-position: -112px -77px;
     }
 
-    &.flag-kp {
+    @include modifier('kp') {
         background-position: -128px -77px;
     }
 
-    &.flag-kr {
+    @include modifier('kr') {
         background-position: -144px -77px;
     }
 
-    &.flag-kurdistan {
+    @include modifier('kurdistan') {
         background-position: -160px -77px;
     }
 
-    &.flag-kw {
+    @include modifier('kw') {
         background-position: -176px -77px;
     }
 
-    &.flag-ky {
+    @include modifier('ky') {
         background-position: -192px -77px;
     }
 
-    &.flag-kz {
+    @include modifier('kz') {
         background-position: -208px -77px;
     }
 
-    &.flag-la {
+    @include modifier('la') {
         background-position: -224px -77px;
     }
 
-    &.flag-lb {
+    @include modifier('lb') {
         background-position: -240px -77px;
     }
 
-    &.flag-lc {
+    @include modifier('lc') {
         background-position: 0 -88px;
     }
 
-    &.flag-li {
+    @include modifier('li') {
         background-position: -16px -88px;
     }
 
-    &.flag-lk {
+    @include modifier('lk') {
         background-position: -32px -88px;
     }
 
-    &.flag-lr {
+    @include modifier('lr') {
         background-position: -48px -88px;
     }
 
-    &.flag-ls {
+    @include modifier('ls') {
         background-position: -64px -88px;
     }
 
-    &.flag-lt {
+    @include modifier('lt') {
         background-position: -80px -88px;
     }
 
-    &.flag-lu {
+    @include modifier('lu') {
         background-position: -96px -88px;
     }
 
-    &.flag-lv {
+    @include modifier('lv') {
         background-position: -112px -88px;
     }
 
-    &.flag-ly {
+    @include modifier('ly') {
         background-position: -128px -88px;
     }
 
-    &.flag-ma {
+    @include modifier('ma') {
         background-position: -144px -88px;
     }
 
-    &.flag-mc {
+    @include modifier('mc') {
         background-position: -160px -88px;
     }
 
-    &.flag-md {
+    @include modifier('md') {
         background-position: -176px -88px;
     }
 
-    &.flag-me {
+    @include modifier('me') {
         background-position: -192px -88px;
     }
 
-    &.flag-mg {
+    @include modifier('mg') {
         background-position: -208px -88px;
     }
 
-    &.flag-mh {
+    @include modifier('mh') {
         background-position: -224px -88px;
     }
 
-    &.flag-mk {
+    @include modifier('mk') {
         background-position: -240px -88px;
     }
 
-    &.flag-ml {
+    @include modifier('ml') {
         background-position: 0 -99px;
     }
 
-    &.flag-mm {
+    @include modifier('mm') {
         background-position: -16px -99px;
     }
 
-    &.flag-mn {
+    @include modifier('mn') {
         background-position: -32px -99px;
     }
 
-    &.flag-mo {
+    @include modifier('mo') {
         background-position: -48px -99px;
     }
 
-    &.flag-mp {
+    @include modifier('mp') {
         background-position: -64px -99px;
     }
 
-    &.flag-mq {
+    @include modifier('mq') {
         background-position: -80px -99px;
     }
 
-    &.flag-mr {
+    @include modifier('mr') {
         background-position: -96px -99px;
     }
 
-    &.flag-ms {
+    @include modifier('ms') {
         background-position: -112px -99px;
     }
 
-    &.flag-mt {
+    @include modifier('mt') {
         background-position: -128px -99px;
     }
 
-    &.flag-mu {
+    @include modifier('mu') {
         background-position: -144px -99px;
     }
 
-    &.flag-mv {
+    @include modifier('mv') {
         background-position: -160px -99px;
     }
 
-    &.flag-mw {
+    @include modifier('mw') {
         background-position: -176px -99px;
     }
 
-    &.flag-mx {
+    @include modifier('mx') {
         background-position: -192px -99px;
     }
 
-    &.flag-my {
+    @include modifier('my') {
         background-position: -208px -99px;
     }
 
-    &.flag-mz {
+    @include modifier('mz') {
         background-position: -224px -99px;
     }
 
-    &.flag-na {
+    @include modifier('na') {
         background-position: -240px -99px;
     }
 
-    &.flag-nc {
+    @include modifier('nc') {
         background-position: 0 -110px;
     }
 
-    &.flag-ne {
+    @include modifier('ne') {
         background-position: -16px -110px;
     }
 
-    &.flag-nf {
+    @include modifier('nf') {
         background-position: -32px -110px;
     }
 
-    &.flag-ng {
+    @include modifier('ng') {
         background-position: -48px -110px;
     }
 
-    &.flag-ni {
+    @include modifier('ni') {
         background-position: -64px -110px;
     }
 
-    &.flag-nl {
+    @include modifier('nl') {
         background-position: -80px -110px;
     }
 
-    &.flag-no {
+    @include modifier('no') {
         background-position: -96px -110px;
     }
 
-    &.flag-np {
+    @include modifier('np') {
         background-position: -112px -110px;
     }
 
-    &.flag-nr {
+    @include modifier('nr') {
         background-position: -128px -110px;
     }
 
-    &.flag-nu {
+    @include modifier('nu') {
         background-position: -144px -110px;
     }
 
-    &.flag-nz {
+    @include modifier('nz') {
         background-position: -160px -110px;
     }
 
-    &.flag-om {
+    @include modifier('om') {
         background-position: -176px -110px;
     }
 
-    &.flag-pa {
+    @include modifier('pa') {
         background-position: -192px -110px;
     }
 
-    &.flag-pe {
+    @include modifier('pe') {
         background-position: -208px -110px;
     }
 
-    &.flag-pf {
+    @include modifier('pf') {
         background-position: -224px -110px;
     }
 
-    &.flag-pg {
+    @include modifier('pg') {
         background-position: -240px -110px;
     }
 
-    &.flag-ph {
+    @include modifier('ph') {
         background-position: 0 -121px;
     }
 
-    &.flag-pk {
+    @include modifier('pk') {
         background-position: -16px -121px;
     }
 
-    &.flag-pl {
+    @include modifier('pl') {
         background-position: -32px -121px;
     }
 
-    &.flag-pm {
+    @include modifier('pm') {
         background-position: -48px -121px;
     }
 
-    &.flag-pn {
+    @include modifier('pn') {
         background-position: -64px -121px;
     }
 
-    &.flag-pr {
+    @include modifier('pr') {
         background-position: -80px -121px;
     }
 
-    &.flag-ps {
+    @include modifier('ps') {
         background-position: -96px -121px;
     }
 
-    &.flag-pt {
+    @include modifier('pt') {
         background-position: -112px -121px;
     }
 
-    &.flag-pw {
+    @include modifier('pw') {
         background-position: -128px -121px;
     }
 
-    &.flag-py {
+    @include modifier('py') {
         background-position: -144px -121px;
     }
 
-    &.flag-qa {
+    @include modifier('qa') {
         background-position: -160px -121px;
     }
 
-    &.flag-re {
+    @include modifier('re') {
         background-position: -176px -121px;
     }
 
-    &.flag-ro {
+    @include modifier('ro') {
         background-position: -192px -121px;
     }
 
-    &.flag-rs {
+    @include modifier('rs') {
         background-position: -208px -121px;
     }
 
-    &.flag-ru {
+    @include modifier('ru') {
         background-position: -224px -121px;
     }
 
-    &.flag-rw {
+    @include modifier('rw') {
         background-position: -240px -121px;
     }
 
-    &.flag-sa {
+    @include modifier('sa') {
         background-position: 0 -132px;
     }
 
-    &.flag-sb {
+    @include modifier('sb') {
         background-position: -16px -132px;
     }
 
-    &.flag-sc {
+    @include modifier('sc') {
         background-position: -32px -132px;
     }
 
-    &.flag-scotland {
+    @include modifier('scotland') {
         background-position: -48px -132px;
     }
 
-    &.flag-sd {
+    @include modifier('sd') {
         background-position: -64px -132px;
     }
 
-    &.flag-se {
+    @include modifier('se') {
         background-position: -80px -132px;
     }
 
-    &.flag-sg {
+    @include modifier('sg') {
         background-position: -96px -132px;
     }
 
-    &.flag-sh {
+    @include modifier('sh') {
         background-position: -112px -132px;
     }
 
-    &.flag-si {
+    @include modifier('si') {
         background-position: -128px -132px;
     }
 
-    &.flag-sk {
+    @include modifier('sk') {
         background-position: -144px -132px;
     }
 
-    &.flag-sl {
+    @include modifier('sl') {
         background-position: -160px -132px;
     }
 
-    &.flag-sm {
+    @include modifier('sm') {
         background-position: -176px -132px;
     }
 
-    &.flag-sn {
+    @include modifier('sn') {
         background-position: -192px -132px;
     }
 
-    &.flag-so {
+    @include modifier('so') {
         background-position: -208px -132px;
     }
 
-    &.flag-somaliland {
+    @include modifier('somaliland') {
         background-position: -224px -132px;
     }
 
-    &.flag-sr {
+    @include modifier('sr') {
         background-position: -240px -132px;
     }
 
-    &.flag-ss {
+    @include modifier('ss') {
         background-position: 0 -143px;
     }
 
-    &.flag-st {
+    @include modifier('st') {
         background-position: -16px -143px;
     }
 
-    &.flag-sv {
+    @include modifier('sv') {
         background-position: -32px -143px;
     }
 
-    &.flag-sx {
+    @include modifier('sx') {
         background-position: -48px -143px;
     }
 
-    &.flag-sy {
+    @include modifier('sy') {
         background-position: -64px -143px;
     }
 
-    &.flag-sz {
+    @include modifier('sz') {
         background-position: -80px -143px;
     }
 
-    &.flag-tc {
+    @include modifier('tc') {
         background-position: -96px -143px;
     }
 
-    &.flag-td {
+    @include modifier('td') {
         background-position: -112px -143px;
     }
 
-    &.flag-tf {
+    @include modifier('tf') {
         background-position: -128px -143px;
     }
 
-    &.flag-tg {
+    @include modifier('tg') {
         background-position: -144px -143px;
     }
 
-    &.flag-th {
+    @include modifier('th') {
         background-position: -160px -143px;
     }
 
-    &.flag-tj {
+    @include modifier('tj') {
         background-position: -176px -143px;
     }
 
-    &.flag-tk {
+    @include modifier('tk') {
         background-position: -192px -143px;
     }
 
-    &.flag-tl {
+    @include modifier('tl') {
         background-position: -208px -143px;
     }
 
-    &.flag-tm {
+    @include modifier('tm') {
         background-position: -224px -143px;
     }
 
-    &.flag-tn {
+    @include modifier('tn') {
         background-position: -240px -143px;
     }
 
-    &.flag-to {
+    @include modifier('to') {
         background-position: 0 -154px;
     }
 
-    &.flag-tr {
+    @include modifier('tr') {
         background-position: -16px -154px;
     }
 
-    &.flag-tt {
+    @include modifier('tt') {
         background-position: -32px -154px;
     }
 
-    &.flag-tv {
+    @include modifier('tv') {
         background-position: -48px -154px;
     }
 
-    &.flag-tw {
+    @include modifier('tw') {
         background-position: -64px -154px;
     }
 
-    &.flag-tz {
+    @include modifier('tz') {
         background-position: -80px -154px;
     }
 
-    &.flag-ua {
+    @include modifier('ua') {
         background-position: -96px -154px;
     }
 
-    &.flag-ug {
+    @include modifier('ug') {
         background-position: -112px -154px;
     }
 
-    &.flag-um {
+    @include modifier('um') {
         background-position: -128px -154px;
     }
 
-    &.flag-us {
+    @include modifier('us') {
         background-position: -144px -154px;
     }
 
-    &.flag-uu {
+    @include modifier('uu') {
         @include box-sizing(border-box);
 
         border: 1px dashed $Color-Light_Grey;
     }
 
-    &.flag-uy {
+    @include modifier('uy') {
         background-position: -160px -154px;
     }
 
-    &.flag-uz {
+    @include modifier('uz') {
         background-position: -176px -154px;
     }
 
-    &.flag-va {
+    @include modifier('va') {
         background-position: -192px -154px;
     }
 
-    &.flag-vc {
+    @include modifier('vc') {
         background-position: -208px -154px;
     }
 
-    &.flag-ve {
+    @include modifier('ve') {
         background-position: -224px -154px;
     }
 
-    &.flag-vg {
+    @include modifier('vg') {
         background-position: -240px -154px;
     }
 
-    &.flag-vi {
+    @include modifier('vi') {
         background-position: 0 -165px;
     }
 
-    &.flag-vn {
+    @include modifier('vn') {
         background-position: -16px -165px;
     }
 
-    &.flag-vu {
+    @include modifier('vu') {
         background-position: -32px -165px;
     }
 
-    &.flag-wales {
+    @include modifier('wales') {
         background-position: -48px -165px;
     }
 
-    &.flag-wf {
+    @include modifier('wf') {
         background-position: -64px -165px;
     }
 
-    &.flag-ws {
+    @include modifier('ws') {
         background-position: -80px -165px;
     }
 
-    &.flag-ye {
+    @include modifier('ye') {
         background-position: -96px -165px;
     }
 
-    &.flag-yt {
+    @include modifier('yt') {
         background-position: -112px -165px;
     }
 
-    &.flag-za {
+    @include modifier('za') {
         background-position: -128px -165px;
     }
 
-    &.flag-zm {
+    @include modifier('zm') {
         background-position: -160px -165px;
     }
 
-    &.flag-zw {
+    @include modifier('zw') {
         background-position: -176px -165px;
     }
 }
