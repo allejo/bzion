@@ -85,7 +85,6 @@
 
                     @include element('team-container') {
                         @include desktop-columns(6, 0);
-                        @include desktop-gutter;
 
                         &:first-child {
                             padding-right: 5px;
