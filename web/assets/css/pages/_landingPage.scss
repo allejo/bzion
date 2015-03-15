@@ -9,6 +9,10 @@
         @include respond-to(tablets) {
             background-position: center center;
         }
+
+        @include component('button') {
+            margin-top: 40px;
+        }
     }
 
     @include component('icon-bullet-points') {
