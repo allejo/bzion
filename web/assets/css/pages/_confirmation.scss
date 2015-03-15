@@ -1,13 +1,9 @@
-.confirmation--container {
-    @extend %wrapper;
-
-    margin-top: 15px;
-
-    .confirmation--message {
+@include component('confirmation') {
+    @include element('message') {
         margin-bottom: 25px;
     }
 
-    .confirmation--actions {
+    @include element('actions') {
         text-align: center;
 
         div {

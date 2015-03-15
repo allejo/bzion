@@ -1,20 +1,20 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <main class="page news">
-        <section class="page__header">
-            <div class="page__header__container">
-                <section class="page__header__container__title">
+    <main class="c-page">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
                     <h1>Action Confirmation</h1>
                 </section>
             </div>
         </section>
 
-        <section class="confirmation--container">
-            <article class="confirmation--message">
+        <section class="o-layout c-confirmation">
+            <article class="o-layout__body--full c-confirmation__message">
                 {{ message|raw }}
             </article>
-            <div class="confirmation--actions">
+            <div class="o-layout__body--full c-confirmation__actions">
                 {{ form(form) }}
             </div>
         </section>
