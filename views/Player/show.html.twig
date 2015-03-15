@@ -39,7 +39,9 @@
                 <p><strong>Last seen</strong> {{ player.lastLogin }}</p>
 
                 {% if player.description is not empty %}
-                    <p class="description">{{ player.description }}</p>
+                    <section class="c-public-profile__details__bio s-markdown">
+                        {{ player.description }}
+                    </section>
                 {% endif %}
             </section>
         </section>

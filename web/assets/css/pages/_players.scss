@@ -25,7 +25,9 @@
         }
 
         @include element('details') {
-
+            @include element('bio') {
+                margin-top: $Settings-Page_Section-Small_Margin;
+            }
         }
     }
 }
