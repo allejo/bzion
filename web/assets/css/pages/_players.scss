@@ -18,6 +18,16 @@
             display: inline;
         }
     }
+
+    @include component('public-profile') {
+        @include element('profile-picture') {
+            @include profile-picture();
+        }
+
+        @include element('details') {
+
+        }
+    }
 }
 
 @include component('player-badge') {
@@ -67,50 +77,6 @@
 
                 &:hover {
                     color: lighten($Color-Medium_Grey, 15%);
-                }
-            }
-        }
-    }
-}
-
-main {
-    &.players {
-        .profile {
-            .row {
-                .information {
-                    .description {
-                        margin: 20px 0;
-                    }
-                }
-
-                .previous_callsigns {
-
-                }
-
-                .previous_ips {
-
-                }
-
-                .admin_notes {
-                    width: 100%;
-
-                    form {
-                        @extend .clearfix;
-
-                        padding: 5px 15px;
-
-                        textarea {
-                            height: 160px;
-                            margin-bottom: 5px;
-                            resize: vertical;
-                            width: 100%;
-                        }
-
-                        button {
-                            float: right;
-                            margin-left: 10px;
-                        }
-                    }
                 }
             }
         }

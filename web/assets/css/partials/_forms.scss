@@ -12,10 +12,6 @@ button {
     @extend .c-button--blue;
 }
 
-form {
-    margin-bottom: $Form-Spacing;
-}
-
 fieldset {
     background-color: lighten($Form-Border_Color, 10%);
     border: $Border-Default;

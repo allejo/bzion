@@ -17,54 +17,24 @@
         }
     }
 
-    .o-layout {
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        h4 {
-            margin-bottom: 15px;
-        }
-    }
-
-    .o-layout__body--half {
-        @include respond-to(phablets) {
-            margin-bottom: 30px;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
-    }
-
     @include component('team') {
         @include element('information') {
             @include element('bio') {
-                margin-top: 15px;
+                margin-top: $Settings-Page_Section-Small_Margin;
             }
 
             @include respond-to(phablets) {
-                margin-top: 30px;
                 order: 2;
             }
         }
 
         @include element('profile-picture') {
+            @include profile-picture();
+
             text-align: right;
-
-            img {
-                width: 100%;
-
-                @include respond-to(phablets) {
-                    width: 30%;
-                }
-
-                @include respond-to(phones) {
-                    width: 40%;
-                }
-            }
 
             @include respond-to(phablets) {
                 order: 1;
-                text-align: center;
             }
         }
 

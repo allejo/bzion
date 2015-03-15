@@ -173,3 +173,22 @@
         @content;
     }
 }
+
+@mixin profile-picture() {
+    img {
+        width: 100%;
+
+        @include respond-to(phablets) {
+            width: 30%;
+        }
+
+        @include respond-to(phones) {
+            width: 40%;
+        }
+    }
+
+    @include respond-to(phablets) {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+}

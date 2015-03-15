@@ -1,8 +1,22 @@
+%phablet-margin {
+    @include respond-to(phablets) {
+        margin-bottom: $Settings-Page_Section-Margin;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
 @include object('layout') {
     @extend %wrapper;
     @include desktop-container;
 
     margin-bottom: $Settings-Page_Section-Margin;
+
+    h4 {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+    }
 
     @include element('sidebar') {
         @include desktop-columns(3);
@@ -20,16 +34,19 @@
         }
 
         @include modifier('third') {
+            @extend %phablet-margin;
             @include desktop-columns(4, 0);
             @include phablet-columns(12);
         }
 
         @include modifier('quarter') {
+            @extend %phablet-margin;
             @include desktop-columns(3);
             @include phablet-columns(12);
         }
 
         @include modifier('half') {
+            @extend %phablet-margin;
             @include desktop-columns(6, 0);
             @include phablet-columns(12);
         }
