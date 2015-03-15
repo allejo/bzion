@@ -30,6 +30,20 @@
             }
         }
     }
+
+    @include component('private-profile') {
+        @include element('callsigns') {
+
+        }
+
+        @include element('ips') {
+
+        }
+
+        @include element('notes') {
+
+        }
+    }
 }
 
 @include component('player-badge') {

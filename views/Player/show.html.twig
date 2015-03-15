@@ -49,8 +49,8 @@
         {% if me.hasPermission("view_visitor_log") %}
             <hr>
 
-            <section class="o-layout">
-                <section class="o-layout__body--half previous_callsigns">
+            <section class="o-layout c-private-profile">
+                <section class="o-layout__body--half c-private-profile__callsigns">
                     <h4>
                         Previous Callsigns
                         <small>
@@ -65,7 +65,7 @@
                     </ul>
                 </section>
 
-                <section class="o-layout__body--half previous_ips">
+                <section class="o-layout__body--half c-private-profile__ips">
                     <h4>
                         Known IP Addresses
                         <small>
@@ -80,15 +80,19 @@
                 </section>
             </section>
 
-            <section class="o-layout">
-                <section class="o-layout__body--full admin_notes">
+            <section class="o-layout c-private-profile">
+                <section class="o-layout__body--full c-private-profile__notes">
                     <h4>Admin Notes</h4>
-                    {{ form_start(adminNotesForm) }}
+                    {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
                         {{ form_errors(adminNotesForm) }}
 
-                        {{ form_row(adminNotesForm.notes, { label: false }) }}
-                        {{ form_row(adminNotesForm.save, { attr: { class: "button grey notextshadow" }}) }}
-                        {{ form_row(adminNotesForm.save_and_sign, { attr: { class: "button grey notextshadow" }}) }}
+                        <section class="c-form__editor">
+                            {{ form_row(adminNotesForm.notes, { attr: { 'class': 'c-form__editor__body__content c-form__editor__body__content--small' }, label: false }) }}
+                        </section>
+
+                        <section class="c-form__actions">
+                            {{ form_rest(adminNotesForm) }}
+                        </section>
                     {{ form_end(adminNotesForm) }}
                 </section>
             </section>

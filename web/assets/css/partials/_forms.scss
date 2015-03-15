@@ -15,7 +15,7 @@ button {
 fieldset {
     background-color: lighten($Form-Border_Color, 10%);
     border: $Border-Default;
-    margin: 0 0 $Form-Small_Spacing;
+    margin: 0;
     padding: $Form-Small_Spacing;
 }
 
@@ -52,7 +52,6 @@ textarea {
     box-sizing: border-box;
     font-family: $Font-Sans_Serif;
     font-size: 16px;
-    margin-bottom: $Form-Spacing / 2;
     padding: $Form-Spacing / 3;
     transition: border-color;
     width: 100%;
@@ -88,7 +87,6 @@ input[type="file"] {
 }
 
 select {
-    margin-bottom: $Form-Spacing;
     max-width: 100%;
     width: auto;
 }
@@ -98,23 +96,37 @@ select {
 // ========================================
 
 @include component('form') {
-    @extend %wrapper;
+    margin-bottom: $Settings-Page_Section-Margin;
 
     @include element('editor') {
-        @include desktop-container;
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+
+        div {
+            width: 100%;
+        }
 
         @include element('body') {
-            @include desktop-columns(9);
-            @include phablet-columns(12);
+            div {
+                margin-bottom: $Form-Small_Spacing;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
 
             @include element('content') {
                 min-height: 270px;
+
+                @include modifier('small') {
+                    min-height: 140px;
+                }
             }
         }
 
         @include element('meta') {
-            @include desktop-columns(3);
-            @include phablet-columns(12);
+            div {
+                margin-bottom: $Form-Spacing;
+            }
 
             @include respond-to(phablets) {
                 div {
@@ -124,6 +136,10 @@ select {
                     &:last-child {
                         margin-right: 0;
                     }
+
+                    @include respond-to(phablets) {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
@@ -131,5 +147,13 @@ select {
 
     @include element('actions') {
         text-align: left;
+
+        div {
+            display: inline-block;
+
+            button {
+                margin-right: 10px;
+            }
+        }
     }
 }

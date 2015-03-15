@@ -18,6 +18,10 @@
         margin-bottom: $Settings-Page_Section-Small_Margin;
     }
 
+    @include modifier('no-margin') {
+        margin-bottom: 0;
+    }
+
     @include element('sidebar') {
         @include desktop-columns(3);
         @include phablet-columns(12);
