@@ -1,4 +1,8 @@
-main {
+@include scope('newsstand') {
+    @include object('layout') {
+        margin-bottom: $Settings-Page_Section-Margin;
+    }
+
     @include component('article'){
         border-bottom: $Border-Default;
         margin-bottom: 20px;

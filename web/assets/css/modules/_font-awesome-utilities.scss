@@ -33,7 +33,7 @@
 
     // Stupid fix for "fa-gamepad" that has a weird whitespace on the top that throws off
     // the perfect centering. 10px is a magic number
-    &.gamepad-lineheight {
+    &.u-gamepad-fix {
         line-height: $size - 10px;
     }
 }

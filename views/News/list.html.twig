@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <main class="c-page news">
+    <main class="c-page s-newsstand">
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
@@ -32,7 +32,7 @@
         <section class="o-layout">
             {% include "News/categories.html.twig" %}
 
-            <section class="o-layout__body-with-sidebar">
+            <section class="o-layout__body--with-sidebar">
                 {% for article in news %}
                     {% include "News/article.html.twig" with { 'article': article } %}
                 {% endfor %}

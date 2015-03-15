@@ -110,7 +110,6 @@ select {
         @include element('body') {
             @include desktop-columns(9);
             @include phablet-columns(12);
-            @include phablet-gutter;
 
             @include element('content') {
                 min-height: 270px;

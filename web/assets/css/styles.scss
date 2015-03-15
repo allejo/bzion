@@ -12,7 +12,7 @@
 
 @import "partials/base";
 @import "modules/utilities";
-@import "modules/font-awesome";
+@import "modules/font-awesome-utilities";
 @import "modules/mobile-responsive-definitions";
 @import "modules/mobile-responsive-helpers";
 @import "modules/placeholders";
@@ -35,16 +35,18 @@
 //    (CSS for parts of the website but not specific to a single page)
 //
 
-@import "partials/helpers";
-@import "partials/generic";
-@import "partials/typography";
 @import "partials/buttons";
+@import "partials/font-awesome";
 @import "partials/forms";
-@import "partials/header";
-@import "partials/jumbotron";
 @import "partials/footer";
-@import "partials/ranks";
+@import "partials/generic";
+@import "partials/header";
+@import "partials/helpers";
+@import "partials/icon-bullet-points";
+@import "partials/jumbotron";
 @import "partials/layouts";
+@import "partials/ranks";
+@import "partials/typography";
 
 
 //

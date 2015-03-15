@@ -1,3 +1,17 @@
+@function calculate-flex($columns) {
+    @return ($rocks-column-width * $columns) * 1%;
+}
+
+@function calculate-gutter($column-count: $rocks-column-count, $gutter: 0.25%) {
+    @return $column-count * $gutter;
+}
+
+@mixin set-flex($flex, $gutter) {
+    flex-basis: $flex;
+    max-width: $flex;
+    margin-right: $gutter;
+}
+
 @mixin make-container() {
     box-sizing: border-box;
     display: flex;
@@ -6,11 +20,15 @@
     flex-wrap: wrap;
 }
 
-@mixin make-columns($columns) {
-    $percent: ($rocks-column-width * $columns) * 1%;
+@mixin make-columns($columns, $gutter: calculate-gutter()) {
+    $gutter: if($columns == 12, 0, $gutter);
+    $width: if($gutter == 0, calculate-flex($columns), calculate-flex($columns) - $gutter);
 
-    flex-basis: $percent;
-    max-width: $percent;
+    @include set-flex($width, $gutter);
+
+    &:last-child {
+        @include set-flex(calculate-flex($columns), 0);
+    }
 }
 
 @mixin offset-columns($columns) {

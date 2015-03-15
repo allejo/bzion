@@ -126,6 +126,32 @@ $desktop-min-size: $tablet-max-size + 1;
 /// Similar to `respond-to` with the exception that instead of smaller views also inheriting
 /// these CSS rules, only a specific view size will able to see the content
 ///
+/// @access private
+/// @content
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`, `desktops`
+
+@mixin _respond-only-to($media) {
+    @if $media == phones {
+        @include media-size($phone-min-size, $phone-max-size) { @content; }
+    }
+    @else if $media == phablets {
+        @include media-size($phablet-min-size, $phablet-max-size) { @content; }
+    }
+    @else if $media == tablets {
+        @include media-size($tablet-min-size, $tablet-max-size) { @content; }
+    }
+    @else if $media == desktops {
+        @include media-size($desktop-min-size) { @content; }
+    }
+}
+
+
+/// Similar to `respond-to` with the exception that instead of smaller views also inheriting
+/// these CSS rules, only a specific view size will able to see the content. Multiple view
+/// points can be specified and the rules will be applied to each view point
+///
 /// @content
 ///
 /// @param {String} $media
@@ -145,81 +171,54 @@ $desktop-min-size: $tablet-max-size + 1;
 ///       }
 ///   }
 
-@mixin respond-only-to($media) {
-    @if $media == phones {
-        @include media-size($phone-min-size, $phone-max-size) { @content; }
-    }
-    @else if $media == phablets {
-        @include media-size($phablet-min-size, $phablet-max-size) { @content; }
-    }
-    @else if $media == tablets {
-        @include media-size($tablet-min-size, $tablet-max-size) { @content; }
-    }
-    @else if $media == desktops {
-        @include media-size($desktop-min-size) { @content; }
+@mixin respond-only-to($media_list...) {
+    @each $media in $media_list {
+        @include _respond-only-to($media) {
+            @content;
+        }
     }
 }
 
 
-/// A mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin for a desktop to keep it consistent with the other mixins
-///
-/// @param {Number [unit]} $width [em(1088)]
-///   The max width to be applied to the element. Can be a percentage or a measure.
-///
-/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+/// Creates a flex box container available to desktops and smaller screen sizes that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
 ///   @include outer-container;
 
-@mixin desktop-container($width: $max-width) {
-    @include outer-container($width);
+@mixin desktop-container() {
+    @include make-container();
 }
 
 
-/// A convenience mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin that will only be included once we hit a tablet view or smaller
-///
-/// @param {Number [unit]} $width [em(1088)]
-///   The max width to be applied to the element. Can be a percentage or a measure.
-///
-/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+/// Creates a flex box container available to tablets and smaller screen sizes that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
 ///   @include respond-to(tablets) {
 ///       @include outer-container($width);
 ///   }
 
-@mixin tablet-container($width: $max-width) {
+@mixin tablet-container() {
     @include respond-to(tablets) {
-        @include outer-container($width);
+        @include make-container();
     }
 }
 
 
-/// A convenience mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin that will only be included once we hit a phablet view or smaller
-///
-/// @param {Number [unit]} $width [em(1088)]
-///   The max width to be applied to the element. Can be a percentage or a measure.
-///
-/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+/// Creates a flex box container available to phablets and smaller screen sizes that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
 ///   @include respond-to(phablets) {
 ///       @include outer-container($width);
 ///   }
 
-@mixin phablet-container($width: $max-width) {
+@mixin phablet-container() {
     @include respond-to(phablets) {
-        @include outer-container($width);
+        @include make-container();
     }
 }
 
 
-/// A convenience mixin which includes Neat's [outer-container()](http://thoughtbot.github.io/neat-docs/latest/#outer-container) mixin that will only be included once we hit a phone view
-///
-/// @param {Number [unit]} $width [em(1088)]
-///   The max width to be applied to the element. Can be a percentage or a measure.
-///
-/// @link http://thoughtbot.github.io/neat-docs/latest/#outer-container
+/// Creates a flex box container available to phones that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
 ///   @include respond-to(phones) {
@@ -228,7 +227,7 @@ $desktop-min-size: $tablet-max-size + 1;
 
 @mixin phone-container($width: $max-width) {
     @include respond-to(phones) {
-        @include outer-container($width);
+        @include make-container();
     }
 }
 
@@ -243,8 +242,8 @@ $desktop-min-size: $tablet-max-size + 1;
 /// @example scss - SCSS Equivalent
 ///   @include span-columns($columns);
 
-@mixin desktop-columns($columns) {
-    @include span-columns($columns);
+@mixin desktop-columns($columns, $gutter: calculate-gutter()) {
+    @include make-columns($columns, $gutter);
 }
 
 
@@ -260,9 +259,9 @@ $desktop-min-size: $tablet-max-size + 1;
 ///       @include span-columns($columns);
 ///   }
 
-@mixin tablet-columns($columns) {
+@mixin tablet-columns($columns, $gutter: calculate-gutter()) {
     @include respond-to(tablets) {
-        @include span-columns($columns);
+        @include make-columns($columns, $gutter);
     }
 }
 
@@ -279,9 +278,9 @@ $desktop-min-size: $tablet-max-size + 1;
 ///       @include span-columns($columns);
 ///   }
 
-@mixin phablet-columns($columns) {
+@mixin phablet-columns($columns, $gutter: calculate-gutter()) {
     @include respond-to(phablets) {
-        @include span-columns($columns);
+        @include make-columns($columns, $gutter);
     }
 }
 
@@ -298,9 +297,9 @@ $desktop-min-size: $tablet-max-size + 1;
 ///       @include span-columns($columns);
 ///   }
 
-@mixin phone-columns($columns) {
+@mixin phone-columns($columns, $gutter: calculate-gutter()) {
     @include respond-to(phones) {
-        @include span-columns($columns);
+        @include make-columns($columns, $gutter);
     }
 }
 

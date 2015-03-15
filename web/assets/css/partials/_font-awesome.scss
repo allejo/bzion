@@ -1,0 +1,24 @@
+@include component('circular-fa') {
+    @extend %margin-center;
+    @include set-circular-size(100px);
+
+    border: 1px solid $Color-Black;
+    display: block;
+    font-size: 55px;
+    margin: {
+        bottom: 10px;
+        top: 10px;
+    }
+
+    @include respond-to(phablets) {
+        @include set-circular-size(65px);
+
+        border: none;
+    }
+
+    @include respond-to(phones) {
+        @include set-circular-size(45px);
+
+        font-size: 35px;
+    }
+}

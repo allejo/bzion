@@ -1,190 +1,117 @@
-main {
-    &.landing {
-        @include component('jumbotron') {
-            background-attachment: scroll;
-            background-image: url("../imgs/cover_photo.png");
-            background-position: 0 -185px;
-            background-repeat: no-repeat;
+@include scope('landing') {
+    @include component('jumbotron') {
+        background-attachment: scroll;
+        background-image: url("../imgs/cover_photo.png");
+        background-position: 0 -185px;
+        background-repeat: no-repeat;
+        margin-bottom: $Settings-Page_Section-Margin;
 
-            @include respond-to(tablets) {
-                background-position: center center;
-            }
+        @include respond-to(tablets) {
+            background-position: center center;
         }
+    }
 
-        .key_points {
-            @extend %wrapper;
-            @include desktop-container;
-            @include phablet-container;
+    @include component('icon-bullet-points') {
+        margin-bottom: $Settings-Page_Section-Margin;
+    }
 
-            padding: {
-                left: 15px;
-                right: 15px;
+    @include component('latest-updates') {
+        @extend %wrapper;
+        @include desktop-container();
+
+        margin-bottom: $Settings-Page_Section-Margin;
+
+        @include component('news-container') {
+            @include desktop-columns(5);
+            @include phablet-columns(12);
+
+            @include respond-to(phablets) {
+                margin-bottom: $Settings-Page_Section-Margin;
             }
 
-            ul {
-                @include phablet-container;
+            @include element('newsstand') {
+                @extend %no-padding-ul;
 
-                padding-left: 0;
+                margin: {
+                    bottom: 15px;
+                    top: 15px;
+                }
 
                 li {
-                    @include desktop-columns(4);
-                    @include phablet-columns(12);
+                    border-bottom: $Border-Default;
+                    list-style: none;
+                    padding: 15px 0 15px;
 
-                    text-align: center;
-
-                    .circular-icon {
-                        @include phablet-columns(2);
-                        @include phone-columns(3);
-                        @include set-circular-size(100px);
-
-                        border: 1px solid $Color-Black;
-                        font-size: 55px;
-                        margin-bottom: 10px;
-
-                        @include respond-to(phablets) {
-                            @include set-circular-size(65px);
-
-                            border: none;
-                        }
-
-                        @include respond-to(phones) {
-                            @include set-circular-size(45px);
-
-                            font-size: 35px;
-                        }
+                    h3 {
+                        font-size: 18px;
+                        margin-bottom: 5px;
                     }
 
-                    div {
-                        @include phablet-columns(10);
-                        @include phone-columns(9);
-
-                        h3 {
-                            font-size: 24px;
-                            font-weight: 400;
-                            margin: 10px 0;
-                        }
-
-                        @include respond-to(phablets) {
-                            padding-left: 10px;
-                        }
+                    &:first-child {
+                        padding-top: 0;
                     }
 
-                    @include respond-to(phablets) {
-                        margin: {
-                            bottom: 10px;
-                            top: 10px;
-                        }
-                        text-align: left;
+                    &:last-child {
+                        border-bottom: none;
+                        padding-bottom: 0;
                     }
                 }
             }
         }
 
-        .content {
-            @extend %wrapper;
+        @include component('match-container') {
+            @include desktop-columns(7);
+            @include phablet-columns(12);
 
-            @include desktop-container;
+            @include element('matches') {
+                @include desktop-container;
 
-            .news-container,
-            .recent-matches-container {
-                margin: {
-                    bottom: 20px;
-                    top: 20px;
-                }
-            }
+                margin: 15px 0;
 
-            .news-container {
-                @include desktop-columns(5);
-                @include phablet-columns(12);
-                @include phablet-gutter();
-
-                .news {
-                    @extend %no-padding-ul;
-
-                    margin: {
-                        bottom: 15px;
-                        top: 15px;
-                    }
-
-                    li {
-                        border-bottom: $Border-Default;
-                        list-style: none;
-                        padding: 15px 0 15px;
-
-                        h3 {
-                            font-size: 18px;
-                            margin-bottom: 5px;
-                        }
-
-                        &:first-child {
-                            padding-top: 0;
-                        }
-
-                        &:last-child {
-                            border-bottom: none;
-                            padding-bottom: 0;
-                        }
-                    }
-                }
-            }
-
-            .recent-matches-container {
-                @include desktop-columns(7);
-                @include phablet-columns(12);
-
-                .recent-matches {
+                @include element('match'){
                     @include desktop-container;
+                    @include desktop-columns(4, 0);
+                    @include phone-columns(6, 0);
 
-                    margin: 15px 0;
+                    &:nth-child(n+4) {
+                        margin-top: 15px;
+                    }
 
-                    .match {
-                        @include desktop-container;
-                        @include desktop-columns(4);
-                        @include desktop-gutter(3n);
-                        @include phone-reset-gutter(3n);
-                        @include phone-columns(6);
-                        @include phone-gutter(2n);
-
-                        &:nth-child(n+4) {
+                    @include respond-to(phones) {
+                        &:nth-child(n+3) {
                             margin-top: 15px;
                         }
+                    }
 
-                        @include respond-to(phones) {
-                            &:nth-child(n+3) {
-                                margin-top: 15px;
-                            }
+                    @include element('team-container') {
+                        @include desktop-columns(6, 0);
+                        @include desktop-gutter;
+
+                        &:first-child {
+                            padding-right: 5px;
+                            text-align: right;
                         }
 
-                        .team-container {
-                            @include desktop-columns(6);
-                            @include desktop-gutter;
-
-                            &:first-child {
-                                padding-right: 5px;
-                                text-align: right;
-                            }
-
-                            &:nth-child(2) {
-                                padding-left: 5px;
-                            }
-
-                            .team {
-                                display: inline-block;
-                                text-align: center;
-
-                                img {
-                                    @extend %margin-center;
-
-                                    display: block;
-                                }
-                            }
+                        &:nth-child(2) {
+                            padding-left: 5px;
                         }
 
-                        .stats {
-                            @include desktop-columns(12);
-
+                        @include element('team') {
+                            display: inline-block;
                             text-align: center;
+
+                            img {
+                                @extend %margin-center;
+
+                                display: block;
+                            }
                         }
+                    }
+
+                    @include element('stats') {
+                        @include desktop-columns(12);
+
+                        text-align: center;
                     }
                 }
             }

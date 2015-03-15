@@ -1,0 +1,37 @@
+@include component('icon-bullet-points') {
+    text-align: center;
+
+    @include element('bullet') {
+        @include phablet-container();
+
+        @include respond-to(phablets) {
+            margin-bottom: 15px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        @include element('icon') {
+            @include phablet-columns(2);
+        }
+
+        @include element('content') {
+            @include phablet-columns(10);
+
+            h3 {
+                font-size: 24px;
+                font-weight: 400;
+                margin: 10px 0;
+            }
+        }
+    }
+
+    @include respond-to(phablets) {
+        margin: {
+            bottom: 10px;
+            top: 10px;
+        }
+        text-align: left;
+    }
+}
