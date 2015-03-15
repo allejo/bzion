@@ -37,7 +37,9 @@ class Configuration implements ConfigurationInterface
 
                 ->arrayNode('site')
                     ->children()
-                        ->scalarNode('name')->defaultValue('BZiON: A League Management System')->info('The name of the website')->attribute('asked', true)->end()
+                        ->scalarNode('name')->defaultValue('BZiON')->info('The name of the website')->attribute('asked', true)->end()
+                        ->scalarNode('welcome')->defaultValue('Welcome to BZiON')->info('The main welcome message that appears on the landing page')->attribute('asked', true)->end()
+                        ->scalarNode('slug')->defaultValue('A good clean League Management System ...sorta')->info('The secondary message that appears on the landing page')->attribute('asked', true)->end()
                     ->end()
                 ->end()
 

@@ -5,7 +5,9 @@ bzion:
         username: bzion_admin
         password: password
     site:
-        name: "BZiON: A League Management System"
+        name: "BZiON"
+        welcome: "Welcome to BZiON"
+        slug: "A good clean League Management System ...sorta"
     league:
         duration:
             30: 3/3 # 30 minute match gets full ELO

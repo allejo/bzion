@@ -4,8 +4,8 @@
     <main class="s-landing">
         <section class="c-jumbotron">
             <article>
-                <h1>Welcome to Games United</h1>
-                <h2>Good clean fun... sorta</h2>
+                <h1>{{ app.siteWelcome }}</h1>
+                <h2>{{ app.siteSlug }}</h2>
 
                 {% if me is invalid %}
                     <a class="c-button c-button--green" href="#">Register</a>

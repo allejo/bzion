@@ -83,6 +83,26 @@ class AppGlobal
     }
 
     /**
+     * Get the name of the website
+     *
+     * @return string
+     */
+    public function getSiteWelcome()
+    {
+        return $this->container->getParameter('bzion.site.welcome');
+    }
+
+    /**
+     * Get the name of the website
+     *
+     * @return string
+     */
+    public function getSiteSlug()
+    {
+        return $this->container->getParameter('bzion.site.slug');
+    }
+
+    /**
      * Get information about sockets
      *
      * @return array
