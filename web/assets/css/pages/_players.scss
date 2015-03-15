@@ -1,12 +1,3 @@
-@include scope('player-list') {
-    @include component('roll-call') {
-        @include component('player-badge') {
-            @include phablet-columns(6, 0);
-            @include phone-columns(12);
-        }
-    }
-}
-
 @include scope('player-profile') {
     .c-page__header__container__title {
        @include component('flag') {
@@ -50,21 +41,49 @@
     display: flex;
     margin-bottom: 10px;
 
-    @include respond-only-to(desktops, tablets) {
-        &:nth-last-child(-n+3) {
-            margin-bottom: 0;
+    &.o-layout__body--third {
+        @include respond-only-to(desktops, tablets) {
+            &:nth-last-child(-n+3) {
+                margin-bottom: 0;
+            }
+        }
+
+        @include respond-only-to(phablets) {
+            &:nth-last-child(-n+2) {
+                margin-bottom: 0;
+            }
+        }
+
+        @include respond-only-to(phones) {
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
 
-    @include respond-only-to(phablets) {
-        &:nth-last-child(-n+2) {
-            margin-bottom: 0;
+    &.o-layout__body--quarter {
+        @include respond-only-to(desktops) {
+            &:nth-last-child(-n+4) {
+                margin-bottom: 0;
+            }
         }
-    }
 
-    @include respond-only-to(phones) {
-        &:last-child {
-            margin-bottom: 0;
+        @include respond-only-to(tablets) {
+            &:nth-last-child(-n+3) {
+                margin-bottom: 0;
+            }
+        }
+
+        @include respond-only-to(phablets) {
+            &:nth-last-child(-n+2) {
+                margin-bottom: 0;
+            }
+        }
+
+        @include respond-only-to(phones) {
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
 
@@ -94,6 +113,13 @@
                 &:hover {
                     color: lighten($Color-Medium_Grey, 15%);
                 }
+            }
+        }
+
+        @include modifier('callsign-only') {
+            padding: {
+                bottom: 10px;
+                top: 10px;
             }
         }
     }

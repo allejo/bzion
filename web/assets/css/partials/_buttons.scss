@@ -44,7 +44,7 @@ $Button-Colors: (
                 color: set-text-from-color($value);
                 text-decoration: none;
 
-                &:not(.c-button--no-hover) {
+                &:not(.c-button--no-hover):not(.c-button--display) {
                     $hoverColor: darken($value, 3%);
                     $hoverDarkColor: darken($hoverColor, 7%);
 
@@ -55,5 +55,10 @@ $Button-Colors: (
                 }
             }
         }
+    }
+
+    @include modifier('display') {
+        @extend .c-button--skinny;
+        @extend .c-button--no-click;
     }
 }

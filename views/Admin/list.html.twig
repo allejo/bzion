@@ -3,35 +3,35 @@
 {% block title %}League Administration{% endblock %}
 
 {% block content %}
-    <main class="administration">
-        <section class="content_header">
-            <article class="wrapper">
-                <div>
+    <main class="c-page">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
                     <h1>League Administration</h1>
-                </div>
-            </article>
+                </section>
+            </div>
         </section>
 
         {% for section in role_sections %}
-            <section class="admins">
-                <p class="button {{ section.role.displayColor }} skinny square nohover noclick">
+            <section class="o-layout">
+                <p class="c-button c-button--{{ section.role.displayColor }} c-button--display">
                     {% if section.role.displayIcon is not null %}
                         <i class="fa {{ section.role.displayIcon }}"></i>
                     {% endif %}
 
                     <span>{{ section.role.displayName }}</span>
                 </p>
+            </section>
 
-                <ul>
-                    {% for player in section.members %}
-                        <li>
-                            <img class="player_avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
-                            <section class="info">
-                                <p class="callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
-                            </section>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <section class="o-layout">
+                {% for player in section.members %}
+                    <article class="o-layout__body--quarter c-player-badge">
+                        <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
+                        <section class="c-player-badge__info c-player-badge__info--callsign-only">
+                            <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+                        </section>
+                    </article>
+                {% endfor %}
             </section>
         {% endfor %}
     </main>

@@ -40,13 +40,16 @@
         @include modifier('third') {
             @extend %phablet-margin;
             @include desktop-columns(4, 0);
-            @include phablet-columns(12);
+            @include phablet-columns(6, 0);
+            @include phone-columns(12);
         }
 
         @include modifier('quarter') {
             @extend %phablet-margin;
-            @include desktop-columns(3);
-            @include phablet-columns(12);
+            @include desktop-columns(3, 0);
+            @include tablet-columns(4, 0);
+            @include phablet-columns(6, 0);
+            @include phone-columns(12);
         }
 
         @include modifier('half') {
