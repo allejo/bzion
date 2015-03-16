@@ -1,5 +1,13 @@
 // This files contains styles for all of the generic HTML elements
 
+* {
+    &,
+    &:before,
+    &:after {
+        @include box-sizing(inherit);
+    }
+}
+
 a {
     color: $Color-Sky_Blue;
     text-decoration: none;
@@ -116,6 +124,10 @@ hr {
     @include respond-to(phablets) {
         margin: 30px auto;
     }
+}
+
+html {
+    @include box-sizing(border-box);
 }
 
 ol {
