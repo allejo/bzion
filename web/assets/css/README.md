@@ -3,13 +3,13 @@ Styling BZiON
 
 BZiON's stylesheet is written in SASS and we make the most of it; if you're not familiar with SASS, head on over to the [SASS Getting Started Guide](http://sass-lang.com/guide).
 
-We choose to use SASS, Bourbon, and Neat because of the freedom it gave us to control every aspect of the design.
+We choose to use SASS and Bourbon because of the freedom it gave us to control every aspect of the design.
 
 ## Stylesheet Structure
 
 - **modules/**
     - This folder contains all of the partial SASS files that don't have actual CSS classes but instead only provide mixins or placeholders.
-    - Documentation for all of custom mixins used throughout the project is provided through SassDoc, which is [hosted by alezakos](http://helit.org/bziondoc/sassdoc/).
+    - Documentation for all of custom mixins used throughout the project is provided through SassDoc.
 - **pages/**
     - This folder contains all of the partial SASS files that contain all of the CSS classes for specific pages
 - **partials/**
@@ -51,12 +51,16 @@ We have no intention of abandoning SASS.
 
 ### Why not Bootstrap?
 
-While Bootstrap definitely has its uses, we choose not to use Bootstrap because it didn't suit our needs. Since we use ThoughtBot's Neat library, it already provides us with a simple to use grid system and we have convenience mixins to perform similar functionality to Bootstrap's mixins so other than that, it's just a lot of bloat.
+While Bootstrap definitely has its uses, we choose not to use Bootstrap because it didn't suit our needs. Since we use our own flex-box based grid system, we have convenience mixins to perform similar functionality to Bootstrap's mixins so other than that, it's just a lot of bloat.
 
-Bootstrap's grid system is also a limiting factor when styling for specific mobile devices in landspace mode so Neat's grid system gives us full control of handling that. Lastly, Bootstrap is a "mobile-first" library while BZiON is "desktop-first" so that's another limiting factor.
+Bootstrap's grid system is also a limiting factor when styling for specific mobile devices in landspace mode so our own grid system gives us full control of handling that. Lastly, Bootstrap is a "mobile-first" library while BZiON is "desktop-first" so that's another limiting factor.
 
 ### Why not &lt;insert framework here&gt;?
 
-Similarly to our reasons for not using Bootstrap, Bourbon and Neat give us the freedom to control every aspect of our SASS. It has not been the case where Bourbon or Neat lacked a feature that couldn't be written quickly, so there isn't a need for using a different framework/library.
+Similarly to our reasons for not using Bootstrap, Bourbon gives us the freedom to control every aspect of our SASS. It has not been the case where Bourbon lacked a feature that couldn't be written quickly, so there isn't a need for using a different framework/library.
 
-In addition, Bourbon and Neat are both lightweight and do not affect compilation time as much as other libraries (e.g. Compass, Susy).
+In addition, Bourbon is lightweight and do not affect compilation time as much as other libraries (e.g. Compass, Susy).
+
+### Why use Bourbon when Autoprefixer exists?
+
+While Autoprefixer may be nice and use CanIUse' information, it has proven to fall short in supporting vendor prefixes for flex-boxes, which our entire grid system is based on. For this reason, we have chosen to use Bourbon, which was designed by humans who have tested this thoroughly and not automated assumptions like Autoprefixer.

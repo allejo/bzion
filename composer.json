@@ -43,7 +43,7 @@
         "symfony/validator"          : "~2.6",
         "symfony/yaml"               : "~2.6",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
-        "twig/twig"                  : "dev-master",
+        "twig/twig"                  : "~1.18",
         "yzalis/identicon"           : "1.1.*@dev"
     },
     "require-dev": {

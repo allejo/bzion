@@ -14,7 +14,3 @@
 	path = web/assets/css/vendor/bourbon
 	url = https://github.com/Sujevo/lib-bourbon
 	branch = v4_0
-[submodule "web/assets/css/vendor/neat"]
-	path = web/assets/css/vendor/neat
-	url = https://github.com/Sujevo/lib-neat
-	branch = v1_7
