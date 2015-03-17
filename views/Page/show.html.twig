@@ -3,16 +3,26 @@
 {% block title %}{{ page.name }}{% endblock %}
 
 {% block content %}
-    <main class="custom_page">
-        <section class="content_header">
-            <article class="wrapper">
-                <div>
+    <main class="c-page s-matches">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
                     <h1>{{ page.name }}</h1>
-                </div>
-            </article>
+                </section>
+
+                <section class="c-page__header__container__options">
+                    {% if me.canEdit(page) %}
+                        <a class="c-button c-button--grey" href="{{ page.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
+                    {% endif %}
+
+                    {% if me.canDelete(page) %}
+                        <a class="c-button c-button--red" href="{{ page.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
+                    {% endif %}
+                </section>
+            </div>
         </section>
 
-        <section class="content">
+        <section class="o-layout">
             {{ page.content | raw }}
         </section>
     </main>
