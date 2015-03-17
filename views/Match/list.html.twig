@@ -9,22 +9,22 @@
 {% endblock %}
 
 {% block content %}
-    <main class="match_list">
-        <section class="content_header">
-            <article class="wrapper">
-                <div>
+    <main class="c-page s-matches">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
                     <h1>Matches</h1>
-                </div>
+                </section>
 
-                {% if me.canCreate("Match") %}
-                    <div class="buttons">
-                        <a class="button grey notextshadow" href="{{ path('match_enter') }}"><i class="fa fa-plus"></i> Report Match</a>
-                    </div>
-                {% endif %}
-            </article>
+                <section class="c-page__header__container__options">
+                    {% if me.canCreate("Match") %}
+                        <a class="c-button c-button--blue" href="{{ path('match_enter') }}"><i class="fa fa-plus"></i> Report Match</a>
+                    {% endif %}
+                </section>
+            </div>
         </section>
 
-        <section class="matches">
+        <section class="o-layout">
             {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
             {% set lastMatchDate = "" %}
 
@@ -36,17 +36,20 @@
                         </section>
                     {% endif %}
 
-                    <h4>{{ currentMatchDate }}</h4>
-                    <section>
+                    <section class="o-layout__body--full">
+                        <h4>{{ currentMatchDate }}</h4>
+                    </section>
+
+                    <section class="o-layout__body--full">
                 {% endif %}
 
-                <article>
-                    <div class="css-table">
-                        <div class="row">
-                            <div class="column winner">{{ link_to(match.winner) }}</div>
-                            <div class="column win-points">{{ match.score(match.winner.id) }}</div>
-                            <div class="column loss-points">{{ match.score(match.loser.id) }}</div>
-                            <div class="column loser">{{ link_to(match.loser) }}</div>
+                <article class="c-match-summary">
+                    <div class="c-table c-table--no-border">
+                        <div class="c-table__row">
+                            <div class="c-table__row__column c-match-summary__winner">{{ link_to(match.winner) }}</div>
+                            <div class="c-table__row__column c-match-summary__win-points">{{ match.score(match.winner.id) }}</div>
+                            <div class="c-table__row__column c-match-summary__loss-points">{{ match.score(match.loser.id) }}</div>
+                            <div class="c-table__row__column c-match-summary__loser">{{ link_to(match.loser) }}</div>
                         </div>
                     </div>
                 </article>

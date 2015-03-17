@@ -1,3 +1,28 @@
+@include component('match-summary') {
+    @include element('winner') {
+        @include flex-basis(45%);
+
+        text-align: right;
+    }
+
+    @include element('win-points') {
+        @include flex-basis(5%);
+
+        padding-right: 10px;
+        text-align: right;
+    }
+
+    @include element('loss-points') {
+        @include flex-basis(5%);
+
+        padding-left: 10px;
+    }
+
+    @include element('loser') {
+        @include flex-basis(45%);
+    }
+}
+
 main {
     &.match_list {
         margin-bottom: 20px;
