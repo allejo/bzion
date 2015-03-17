@@ -9,7 +9,7 @@ We choose to use SASS and Bourbon because of the freedom it gave us to control e
 
 - **modules/**
     - This folder contains all of the partial SASS files that don't have actual CSS classes but instead only provide mixins or placeholders.
-    - Documentation for all of custom mixins used throughout the project is provided through SassDoc.
+    - Documentation for all of custom mixins used throughout the project is provided through SassDoc [hosted by alezakos](http://helit.org/bziondoc/sassdoc/)
 - **pages/**
     - This folder contains all of the partial SASS files that contain all of the CSS classes for specific pages
 - **partials/**
