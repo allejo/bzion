@@ -1,0 +1,120 @@
+/// Set the visibility of a specific element to be visible or hidden based on the screen width. An element will only be
+/// visible when the screen is at the specified width. For example, if you have an element only be visible on phones,
+/// you would set the minimum and maximum screen size a phone would have. You can use pre-defined values such as
+/// `$phone-min-size` and `$phone-max-size` to stay consistent with the project. This function should not be accessed
+/// directly and instead should only be used through convenience mixins.
+///
+/// @access private
+///
+/// @param {Boolean} $hide
+///   Whether you want to hide or display the specified element in the specified screen width. True to display the element
+///   **only** on the specified screen size.
+/// @param {Number [unit]} $min
+///   The minimum size a screen should have in order for the specified element to be displayed
+/// @param {Number [unit]} $max
+///   (Optional) The maximum size a screen should have in order for the specified element to be displayed. If no maximum
+///   or 0 is specified, then the element will be displayed on a screen size at least `$min` in width.
+
+@mixin set-visible($hide, $media) {
+    display: if($hide, none, block);
+
+    @include respond-only-to($media) {
+        display: if($hide, block, none);
+    }
+}
+
+
+/// A mixin that will hide the specified element only on a desktop
+///
+/// @example scss
+///   .hide-desktop-only {
+///       @include invisible-desktop();
+///   }
+
+@mixin invisible-desktop() {
+    @include set-visible(false, desktops);
+}
+
+
+/// A mixin that will hide the specified element only on a tablet
+///
+/// @example scss
+///   .hide-tablet-only {
+///       @include invisible-tablet();
+///   }
+
+@mixin invisible-tablet() {
+    @include set-visible(false, tablets);
+}
+
+
+/// A mixin that will hide the specified element only on a phablet
+///
+/// @example scss
+///   .hide-phablet-only {
+///       @include invisible-phablet();
+///   }
+
+@mixin invisible-phablet() {
+    @include set-visible(false, phablets);
+}
+
+
+/// A mixin that will hide the specified element only on a phone
+///
+/// @example scss
+///   .hide-phone-only {
+///       @include invisible-phone();
+///   }
+
+@mixin invisible-phone() {
+    @include set-visible(false, phones);
+}
+
+
+/// A mixin that will make the specified element appear only on a desktop
+///
+/// @example scss
+///   .display-desktop-only {
+///       @include visible-desktop();
+///   }
+
+@mixin visible-desktop() {
+    @include set-visible(true, desktops);
+}
+
+
+/// A mixin that will make the specified element appear only on a table
+///
+/// @example scss
+///   .display-tablet-only {
+///       @include visible-tablet();
+///   }
+
+@mixin visible-tablet() {
+    @include set-visible(true, tablets);
+}
+
+
+/// A mixin that will make the specified element appear only on a phablet
+///
+/// @example scss
+///   .display-phablet-only {
+///       @include visible-phablet();
+///   }
+
+@mixin visible-phablet() {
+    @include set-visible(true, phablets);
+}
+
+
+/// A mixin that will make the specified element appear only on a phone
+///
+/// @example scss
+///   .display-phone-only {
+///       @include visible-phone();
+///   }
+
+@mixin visible-phone() {
+    @include set-visible(true, phones);
+}

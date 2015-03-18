@@ -32,6 +32,32 @@
     }
 }
 
+.css-dev {
+    background-color: red;
+    bottom: 0;
+    color: $Color-White;
+    display: block;
+    padding: 0 5px;
+    position: fixed;
+    text-align: center;
+
+    .desktop {
+        @include visible-desktop();
+    }
+
+    .tablet {
+        @include visible-tablet();
+    }
+
+    .phablet {
+        @include visible-phablet();
+    }
+
+    .phone {
+        @include visible-phone();
+    }
+}
+
 @include component('table') {
     @include element('row') {
         @include display(flex);

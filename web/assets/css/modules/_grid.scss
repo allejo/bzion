@@ -1,0 +1,122 @@
+/// Creates a flex box container available to desktops and smaller screen sizes that will contain flex children
+///
+/// @example scss - SCSS Equivalent
+///   @include outer-container;
+
+@mixin desktop-container() {
+    @include make-container();
+}
+
+
+/// Creates a flex box container available to tablets and smaller screen sizes that will contain flex children
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(tablets) {
+///       @include outer-container($width);
+///   }
+
+@mixin tablet-container() {
+    @include respond-to(tablets) {
+        @include make-container();
+    }
+}
+
+
+/// Creates a flex box container available to phablets and smaller screen sizes that will contain flex children
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phablets) {
+///       @include outer-container($width);
+///   }
+
+@mixin phablet-container() {
+    @include respond-to(phablets) {
+        @include make-container();
+    }
+}
+
+
+/// Creates a flex box container available to phones that will contain flex children
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phones) {
+///       @include outer-container($width);
+///   }
+
+@mixin phone-container() {
+    @include respond-to(phones) {
+        @include make-container();
+    }
+}
+
+
+/// A mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin for a desktop to keep it consistent with the other mixins
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include span-columns($columns);
+
+@mixin desktop-columns($columns, $gutter: calculate-gutter()) {
+    @include make-columns($columns, $gutter);
+}
+
+
+/// A convenience mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin that will only be included once we hit a tablet view or smaller
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(tablets) {
+///       @include span-columns($columns);
+///   }
+
+@mixin tablet-columns($columns, $gutter: calculate-gutter()) {
+    @include respond-to(tablets) {
+        @include make-columns($columns, $gutter);
+    }
+}
+
+
+/// A convenience mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin that will only be included once we hit a phablet view or smaller
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phablets) {
+///       @include span-columns($columns);
+///   }
+
+@mixin phablet-columns($columns, $gutter: calculate-gutter()) {
+    @include respond-to(phablets) {
+        @include make-columns($columns, $gutter);
+    }
+}
+
+
+/// A convenience mixin which includes Neat's [span-columns()](http://thoughtbot.github.io/neat-docs/latest/#span-columns) mixin that will only be included once we hit a phone view
+///
+/// @param {Number [unitless]} $columns
+///   Specifies the number of columns an element should span. If the selector is nested the number of columns of its parent element should be passed as an argument as well.
+///
+/// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
+///
+/// @example scss - SCSS Equivalent
+///   @include respond-to(phones) {
+///       @include span-columns($columns);
+///   }
+
+@mixin phone-columns($columns, $gutter: calculate-gutter()) {
+    @include respond-to(phones) {
+        @include make-columns($columns, $gutter);
+    }
+}

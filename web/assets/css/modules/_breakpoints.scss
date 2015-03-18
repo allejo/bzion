@@ -1,0 +1,24 @@
+/// The minimum width that will be considered a "phone" with media queries. This
+/// variable is only used for the `visible-phone()` and `invisible-phone()` mixins.
+/// It is not used in the `respond-to()` mixin.
+$phone-min-size: 320px;
+
+/// The maximum width that will be considered a "phone" with media queries
+$phone-max-size: 480px;
+
+/// The minimum width that will be considered a "phablet" with media queries. Those
+/// giant phones that can't even fit in your pocket
+$phablet-min-size: $phone-max-size + 1;
+
+/// The maximum width that will be considered a "phablet" with media queries. Those
+/// giant phones that can't even fit in your pocket
+$phablet-max-size: 768px;
+
+/// The minimum width that will be considered a "tablet" with media queries.
+$tablet-min-size: $phablet-max-size + 1;
+
+/// The maximum width that will be considered a "tablet" with media queries
+$tablet-max-size: 992px;
+
+/// The minimum width that will be considered a "desktop" with media queries.
+$desktop-min-size: $tablet-max-size + 1;

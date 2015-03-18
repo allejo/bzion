@@ -11,10 +11,14 @@
 //
 
 @import "partials/base";
+@import "modules/bem-utilities";
+@import "modules/breakpoints";
+@import "modules/mobile-responsive";
+@import "modules/grid";
+@import "modules/visibility";
+@import "modules/media-query-setup";
 @import "modules/utilities";
 @import "modules/font-awesome-utilities";
-@import "modules/mobile-responsive-definitions";
-@import "modules/mobile-responsive-helpers";
 @import "modules/placeholders";
 
 

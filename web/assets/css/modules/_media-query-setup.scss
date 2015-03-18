@@ -1,29 +1,3 @@
-.css-dev {
-    background-color: red;
-    bottom: 0;
-    color: $Color-White;
-    display: block;
-    padding: 0 5px;
-    position: fixed;
-    text-align: center;
-
-    .desktop {
-        @include visible-desktop();
-    }
-
-    .tablet {
-        @include visible-tablet();
-    }
-
-    .phablet {
-        @include visible-phablet();
-    }
-
-    .phone {
-        @include visible-phone();
-    }
-}
-
 // Because BZiON uses `sass-media_query_combiner` to combine the media queries together, the order the media queries are placed are changed.
 // To fix this issue, here are some dummy CSS rules that'll basically "trick" the SASS plug-in to order the media queries as specified here.
 //

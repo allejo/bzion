@@ -1,0 +1,140 @@
+/// Create a media query that will automatically handle max or min widths. When both $min
+/// and $max are set, both of them will be used and generate a media query with a minimum
+/// and maximum width. This mixin shouldn't be accessed directly but instead should only
+/// be used through one of the convenience mixins that uses this mixin.
+///
+/// @access private
+/// @content
+///
+/// @param {Number [unit]} $min [0]
+///   The minimum width for this media query to consider. When set to 0, a media query
+///   with a max-width will be generated
+///
+/// @param {Number [unit]} $max [0]
+///   The maximum width for this media query to consider. When set to 0, a media query
+///   with a min-width will be generated
+///
+
+@mixin media-size($min: 0, $max: 0) {
+    @if $min == $max {
+        @error "media-size() does not allow $min and $max both be equal to each other."
+    }
+    @else if $min > $max and $max != 0 {
+        @error "media-size() does not allow $min to be greater $max.";
+    }
+    @else if $min < 0 or $max < 0 {
+        @error "media-size() does not allow either $min or $max to be less than 0.";
+    }
+
+    @if $min == 0 and $max != 0 {
+        @media only screen and (max-width: $max) { @content; }
+    }
+    @else if $min != 0 and $max == 0 {
+        @media only screen and (min-width: $min) { @content; }
+    }
+    @else if $min != 0 and $max != 0 {
+        @media only screen and (min-width: $min) and (max-width: $max) { @content; }
+    }
+    @else {
+        @error "media-size() does not allow $min and $max both be 0.";
+    }
+}
+
+
+/// Have the specified content inside of the mixin respond to a specific view size. Because
+/// BZiON is "desktop first," all of the applied styles will also be applied to smaller views.
+///
+/// Passing a random value will cause the CSS rules to be applied to all views. This means you
+/// may pass a value such as `desktops` for consistency but it will be the equivalent of passing
+/// `bacon`.
+///
+/// @content
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
+///
+/// @example scss - Usage
+///   @include respond-to(phablets) {
+///       .phablet-and-smaller {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (max-width: 992px) {
+///       .phablet-and-smaller {
+///           display: block;
+///       }
+///   }
+
+@mixin respond-to($media) {
+    @if $media == phones {
+        @include media-size(0, $phone-max-size) { @content; }
+    }
+    @else if $media == phablets {
+        @include media-size(0, $phablet-max-size) { @content; }
+    }
+    @else if $media == tablets {
+        @include media-size(0, $tablet-max-size) { @content; }
+    }
+    @else {
+        @content;
+    }
+}
+
+
+/// Similar to `respond-to` with the exception that instead of smaller views also inheriting
+/// these CSS rules, only a specific view size will able to see the content
+///
+/// @access private
+/// @content
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`, `desktops`
+
+@mixin _respond-only-to($media) {
+    @if $media == phones {
+        @include media-size($phone-min-size, $phone-max-size) { @content; }
+    }
+    @else if $media == phablets {
+        @include media-size($phablet-min-size, $phablet-max-size) { @content; }
+    }
+    @else if $media == tablets {
+        @include media-size($tablet-min-size, $tablet-max-size) { @content; }
+    }
+    @else if $media == desktops {
+        @include media-size($desktop-min-size) { @content; }
+    }
+}
+
+
+/// Similar to `respond-to` with the exception that instead of smaller views also inheriting
+/// these CSS rules, only a specific view size will able to see the content. Multiple view
+/// points can be specified and the rules will be applied to each view point
+///
+/// @content
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`, `desktops`
+///
+/// @example scss - Usage
+///   @include respond-to(phablets) {
+///       .phablet-only {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (min-width: 481px) and (max-width: 768px) {
+///       .phablet-only {
+///           display: block;
+///       }
+///   }
+
+@mixin respond-only-to($media_list...) {
+    @each $media in $media_list {
+        @include _respond-only-to($media) {
+            @content;
+        }
+    }
+}
