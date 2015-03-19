@@ -142,6 +142,16 @@ select {
                     }
                 }
             }
+
+            @include element('avatar') {
+                img {
+                    width: 100%;
+
+                    @include respond-to(phablets) {
+                        width: auto;
+                    }
+                }
+            }
         }
     }
 
@@ -150,10 +160,7 @@ select {
 
         div {
             display: inline-block;
-
-            button {
-                margin-right: 10px;
-            }
+            margin-right: 10px;
         }
     }
 }
