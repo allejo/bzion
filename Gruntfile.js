@@ -43,6 +43,14 @@ module.exports = function(grunt) {
                 src: [ 'web/assets/css/modules' ]
             }
         },
+        scsslint: {
+            allFiles: [
+                'web/assets/css/**/*.scss'
+            ],
+            options: {
+                config: '.scss-lint.yml'
+            }
+        },
         jshint: {
             options: {
                 eqnull: true,

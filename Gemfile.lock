@@ -1,9 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    sass (3.4.12)
-    sass-media_query_combiner (0.0.6)
+    rainbow (2.0.0)
+    sass (3.4.13)
+    sass-media_query_combiner (0.0.7)
       sass (>= 3.2.0)
+    scss-lint (0.34.0)
+      rainbow (~> 2.0)
+      sass (~> 3.4.1)
 
 PLATFORMS
   ruby
@@ -11,3 +15,4 @@ PLATFORMS
 DEPENDENCIES
   sass
   sass-media_query_combiner
+  scss-lint
