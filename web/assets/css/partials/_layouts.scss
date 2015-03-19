@@ -31,6 +31,10 @@
         @include modifier('with-sidebar') {
             @include desktop-columns(9);
             @include phablet-columns(12);
+
+            @include respond-to(phablets) {
+                margin-bottom: $Settings-Page_Section-Small_Margin;
+            }
         }
 
         @include modifier('full') {

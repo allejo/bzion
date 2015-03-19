@@ -7,22 +7,29 @@
         </div>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'c-form' } }) }}
+    {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form' } }) }}
         <section class="o-layout c-form__editor">
             <article class="o-layout__body--with-sidebar c-form__editor__body">
                 {{ form_row(form.name) }}
                 {{ form_row(form.description, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
             </article>
 
-            <aside class="o-layout__sidebar c-form__editor__meta">
-                <div class="c-form__editor__meta__avatar">
+            <aside class="o-layout__sidebar c-form__editor__meta c-avatar-container">
+                <div class="c-avatar-container__image">
                     {% if avatar is not null %}
                         <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
                     {% endif %}
                 </div>
 
-                {{ form_row(form.avatar) }}
-                {{ form_row(form.delete_avatar) }}
+                <div class="c-avatar-container__options">
+                    <div class="c-avatar-container__options__upload">
+                        {{ form_label(form.avatar) }}
+                        {{ form_errors(form.avatar) }}
+                        {{ form_widget(form.avatar) }}
+                    </div>
+
+                    {{ form_row(form.delete_avatar) }}
+                </div>
             </aside>
         </section>
 

@@ -126,6 +126,10 @@ select {
         @include element('meta') {
             div {
                 margin-bottom: $Form-Spacing;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
             }
 
             @include respond-to(phablets) {
@@ -142,16 +146,6 @@ select {
                     }
                 }
             }
-
-            @include element('avatar') {
-                img {
-                    width: 100%;
-
-                    @include respond-to(phablets) {
-                        width: auto;
-                    }
-                }
-            }
         }
     }
 
@@ -160,7 +154,44 @@ select {
 
         div {
             display: inline-block;
-            margin-right: 10px;
+            margin-right: 20px;
+        }
+    }
+}
+
+@include scope('avatar-form') {
+    @include component('avatar-container') {
+        @include respond-only-to(phablets) {
+            @include make-container();
+        }
+
+        @include element('image') {
+            img {
+                width: 100%;
+
+                @include respond-to(phones) {
+                    width: 60%;
+                }
+            }
+
+            @include respond-only-to(phablets) {
+                @include make-columns(5);
+            }
+
+            @include respond-to(phones) {
+                margin-bottom: $Settings-Page_Section-Small_Margin;
+                text-align: center;
+            }
+        }
+
+        @include element('options') {
+            @include element('upload') {
+                margin-bottom: 5px;
+            }
+
+            @include respond-only-to(phablets) {
+                @include make-columns(7);
+            }
         }
     }
 }
