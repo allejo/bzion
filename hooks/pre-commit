@@ -9,7 +9,14 @@ fi
 # Are any Sass files changed and added?
 if git status -s | grep  '^M.\+s[ac]ss$'
 then
-    grunt sass:dist & wait
+    grunt sass:dist
+    RESULT=$?
+
+    if [ $RESULT -gt 0 ]
+    then
+        exit 1
+    fi
+
     git add -f web/assets/css/styles.css
 fi
 
