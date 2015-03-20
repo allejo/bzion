@@ -37,6 +37,12 @@
     }
 }
 
+@include component('roll-call') {
+    @include component('player-badge') {
+        margin-bottom: 10px;
+    }
+}
+
 @include component('player-badge') {
     @include display(flex);
 
