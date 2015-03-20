@@ -3,5 +3,8 @@
 {% block title %}Teams :: New Team{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "Team/form.html.twig" with {
+        'pageTitle': 'Create a New Team',
+        'form': form }
+    %}
 {% endblock %}

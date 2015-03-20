@@ -16,6 +16,7 @@
 
             <aside class="o-layout__sidebar c-form__editor__meta c-avatar-container">
                 <div class="c-avatar-container__image">
+                    {# Only show an avatar if we're editing an existing team #}
                     {% if avatar is not null %}
                         <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
                     {% endif %}
@@ -28,14 +29,21 @@
                         {{ form_widget(form.avatar) }}
                     </div>
 
-                    {{ form_row(form.delete_avatar) }}
+                    {# Only show the option to delete an avatar if we're editing an existing team #}
+                    {% if form.delete_avatar is not null %}
+                        {{ form_row(form.delete_avatar) }}
+                    {% endif %}
                 </div>
             </aside>
         </section>
 
         <section class="o-layout c-form__actions">
             <section class="o-layout__body--full">
-                {{ form_row(form.leader) }}
+                {# Only show the option to edit leadership if we're editing an existing team #}
+                {% if form.leader is not null %}
+                    {{ form_row(form.leader) }}
+                {% endif %}
+
                 {{ form_row(form.status) }}
             </section>
         </section>
