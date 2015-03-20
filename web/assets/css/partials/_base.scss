@@ -15,33 +15,43 @@ $Color-Dark_Grey: #333333;
 $Color-Black: #000000;
 $Color-Sky_Blue: #009EFF;
 $Color-Blue: #258EC9;
-$Color-Orange: #ff6700;
+$Color-Orange: #FF6700;
+$Color-Yellow: #FDCE46;
+$Color-Red: #FF0000;
 
-$alert-success-bg: #dff0d8;
-$alert-success-text: #3c763d;
+// Match Colors
+$Match-Color_Wins: #EBEBEB;
+$Match-Color_Losses: #B6D1D8;
+$Match-Color_Draws: #8FDC00;
+
+// Alert notification colors
+$alert-success-bg: #DFF0D8;
+$alert-success-text: #3C763D;
 $alert-success-border: darken(adjust-hue($alert-success-bg, -10), 5%);
 
-$alert-info-bg: #d9edf7;
-$alert-info-text: #31708f;
+$alert-info-bg: #D9EDF7;
+$alert-info-text: #31708F;
 $alert-info-border: darken(adjust-hue($alert-info-bg, -10), 7%);
 
-$alert-warning-bg: #fcf8e3;
-$alert-warning-text: #8a6d3b;
+$alert-warning-bg: #FCF8E3;
+$alert-warning-text: #8A6D3B;
 $alert-warning-border: darken(adjust-hue($alert-warning-bg, -10), 5%);
 
-$alert-danger-bg: #f2dede;
-$alert-danger-text: #a94442;
+$alert-danger-bg: #F2DEDE;
+$alert-danger-text: #A94442;
 $alert-danger-border: darken(adjust-hue($alert-danger-bg, -10), 5%);
 
+// Borders
 $Border-Light_Color: #E9E9E9;
 $Border-Default: 1px solid $Border-Light_Color;
 $Border-Radius: 3px;
 
+// Form Settings
 $Form-Action_Color: $Color-Sky_Blue;
 $Form-Base_Background_Color: $Color-White;
 $Form-Border_Color: #DDDDDD;
 $Form-Border_Radius: 3px;
-$Form-Box_Shadow: inset 0 1px 3px rgba(#000, 0.06);
+$Form-Box_Shadow: inset 0 1px 3px rgba($Color-Black, 0.06);
 $Form-Box_Shadow_Focus: $Form-Box_Shadow, 0 0 5px adjust-color($Form-Action_Color, $lightness: -5%, $alpha: -0.3);
 $Form-Spacing: 1.5em;
 $Form-Small_Spacing: $Form-Spacing / 2;

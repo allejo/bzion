@@ -14,10 +14,6 @@
 
     margin-bottom: $Settings-Page_Section-Margin;
 
-    h4 {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
-    }
-
     @include modifier('no-margin') {
         margin-bottom: 0;
     }
@@ -61,6 +57,10 @@
             @include desktop-columns(6, 0);
             @include phablet-columns(12);
         }
+    }
+
+    h4 {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
     }
 }
 

@@ -1,3 +1,5 @@
+// scss-lint:disable QualifyingElement
+
 // Thanks to ThoughtBot's Bitters for this awesome template
 //
 // https://github.com/thoughtbot/bitters
@@ -8,6 +10,7 @@
 // ==========================================
 
 button {
+    // scss-lint:disable PlaceholderInExtend
     @extend .c-button;
     @extend .c-button--blue;
 }
@@ -32,8 +35,8 @@ label {
     margin-bottom: $Form-Small_Spacing / 2;
 
     &.required::after {
-        color: red;
-        content: "*";
+        color: $Color-Red;
+        content: '*';
         padding-left: 3px;
     }
 
@@ -101,19 +104,7 @@ select {
     @include element('editor') {
         margin-bottom: $Settings-Page_Section-Small_Margin;
 
-        div {
-            width: 100%;
-        }
-
         @include element('body') {
-            div {
-                margin-bottom: $Form-Small_Spacing;
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
-            }
-
             @include element('content') {
                 min-height: 270px;
 
@@ -121,9 +112,32 @@ select {
                     min-height: 140px;
                 }
             }
+
+            div {
+                margin-bottom: $Form-Small_Spacing;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
         }
 
         @include element('meta') {
+            @include respond-to(phablets) {
+                div {
+                    float: left;
+                    margin-right: 15px;
+
+                    @include respond-to(phablets) {
+                        margin-bottom: 0;
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
             div {
                 margin-bottom: $Form-Spacing;
 
@@ -131,21 +145,10 @@ select {
                     margin-bottom: 0;
                 }
             }
+        }
 
-            @include respond-to(phablets) {
-                div {
-                    float: left;
-                    margin-right: 15px;
-
-                    &:last-child {
-                        margin-right: 0;
-                    }
-
-                    @include respond-to(phablets) {
-                        margin-bottom: 0;
-                    }
-                }
-            }
+        div {
+            width: 100%;
         }
     }
 
@@ -166,14 +169,6 @@ select {
         }
 
         @include element('image') {
-            img {
-                width: 100%;
-
-                @include respond-to(phones) {
-                    width: 60%;
-                }
-            }
-
             @include respond-only-to(phablets) {
                 @include make-columns(5);
             }
@@ -181,6 +176,14 @@ select {
             @include respond-to(phones) {
                 margin-bottom: $Settings-Page_Section-Small_Margin;
                 text-align: center;
+            }
+
+            img {
+                width: 100%;
+
+                @include respond-to(phones) {
+                    width: 60%;
+                }
             }
         }
 

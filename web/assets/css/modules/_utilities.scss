@@ -12,7 +12,7 @@
         @return darken($color, 50%); // Lighter background, return dark color
     }
     @else {
-        @return #ffffff; // Darker background, return light color
+        @return $Color-White; // Darker background, return light color
     }
 }
 

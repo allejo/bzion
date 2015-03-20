@@ -21,6 +21,10 @@
 
         text-align: right;
 
+        @include respond-to(phablets) {
+            text-align: left;
+        }
+
         li {
             margin-left: 20px;
 
@@ -35,10 +39,6 @@
             @include respond-to(phones) {
                 margin-right: 10px;
             }
-        }
-
-        @include respond-to(phablets) {
-            text-align: left;
         }
     }
 

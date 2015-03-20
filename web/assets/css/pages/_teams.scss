@@ -11,12 +11,6 @@
 }
 
 @include scope('team-profile') {
-    .c-page__header__container__title {
-        @include component('rank') {
-            margin-right: 10px;
-        }
-    }
-
     @include component('team') {
         @include element('information') {
             @include element('bio') {
@@ -64,39 +58,39 @@
 
                     margin: auto;
 
+                    @include respond-to(tablets) {
+                        margin: 20px 0 0;
+                        text-align: center;
+                        width: 100%;
+                    }
+
                     > li {
+                        @include respond-to(tablets) {
+                            display: inline-block;
+                            margin: 0 5px;
+                        }
+
                         > div {
                             $block_size: 10px;
 
-                            border: 1px solid $Color-Off_White;
+                            border: $Border-Default;
                             float: left;
                             height: $block_size;
                             margin: 5px 10px;
                             width: $block_size;
 
                             &.wins {
-                                background-color: #EBEBEB;
+                                background-color: $Match-Color_Wins;
                             }
 
                             &.losses {
-                                background-color: #B6D1D8;
+                                background-color: $Match-Color_Losses;
                             }
 
                             &.draws {
-                                background-color: #8FDC00;
+                                background-color: $Match-Color_Draws;
                             }
                         }
-
-                        @include respond-to(tablets) {
-                            display: inline-block;
-                            margin: 0 5px;
-                        }
-                    }
-
-                    @include respond-to(tablets) {
-                        margin: 20px 0 0;
-                        text-align: center;
-                        width: 100%;
                     }
                 }
 
@@ -133,7 +127,7 @@
                             }
 
                             &.fa-star {
-                                color: #FDCE46;
+                                color: $Color-Yellow;
                             }
                         }
                     }
@@ -150,13 +144,9 @@
                 width: 100%;
 
                 @include element('row') {
-                    border: none;
+                    border: 0;
                     border-bottom: $Border-Default;
                     color: $Color-Black;
-
-                    &:last-child {
-                        border-bottom: none;
-                    }
 
                     @include respond-to(phones) {
                         padding: {
@@ -181,11 +171,11 @@
                     }
 
                     @include element('column') {
-                        border: none;
+                        border: 0;
                         padding: 5px 10px;
 
                         @include respond-to(phones) {
-                            padding: 5px 1px 5px;
+                            padding: 5px 1px;
                         }
 
                         @include utility('match-outcome') {
@@ -198,8 +188,18 @@
                     @include respond-to(phones) {
                         @include flex-wrap(wrap);
                     }
+
+                    &:last-child {
+                        border-bottom: 0;
+                    }
                 }
             }
+        }
+    }
+
+    .c-page__header__container__title {
+        @include component('rank') {
+            margin-right: 10px;
         }
     }
 }
@@ -232,16 +232,16 @@
                 @include element('elo') {
                     margin-left: 10px;
 
+                    @include respond-to(phones) {
+                        margin: 0;
+                    }
+
                     &:before {
                         content: '(';
                     }
 
                     &:after {
                         content: ')';
-                    }
-
-                    @include respond-to(phones) {
-                        margin: 0;
                     }
                 }
             }

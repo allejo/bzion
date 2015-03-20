@@ -1,10 +1,10 @@
 $Button-Colors: (
     "red": #DB3434,
     "blue": #3498DB,
-    "grey": #dbdbdb,
+    "grey": #DBDBDB,
     "black": #4F4F4F,
     "green": #34DB6D,
-    "orange": #ff8400,
+    "orange": #FF8400,
     "purple": #6F34DB,
     "yellow": #FFB608
 );
@@ -17,10 +17,6 @@ $Button-Colors: (
     font-size: 14px;
     padding: 3px 15px 4px 13px;
     text-decoration: none;
-
-    i {
-        @extend %fa-fw;
-    }
 
     // Additional classes
     @include modifier('skinny') {
@@ -50,15 +46,20 @@ $Button-Colors: (
 
                     @include linear-gradient($hoverColor, $hoverDarkColor);
 
-                    color: set-text-from-color($hoverColor);
                     border-color: $hoverDarkColor;
+                    color: set-text-from-color($hoverColor);
                 }
             }
         }
     }
 
     @include modifier('display') {
+        // scss-lint:disable PlaceholderInExtend
         @extend .c-button--skinny;
         @extend .c-button--no-click;
+    }
+
+    i {
+        @extend %fa-fw;
     }
 }

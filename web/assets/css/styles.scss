@@ -2,7 +2,7 @@
 // Reset all of the CSS
 //    (so we can have full control)
 //
-@import "partials/reset";
+@import 'partials/reset';
 
 
 //
@@ -10,16 +10,16 @@
 //    (things that won't actually output CSS)
 //
 
-@import "partials/base";
-@import "modules/bem-utilities";
-@import "modules/breakpoints";
-@import "modules/mobile-responsive";
-@import "modules/grid";
-@import "modules/visibility";
-@import "modules/media-query-setup";
-@import "modules/utilities";
-@import "modules/font-awesome-utilities";
-@import "modules/placeholders";
+@import 'partials/base';
+@import 'modules/bem-utilities';
+@import 'modules/breakpoints';
+@import 'modules/mobile-responsive';
+@import 'modules/grid';
+@import 'modules/visibility';
+@import 'modules/media-query-setup';
+@import 'modules/utilities';
+@import 'modules/font-awesome-utilities';
+@import 'modules/placeholders';
 
 
 //
@@ -27,10 +27,10 @@
 //    (everything that wasn't written by us)
 //
 
-@import "vendor/bourbon/bourbon";
-@import "modules/rocks/rocks";
-@import "vendor/flags";
-@import "vendor/loaders";
+@import 'vendor/bourbon/bourbon';
+@import 'modules/rocks/rocks';
+@import 'vendor/flags';
+@import 'vendor/loaders';
 
 
 //
@@ -38,20 +38,19 @@
 //    (CSS for parts of the website but not specific to a single page)
 //
 
-@import "partials/alerts";
-@import "partials/buttons";
-@import "partials/flashbag";
-@import "partials/font-awesome";
-@import "partials/forms";
-@import "partials/footer";
-@import "partials/generic";
-@import "partials/header";
-@import "partials/helpers";
-@import "partials/icon-bullet-points";
-@import "partials/jumbotron";
-@import "partials/layouts";
-@import "partials/ranks";
-@import "partials/typography";
+@import 'partials/alerts';
+@import 'partials/buttons';
+@import 'partials/flashbag';
+@import 'partials/font-awesome';
+@import 'partials/forms';
+@import 'partials/footer';
+@import 'partials/generic';
+@import 'partials/header';
+@import 'partials/icon-bullet-points';
+@import 'partials/jumbotron';
+@import 'partials/layouts';
+@import 'partials/ranks';
+@import 'partials/typography';
 
 
 //
@@ -59,15 +58,23 @@
 //    (CSS for specific pages on the website)
 //
 
-@import "pages/bans";
-@import "pages/confirmation";
-@import "pages/landingPage";
-@import "pages/matches";
-@import "pages/messaging";
-@import "pages/news";
-@import "pages/notifications";
-@import "pages/pages";
-@import "pages/players";
-@import "pages/profiles";
-@import "pages/teams";
-@import "pages/servers";
+@import 'pages/bans';
+@import 'pages/confirmation';
+@import 'pages/landingPage';
+@import 'pages/matches';
+@import 'pages/messaging';
+@import 'pages/news';
+@import 'pages/notifications';
+@import 'pages/pages';
+@import 'pages/players';
+@import 'pages/profiles';
+@import 'pages/teams';
+@import 'pages/servers';
+
+
+//
+// Helper Classes
+//    (CSS classes that are utilities classes are only meant to override other CSS)
+//
+
+@import 'partials/helpers';

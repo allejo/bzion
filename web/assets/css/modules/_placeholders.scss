@@ -5,12 +5,11 @@
 /// A placeholder for the infamous "clearfix" hack to fix floats
 
 %clearfix {
-    *zoom: 1;
     &:after {
+        clear: both;
         content: '';
         display: table;
         line-height: 0;
-        clear: both;
     }
 }
 

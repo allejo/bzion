@@ -1,7 +1,7 @@
 @include scope('landing') {
     @include component('jumbotron') {
         background-attachment: scroll;
-        background-image: url("../imgs/cover_photo.png");
+        background-image: url('../imgs/cover_photo.png');
         background-position: 0 -185px;
         background-repeat: no-repeat;
         margin-bottom: $Settings-Page_Section-Margin;
@@ -49,7 +49,7 @@
                 li {
                     border-bottom: $Border-Default;
                     list-style: none;
-                    padding: 15px 0 15px;
+                    padding: 15px 0;
 
                     h3 {
                         font-size: 18px;
@@ -61,7 +61,7 @@
                     }
 
                     &:last-child {
-                        border-bottom: none;
+                        border-bottom: 0;
                         padding-bottom: 0;
                     }
                 }
@@ -77,14 +77,10 @@
 
                 margin-top: 15px;
 
-                @include element('match'){
-                    @include desktop-container;
+                @include element('match') {
+                    @include desktop-container();
                     @include desktop-columns(4, 0);
                     @include phone-columns(6, 0);
-
-                    &:nth-child(n+4) {
-                        margin-top: 15px;
-                    }
 
                     @include respond-to(phones) {
                         &:nth-child(n+3) {
@@ -94,15 +90,6 @@
 
                     @include element('team-container') {
                         @include desktop-columns(6, 0);
-
-                        &:first-child {
-                            padding-right: 5px;
-                            text-align: right;
-                        }
-
-                        &:nth-child(2) {
-                            padding-left: 5px;
-                        }
 
                         @include element('team') {
                             display: inline-block;
@@ -119,12 +106,25 @@
                                 }
                             }
                         }
+
+                        &:first-child {
+                            padding-right: 5px;
+                            text-align: right;
+                        }
+
+                        &:nth-child(2) {
+                            padding-left: 5px;
+                        }
                     }
 
                     @include element('stats') {
                         @include desktop-columns(12);
 
                         text-align: center;
+                    }
+
+                    &:nth-child(n+4) {
+                        margin-top: 15px;
                     }
                 }
             }

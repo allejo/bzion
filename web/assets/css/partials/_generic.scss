@@ -20,7 +20,7 @@ a {
     // of our internal links are relative so this is a safe move.
     &[href^="http"] {
         &:after {
-            content: "\F08E";
+            content: '\F08E';
             font-family: FontAwesome;
             font-size: 0.6em;
             margin-left: 5px;
@@ -59,8 +59,8 @@ blockquote {
     }
 
     &:before {
-        content: '\f10d';
         color: $Color-Medium_Grey;
+        content: '\f10d';
         float: left;
         font-family: FontAwesome;
         font-size: 30px;
@@ -108,10 +108,12 @@ h4 {
 }
 
 hr {
-    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
-    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
-    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
-    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(201, 201, 201, 0.75), rgba(0,0,0,0));
+    @include linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.2) 50%,
+            rgba(0, 0, 0, 0) 100%);
+
     border: 0;
     height: 1px;
     margin: 50px auto;
@@ -151,11 +153,6 @@ pre {
 ul {
     padding-left: 30px;
 
-    li {
-        padding-left: 0;
-        list-style-type: circle;
-    }
-
     @include is('horizontal') {
         padding-left: 0;
 
@@ -171,6 +168,11 @@ ul {
         li {
             list-style-type: none;
         }
+    }
+
+    li {
+        list-style-type: circle;
+        padding-left: 0;
     }
 }
 

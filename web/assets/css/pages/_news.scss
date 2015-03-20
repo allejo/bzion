@@ -3,7 +3,7 @@
         margin-bottom: $Settings-Page_Section-Margin;
     }
 
-    @include component('article'){
+    @include component('article') {
         border-bottom: $Border-Default;
         margin-bottom: 20px;
         padding-bottom: 20px;
@@ -48,9 +48,9 @@
         }
 
         &:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
+            border-bottom: 0;
             margin-bottom: 0;
+            padding-bottom: 0;
         }
     }
 
@@ -59,6 +59,10 @@
 
         border: $Border-Default;
         border-radius: 3px;
+
+        @include respond-to(phablets) {
+            display: none;
+        }
 
         li {
             border-bottom: $Border-Default;
@@ -75,7 +79,8 @@
                 }
             }
 
-            &.active, &:hover {
+            &.active,
+            &:hover {
                 border-right: 2px solid $Color-Orange;
 
                 &:first-child {
@@ -96,12 +101,8 @@
             }
 
             &:last-child {
-                border-bottom: none;
+                border-bottom: 0;
             }
-        }
-
-        @include respond-to(phablets) {
-            display: none;
         }
     }
 }

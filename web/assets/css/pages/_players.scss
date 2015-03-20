@@ -1,15 +1,4 @@
 @include scope('player-profile') {
-    .c-page__header__container__title {
-       @include component('flag') {
-            margin-right: 10px;
-            margin-top: 6px;
-        }
-
-        h1 {
-            display: inline;
-        }
-    }
-
     @include component('public-profile') {
         @include element('profile-picture') {
             @include profile-picture();
@@ -35,12 +24,61 @@
 
         }
     }
+
+    .c-page__header__container__title {
+        @include component('flag') {
+            margin-right: 10px;
+            margin-top: 6px;
+        }
+
+        h1 {
+            display: inline;
+        }
+    }
 }
 
 @include component('player-badge') {
     @include display(flex);
 
     margin-bottom: 10px;
+
+    @include element('avatar') {
+        $avatarSize: 50px;
+
+        height: $avatarSize;
+        width: $avatarSize;
+    }
+
+    @include element('info') {
+        @include flex(1);
+
+        padding-left: 10px;
+        vertical-align: top;
+
+        @include element('callsign') {
+            display: inline-block;
+            font-size: 18px;
+        }
+
+        @include element('team') {
+            font-size: 14px;
+
+            a {
+                color: $Color-Medium_Grey;
+
+                &:hover {
+                    color: lighten($Color-Medium_Grey, 15%);
+                }
+            }
+        }
+
+        @include modifier('callsign-only') {
+            padding: {
+                bottom: 10px;
+                top: 10px;
+            }
+        }
+    }
 
     &.o-layout__body--third {
         @include respond-only-to(desktops, tablets) {
@@ -84,44 +122,6 @@
         @include respond-only-to(phones) {
             &:last-child {
                 margin-bottom: 0;
-            }
-        }
-    }
-
-    @include element('avatar') {
-        $avatarSize: 50px;
-
-        height: $avatarSize;
-        width: $avatarSize;
-    }
-
-    @include element('info') {
-        @include flex(1);
-
-        padding-left: 10px;
-        vertical-align: top;
-
-        @include element('callsign') {
-            display: inline-block;
-            font-size: 18px;
-        }
-
-        @include element('team') {
-            font-size: 14px;
-
-            a {
-                color: $Color-Medium_Grey;
-
-                &:hover {
-                    color: lighten($Color-Medium_Grey, 15%);
-                }
-            }
-        }
-
-        @include modifier('callsign-only') {
-            padding: {
-                bottom: 10px;
-                top: 10px;
             }
         }
     }

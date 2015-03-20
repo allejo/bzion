@@ -2,7 +2,7 @@
     $width: 50%;
 
     left: 50%;
-    margin: 0 0 0 -1 * ($width / 2);
+    margin: 0 0 0 (-1 * ($width / 2));
     position: fixed;
     top: 0;
     width: $width;
@@ -11,9 +11,9 @@
         // @TODO Is animation CSS or JS?
 
         border: 1px solid;
-        border-top: none;
-        border-bottom-right-radius: $Border-Radius;
         border-bottom-left-radius: $Border-Radius;
+        border-bottom-right-radius: $Border-Radius;
+        border-top: 0;
         padding: 10px 0;
         text-align: center;
     }
