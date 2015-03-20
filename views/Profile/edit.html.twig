@@ -3,6 +3,17 @@
 {% block title %}Edit Profile{% endblock %}
 
 {% block content %}
-    <h3>Edit Profile</h3>
-    {{ form(form) }}
+    <main class="c-page s-profile">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>Edit Profile</h1>
+                </section>
+            </div>
+        </section>
+
+        <section class="o-layout">
+            {{ form(form) }}
+        </section>
+    </main>
 {% endblock %}
