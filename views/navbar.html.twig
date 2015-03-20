@@ -39,6 +39,10 @@
                 navbar.badge(me.countUnreadMessages, "unreadMessageCount"),
                 'Message', 'message_list', 'comments-o'
             )}}
+            {{ navbar.page(
+                null,
+                'Settings', 'profile_edit', 'gear'
+            )}}
             <li>
                 <a href="{{ path('logout') }}">
                     <i class="fa fa-sign-out"></i>
