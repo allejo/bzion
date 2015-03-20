@@ -14,7 +14,7 @@
 
         <section class="o-layout c-roll-call">
             {% for player in players %}
-                <article class="o-layout__body--third c-player-badge" data-callsign="{{ player.callsign }}" data-team="{{ player.team.name }}" data-country="{{ player.country.name }}">
+                <article class="o-layout__body--third c-player-badge" data-callsign="{{ player.username }}" data-team="{{ player.team.name }}" data-country="{{ player.country.name }}">
                     <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
                     <section class="c-player-badge__info">
                         <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
