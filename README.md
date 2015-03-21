@@ -1,6 +1,6 @@
 # BZiON [![Build Status](https://travis-ci.org/allejo/bzion.png?branch=master)](https://travis-ci.org/allejo/bzion) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/allejo/bzion/badges/quality-score.png?s=291afbdf9d3ff68b2e2f44e9d02533795bcbf107)](https://scrutinizer-ci.com/g/allejo/bzion/) [![Code Coverage](https://scrutinizer-ci.com/g/allejo/bzion/badges/coverage.png?b=master)](http://helit.org/bziondoc/coverage/)
 
-BZiON is a modern content management system (CMS) written for BZFlag leagues to manage players, teams, matches, and tournaments.
+BZiON is a modern league management system (LMS) written for BZFlag leagues to manage players, teams, matches, and tournaments.
 
 ## Contributors
 
