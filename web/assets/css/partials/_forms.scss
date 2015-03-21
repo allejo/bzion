@@ -174,13 +174,13 @@ select {
             display: inline-block;
             margin-right: 10px;
 
+            @include respond-only-to(phones) {
+                display: block;
+            }
+
             input,
             label {
                 display: inline-block;
-            }
-
-            @include respond-only-to(phones) {
-                display: block;
             }
         }
 
