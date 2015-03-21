@@ -31,7 +31,7 @@ class ScriptHandler
      */
     public static function clearCache(Event $event)
     {
-        static::executeCommand($event, 'cache:clear');
+        static::executeCommand($event, 'cache:clear -e prod');
     }
 
     /**
