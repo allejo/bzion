@@ -41,6 +41,12 @@ function notify(message, type) {
 }
 
 $(function () {
+    $(window).resize(function () {
+        if ($(window).width() >= 992) {
+            $(".pages").show();
+        }
+    });
+
     $("#mobile-menu").click(function() {
         $("#menu-pages").slideToggle();
     });
