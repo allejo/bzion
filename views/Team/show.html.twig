@@ -1,5 +1,36 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'grey',
+        'url': team.url('edit'),
+        'icon': 'pencil',
+        'text': 'Edit',
+        'condition': me.canEdit(team)
+    },
+    {
+        'color': 'grey',
+        'url': team.url('join'),
+        'icon': 'plus',
+        'text': 'Join',
+        'condition': me is valid and me.team.id != team.id and me.isTeamless and team.status == 'open'
+    },
+    {
+        'color': 'grey',
+        'url': team.url('abandon'),
+        'icon': 'sign-out',
+        'text': 'Abandon',
+        'condition': me is valid and me.team.id == team.id
+    },
+    {
+        'color': 'red',
+        'url': team.url('delete'),
+        'icon': 'trash-o',
+        'text': 'Delete',
+        'condition': me.canDelete(team)
+    }
+] %}
+
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
 {% block stylesheets %}
@@ -20,21 +51,7 @@
                 </section>
 
                 <section class="c-page__header__container__options">
-                    {% if me.canDelete(team) %}
-                        <a class="c-button c-button--red" href="{{ team.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
-                    {% endif %}
-
-                    {% if me.canEdit(team) %}
-                        <a class="c-button c-button--grey" href="{{ team.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
-                    {% endif %}
-
-                    {% if me is valid and me.team.id != team.id and me.isTeamless and team.status == 'open' %}
-                        <a class="c-button c-button--grey" href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join</a>
-                    {% endif %}
-
-                    {% if me is valid and me.team.id == team.id %}
-                        <a class="c-button c-button--grey" href="{{ team.url('abandon') }}"><i class="fa fa-sign-out"></i> Abandon</a>
-                    {% endif %}
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
                 </section>
             </div>
         </section>

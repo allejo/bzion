@@ -1,5 +1,15 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('team_new'),
+        'icon': 'plus',
+        'text': 'Create Team',
+        'condition': me.Teamless and me.canCreate("Team")
+    }
+] %}
+
 {% block title %}Teams{% endblock %}
 
 {% block content %}
@@ -11,9 +21,7 @@
                 </section>
 
                 <section class="c-page__header__container__options">
-                    {% if me.Teamless and me.canCreate("Team") %}
-                        <a class="c-button c-button--blue" href="{{ path('team_new') }}"><i class="fa fa-plus"></i> Create Team</a>
-                    {% endif %}
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
                 </section>
             </div>
         </section>

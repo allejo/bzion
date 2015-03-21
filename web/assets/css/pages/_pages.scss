@@ -41,6 +41,10 @@
                 @include component('button') {
                     margin-left: 5px;
                 }
+
+                @include respond-to(tablets) {
+                    display: none;
+                }
             }
         }
     }

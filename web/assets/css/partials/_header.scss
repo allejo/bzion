@@ -7,6 +7,25 @@ $Color-Header_Border: #D4D4D4;
 $Settings-Line_Height: 56px;
 
 header {
+    .pages {
+        li {
+            hr {
+                margin: {
+                    bottom: 10px;
+                    top: 10px;
+                }
+            }
+        }
+    }
+
+    .u-mobile-only {
+        display: none;
+
+        @include respond-to(tablets) {
+            display: block;
+        }
+    }
+
     &.site-header {
         @include linear-gradient($Color-White, #F2F2F2);
 

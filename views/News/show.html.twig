@@ -1,5 +1,22 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'grey',
+        'url': article.url('edit'),
+        'icon': 'pencil',
+        'text': 'Edit',
+        'condition': me.canEdit(article)
+    },
+    {
+        'color': 'red',
+        'url': article.url('delete'),
+        'icon': 'trash-o',
+        'text': 'Delete',
+        'condition': me.canDelete(article)
+    }
+] %}
+
 {% block title %}News{% endblock %}
 
 {% block content %}
@@ -16,13 +33,7 @@
                 </section>
 
                 <section class="c-page__header__container__options">
-                    {% if me.canEdit(article) %}
-                        <a class="c-button c-button--grey" href="{{ article.url('edit') }}"><i class="fa fa-pencil"></i> Edit</a>
-                    {% endif %}
-
-                    {% if me.canDelete(article) %}
-                        <a class="c-button c-button--red" href="{{ article.url('delete') }}"><i class="fa fa-trash-o"></i> Delete</a>
-                    {% endif %}
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
                 </section>
             </div>
         </section>

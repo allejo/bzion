@@ -21,12 +21,29 @@
     </li>
 {% endmacro %}
 
+{% macro action(title, url, icon) %}
+    <li class="u-mobile-only">
+        <a href="{{ url }}">
+            <i class="fa fa-{{ icon }} fa-fw"></i> {{ title }}
+        </a>
+    </li>
+{% endmacro %}
+
 <nav>
     <ul id="menu-pages" class="pages">
         {{ navbar.page('News', 'News', 'news_list', 'thumb-tack')}}
         {{ navbar.page('Teams', 'Team', 'team_list', 'users')}}
         {{ navbar.page('Players', 'Player', 'player_list', 'user')}}
         {{ navbar.page('Matches', 'Match', 'match_list', 'trophy')}}
+
+        {% if pageButtons is not null %}
+            <li class="u-mobile-only"><hr></li>
+            {% for button in pageButtons %}
+                {% if button.condition %}
+                    {{ navbar.action(button.text, button.url, button.icon) }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </ul>
 
     <ul class="user">

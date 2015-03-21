@@ -1,5 +1,15 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('news_new'),
+        'icon': 'plus',
+        'text': 'Post New',
+        'condition': me.canCreate("News")
+    }
+] %}
+
 {% block title %}
     {% if category %}
         News :: {{ category.name }}
@@ -22,9 +32,7 @@
                 </section>
 
                 <section class="c-page__header__container__options">
-                    {% if me.canCreate("News") %}
-                        <a class="c-button c-button--blue" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> Post New</a>
-                    {% endif %}
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
                 </section>
             </div>
         </section>
