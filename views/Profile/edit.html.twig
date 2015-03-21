@@ -12,8 +12,48 @@
             </div>
         </section>
 
-        <section class="o-layout">
-            {{ form(form) }}
-        </section>
+        {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form' } }) }}
+            <section class="o-layout c-form__editor">
+                <article class="o-layout__body--with-sidebar c-form__editor__body">
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.description, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
+                </article>
+
+                <aside class="o-layout__sidebar c-form__editor__meta">
+                    <div class="c-avatar-container__image">
+                        <img src="{{ me.avatar | imagine_filter('huge_thumb') }}" />
+                    </div>
+
+                    <div class="c-avatar-container__options">
+                        <div class="c-avatar-container__options__upload">
+                            {{ form_label(form.avatar) }}
+                            {{ form_errors(form.avatar) }}
+                            {{ form_widget(form.avatar) }}
+                        </div>
+
+                        {% if me.avatar is not null %}
+                            {{ form_row(form.delete_avatar) }}
+                        {% endif %}
+                    </div>
+                </aside>
+            </section>
+
+            <section class="o-layout c-form__actions">
+                <article class="o-layout__body--full">
+                    {{ form_row(form.country) }}
+                    {{ form_row(form.timezone) }}
+                </article>
+            </section>
+
+            <section class="o-layout c-form__actions">
+                <article class="o-layout__body--full">
+                    {{ form_row(form.receive, { 'attr': { 'class': 'c-form__choice-list' } }) }}
+                </article>
+            </section>
+
+            <section class="o-layout o-layout--no-margin c-form__actions">
+                {{ form_rest(form) }}
+            </section>
+        {{ form_end(form) }}
     </main>
 {% endblock %}

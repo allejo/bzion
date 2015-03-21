@@ -155,9 +155,39 @@ select {
     @include element('actions') {
         text-align: left;
 
-        div {
+        article,
+        section {
+            > div {
+                display: inline-block;
+                margin-bottom: 15px;
+                margin-right: 20px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    @include element('choice-list') {
+        @include element('item') {
             display: inline-block;
-            margin-right: 20px;
+            margin-right: 10px;
+
+            input,
+            label {
+                display: inline-block;
+            }
+
+            @include respond-only-to(phones) {
+                display: block;
+            }
+        }
+
+        @include modifier('vertical') {
+            .c-form__choice-list__item {
+                display: block;
+            }
         }
     }
 }
@@ -171,6 +201,10 @@ select {
         @include element('image') {
             @include respond-only-to(phablets) {
                 @include make-columns(5);
+            }
+
+            @include respond-to(phablets) {
+                margin-bottom: 0;
             }
 
             @include respond-to(phones) {
