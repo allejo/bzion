@@ -9,8 +9,7 @@ try {
     $kernel = new AppKernel(AppKernel::guessDevEnvironment(), true);
     $kernel->boot();
 } catch (ForbiddenDeveloperAccessException $e) {
-    // Exit silently if a user tries to access dev.php on production
-    die();
+    throw $e;
 } catch (Exception $e) {
     // If something bad happened, show it unless we're sure we're in a production
     // environment
