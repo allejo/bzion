@@ -31,7 +31,7 @@ class ScriptHandler
      */
     public static function clearCache(Event $event)
     {
-        static::executeCommand($event, 'cache:clear -e prod');
+        static::executeCommand($event, 'cache:clear');
     }
 
     /**
@@ -186,7 +186,7 @@ class ScriptHandler
      */
     protected static function executeCommand(Event $event, $command, $timeout = 300)
     {
-        $console = escapeshellarg(__DIR__ . '/../../app/console');
+        $console = escapeshellarg(__DIR__ . '/../../app/console') . ' --env=prod';
 
         if ($event->getIO()->isDecorated()) {
             $console .= ' --ansi';
