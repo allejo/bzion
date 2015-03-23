@@ -529,15 +529,19 @@ class Team extends AvatarModel
     /**
      * Create a new team
      *
-     * @param  string $name        The name of the team
-     * @param  int    $leader      The ID of the person creating the team, also the leader
-     * @param  string $avatar      The URL to the team's avatar
-     * @param  string $description The team's description
-     * @param  string $status      The team's status (open, closed, disabled or deleted)
+     * @param  string           $name        The name of the team
+     * @param  int              $leader      The ID of the person creating the team, also the leader
+     * @param  string           $avatar      The URL to the team's avatar
+     * @param  string           $description The team's description
+     * @param  string           $status      The team's status (open, closed, disabled or deleted)
+     * @param  string|\TimeDate $created     The date the team was created
+     *
      * @return Team   An object that represents the newly created team
      */
-    public static function createTeam($name, $leader, $avatar, $description, $status = 'closed')
+    public static function createTeam($name, $leader, $avatar, $description, $status = 'closed', $created = "now")
     {
+        $created = TimeDate::from($created);
+
         $team = self::create(array(
             'name'             => $name,
             'alias'            => self::generateAlias($name),
@@ -551,8 +555,9 @@ class Team extends AvatarModel
             'members'          => 0,
             'avatar'           => $avatar,
             'leader'           => $leader,
-            'status'           => $status
-        ), 'ssssidiiiisss', 'created');
+            'status'           => $status,
+            'created'          => $created->toMysql(),
+        ), 'ssssidiiiissss');
 
         $team->addMember($leader);
         $team->getIdenticon($team->getId());
