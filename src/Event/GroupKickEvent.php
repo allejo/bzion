@@ -18,7 +18,7 @@ class GroupKickEvent extends Event
     protected $group;
 
     /**
-     * @var \Player
+     * @var \Player|\Team
      */
     protected $kicked;
 
@@ -30,11 +30,11 @@ class GroupKickEvent extends Event
     /**
      * Create a new event
      *
-     * @param \Group  $group  The group from which the player was kicked
-     * @param \Player $kicked The player who was kicked
-     * @param \Player $kicker The player who issued the kick
+     * @param \Group        $group  The group from which the player was kicked
+     * @param \Player|\Team $kicked The member who was kicked
+     * @param \Player       $kicker The player who issued the kick
      */
-    public function __construct(\Group $group, \Player $kicked, \Player $kicker)
+    public function __construct(\Group $group, \Model $kicked, \Player $kicker)
     {
         $this->group = $group;
         $this->kicked = $kicked;
@@ -52,9 +52,9 @@ class GroupKickEvent extends Event
     }
 
     /**
-     * Get the player who was kicked
+     * Get the member who was kicked
      *
-     * @return \Player
+     * @return \Player|\Team
      */
     public function getKicked()
     {

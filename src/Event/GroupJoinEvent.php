@@ -18,20 +18,20 @@ class GroupJoinEvent extends Event
     protected $group;
 
     /**
-     * @var \Player[]
+     * @var \Model[]
      */
-    protected $players;
+    protected $members;
 
     /**
      * Create a new event
      *
-     * @param \Group    $group   The group in question
-     * @param \Player[] $players The players who joined the group
+     * @param \Group   $group   The group in question
+     * @param \Model[] $members The players and teams who joined the group
      */
-    public function __construct(\Group $group, array $players)
+    public function __construct(\Group $group, array $members)
     {
-        $this->group = $group;
-        $this->players = $players;
+        $this->group  = $group;
+        $this->members = $members;
     }
 
     /**
@@ -45,13 +45,13 @@ class GroupJoinEvent extends Event
     }
 
     /**
-     * Get the Players who joined the group
+     * Get the Players and Teams who joined the group
      *
-     * @return \Player[]
+     * @return \Model[]
      */
-    public function getPlayers()
+    public function getNewMembers()
     {
-        return $this->players;
+        return $this->members;
     }
 
     /**
@@ -59,9 +59,20 @@ class GroupJoinEvent extends Event
      */
     public function serialize()
     {
+        $players = $teams = array();
+
+        foreach ($this->members as $member) {
+            if ($member instanceof \Player) {
+                $players[] = $member;
+            } else {
+                $teams[] = $member;
+            }
+        }
+
         return serialize(array(
             'group'   => $this->group->getId(),
-            'players' => \Player::mapToIDs($this->players)
+            'players' => \Player::mapToIDs($players),
+            'teams' => \Team::mapToIDs($teams)
         ));
     }
 
@@ -73,8 +84,10 @@ class GroupJoinEvent extends Event
         $data = unserialize($data);
 
         $group = new \Group($data['group']);
-        $players = \Player::arrayIdToModel($data['players']);
 
-        $this->__construct($group, $players);
+        $players = \Player::arrayIdToModel($data['players']);
+        $teams = \Team::arrayIdToModel($data['teams']);
+
+        $this->__construct($group, array_merge($players, $teams));
     }
 }

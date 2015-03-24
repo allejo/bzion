@@ -18,20 +18,20 @@ class GroupAbandonEvent extends Event
     protected $group;
 
     /**
-     * @var \Player
+     * @var \Player|\Team
      */
-    protected $player;
+    protected $member;
 
     /**
      * Create a new event
      *
-     * @param \Group  $group  The group that the player left
-     * @param \Player $player The player who abandoned the group
+     * @param \Group        $group  The group that the player left
+     * @param \Player|\Team $member The member who abandoned the group
      */
-    public function __construct(\Group $group, \Player $player)
+    public function __construct(\Group $group, \Model $member)
     {
         $this->group = $group;
-        $this->player = $player;
+        $this->member = $member;
     }
 
     /**
@@ -45,12 +45,12 @@ class GroupAbandonEvent extends Event
     }
 
     /**
-     * Get the player who left the group
+     * Get the member who left the group
      *
-     * @return \Player
+     * @return \Player|\Team
      */
-    public function getPlayer()
+    public function getMember()
     {
-        return $this->player;
+        return $this->member;
     }
 }

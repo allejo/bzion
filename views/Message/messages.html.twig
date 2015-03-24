@@ -31,19 +31,19 @@
         {% if type == 'group.rename' %}
             <li><i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"</li>
         {% elseif type == 'group.abandon' %}
-            <li><i class="fa fa-hand-o-left"></i> {{ link_to(event.player) }} left the discussion</li>
+            <li><i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion</li>
         {% elseif type == 'group.kick' %}
             <li><i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion</li>
         {% elseif type == 'group.join' %}
             <li><i class="fa fa-plus-circle"></i>
-            {% for player in event.players -%}
+            {% for member in event.newMembers -%}
                 {%- if not loop.first -%}
                     {%- if loop.last %} and
                     {% else -%} ,
                     {% endif -%}
                 {%- endif -%}
 
-                {{ link_to(player) }}
+                {{ link_to(member) }}
             {%- else -%}
                 Nobody
             {%- endfor %}
