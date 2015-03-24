@@ -1,5 +1,7 @@
 {% extends 'Message/layout.html.twig' %}
 
+{% from 'Message/layout.html.twig' import member %}
+
 {% form_theme form _self %}
 
 {% block messages %}
@@ -17,7 +19,7 @@
                 <p class="members">
                     {% if group.members is not empty %}
                         {% for member in group.members %}
-                            {{- link_to(member) -}}
+                            {{- member(member) -}}
                             {%- if not loop.last -%}
                                 {{- ', ' -}}
                             {%- endif -%}

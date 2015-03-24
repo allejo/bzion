@@ -216,23 +216,28 @@ class Group extends UrlModel implements NamedModel
     /**
      * Get a list containing each member of the group
      * @param  int|null $hide The ID of a player to ignore
-     * @return Player[] An array of players
+     * @return Model[]  An array of players and teams
      */
     public function getMembers($hide = null)
     {
-        // Sort players alphabetically by their username
-        $members = Player::arrayIdToModel($this->getMemberIds($hide));
+        $members = Player::arrayIdToModel($this->getPlayerIds($hide, true));
         usort($members, Player::getAlphabeticalSort());
 
-        return $members;
+        $teams = Team::arrayIdToModel($this->getTeamIds());
+        usort($teams, Team::getAlphabeticalSort());
+
+        return array_merge($members, $teams);
     }
 
     /**
-     * Get a list containing the IDs of each member of the group
-     * @param  int|null  $hide The ID of a player to ignore
+     * Get a list containing the IDs of each member player of the group
+     * @param  int|null  $hide     The ID of a player to ignore
+     * @param  boolean   $distinct Whether to only return players who were
+     *                             specifically invited to the conversation, and
+     *                             are not participating only as members of a team
      * @return integer[] An array of player IDs
      */
-    public function getMemberIds($hide = null)
+    public function getPlayerIds($hide = null, $distinct = false)
     {
         $additional_query = "WHERE `group` = ?";
         $types = "i";
@@ -244,7 +249,21 @@ class Group extends UrlModel implements NamedModel
             $params[] = $hide;
         }
 
+        if ($distinct) {
+            $additional_query .= " AND `distinct` = 1";
+        }
+
         return parent::fetchIds($additional_query, $types, $params, "player_groups", "player");
+    }
+
+    /**
+     * Get a list containing the IDs of each member team of the group
+     *
+     * @return integer[] An array of team IDs
+     */
+    public function getTeamIds()
+    {
+        return parent::fetchIds("WHERE `group` = ?", "i", $this->id, "team_groups", "team");
     }
 
     /**

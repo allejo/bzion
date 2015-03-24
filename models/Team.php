@@ -592,6 +592,17 @@ class Team extends AvatarModel
     }
 
     /**
+     * Alphabetical order function for use in usort (case-insensitive)
+     * @return Closure The sort function
+     */
+    public static function getAlphabeticalSort()
+    {
+        return function (Team $a, Team $b) {
+            return strcasecmp($a->getName(), $b->getName());
+        };
+    }
+
+    /**
      * {@inheritDoc}
      */
     public static function getActiveStatuses()

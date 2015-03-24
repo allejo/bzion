@@ -134,7 +134,7 @@ class EventPusher implements MessageComponentInterface
 
         $group = new \Group($event->data->discussion);
 
-        $groupMembers = $group->getMemberIds();
+        $groupMembers = $group->getPlayerIds();
 
         foreach ($this->clients as $client) {
             $player = $client->Player;

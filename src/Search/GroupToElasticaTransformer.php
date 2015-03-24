@@ -29,7 +29,7 @@ class GroupToElasticaTransformer implements ModelToElasticaTransformerInterface
         return new Document(
             $group->getId(),
             array(
-                'members' => $group->getMemberIDs()
+                'members' => $group->getPlayerIDs()
             )
         );
     }
