@@ -157,7 +157,8 @@
 
                     @include utility('date') {
                         @include respond-to(phones) {
-                            flex-basis: 100%;
+                            @include flex-basis(100%);
+
                             padding-bottom: 0;
                         }
                     }
