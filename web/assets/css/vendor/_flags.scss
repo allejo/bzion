@@ -939,8 +939,7 @@
     }
 
     @include modifier('uu') {
-        @include box-sizing(border-box);
-
+        box-sizing: border-box;
         border: 1px dashed $Color-Light_Grey;
     }
 

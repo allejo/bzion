@@ -70,10 +70,9 @@
         }
 
         @include element('column') {
-            @include box-sizing(border-box);
-
             border-left: $Table-Border;
             border-right: $Table-Border;
+            box-sizing: border-box;
         }
     }
 

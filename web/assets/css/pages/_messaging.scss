@@ -13,7 +13,7 @@ main {
             display: table;
 
             .conversations {
-                @include box-sizing(border-box);
+                box-sizing: border-box;
 
                 background-color: #FFFFFF;
                 border-left: 1px solid #EFEFEF;
@@ -73,7 +73,7 @@ main {
                         padding-top: 45px;
 
                         li {
-                            @include box-sizing(border-box);
+                            box-sizing: border-box;
 
                             background-color: #ffffff;
                             border-bottom: 1px solid #EFEFEF;
@@ -131,14 +131,14 @@ main {
             }
 
             .chat_area {
-                @include box-sizing(border-box);
+                box-sizing: border-box;
 
                 border-right: 1px solid #EFEFEF;
                 display: table-cell;
                 width: 100%;
 
                 .conversation_details {
-                    @include box-sizing(border-box);
+                    box-sizing: border-box;
 
                     background-color: $Color-Sky_Blue;
                     border-bottom: 1px solid #EFEFEF;
@@ -263,7 +263,7 @@ main {
                     background-color: #FFFFFF;
 
                     .input_group {
-                        @include box-sizing(border-box);
+                        box-sizing: border-box;
 
                         border-bottom: 1px solid #EFEFEF;
                         display: table;
@@ -284,7 +284,7 @@ main {
                             }
 
                             > input {
-                                @include box-sizing(border-box);
+                                box-sizing: border-box;
                                 @include placeholder {
                                     color: #999;
                                     opacity: 1;
@@ -309,7 +309,7 @@ main {
                     }
 
                     .editor {
-                        @include box-sizing(border-box);
+                        box-sizing: border-box;
 
                         border-bottom: 1px solid #EFEFEF;
                         padding: 10px;
@@ -321,7 +321,7 @@ main {
                             }
 
                             textarea {
-                                @include box-sizing(border-box);
+                                box-sizing: border-box;
 
                                 border: none;
                                 font-size: 13px;
@@ -354,7 +354,7 @@ main {
                     }
 
                     .player-select {
-                        @include box-sizing(border-box);
+                        box-sizing: border-box;
 
                         border-radius: 0;
                         display: table-cell;
@@ -363,7 +363,7 @@ main {
                     }
 
                     .player-select input[type=text] {
-                        @include box-sizing(border-box);
+                        box-sizing: border-box;
 
                         background-image: linear-gradient(rgb(238, 238, 238) 1%, rgb(255, 255, 255) 15%);
                         font-size: 13px;
@@ -373,7 +373,7 @@ main {
                     }
 
                     .compose_area {
-                        @include box-sizing(border-box);
+                        box-sizing: border-box;
 
                         background-color: #fff;
                         border: 1px solid #eee;
@@ -394,7 +394,7 @@ main {
                 }
 
                 .reply_form {
-                    @include box-sizing(border-box);
+                    box-sizing: border-box;
 
                     background-color: $Color-Blue_Grey;
                     bottom: 0;
@@ -406,7 +406,7 @@ main {
                         overflow: hidden;
 
                         textarea {
-                            @include box-sizing(border-box);
+                            box-sizing: border-box;
 
                             border: 1px solid $Color-Light_Grey;
                             font-family: Open Sans;
