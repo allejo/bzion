@@ -1,6 +1,11 @@
 <?php
+/**
+ * This file contains a database migration
+ *
+ * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
+ */
 
-use Phinx\Migration\AbstractMigration;
+use BZIon\Migration\AbstractMigration;
 
 class TeamGroupAssociations extends AbstractMigration
 {
@@ -28,20 +33,4 @@ class TeamGroupAssociations extends AbstractMigration
         ));
         $playerGroup->update();
      }
-
-    /**
-     * Migrate Up.
-     */
-    public function up()
-    {
-
-    }
-
-    /**
-     * Migrate Down.
-     */
-    public function down()
-    {
-
-    }
 }
