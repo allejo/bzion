@@ -26,6 +26,15 @@ module.exports = function(grunt) {
                 }
             }
         },
+        phpunit: {
+            classes: {
+                dir: 'tests/ModelTests/'
+            },
+            options: {
+                bin: 'vendor/bin/phpunit',
+                colors: true
+            }
+        },
         sass: {
             dist: {
                 options: {
@@ -111,6 +120,10 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            tests: {
+                files: [ 'models/*.php', 'tests/ModelTests/*.php' ],
+                tasks: [ 'phpunit' ]
             }
         }
     });

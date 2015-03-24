@@ -2,8 +2,14 @@
 
 class TeamTest extends TestCase
 {
+    /**
+     * @var Player
+     */
     private $player;
-    private $playerid;
+
+    /**
+     * @var Team
+     */
     private $team;
 
     protected function setUp()
@@ -16,20 +22,38 @@ class TeamTest extends TestCase
     public function testTeamLeader()
     {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Sample Avatar Text", "Sample Description");
-
         $team = new Team($this->team->getId());
 
         $this->assertEquals($this->player->getId(), $team->getLeader()->getId());
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testInvalidTeamLeader()
+    {
+        $this->team = Team::createTeam("An Invalid Team", 0, "Sample Avatar Text", "Team Number 1 sample description");
+    }
+
     public function testTeamName()
     {
         $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
-
         $team = new Team($this->team->getId());
 
         $this->assertEquals("Team name test", $team->getName());
+    }
+
+    public function testTeamAlias()
+    {
+        $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
+        $team = new Team($this->team->getId());
+
         $this->assertEquals("team-name-test", $team->getAlias());
+    }
+
+    public function testTeamFetchByAlias()
+    {
+        $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
 
         $this->assertEquals($this->team->getId(), Team::fetchFromAlias("team-name-test")->getId());
     }
