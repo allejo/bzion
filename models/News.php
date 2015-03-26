@@ -78,8 +78,8 @@ class News extends UrlModel implements NamedModel
         $this->category = $news['category'];
         $this->subject = $news['subject'];
         $this->content = $news['content'];
-        $this->created = new TimeDate($news['created']);
-        $this->updated = new TimeDate($news['updated']);
+        $this->created = TimeDate::fromMysql($news['created']);
+        $this->updated = TimeDate::fromMysql($news['updated']);
         $this->author = $news['author'];
         $this->editor = $news['editor'];
         $this->status = $news['status'];

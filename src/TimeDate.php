@@ -36,10 +36,20 @@ class TimeDate extends Carbon\Carbon
     public function toMysql()
     {
         // We can't tell MySQL to store timezone data, so just convert the
-        // timestamp to local time
-        $time = $this->copy()->setTimezone(date_default_timezone_get());
+        // timestamp to UTC
+        $time = $this->copy()->setTimezone("UTC");
 
         return $time->format(self::MYSQL);
+    }
+
+    /**
+     * Create a timestamp from a MySQL string
+     * @param  string $time
+     * @return TimeDate
+     */
+    public static function fromMysql($time)
+    {
+        return new self($time, "UTC");
     }
 
     /**

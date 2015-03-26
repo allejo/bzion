@@ -56,7 +56,7 @@ class Invitation extends UrlModel
         $this->invited_player = $invitation['invited_player'];
         $this->sent_by    = $invitation['sent_by'];
         $this->team       = $invitation['team'];
-        $this->expiration = new TimeDate($invitation['expiration']);
+        $this->expiration = TimeDate::fromMysql($invitation['expiration']);
         $this->text       = $invitation['text'];
     }
 
@@ -151,7 +151,7 @@ class Invitation extends UrlModel
     public static function hasOpenInvitation($player, $team)
     {
         return self::fetchCount(
-            "WHERE invited_player = ? AND team = ? AND expiration > NOW()",
+            "WHERE invited_player = ? AND team = ? AND expiration > UTC_TIMESTAMP()",
             'ii', array($player, $team)
         );
     }

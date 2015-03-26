@@ -121,7 +121,7 @@ class Team extends AvatarModel
         $this->description_md = $team['description_md'];
         $this->description_html = $team['description_html'];
         $this->avatar = $team['avatar'];
-        $this->created = new TimeDate($team['created']);
+        $this->created = TimeDate::fromMysql($team['created']);
         $this->elo = $team['elo'];
         $this->activity = $team['activity'];
         $this->leader = $team['leader'];

@@ -76,8 +76,8 @@ class Page extends AliasModel
     protected function assignLazyResult($page)
     {
         $this->content = $page['content'];
-        $this->created = new TimeDate($page['created']);
-        $this->updated = new TimeDate($page['updated']);
+        $this->created = TimeDate::fromMysql($page['created']);
+        $this->updated = TimeDate::fromMysql($page['updated']);
     }
 
     /**

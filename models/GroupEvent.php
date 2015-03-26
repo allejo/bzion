@@ -60,7 +60,7 @@ class GroupEvent extends Model implements GroupEventInterface
         $this->group = $event['group_to'];
         $this->event = unserialize($event['event']);
         $this->type = $event['type'];
-        $this->timestamp = new TimeDate($event['timestamp']);
+        $this->timestamp = TimeDate::fromMysql($event['timestamp']);
         $this->status = $event['status'];
     }
 

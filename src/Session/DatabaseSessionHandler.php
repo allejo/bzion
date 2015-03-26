@@ -92,8 +92,8 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
         $encoded = base64_encode($data);
 
         $this->database->query(
-            "INSERT INTO sessions (id, data, timestamp) VALUES (?, ?, NOW())
-             ON DUPLICATE KEY UPDATE data = ?, timestamp = NOW();",
+            "INSERT INTO sessions (id, data, timestamp) VALUES (?, ?, UTC_TIMESTAMP())
+             ON DUPLICATE KEY UPDATE data = ?, timestamp = UTC_TIMESTAMP();",
             'sss', array($sessionId, $encoded, $encoded));
 
         return true;

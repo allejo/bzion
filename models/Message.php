@@ -56,7 +56,7 @@ class Message extends Model implements GroupEventInterface
     {
         $this->group_to = $message['group_to'];
         $this->player_from = $message['player_from'];
-        $this->timestamp = new TimeDate($message['timestamp']);
+        $this->timestamp = TimeDate::fromMysql($message['timestamp']);
         $this->message = $message['message'];
         $this->status = $message['status'];
     }

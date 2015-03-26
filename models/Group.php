@@ -49,7 +49,7 @@ class Group extends UrlModel implements NamedModel
     protected function assignResult($group)
     {
         $this->subject = $group['subject'];
-        $this->last_activity = TimeDate::parse($group['last_activity']);
+        $this->last_activity = TimeDate::fromMysql($group['last_activity']);
         $this->creator = $group['creator'];
         $this->status = $group['status'];
     }

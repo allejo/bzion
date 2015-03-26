@@ -390,7 +390,7 @@ abstract class BaseModel implements ModelInterface
 
             foreach ($now as $column) {
                 $columns .= ",$column";
-                $question_marks .= ",NOW()";
+                $question_marks .= ",UTC_TIMESTAMP()";
             }
         }
 

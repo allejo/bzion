@@ -163,8 +163,8 @@ class Player extends AvatarModel implements NamedModel
         $this->outdated = $player['outdated'];
         $this->description = $player['description'];
         $this->timezone = $player['timezone'];
-        $this->joined = new TimeDate($player['joined']);
-        $this->last_login = new TimeDate($player['last_login']);
+        $this->joined = TimeDate::fromMysql($player['joined']);
+        $this->last_login = TimeDate::fromMysql($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
 
         $this->roles = Role::getRoles($this->id);

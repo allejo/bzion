@@ -83,7 +83,7 @@ class Server extends UrlModel implements NamedModel
         $this->owner = $server['owner'];
         $this->online = $server['online'];
         $this->info = unserialize($server['info']);
-        $this->updated = new TimeDate($server['updated']);
+        $this->updated = TimeDate::fromMysql($server['updated']);
         $this->status = $server['status'];
     }
 
@@ -119,7 +119,7 @@ class Server extends UrlModel implements NamedModel
     {
         $this->info = @bzfquery($this->address);
         $this->updated = TimeDate::now();
-        $this->db->query("UPDATE servers SET info = ?, updated = NOW() WHERE id = ?", "si", array(serialize($this->info), $this->id));
+        $this->db->query("UPDATE servers SET info = ?, updated = UTC_TIMESTAMP() WHERE id = ?", "si", array(serialize($this->info), $this->id));
 
         $this->updateOnline();
 

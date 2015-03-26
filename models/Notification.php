@@ -68,7 +68,7 @@ class Notification extends Model
         $this->type      = $notification['type'];
         $this->event     = unserialize($notification['event']);
         $this->status    = $notification['status'];
-        $this->timestamp = new TimeDate($notification['timestamp']);
+        $this->timestamp = TimeDate::fromMysql($notification['timestamp']);
     }
 
     /**

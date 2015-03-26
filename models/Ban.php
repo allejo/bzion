@@ -96,12 +96,12 @@ class Ban extends UrlModel implements NamedModel
         $this->player = $ban['player'];
         $this->expiration = ($ban['expiration'] === null)
                           ? null
-                          : new TimeDate($ban['expiration']);
+                          : TimeDate::fromMysql($ban['expiration']);
         $this->srvmsg = $ban['server_message'];
         $this->reason = $ban['reason'];
         $this->allowServerJoin = $ban['allow_server_join'];
-        $this->created = new TimeDate($ban['created']);
-        $this->updated = new TimeDate($ban['updated']);
+        $this->created = TimeDate::fromMysql($ban['created']);
+        $this->updated = TimeDate::fromMysql($ban['updated']);
         $this->author = $ban['author'];
         $this->status = $ban['status'];
     }
@@ -489,7 +489,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public static function getBan($playerId)
     {
-        $bans = self::fetchIdsFrom('player', array($playerId), 'i', false, "AND (expiration IS NULL OR expiration > NOW())");
+        $bans = self::fetchIdsFrom('player', array($playerId), 'i', false, "AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())");
 
         if (empty($bans)) {
             return null;

@@ -155,8 +155,8 @@ class Match extends PermissionModel implements NamedModel
         $this->server = $match['server'];
         $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
-        $this->timestamp = new TimeDate($match['timestamp']);
-        $this->updated = new TimeDate($match['updated']);
+        $this->timestamp = TimeDate::fromMysql($match['timestamp']);
+        $this->updated = TimeDate::fromMysql($match['updated']);
         $this->duration = $match['duration'];
         $this->entered_by = $match['entered_by'];
         $this->status = $match['status'];

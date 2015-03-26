@@ -78,7 +78,7 @@ class Visit extends Model
      */
     public static function enterVisit($visitor, $ip, $host, $user_agent, $referrer, $timestamp = "now")
     {
-        $timestamp = new TimeDate($timestamp);
+        $timestamp = TimeDate::from($timestamp);
 
         return self::create(array(
             'player' => $visitor,
