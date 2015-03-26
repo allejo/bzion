@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ff752fe25329e1713da60964f06dd8b4",
+    "hash": "b1c06e4e9e1d024c398b7e0a7ea051da",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -928,12 +928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/select2/select2.git",
-                "reference": "9318980651e5bf471c412834139a03bf5de54f94"
+                "reference": "cc1eefb78f88ce0ca17c6059fb940c0fda84a82e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/select2/select2/zipball/9318980651e5bf471c412834139a03bf5de54f94",
-                "reference": "9318980651e5bf471c412834139a03bf5de54f94",
+                "url": "https://api.github.com/repos/select2/select2/zipball/cc1eefb78f88ce0ca17c6059fb940c0fda84a82e",
+                "reference": "cc1eefb78f88ce0ca17c6059fb940c0fda84a82e",
                 "shasum": ""
             },
             "require": {
@@ -958,7 +958,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "https://select2.github.io/",
-            "time": "2015-03-20 13:16:35"
+            "time": "2015-03-25 14:31:48"
         },
         {
             "name": "jms/metadata",
@@ -1536,20 +1536,21 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.17.0",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "a1dd1ad9abfc8b3c4d8768068e6c71d293424e86"
+                "reference": "99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/a1dd1ad9abfc8b3c4d8768068e6c71d293424e86",
-                "reference": "a1dd1ad9abfc8b3c4d8768068e6c71d293424e86",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36",
+                "reference": "99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3.0",
+                "symfony/translation": "2.6.*"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
@@ -1578,7 +1579,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2015-03-08 14:05:44"
+            "time": "2015-03-26 03:05:57"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -1718,6 +1719,51 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+            "name": "ramsey/array_column",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/array_column.git",
+                "reference": "f8e52eb28e67eb50e613b451dd916abcf783c1db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/array_column/zipball/f8e52eb28e67eb50e613b451dd916abcf783c1db",
+                "reference": "f8e52eb28e67eb50e613b451dd916abcf783c1db",
+                "shasum": ""
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "0.8.*",
+                "phpunit/phpunit": "~4.5",
+                "satooshi/php-coveralls": "0.6.*",
+                "squizlabs/php_codesniffer": "~2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/array_column.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Ramsey",
+                    "homepage": "http://benramsey.com"
+                }
+            ],
+            "description": "Provides functionality for array_column() to projects using PHP earlier than version 5.5.",
+            "homepage": "https://github.com/ramsey/array_column",
+            "keywords": [
+                "array",
+                "array_column",
+                "column"
+            ],
+            "time": "2015-03-20 22:07:39"
+        },
+        {
             "name": "react/event-loop",
             "version": "v0.3.4",
             "target-dir": "React/EventLoop",
@@ -1846,52 +1892,6 @@
                 "stream"
             ],
             "time": "2014-02-16 19:48:52"
-        },
-        {
-            "name": "rhumsaa/array_column",
-            "version": "1.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ramsey/array_column.git",
-                "reference": "f8e52eb28e67eb50e613b451dd916abcf783c1db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/array_column/zipball/f8e52eb28e67eb50e613b451dd916abcf783c1db",
-                "reference": "f8e52eb28e67eb50e613b451dd916abcf783c1db",
-                "shasum": ""
-            },
-            "require-dev": {
-                "jakub-onderka/php-parallel-lint": "0.8.*",
-                "phpunit/phpunit": "~4.5",
-                "satooshi/php-coveralls": "0.6.*",
-                "squizlabs/php_codesniffer": "~2.2"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/array_column.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ben Ramsey",
-                    "homepage": "http://benramsey.com"
-                }
-            ],
-            "description": "Provides functionality for array_column() to projects using PHP earlier than version 5.5.",
-            "homepage": "https://github.com/ramsey/array_column",
-            "keywords": [
-                "array",
-                "array_column",
-                "column"
-            ],
-            "abandoned": "ramsey/array_column",
-            "time": "2015-03-20 22:07:39"
         },
         {
             "name": "robloach/component-installer",
@@ -4638,12 +4638,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkExtension.git",
-                "reference": "bcd3fc1809fefd272d289c32fc5ba2eed2ad19d5"
+                "reference": "9bff0ae65f32f9bf9df0afef91057a7bfeeeafc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkExtension/zipball/bcd3fc1809fefd272d289c32fc5ba2eed2ad19d5",
-                "reference": "bcd3fc1809fefd272d289c32fc5ba2eed2ad19d5",
+                "url": "https://api.github.com/repos/Behat/MinkExtension/zipball/9bff0ae65f32f9bf9df0afef91057a7bfeeeafc6",
+                "reference": "9bff0ae65f32f9bf9df0afef91057a7bfeeeafc6",
                 "shasum": ""
             },
             "require": {
@@ -4689,7 +4689,7 @@
                 "test",
                 "web"
             ],
-            "time": "2015-03-22 18:16:23"
+            "time": "2015-03-25 17:21:25"
         },
         {
             "name": "behat/symfony2-extension",
@@ -4915,12 +4915,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "c5cd184767001f34177da99e91f7a6dcf8ad27f6"
+                "reference": "8cfd48c479f4f8f059afb8f7e9f4af21362907fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/c5cd184767001f34177da99e91f7a6dcf8ad27f6",
-                "reference": "c5cd184767001f34177da99e91f7a6dcf8ad27f6",
+                "url": "https://api.github.com/repos/composer/composer/zipball/8cfd48c479f4f8f059afb8f7e9f4af21362907fd",
+                "reference": "8cfd48c479f4f8f059afb8f7e9f4af21362907fd",
                 "shasum": ""
             },
             "require": {
@@ -4975,7 +4975,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-03-24 01:36:30"
+            "time": "2015-03-25 14:32:49"
         },
         {
             "name": "dompdf/dompdf",
@@ -6829,12 +6829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "b2627a9403e0182f3fa86eeb9d3442471032d211"
+                "reference": "48c76189fb0a76a20a4a67a750b513ed06074b55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b2627a9403e0182f3fa86eeb9d3442471032d211",
-                "reference": "b2627a9403e0182f3fa86eeb9d3442471032d211",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/48c76189fb0a76a20a4a67a750b513ed06074b55",
+                "reference": "48c76189fb0a76a20a4a67a750b513ed06074b55",
                 "shasum": ""
             },
             "require": {
@@ -6880,7 +6880,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-03-02 12:21:06"
+            "time": "2015-03-26 11:09:50"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -7799,7 +7799,6 @@
         "sensio/distribution-bundle": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.0",
         "ext-gd": "*"
