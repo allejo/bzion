@@ -34,6 +34,7 @@ class TimezoneType extends AbstractType
     public static function getTimezones()
     {
         return array(
+            'UTC'                  => "UTC",
             'Pacific/Midway'       => "(GMT-11:00) Midway Island",
             'US/Samoa'             => "(GMT-11:00) Samoa",
             'US/Hawaii'            => "(GMT-10:00) Hawaii",
