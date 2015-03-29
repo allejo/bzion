@@ -35,7 +35,7 @@
     @if length($elements) == 1 {
         $element: nth($elements, 1);
 
-        #{&}#{bem-separator($object)}#{$element} {
+        &#{bem-separator($object)}#{$element} {
             @content;
         }
     }
@@ -44,7 +44,7 @@
 
         @each $element in $elements {
             // The last comma doesn't matter since SASS will automatically remove it on compilation
-            $class_list: $class_list + "#{&}#{bem-separator($object)}" + $element + ", ";
+            $class_list: $class_list + "&#{bem-separator($object)}" + $element + ", ";
         }
 
         #{$class_list} {
