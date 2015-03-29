@@ -14,21 +14,16 @@
                 }
             }
 
+            @include element('address', 'playerCount', 'updated') {
+                padding-left: 15px;
+            }
+
             @include element('name') {
                 font-weight: bold;
             }
 
-            @include element('address') {
-                padding-left: 15px;
-            }
-
-            @include element('playerCount') {
-                padding-left: 15px;
-            }
-
             @include element('updated') {
                 font-style: italic;
-                padding-left: 15px;
             }
 
             header {

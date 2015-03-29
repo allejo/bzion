@@ -1,10 +1,85 @@
+/// Get the the separator used between an element or a modifier for the BEM convention
+///
+/// @access private
+///
+/// @param {String} $object
+///   Accepted values: `element` or `modifier`
+///
+/// @link https://en.bem.info/method/definitions/
+
+@function bem-separator($object) {
+    @if ($object == "element") {
+        @return "__";
+    }
+    @else if ($object == "modifier") {
+        @return "--";
+    }
+
+    @return "";
+}
+
+
+/// Generate the appropriate CSS to follow the BEM convention.
+///
+/// @access private
+///
+/// @param {String} $object
+///   Accepted values: `element` or `modifier`
+/// @param {List} $elements
+///   The list of element(s) we'll be creating the CSS structure for
+///
+/// @link https://en.bem.info/method/definitions/
+///
+
+@mixin bem-standard($object, $elements) {
+    @if length($elements) == 1 {
+        $element: nth($elements, 1);
+
+        #{&}#{bem-separator($object)}#{$element} {
+            @content;
+        }
+    }
+    @else {
+        $class_list: '';
+
+        @each $element in $elements {
+            // The last comma doesn't matter since SASS will automatically remove it on compilation
+            $class_list: $class_list + "#{&}#{bem-separator($object)}" + $element + ", ";
+        }
+
+        #{$class_list} {
+            @content;
+        }
+    }
+}
+
+
 /// Create a Block Element following the BEM naming scheme
 ///
-/// @param {String} $element
-///   Element's name
+/// @param {String|Argument List} $elements
+///   A single element's name or an argument list of elements
+///
+/// @example scss - Usage
+///   .foo {
+///       @include element('header') {
+///           display: block;
+///       }
+///
+///       @include element('body', 'footer') {
+///           display: inline-block;
+///       }
+///   }
+///
+/// @example css - Output
+///   .foo .foo__header {
+///       display: block;
+///   }
+///   .foo .foo__body, .foo .foo__footer {
+///       display: inline-block;
+///   }
 
-@mixin element($element) {
-    &__#{$element} {
+@mixin element($elements...) {
+    @include bem-standard('element', $elements) {
         @content;
     }
 }
@@ -12,11 +87,31 @@
 
 /// Create a Block Modifier following the BEM naming scheme
 ///
-/// @param {String} $modifier
-///   Modifier's name
+/// @param {String|Argument List} $modifiers
+///   A single modifier's name or an argument list of modifiers
+///
+/// @example scss - Usage
+///   .bar {
+///       @include modifier('quarter') {
+///           display: inline-block;
+///       }
+///
+///       @include modifier('full', 'half') {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - Output
+///   .bar .bar--quarter {
+///       display: inline-block;
+///   }
+///   .bar .bar--full, .bar .bar--half {
+///       display: block;
+///   }
 
-@mixin modifier($modifier) {
-    &--#{$modifier} {
+
+@mixin modifier($modifiers...) {
+    @include bem-standard('modifier', $modifiers) {
         @content;
     }
 }
