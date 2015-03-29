@@ -6,6 +6,8 @@
 ///
 
 @function get-max-size($media) {
+    // scss-lint:disable ElsePlacement
+
     @if      $media == phones   { @return $phone-max-size; }
     @else if $media == phablets { @return $phablet-max-size; }
     @else if $media == tablets  { @return $tablet-max-size; }
@@ -22,6 +24,8 @@
 ///
 
 @function get-min-size($media) {
+    // scss-lint:disable ElsePlacement
+
     @if      $media == phones   { @return $phone-min-size; }
     @else if $media == phablets { @return $phablet-min-size; }
     @else if $media == tablets  { @return $tablet-min-size; }

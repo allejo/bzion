@@ -39,7 +39,7 @@
     }
 
     @else if $index < 1 {
-        @warn "List index 0 must be a non-zero integer for `insert-nth`";
+        @warn 'List index 0 must be a non-zero integer for `insert-nth`';
     }
 
     @else if $index > length($list) {
@@ -207,7 +207,7 @@
     }
 
     @else if $index == 0 {
-        @warn "List index 0 must be a non-zero integer for `remove-nth`.";
+        @warn 'List index 0 must be a non-zero integer for `remove-nth`.';
     }
 
     @else if abs($index) > length($list) {
@@ -294,7 +294,7 @@
     }
 
     @else if $index == 0 {
-        @warn "List index 0 must be a non-zero integer for `replace-nth`.";
+        @warn 'List index 0 must be a non-zero integer for `replace-nth`.';
     }
 
     @else if abs($index) > length($list) {
@@ -375,15 +375,15 @@
     $result: null;
 
     @if type-of($start) != number or type-of($end) != number {
-        @warn "Either $start or $end are not a number for `slice`.";
+        @warn 'Either $start or $end are not a number for `slice`.';
     }
 
     @else if $start > $end {
-        @warn "The start index has to be lesser than or equals to the end index for `slice`.";
+        @warn 'The start index has to be lesser than or equals to the end index for `slice`.';
     }
 
     @else if $start < 1 or $end < 1 {
-        @warn "List indexes must be non-zero integers for `slice`.";
+        @warn 'List indexes must be non-zero integers for `slice`.';
     }
 
     @else if $start > length($list) {

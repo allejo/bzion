@@ -8,14 +8,14 @@
 /// @link https://en.bem.info/method/definitions/
 
 @function bem-separator($object) {
-    @if ($object == "element") {
-        @return "__";
+    @if ($object == 'element') {
+        @return '__';
     }
-    @else if ($object == "modifier") {
-        @return "--";
+    @else if ($object == 'modifier') {
+        @return '--';
     }
 
-    @return "";
+    @return '';
 }
 
 
@@ -44,7 +44,7 @@
 
         @each $element in $elements {
             // The last comma doesn't matter since SASS will automatically remove it on compilation
-            $class_list: $class_list + "&#{bem-separator($object)}" + $element + ", ";
+            $class_list: $class_list + "&#{bem-separator($object)}" + $element + ', ';
         }
 
         #{$class_list} {
