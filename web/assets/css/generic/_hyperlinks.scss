@@ -1,0 +1,21 @@
+a {
+    color: $Font-Color-Hyperlink;
+    text-decoration: none;
+
+    &:hover {
+        color: darken($Font-Color-Hyperlink, 15%);
+    }
+
+    // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
+    // of our internal links are relative so this is a safe move.
+    &[href^="http"] {
+        &:after {
+            content: '\F08E';
+            font-family: FontAwesome;
+            font-size: 0.6em;
+            margin-left: 5px;
+            text-decoration: none;
+            vertical-align: top;
+        }
+    }
+}

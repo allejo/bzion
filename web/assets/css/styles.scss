@@ -34,6 +34,19 @@
 
 
 //
+// Generic HTML Elements
+//    (CSS for generic HTML elements)
+//
+@import "generic/blocks";
+@import "generic/body";
+@import "generic/formatting";
+@import "generic/headers";
+@import "generic/hyperlinks";
+@import "generic/lists";
+@import "generic/tables";
+
+
+//
 // Partials
 //    (CSS for parts of the website but not specific to a single page)
 //
@@ -44,7 +57,6 @@
 @import 'partials/font-awesome';
 @import 'partials/forms';
 @import 'partials/footer';
-@import 'partials/generic';
 @import 'partials/header';
 @import 'partials/icon-bullet-points';
 @import 'partials/jumbotron';

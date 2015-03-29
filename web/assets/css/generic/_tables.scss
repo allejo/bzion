@@ -1,0 +1,100 @@
+table {
+    background-color: $Table-Background;
+    max-width: 100%;
+    width: 100%;
+
+    caption {
+        color: $Font-Color-Muted;
+        padding-bottom: $Table-Cell_Padding;
+        padding-top: $Table_Cell_Padding;
+        text-align: left;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                border-top: $Table-Border;
+                padding: $Table-Cell_Padding;
+                line-height: $Settings-Line_Height;
+                vertical-align: top;
+            }
+        }
+    }
+
+    > thead > tr > th {
+        vertical-align: bottom;
+        border-bottom: 2px $Border-Type $Border-Color;
+    }
+    > caption + thead,
+    > colgroup + thead,
+    > thead:first-child {
+        > tr:first-child {
+            > th,
+            > td {
+                border-top: 0;
+            }
+        }
+    }
+
+    > tbody + tbody {
+        border-top: 2px $Border-Type $Border-Color;
+    }
+
+    > tbody > tr:hover {
+        background-color: $Table-Background-Hover;
+    }
+
+    table {
+        background-color: $Settings-Background_Color;
+    }
+}
+
+@include component('html-table') {
+    @include modifier('condensed') {
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    padding: $Table-Cell_Padding_Condensed;
+                }
+            }
+        }
+    }
+
+    @include modifier('bordered') {
+        border: $Table-Border;
+
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    border: $Table-Border;
+                }
+            }
+        }
+
+        > thead > tr {
+            > th,
+            > td {
+                border-bottom-width: 2px;
+            }
+        }
+    }
+
+    @include modifier('striped') {
+        > tbody > tr:nth-of-type(odd) {
+            background-color: $Table-Background-Accent;
+        }
+    }
+}

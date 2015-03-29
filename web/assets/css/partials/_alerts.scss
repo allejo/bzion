@@ -15,18 +15,18 @@
 
 @include component('alert') {
     @include modifier('success') {
-        @include make-alert($alert-success-bg, $alert-success-border, $alert-success-text);
+        @include make-alert($Alert-Success-Background, $Alert-Success-Border, $Alert-Success-Text);
     }
 
     @include modifier('info') {
-        @include make-alert($alert-info-bg, $alert-info-border, $alert-info-text);
+        @include make-alert($Alert-Informational-Background, $Alert-Informational-Border, $Alert-Informational-Text);
     }
 
     @include modifier('warning') {
-        @include make-alert($alert-warning-bg, $alert-warning-border, $alert-warning-text);
+        @include make-alert($Alert-Warning-Background, $Alert-Warning-Border, $Alert-Warning-Text);
     }
 
     @include modifier('danger') {
-        @include make-alert($alert-danger-bg, $alert-danger-border, $alert-danger-text);
+        @include make-alert($Alert-Danger-Background, $Alert-Danger-Border, $Alert-Danger-Text);
     }
 }

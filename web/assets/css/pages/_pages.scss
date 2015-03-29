@@ -1,6 +1,6 @@
 @include component('page') {
     @include element('header') {
-        border-bottom: 1px solid $Border-Light_Color;
+        border-bottom: 1px solid $Border-Color;
         margin-bottom: $Settings-Page_Section-Margin;
 
         @include element('container') {

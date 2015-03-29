@@ -1,0 +1,17 @@
+* {
+    &,
+    &:before,
+    &:after {
+        box-sizing: inherit;
+    }
+}
+
+body {
+    background-color: $Settings-Background_Color;
+    font-family: $Font-Sans_Serif;
+    line-height: 1.4em;
+}
+
+html {
+    box-sizing: border-box;
+}

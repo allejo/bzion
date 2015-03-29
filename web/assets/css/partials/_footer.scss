@@ -2,7 +2,7 @@
     @extend %wrapper;
     @include display(flex);
 
-    border-top: 1px solid $Border-Light_Color;
+    border-top: 1px solid $Border-Color;
     padding: {
         bottom: 20px;
         top: 20px;

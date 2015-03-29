@@ -21,7 +21,7 @@
             }
 
             @include element('timestamp') {
-                color: $Font-Color-Disabled;
+                color: $Font-Color-Muted;
                 font-size: 12px;
                 margin-left: 5px;
             }

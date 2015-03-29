@@ -1,0 +1,37 @@
+ol,
+ul {
+    padding-left: 30px;
+
+    li {
+        padding-left: 0;
+    }
+}
+
+ol {
+    li {
+        list-style-type: decimal;
+    }
+}
+
+ul {
+    @include is('horizontal') {
+        padding-left: 0;
+
+        li {
+            display: inline-block;
+            list-style: none;
+        }
+    }
+
+    @include has('no-padding') {
+        padding-left: 0;
+
+        li {
+            list-style-type: none;
+        }
+    }
+
+    li {
+        list-style-type: circle;
+    }
+}

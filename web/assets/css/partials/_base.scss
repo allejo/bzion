@@ -1,8 +1,3 @@
-// Page settings
-$Settings-Global_Width: 980px;
-$Settings-Page_Section-Margin: 30px;
-$Settings-Page_Section-Small_Margin: $Settings-Page_Section-Margin / 2;
-
 // Our color palette
 $Color-White: #FFFFFF;
 $Color-Almost_White: #F7F7F7;
@@ -20,9 +15,16 @@ $Color-Yellow: #FDCE46;
 $Color-Red: #FF0000;
 $Color-Green: #008000;
 
+// Page settings
+$Settings-Background_Color: $Color-White;
+$Settings-Global_Width: 980px;
+$Settings-Line_Height: 1.4em;
+$Settings-Page_Section-Margin: 30px;
+$Settings-Page_Section-Small_Margin: $Settings-Page_Section-Margin / 2;
+
 // Font colors
 $Font-Color-Default: $Color-Black;
-$Font-Color-Disabled: $Color-Medium_Grey;
+$Font-Color-Muted: $Color-Medium_Grey;
 $Font-Color-Hyperlink: $Color-Sky_Blue;
 
 // Match Colors
@@ -31,25 +33,27 @@ $Match-Color_Losses: #B6D1D8;
 $Match-Color_Draws: #8FDC00;
 
 // Alert notification colors
-$alert-success-bg: #DFF0D8;
-$alert-success-text: #3C763D;
-$alert-success-border: darken(adjust-hue($alert-success-bg, -10), 5%);
+$Alert-Success-Background: #DFF0D8;
+$Alert-Success-Text: #3C763D;
+$Alert-Success-Border: darken(adjust-hue($Alert-Success-Background, -10), 5%);
 
-$alert-info-bg: #D9EDF7;
-$alert-info-text: #31708F;
-$alert-info-border: darken(adjust-hue($alert-info-bg, -10), 7%);
+$Alert-Informational-Background: #D9EDF7;
+$Alert-Informational-Text: #31708F;
+$Alert-Informational-Border: darken(adjust-hue($Alert-Informational-Background, -10), 7%);
 
-$alert-warning-bg: #FCF8E3;
-$alert-warning-text: #8A6D3B;
-$alert-warning-border: darken(adjust-hue($alert-warning-bg, -10), 5%);
+$Alert-Warning-Background: #FCF8E3;
+$Alert-Warning-Text: #8A6D3B;
+$Alert-Warning-Border: darken(adjust-hue($Alert-Warning-Background, -10), 5%);
 
-$alert-danger-bg: #F2DEDE;
-$alert-danger-text: #A94442;
-$alert-danger-border: darken(adjust-hue($alert-danger-bg, -10), 5%);
+$Alert-Danger-Background: #F2DEDE;
+$Alert-Danger-Text: #A94442;
+$Alert-Danger-Border: darken(adjust-hue($Alert-Danger-Background, -10), 5%);
 
 // Borders
-$Border-Light_Color: #E9E9E9;
-$Border-Default: 1px solid $Border-Light_Color;
+$Border-Color: #E9E9E9;
+$Border-Type: solid;
+$Border-Width: 1px;
+$Border-Default: $Border-Width $Border-Type $Border-Color;
 $Border-Radius: 3px;
 
 // Form Settings
@@ -62,8 +66,14 @@ $Form-Box_Shadow_Focus: $Form-Box_Shadow, 0 0 5px adjust-color($Form-Action_Colo
 $Form-Spacing: 1.5em;
 $Form-Small_Spacing: $Form-Spacing / 2;
 
+// Table Settings
+$Table-Background: transparent;
+$Table-Background-Accent: #F9F9F9;
+$Table-Background-Active: #F5F5F5;
+$Table-Background-Hover: $Table-Background-Active;
 $Table-Border: $Border-Default;
-$Table-Hover_Color: $Color-Almost_White;
+$Table-Cell_Padding: 8px;
+$Table-Cell_Padding_Condensed: 5px;
 
 // Typography
 $Font-Sans_Serif: 'Lato', sans-serif;
