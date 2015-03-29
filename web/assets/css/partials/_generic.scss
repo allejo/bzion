@@ -9,11 +9,11 @@
 }
 
 a {
-    color: $Color-Sky_Blue;
+    color: $Font-Color-Hyperlink;
     text-decoration: none;
 
     &:hover {
-        color: darken($Color-Sky_Blue, 15%);
+        color: darken($Font-Color-Hyperlink, 15%);
     }
 
     // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All

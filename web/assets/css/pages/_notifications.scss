@@ -1,10 +1,32 @@
 @include scope('notifications') {
     @include component('notifications') {
+        padding: {
+            bottom: 10px;
+            top: 10px;
+        }
+
         @include element('notification') {
             padding: 10px;
 
             @include modifier('unread') {
                 background-color: $Color-Blue_Grey;
+            }
+
+            @include element('message') {
+                .fa {
+                    @extend %fa-fw;
+
+                    margin-right: 10px;
+                }
+            }
+
+            @include element('timestamp') {
+                color: $Font-Color-Disabled;
+                font-size: 12px;
+            }
+
+            @include element('action') {
+                margin-left: 20px;
             }
         }
     }
