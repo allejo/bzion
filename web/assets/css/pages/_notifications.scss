@@ -23,6 +23,7 @@
             @include element('timestamp') {
                 color: $Font-Color-Disabled;
                 font-size: 12px;
+                margin-left: 5px;
             }
 
             @include element('action') {
