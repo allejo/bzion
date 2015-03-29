@@ -3,37 +3,37 @@
 {% block title %}Notifications{% endblock %}
 
 {% block content %}
-    <main class="notification_list">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>Notifications</h1>
-            </article>
+    <main class="c-page s-notifications">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>Notifications</h1>
+                </section>
+            </div>
         </section>
 
-    <section class="notifications">
-        {% for chunk in notifications %}
-            <h3>{{ chunk.date.format('F Y') }}</h3>
+        <sections class="o-layout">
+            {% for month in notifications %}
+                <section class="o-layout__body--full">
+                    <h3>{{ month.date.format('F Y') }}</h3>
 
-            <ul>
-                {% for notification in chunk.notifications %}
+                    <ul class="c-notifications">
+                        {% for notification in month.notifications %}
+                            {% set class = (notification.read) ? "read" : "unread" %}
 
-                    {% set class = "" %}
-
-                    {% if not notification.read %}
-                        {% set class = "unread" %}
-                    {% endif %}
-
-                    <li class="{{ class }} notification">
-                        {{ include('Notification/item.html.twig') }}
-                        <em> {{ notification.timestamp.diffForHumans }} </em>
-                        {% for title, link in notification.actions %}
-                            <a href="{{ link }}">{{ title }}</a>
+                            <li class="c-notifications__notification c-notifications__notification--{{ class }}">
+                                {{ include('Notification/item.html.twig') }}
+                                <em>{{ notification.timestamp.diffForHumans }}</em>
+                                {% for title, link in notification.actions %}
+                                    <a href="{{ link }}">{{ title }}</a>
+                                {% endfor %}
+                            </li>
                         {% endfor %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </section>
+                    </ul>
+                </section>
+            {% endfor %}
+        </sections>
+    </main>
 {% endblock %}
 
 

@@ -1,15 +1,10 @@
-main {
-    &.notification_list {
-        .notifications {
-            @extend .clearfix;
-            @extend .wrapper;
+@include scope('notifications') {
+    @include component('notifications') {
+        @include element('notification') {
+            padding: 10px;
 
-            .notification {
-                padding: 10px;
-
-                &.unread {
-                    background-color: $Color-Blue_Grey;
-                }
+            @include modifier('unread') {
+                background-color: $Color-Blue_Grey;
             }
         }
     }
