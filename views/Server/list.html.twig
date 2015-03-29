@@ -1,21 +1,64 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('server_new'),
+        'icon': 'plus',
+        'text': 'Add Server',
+        'condition': me.canCreate("Server")
+    }
+] %}
+
 {% block title %}Servers{% endblock %}
 
 {% block content %}
-    <main class="server_list">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>Servers</h1>
-            </article>
+    <main class="c-page s-teams">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>Servers</h1>
+                </section>
+
+                <section class="c-page__header__container__options">
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+                </section>
+            </div>
         </section>
 
-        <section class="servers">
+        <section class="o-layout c-servers">
             {% for server in servers %}
-                <div class="server" data-id="{{ server.id }}">
+                <div class="o-layout__body--half c-servers__server" data-id="{{ server.id }}">
                     <div class="dimmable">
-                        <div class="server_info">
-                            {{ include('Server/show.html.twig') }}
+                        <div class="c-servers__server__info">
+                            <header>
+                                {% set status = (server.online) ? "online" : "offline" %}
+
+                                <span class="c-servers__server__info__status c-servers__server__info__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
+                                <span class="c-servers__server__info__name">{{ server.name }}</span>
+                                {{ server.country.flagLiteral | raw }}
+
+                                {% if me.canEdit(server) or me.canDelete(server) %}
+                                    <ul class="c-servers__server__options is-horizontal has-no-padding">
+                                        {% if me.canEdit(server) %}
+                                            <li>
+                                                <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+                                                    <i class="fa fa-refresh"></i>
+                                                </a>
+                                            </li>
+                                            <li>{{ link_to(server, 'pencil', 'edit') }}</li>
+                                        {% endif %}
+
+                                        {% if me.canDelete(server) %}
+                                            <li>{{ link_to(server, 'minus', 'delete') }}</li>
+                                        {% endif %}
+                                    </ul>
+                                {% endif %}
+                            </header>
+
+                            <p class="c-servers__server__info__address">{{ server.address }}</p>
+                            <p class="c-servers__server__info__playerCount">Player count: {{ server.numPlayers }}</p>
+                            <small class="c-servers__server__info__updated">Updated {{ server.lastUpdate }}</small>
                         </div>
                     </div>
                 </div>

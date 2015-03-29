@@ -1,89 +1,55 @@
-main {
-    &.server_list {
-        .servers {
-            @extend .clearfix;
-            @extend .wrapper;
+@include component('servers') {
+    @include element('server') {
+        @include element('info') {
+            @include element('status') {
+                color: $Color-Medium_Grey;
+                margin-right: 5px;
 
-            @include columns(2 3em);
-
-            .server {
-                display: inline-block;
-                overflow: auto;
-                width: 100%;
-
-                .dimmable {
-                    padding: 10px;
-
-                    @include respond-to(phablets) {
-                        margin: 10px 0;
-                        padding: 0;
-                    }
+                @include modifier('online') {
+                    color: $Color-Green;
                 }
 
-                // HTML needs to be restructured, until then this class won't
-                // be expanded
-                .server_info {
-                    .title {
-                        @extend .clearfix;
-
-                        .status {
-                            cursor: pointer;
-                            font-size: 18px;
-
-                            &.offline {
-                                color: red;
-                            }
-
-                            &.online {
-                                color: green;
-                            }
-                        }
-
-                        .name {
-                            font-weight: bold;
-                        }
-
-                        ul {
-                            float: right;
-                            padding-left: 0;
-
-                            li {
-                                display: inline-block;
-                                list-style-type: none;
-                            }
-                        }
-                    }
-
-                    .address, .playerCount, small {
-                        font-size: 14px;
-                        margin-left: 13px;
-                    }
-
-                    small {
-                        font-style: italic;
-                    }
-
-                    .players {
-                        font-size: 12px;
-
-                        li {
-                            display: inline-block;
-                            list-style-type: none;
-
-                            &:after {
-                                content: ',';
-                            }
-
-                            &:last-child:after {
-                                content: '';
-                            }
-                        }
-                    }
+                @include modifier('offline') {
+                    color: $Color-Red;
                 }
             }
 
-            @include respond-to(phablets) {
-                @include columns(1 3em);
+            @include element('name') {
+                font-weight: bold;
+            }
+
+            @include element('address') {
+                padding-left: 15px;
+            }
+
+            @include element('playerCount') {
+                padding-left: 15px;
+            }
+
+            @include element('updated') {
+                font-style: italic;
+                padding-left: 15px;
+            }
+
+            header {
+                @include display(flex);
+                @include align-items(center);
+            }
+        }
+
+        @include element('options') {
+            @include flex(1);
+
+            text-align: right;
+        }
+
+        @include respond-only-to(desktops, tablets) {
+            &:nth-child(odd) {
+                padding-right: 10px;
+            }
+
+            &:nth-child(even) {
+                padding-left: 10px;
             }
         }
     }
