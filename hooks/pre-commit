@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATH=$PATH:/usr/local/bin/
+
 # If the CSS file was committed, then undo it and we'll do it after we compile it
 if git status -s | grep  '^M.\+css$'
 then
