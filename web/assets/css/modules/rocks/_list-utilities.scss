@@ -1,0 +1,439 @@
+// Credit for all of these SASS functions go to Hugo Giraudel
+//
+// http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+
+
+/// Get the first element from a list
+///
+/// @param {List} $list
+///   The list we'll be retrieving the first element from
+///
+/// @example scss
+///   $list: a, b, c, d, e, f;
+///   $first: first($list); // a
+
+@function first($list) {
+    @return nth($list, 1);
+}
+
+
+/// Insert an element to a list at a specific location
+///
+/// @param {List} $list
+///   The list we'll be inserting an element to
+/// @param {Number [unitless]} $index
+///   The position we'll be inserting the element
+/// @param {Value} $value
+///   The element that will be inserted
+///
+/// @example scss
+///   $list: a, b, d, e, f;
+///   // I want to add "c" as the 3rd index in the list
+///   $new-list: insert-nth($list, 3, c);   // a, b, c, d, e, f
+
+@function insert-nth($list, $index, $value) {
+    $result: null;
+
+    @if type-of($index) != number {
+        @warn "$index: #{quote($index)} is not a number for `insert-nth`.";
+    }
+
+    @else if $index < 1 {
+        @warn "List index 0 must be a non-zero integer for `insert-nth`";
+    }
+
+    @else if $index > length($list) {
+        @warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
+    }
+
+    @else {
+        $result: ();
+
+        @for $i from 1 through length($list) {
+            @if $i == $index {
+                $result: append($result, $value);
+            }
+
+            $result: append($result, nth($list, $i));
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Get the last element from a list
+///
+/// @param {List} $list
+///   The list we'll be retrieving the last element from
+///
+/// @example scss
+///   $list: a, b, c, d, e, f;
+///   $last: last($list); // f
+
+@function last($list) {
+    @return nth($list, length($list));
+}
+
+
+/// Sass already provides a index() function to retrieve the index of a given value in a list;
+/// it only returns the first index. This function allows you to get the last index
+///
+/// @param {List} $list
+///   The list we'll be retrieving the last element from
+/// @param {Value} $value
+///   The element we're searching for
+///
+/// @example scss - Usage
+///   $list: a, b, c, d z, e, a, f;
+///   $first-index: index($list, a);     // 1
+///   $last-index: last-index($list, a); // 6
+///   $last-index: last-index($list, z); // null
+///
+/// @return {Number}
+///   The index of the last occurrence of an element in the list
+
+@function last-index($list, $value) {
+    $index: null;
+
+    @for $i from length($list) through 1 {
+        @if nth($list, $i) == $value {
+            @return $i;
+        }
+    }
+
+    @return null;
+}
+
+
+/// Shift all of the elements in a list by a specified value
+///
+/// @param {List} $list
+///   The list that will be modified
+/// @param {Number [unitless]} $value
+///   The number of indices the list elements will be moved
+///
+/// @example scss
+///   $list: a, b, c, d, e, f;
+///   $new-list: loop($list, 1);  // f, a, b, c, d, e
+///   $new-list: loop($list, -3); // d, e, f, a, b, c
+
+@function shift($list, $value: 1) {
+    $result: ();
+
+    @for $i from 0 to length($list) {
+        $result: append($result, nth($list, ($i - $value) % length($list) + 1));
+    }
+
+    @return $result;
+}
+
+
+/// Prepend an element or several elements to a list
+///
+/// @param {List} $list
+///   The list we'll prepend a value to
+/// @param {Value} $value
+///   The element(s) that will be added to the list
+///
+/// @example scss
+///   $list: b, c, d, e, f;
+///   $new-list: prepend($list, a);               // a, b, c, d, e, f
+///   $new-list: prepend($list, now i know my a); // now, i, know, my, a, b, c, d, e, f
+
+@function prepend($list, $value) {
+    @return join($value, $list);
+}
+
+
+/// Remove an element from a list
+///
+/// @param {List} $list
+///   The list that will be modified
+/// @param {Value} $value
+///   The value that will removed from the list
+/// @param {Boolean} $recursive
+///   Whether or not to expand each list item and remove elements from the expanded list item
+///
+/// @example scss
+///   $list: a, b z, c, z, d, z, e, f;
+///   $new-list: remove($list, z);       // a, b z, c, d, e, f;
+///   $new-list: remove($list, z, true); // a, b, c, d, e, f
+///
+/// @return {List}
+///   The modified list without the item that was removed
+
+@function remove($list, $value, $recursive: false) {
+    $result: ();
+
+    @for $i from 1 through length($list) {
+        @if type-of(nth($list, $i)) == list and $recursive {
+            $result: append($result, remove(nth($list, $i), $value, $recursive));
+        }
+
+        @else if nth($list, $i) != $value {
+            $result: append($result, nth($list, $i));
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Remove an element from a list at a specific index
+///
+/// @param {List} $list
+///   The list that will be modified
+/// @param {Number [unitless]} $index
+///   The index of the element that will be removed from the list
+///
+/// @example scss
+///   $list: a, b, z, c, d, e, f;
+///   $new-list: remove-nth($list,   3); // a, b, c, d, e, f
+///   $new-list: remove-nth($list,   0); // error
+///   $new-list: remove-nth($list,  -2); // a, b, z, c, d, f
+///   $new-list: remove-nth($list, -10); // error
+///   $new-list: remove-nth($list, 100); // error
+///   $new-list: remove-nth($list, zog); // error
+///
+/// @return {List}
+///   The modified list without the item that was removed
+
+@function remove-nth($list, $index) {
+    $result: null;
+
+    @if type-of($index) != number {
+        @warn "$index: #{quote($index)} is not a number for `remove-nth`.";
+    }
+
+    @else if $index == 0 {
+        @warn "List index 0 must be a non-zero integer for `remove-nth`.";
+    }
+
+    @else if abs($index) > length($list) {
+        @warn "List index is #{$index} but list is only #{length($list)} item long for `remove-nth`.";
+    }
+
+    @else {
+        $result: ();
+        $index: if($index < 0, length($list) + $index + 1, $index);
+
+        @for $i from 1 through length($list) {
+            @if $i != $index {
+                $result: append($result, nth($list, $i));
+            }
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Replace a specified value with a new value inside of a list
+///
+/// @param {List} $list
+///   The list we'll be modifying
+/// @param {Value} $old-value
+///   The value to look for that will be replaced
+/// @param {Value} $new-value
+///   The value that will be used to replace the old value
+/// @param {Boolean} $recursive [false]
+///   Whether or not to expand each list item and replace the elements from the expanded list item
+///
+/// @example scss
+///   $list: a, b, r, a, c a, d a, b, r, a;
+///   $new-list: replace($list, a, u);       // u, b, r, u, c a, d a, b, r, u;
+///   $new-list: replace($list, a, u, true); // u, b, r, u, c u, d u, b, r, u;
+
+@function replace($list, $old-value, $new-value, $recursive: false) {
+    $result: ();
+
+    @for $i from 1 through length($list) {
+        @if type-of(nth($list, $i)) == list and $recursive {
+            $result: append($result, replace(nth($list, $i), $old-value, $new-value, $recursive));
+        }
+
+        @else {
+            @if nth($list, $i) == $old-value {
+                $result: append($result, $new-value);
+            }
+
+            @else {
+                $result: append($result, nth($list, $i));
+            }
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Replace a value at a specific index in a list
+///
+/// @param {List} $list
+///   The list we'll be modifying
+/// @param {Number [unitless]} $index
+///   The index of the element that will be replaced
+/// @param {Value} $value
+///   The value that will replace the existing element
+///
+/// @example scss
+///   $list: a, b, z, d, e, f;
+///   $new-list: replace-nth($list,   3, c); // a, b, c, d, e, f
+///   $new-list: replace-nth($list,   0, c); // error
+///   $new-list: replace-nth($list,  -2, c); // a, b, c, d, z, f
+///   $new-list: replace-nth($list, -10, c); // error
+///   $new-list: replace-nth($list, 100, c); // error
+///   $new-list: replace-nth($list, zog, c); // er
+
+@function replace-nth($list, $index, $value) {
+    $result: null;
+
+    @if type-of($index) != number {
+        @warn "$index: #{quote($index)} is not a number for `replace-nth`.";
+    }
+
+    @else if $index == 0 {
+        @warn "List index 0 must be a non-zero integer for `replace-nth`.";
+    }
+
+    @else if abs($index) > length($list) {
+        @warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
+    }
+
+    @else {
+        $result: ();
+        $index: if($index < 0, length($list) + $index + 1, $index);
+
+        @for $i from 1 through length($list) {
+            @if $i == $index {
+                $result: append($result, $value);
+            }
+
+            @else {
+                $result: append($result, nth($list, $i));
+            }
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Reverse the elements of a list
+///
+/// @param {List} $list
+///   The list what will be reversed
+/// @param {Boolean} $recursive [false]
+///   Whether or not to expand each list item and reverse the elements from the expanded list item
+///
+/// @example scss
+///   $list: a, b, c d e, f, g, h;
+///   $new-list: reverse($list);       // h, g, f, c d e, b, a
+///   $new-list: reverse($list, true); // h, g, f, e d c, b, a
+///
+/// @return {List}
+///   A version of the original list that has been reversed
+
+@function reverse($list, $recursive: false) {
+    $result: ();
+
+    @for $i from length($list)*-1 through -1 {
+        @if type-of(nth($list, abs($i))) == list and $recursive {
+            $result: append($result, reverse(nth($list, abs($i)), $recursive));
+        }
+
+        @else {
+            $result: append($result, nth($list, abs($i)));
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Extract a portion from a list
+///
+/// @param {List} $list
+///   The list that will be split
+/// @param {Number [unitless]} $start
+///   The index of where to start splitting the list
+/// @param {Number [unitless]} $end [length($list)]
+///   The index of where to stop splitting the list
+///
+/// @example scss
+///   $list: a, b, c, d, e, f;
+///   $new-list: slice($list, 3, 5);   // c, d, e
+///   $new-list: slice($list, 4, 4);   // d
+///   $new-list: slice($list, 5, 3);   // error
+///   $new-list: slice($list, -1, 10); // error
+///
+/// @return {List}
+///   The portion of the list that was extracted
+
+@function slice($list, $start: 1, $end: length($list)) {
+    $result: null;
+
+    @if type-of($start) != number or type-of($end) != number {
+        @warn "Either $start or $end are not a number for `slice`.";
+    }
+
+    @else if $start > $end {
+        @warn "The start index has to be lesser than or equals to the end index for `slice`.";
+    }
+
+    @else if $start < 1 or $end < 1 {
+        @warn "List indexes must be non-zero integers for `slice`.";
+    }
+
+    @else if $start > length($list) {
+        @warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
+    }
+
+    @else if $end > length($list) {
+        @warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
+    }
+
+    @else {
+        $result: ();
+
+        @for $i from $start through $end {
+            $result: append($result, nth($list, $i));
+        }
+    }
+
+    @return $result;
+}
+
+
+/// Convert a list into a string
+///
+/// @param {List} $list
+///   The list that will be converted into a string
+/// @param {String} $glue
+///   The value that will be placed in between each list element when being concatenated
+/// @param {Boolean} $is-nested [false]
+///   Whether or not to expand each list item and concat the elements from the expanded list item
+///
+/// @example scss
+///   $list: a, b, c d e, f, g, h;
+///   $new-list: to-string($list);      // abcdefgh
+///   $new-list: to-string($list, '-'); // a-b-c-d-e-f-g-h
+
+@function to-string($list, $glue: '', $is-nested: false) {
+    $result: null;
+
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+
+        @if type-of($e) == list {
+            $result: $result#{to-string($e, $glue, true)};
+        }
+
+        @else {
+            $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+        }
+    }
+
+    @return $result;
+}
