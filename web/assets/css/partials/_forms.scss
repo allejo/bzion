@@ -152,9 +152,12 @@ select {
         }
     }
 
-    @include element('actions') {
+    @include element('actions', 'buttons') {
         text-align: left;
+    }
 
+    // The actions element will contain any misc. actions to be taken on an element
+    @include element('actions') {
         article,
         section {
             > div {
@@ -166,6 +169,14 @@ select {
                     margin-bottom: 0;
                 }
             }
+        }
+    }
+
+    // The buttons element will contain any and all buttons a form contains
+    @include element('buttons') {
+        > div {
+            display: inline-block;
+            margin-right: 10px;
         }
     }
 
