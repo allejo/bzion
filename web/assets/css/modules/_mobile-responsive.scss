@@ -1,3 +1,51 @@
+/// Convenience method to return the maximum size of a view size. A desktop view size will
+/// return 0
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
+///
+
+@function get-max-size($media) {
+    @if      $media == phones   { @return $phone-max-size; }
+    @else if $media == phablets { @return $phablet-max-size; }
+    @else if $media == tablets  { @return $tablet-max-size; }
+    @else if $media == desktops { @return 0; }
+
+    @error "An unsupported (#{$media}) viewsize was passed to get-max-size()";
+}
+
+
+/// Convenience method to return the minimum size of a view size
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
+///
+
+@function get-min-size($media) {
+    @if      $media == phones   { @return $phone-min-size; }
+    @else if $media == phablets { @return $phablet-min-size; }
+    @else if $media == tablets  { @return $tablet-min-size; }
+    @else if $media == desktops { @return $desktop-min-size; }
+
+    @error "An unsupported (#{$media}) viewsize was passed to get-min-size()";
+}
+
+
+/// A convenience method to test if the provided view size is a supported one
+///
+/// Supported viewsizes: `phones`, `phablets`, `tablets`, `desktops`
+///
+/// @param {Viewsize} $media
+///   The Viewsize that will be checked
+///
+
+@mixin valid-viewsize($media) {
+    @if not index(phones phablets tablets desktops, $media) {
+        @error "Unknown view size (#{$media}) given to _respond-only-to()";
+    }
+}
+
+
 /// Create a media query that will automatically handle max or min widths. When both $min
 /// and $max are set, both of them will be used and generate a media query with a minimum
 /// and maximum width. This mixin shouldn't be accessed directly but instead should only
@@ -41,81 +89,14 @@
 }
 
 
-/// Have the specified content inside of the mixin respond to a specific view size. Because
-/// BZiON is "desktop first," all of the applied styles will also be applied to smaller views.
-///
-/// Passing a random value will cause the CSS rules to be applied to all views. This means you
-/// may pass a value such as `desktops` for consistency but it will be the equivalent of passing
-/// `bacon`.
-///
-/// @content
-///
-/// @param {String} $media
-///   Accepted view sizes: `phones`, `phablets`, `tablets`
-///
-/// @example scss - Usage
-///   @include respond-to(phablets) {
-///       .phablet-and-smaller {
-///           display: block;
-///       }
-///   }
-///
-/// @example css - CSS Output
-///   @media only screen and (max-width: 992px) {
-///       .phablet-and-smaller {
-///           display: block;
-///       }
-///   }
-
-@mixin respond-to($media) {
-    @if $media == phones {
-        @include media-size(0, $phone-max-size) { @content; }
-    }
-    @else if $media == phablets {
-        @include media-size(0, $phablet-max-size) { @content; }
-    }
-    @else if $media == tablets {
-        @include media-size(0, $tablet-max-size) { @content; }
-    }
-    @else {
-        @content;
-    }
-}
-
-
-/// Similar to `respond-to` with the exception that instead of smaller views also inheriting
-/// these CSS rules, only a specific view size will able to see the content
-///
-/// @access private
-/// @content
-///
-/// @param {String} $media
-///   Accepted view sizes: `phones`, `phablets`, `tablets`, `desktops`
-
-@mixin _respond-only-to($media) {
-    @if $media == phones {
-        @include media-size($phone-min-size, $phone-max-size) { @content; }
-    }
-    @else if $media == phablets {
-        @include media-size($phablet-min-size, $phablet-max-size) { @content; }
-    }
-    @else if $media == tablets {
-        @include media-size($tablet-min-size, $tablet-max-size) { @content; }
-    }
-    @else if $media == desktops {
-        @include media-size($desktop-min-size) { @content; }
-    }
-}
-
-
 /// Similar to `respond-to` with the exception that instead of smaller views also inheriting
 /// these CSS rules, only a specific view size will able to see the content. Multiple view
 /// points can be specified and the rules will be applied to each view point
 ///
 /// @content
 ///
-/// @param {String} $media
-///   Accepted view sizes: `phones`, `phablets`, `tablets`, `desktops`
+/// @param {Viewsize} $media
+///   An argument list of Viewsizes that the specified CSS rules will be applied to
 ///
 /// @example scss - Usage
 ///   @include respond-to(phablets) {
@@ -133,8 +114,47 @@
 
 @mixin respond-only-to($media_list...) {
     @each $media in $media_list {
-        @include _respond-only-to($media) {
-            @content;
+        @include valid-viewsize($media);
+
+        @if get-max-size($media) == 0 {
+            @include media-size(get-min-size($media)) { @content; }
         }
+        @else {
+            @include media-size(get-min-size($media), get-max-size($media)) { @content; }
+        }
+    }
+}
+
+
+/// Have the specified content inside of the mixin respond to a specific view size. Because
+/// BZiON is "desktop first," all of the applied styles will also be applied to smaller views.
+///
+/// @content
+///
+/// @param {Viewsize} $media
+///   The Viewsize (and smaller) that will have the specified CSS rules applied to
+///
+/// @example scss - Usage
+///   @include respond-to(phablets) {
+///       .phablet-and-smaller {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (max-width: 768px) {
+///       .phablet-and-smaller {
+///           display: block;
+///       }
+///   }
+
+@mixin respond-to($media) {
+    @include valid-viewsize($media);
+
+    @if index(phones phablets tablets, $media) {
+        @include media-size(0, get-max-size($media)) { @content; }
+    }
+    @else {
+        @content;
     }
 }
