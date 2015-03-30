@@ -15,6 +15,16 @@
         @include element('information') {
             @include element('bio') {
                 margin-top: $Settings-Page_Section-Small_Margin;
+                max-height: 300px;
+                overflow: hidden;
+
+                @include respond-to(phablets) {
+                    max-height: 400px;
+                }
+
+                @include respond-to(phones) {
+                    max-height: 500px;
+                }
             }
 
             @include respond-to(phablets) {

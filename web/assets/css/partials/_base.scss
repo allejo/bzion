@@ -3,7 +3,7 @@ $Color-White: #FFFFFF;
 $Color-Almost_White: #F7F7F7;
 $Color-Blue_Grey: #F4F7FB;
 $Color-Off_White: #E9E9E9; // Deprecated; Use $Border-Light_Color instead
-$Color-Light_Grey: #A1A1A1;
+$Color-Light_Grey: #B8B8B8;
 $Color-Medium_Grey: #656565;
 $Color-Grey: #515051;
 $Color-Dark_Grey: #333333;
@@ -21,6 +21,13 @@ $Settings-Global_Width: 980px;
 $Settings-Line_Height: 1.4em;
 $Settings-Page_Section-Margin: 30px;
 $Settings-Page_Section-Small_Margin: $Settings-Page_Section-Margin / 2;
+
+// Borders
+$Border-Color: #E9E9E9;
+$Border-Type: solid;
+$Border-Width: 1px;
+$Border-Default: $Border-Width $Border-Type $Border-Color;
+$Border-Radius: 3px;
 
 // Font colors
 $Font-Color-Default: $Color-Black;
@@ -48,13 +55,6 @@ $Alert-Warning-Border: darken(adjust-hue($Alert-Warning-Background, -10), 5%);
 $Alert-Danger-Background: #F2DEDE;
 $Alert-Danger-Text: #A94442;
 $Alert-Danger-Border: darken(adjust-hue($Alert-Danger-Background, -10), 5%);
-
-// Borders
-$Border-Color: #E9E9E9;
-$Border-Type: solid;
-$Border-Width: 1px;
-$Border-Default: $Border-Width $Border-Type $Border-Color;
-$Border-Radius: 3px;
 
 // Form Settings
 $Form-Action_Color: $Color-Sky_Blue;
