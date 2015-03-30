@@ -5,8 +5,16 @@
         }
 
         @include element('details') {
+            // Anything beyond these max heights shouldn't be considered sane. This is a profile page
+            // not a blog
             @include element('bio') {
                 margin-top: $Settings-Page_Section-Small_Margin;
+                max-height: 700px;
+                overflow: hidden;
+
+                @include respond-to(tablets) {
+                    max-height: 940px;
+                }
             }
         }
     }
