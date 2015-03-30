@@ -34,7 +34,7 @@
         </section>
 
         <section class="o-user-html">
-            {{ page.content | raw }}
+            {{ page.content | markdown(false) }}
         </section>
     </main>
 {% endblock %}
