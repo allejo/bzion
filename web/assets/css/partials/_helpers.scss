@@ -65,14 +65,23 @@
         border-bottom: $Table-Border;
         border-top: $Table-Border;
 
-        &:hover {
-            background-color: $Table-Background-Hover;
+        @include modifier('header') {
+            .c-table__row__column {
+                font-weight: bold;
+            }
         }
 
         @include element('column') {
+            @include flex(1);
+
             border-left: $Table-Border;
             border-right: $Table-Border;
             box-sizing: border-box;
+            padding: $Table-Cell_Padding;
+        }
+
+        &:hover {
+            background-color: $Table-Background-Hover;
         }
     }
 

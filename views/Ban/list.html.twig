@@ -1,56 +1,67 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('ban_create'),
+        'icon': 'plus',
+        'text': 'Add Ban',
+        'condition': me.canCreate("Ban")
+    }
+] %}
+
 {% block title %}Bans{% endblock %}
 
 {% block content %}
-    <main class="bans">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>League Bans</h1>
-            </article>
+    <main class="c-page s-newsstand">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>
+                        League Bans
+                    </h1>
+                </section>
+
+                <section class="c-page__header__container__options">
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+                </section>
+            </div>
         </section>
 
-        <section class="punishments">
-            <article class="css-table ban_list">
-                <div class="row header">
-                    <div class="column">
-                        <strong>Date</strong>
-                    </div>
-                    <div class="column">
-                        <strong>Victim</strong>
-                    </div>
-                    <div class="column">
-                        <strong>Banner</strong>
-                    </div>
-                    <div class="column">
-                        <strong>Expires</strong>
-                    </div>
-                    <div class="column"></div>
+        <section class="o-layout">
+            <section class="o-layout__body--full c-table c-table--no-border c-table--no-hover">
+                <div class="c-table__row c-table__row--header">
+                    <div class="c-table__row__column">Date</div>
+                    <div class="c-table__row__column">Victim</div>
+                    <div class="c-table__row__column">Banner</div>
+                    <div class="c-table__row__column">Expires</div>
+                    <div class="c-table__row__column"></div>
                 </div>
+
                 {% for ban in bans %}
-                    <div class="row">
-                        <div class="column creation">
+                    <div class="c-table__row c-ban">
+                        <div class="c-table__row__column c-ban__creation">
                             {{ ban.created }}
                         </div>
-                        <div class="column victim">
+                        <div class="c-table__row__column c-ban__victim">
                             {{ link_to(ban.victim) }}
                         </div>
-                        <div class="column author">
+                        <div class="c-table__row__column c-ban__author">
                             {{ link_to(ban.author) }}
                         </div>
-                        <div class="column expiration">
+                        <div class="c-table__row__column c-ban__expiration">
                             {% if ban.willExpire %}
                                 {{ ban.expiration.format(constant('TimeDate::DATE_FULL')) }}
                             {% else %}
                                 <em>Never</em>
                             {% endif %}
                         </div>
-                        <div class="column info">
+                        <div class="c-table__row__column c-ban__info">
                             {{ link_to(ban, icon='info-circle') }}
                         </div>
                     </div>
                 {% endfor %}
-            </article>
+            </section>
         </section>
     </main>
 {% endblock %}

@@ -1,3 +1,9 @@
+@include component('ban') {
+    @include element('info') {
+        text-align: center;
+    }
+}
+
 main {
     &.bans {
         @extend .clearfix;

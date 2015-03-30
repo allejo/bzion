@@ -116,25 +116,27 @@
                             }
                         }
                     }
-
-                    .c-team__roster__option {
-                        text-align: center;
-                        width: 30px;
-
-                        i {
-                            &.fa-eject {
-                                color: $Color-Medium_Grey;
-                            }
-
-                            &.fa-star {
-                                color: $Color-Yellow;
-                            }
-                        }
-                    }
                 }
 
                 @include respond-to(phablets) {
                     margin-left: 0;
+                }
+            }
+
+            @include element('option') {
+                @include flex(none);
+
+                text-align: center;
+                width: 30px;
+
+                i {
+                    &.fa-eject {
+                        color: $Color-Medium_Grey;
+                    }
+
+                    &.fa-star {
+                        color: $Color-Yellow;
+                    }
                 }
             }
         }
