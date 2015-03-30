@@ -40,7 +40,7 @@
 
                 {% if player.description is not empty %}
                     <section class="c-public-profile__details__bio s-markdown">
-                        {{ player.description | markdown }}
+                        {{ player.description | markdown(true, false) }}
                     </section>
                 {% endif %}
             </section>

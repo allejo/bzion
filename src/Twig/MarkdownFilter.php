@@ -2,11 +2,14 @@
 
 namespace BZIon\Twig;
 
+use BZIon\MarkdownEngine;
+
 class MarkdownFilter
 {
-    public function __invoke($string, $escapeHTML = true)
+    public function __invoke($string, $escapeHTML = true, $allowImages = true)
     {
-        $ParseEngine = new \Parsedown();
+        $ParseEngine = new MarkdownEngine();
+        $ParseEngine->setAllowImages($allowImages);
         $ParseEngine->setMarkupEscaped($escapeHTML);
 
         return $ParseEngine->text($string);

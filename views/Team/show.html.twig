@@ -60,7 +60,7 @@
             <section class="o-layout__body--with-sidebar c-team__information">
                 <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
                 <article class="c-team__information__bio s-markdown">
-                    {{ team.description | markdown }}
+                    {{ team.description | markdown(true, false) }}
                 </article>
             </section>
 
