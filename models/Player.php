@@ -380,19 +380,6 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
-     * Get the player's description, exactly as it is saved in the database
-     *
-     * @deprecated
-     * @return string The description
-     */
-    public function getRawDescription()
-    {
-        $this->lazyLoad();
-
-        return $this->description;
-    }
-
-    /**
      * Get the player's team
      * @return Team The object representing the team
      */
