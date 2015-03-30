@@ -115,7 +115,7 @@
                                 {% endif %}
                             </div>
 
-                            {% if me.hasPermission(constant('Permission::EDIT_TEAM')) or me.id == team.leader.id %}
+                            {% if me.canEdit(team) %}
                                 <div class="c-table__row__column c-team__roster__option">
                                     <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
                                         <i class="fa fa-eject"></i>

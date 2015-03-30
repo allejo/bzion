@@ -11,7 +11,7 @@ class LinkToFunction
      * @param  string  $action    The action to link to (e.g show or edit)
      * @param  boolean $linkAll   Whether to link to inactive or deleted models
      * @param  string  $class     The CSS class(es) to apply to the link
-     * @param  string  $forceText Whether to show both the icon and text
+     * @param  boolean $forceText Whether to show both the icon and text
      * @return string  The HTML link
      */
     public function __invoke(
@@ -42,10 +42,10 @@ class LinkToFunction
     /**
      * Get the content of the link to show
      *
-     * @param  \Model $model     The model we want to link to
-     * @param  string $icon      A font awesome icon identifier to show instead of text
-     * @param  string $forceText Whether to show both the icon and text
-     * @return string The link's content
+     * @param  \Model  $model     The model we want to link to
+     * @param  string  $icon      A font awesome icon identifier to show instead of text
+     * @param  boolean $forceText Whether to show both the icon and text
+     * @return string  The link's content
      */
     private function getContent($model, $icon, $forceText)
     {

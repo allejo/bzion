@@ -5,15 +5,18 @@ if (typeof teamWins !== 'undefined' && typeof teamLosses !== 'undefined' && type
     var pieData = [
         {
             value: teamWins,
-            color: "#EBEBEB"
+            color: "#EBEBEB",
+            label: "Wins"
         },
         {
             value: teamLosses,
-            color: "#B6D1D8"
+            color: "#B6D1D8",
+            label: "Losses"
         },
         {
             value: teamDraws,
-            color: "#8FDC00"
+            color: "#8FDC00",
+            label: "Draws"
         }
     ];
 
@@ -28,4 +31,3 @@ else
 {
     console.log("The follow variables were not defined on your page: teamWins, teamLosses, and teamDraws");
 }
-
