@@ -547,7 +547,7 @@ class Team extends AvatarModel
             'leader'           => $leader,
             'status'           => $status,
             'created'          => $created->toMysql(),
-        ), 'ssssidiiiissss');
+        ), 'sssidiiiissss');
 
         $team->addMember($leader);
         $team->getIdenticon($team->getId());
