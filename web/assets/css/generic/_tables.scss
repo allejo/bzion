@@ -95,6 +95,10 @@ table {
     @include modifier('striped') {
         > tbody > tr:nth-of-type(odd) {
             background-color: $Table-Background-Accent;
+
+            &:hover {
+                background-color: $Table-Background-Hover;
+            }
         }
     }
 }
