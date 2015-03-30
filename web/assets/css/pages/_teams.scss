@@ -171,7 +171,7 @@
 
                     @include utility('date') {
                         @include respond-to(phones) {
-                            @include flex-basis(100%);
+                            @include order(1);
 
                             padding-bottom: 0;
                         }
@@ -179,10 +179,19 @@
 
                     @include utility('opponent') {
                         @include flex(2);
+
+                        @include respond-to(phones) {
+                            @include flex-basis(100%);
+                            @include order(3);
+                        }
                     }
 
                     @include utility('score') {
-                        @include flex(1);
+                        @include respond-to(phones) {
+                            @include order(2);
+
+                            text-align: right;
+                        }
                     }
 
                     @include element('column') {
