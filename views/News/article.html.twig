@@ -8,7 +8,7 @@
     <p class="c-article__data">{{ article.created | date("F d, Y") }}</p>
 
     <section class="c-article__content s-markdown">
-        {{ article.content }}
+        {{ article.content | markdown }}
     </section>
 
     <ul class="c-article__meta">

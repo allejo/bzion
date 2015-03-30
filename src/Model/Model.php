@@ -6,8 +6,6 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use \Michelf\Markdown;
-
 /**
  * A database object (e.g. A player or a team)
  * @package    BZiON\Models
@@ -158,21 +156,6 @@ abstract class Model extends CachedModel
         }
 
         return implode('_', $ret);
-    }
-
-    /**
-     * Convert a markdown string to HTML. This function is used to have one global configuration with all markdown parsing
-     *
-     * @param string $text The markdown to be parsed to HTML
-     *
-     * @return string Return the parsed markdown
-     */
-    public static function mdTransform($text)
-    {
-        $mdParser = new Markdown();
-        $mdParser->no_entities = true;
-
-        return $mdParser->transform($text);
     }
 
     /**

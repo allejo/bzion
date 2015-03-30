@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b1c06e4e9e1d024c398b7e0a7ea051da",
+    "hash": "062096fb9050635411c31c1ab83b4423",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -461,6 +461,45 @@
             "time": "2014-09-09 13:34:57"
         },
         {
+            "name": "erusev/parsedown",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "468d1e3da8bde049debee7f484a4f9c4b26b41ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/468d1e3da8bde049debee7f484a4f9c4b26b41ba",
+                "reference": "468d1e3da8bde049debee7f484a4f9c4b26b41ba",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-03-18 18:44:57"
+        },
+        {
             "name": "evenement/evenement",
             "version": "v1.0.0",
             "source": {
@@ -502,16 +541,16 @@
         },
         {
             "name": "friendsofsymfony/elastica-bundle",
-            "version": "3.1.0",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSElasticaBundle.git",
-                "reference": "447d29ab9c37c3ce913a0692fa0cd4c271aa5cd3"
+                "reference": "69470d7e20181f016d5fb40ed139a12800f888c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSElasticaBundle/zipball/447d29ab9c37c3ce913a0692fa0cd4c271aa5cd3",
-                "reference": "447d29ab9c37c3ce913a0692fa0cd4c271aa5cd3",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSElasticaBundle/zipball/69470d7e20181f016d5fb40ed139a12800f888c1",
+                "reference": "69470d7e20181f016d5fb40ed139a12800f888c1",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +626,7 @@
                 "propel",
                 "search"
             ],
-            "time": "2015-03-17 22:38:47"
+            "time": "2015-03-27 01:01:39"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -1263,17 +1302,17 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "1.2.3",
+            "version": "1.2.4",
             "target-dir": "Liip/ImagineBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "a97b46f5bbbf8e2a2646871f4bea1a11b189cbb8"
+                "reference": "fb777bf6db7ed8cd6b9d72b9c1a25f71901c01c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/a97b46f5bbbf8e2a2646871f4bea1a11b189cbb8",
-                "reference": "a97b46f5bbbf8e2a2646871f4bea1a11b189cbb8",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/fb777bf6db7ed8cd6b9d72b9c1a25f71901c01c1",
+                "reference": "fb777bf6db7ed8cd6b9d72b9c1a25f71901c01c1",
                 "shasum": ""
             },
             "require": {
@@ -1333,7 +1372,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2015-02-22 19:35:59"
+            "time": "2015-03-27 05:32:04"
         },
         {
             "name": "michelf/php-markdown",
@@ -4915,12 +4954,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "8cfd48c479f4f8f059afb8f7e9f4af21362907fd"
+                "reference": "f10c71475167a4661225b14560ca0a400d730829"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/8cfd48c479f4f8f059afb8f7e9f4af21362907fd",
-                "reference": "8cfd48c479f4f8f059afb8f7e9f4af21362907fd",
+                "url": "https://api.github.com/repos/composer/composer/zipball/f10c71475167a4661225b14560ca0a400d730829",
+                "reference": "f10c71475167a4661225b14560ca0a400d730829",
                 "shasum": ""
             },
             "require": {
@@ -4975,7 +5014,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-03-25 14:32:49"
+            "time": "2015-03-29 14:37:42"
         },
         {
             "name": "dompdf/dompdf",
@@ -5017,45 +5056,6 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2014-03-11 01:59:52"
-        },
-        {
-            "name": "erusev/parsedown",
-            "version": "1.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/erusev/parsedown.git",
-                "reference": "9da19c1108c39df9b42adc42e39b8371070652d0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/9da19c1108c39df9b42adc42e39b8371070652d0",
-                "reference": "9da19c1108c39df9b42adc42e39b8371070652d0",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Parsedown": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Emanuil Rusev",
-                    "email": "hello@erusev.com",
-                    "homepage": "http://erusev.com"
-                }
-            ],
-            "description": "Parser for Markdown.",
-            "homepage": "http://parsedown.org",
-            "keywords": [
-                "markdown",
-                "parser"
-            ],
-            "time": "2015-01-24 13:01:47"
         },
         {
             "name": "herrera-io/json",
@@ -5228,16 +5228,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "680d026082c3aa234b2d8617c50e9c73999913ba"
+                "reference": "2465fe486c864e30badaa4d005ebdf89dbc503f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/680d026082c3aa234b2d8617c50e9c73999913ba",
-                "reference": "680d026082c3aa234b2d8617c50e9c73999913ba",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/2465fe486c864e30badaa4d005ebdf89dbc503f3",
+                "reference": "2465fe486c864e30badaa4d005ebdf89dbc503f3",
                 "shasum": ""
             },
             "require": {
@@ -5290,7 +5290,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2015-03-23 20:38:38"
+            "time": "2015-03-27 16:41:39"
         },
         {
             "name": "kherge/version",
@@ -7799,6 +7799,7 @@
         "sensio/distribution-bundle": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.0",
         "ext-gd": "*"

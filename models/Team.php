@@ -17,14 +17,7 @@ class Team extends AvatarModel
      *
      * @var string
      */
-    protected $description_md;
-
-    /**
-     * The description of the team parsed to HTML
-     *
-     * @var string
-     */
-    protected $description_html;
+    protected $description;
 
     /**
      * The creation date of the team
@@ -118,8 +111,7 @@ class Team extends AvatarModel
     {
         $this->name = $team['name'];
         $this->alias = $team['alias'];
-        $this->description_md = $team['description_md'];
-        $this->description_html = $team['description_html'];
+        $this->description = $team['description'];
         $this->avatar = $team['avatar'];
         $this->created = TimeDate::fromMysql($team['created']);
         $this->elo = $team['elo'];
@@ -240,9 +232,9 @@ class Team extends AvatarModel
      * @param  boolean $md false for HTML format, true for the original markdown
      * @return string  The description of the team
      */
-    public function getDescription($md = false)
+    public function getDescription()
     {
-        return ($md) ? $this->description_md : $this->description_html;
+        return $this->description;
     }
 
     /**
@@ -465,13 +457,12 @@ class Team extends AvatarModel
     /**
      * Update the description of the team
      *
-     * @param  string $description_md The description of the team written as markdown
+     * @param  string $description The description of the team written as markdown
      * @return void
      */
-    public function setDescription($description_md)
+    public function setDescription($description)
     {
-        $this->update("description_md", $description_md, "s");
-        $this->update("description_html", parent::mdTransform($description_md), "s");
+        $this->update("description", $description, "s");
     }
 
     /**
@@ -545,8 +536,7 @@ class Team extends AvatarModel
         $team = self::create(array(
             'name'             => $name,
             'alias'            => self::generateAlias($name),
-            'description_md'   => $description,
-            'description_html' => parent::mdTransform($description),
+            'description'   => $description,
             'elo'              => 1200,
             'activity'         => 0.00,
             'matches_won'      => 0,

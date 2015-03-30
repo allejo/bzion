@@ -323,7 +323,7 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        return htmlspecialchars($this->description);
+        return $this->description;
     }
 
     /**
@@ -381,6 +381,8 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Get the player's description, exactly as it is saved in the database
+     *
+     * @deprecated
      * @return string The description
      */
     public function getRawDescription()
