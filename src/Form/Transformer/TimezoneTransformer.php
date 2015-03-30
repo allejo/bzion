@@ -35,7 +35,7 @@ class TimezoneTransformer implements DataTransformerInterface
             }
         }
 
-        return 'Europe/London'; // Default if we can't find a timezone
+        return 'UTC'; // Default if we can't find a timezone
     }
 
     /**

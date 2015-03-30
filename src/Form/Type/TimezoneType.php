@@ -17,7 +17,7 @@ class TimezoneType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => $this->getTimezones(),
-            'data'    => 'Europe/London'
+            'data'    => 'UTC'
         ));
     }
 
