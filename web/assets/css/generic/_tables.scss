@@ -1,4 +1,6 @@
 table {
+    //scss-lint:disable NestingDepth,SelectorDepth
+
     background-color: $Table-Background;
     max-width: 100%;
     width: 100%;
@@ -21,17 +23,18 @@ table {
             > th,
             > td {
                 border-top: $Table-Border;
-                padding: $Table-Cell_Padding;
                 line-height: $Settings-Line_Height;
+                padding: $Table-Cell_Padding;
                 vertical-align: top;
             }
         }
     }
 
     > thead > tr > th {
-        vertical-align: bottom;
         border-bottom: 2px $Border-Type $Border-Color;
+        vertical-align: bottom;
     }
+
     > caption + thead,
     > colgroup + thead,
     > thead:first-child {

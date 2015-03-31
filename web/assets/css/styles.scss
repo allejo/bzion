@@ -37,13 +37,13 @@
 // Generic HTML Elements
 //    (CSS for generic HTML elements)
 //
-@import "generic/blocks";
-@import "generic/body";
-@import "generic/formatting";
-@import "generic/headers";
-@import "generic/hyperlinks";
-@import "generic/lists";
-@import "generic/tables";
+@import 'generic/blocks';
+@import 'generic/body';
+@import 'generic/formatting';
+@import 'generic/headers';
+@import 'generic/hyperlinks';
+@import 'generic/lists';
+@import 'generic/tables';
 
 
 //
@@ -80,7 +80,6 @@
 @import 'pages/notifications';
 @import 'pages/pages';
 @import 'pages/players';
-@import 'pages/profiles';
 @import 'pages/teams';
 @import 'pages/servers';
 
