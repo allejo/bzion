@@ -13,20 +13,8 @@
 @include scope('team-profile') {
     @include component('team') {
         @include element('information') {
-            // Anything beyond these max heights shouldn't be considered sane. This is a profile page
-            // not a blog
             @include element('bio') {
                 margin-top: $Settings-Page_Section-Small_Margin;
-                max-height: 450px;
-                overflow: hidden;
-
-                @include respond-to(phablets) {
-                    max-height: 600px;
-                }
-
-                @include respond-to(phones) {
-                    max-height: 750px;
-                }
             }
 
             @include respond-to(phablets) {
