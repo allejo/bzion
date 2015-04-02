@@ -1,5 +1,15 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        color: 'grey',
+        url: me.team.url('invite', false, { player: player.id }),
+        icon: 'plus',
+        text: 'Invite to team',
+        condition: me.isValid and not me.isTeamless and me.team.leader.id == me.id
+    }
+] %}
+
 {% block title %}Players :: {{ player.username }}{% endblock %}
 
 {% block stylesheets %}
@@ -13,6 +23,10 @@
                 <section class="c-page__header__container__title">
                     {{ player.country.flagLiteral | raw }}
                     <h1>{{ player.username }}</h1>
+                </section>
+
+                <section class="c-page__header__container__options">
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
                 </section>
             </div>
         </section>
