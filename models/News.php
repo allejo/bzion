@@ -137,7 +137,7 @@ class News extends UrlModel implements NamedModel
      *
      * @return string The article's creation time in the specified format
      */
-    public function getCreated($format = "")
+    public function getCreated($format = TimeDate::DATE_FULL)
     {
         if (empty($format)) {
             return $this->created->diffForHumans();
