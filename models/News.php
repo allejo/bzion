@@ -133,17 +133,11 @@ class News extends UrlModel implements NamedModel
     /**
      * Get the time when the article was submitted
      *
-     * @param string $format The date format. Leave blank if you want a relative time (e.g. 2 days ago)
-     *
-     * @return string The article's creation time in the specified format
+     * @return TimeDate The article's creation time
      */
-    public function getCreated($format = TimeDate::DATE_FULL)
+    public function getCreated()
     {
-        if (empty($format)) {
-            return $this->created->diffForHumans();
-        }
-
-        return $this->created->format($format);
+        return $this->created;
     }
 
     /**
@@ -155,23 +149,17 @@ class News extends UrlModel implements NamedModel
      */
     public function getCreatedLiteral($format = TimeDate::DATE_FULL)
     {
-        return '<span title="' . $this->getCreated($format) . '">' . $this->getCreated() . '</span>';
+        return '<span title="' . $this->getCreated() . '">' . $this->getCreated()->format($format) . '</span>';
     }
 
     /**
      * Get the time when the article was last updated
      *
-     * @param string $format The date format. Leave blank if you want a relative time (e.g. 2 days ago)
-     *
-     * @return string The article's last update time in a human-readable form
+     * @return TimeDate The article's last update time
      */
-    public function getLastEdit($format = "")
+    public function getLastEdit()
     {
-        if (empty($format)) {
-            return $this->updated->diffForHumans();
-        }
-
-        return $this->updated->format($format);
+        return $this->updated;
     }
 
     /**

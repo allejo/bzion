@@ -61,9 +61,9 @@ class NewsTest extends TestCase
         $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
 
         $this->assertNotFalse($news);
-        $this->assertEquals(TimeDate::now()->diffForHumans(), $news->getCreated());
+        $this->assertEquals(TimeDate::now(), $news->getCreated());
 
-        $createdLiteral = '<span title="' . $news->getCreated(TimeDate::DATE_FULL) . '">' . $news->getCreated() . '</span>';
+        $createdLiteral = '<span title="' . $news->getCreated() . '">' . $news->getCreated()->format(TimeDate::DATE_FULL) . '</span>';
 
         $this->assertEquals($createdLiteral, $news->getCreatedLiteral());
         $this->assertEquals(StringMocks::SampleTitleOne, $news->getSubject());
@@ -74,7 +74,6 @@ class NewsTest extends TestCase
         $this->assertEquals($this->player_with_create_perms->getId(), $news->getAuthorID());
 
         $this->assertEquals($news->getLastEdit(), $news->getCreated());
-        $this->assertEquals($news->getLastEdit(TimeDate::DATE_FULL), $news->getCreated(TimeDate::DATE_FULL));
 
         $this->assertEquals($news->getAuthor(), $news->getLastEditor());
         $this->assertEquals($news->getAuthorID(), $news->getLastEditorID());
