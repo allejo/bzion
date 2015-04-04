@@ -5,6 +5,7 @@ use BZIon\Composer\ScriptHandler;
 require("vendor/autoload.php");
 
 $config = ScriptHandler::getDatabaseConfig();
+$testConfig = ScriptHandler::getDatabaseConfig(true);
 
 return array(
     'paths' => array(
@@ -19,6 +20,13 @@ return array(
             'name' => $config['database'],
             'user' => $config['username'],
             'pass' => $config['password']
+        ),
+        'test' => array(
+            'adapter' => 'mysql',
+            'host' => $testConfig['host'],
+            'name' => $testConfig['database'],
+            'user' => $testConfig['username'],
+            'pass' => $testConfig['password']
         )
     )
 );
