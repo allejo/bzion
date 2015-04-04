@@ -6,13 +6,16 @@ class LinkToFunction
     /**
      * Get a link literal to a Model
      *
+     * @param          $context
      * @param  \Model  $model     The model we want to link to
      * @param  string  $icon      A font awesome icon identifier to show instead of text
      * @param  string  $action    The action to link to (e.g show or edit)
      * @param  boolean $linkAll   Whether to link to inactive or deleted models
      * @param  string  $class     The CSS class(es) to apply to the link
      * @param  boolean $forceText Whether to show both the icon and text
-     * @return string  The HTML link
+     * @param  string  $content   Override the content that will automatically be used
+     *
+     * @return string The HTML link
      */
     public function __invoke(
         $context,
@@ -21,9 +24,15 @@ class LinkToFunction
         $action = 'show',
         $linkAll = false,
         $class = '',
-        $forceText = false
+        $forceText = false,
+        $content = ''
     ) {
-        $content = $this->getContent($model, $icon, $forceText);
+        if (empty($content)) {
+            $content = $this->getContent($model, $icon, $forceText);
+        }
+        else if ($icon) {
+            $content = "<i class=\"fa fa-$icon\"></i> " . $content;
+        }
 
         if ($model instanceof \UrlModel && ($linkAll || !isset($context['app']) || $context['app']->getController()->canSee($model))) {
             $params = array();

@@ -1,113 +1,83 @@
-@include component('ban') {
-    @include element('info') {
-        text-align: center;
-    }
-}
+@include component('ban-table') {
+    @include component('ban') {
+        @include respond-to(phablets) {
+            @include flex-wrap(wrap);
 
-main {
-    &.bans {
-        @extend .clearfix;
+            margin-bottom: $Settings-Page_Section-Margin;
 
-        .punishments {
-            @extend .wrapper;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
 
-            .ban_list {
-                width: 100%;
+        @include element('creation', 'victim', 'author', 'expiration') {
+            span {
+                display: none;
 
-                .row {
-                    &.header {
-                        border-bottom: 1px dotted #EFEFEF;
+                @include respond-to(phablets) {
+                    display: inline-block;
+                    font-weight: bold;
+                    width: 120px;
+                }
+            }
+        }
 
-                        @include respond-to(phones) {
-                            display: none;
-                        }
+        @include element('creation') {
+
+        }
+
+        @include element('victim') {
+
+        }
+
+        @include element('author') {
+
+        }
+
+        @include element('expiration') {
+
+        }
+
+        @include element('info') {
+            min-width: 30px; // Magic number; it's the width of the fa-info-circle
+            text-align: center;
+
+            @include respond-to(tablets) {
+                @include flex(0 1 auto);
+            }
+
+            @include respond-to(phablets) {
+                text-align: left;
+            }
+
+            @include element('details') {
+                @include modifier('desktop') {
+                    @include respond-to(phablets) {
+                        display: none;
                     }
+                }
 
-                    .column {
-                        border: none;
-                        padding: 10px;
+                @include modifier('mobile') {
+                    display: none;
 
-                        &.creation, &.victim, &.author, &.expiration, &.info {
-                            @include respond-to(phones) {
-                                &:before {
-                                    font-weight: bold;
-                                    text-align: left;
-                                }
-                            }
-                        }
-
-                        &.creation {
-                            @include respond-to(phones) {
-                                &:before {
-                                    content: 'Ban issued ';
-                                }
-                            }
-                        }
-
-                        &.victim {
-                            @include respond-to(phones) {
-                                &:before {
-                                    content: 'Ban Victim: ';
-                                }
-                            }
-                        }
-
-                        &.author {
-                            @include respond-to(phones) {
-                                &:before {
-                                    content: 'Banner: ';
-                                }
-                            }
-                        }
-
-                        &.expiration {
-                            @include respond-to(phones) {
-                                &:before {
-                                    content: 'Expiration: ';
-                                }
-                            }
-                        }
-
-                        &.info {
-                            @include respond-to(phones) {
-                                padding-bottom: 20px;
-
-                                &:before {
-                                    content: 'Ban details: ';
-                                }
-                            }
-                        }
-
-                        @include respond-to(phones) {
-                            display: block;
-                            height: auto;
-                            padding: 0;
-                        }
-                    }
-
-                    &:last-child {
-                        .column {
-                            &.info {
-                                @include respond-to(phones) {
-                                    padding-bottom: 0;
-                                }
-                            }
-                        }
+                    @include respond-to(phablets) {
+                        display: inline-block;
                     }
                 }
             }
         }
 
-        .summary {
-            @extend .wrapper;
-
-            h2, h3 {
-                margin-bottom: 10px;
+        .c-table__row__column {
+            @include respond-to(phablets) {
+                @include flex-basis(100%);
+                padding: 2px 0;
             }
+        }
+    }
 
-            > article, > p, > ul {
-                margin: 10px 20px;
-            }
+    .c-table__row--header {
+        @include respond-to(phablets) {
+            display: none;
         }
     }
 }

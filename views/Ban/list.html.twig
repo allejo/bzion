@@ -29,27 +29,29 @@
         </section>
 
         <section class="o-layout">
-            <section class="o-layout__body--full c-table c-table--no-border c-table--no-hover">
+            <section class="o-layout__body--full c-table c-table--no-border c-table--no-hover c-ban-table">
                 <div class="c-table__row c-table__row--header">
-                    <div class="c-table__row__column">Date</div>
-                    <div class="c-table__row__column">Victim</div>
-                    <div class="c-table__row__column">Banner</div>
-                    <div class="c-table__row__column">Expires</div>
-                    <div class="c-table__row__column"></div>
+                    <div class="c-table__row__column c-ban__creation">Date</div>
+                    <div class="c-table__row__column c-ban__victim">Victim</div>
+                    <div class="c-table__row__column c-ban__author">Banner</div>
+                    <div class="c-table__row__column c-ban__expiration">Expires</div>
+                    <div class="c-table__row__column c-ban__info"></div>
                 </div>
 
                 {% for ban in bans %}
                     <div class="c-table__row c-ban">
                         <div class="c-table__row__column c-ban__creation">
-                            {{ ban.created }}
+                            <span>Ban issued:</span> {{ ban.created }}
                         </div>
                         <div class="c-table__row__column c-ban__victim">
-                            {{ link_to(ban.victim) }}
+                            <span>Ban victim:</span> {{ link_to(ban.victim) }}
                         </div>
                         <div class="c-table__row__column c-ban__author">
-                            {{ link_to(ban.author) }}
+                            <span>Banner:</span> {{ link_to(ban.author) }}
                         </div>
                         <div class="c-table__row__column c-ban__expiration">
+                            <span>Ban expiration:</span>
+
                             {% if ban.willExpire %}
                                 {{ ban.expiration.format(constant('TimeDate::DATE_FULL')) }}
                             {% else %}
@@ -57,7 +59,8 @@
                             {% endif %}
                         </div>
                         <div class="c-table__row__column c-ban__info">
-                            {{ link_to(ban, icon='info-circle') }}
+                            {{ link_to(ban, icon='info-circle', class='c-ban__info__details--desktop') }}
+                            {{ link_to(ban, class='c-ban__info__details--mobile', content='View ban details') }}
                         </div>
                     </div>
                 {% endfor %}
