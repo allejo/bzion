@@ -105,7 +105,7 @@ class ScriptHandler
         if (self::createDatabase($io, $config['host'], $config['username'], $config['password'], $config['database'])) {
             $io->write(''); // newline
 
-            $arguments = array('migrate', '-e' => 'main');
+            $arguments = array('migrate', '-e' => ($testing) ? 'test' : 'main');
             $app = new PhinxApplication();
             $app->doRun(new ArrayInput($arguments), new ConsoleOutput());
         }
