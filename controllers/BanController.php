@@ -37,7 +37,7 @@ class BanController extends CRUDController
     {
         if (!$this->canEdit($me, $ban)) {
             throw new ForbiddenException("You are not allowed to unban a player.");
-        } elseif ($ban->hasExpired()) {
+        } elseif ($ban->isExpired()) {
             throw new ForbiddenException("Sorry, this ban has already expired.");
         }
 

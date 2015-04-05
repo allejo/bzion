@@ -25,12 +25,6 @@ class Ban extends UrlModel implements NamedModel
     protected $expiration;
 
     /**
-     * Either manually or automatically, whether or not a ban has expired
-     * @var bool
-     */
-    protected $expired;
-
-    /**
      * The message that will appear when a player is denied connecting to a game server
      * @var string
      */
@@ -266,31 +260,17 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * Calculate whether a ban has expired or not. If there is no need to calculate, then use isExpired() instead.
+     * Calculate whether a ban has expired or not.
      *
      * @return bool True if the ban's expiration time has already passed
      */
-    public function hasExpired()
+    public function isExpired()
     {
-        if ($this->isExpired()) {
-            return true;
-        }
-
         if ($this->expiration === null) {
             return false;
         }
 
         return TimeDate::now()->gte($this->expiration);
-    }
-
-    /**
-     * Check whether or not a ban has expired either manually or automatically
-     *
-     * @return bool Whether or not the ban has expired
-     */
-    public function isExpired()
-    {
-        return $this->expired;
     }
 
     /**
@@ -367,15 +347,6 @@ class Ban extends UrlModel implements NamedModel
     public function setAllowServerJoin($allowServerJoin)
     {
         return $this->updateProperty($this->allowServerJoin, 'allow_server_join', (bool) $allowServerJoin);
-    }
-
-    /**
-     * Unban a player
-     * @return self
-     */
-    public function unban()
-    {
-        return $this->updateProperty($this->expired, 'expired', true);
     }
 
     /**
