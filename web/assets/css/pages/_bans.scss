@@ -1,15 +1,16 @@
-@include component('ban-table') {
+// This component will work alongside a CSS table (.c-table) and will be used to display a list
+// of bans
+@include component('banlist') {
+    // An individual row in the '.c-banlist' CSS table. A single row per ban will be used
     @include component('ban') {
+        @extend %phablet-margin;
+
+        // For phablets and phones, we'll be making the columns into full rows
         @include respond-to(phablets) {
             @include flex-wrap(wrap);
-
-            margin-bottom: $Settings-Page_Section-Margin;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
         }
 
+        // "Display" the column headers next the columns that become rows in phablet view
         @include element('creation', 'victim', 'author', 'expiration') {
             span {
                 display: none;
@@ -42,6 +43,7 @@
             min-width: 30px; // Magic number; it's the width of the fa-info-circle
             text-align: center;
 
+            // On desktops, all columns are equal size. On tablets, the info column will adjust to the fa-info-circle size
             @include respond-to(tablets) {
                 @include flex(0 1 auto);
             }
@@ -50,13 +52,16 @@
                 text-align: left;
             }
 
+            // This will be the links to individual ban pages
             @include element('details') {
+                // On desktops and tablets, we'll display an 'info circle' but we'll have a text version for phablets/phones so hide it at that point
                 @include modifier('desktop') {
                     @include respond-to(phablets) {
                         display: none;
                     }
                 }
 
+                // On phablets and phones only, we'll display a text description so hide it until we reach that breakpoint
                 @include modifier('mobile') {
                     display: none;
 
@@ -67,6 +72,7 @@
             }
         }
 
+        // Convert columns into rows for phablets and smaller
         .c-table__row__column {
             @include respond-to(phablets) {
                 @include flex-basis(100%);
@@ -75,6 +81,7 @@
         }
     }
 
+    // Hide the header row for phablets and smaller since we'll be displaying the spans
     .c-table__row--header {
         @include respond-to(phablets) {
             display: none;
