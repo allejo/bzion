@@ -1,3 +1,7 @@
+// A CSS scope where parsed markdown will be available, so we'll have some sanity checks to keep
+// HTML elements different from the rest of the website.
+//
+// e.g. Not have a markdown parsed H1 be the same size as an H1 used in a page header
 @include scope('markdown') {
     h1,
     h2 {

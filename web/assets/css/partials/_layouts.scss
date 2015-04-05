@@ -1,29 +1,24 @@
-%phablet-margin {
-    @include respond-to(phablets) {
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-}
-
+// The CSS class that will be used as the main layout
 @include object('layout') {
     @extend %wrapper;
     @include desktop-container;
 
     margin-bottom: $Settings-Page_Section-Margin;
 
+    // By default, each element will have a bottom margin, so have a modifier class to remove it
     @include modifier('no-margin') {
         margin-bottom: 0;
     }
 
+    // An element that will be a sidebar
     @include element('sidebar') {
         @include desktop-columns(3);
         @include phablet-columns(12);
     }
 
+    // An element that will have the important content of a page
     @include element('body') {
+        // When a page has a sidebar, this modifier will appropriately use the remaining space
         @include modifier('with-sidebar') {
             @include desktop-columns(9);
             @include phablet-columns(12);
@@ -33,16 +28,13 @@
             }
         }
 
+        // Take up the whole parent container; i.e. the 'o-layout' element
         @include modifier('full') {
+            @extend %desktop-margin;
             @include desktop-columns(12);
-
-            margin-bottom: $Settings-Page_Section-Small_Margin;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
         }
 
+        // Take up a third of the parent container
         @include modifier('third') {
             @extend %phablet-margin;
             @include desktop-columns(4, 0);
@@ -50,6 +42,7 @@
             @include phone-columns(12);
         }
 
+        // Take up a forth of the parent container
         @include modifier('quarter') {
             @extend %phablet-margin;
             @include desktop-columns(3, 0);
@@ -58,6 +51,7 @@
             @include phone-columns(12);
         }
 
+        // Take up half of the parent container
         @include modifier('half') {
             @extend %phablet-margin;
             @include desktop-columns(6, 0);
@@ -70,7 +64,8 @@
     }
 }
 
-@include object('user-html') {
+// A CSS scope where user inputted HTML will be available, so we'll have some sanity checks
+@include scope('user-html') {
     @extend %wrapper;
 
     display: block;

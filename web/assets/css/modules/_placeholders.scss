@@ -14,6 +14,14 @@
 }
 
 
+/// A placeholder that will automatically set the margin bottom of an element to the global
+/// setting and set the last child to have no margin bottom on all view sizes
+
+%desktop-margin {
+    @include autoMarginBottom($Settings-Page_Section-Small_Margin);
+}
+
+
 /// A placeholder that will automatically horizontally center a block element
 
 %margin-center {
@@ -31,6 +39,36 @@
 
     li {
         list-style-type: none;
+    }
+}
+
+
+/// A placeholder that will automatically set the margin bottom of an element to the global
+/// setting and set the last child to have no margin bottom on view sizes of a phablet and smaller
+
+%phablet-margin {
+    @include respond-to(phablets) {
+        @include autoMarginBottom();
+    }
+}
+
+
+/// A placeholder that will automatically set the margin bottom of an element to the global
+/// setting and set the last child to have no margin bottom on phones
+
+%phone-margin {
+    @include respond-to(phones) {
+        @include autoMarginBottom();
+    }
+}
+
+
+/// A placeholder that will automatically set the margin bottom of an element to the global
+/// setting and set the last child to have no margin bottom on view sizes of a tablet and smaller
+
+%tablet-margin {
+    @include respond-to(tablets) {
+        @include autoMarginBottom($Settings-Page_Section-Small_Margin);
     }
 }
 

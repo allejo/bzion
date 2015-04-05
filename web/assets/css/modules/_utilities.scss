@@ -1,3 +1,17 @@
+/// Automatically set the margin-bottom of an element to a specified value but have the last
+/// type of that element to have margin bottom 0
+///
+/// @param {Number [unit]} [30px] $margin
+///   The margin bottom that will be used
+
+@mixin autoMarginBottom($margin: $Settings-Page_Section-Margin) {
+    margin-bottom: $margin;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
 /// Return a dark color or a light color based on the color given. This function can be used
 /// when wanting to dynamically set the font-color based on the background color.
 ///
