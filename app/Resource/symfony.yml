@@ -4,6 +4,9 @@ imports:
 
 framework:
     secret: "toast"
+    form: ~
+    csrf_protection: ~
+    validation: ~
     router:
         resource: "%kernel.root_dir%/routes.yml"
         strict_requirements: ~

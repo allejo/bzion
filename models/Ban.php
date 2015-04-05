@@ -124,7 +124,7 @@ class Ban extends UrlModel implements NamedModel
         $this->lazyLoad();
 
         $this->ipAddresses[] = $ipAddress;
-        $this->db->query("INSERT INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
+        $this->db->query("INSERT IGNORE INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
     }
 
     /**
