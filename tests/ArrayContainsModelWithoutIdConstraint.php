@@ -17,6 +17,7 @@ class ArrayContainsModelWithoutIdConstraint extends PHPUnit_Framework_Constraint
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
         }
 
+        parent::__construct();
         $this->value = $value;
     }
 
@@ -41,12 +42,25 @@ class ArrayContainsModelWithoutIdConstraint extends PHPUnit_Framework_Constraint
     }
 
     /**
+     * @param mixed $other
+     *
+     * @return string
+     */
+    public function failureDescription($other)
+    {
+        return sprintf(
+            'the given array of Models contains at least one Model with ID %d',
+            $this->value
+        );
+    }
+
+    /**
      * Returns a string representation of the constraint.
      *
      * @return string
      */
     public function toString()
     {
-        return 'has no Models with ID ' . PHPUnit_Util_Type::export($this->value);
+        return sprintf('has no Models with ID %d', $this->value);
     }
 }
