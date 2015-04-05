@@ -5,19 +5,28 @@ class ArrayLengthConstraint extends PHPUnit_Framework_Constraint
     /**
      * @var int
      */
-    protected $value;
+    protected $actualValue;
 
     /**
-     * @param  int                         $value
+     * @var int
+     */
+    protected $expectedValue;
+
+    /**
+     * @param  int $expected
+     * @param  int $actual
+     *
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct($value)
+    public function __construct($expected, $actual)
     {
-        if (!is_int($value)) {
+        if (!is_int($expected)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
         }
 
-        $this->value = $value;
+        parent::__construct();
+        $this->expectedValue = $expected;
+        $this->actualValue   = $actual;
     }
 
     /**
@@ -29,7 +38,21 @@ class ArrayLengthConstraint extends PHPUnit_Framework_Constraint
      */
     public function matches($other)
     {
-        return (count($other) == $this->value);
+        return (count($other) == $this->expectedValue);
+    }
+
+    /**
+     * @param mixed $other
+     *
+     * @return string
+     */
+    public function failureDescription($other)
+    {
+        return sprintf(
+            '%s but expecting length %d',
+            $this->toString(),
+            $this->expectedValue
+        );
     }
 
     /**
@@ -39,6 +62,6 @@ class ArrayLengthConstraint extends PHPUnit_Framework_Constraint
      */
     public function toString()
     {
-        return 'has length ' . PHPUnit_Util_Type::export($this->value);
+        return sprintf('the given array has length %d', $this->actualValue);
     }
 }

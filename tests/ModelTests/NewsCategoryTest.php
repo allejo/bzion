@@ -108,6 +108,15 @@ class NewsTest extends TestCase
         $this->wipe($news);
     }
 
+    public function testCustomNewsCategoryQueryBuilder()
+    {
+        $qb = $this->newsCategory->getQueryBuilder();
+        $this->assertInstanceOf('QueryBuilder', $qb);
+
+        $results = $qb->where("status")->equals("enabled")->getModels();
+        $this->assertArrayLengthEquals($results, 2);
+    }
+
     public function tearDown()
     {
         $this->wipe($this->newsCategory);

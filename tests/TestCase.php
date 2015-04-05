@@ -58,7 +58,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array or ArrayAccess');
         }
 
-        $constraint = new ArrayLengthConstraint($expected);
+        $constraint = new ArrayLengthConstraint($expected, count($array));
 
         self::assertThat($array, $constraint, $message);
     }
