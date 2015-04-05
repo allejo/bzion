@@ -12,6 +12,13 @@
  */
 class Role extends Model
 {
+    const DEVELOPER     = 1;
+    const ADMINISTRATOR = 2;
+    const COP           = 3;
+    const REFEREE       = 4;
+    const SYSADMIN      = 5;
+    const PLAYER        = 6;
+
     /**
      * The name of the role
      * @var string
