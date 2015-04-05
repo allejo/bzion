@@ -1,47 +1,85 @@
 {% extends 'layout.html.twig' %}
 
+{% set pageButtons = [
+    {
+        'color': 'grey',
+        'url': ban.url('edit'),
+        'icon': 'pencil',
+        'text': 'Edit Ban',
+        'condition': me.canEdit(ban)
+    }
+] %}
+
 {% block title %}Bans{% endblock %}
 
 {% block content %}
-    <main class="bans">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>{{ ban.victim.username }}'s Ban</h1>
-            </article>
+    <main class="c-page">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>{{ ban.victim.username }}'s Ban</h1>
+                </section>
+
+                <section class="c-page__header__container__options">
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+                </section>
+            </div>
         </section>
 
-        <section class="summary">
-            <strong>Date</strong>
-            <p>{{ ban.created }}</p>
+        <div class="o-layout">
+            <section class="o-layout__body--full">
+                <strong>Victim</strong>
+                <p>{{ link_to(ban.victim) }}</p>
+            </section>
 
-            <strong>Expiration</strong>
-            <p>
-                {% if ban.willExpire %}
-                    {{ ban.expiration }} ({{ ban.expiration.diffForHumans }})
-                {% else %}
-                    <em>Until further notice</em>
-                {% endif %}
-            </p>
+            <section class="o-layout__body--full">
+                <strong>Banned by</strong>
+                <p>{{ link_to(ban.author) }}</p>
+            </section>
 
-            <strong>Reason</strong>
-            <article>
-                {{ ban.reason }}
-            </article>
+            <section class="o-layout__body--full">
+                <strong>Date</strong>
+                <p>{{ ban.created }}</p>
+            </section>
+
+            <section class="o-layout__body--full">
+                <strong>Expiration</strong>
+                <p>
+                    {% if ban.willExpire %}
+                        {{ ban.expiration | date(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
+                    {% else %}
+                        <em>Until further notice</em>
+                    {% endif %}
+                </p>
+            </section>
+
+            <section class="o-layout__body--full">
+                <strong>Reason</strong>
+                <article class="s-markdown">
+                    {{ ban.reason | markdown }}
+                </article>
+            </section>
 
             {% if me.hasPermission("edit_ban") %}
-                <strong>Server Ban Message</strong>
-                <p>{{ ban.serverMessage | raw }}</p>
+                <section class="o-layout__body--full">
+                    <strong>Server Ban Message</strong>
+                    <p>{{ ban.serverMessage | raw }}</p>
+                </section>
 
-                <strong>Allow Server Join</strong>
-                <p>{{ ban.allowedServerJoin | yesNo }}</p>
+                <section class="o-layout__body--full">
+                    <strong>Allow Server Join</strong>
+                    <p>{{ ban.allowedServerJoin | yesNo }}</p>
+                </section>
 
-                <strong>Banned IP Addresses</strong>
-                <ul>
-                    {% for ip in ban.ipAddresses %}
-                        <li>{{ ip }}</li>
-                    {% endfor %}
-                </ul>
+                <section class="o-layout__body--full">
+                    <strong>Banned IP Addresses</strong>
+                    <ul>
+                        {% for ip in ban.ipAddresses %}
+                            <li>{{ ip }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
             {% endif %}
-        </section>
+        </div>
     </main>
 {% endblock %}

@@ -16,6 +16,10 @@
     h6,
     p {
         margin-bottom: 5px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 
     h1 {

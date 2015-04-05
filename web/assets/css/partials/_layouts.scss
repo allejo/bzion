@@ -35,6 +35,12 @@
 
         @include modifier('full') {
             @include desktop-columns(12);
+
+            margin-bottom: $Settings-Page_Section-Small_Margin;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
 
         @include modifier('third') {
