@@ -26,7 +26,7 @@ class TeamFormCreator extends ModelFormCreator
             'constraints' => array(
                 new NotBlank(), new Length(array(
                     'min' => 2,
-                    'max' => 32,
+                    'max' => 32, // default BZFlag motto length
                 ))
             )
         ))->add('description', 'textarea', array(

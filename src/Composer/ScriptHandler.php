@@ -203,8 +203,8 @@ class ScriptHandler
     /**
      * Get the database's configuration
      *
-     * @param  boolean $testing Whether to retrieve the test database credentials
-     * @return array   The configuration as defined in the config.yml file
+     * @param  boolean    $testing Whether to retrieve the test database credentials
+     * @return array|null The configuration as defined in the config.yml file, null if no configuration was found
      */
     public static function getDatabaseConfig($testing = false)
     {
@@ -216,8 +216,11 @@ class ScriptHandler
         $path = $testing ? 'testing' : 'mysql';
 
         $config = Yaml::parse($configPath);
-        $config = $config['bzion'][$path];
 
-        return $config;
+        if (isset($config['bzion'][$path])) {
+            return $config['bzion'][$path];
+        }
+
+        return null;
     }
 }

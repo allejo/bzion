@@ -21,12 +21,12 @@ return array(
             'user' => $config['username'],
             'pass' => $config['password']
         ),
-        'test' => array(
+        'test' => ($testConfig) ? array(
             'adapter' => 'mysql',
             'host' => $testConfig['host'],
             'name' => $testConfig['database'],
             'user' => $testConfig['username'],
             'pass' => $testConfig['password']
-        )
+        ) : null
     )
 );
