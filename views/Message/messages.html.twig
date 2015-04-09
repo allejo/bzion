@@ -21,7 +21,7 @@
                     </div>
                 {% endif -%}
 
-                <p>{{ message.content|nl2br }}</p>
+                <p>{{ message.content|markdown(true, false) }}</p>
             </div>
         </li>
     {% else %}
