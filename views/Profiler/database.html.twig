@@ -63,6 +63,10 @@
             overflow-x: auto;
             max-width: 25vw;
         }
+
+        .duplicated-query th {
+            background-color: #F7CACE;
+        }
     </style>
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -195,13 +199,19 @@
             <th>Query</th>
             <th>Results</th>
         </tr>
+        {% set frequencies = collector.queryFrequencies %}
         {% for query in collector.queries %}
-            <tr>
-                <th>
+            {% set frequency = frequencies[query.resolvedQuery] %}
+            <tr {{- frequency > 1 ? ' class="duplicated-query"' : '' }}>
+                {% if frequency > 1 %}
+                    <th title="Query executed {{ frequency }} times">
+                {% else %}
+                    <th>
+                {% endif %}
                     <span class="database-query {{ query.queryType|lower }}-query" title="{{ query.queryType|upper }} query" />
                 </th>
                 <td>
-                    <b>{{ query.duration|number_format(1) }}</b> &micro;s
+                    <b>{{ query.duration|number_format }}</b> &micro;s
                 </td>
                 <td>
                     {%- if noresolve -%}
