@@ -6,6 +6,7 @@ use BZIon\Twig\InvalidTest;
 use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\MarkdownFilter;
 use BZIon\Twig\PluralFilter;
+use BZIon\Twig\TruncateFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\YesNoFilter;
 use Liip\ImagineBundle\Templating\ImagineExtension;
@@ -158,6 +159,7 @@ class AppKernel extends Kernel
         }
 
         $twig->addFunction(LinkToFunction::get());
+        $twig->addFilter(TruncateFilter::get());
         $twig->addFilter(MarkdownFilter::get());
         $twig->addFilter(PluralFilter::get());
         $twig->addFilter(YesNoFilter::get());

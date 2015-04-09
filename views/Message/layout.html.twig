@@ -61,7 +61,8 @@
                                     <article class="last_message">
                                         {% set lastmessage = group.lastmessage %}
                                         {% if lastmessage is valid %}
-                                            <strong>{{ lastmessage.author.username }}:</strong> {{ lastmessage.summary(50) }}
+                                            <strong>{{ lastmessage.author.username }}:</strong>
+                                            {{ lastmessage.content|markdown(true, false)|striptags|truncate(50) }}
                                         {% endif %}
                                     </article>
                                 </a>
