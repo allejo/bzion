@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Form\Creator\ProfileFormCreator;
+use Monolog\Logger;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -79,7 +80,15 @@ class ProfileController extends HTMLController
             return;
         }
 
+        $from = $this->container->getParameter('bzion.email.from');
         $title = $this->container->getParameter('bzion.site.name');
+
+        if (!$from) {
+            $this->getLogger()->addError('Unable to send verification e-mail message to player due to the "From:" address not being specified', array(
+                'player' => array('id' => $player->getId(), 'username' => $player->getUsername())
+            ));
+            return;
+        }
 
         $message = Swift_Message::newInstance()
             ->setSubject($title . ' Email Confirmation')

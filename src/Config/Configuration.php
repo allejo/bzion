@@ -65,7 +65,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('from')
                             ->defaultNull()
                             ->attribute('asked', true)
-                            ->info("The e-mail address that will be shown in the 'From:' field when sending messages")
+                            ->info("The e-mail address that will be shown in the 'From:' field when sending messages. Leaving this to null will prevent any e-mails from being sent.")
                             ->example('noreply@example.com')
                         ->end()
                     ->end()

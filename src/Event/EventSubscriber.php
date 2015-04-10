@@ -177,6 +177,10 @@ class EventSubscriber implements EventSubscriberInterface
      */
     public function sendEmails($subject, $recipients, $template, $params = array())
     {
+        if (!$this->from) {
+            return;
+        }
+
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom(array($this->from => $this->siteTitle))
