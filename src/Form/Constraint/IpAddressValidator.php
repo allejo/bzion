@@ -20,6 +20,11 @@ class IpAddressValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        if (empty($value)) {
+            // No need to run any checks if no IP is provided
+            return;
+        }
+
         foreach ($value as $value) {
             if (strlen($value) > 255) {
                 $this->context->buildViolation($constraint->lengthMessage)

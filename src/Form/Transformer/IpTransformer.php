@@ -28,6 +28,8 @@ class IpTransformer implements DataTransformerInterface
      */
     public function reverseTransform($ips)
     {
-        return preg_split("/[\s,]+/", strtolower($ips));
+        return array_filter(preg_split("/[\s,]+/", strtolower($ips)), function($value) {
+            return $value !== '';
+        });
     }
 }
