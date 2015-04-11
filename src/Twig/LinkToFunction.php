@@ -45,7 +45,7 @@ class LinkToFunction
             return '<a' . $this->getClass($class) . ' href="' . $url . '">' . $content . '</a>';
         }
 
-        return '<span' . $this->getClass("$class disabled-link") . '>' . $content . '</a>';
+        return '<span' . $this->getClass("$class disabled-link") . '>' . $content . '</span>';
     }
 
     /**

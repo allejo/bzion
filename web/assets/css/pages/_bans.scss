@@ -11,15 +11,13 @@
         }
 
         // "Display" the column headers next the columns that become rows in phablet view
-        @include element('creation', 'victim', 'author', 'expiration') {
-            span {
-                display: none;
+        @include element('label') {
+            display: none;
 
-                @include respond-to(phablets) {
-                    display: inline-block;
-                    font-weight: bold;
-                    width: 120px;
-                }
+            @include respond-to(phablets) {
+                display: inline-block;
+                font-weight: bold;
+                width: 120px;
             }
         }
 
