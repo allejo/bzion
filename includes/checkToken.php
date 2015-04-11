@@ -1,5 +1,16 @@
 <?php
 
+// Part of bzflag
+// Copyright (c) 1993-2013 Tim Riker
+//
+// This package is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// Version 2.1 as published by the Free Software Foundation.
+//
+// THIS PACKAGE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+// IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+//
 // This function will check a username and token returned by the bzflag
 // weblogin page at http://my.bzflag.org/weblogin.php?action=weblogin. You can use
 // this URL to ask a user for his bzflag global login. Your page needs to pass
