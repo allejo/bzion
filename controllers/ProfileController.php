@@ -92,7 +92,7 @@ class ProfileController extends HTMLController
 
         $message = Swift_Message::newInstance()
             ->setSubject($title . ' Email Confirmation')
-            ->setFrom(array($this->container->getParameter('bzion.email.from') => $title))
+            ->setFrom(array($from => $title))
             ->setTo($player->getEmailAddress())
             ->setBody($this->render('Email/confirm.txt.twig',  array('player' => $player)))
             ->addPart($this->render('Email/confirm.html.twig', array('player' => $player)), 'text/html');

@@ -269,6 +269,8 @@ class Group extends UrlModel implements NamedModel
     /**
      * Create a new message group
      *
+     * @todo Support team members
+     *
      * @param  string $subject   The subject of the group
      * @param  int    $creatorId The ID of the player who created the group
      * @param  array  $members   A list of IDs representing the group's members
@@ -325,38 +327,72 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Checks if a player belongs in the group
-     * @param  int  $id The ID of the player
-     * @return bool True if the player belongs in the group, false if they don't
+     * Checks if a player or team belongs in the group
+     * @param  Player|Team $member The player or team to check
+     * @return bool True if the given object belongs in the group, false if they don't
      */
-    public function isMember($id)
+    public function isMember($member)
     {
-        $result = $this->db->query("SELECT 1 FROM `player_groups` WHERE `group` = ?
-                                    AND `player` = ?", "ii", array($this->id, $id));
+        $type = ($member instanceof Player) ? 'player' : 'team';
+
+        $result = $this->db->query("SELECT 1 FROM `{$type}_groups` WHERE `group` = ?
+                                    AND `$type` = ?", "ii", array($this->id, $member->getId()));
 
         return count($result) > 0;
     }
 
     /**
-     * Add a player to the discussion
+     * Add a member to the discussion
      *
-     * @param  int  $playerId The ID of the player to add
+     * @param  Player|Team $member The member  to add
      * @return void
      */
-    public function addMember($playerId)
+    public function addMember($member)
     {
-        $this->db->query("INSERT INTO `player_groups` (`group`, `player`) VALUES (?, ?)", "ii", array($this->getId(), $playerId));
+        if ($member instanceof Player) {
+            // Mark individual players as distinct by creating or updating the
+            // entry on the table
+            $this->db->query(
+                "INSERT INTO `player_groups` (`group`, `player`, `distinct`) VALUES (?, ?, 1)
+                    ON DUPLICATE KEY UPDATE `distinct` = 1",
+                "ii",
+                array($this->getId(), $member->getId())
+            );
+        } elseif ($member instanceof Team) {
+            // Add the team to the team_groups table...
+            $this->db->query(
+                "INSERT INTO `team_groups` (`group`, `team`) VALUES (?, ?)",
+                "ii",
+                array($this->getId(), $member->getId())
+            );
+
+            // ...and each of its members in the player_groups table as
+            // non-distinct (unless they were already there)
+            foreach ($member->getMembers() as $player) {
+                $this->db->query(
+                    "INSERT IGNORE INTO `player_groups` (`group`, `player`, `distinct`) VALUES (?, ?, 0)",
+                    "ii",
+                    array($this->getId(), $player->getId())
+                );
+            }
+        }
     }
 
     /**
-     * Remove a player from the discussion
+     * Remove a member from the discussion
      *
-     * @param  int  $playerId The ID of the player to remove
+     * @todo
+     *
+     * @param  Player|Team $member The member to remove
      * @return void
      */
-    public function removeMember($playerId)
+    public function removeMember($member)
     {
-        $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $playerId));
+        if ($member instanceof Player) {
+            $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId()));
+        } else {
+            throw new Exception("Not implemented yet");
+        }
     }
 
     /**
@@ -374,28 +410,6 @@ class Group extends UrlModel implements NamedModel
             array($this->id, $except),
             'player_groups AS pg',
             'pg.player');
-    }
-
-    /**
-     * Checks if a player has a new message in the group
-     *
-     * @todo Make this method work
-     * @param  int     $id The ID of the player
-     * @return boolean True if the player has a new message
-     */
-    public static function hasNewMessage($id)
-    {
-        $groups = self::getGroups($id);
-        $me = new Player($id);
-
-        foreach ($groups as $group) {
-            // THIS DOESNT WORK
-            if ($me->getLastlogin(false)->gt($group->getLastActivity(false))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

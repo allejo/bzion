@@ -116,14 +116,14 @@ class MessageController extends JSONController
 
     public function leaveAction(Player $me, Group $discussion)
     {
-        if (!$discussion->isMember($me->getId())) {
+        if (!$discussion->isMember($me)) {
             throw new ForbiddenException("You are not a member of this discussion.");
         } elseif ($discussion->getCreator()->getId() == $me->getId()) {
             throw new ForbiddenException("You can't abandon the conversation you started!");
         }
 
         return $this->showConfirmationForm(function () use ($discussion, $me) {
-            $discussion->removeMember($me->getId());
+            $discussion->removeMember($me);
 
             $event = new GroupAbandonEvent($discussion, $me);
             Service::getDispatcher()->dispatch(Events::GROUP_ABANDON, $event);
@@ -141,12 +141,12 @@ class MessageController extends JSONController
             throw new ForbiddenException("You can't leave your own discussion.");
         }
 
-        if (!$discussion->isMember($player->getId())) {
+        if (!$discussion->isMember($player)) {
             throw new ForbiddenException("The specified player is not a member of this conversation.");
         }
 
         return $this->showConfirmationForm(function () use ($discussion, $player, $me) {
-            $discussion->removeMember($player->getId());
+            $discussion->removeMember($player);
 
             $event = new GroupKickEvent($discussion, $player, $me);
             Service::getDispatcher()->dispatch(Events::GROUP_KICK, $event);
@@ -187,8 +187,8 @@ class MessageController extends JSONController
             $invitees = array();
 
             foreach ($form->get('players')->getData() as $player) {
-                if (!$discussion->isMember($player->getId())) {
-                    $discussion->addMember($player->getId());
+                if (!$discussion->isMember($player)) {
+                    $discussion->addMember($player);
                     $invitees[] = $player;
                 }
             }
@@ -270,7 +270,7 @@ class MessageController extends JSONController
     private function assertCanParticipate(Player $player, Group $group,
         $message = "You are not allowed to participate in that discussion"
     ) {
-        if (!$group->isMember($player->getId())) {
+        if (!$group->isMember($player)) {
             throw new ForbiddenException($message);
         }
     }
