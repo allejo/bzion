@@ -683,6 +683,19 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
+     * Mark all the unread messages of a player as read
+     *
+     * @return void
+     */
+    public function markMessagesAsRead()
+    {
+        $this->db->query(
+            "UPDATE `player_groups` SET `read` = 1 WHERE `player` = ? AND `read` = 0",
+            'i', array($this->id)
+        );
+    }
+
+    /**
      * Give or remove a role to/form a player
      *
      * @param int    $role_id The role ID to add or remove
