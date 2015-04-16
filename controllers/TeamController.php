@@ -119,9 +119,9 @@ class TeamController extends CRUDController
         $this->assertCanEdit($me, $team, "You are not allowed to change the leader of this team.");
 
         if (!$team->isMember($player->getId())) {
-            throw new ForbiddenException("The specified player is not a member of {$team->getEscapedName()}");
+            throw new ForbiddenException("The specified player is not a member of {$team->getName()}");
         } elseif ($team->getLeader()->getId() == $player->getId()) {
-            throw new ForbiddenException("{$player->getEscapedUsername()} is already the leader of {$team->getEscapedName()}");
+            throw new ForbiddenException("{$player->getUsername()} is already the leader of {$team->getName()}");
         }
 
         return $this->showConfirmationForm(function () use ($player, $team) {
@@ -154,7 +154,7 @@ class TeamController extends CRUDController
         // The name for the team that the user gave us already exists
         // TODO: This takes deleted teams into account, do we want that?
         if ($team->isValid()) {
-            $name->addError(new FormError("A team called {$team->getEscapedName()} already exists"));
+            $name->addError(new FormError("A team called {$team->getName()} already exists"));
         }
     }
 

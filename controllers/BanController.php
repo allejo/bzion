@@ -41,13 +41,13 @@ class BanController extends CRUDController
             throw new ForbiddenException("Sorry, this ban has already expired.");
         }
 
-        $victim = $ban->getVictim()->getEscapedUsername();
+        $victim = $ban->getVictim();
 
         return $this->showConfirmationForm(function () use ($ban) {
             $ban->expire();
 
             return new RedirectResponse($ban->getUrl());
-        }, "Are you sure you want to unban <strong>$victim</strong>?",
-            "$victim's ban has been deactivated successfully", "Unban");
+        }, "Are you sure you want to unban <strong>{$victim->getEscapedUsername()}</strong>?",
+            "{$victim->getUsername()}'s ban has been deactivated successfully", "Unban");
     }
 }
