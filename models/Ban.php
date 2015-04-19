@@ -183,11 +183,11 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Get the creation time of the ban
-     * @return string The creation time in a human readable form
+     * @return TimeDate The creation time
      */
     public function getCreated()
     {
-        return $this->created->diffForHumans();
+        return $this->created;
     }
 
     /**

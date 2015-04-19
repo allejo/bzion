@@ -39,7 +39,7 @@
                 {% for ban in bans %}
                     <div class="c-table__row c-ban">
                         <div class="c-table__row__column c-ban__creation">
-                            <span class="c-ban__label">Ban issued:</span> {{ ban.created }}
+                            <span class="c-ban__label">Ban issued:</span> {{ ban.created | humanTime }}
                         </div>
                         <div class="c-table__row__column c-ban__victim">
                             <span class="c-ban__label">Ban victim:</span> {{ link_to(ban.victim) }}

@@ -3,6 +3,7 @@
 use BZIon\Cache\ModelCache;
 use BZIon\Session\DatabaseSessionHandler;
 use BZIon\Twig\InvalidTest;
+use BZIon\Twig\HumanDateFilter;
 use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\MarkdownFilter;
 use BZIon\Twig\PluralFilter;
@@ -159,6 +160,7 @@ class AppKernel extends Kernel
         }
 
         $twig->addFunction(LinkToFunction::get());
+        $twig->addFilter(HumanDateFilter::get());
         $twig->addFilter(TruncateFilter::get());
         $twig->addFilter(MarkdownFilter::get());
         $twig->addFilter(PluralFilter::get());
