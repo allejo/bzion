@@ -12,7 +12,7 @@ class HumanDateFilter
      */
     public function __invoke($time, $format = "")
     {
-        $timeElement = "<span class='c-timestamp js-timestamp' title='%s'>%s</span>";
+        $timeElement = '<span class="c-timestamp js-timestamp" title="%s">%s</span>';
         $outputTime = (empty($format)) ? $time->diffForHumans() : $time->format($format);
 
         return sprintf($timeElement, $time->format("F j, Y g:ia"), $outputTime);
