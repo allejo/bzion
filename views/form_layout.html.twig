@@ -238,7 +238,7 @@
 {%- endblock repeated_row %}
 
 {% block form_row -%}
-    <div>
+    <div {{ block('container_attributes') }}>
         {{- form_label(form) -}}
         {{- form_errors(form) -}}
         {{- form_widget(form) -}}
@@ -312,6 +312,18 @@
         {{- form_row(child) -}}
     {% endfor %}
 {%- endblock form_rows %}
+
+{% block container_attributes -%}
+    {%- for attrname, attrvalue in container_attr -%}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- elseif attrvalue is sameas(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not sameas(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock container_attributes %}
 
 {% block widget_attributes -%}
     id="{{ id }}" name="{{ full_name }}"
