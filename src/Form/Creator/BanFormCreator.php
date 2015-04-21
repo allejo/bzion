@@ -38,7 +38,7 @@ class BanFormCreator extends ModelFormCreator
                     'data' => \TimeDate::now(),
                 ))->setDataLocked(false)
             )
-            ->add('reason', 'text', array(
+            ->add('reason', 'textarea', array(
                 'constraints' => new NotBlank(),
             ))
             ->add('server_join_allowed', 'checkbox', array(

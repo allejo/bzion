@@ -113,6 +113,42 @@ select {
                 }
             }
 
+            @include element('timestamp') {
+                $Margin: 7px;
+
+                @include element ('date', 'time') {
+                    display: inline-block;
+                    width: auto;
+
+                    select {
+                        display: inline-block;
+                        margin-right: $Margin;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+
+                @include element('date') {
+                    margin-right: 15px;
+                }
+
+                @include element('time') {
+                    select {
+                        margin-left: $Margin;
+
+                        &:first-child {
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+
             div {
                 margin-bottom: $Form-Small_Spacing;
 
@@ -147,7 +183,7 @@ select {
             }
         }
 
-        div {
+        > section > div {
             width: 100%;
         }
     }

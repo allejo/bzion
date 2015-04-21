@@ -86,3 +86,34 @@
         }
     }
 }
+
+@include component('ban-form') {
+    @include element('settings') {
+        @include element('expiration') {
+            text-align: center;
+        }
+
+        > div {
+            display: inline-block;
+            margin-right: 30px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    @include element('server-settings') {
+        @include display(flex);
+
+        @include element('message') {
+            @include desktop-columns(10);
+        }
+
+        @include element('allow-join') {
+            @include desktop-columns(2);
+
+            text-align: center;
+        }
+    }
+}
