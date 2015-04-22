@@ -167,23 +167,23 @@ class Player extends AvatarModel implements NamedModel
         $this->last_login = TimeDate::fromMysql($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
 
-        $this->roles = Role::getRoles($this->id);
-        $this->permissions = array();
-
-        foreach ($this->roles as $role) {
-            $this->permissions = array_merge($this->permissions, $role->getPerms());
-        }
+        $this->updateUserPermissions();
     }
 
     /**
      * Add a player a new role
      *
-     * @param int $role_id The role ID to add a player to
+     * @param Role|int $role_id The role ID to add a player to
      *
      * @return bool Whether the operation was successful or not
      */
     public function addRole($role_id)
     {
+        if ($role_id instanceof Role)
+        {
+            $role_id = $role_id->getId();
+        }
+
         $this->lazyLoad();
 
         // Make sure the player doesn't already have the role
@@ -397,6 +397,19 @@ class Player extends AvatarModel implements NamedModel
         $this->lazyLoad();
 
         return ($this->timezone) ?: date_default_timezone_get();
+    }
+
+    /**
+     * Rebuild the list of permissions a user has been granted
+     */
+    private function updateUserPermissions()
+    {
+        $this->roles = Role::getRoles($this->id);
+        $this->permissions = array();
+
+        foreach ($this->roles as $role) {
+            $this->permissions = array_merge($this->permissions, $role->getPerms());
+        }
     }
 
     /**
@@ -713,6 +726,7 @@ class Player extends AvatarModel implements NamedModel
             } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));
             }
+            $this->updateUserPermissions();
             $this->refresh();
 
             return true;
