@@ -18,14 +18,16 @@ class Player extends AvatarModel implements NamedModel
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
      * constant variables. Hopefully, a user won't be silly enough to delete them manually from the database.
+     *
+     * @TODO Deprecate these and use the Role constants
      */
-    const DEVELOPER    = 1;
-    const ADMIN        = 2;
-    const COP          = 3;
-    const REFEREE      = 4;
-    const S_ADMIN      = 5;
-    const PLAYER       = 6;
-    const PLAYER_NO_PM = 7;
+    const DEVELOPER    = Role::DEVELOPER;
+    const ADMIN        = Role::ADMINISTRATOR;
+    const COP          = Role::COP;
+    const REFEREE      = Role::REFEREE;
+    const S_ADMIN      = Role::SYSADMIN;
+    const PLAYER       = Role::PLAYER;
+    const PLAYER_NO_PM = Role::PLAYER_NO_PM;
 
     /**
      * The bzid of the player

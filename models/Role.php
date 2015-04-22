@@ -18,6 +18,7 @@ class Role extends Model
     const REFEREE       = 4;
     const SYSADMIN      = 5;
     const PLAYER        = 6;
+    const PLAYER_NO_PM  = 7;
 
     /**
      * The name of the role
