@@ -47,5 +47,9 @@
                 }
             }
         }
+
+        @include respond-to(phones) {
+            margin-bottom: $Settings-Page_Section-Small_Margin;
+        }
     }
 }

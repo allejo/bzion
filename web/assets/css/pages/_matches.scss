@@ -1,13 +1,35 @@
 $score_padding: 15px;
+$score_padding_small: 10px;
+
+@include component('match-history') {
+    @include element('date') {
+        h4 {
+            margin-bottom: 0;
+        }
+    }
+}
 
 @include component('match-summary') {
     @include desktop-container();
 
     margin-bottom: $Settings-Page_Section-Small_Margin;
 
+    @include respond-to(phones) {
+        margin-bottom: 20px;
+    }
+
     @include element('team') {
         @include desktop-container();
         @include desktop-columns(6, 0);
+        @include phone-columns(12);
+
+        @include respond-to(phones) {
+            margin-bottom: 5px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
 
         @include element('image', 'name', 'score') {
             @include display(flex);
@@ -23,10 +45,22 @@ $score_padding: 15px;
 
         @include element('image') {
             @include desktop-columns(3);
+            @include phone-columns(2);
+
+            @include respond-to(phones) {
+                img {
+                    margin: {
+                        right: auto;
+                    }
+                    max-height: 100%;
+                    max-width: 100%;
+                }
+            }
         }
 
         @include element('name') {
             @include desktop-columns(7);
+            @include phone-columns(8);
 
             p {
                 max-width: 100%;
@@ -38,6 +72,12 @@ $score_padding: 15px;
 
         @include element('score') {
             @include desktop-columns(2);
+
+            p {
+                @include respond-to(phones) {
+                    margin-left: auto;
+                }
+            }
         }
 
         @include modifier('winner') {
@@ -46,8 +86,36 @@ $score_padding: 15px;
                 margin-left: auto;
             }
 
+            .c-match-summary__team__image {
+                img {
+                    @include respond-to(phones) {
+                        margin: {
+                            left: 0;
+                        }
+                    }
+                }
+            }
+
+            .c-match-summary__team__name {
+                p {
+                    @include respond-to(phones) {
+                        margin: {
+                            left: 0;
+                        }
+                    }
+                }
+            }
+
             .c-match-summary__team__score {
                 padding-right: $score_padding;
+
+                @include respond-to(phablets) {
+                    padding-right: $score_padding_small;
+                }
+
+                @include respond-to(phones) {
+                    padding-right: 0;
+                }
             }
         }
 
@@ -64,6 +132,22 @@ $score_padding: 15px;
                 @include order(1);
 
                 padding-left: $score_padding;
+
+                @include respond-to(phablets) {
+                    padding-left: $score_padding_small;
+                }
+
+                @include respond-to(phones) {
+                    padding-left: 0;
+                }
+            }
+
+            @include respond-to(phones) {
+                .c-match-summary__team__image,
+                .c-match-summary__team__name,
+                .c-match-summary__team__score {
+                    @include order(initial);
+                }
             }
         }
     }
