@@ -16,7 +16,6 @@ class PlayerTest extends TestCase
 
     public function testRoleModification()
     {
-        $this->markTestSkipped("Skip a segfaulting test?");
         $role = new Role(Role::ADMINISTRATOR);
         $this->assertTrue($role->hasPerm(Permission::PUBLISH_NEWS));
         $this->assertFalse($this->player->hasPermission(Permission::PUBLISH_NEWS));
