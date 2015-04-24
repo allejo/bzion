@@ -1,5 +1,17 @@
 {% extends 'layout.html.twig' %}
 
+{% import _self as this %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('match_enter'),
+        'icon': 'plus',
+        'text': 'Report Match',
+        'condition': me.canCreate("Match")
+    }
+] %}
+
 {% block title %}
     {% if team %}
         Matches :: {{ team.name }}
@@ -7,6 +19,18 @@
         Matches
     {% endif %}
 {% endblock %}
+
+{% macro team_summary(match, team) %}
+    <div class="c-match-summary__team__image">
+        <img src="{{ team.avatar | imagine_filter('small_thumb') }}" />
+    </div>
+    <div class="c-match-summary__team__name">
+        <p>{{ link_to(team) }}</p>
+    </div>
+    <div class="c-match-summary__team__score">
+        <p>{{ match.score(team.id) }}</p>
+    </div>
+{% endmacro %}
 
 {% block content %}
     <main class="c-page s-matches">
@@ -17,9 +41,7 @@
                 </section>
 
                 <section class="c-page__header__container__options">
-                    {% if me.canCreate("Match") %}
-                        <a class="c-button c-button--blue" href="{{ path('match_enter') }}"><i class="fa fa-plus"></i> Report Match</a>
-                    {% endif %}
+                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
                 </section>
             </div>
         </section>
@@ -44,13 +66,11 @@
                 {% endif %}
 
                 <article class="c-match-summary">
-                    <div class="c-table c-table--no-border">
-                        <div class="c-table__row">
-                            <div class="c-table__row__column c-match-summary__winner">{{ link_to(match.winner) }}</div>
-                            <div class="c-table__row__column c-match-summary__win-points">{{ match.score(match.winner.id) }}</div>
-                            <div class="c-table__row__column c-match-summary__loss-points">{{ match.score(match.loser.id) }}</div>
-                            <div class="c-table__row__column c-match-summary__loser">{{ link_to(match.loser) }}</div>
-                        </div>
+                    <div class="c-match-summary__team c-match-summary__team--winner">
+                        {{ this.team_summary(match, match.winner) }}
+                    </div>
+                    <div class="c-match-summary__team c-match-summary__team--loser">
+                        {{ this.team_summary(match, match.loser) }}
                     </div>
                 </article>
 

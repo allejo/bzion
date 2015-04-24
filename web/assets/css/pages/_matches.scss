@@ -1,24 +1,74 @@
+$score_padding: 15px;
+
 @include component('match-summary') {
-    @include element('winner') {
-        @include flex-basis(45%);
+    @include desktop-container();
 
-        text-align: right;
+    margin-bottom: $Settings-Page_Section-Small_Margin;
+
+    @include element('team') {
+        @include desktop-container();
+        @include desktop-columns(6, 0);
+
+        @include element('image', 'name', 'score') {
+            @include display(flex);
+
+            img,
+            p {
+                margin: {
+                    bottom: auto;
+                    top: auto;
+                };
+            }
+        }
+
+        @include element('image') {
+            @include desktop-columns(3);
+        }
+
+        @include element('name') {
+            @include desktop-columns(7);
+
+            p {
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        @include element('score') {
+            @include desktop-columns(2);
+        }
+
+        @include modifier('winner') {
+            img,
+            p {
+                margin-left: auto;
+            }
+
+            .c-match-summary__team__score {
+                padding-right: $score_padding;
+            }
+        }
+
+        @include modifier('loser') {
+            .c-match-summary__team__image {
+                @include order(3);
+            }
+
+            .c-match-summary__team__name {
+                @include order(2);
+            }
+
+            .c-match-summary__team__score {
+                @include order(1);
+
+                padding-left: $score_padding;
+            }
+        }
     }
 
-    @include element('win-points') {
-        @include flex-basis(5%);
-
-        padding-right: 10px;
-        text-align: right;
-    }
-
-    @include element('loss-points') {
-        @include flex-basis(5%);
-
-        padding-left: 10px;
-    }
-
-    @include element('loser') {
-        @include flex-basis(45%);
+    &:last-child {
+        margin-bottom: 0;
     }
 }
