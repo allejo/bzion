@@ -62,7 +62,7 @@
                                         {% set lastmessage = group.lastmessage %}
                                         {% if lastmessage is valid %}
                                             <strong>{{ lastmessage.author.username }}:</strong>
-                                            {{ lastmessage.content|markdown(true, false)|striptags|truncate(50) }}
+                                            {{ lastmessage.content|markdown(true, false)|striptags|truncate(50)|raw }}
                                         {% endif %}
                                     </article>
                                 </a>
