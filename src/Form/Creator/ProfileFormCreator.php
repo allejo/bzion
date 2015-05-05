@@ -46,8 +46,9 @@ class ProfileFormCreator extends ModelFormCreator
             ))
             ->add('delete_avatar', 'submit')
             ->add('country', 'choice', array(
-                'choices' => \Country::getCountriesWithISO(),
-                'data'    => $this->editing->getCountry()->getISO()
+                'choices'  => \Country::getCountriesWithISO(),
+                'data'     => $this->editing->getCountry()->getISO(),
+                'required' => false
             ))
             ->add('email', 'email', array(
                 'constraints' => $emailConstraints,
@@ -55,16 +56,18 @@ class ProfileFormCreator extends ModelFormCreator
                 'label'       => 'E-Mail Address',
                 'required'    => false
             ))
+            // TODO: Disable this when no e-mail has been specified with JS
             ->add('receive', 'choice', array(
                 'choices' => array(
                     'nothing'    => 'Nothing',
                     'messages'   => 'Messages only',
                     'everything' => 'Everything'
                 ),
-                'data'     => $this->editing->getReceives(),
-                'label'    => 'Receive notifications about',
-                'disabled' => !$this->editing->isVerified(),
-                'expanded' => true,
+                'data'        => $this->editing->getReceives(),
+                'label'       => 'Receive notifications about',
+                'expanded'    => true,
+                'placeholder' => false,
+                'required'    => false
             ))
             ->add('timezone', new TimezoneType(), array(
                 'constraints' => new NotBlank(),
