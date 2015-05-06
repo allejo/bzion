@@ -180,7 +180,7 @@ SUCCESS
             $node->finalize($value);
 
             return $value;
-        }, false, $default);
+        }, null, $default);
 
         $this->io->write("");
 
