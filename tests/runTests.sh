@@ -30,8 +30,10 @@ fi
 vendor/phpunit/phpunit/phpunit $COVERAGE_TYPE
 PHPUNIT=$?
 
-# Find all PHP files on the root directory which do not start with "bzion"
-FILES="`find . -maxdepth 1 -iname '*.php' -and ! -iname 'bzion*' | sort`"
+# Find all PHP files that we manage
+FILES="`find . app -maxdepth 1 -iname '*.php' | sort`\
+`echo`
+`find controllers models src web -iname '*.php' | sort`"
 
 echo -e "\n"
 

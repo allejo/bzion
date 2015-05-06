@@ -25,7 +25,7 @@ ERROR_LOG=""
 
 for file
 do
-    ERRORS=`php $file 2>&1 > /dev/null`
+    ERRORS=`php --syntax-check $file 2>&1 > /dev/null`
 
     # Find number of different messages included PHP's output
     notices=`echo "$ERRORS" | grep -i notice | wc -l`
