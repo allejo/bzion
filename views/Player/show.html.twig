@@ -25,9 +25,7 @@
                     <h1>{{ player.username }}</h1>
                 </section>
 
-                <section class="c-page__header__container__options">
-                    {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-                </section>
+                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
             </div>
         </section>
 
