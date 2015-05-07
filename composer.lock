@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "062096fb9050635411c31c1ab83b4423",
+    "hash": "6e14f95676023cc1684a26430231fe3c",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -953,44 +953,6 @@
                 "image processing"
             ],
             "time": "2014-11-11 11:36:02"
-        },
-        {
-            "name": "ivaynberg/select2",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/select2/select2.git",
-                "reference": "d166717f5c1ab540c336bd8dcdcb607cb857939a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/select2/select2/zipball/d166717f5c1ab540c336bd8dcdcb607cb857939a",
-                "reference": "d166717f5c1ab540c336bd8dcdcb607cb857939a",
-                "shasum": ""
-            },
-            "require": {
-                "robloach/component-installer": "*"
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "dist/js/select2.js"
-                    ],
-                    "files": [
-                        "dist/js/select2.js",
-                        "dist/js/i18n/*.js",
-                        "dist/css/select2.css"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Select2 is a jQuery based replacement for select boxes.",
-            "homepage": "https://select2.github.io/",
-            "time": "2015-05-03 00:50:36"
         },
         {
             "name": "jms/metadata",
@@ -2089,6 +2051,44 @@
                 "search"
             ],
             "time": "2015-02-17 19:57:36"
+        },
+        {
+            "name": "select2/select2",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/select2/select2.git",
+                "reference": "ac1680d81dcc60009c5d0fe0dd52e70bc065c140"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/select2/select2/zipball/ac1680d81dcc60009c5d0fe0dd52e70bc065c140",
+                "reference": "ac1680d81dcc60009c5d0fe0dd52e70bc065c140",
+                "shasum": ""
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/js/select2.js"
+                    ],
+                    "files": [
+                        "dist/js/select2.js",
+                        "dist/js/i18n/*.js",
+                        "dist/css/select2.css"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Select2 is a jQuery based replacement for select boxes.",
+            "homepage": "https://select2.github.io/",
+            "time": "2015-05-03 14:45:29"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -4947,12 +4947,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "6c63fe9f22779a36f672c3f831c1450bf0a3a143"
+                "reference": "52d290f5f2e4f6905fdf171900286ddd1dc70ab0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/6c63fe9f22779a36f672c3f831c1450bf0a3a143",
-                "reference": "6c63fe9f22779a36f672c3f831c1450bf0a3a143",
+                "url": "https://api.github.com/repos/composer/composer/zipball/52d290f5f2e4f6905fdf171900286ddd1dc70ab0",
+                "reference": "52d290f5f2e4f6905fdf171900286ddd1dc70ab0",
                 "shasum": ""
             },
             "require": {
@@ -5010,7 +5010,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-05-06 13:24:06"
+            "time": "2015-05-06 23:37:08"
         },
         {
             "name": "dompdf/dompdf",
@@ -7865,7 +7865,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ivaynberg/select2": 20,
+        "select2/select2": 20,
         "yzalis/identicon": 20,
         "behat/behat": 0,
         "behat/mink": 20,
