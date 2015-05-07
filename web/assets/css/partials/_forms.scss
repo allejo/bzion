@@ -279,3 +279,16 @@ select {
         }
     }
 }
+
+
+// ===========================================
+// Placeholders that'll override form elements
+// ===========================================
+
+// @TODO Rewrite this without !important statements
+%remove-input-style {
+    background-color: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}

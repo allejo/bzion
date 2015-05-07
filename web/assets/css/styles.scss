@@ -71,11 +71,14 @@
 //    (CSS for specific pages on the website)
 //
 
+@import 'pages/Messaging/inbox';
+@import 'pages/Messaging/compose';
+@import 'pages/Messaging/messenger';
+
 @import 'pages/bans';
 @import 'pages/confirmation';
 @import 'pages/landingPage';
 @import 'pages/matches';
-@import 'pages/messaging';
 @import 'pages/news';
 @import 'pages/notifications';
 @import 'pages/pages';

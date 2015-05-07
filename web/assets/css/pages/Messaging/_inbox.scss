@@ -1,0 +1,27 @@
+@include component('messages') {
+    @include element('search') {
+        @include display(flex);
+
+        border-bottom: $Border-Default;
+        padding-bottom: 5px;
+
+        @include element('input') {
+            @extend %remove-input-style;
+            @include flex(1);
+        }
+
+        @include element('icon') {
+            @include display(flex);
+
+            padding: 0 10px;
+
+            i {
+                margin: auto;
+            }
+        }
+    }
+
+    @include element('inbox') {
+
+    }
+}
