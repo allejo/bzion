@@ -26,19 +26,19 @@
             </div>
         </section>
 
-        <section class="o-layout c-roster">
+        <section class="o-layout">
             {% for team in teams %}
-                <article class="o-layout__body--full c-team-banner">
-                    {{  team.rankImageLiteral | raw }}
-                    <section class="c-team-banner__team-bio">
-                        <article class="c-team-banner__team-bio__info">
-                            <section class="c-team-banner__team-bio__info__summary">
-                                <span class="c-team-banner__team-bio__info__summary__name">{{ link_to(team) }}</span>
-                                <span class="c-team-banner__team-bio__info__summary__elo">{{ team.elo }}</span>
+                <article class="o-layout__body--full c-team-widget">
+                    {{ team.rankImageLiteral | raw }}
+                    <section class="c-team-widget__info">
+                        <article class="c-team-widget__info__header">
+                            <section class="c-team-widget__info__header__summary">
+                                <span class="c-team-widget__info__header__summary__name">{{ link_to(team) }}</span>
+                                <span class="c-team-widget__info__header__summary__elo">{{ team.elo }}</span>
                             </section>
 
-                            <section class="c-team-summary__stats">
-                                <p class="c-team-summary__stats__matches">
+                            <section class="c-team-widget__info__header__matches">
+                                <p class="c-team-widget__info__header__matches__stats">
                                     <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}">{{ team.matchesWon }}</a> -
                                     <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}">{{ team.matchesLost }}</a> -
                                     <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}">{{ team.matchesDraw }}</a>
@@ -46,7 +46,7 @@
                             </section>
                         </article>
 
-                        <article class="c-team-banner__team-bio__meta">
+                        <article class="c-team-widget__info__meta">
                             <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
                             <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
                             <span><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</span>

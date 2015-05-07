@@ -1,15 +1,3 @@
-@include scope('teams') {
-    margin-bottom: $Settings-Page_Section-Margin;
-
-    @include component('team-banner') {
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-}
-
 @include scope('team-profile') {
     @include component('team') {
         @include element('information') {
@@ -216,19 +204,27 @@
     }
 }
 
-@include component('team-banner') {
+// On the team list page, a widget is the element each team will have with all their information
+// and statistics
+@include component('team-widget') {
     @include display(flex);
 
+    margin-bottom: $Settings-Page_Section-Margin;
+
+    // The rank icon
     @include component('rank') {
         margin: 3px 10px 0 0;
     }
 
-    @include element('team-bio') {
+    // All of the information relating to the team
+    @include element('info') {
         @include flex(1);
 
-        @include element('info') {
+        // The header of each "widget" which will contain a summary and match stats
+        @include element('header') {
             @include display(flex);
 
+            // A summary will contain the team name and the elo
             @include element('summary') {
                 @include flex(1);
 
@@ -257,8 +253,21 @@
                     }
                 }
             }
+
+            // The matches element will have all of the wins, losses, and draws
+            @include element('matches') {
+                // We're hiding it on a phone because there's not enough room and this information isn't imperative
+                @include respond-to(phones) {
+                    display: none;
+                }
+
+                @include element('stats') {
+
+                }
+            }
         }
 
+        // The meta section will have all the information such as activity, leader, and number of members
         @include element('meta') {
             margin-top: 5px;
 
