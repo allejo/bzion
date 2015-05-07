@@ -5,7 +5,7 @@ GEM
     sass (3.4.13)
     sass-media_query_combiner (0.0.7)
       sass (>= 3.2.0)
-    scss-lint (0.34.0)
+    scss-lint (0.38.0)
       rainbow (~> 2.0)
       sass (~> 3.4.1)
 
