@@ -1,33 +1,31 @@
 <section class="{{ customClass }} c-messages__inbox">
     {% for group in groups %}
-        <div class="c-messages__inbox__message">
-            <a data-id="{{ group.id }}" href="{{ group.url }}">
-                <section class="meta">
-                    <p class="subject">{{ group.subject }}</p>
-                    <p class="timestamp">{{ group.lastActivity }}</p>
-                </section>
+        <a class="c-messages__inbox__message" data-id="{{ group.id }}" href="{{ group.url }}">
+            <section class="c-messages__inbox__message__meta">
+                <p class="c-messages__inbox__message__meta__subject">{{ group.subject }}</p>
+                <p class="c-messages__inbox__message__meta__timestamp">{{ group.lastActivity }}</p>
+            </section>
 
-                <p class="members">
-                    {% if group.members is not empty %}
-                        {% for member in group.members %}
-                            {{- member.name -}}
-                            {%- if not loop.last -%}
-                                {{- ', ' -}}
-                            {%- endif -%}
-                        {% endfor %}
-                    {% else %}
-                        No other recipients
-                    {% endif %}
-                </p>
+            <p class="c-messages__inbox__message__members">
+                {% if group.members is not empty %}
+                    {% for member in group.members %}
+                        {{- member.name -}}
+                        {%- if not loop.last -%}
+                            {{- ', ' -}}
+                        {%- endif -%}
+                    {% endfor %}
+                {% else %}
+                    No other recipients
+                {% endif %}
+            </p>
 
-                <article class="last_message">
-                    {% set lastmessage = group.lastmessage %}
-                    {% if lastmessage is valid %}
-                        <strong>{{ lastmessage.author.username }}:</strong>
-                        {{ lastmessage.content|markdown(true, false)|striptags|truncate(50)|raw }}
-                    {% endif %}
-                </article>
-            </a>
-        </div>
+            <article class="c-messages__inbox__message__latest-message">
+                {% set lastmessage = group.lastmessage %}
+                {% if lastmessage is valid %}
+                    <strong>{{ lastmessage.author.username }}:</strong>
+                    {{ lastmessage.content|markdown(true, false)|striptags|truncate(50)|raw }}
+                {% endif %}
+            </article>
+        </a>
     {% endfor %}
 </section>

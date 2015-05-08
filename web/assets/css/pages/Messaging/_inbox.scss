@@ -1,8 +1,19 @@
+@include scope('message-inbox') {
+    @include component('page') {
+        @include element('header') {
+            margin-bottom: 10px;
+        }
+    }
+}
+
 @include component('messages') {
+    margin-bottom: 0;
+
     @include element('search') {
         @include display(flex);
 
         border-bottom: $Border-Default;
+        margin-bottom: 0;
         padding-bottom: 5px;
 
         @include element('input') {
@@ -22,6 +33,45 @@
     }
 
     @include element('inbox') {
+        @include element('message') {
+            border-bottom: $Border-Default;
+            color: $Color-Black;
+            display: block;
+            padding: $Settings-Page_Section-Small_Margin;
 
+            @include element('meta') {
+                @include display(flex);
+
+                @include element('subject') {
+                    @include flex(1);
+
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                @include element('timestamp') {
+                    color: $Color-Medium_Grey;
+                    font-size: 14px;
+                }
+            }
+
+            @include element('members') {
+                color: $Color-Medium_Grey;
+                font-size: 14px;
+                font-style: italic;
+            }
+
+            @include element('latest-message') {
+                margin-top: 10px;
+            }
+
+            &:hover {
+                background-color: $Color-Blue_Grey
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
     }
 }
