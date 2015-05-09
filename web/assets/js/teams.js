@@ -5,17 +5,17 @@ if (typeof teamWins !== 'undefined' && typeof teamLosses !== 'undefined' && type
     var pieData = [
         {
             value: teamWins,
-            color: "#EBEBEB",
+            color: $('#winsColor').css('background-color'),
             label: "Wins"
         },
         {
             value: teamLosses,
-            color: "#B6D1D8",
+            color: $('#lossColor').css('background-color'),
             label: "Losses"
         },
         {
             value: teamDraws,
-            color: "#8FDC00",
+            color: $('#drawColor').css('background-color'),
             label: "Draws"
         }
     ];
