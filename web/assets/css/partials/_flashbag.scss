@@ -1,6 +1,7 @@
 @include component('flashbag') {
     $width: 50%;
 
+    height: 0;
     left: 50%;
     margin: 0 0 0 (-1 * ($width / 2));
     position: fixed;
@@ -8,7 +9,9 @@
     width: $width;
 
     @include element('item') {
-        // @TODO Is animation CSS or JS?
+        @include animation(slide linear 1s forwards);
+        @include animation-delay(3s);
+        @include transform-origin(50% 50%);
 
         border: 1px solid;
         border-bottom-left-radius: $Border-Radius;
@@ -16,5 +19,14 @@
         border-top: 0;
         padding: 10px 0;
         text-align: center;
+    }
+}
+
+@include keyframes(slide) {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    100% {
+        transform: translate(0px, -45px);
     }
 }
