@@ -12,7 +12,7 @@ matrix:
             - NO_COVERAGE=1
             - BZION_HHVM=1
     allow_failures:
-        - php: hhvm
+        - php: [7, hhvm]
     fast_finish: true
 
 install:
