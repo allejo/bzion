@@ -12,7 +12,7 @@ use Composer\IO\ConsoleIO;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Phinx\Console\PhinxApplication;
-use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -86,7 +86,7 @@ class ScriptHandler
             // Create our own IO
             $input = new ArrayInput(array());
             $output = new ConsoleOutput();
-            $helperSet = new HelperSet(array(new DialogHelper()));
+            $helperSet = new HelperSet(array(new QuestionHelper()));
 
             $io = new ConsoleIO($input, $output, $helperSet);
         }
@@ -215,7 +215,7 @@ class ScriptHandler
 
         $path = $testing ? 'testing' : 'mysql';
 
-        $config = Yaml::parse($configPath);
+        $config = Yaml::parse(file_get_contents($configPath));
 
         if (isset($config['bzion'][$path])) {
             return $config['bzion'][$path];

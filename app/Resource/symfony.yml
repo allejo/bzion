@@ -15,6 +15,10 @@ framework:
     session:
         handler_id: ~
 
+framework:
+    assets:
+        base_path: ~
+
 twig:
     paths:
         "%kernel.root_dir%/../views": bzion

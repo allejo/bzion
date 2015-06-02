@@ -22,11 +22,12 @@ class Extractor extends ApiDocExtractor
      *  - annotation
      *  - resource
      *
-     * @param array $routes array of Route-objects for which the annotations should be extracted
+     * @param array  $routes array of Route-objects for which the annotations should be extracted
+     * @param string $view
      *
      * @return array
      */
-    public function extractAnnotations(array $routes)
+    public function extractAnnotations(array $routes, $view = 'default')
     {
         foreach ($routes as &$route) {
             if (!$route instanceof Route) {

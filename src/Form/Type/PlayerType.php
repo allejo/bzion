@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlayerType extends AbstractType
 {
@@ -278,9 +278,9 @@ class PlayerType extends AbstractType
         return $models;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setOptional(array('include'));
+        $resolver->setDefined(array('include'));
         $resolver->setDefaults(array(
             'compound' => true,
             'label'    => false,
