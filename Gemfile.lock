@@ -16,3 +16,6 @@ DEPENDENCIES
   sass
   sass-media_query_combiner
   scss-lint
+
+BUNDLED WITH
+   1.10.1
