@@ -1,5 +1,5 @@
 // The CSS class that will be used as the main layout
-@include object('layout') {
+@include object('row') {
     @extend %wrapper;
     @include desktop-container;
 
@@ -17,7 +17,7 @@
     }
 
     // An element that will have the important content of a page
-    @include element('body') {
+    @include element('column') {
         // When a page has a sidebar, this modifier will appropriately use the remaining space
         @include modifier('with-sidebar') {
             @include desktop-columns(9);

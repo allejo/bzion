@@ -12,9 +12,9 @@
             </div>
         </section>
 
-        <sections class="o-layout">
+        <sections class="o-row">
             {% for month in notifications %}
-                <section class="o-layout__body--full">
+                <section class="o-row__column--full">
                     <h3>{{ month.date.format('F Y') }}</h3>
 
                     <ul class="c-notifications has-no-padding">

@@ -39,9 +39,9 @@
             {#{{ form(inviteForm)}}#}
         {#{% endif %}#}
 
-        <section class="o-layout c-messages">
-            {% include "Message/searchbar.html.twig" with {'customClass': 'o-layout__body--full'} %}
-            {% include "Message/conversations.html.twig" with {'customClass': 'o-layout__body--full'} %}
+        <section class="o-row c-messages">
+            {% include "Message/searchbar.html.twig" with {'customClass': 'o-row__column--full'} %}
+            {% include "Message/conversations.html.twig" with {'customClass': 'o-row__column--full'} %}
         </section>
 
         {# @TODO Figure out what to do with this thing #}

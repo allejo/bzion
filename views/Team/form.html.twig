@@ -8,13 +8,13 @@
     </section>
 
     {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form' } }) }}
-        <section class="o-layout c-form__editor">
-            <article class="o-layout__body--with-sidebar c-form__editor__body">
+        <section class="o-row c-form__editor">
+            <article class="o-row__column--with-sidebar c-form__editor__body">
                 {{ form_row(form.name) }}
                 {{ form_row(form.description, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
             </article>
 
-            <aside class="o-layout__sidebar c-form__editor__meta c-avatar-container">
+            <aside class="o-row__sidebar c-form__editor__meta c-avatar-container">
                 <div class="c-avatar-container__image">
                     {# Only show an avatar if we're editing an existing team #}
                     {% if avatar is not null %}
@@ -37,8 +37,8 @@
             </aside>
         </section>
 
-        <section class="o-layout c-form__actions">
-            <section class="o-layout__body--full">
+        <section class="o-row c-form__actions">
+            <section class="o-row__column--full">
                 {# Only show the option to edit leadership if we're editing an existing team #}
                 {% if form.leader is not null %}
                     {{ form_row(form.leader) }}
@@ -48,7 +48,7 @@
             </section>
         </section>
 
-        <section class="o-layout o-layout--no-margin c-form__buttons">
+        <section class="o-row o-row--no-margin c-form__buttons">
             {{ form_rest(form) }}
         </section>
     {{ form_end(form) }}

@@ -29,12 +29,12 @@
             </div>
         </section>
 
-        <section class="o-layout c-public-profile">
-            <section class="o-layout__sidebar c-public-profile__profile-picture">
+        <section class="o-row c-public-profile">
+            <section class="o-row__sidebar c-public-profile__profile-picture">
                 <img src="{{ player.avatar|imagine_filter('huge_thumb') }}">
             </section>
 
-            <section class="o-layout__body--with-sidebar c-public-profile__details">
+            <section class="o-row__column--with-sidebar c-public-profile__details">
                 <p>
                     {% if player.id == player.team.leader.id %}
                         <strong>Leader of</strong> {{ link_to(player.team) }}
@@ -61,8 +61,8 @@
         {% if me.hasPermission("view_visitor_log") %}
             <hr>
 
-            <section class="o-layout c-private-profile">
-                <section class="o-layout__body--half c-private-profile__callsigns">
+            <section class="o-row c-private-profile">
+                <section class="o-row__column--half c-private-profile__callsigns">
                     <h4>
                         Previous Callsigns
                         <small>
@@ -77,7 +77,7 @@
                     </ul>
                 </section>
 
-                <section class="o-layout__body--half c-private-profile__ips">
+                <section class="o-row__column--half c-private-profile__ips">
                     <h4>
                         Known IP Addresses
                         <small>
@@ -92,8 +92,8 @@
                 </section>
             </section>
 
-            <section class="o-layout c-private-profile">
-                <section class="o-layout__body--full c-private-profile__notes">
+            <section class="o-row c-private-profile">
+                <section class="o-row__column--full c-private-profile__notes">
                     <h4>Admin Notes</h4>
                     {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
                         {{ form_errors(adminNotesForm) }}
