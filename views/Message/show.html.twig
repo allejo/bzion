@@ -10,33 +10,28 @@
     }
 ] %}
 
-{% set viewTitle = group.subject %}
+{% set viewTitle = "Subject: " ~ group.subject %}
 
 {% block messages_body %}
-    <section class="o-row c-messages">
-        <aside class="o-row__sidebar">
+    <section class="o-row c-messenger">
+        <aside class="c-messenger__sidebar">
             {% include "Message/searchbar.html.twig" %}
             {% include "Message/conversations.html.twig" %}
         </aside>
 
-        <section id="groupMessages" class="o-row__column--with-sidebar" data-id="{{ group.id }}">
+        <section id="groupMessages" class="c-messenger__messages" data-id="{{ group.id }}">
             <div class="dimmable">
                 <section class="conversation_details">
-                    <div class="meta">
-                        <p class="subject">{{ group.subject }}</p>
-
-                        <div class="tools">
-                            <i class="fa fa-cog"></i>
-                            <i class="fa fa-times close"></i>
-                        </div>
-                    </div>
                     <p class="members">
+                        Conversation with
                         {% if group.members is not empty %}
                             {% for member in group.members %}
-                                {{- member.name -}}
-                                {%- if not loop.last -%}
-                                    {{- ', ' -}}
-                                {%- endif -%}
+                                {% if me.name != member.name %}
+                                    {{- link_to(member) -}}
+                                    {%- if not loop.last -%}
+                                        {{- ', ' -}}
+                                    {%- endif -%}
+                                {% endif %}
                             {% endfor %}
                         {% else %}
                             No other recipients

@@ -1,0 +1,14 @@
+@include component('messenger') {
+    @include element('sidebar') {
+        @include desktop-columns(4, 0);
+
+        @include respond-to(phablets) {
+            display: none;
+        }
+    }
+
+    @include element('messages') {
+        @include desktop-columns(8, 0);
+        @include phablet-columns(12);
+    }
+}
