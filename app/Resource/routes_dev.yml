@@ -1,17 +1,17 @@
 dev_generic_error:
-    pattern:    /_error
+    path:     /_error
     defaults: { _controller: 'Error', _action: 'genericError' }
 
 dev_generic_error_with_message:
-    pattern:    /_error/{message}
+    path:     /_error/{message}
     defaults: { _controller: 'Error', _action: 'genericError' }
 
 dev_model_not_found_error:
-    pattern:    /_error/notfound/{type}
+    path:     /_error/notfound/{type}
     defaults: { _controller: 'Error', _action: 'modelNotFound', type: 'Player' }
 
 dev_model_not_found_error_with_message:
-    pattern:    /_error/notfound/{type}/{message}
+    path:     /_error/notfound/{type}/{message}
     defaults: { _controller: 'Error', _action: 'modelNotFound', type: 'Player' }
 
 _main:

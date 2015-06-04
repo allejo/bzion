@@ -1,5 +1,5 @@
 index:
-    pattern:  /
+    path:   /
     defaults: { _controller: 'Home', _action: 'show' }
 
 _liip_imagine:
@@ -7,232 +7,233 @@ _liip_imagine:
     defaults: { _defaultHandler: true }
 
 admin_list:
-    pattern:    /admins
+    path:     /admins
     defaults: { _controller: 'Admin', _action: 'list' }
 
 admin_wipe:
-    pattern:    /admin/deleted
+    path:     /admin/deleted
     defaults: { _controller: 'Admin', _action: 'wipe' }
 
 api_leagueoverseer:
-    pattern:    /api/leagueOverseer
+    path:     /api/leagueOverseer
     defaults: { _controller: 'LeagueOverseerHook', _action: 'query' }
 
 ban_list:
-    pattern:    /bans
+    path:     /bans
     defaults: { _controller: 'Ban', _action: 'list' }
 
 ban_create:
-    pattern:    /bans/new
+    path:     /bans/new
     defaults: { _controller: 'Ban', _action: 'create' }
 
 ban_show:
-    pattern:    /bans/{ban}
+    path:     /bans/{ban}
     defaults: { _controller: 'Ban', _action: 'show' }
 
 ban_edit:
-    pattern:    /bans/{ban}/edit
+    path:     /bans/{ban}/edit
     defaults: { _controller: 'Ban', _action: 'edit' }
 
 ban_expire:
-    pattern:    /bans/{ban}/unban
+    path:     /bans/{ban}/unban
     defaults: { _controller: 'Ban', _action: 'unban' }
 
 ban_delete:
-    pattern:    /bans/{ban}/delete
+    path:     /bans/{ban}/delete
     defaults: { _controller: 'Ban', _action: 'delete' }
 
 invitation_accept:
-    pattern:    /invitations/{invitation}
+    path:     /invitations/{invitation}
     defaults: { _controller: 'Invitation', _action: 'accept' }
 
 login:
-    pattern:    /login
+    path:     /login
     defaults: { _controller: 'Login', _action: 'login', _noMaint: true }
 
 logout:
-    pattern:    /logout
+    path:     /logout
     defaults: { _controller: 'Login', _action: 'logout', _noMaint: true }
 
 match_list:
-    pattern:    /matches
+    path:     /matches
     defaults: { _controller: 'Match', _action: 'list' }
 
 match_by_team_list:
-    pattern:    /teams/{team}/matches
+    path:     /teams/{team}/matches
     defaults: { _controller: 'Match', _action: 'list' }
 
 match_by_team_list_sort:
-    pattern:    /teams/{team}/matches/{type}
+    path:     /teams/{team}/matches/{type}
     defaults: { _controller: 'Match', _action: 'list' }
 
 match_enter:
-    pattern:    /matches/enter
+    path:     /matches/enter
     defaults: { _controller: 'Match', _action: 'create' }
 
 match_delete:
-    pattern:    /matches/{match}/delete
+    path:     /matches/{match}/delete
     defaults: { _controller: 'Match', _action: 'delete' }
 
 message_list:
-    pattern:    /messages
+    path:     /messages
     defaults: { _controller: 'Message', _action: 'list' }
 
 message_compose:
-    pattern:    /messages/compose
+    path:     /messages/compose
     defaults: { _controller: 'Message', _action: 'compose' }
 
 message_search:
-    pattern:    /messages/search
+    path:     /messages/search
     defaults: { _controller: 'Message', _action: 'search' }
 
 message_discussion_show:
-    pattern:    /messages/{discussion}
+    path:     /messages/{discussion}
     defaults: { _controller: 'Message', _action: 'show' }
 
 message_discussion_leave:
-    pattern:    /messages/{discussion}/leave
+    path:     /messages/{discussion}/leave
     defaults: { _controller: 'Message', _action: 'leave' }
 
 message_discussion_kick:
-    pattern:    /messages/{discussion}/kick/{player}
+    path:     /messages/{discussion}/kick/{player}
     defaults: { _controller: 'Message', _action: 'kick' }
 
 news_list:
-    pattern:    /news
+    path:     /news
     defaults: { _controller: 'News', _action: 'list' }
 
 news_new:
-    pattern:    /news/new
+    path:     /news/new
     defaults: { _controller: 'News', _action: 'create' }
 
 news_show:
-    pattern:    /news/{article}
+    path:     /news/{article}
     defaults: { _controller: 'News', _action: 'show' }
 
 news_edit:
-    pattern:    /news/{article}/edit
+    path:     /news/{article}/edit
     defaults: { _controller: 'News', _action: 'edit' }
 
 news_delete:
-    pattern:    /news/{article}/delete
+    path:     /news/{article}/delete
     defaults: { _controller: 'News', _action: 'delete' }
 
 news_category_show:
-    pattern:    /news/category/{category}
+    path:     /news/category/{category}
     defaults: { _controller: 'News', _action: 'list' }
 
 notification_list:
-    pattern:    /notifications
+    path:     /notifications
     defaults: { _controller: 'Notification', _action: 'list' }
 
 player_list:
-    pattern:    /players
+    path:     /players
     defaults: { _controller: 'Player', _action: 'list' }
 
 player_show:
-    pattern:    /players/{player}
+    path:     /players/{player}
     defaults: { _controller: 'Player', _action: 'show' }
 
 profile_show:
-    pattern:    /profile
+    path:     /profile
     defaults: { _controller: 'Profile', _action: 'show' }
 
 profile_edit:
-    pattern:    /profile/edit
+    path:     /profile/edit
     defaults: { _controller: 'Profile', _action: 'edit' }
 
 profile_confirm:
-    pattern:    /profile/confirm/{token}
+    path:     /profile/confirm/{token}
     defaults: { _controller: 'Profile', _action: 'confirm' }
 
 server_list:
-    pattern:    /servers
+    path:     /servers
     defaults: { _controller: 'Server', _action: 'list' }
 
 server_new:
-    pattern:    /servers/new
+    path:     /servers/new
     defaults: { _controller: 'Server', _action: 'create' }
 
 server_show:
-    pattern:    /servers/{server}
+    path:     /servers/{server}
     defaults: { _controller: 'Server', _action: 'show' }
 
 server_delete:
-    pattern:    /servers/{server}/delete
+    path:     /servers/{server}/delete
     defaults: { _controller: 'Server', _action: 'delete' }
 
 server_edit:
-    pattern:    /servers/{server}/edit
+    path:     /servers/{server}/edit
     defaults: { _controller: 'Server', _action: 'edit' }
 
 team_list:
-    pattern:    /teams
+    path:     /teams
     defaults: { _controller: 'Team', _action: 'list' }
 
 team_new:
-    pattern:    /teams/new
+    path:     /teams/new
     defaults: { _controller: 'Team', _action: 'create' }
 
 team_show:
-    pattern:    /teams/{team}
+    path:     /teams/{team}
     defaults: { _controller: 'Team', _action: 'show' }
 
 team_members:
-    pattern:    /teams/{team}/members
+    path:     /teams/{team}/members
     defaults: { _controller: 'Player', _action: 'list' }
 
 team_join:
-    pattern:    /teams/{team}/join
+    path:     /teams/{team}/join
     defaults: { _controller: 'Team', _action: 'join' }
 
 team_edit:
-    pattern:    /teams/{team}/edit
+    path:     /teams/{team}/edit
     defaults: { _controller: 'Team', _action: 'edit' }
 
 team_delete:
-    pattern:    /teams/{team}/delete
+    path:     /teams/{team}/delete
     defaults: { _controller: 'Team', _action: 'delete' }
 
 team_kick:
-    pattern:    /teams/{team}/kick/{player}
+    path:     /teams/{team}/kick/{player}
     defaults: { _controller: 'Team', _action: 'kick' }
 
 team_invite:
-    pattern:    /teams/{team}/invite/{player}
+    path:     /teams/{team}/invite/{player}
     defaults: { _controller: 'Invitation', _action: 'invite' }
 
 team_assign_leader:
-    pattern:    /teams/{team}/change-leader/{player}
+    path:     /teams/{team}/change-leader/{player}
     defaults: { _controller: 'Team', _action: 'assignLeader' }
 
 team_abandon:
-    pattern:    /teams/{team}/abandon
+    path:     /teams/{team}/abandon
     defaults: { _controller: 'Team', _action: 'abandon' }
 
 custom_page_create:
-    pattern:    /pages/new
+    path:     /pages/new
     defaults: { _controller: 'Page', _action: 'create' }
 
 custom_page_show:
-    pattern:    /{page}
+    path:     /{page}
     defaults: { _controller: 'Page', _action: 'show' }
 
 custom_page_edit:
-    pattern:    /{page}/edit
+    path:     /{page}/edit
     defaults: { _controller: 'Page', _action: 'edit' }
 
 custom_page_delete:
-    pattern:    /{page}/delete
+    path:     /{page}/delete
     defaults: { _controller: 'Page', _action: 'delete' }
 
-NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
-    defaults: { _defaultHandler: true }
+# FIXME: Disabled temporarily, since it contains deprecated code that makes tests fail
+# NelmioApiDocBundle:
+#     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+#     prefix:   /api/doc
+#     defaults: { _defaultHandler: true }
 
 trailing_slash:
-    path: /{url}
+    path:  /{url}
     defaults: { _controller: 'Redirecting', _action: 'removeTrailingSlash' }
     methods: [GET]
     requirements:

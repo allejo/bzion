@@ -86,7 +86,7 @@ abstract class HTMLController extends Controller
     public function callAction($action = null)
     {
         $response = parent::callAction($action);
-        if (!$response->isRedirection()) {
+        if (!$response->isRedirection() && !$response->isNotFound()) {
             $this->saveURL();
         }
 

@@ -4,7 +4,7 @@ namespace BZIon\Form\Type;
 use BZIon\Form\Transformer\TimezoneTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimezoneType extends AbstractType
 {
@@ -13,7 +13,7 @@ class TimezoneType extends AbstractType
         $builder->addModelTransformer(new TimezoneTransformer());
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'choices' => $this->getTimezones(),

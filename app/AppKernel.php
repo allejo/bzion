@@ -11,13 +11,13 @@ use BZIon\Twig\TruncateFilter;
 use BZIon\Twig\ValidTest;
 use BZIon\Twig\YesNoFilter;
 use Liip\ImagineBundle\Templating\ImagineExtension;
+use Symfony\Bridge\Twig\Extension\AssetExtension;
 use Symfony\Bridge\Twig\Extension\DumpExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\Extension\StopwatchExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
@@ -149,7 +149,7 @@ class AppKernel extends Kernel
             new ImagineExtension($this->container->get('liip_imagine.cache.manager'))
         );
         $twig->addExtension(
-            new AssetsExtension($this->container, $this->container->get('router')->getContext())
+            new AssetExtension($this->container->get('assets.packages'))
         );
         $twig->addExtension(
             new StopwatchExtension($this->container->get('debug.stopwatch', null))
@@ -195,6 +195,7 @@ class AppKernel extends Kernel
     {
         $this->container->enterScope('request');
         $this->container->set('request', $request, 'request');
+        $this->container->get('request_stack')->push($request);
 
         if ($type === self::MASTER_REQUEST) {
             $this->request = $request;

@@ -79,13 +79,13 @@
                     <canvas id="teamMatchStats" class="c-team__match-stats__visual__graph"></canvas>
                     <ul class="c-team__match-stats__visual__legend">
                         <li>
-                            <div class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
+                            <div id="winsColor" class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
                         </li>
                         <li>
-                            <div class="losses"></div> {{ 'loss'|plural(team.matchesLost) }}
+                            <div id="lossColor" class="losses"></div> {{ 'loss'|plural(team.matchesLost) }}
                         </li>
                         <li>
-                            <div class="draws"></div> {{ 'draw'|plural(team.matchesDraw) }}
+                            <div id="drawColor" class="draws"></div> {{ 'draw'|plural(team.matchesDraw) }}
                         </li>
                     </ul>
                 </section>

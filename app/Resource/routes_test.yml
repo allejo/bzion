@@ -1,5 +1,5 @@
 test_login:
-    pattern:    /login/{user}
+    path:     /login/{user}
     defaults: { _controller: 'Login', _action: 'loginAsTestUser' }
 
 _main:

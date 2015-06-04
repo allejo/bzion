@@ -4,7 +4,7 @@ namespace BZIon\Form\Type;
 use BZIon\Form\Transformer\DatetimeWithTimezoneTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatetimeWithTimezoneType extends AbstractType
 {
@@ -19,7 +19,7 @@ class DatetimeWithTimezoneType extends AbstractType
             ->addViewTransformer(new DatetimeWithTimezoneTransformer());
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'compound'   => true,

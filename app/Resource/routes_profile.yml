@@ -14,7 +14,7 @@ _configurator:
     defaults: { _defaultHandler: true }
 
 test_login:
-    pattern:    /login/{user}
+    path:     /login/{user}
     defaults: { _controller: 'Login', _action: 'loginAsTestUser', _noMaint: true }
 
 _main:
