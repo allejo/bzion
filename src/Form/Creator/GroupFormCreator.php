@@ -34,6 +34,6 @@ class GroupFormCreator extends ModelFormCreator
             ->add('Message', 'textarea', $notBlank)
             ->add('Send', 'submit')
             // Prevents JS from going crazy if we load a page with AJAX
-            ->setAction(\Service::getGenerator()->generate('message_list'));
+            ->setAction(\Service::getGenerator()->generate('message_compose'));
     }
 }

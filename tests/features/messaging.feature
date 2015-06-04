@@ -11,7 +11,7 @@ Feature: Messaging
    Scenario: Banned user
       Given I am a banned user
       And there is a player called "allejo"
-      When I go to "/messages"
+      When I go to "/messages/compose"
       Then I should see "You are not allowed to send messages"
       When "allejo" sends me a message
       And I go to "/messages/1"
@@ -23,6 +23,7 @@ Feature: Messaging
       Given I am logged in as "unequivocal"
       And there is a player called "Incontestable"
       When I go to "/messages"
+      And I follow "Compose"
       And I fill in "form_Recipients_players" with "INCONTESTABLE,instant"
       And I press "Send"
       Then I should see "There is no player called instant"
@@ -35,7 +36,7 @@ Feature: Messaging
    Scenario: Send new message
      Given I am logged in
      And there is a player called "puissant"
-     When I go to "/messages"
+     When I go to "/messages/compose"
      And I fill in "form_Recipients_players" with "puissant"
      And I fill in "form_Subject" with "Importance"
      And I fill in "form_Message" with "Lorem ipsum text"
