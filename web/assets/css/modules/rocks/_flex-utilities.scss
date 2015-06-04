@@ -1,7 +1,0 @@
-@mixin column-reverse() {
-    @include flex-direction(column-reverse);
-}
-
-@mixin row-reverse() {
-    @include flex-direction(row-reverse);
-}

@@ -60,7 +60,7 @@
 /// @example scss - SCSS Equivalent
 ///   @include span-columns($columns);
 
-@mixin desktop-columns($columns, $gutter: calculate-gutter()) {
+@mixin desktop-columns($columns, $gutter: $rocks-gutter) {
     @include make-columns($columns, $gutter);
 }
 
@@ -77,7 +77,7 @@
 ///       @include span-columns($columns);
 ///   }
 
-@mixin tablet-columns($columns, $gutter: calculate-gutter()) {
+@mixin tablet-columns($columns, $gutter: $rocks-gutter) {
     @include respond-to(tablets) {
         @include make-columns($columns, $gutter);
     }
@@ -96,7 +96,7 @@
 ///       @include span-columns($columns);
 ///   }
 
-@mixin phablet-columns($columns, $gutter: calculate-gutter()) {
+@mixin phablet-columns($columns, $gutter: $rocks-gutter) {
     @include respond-to(phablets) {
         @include make-columns($columns, $gutter);
     }
@@ -115,7 +115,7 @@
 ///       @include span-columns($columns);
 ///   }
 
-@mixin phone-columns($columns, $gutter: calculate-gutter()) {
+@mixin phone-columns($columns, $gutter: $rocks-gutter) {
     @include respond-to(phones) {
         @include make-columns($columns, $gutter);
     }
