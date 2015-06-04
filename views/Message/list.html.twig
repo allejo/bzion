@@ -1,0 +1,20 @@
+{% extends "Message/layout.html.twig" %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('message_compose'),
+        'icon': 'pencil',
+        'text': 'Compose',
+        'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+    }
+] %}
+
+{% set viewTitle = "Messages" %}
+
+{% block messages_body %}
+    <section class="o-row c-messages">
+        {% include "Message/searchbar.html.twig" with {'customClass': 'o-row__column--full'} %}
+        {% include "Message/conversations.html.twig" with {'customClass': 'o-row__column--full'} %}
+    </section>
+{% endblock %}

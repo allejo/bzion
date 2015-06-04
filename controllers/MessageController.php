@@ -35,6 +35,11 @@ class MessageController extends JSONController
         Service::getTemplateEngine()->addGlobal("searchForm", $searchForm->createView());
     }
 
+    public function listAction()
+    {
+        return array();
+    }
+
     public function composeAction(Player $me, Request $request)
     {
         if (!$me->hasPermission(Permission::SEND_PRIVATE_MSG)) {

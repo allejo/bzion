@@ -76,7 +76,7 @@ match_delete:
 
 message_list:
     pattern:    /messages
-    defaults: { _controller: 'Message', _action: 'compose' }
+    defaults: { _controller: 'Message', _action: 'list' }
 
 message_compose:
     pattern:    /messages/compose

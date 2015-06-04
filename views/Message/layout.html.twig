@@ -1,16 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% set pageButtons = [
-    {
-        'color': 'blue',
-        'url': 'message_compose',
-        'icon': 'pencil',
-        'text': 'Compose',
-        'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
-    }
-] %}
-
-{% block title %}Messages{% endblock %}
+{% block title %}{{ viewTitle }}{% endblock %}
 
 {% block button_row %}
     {% set type = type|default('submit') %}
@@ -26,7 +16,7 @@
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
-                    <h1>Messages</h1>
+                    <h1>{{ viewTitle }}</h1>
                 </section>
 
                 {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
@@ -39,10 +29,9 @@
             {#{{ form(inviteForm)}}#}
         {#{% endif %}#}
 
-        <section class="o-row c-messages">
-            {% include "Message/searchbar.html.twig" with {'customClass': 'o-row__column--full'} %}
-            {% include "Message/conversations.html.twig" with {'customClass': 'o-row__column--full'} %}
-        </section>
+        {% block messages_body %}
+
+        {% endblock %}
 
         {# @TODO Figure out what to do with this thing #}
         {#{% block messages %}#}
