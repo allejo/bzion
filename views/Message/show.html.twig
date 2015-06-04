@@ -19,10 +19,10 @@
             {% include "Message/conversations.html.twig" %}
         </aside>
 
-        <section id="groupMessages" class="c-messenger__messages" data-id="{{ group.id }}">
+        <section class="c-messenger__conversation" data-id="{{ group.id }}" id="groupMessages">
             <div class="dimmable">
-                <section class="conversation_details">
-                    <p class="members">
+                <section class="c-messenger__conversation__details">
+                    <p class="c-messenger__conversation__details__members">
                         Conversation with
                         {% if group.members is not empty %}
                             {% for member in group.members %}
@@ -39,8 +39,8 @@
                     </p>
                 </section>
 
-                <section class="scrollable_messages">
-                    <ul id="messageView" class="messages">
+                <section class="c-messenger__conversation__container">
+                    <ul id="messageView" class="c-messenger__conversation__container__messages">
                         {% include 'Message/messages.html.twig' %}
                     </ul>
                 </section>

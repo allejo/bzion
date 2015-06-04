@@ -7,49 +7,42 @@
 {% for message in events|reverse %}
     {% if message.isMessage %}
         <li data-id="{{ message.id }}" class="message">
-            {% if message.author.id == me.id -%}
-                <div class="bubble me">
-            {%- else -%}
-                <div class="bubble">
-            {%- endif -%}
-                {# Only display the author details for when the message wasn't sent from the previous user #}
+            {%- if message.author.id != previousAuthor %}
+                <div class="details">
+                    <div class='author'>{{ link_to(message.author) }}</div>
+                    <div class='date'>{{ message.creationDate | humanTime }}</div>
+                </div>
+            {% endif -%}
 
-                {%- if message.author.id != previousAuthor %}
-                    <div class="message_details">
-                        <div class='author'>{{ message.author.username }}</div>
-                        <div class='date'>{{ message.creationDate }}</div>
-                    </div>
-                {% endif -%}
-
-                <p>{{ message.content|markdown(true, false) }}</p>
-            </div>
+            <p>{{ message.content|markdown(true, false) }}</p>
         </li>
     {% else %}
         {% set type = message.category %}
         {% set event = message.event %}
 
-        {% if type == 'group.rename' %}
-            <li><i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"</li>
-        {% elseif type == 'group.abandon' %}
-            <li><i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion</li>
-        {% elseif type == 'group.kick' %}
-            <li><i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion</li>
-        {% elseif type == 'group.join' %}
-            <li><i class="fa fa-plus-circle"></i>
-            {% for member in event.newMembers -%}
-                {%- if not loop.first -%}
-                    {%- if loop.last %} and
-                    {% else -%} ,
-                    {% endif -%}
-                {%- endif -%}
+        <li class="action">
+            {% if type == 'group.rename' %}
+                <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
+            {% elseif type == 'group.abandon' %}
+                <i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion
+            {% elseif type == 'group.kick' %}
+                <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion
+            {% elseif type == 'group.join' %}
+                <i class="fa fa-plus-circle"></i>
+                {% for member in event.newMembers -%}
+                    {%- if not loop.first -%}
+                        {%- if loop.last %} and
+                        {% else -%} ,
+                        {% endif -%}
+                    {%- endif -%}
 
-                {{ link_to(member) }}
-            {%- else -%}
-                Nobody
-            {%- endfor %}
-            joined the discussion
-            </li>
-        {% endif %}
+                    {{ link_to(member) }}
+                {%- else -%}
+                    Nobody
+                {%- endfor %}
+                joined the discussion
+            {% endif %}
+        </li>
     {% endif %}
 
     {% set previousAuthor = message.author.id %}

@@ -2,13 +2,73 @@
     @include element('sidebar') {
         @include desktop-columns(4, 0);
 
+        border-right: $Border-Default;
+
         @include respond-to(phablets) {
             display: none;
         }
     }
 
-    @include element('messages') {
+    @include element('conversation') {
         @include desktop-columns(8, 0);
         @include phablet-columns(12);
+
+        @include element('details') {
+            background-color: $Alert-Informational-Background;
+            color: $Alert-Informational-Text;
+            padding: $Settings-Page_Section-Small_Margin;
+
+            @include element('members') {
+
+            }
+        }
+
+        @include element('container') {
+            @include element('messages') {
+                padding: {
+                    left: $Settings-Page_Section-Small_Margin;
+                    right: $Settings-Page_Section-Small_Margin;
+                }
+
+                li {
+                    list-style-type: none;
+                    margin: {
+                        bottom: 10px;
+                        top: 10px;
+                    }
+
+                    &.action {
+                        font-size: 0.8em;
+                        margin: {
+                            bottom: 5px;
+                            top: 5px;
+                        }
+                    }
+
+                    &.message {
+                        .details {
+                            @include desktop-container();
+
+                            margin-bottom: 5px;
+
+                            .author,
+                            .date {
+                                @include desktop-columns(6);
+                            }
+
+                            .author {
+
+                            }
+
+                            .date {
+                                font-size: 12px;
+                                margin: 0;
+                                text-align: right;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

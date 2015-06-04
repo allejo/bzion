@@ -1,7 +1,7 @@
 @include scope('message-inbox') {
     @include component('page') {
         @include element('header') {
-            margin-bottom: 10px;
+            margin-bottom: 0;
         }
     }
 }
@@ -14,7 +14,10 @@
 
         border-bottom: $Border-Default;
         margin-bottom: 0;
-        padding-bottom: 5px;
+        padding: {
+            bottom: 5px;
+            top: 5px;
+        }
 
         @include element('input') {
             @extend %remove-input-style;
