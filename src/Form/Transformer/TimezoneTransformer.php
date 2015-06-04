@@ -7,6 +7,20 @@ use Symfony\Component\Form\DataTransformerInterface;
 class TimezoneTransformer implements DataTransformerInterface
 {
     /**
+     * The list of timezones where the transformed string can belong
+     * @var array
+     */
+    private $timezones;
+
+    /**
+     * Create a new TimezoneTransformer
+     * @param array $timezones An array of timezones, defaults to TimezoneType::getTimezones()
+     */
+    public function __construct(array $timezones = null) {
+        $this->timezones = ($timezones === null) ? TimezoneType::getTimezones() : $timezones;
+    }
+
+    /**
      * Take a timezone and put its value on the time and timezone fields, so the
      * user can see it
      *
@@ -19,7 +33,7 @@ class TimezoneTransformer implements DataTransformerInterface
             return null;
         }
 
-        $timezones = array_keys(TimezoneType::getTimezones());
+        $timezones = array_keys($this->timezones);
 
         // The provided timezone is in the reduced list of timezones that we
         // show to the user, so we can use it immediately

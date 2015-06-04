@@ -69,7 +69,7 @@ class ProfileFormCreator extends ModelFormCreator
                 'placeholder' => false,
                 'required'    => false
             ))
-            ->add('timezone', new TimezoneType(), array(
+            ->add('timezone', new TimezoneType($this->editing->getTimezone()), array(
                 'constraints' => new NotBlank(),
                 'data'        => $this->editing->getTimezone()
             ))

@@ -8,29 +8,103 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimezoneType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * An extra timezone to include to the list
+     * @var \DateTimeZone|null
+     */
+    private $extraTimezone = null;
+
+    /**
+     * The list of timezones to show
+     * @var array
+     */
+    private $timezones;
+
+    /**
+     * Create new timezone type
+     * @param string|null $extraTimezone An optional extra timezone to include
+     */
+    public function __construct($extraTimezone = null)
     {
-        $builder->addModelTransformer(new TimezoneTransformer());
+        $this->timezones = $this->getTimezones();
+
+        if ($extraTimezone !== null) {
+            $this->extraTimezone = new \DateTimeZone($extraTimezone);
+
+            // Add the extra timezone to the list if it's not there already
+            if (!isset($this->timezones[$this->extraTimezone->getName()])) {
+                $this->timezones = array(
+                    $this->extraTimezone->getName() => $this->getPrettyTimezoneName($this->extraTimezone)
+                ) + $this->timezones;
+            }
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addModelTransformer(new TimezoneTransformer($this->timezones));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => $this->getTimezones(),
+            'choices' => $this->timezones,
             'data'    => 'UTC'
         ));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getParent()
     {
         return 'choice';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return 'timezone';
     }
 
+    /**
+     * Get a user-friendly timezone name
+     * @param  \DateTimeZone $timezone The timezone
+     * @return string
+     */
+    private function getPrettyTimezoneName(\DateTimeZone $timezone)
+    {
+        $offset = $timezone->getOffset(new \DateTime('now'));
+
+        if ($offset == 0) {
+            $formattedOffset = 'GMT';
+        } else {
+            dump($offset);
+            $sign = ($offset > 0) ? '+' : '-';
+
+            $formattedOffset = 'GMT' . $sign . date('H:i', mktime(0, abs($offset)/60));
+        }
+
+        if (substr($timezone->getName(), 0, 7) === 'Etc/GMT') {
+            // Just return the GMT+02:00 text for hardcoded timezone offsets
+            return $formattedOffset;
+        } else {
+            return "($formattedOffset) " . $timezone->getName();
+        }
+    }
+
+    /**
+     * Get a list of the most common timezone names
+     * @return array
+     */
     public static function getTimezones()
     {
         return array(
