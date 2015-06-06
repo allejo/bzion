@@ -31,6 +31,21 @@ class PlayerController extends JSONController
         );
     }
 
+    public function editAction(Player $player, Player $me, Request $request)
+    {
+        if (!$me->canEdit($player)) {
+            throw new ForbiddenException("You are not allowed to edit other players");
+        }
+
+        // Prepare the twig globals early, so that the proper icon is shown
+        // as active on the navbar
+        $this->addTwigGlobals();
+
+        // Forward to the ProfileController
+        $controller = new ProfileController($request->attributes);
+        return $controller->editAction($player, $request, false);
+    }
+
     public function listAction(Request $request, Player $me, Team $team = null)
     {
         $query = $this->getQueryBuilder();

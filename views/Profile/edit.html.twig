@@ -1,13 +1,32 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Edit Profile{% endblock %}
+{% form_theme form _self %}
+
+{% block title -%}
+    {%- if editingSelf -%}
+        Edit Profile
+    {%- else -%}
+        {{ player.name }} :: Edit
+    {%- endif -%}
+{% endblock %}
+
+{% block _form_email_label %}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{- label -}}
+    {% dump %}
+{% endblock %}
 
 {% block content %}
     <main class="c-page s-profile">
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
-                    <h1>Edit Profile</h1>
+                    <h1>{%- if editingSelf -%}
+                        Edit Profile
+                    {%- else -%}
+                        Editing :: {{ player.name }}
+                    {%- endif -%}</h1>
                 </section>
             </div>
         </section>
@@ -15,7 +34,25 @@
         {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form' } }) }}
             <section class="o-layout c-form__editor">
                 <article class="o-layout__body--with-sidebar c-form__editor__body">
-                    {{ form_row(form.email) }}
+                    <div>
+                        <label for="{{ form.email.vars.id }}">
+                            {{ form.email.vars.label }}
+                            {% if not editingSelf and player.emailAddress is not empty %}
+                                    {% if player.verified %}
+                                        <div class="c-form__editor__body__extra c-form__editor__body__extra--success">
+                                            <i class="fa fa-check-circle"></i> Verified
+                                        </div>
+                                    {% else %}
+                                        <div class="c-form__editor__body__extra c-form__editor__body__extra--error">
+                                            <i class="fa fa-times-circle"></i> Not verified
+                                        </div>
+                                    {% endif %}
+                            {% endif %}
+                        </label>
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+
                     {{ form_row(form.description, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
                 </article>
 

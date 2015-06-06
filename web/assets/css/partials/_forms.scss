@@ -13,6 +13,8 @@ button {
     // scss-lint:disable PlaceholderInExtend
     @extend .c-button;
     @extend .c-button--blue;
+
+    margin-right: 5px;
 }
 
 fieldset {
@@ -110,6 +112,19 @@ select {
 
                 @include modifier('small') {
                     min-height: 140px;
+                }
+            }
+
+            @include element('extra') {
+                float: right;
+                font-size: 15px;
+
+                @include modifier('success') {
+                    color: $Color-Green;
+                }
+
+                @include modifier('error') {
+                    color: $Color-Red;
                 }
             }
 

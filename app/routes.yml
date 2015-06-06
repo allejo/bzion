@@ -130,6 +130,10 @@ player_show:
     path:     /players/{player}
     defaults: { _controller: 'Player', _action: 'show' }
 
+player_edit:
+    path:     /players/{player}/edit
+    defaults: { _controller: 'Player', _action: 'edit' }
+
 profile_show:
     path:     /profile
     defaults: { _controller: 'Profile', _action: 'show' }

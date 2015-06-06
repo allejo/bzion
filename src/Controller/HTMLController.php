@@ -15,14 +15,14 @@ abstract class HTMLController extends Controller
      * Whether twig has been prepared
      * @var boolean
      */
-    private $twigReady = false;
+    protected static $twigReady = false;
 
     /**
      * Prepare the twig global variables
      */
-    private function addTwigGlobals()
+    protected function addTwigGlobals()
     {
-        if ($this->twigReady) {
+        if (static::$twigReady) {
             return;
         }
 
@@ -39,7 +39,7 @@ abstract class HTMLController extends Controller
 
         $this->prepareTwig();
 
-        $this->twigReady = true;
+        static::$twigReady = true;
     }
 
     protected function prepareTwig()

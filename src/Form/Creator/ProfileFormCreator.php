@@ -19,6 +19,25 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProfileFormCreator extends ModelFormCreator
 {
     /**
+     * True if the player is editing their own profile, false if an admin is
+     * editing the player
+     *
+     * @var boolean
+     */
+    private $editingSelf = true;
+
+    /**
+     * Set whether the player is editing their own profile
+     *
+     * @param boolean $editingSelf True if the player is editing their own
+     *                             profile, false if an admin is editing the
+     *                             player
+     */
+    public function setEditingSelf($editingSelf) {
+        $this->editingSelf = false;
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function build($builder)
@@ -30,7 +49,7 @@ class ProfileFormCreator extends ModelFormCreator
             $emailConstraints[] = new Email();
         }
 
-        return $builder
+        $builder
             ->add('description', 'textarea', array(
                 'constraints' => new Length(array('max' => 8000)),
                 'data'        => $this->editing->getDescription(),
@@ -56,7 +75,7 @@ class ProfileFormCreator extends ModelFormCreator
                 'label'       => 'E-Mail Address',
                 'required'    => false
             ))
-            // TODO: Disable this when no e-mail has been specified with JS
+            // TODO: Disable this with JS when no e-mail has been specified
             ->add('receive', 'choice', array(
                 'choices' => array(
                     'nothing'    => 'Nothing',
@@ -74,5 +93,35 @@ class ProfileFormCreator extends ModelFormCreator
                 'data'        => $this->editing->getTimezone()
             ))
             ->add('enter', 'submit');
+
+        if (!$this->editingSelf && !empty($this->editing->getEmailAddress()) && !$this->editing->isVerified()) {
+            // Show a button to verify an unverified user's e-mail address to
+            // admins
+            $builder->add('verify_email', 'submit', array(
+                'attr' => array(
+                    'class' => 'c-button--grey'
+                ),
+                'label' => 'Verify E-Mail address'
+            ));
+        }
+
+        return $builder;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function update($form, $player)
+    {
+        $player->setDescription($form->get('description')->getData());
+        $player->setTimezone($form->get('timezone')->getData());
+        $player->setCountry($form->get('country')->getData());
+        $player->setReceives($form->get('receive')->getData());
+
+        if ($form->get('delete_avatar')->isClicked()) {
+            $player->resetAvatar();
+        } else {
+            $player->setAvatarFile($form->get('avatar')->getData());
+        }
     }
 }

@@ -7,6 +7,13 @@
         icon: 'plus',
         text: 'Invite to team',
         condition: me.isValid and not me.isTeamless and me.team.leader.id == me.id
+    },
+    {
+        color: 'blue',
+        url: player.url('edit'),
+        icon: 'edit',
+        text: 'Edit',
+        condition: me.canEdit(player)
     }
 ] %}
 

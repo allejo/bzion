@@ -12,32 +12,54 @@ class ProfileController extends HTMLController
         $this->requireLogin();
     }
 
-    public function editAction(Player $me, Request $request)
+    /**
+     * Edit a profile
+     *
+     * @param  Player  $me      The player's profile to edit
+     * @param  Request $request
+     * @param  boolean $self    Whether a player is editing their own profile,
+     *                          instead of an admin editing another player's
+     *                          profile
+     * @return array
+     */
+    public function editAction(Player $me, Request $request, $self=true)
     {
         $creator = new ProfileFormCreator($me);
-        $form    = $creator->create()->handleRequest($request);
+        $creator->setEditingSelf($self);
+        $form = $creator->create()->handleRequest($request);
 
         if ($form->isValid()) {
-            $me->setDescription($form->get('description')->getData());
-            $me->setTimezone($form->get('timezone')->getData());
-            $me->setCountry($form->get('country')->getData());
-            $me->setReceives($form->get('receive')->getData());
+            if (!$self && $form->has('verify_email') && $form->get('verify_email')->isClicked()) {
+                // An admin is editing a form and has chosen to verify a
+                // player's e-mail address
+                $me->setVerified(true);
 
-            if ($form->get('delete_avatar')->isClicked()) {
-                $me->resetAvatar();
+                // Reset the form so that the "verify email" button gets hidden
+                $form = $creator->create()->handleRequest($request);
             } else {
-                $me->setAvatarFile($form->get('avatar')->getData());
-            }
+                $creator->update($form, $me);
 
-            $email = $form->get('email')->getData();
-            if ($email !== $me->getEmailAddress()) {
-                // User has changed their address, send a confirmation mail
-                $me->setEmailAddress($email);
-                $this->sendConfirmationMessage($me);
+                $email = $form->get('email')->getData();
+                if ($email !== $me->getEmailAddress()) {
+                    // User has changed their address, send a confirmation mail
+                    $me->setEmailAddress($email);
+
+                    if ($self) {
+                        $this->sendConfirmationMessage($me);
+                    } else {
+                        // Admins can set users' e-mail addresses at will, without
+                        // having to send them confirmation messages
+                        $me->setVerified(true);
+                    }
+                }
             }
         }
 
-        return array("player" => $me, "form" => $form->createView());
+        return $this->render('Profile/edit.html.twig', array(
+            "editingSelf" => $self,
+            "player" => $me,
+            "form" => $form->createView()
+        ));
     }
 
     /**
