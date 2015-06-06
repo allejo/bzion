@@ -37,13 +37,12 @@ class PlayerController extends JSONController
             throw new ForbiddenException("You are not allowed to edit other players");
         }
 
-        // Prepare the twig globals early, so that the proper icon is shown
-        // as active on the navbar
-        $this->addTwigGlobals();
+        $params = array(
+            'me' => $player,
+            'self' => false
+        );
 
-        // Forward to the ProfileController
-        $controller = new ProfileController($request->attributes);
-        return $controller->editAction($player, $request, false);
+        return $this->forward('edit', $params, 'Profile');
     }
 
     public function listAction(Request $request, Player $me, Team $team = null)

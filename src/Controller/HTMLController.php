@@ -15,14 +15,14 @@ abstract class HTMLController extends Controller
      * Whether twig has been prepared
      * @var boolean
      */
-    protected static $twigReady = false;
+    public $twigReady = false;
 
     /**
      * Prepare the twig global variables
      */
-    protected function addTwigGlobals()
+    private function addTwigGlobals()
     {
-        if (static::$twigReady) {
+        if ($this->twigReady) {
             return;
         }
 
@@ -35,11 +35,11 @@ abstract class HTMLController extends Controller
         $twig->addGlobal("request", $request);
         $twig->addGlobal("session", $request->getSession());
 
-        $twig->addGlobal("app", new AppGlobal($this, $this->container));
+        $twig->addGlobal("app", new AppGlobal($this->parent, $this->container));
 
         $this->prepareTwig();
 
-        static::$twigReady = true;
+        $this->twigReady = true;
     }
 
     protected function prepareTwig()

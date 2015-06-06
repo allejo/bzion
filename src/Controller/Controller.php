@@ -74,12 +74,20 @@ abstract class Controller extends ContainerAware
     protected $parameters;
 
     /**
-     *
-     * @param ParameterBag $parameters The array returned by $request->attributes
+     * The first controller that was invoked
+     * @var Controller
      */
-    public function __construct($parameters)
+    protected $parent;
+
+    /**
+     *
+     * @param ParameterBag    $parameters The array returned by $request->attributes
+     * @param Controller|null $parent     The controller who invoked this controller
+     */
+    public function __construct($parameters, Controller $parent = null)
     {
         $this->parameters = $parameters;
+        $this->parent = $parent ?: $this;
 
         $this->setContainer(Service::getContainer());
     }
@@ -144,12 +152,16 @@ abstract class Controller extends ContainerAware
      * Please note that this doesn't generate an HTTP redirect, but an
      * internal one - the user sees the original URL, but a different page
      *
-     * @todo Forward the request to another controller
-     * @param  string   $action The action to forward the request to
-     * @param  array    $params An additional associative array of parameters to provide to the action
+     * @param  string $action The action to forward the request to
+     * @param  array  $params An additional associative array of parameters to
+     *                        provide to the action
+     * @param  string|null $controllerName The name of the controller of the
+     *                                     action, without the 'Controller'
+     *                                     suffix (defaults to the current
+     *                                     controller)
      * @return Response
      */
-    protected function forward($action, $params = array())
+    protected function forward($action, $params = array(), $controllerName = null)
     {
         if (!$action) {
             $action = $this->getDefaultActionName();
@@ -158,9 +170,16 @@ abstract class Controller extends ContainerAware
         $args = clone $this->parameters;
         $args->add($params);
 
-        $ret = $this->callMethod($this->getAction($action), $args);
+        if ($controllerName === null) {
+            $controller = $this;
+        } else {
+            $ref = new ReflectionClass($controllerName . 'Controller');
+            $controller = $ref->newInstance($args, $this->parent);
+        }
 
-        return $this->handleReturnValue($ret, $action);
+        $ret = $controller->callMethod($controller->getAction($action), $args);
+
+        return $controller->handleReturnValue($ret, $action);
     }
 
     /**
