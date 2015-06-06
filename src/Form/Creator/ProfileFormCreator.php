@@ -94,7 +94,8 @@ class ProfileFormCreator extends ModelFormCreator
             ))
             ->add('enter', 'submit');
 
-        if (!$this->editingSelf && !empty($this->editing->getEmailAddress()) && !$this->editing->isVerified()) {
+        $address = $this->editing->getEmailAddress();
+        if (!$this->editingSelf && !empty($address) && !$this->editing->isVerified()) {
             // Show a button to verify an unverified user's e-mail address to
             // admins
             $builder->add('verify_email', 'submit', array(
