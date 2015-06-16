@@ -14,7 +14,6 @@
     {% set label_attr = label_attr|merge({'for': id}) %}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
         {{- label -}}
-    {% dump %}
 {% endblock %}
 
 {% block content %}
