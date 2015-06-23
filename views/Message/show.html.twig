@@ -7,6 +7,13 @@
         'icon': 'inbox',
         'text': 'Inbox',
         'condition': true
+    },
+    {
+        'color': 'blue',
+        'url': path('message_compose'),
+        'icon': 'pencil',
+        'text': 'Compose',
+        'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     }
 ] %}
 
