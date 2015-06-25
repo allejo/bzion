@@ -241,12 +241,22 @@ abstract class Controller extends ContainerAware
         $refClass = $modelParameter->getClass();
         $paramName  = $modelParameter->getName();
 
+        if ($refClass !== null && $refClass->isSubclassOf("Model")) {
+            // Look for the object's ID/slugs in the routeParameters array
+            $model = $this->findModelInParameters($modelParameter, $routeParameters);
+
+            if ($model !== null) {
+                return $model;
+            }
+        }
+
         // $me -> currently logged in user
         if ($paramName == "me") {
             return self::getMe();
         }
 
-        if ($refClass === null) {// No class provived by the method's definition, we don't know
+        if ($refClass === null) {
+            // No class provived by the method's definition, we don't know
             // what we should pass
             return null;
         }
@@ -262,10 +272,6 @@ abstract class Controller extends ContainerAware
                 return $this->getLogger();
             case "Symfony\Component\Form\FormFactory":
                 return Service::getFormFactory();
-        }
-
-        if ($refClass->isSubclassOf("Model")) {// Look for the object's ID/slugs in the routeParameters array
-            return $this->findModelInParameters($modelParameter, $routeParameters);
         }
 
         return null;
