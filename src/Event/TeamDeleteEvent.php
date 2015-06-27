@@ -97,6 +97,6 @@ class TeamDeleteEvent extends Event
     {
         $data = unserialize($data);
 
-        $this->__construct(new \Team($data['team']), new \Player($data['deleter']));
+        $this->__construct(\Team::get($data['team']), \Player::get($data['deleter']));
     }
 }

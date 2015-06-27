@@ -35,7 +35,7 @@ class NotificationTest extends TestCase
         $this->assertTrue($this->notification->isRead());
 
         // Refresh the notification from the database
-        $this->notification = new Notification($this->notification->getId());
+        $this->notification = Notification::get($this->notification->getId());
         $this->assertTrue($this->notification->isRead());
     }
 

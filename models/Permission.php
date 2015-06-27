@@ -111,7 +111,7 @@ class Permission extends Model
      */
     public static function getPermissionFromName($perm_name)
     {
-        return new self(
+        return self::get(
             parent::fetchIdFrom($perm_name, "name")
         );
     }

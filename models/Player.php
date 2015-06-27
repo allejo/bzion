@@ -228,7 +228,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getCountry()
     {
-        return new Country($this->country);
+        return Country::get($this->country);
     }
 
     /**
@@ -390,7 +390,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getTeam()
     {
-        return new Team($this->team);
+        return Team::get($this->team);
     }
 
     /**
@@ -756,7 +756,7 @@ class Player extends AvatarModel implements NamedModel
      */
     private function modifyRole($role_id, $action)
     {
-        $role = new Role($role_id);
+        $role = Role::get($role_id);
 
         if ($role->isValid()) {
             if ($action == "add") {
@@ -781,7 +781,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getFromBZID($bzid)
     {
-        return new Player(self::fetchIdFrom($bzid, "bzid", "s"));
+        return Player::get(self::fetchIdFrom($bzid, "bzid", "s"));
     }
 
     /**
@@ -792,7 +792,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getFromUsername($username)
     {
-        return new Player(self::fetchIdFrom($username, 'username', 's'));
+        return Player::get(self::fetchIdFrom($username, 'username', 's'));
     }
 
     /**

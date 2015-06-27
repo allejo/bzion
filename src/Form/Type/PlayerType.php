@@ -228,7 +228,7 @@ class PlayerType extends AbstractType
     private function idToModel($id)
     {
         $id = (int) $id;
-        $player = new Player($id);
+        $player = Player::get($id);
 
         if (!\HTMLController::canSee($player)) {
             throw new InvalidNameException("There is no player with ID $id");

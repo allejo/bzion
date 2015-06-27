@@ -130,7 +130,7 @@ class Notification extends Model
      */
     public function getReceiver()
     {
-        return new Player($this->receiver);
+        return Player::get($this->receiver);
     }
     /**
      * Get the type of the notification

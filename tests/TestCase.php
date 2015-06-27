@@ -175,7 +175,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         foreach ($this->playersCreated as $id) {
-            self::wipe(new Player($id));
+            self::wipe(Player::get($id));
         }
     }
 }

@@ -76,7 +76,7 @@ class Message extends Model implements GroupEventInterface
      */
     public function getGroup()
     {
-        return new Group($this->group_to);
+        return Group::get($this->group_to);
     }
 
     /**
@@ -85,7 +85,7 @@ class Message extends Model implements GroupEventInterface
      */
     public function getAuthor()
     {
-        return new Player($this->player_from);
+        return Player::get($this->player_from);
     }
 
     /**

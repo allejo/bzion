@@ -88,7 +88,7 @@ class Invitation extends UrlModel
      */
     public function getInvitedPlayer()
     {
-        return new Player($this->invited_player);
+        return Player::get($this->invited_player);
     }
 
     /**
@@ -98,7 +98,7 @@ class Invitation extends UrlModel
      */
     public function getSentBy()
     {
-        return new Player($this->sent_by);
+        return Player::get($this->sent_by);
     }
 
     /**
@@ -108,7 +108,7 @@ class Invitation extends UrlModel
      */
     public function getTeam()
     {
-        return new Team($this->team);
+        return Team::get($this->team);
     }
 
     /**

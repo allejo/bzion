@@ -83,12 +83,14 @@ abstract class Event extends SymfonyEvent implements \Serializable
                 // If the serialized data contained a model's ID (and type),
                 // pass a new instance of it
                 if ($this->isModel($param)) {
-                    if ($param->getClass()->isInstantiable()) {
-                        $value = $param->getClass()->newInstance($value);
+                    if (!$param->getClass()->isAbstract()) {
+                        $value = $param->getClass()
+                                       ->getMethod('get')
+                                       ->invoke(null, $value);
                     } else {
                         $id = $value['id'];
                         $type = $value['type'];
-                        $value = new $type($id);
+                        $value = call_user_func(array($type, 'get'), $id);
                     }
                 }
             } else {

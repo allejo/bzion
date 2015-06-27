@@ -71,7 +71,7 @@ class Group extends UrlModel implements NamedModel
      */
     public function getCreator()
     {
-        return new Player($this->creator);
+        return Player::get($this->creator);
     }
 
     /**
@@ -135,7 +135,7 @@ class Group extends UrlModel implements NamedModel
             return Message::invalid();
         }
 
-        return new Message($ids[0]);
+        return Message::get($ids[0]);
     }
 
     /**

@@ -78,7 +78,7 @@ class NewsTest extends TestCase
 
     public function testDeletingProtectedNewsCategory()
     {
-        $newsCategory = new NewsCategory(1);
+        $newsCategory = NewsCategory::get(1);
 
         $newsCategory->delete();
         $this->assertEquals('enabled', $newsCategory->getStatus());

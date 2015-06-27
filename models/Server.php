@@ -79,7 +79,7 @@ class Server extends UrlModel implements NamedModel
     {
         $this->name = $server['name'];
         $this->address = $server['address'];
-        $this->country = new Country($server['country']);
+        $this->country = Country::get($server['country']);
         $this->owner = $server['owner'];
         $this->online = $server['online'];
         $this->info = unserialize($server['info']);
@@ -250,7 +250,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function getOwner()
     {
-        return new Player($this->owner);
+        return Player::get($this->owner);
     }
 
     /**

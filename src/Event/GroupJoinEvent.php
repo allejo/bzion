@@ -83,7 +83,7 @@ class GroupJoinEvent extends Event
     {
         $data = unserialize($data);
 
-        $group = new \Group($data['group']);
+        $group = \Group::get($data['group']);
 
         $players = \Player::arrayIdToModel($data['players']);
         $teams = \Team::arrayIdToModel($data['teams']);

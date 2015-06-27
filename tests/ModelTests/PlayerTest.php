@@ -16,7 +16,7 @@ class PlayerTest extends TestCase
 
     public function testRoleModification()
     {
-        $role = new Role(Role::ADMINISTRATOR);
+        $role = Role::get(Role::ADMINISTRATOR);
         $this->assertTrue($role->hasPerm(Permission::PUBLISH_NEWS));
         $this->assertFalse($this->player->hasPermission(Permission::PUBLISH_NEWS));
 

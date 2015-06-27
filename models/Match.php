@@ -280,7 +280,7 @@ class Match extends PermissionModel implements NamedModel
      */
     public function getTeamA()
     {
-        return new Team($this->team_a);
+        return Team::get($this->team_a);
     }
 
     /**
@@ -289,7 +289,7 @@ class Match extends PermissionModel implements NamedModel
      */
     public function getTeamB()
     {
-        return new Team($this->team_b);
+        return Team::get($this->team_b);
     }
 
     /**
@@ -455,7 +455,7 @@ class Match extends PermissionModel implements NamedModel
      */
     public function getEnteredBy()
     {
-        return new Player($this->entered_by);
+        return Player::get($this->entered_by);
     }
 
     /**
@@ -532,8 +532,8 @@ class Match extends PermissionModel implements NamedModel
         $a_players = array(), $b_players = array(), $server = null, $port = null,
         $replayFile = null, $mapPlayed = null
     ) {
-        $team_a = new Team($a);
-        $team_b = new Team($b);
+        $team_a = Team::get($a);
+        $team_b = Team::get($b);
         $a_elo = $team_a->getElo();
         $b_elo = $team_b->getElo();
 

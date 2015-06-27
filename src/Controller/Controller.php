@@ -300,7 +300,8 @@ abstract class Controller extends ContainerAware
         }
 
         if ($routeParameters->has($paramName . 'Id')) {
-            return $refClass->newInstance($routeParameters->get($paramName . 'Id'));
+            return $refClass->getMethod('get')
+                            ->invoke(null, $routeParameters->get($paramName . 'Id'));
         }
     }
 
@@ -396,7 +397,7 @@ abstract class Controller extends ContainerAware
      */
     public static function getMe()
     {
-        return new Player(self::getRequest()->getSession()->get('playerId'));
+        return Player::get(self::getRequest()->getSession()->get('playerId'));
     }
 
     /**

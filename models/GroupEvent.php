@@ -92,7 +92,7 @@ class GroupEvent extends Model implements GroupEventInterface
      */
     public function getGroup()
     {
-        return new Group($this->group);
+        return Group::get($this->group);
     }
 
     /**

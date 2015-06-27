@@ -27,7 +27,7 @@ class ElasticaToMessageTransformer implements ElasticaToModelTransformerInterfac
         $objects = array();
 
         foreach ($elasticaObjects as $elasticaObject) {
-            $objects[] = new \Message($elasticaObject->getId());
+            $objects[] = \Message::get($elasticaObject->getId());
         }
 
         return $objects;

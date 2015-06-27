@@ -178,7 +178,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getAuthor()
     {
-        return new Player($this->author);
+        return Player::get($this->author);
     }
 
     /**
@@ -247,7 +247,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getVictim()
     {
-        return new Player($this->player);
+        return Player::get($this->player);
     }
 
     /**
@@ -364,7 +364,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
     {
-        $player = new Player($playerID);
+        $player = Player::get($playerID);
 
         if ($expiration !== null) {
             $expiration = TimeDate::from($expiration)->toMysql();

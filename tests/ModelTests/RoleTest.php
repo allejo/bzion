@@ -20,7 +20,7 @@ class RoleTest extends TestCase
 
     public function testLeaderRole()
     {
-        $role = new Role($this->leaderRole->getId());
+        $role = Role::get($this->leaderRole->getId());
 
         $this->player_a->addRole($role->getId());
         $this->player_b->addRole($role->getId());
@@ -58,7 +58,7 @@ class RoleTest extends TestCase
 
     public function testNormalRole()
     {
-        $role = new Role($this->normalRole->getId());
+        $role = Role::get($this->normalRole->getId());
 
         $this->player_b->addRole($role->getId());
 

@@ -22,6 +22,7 @@ class ModelFetcher
             throw new Exception("$type is not a model");
         }
 
-        return $class->newInstance($id);
+        return $class->getMethod('get')
+                      ->invoke(null, $id);
     }
 }

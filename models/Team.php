@@ -135,7 +135,7 @@ class Team extends AvatarModel
      */
     public function addMember($id)
     {
-        $player = new Player($id);
+        $player = Player::get($id);
 
         if (!$player->isTeamless()) {
             throw new Exception("The player already belongs in a team");
@@ -254,7 +254,7 @@ class Team extends AvatarModel
      */
     public function getLeader()
     {
-        return new Player($this->leader);
+        return Player::get($this->leader);
     }
 
     /**
@@ -431,7 +431,7 @@ class Team extends AvatarModel
      */
     public function isMember($playerID)
     {
-        $player = new Player($playerID);
+        $player = Player::get($playerID);
 
         return ($player->getTeam()->getId() == $this->getId());
     }
@@ -448,7 +448,7 @@ class Team extends AvatarModel
             throw new Exception("The player is not a member of that team");
         }
 
-        $player = new Player($id);
+        $player = Player::get($id);
 
         $player->update("team", null, "s");
         $this->update('members', --$this->members, "i");
@@ -578,7 +578,7 @@ class Team extends AvatarModel
      */
     public static function getFromName($name)
     {
-        return new Team(self::fetchIdFrom($name, 'name', 's'));
+        return Team::get(self::fetchIdFrom($name, 'name', 's'));
     }
 
     /**

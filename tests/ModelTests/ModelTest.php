@@ -2,6 +2,26 @@
 
 class ModelTest extends TestCase
 {
+    public function testGetMethod()
+    {
+        $stub = $this->getMockBuilder('BaseModel')
+                     ->disableOriginalConstructor()
+                     ->getMock();
+        $this->assertEquals($stub, BaseModel::get($stub));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetMethodException()
+    {
+        $stub = $this->getMockBuilder('BaseModel')
+                     ->disableOriginalConstructor()
+                     ->getMock();
+
+        News::get($stub);
+    }
+
     public function testEscape()
     {
         $this->assertEquals("some text", Model::escape("some text"));

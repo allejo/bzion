@@ -15,56 +15,61 @@ abstract class CachedModel extends BaseModel
     /**
      * {@inheritDoc}
      */
-    public function __construct($id)
+    public static function get($id)
     {
-        $this->id = (int) $id;
+        if (is_object($id)) {
+            return parent::get($id);
+        }
 
-        if (!$this->retrieveFromCache()) {
-            $this->getFromDatabase();
+        $cache = Service::getModelCache();
+        $id = (int) $id;
+
+        if (!$cache) {
+            // There is no cache, just get the model
+            return parent::get($id);
+        }
+
+        if ($model = static::getFromCache($id)) {
+            // The model exists in the cache, return that to the caller
+            return $model;
+        } else {
+            $model = parent::get($id);
+            $cache->save($model);
+
+            return $model;
         }
     }
 
     /**
-     * Find out whether the current model exists in the model cache
-     * @return bool
+     * Find out whether a model exists in the cache
+     *
+     * @param  int  $id The ID of the model
+     * @return bool     True if the model exists in the cache
      */
-    protected function existsInCache()
+    private static function existsInCache($id)
     {
-        if (!Service::getModelCache()) {
+        $cache = Service::getModelCache();
+
+        if (!$cache) {
             return false;
         }
 
-        return Service::getModelCache()->has(get_class($this), $this->id);
+        return $cache->has(get_called_class(), $id);
     }
 
     /**
-     * Store the current model in the cache so it can be retrieved later
-     * @return void
+     * Get a model from the cache
+     *
+     * @param  int         $id The ID of the model
+     * @return static|null     The model if it's found, null if it doesn't exist
      */
-    protected function storeInCache()
+    private static function getFromCache($id)
     {
-        if (!Service::getModelCache()) {
-            return;
+        if (!static::existsInCache($id)) {
+            return null;
         }
 
-        Service::getModelCache()->save($this);
-    }
-
-    /**
-     * Load the current object's properties from the cache
-     * @return bool True if the assignement was successful, false if the model
-     *              doesn't exist in the cache
-     */
-    protected function retrieveFromCache()
-    {
-        if (!$this->existsInCache()) {
-            return false;
-        }
-
-        $cachedModel = Service::getModelCache()->get(get_class($this), $this->id);
-        $this->copy($cachedModel);
-
-        return true;
+        return Service::getModelCache()->get(get_called_class(), $id);
     }
 
     /**
@@ -86,27 +91,13 @@ abstract class CachedModel extends BaseModel
         parent::__construct($this->id);
 
         if ($this->loaded) {
-            // Load the lazy parameters of the model if they're loaded already
+            // Reload the lazy parameters of the model if they're loaded already
             $this->lazyLoad(true);
-        }
-
-        $this->storeInCache();
-    }
-
-    /**
-     * Clone a model into $this
-     * @return void
-     */
-    private function copy($model)
-    {
-        foreach ($model as $key => $value) {
-            $this->{$key} = $value;
         }
     }
 
     /**
      * {@inheritDoc}
-     * @param string $types
      */
     protected static function create($params, $types, $now = null, $table = '')
     {
@@ -114,15 +105,5 @@ abstract class CachedModel extends BaseModel
         $model->storeInCache();
 
         return $model;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param string $name
-     */
-    public function update($name, $value, $type = 'i')
-    {
-        parent::update($name, $value, $type);
-        $this->storeInCache();
     }
 }

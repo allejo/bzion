@@ -91,7 +91,7 @@ class News extends UrlModel implements NamedModel
      */
     public function getAuthor()
     {
-        return new Player($this->author);
+        return Player::get($this->author);
     }
 
     /**
@@ -109,7 +109,7 @@ class News extends UrlModel implements NamedModel
      */
     public function getCategory()
     {
-        return new NewsCategory($this->category);
+        return NewsCategory::get($this->category);
     }
 
     /**
@@ -168,7 +168,7 @@ class News extends UrlModel implements NamedModel
      */
     public function getLastEditor()
     {
-        return new Player($this->editor);
+        return Player::get($this->editor);
     }
 
     /**
@@ -300,7 +300,7 @@ class News extends UrlModel implements NamedModel
      */
     public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'published')
     {
-        $author = new Player($authorID);
+        $author = Player::get($authorID);
 
         // Only allow real players to post news articles and if the player posting has permissions to create new posts
         if ($author->isValid() && $author->hasPermission(Permission::PUBLISH_NEWS)) {

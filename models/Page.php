@@ -119,7 +119,7 @@ class Page extends AliasModel
      */
     public function getAuthor()
     {
-        return new Player($this->author);
+        return Player::get($this->author);
     }
 
     /**
@@ -267,6 +267,6 @@ class Page extends AliasModel
      */
     public static function getHomePage()
     {
-        return new Page(parent::fetchIdFrom(1, "home"));
+        return Page::get(parent::fetchIdFrom(1, "home"));
     }
 }

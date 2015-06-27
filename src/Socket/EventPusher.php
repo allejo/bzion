@@ -62,7 +62,7 @@ class EventPusher implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         // Find which player opened the connection
-        $conn->Player = new Player($conn->Session->get('playerId'));
+        $conn->Player = Player::get($conn->Session->get('playerId'));
 
         $conn->pong = true;
 
@@ -132,7 +132,7 @@ class EventPusher implements MessageComponentInterface
         // ones who didn't
         $received = array();
 
-        $group = new \Group($event->data->discussion);
+        $group = \Group::get($event->data->discussion);
 
         $groupMembers = $group->getPlayerIds();
 
@@ -161,7 +161,7 @@ class EventPusher implements MessageComponentInterface
                     'New message received',
                     array($recipient),
                     'message',
-                    array('message' => new \Message($event->data->message))
+                    array('message' => \Message::get($event->data->message))
                 );
             }
         }
@@ -174,7 +174,7 @@ class EventPusher implements MessageComponentInterface
      */
     private function onNotificationServerEvent($event)
     {
-        $notification = new \Notification($event->data->notification);
+        $notification = \Notification::get($event->data->notification);
 
         // Whether we've notified that player in real time - if he isn't online
         // at the moment, we'll send an e-mail to him

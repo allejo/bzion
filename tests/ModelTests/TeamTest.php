@@ -22,7 +22,7 @@ class TeamTest extends TestCase
     public function testTeamLeader()
     {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Sample Avatar Text", "Sample Description");
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals($this->player->getId(), $team->getLeader()->getId());
     }
@@ -38,7 +38,7 @@ class TeamTest extends TestCase
     public function testTeamName()
     {
         $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals("Team name test", $team->getName());
     }
@@ -46,7 +46,7 @@ class TeamTest extends TestCase
     public function testTeamAlias()
     {
         $this->team = Team::createTeam("Team name test", $this->player->getId(), "Avatar", "Description");
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals("team-name-test", $team->getAlias());
     }
@@ -62,7 +62,7 @@ class TeamTest extends TestCase
     {
         $this->team = Team::createTeam("13435", $this->player->getId(), "Avatar", "Description");
 
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals("13435", $team->getName());
         $this->assertEquals("13435-", $team->getAlias());
@@ -75,7 +75,7 @@ class TeamTest extends TestCase
     {
         $this->team = Team::createTeam("-()#*$%!", $this->player->getId(), "Avatar", "Description");
 
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals("-()#*$%!", $team->getName());
         $this->assertEquals($this->team->getId(), $team->getAlias());
@@ -100,7 +100,7 @@ class TeamTest extends TestCase
         $this->team->addMember($extraMember->getId());
         $this->team->removeMember($otherPlayer->getId());
 
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $members = $team->getMembers('id');
         $expectedMembers = array($this->player, $extraMember);
@@ -120,7 +120,7 @@ class TeamTest extends TestCase
         $match_a = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 30, $this->player->getId());
         $match_b = Match::enterMatch($this->team->getId(), $otherTeam->getId(), 5, 2, 20, $this->player->getId());
 
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals(2, $team->getNumTotalMatches());
         $this->assertArraysHaveEqualValues(array($match_a, $match_b), $team->getMatches());
@@ -132,7 +132,7 @@ class TeamTest extends TestCase
     {
         $this->team = Team::createTeam("Sample Team", $this->player->getId(), "Avatar", "Description");
 
-        $team = new Team($this->team->getId());
+        $team = Team::get($this->team->getId());
 
         $this->assertEquals("now", $team->getCreationDate());
     }

@@ -188,7 +188,7 @@ class EventSubscriber implements EventSubscriberInterface
             ->addPart($this->twig->render("Email/$template.html.twig", $params), 'text/html');
 
         foreach ($recipients as $recipient) {
-            $recipient = new \Player($recipient);
+            $recipient = \Player::get($recipient);
 
             if (!$recipient->isVerified()) {
                 continue;

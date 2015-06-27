@@ -46,7 +46,7 @@ class SingleModelTransformer implements DataTransformerInterface
         $id = (int) $id;
         $type = $this->type;
 
-        $model = new $type($id);
+        $model = $type::get($id);
 
         if (!$model->isValid()) {
             throw new TransformationFailedException(

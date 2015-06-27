@@ -196,9 +196,7 @@ abstract class HTMLController extends Controller
     protected function requireLogin(
         $message = "You need to be signed in to do this"
     ) {
-        $me = new Player($this->getRequest()->getSession()->get('playerId'));
-
-        if (!$me->isValid()) {
+        if (!$this->getMe()->isValid()) {
             throw new ForbiddenException($message);
         }
     }

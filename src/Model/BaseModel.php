@@ -62,12 +62,44 @@ abstract class BaseModel implements ModelInterface
      * This method takes the ID of the object to look for and creates a
      * $this->db object which can be used to communicate with the database,
      * as well as a $this->result array which is the single result of the
-     * $this->db->query function. If the $id is specified as 0, then an
-     * invalid object will be returned
+     * $this->db->query function
      *
-     * @param int $id The ID of the object to look for
+     * @throws InvalidArgumentException If $id is an object of an incorrect type
+     * @param  int|static $id The ID of the object to look for, or the object
+     *                        itself
      */
-    public function __construct($id)
+    public static function get($id)
+    {
+        if ($id instanceof static) {
+            return $id;
+        }
+
+        if (is_object($id)) {
+            // Throw an exception if $id is an object of the incorrect class
+            throw new InvalidArgumentException("The object provided is not of the correct type");
+        }
+
+        $id = (int) $id;
+
+        return new static($id);
+    }
+
+    /**
+     * Assign the MySQL result array to the individual properties of the model
+     *
+     * @param  array $result MySQL's result array
+     * @return null
+     */
+    abstract protected function assignResult($result);
+
+    /**
+     * Fetch the columns of a model
+     *
+     * If the $id is specified as 0, then an invalid object will be returned
+     *
+     * @param int $id The ID of the model
+     */
+    private function __construct($id)
     {
         $this->db = Database::getInstance();
 
@@ -86,14 +118,12 @@ abstract class BaseModel implements ModelInterface
         $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($id));
 
         if (count($results) < 1) {
-            $this->valid  = false;
+            $this->valid = false;
         } else {
-            $this->valid  = true;
+            $this->valid = true;
             $this->assignResult($results[0]);
         }
     }
-
-    abstract protected function assignResult($result);
 
     /**
      * Update a database field
@@ -355,7 +385,7 @@ abstract class BaseModel implements ModelInterface
      */
     public static function fetchFromSlug($slug)
     {
-        return new static((int) $slug);
+        return static::get((int) $slug);
     }
 
     /**
@@ -398,7 +428,7 @@ abstract class BaseModel implements ModelInterface
         $query = "INSERT into $table ($columns) VALUES ($question_marks)";
         $db->query($query, $types, array_values($params));
 
-        return new static($db->getInsertId());
+        return static::get($db->getInsertId());
     }
 
     /**

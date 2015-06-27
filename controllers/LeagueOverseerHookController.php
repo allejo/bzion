@@ -249,7 +249,7 @@ class LeagueOverseerHookController extends PlainTextController
         $team = null;
 
         foreach ($players as $id) {
-            $player = new Player($id);
+            $player = Player::get($id);
 
             if ($player->isTeamless()) {
                 return Team::invalid();

@@ -77,7 +77,7 @@ abstract class Model extends CachedModel
     {
         $return = array();
         foreach ($idArray as $id) {
-            $return[] = new static($id);
+            $return[] = static::get($id);
         }
 
         return $return;

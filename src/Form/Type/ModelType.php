@@ -69,7 +69,7 @@ class ModelType extends AbstractType
     {
         if ($this->type === 'Role') {
             foreach ($view->vars['choices'] as $choice) {
-                $role = new \Role($choice->value);
+                $role = \Role::get($choice->value);
                 $icon = $role->getDisplayIcon();
                 if ($icon !== null) {
                     $choice->attr['data-icon'] = $icon;

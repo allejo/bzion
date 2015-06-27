@@ -113,7 +113,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      */
     public static function fetchFromAlias($alias)
     {
-        return new static(self::fetchIdFrom($alias, "alias"));
+        return static::get(self::fetchIdFrom($alias, "alias"));
     }
 
     /**
@@ -124,7 +124,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     {
         if (ctype_digit((string) $slug)) {
             // Slug is an integer, we can fetch by ID
-            return new static((int) $slug);
+            return static::get((int) $slug);
         } else {
             // Slug is something else, we can fetch by alias
             return self::fetchFromAlias($slug);
