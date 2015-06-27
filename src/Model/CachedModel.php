@@ -33,10 +33,7 @@ abstract class CachedModel extends BaseModel
             // The model exists in the cache, return that to the caller
             return $model;
         } else {
-            $model = parent::get($id);
-            $cache->save($model);
-
-            return $model;
+            return parent::get($id)->storeInCache();
         }
     }
 
@@ -71,6 +68,23 @@ abstract class CachedModel extends BaseModel
 
         return Service::getModelCache()->get(get_called_class(), $id);
     }
+
+    /**
+     * Store the model in the cache
+     *
+     * @return self
+     */
+    protected function storeInCache()
+    {
+        if (!Service::getModelCache()) {
+            return;
+        }
+
+        Service::getModelCache()->save($this);
+
+        return $this;
+    }
+
 
     /**
      * Fetch a model's data from the database again
