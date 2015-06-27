@@ -2,6 +2,16 @@
 
 {% form_theme form _self %}
 
+{% set pageButtons = [
+    {
+        'color': 'grey',
+        'url': player.url,
+        'icon': 'eye',
+        'text': (editingSelf) ? 'View my profile' : 'View profile',
+        'condition': true
+    }
+] %}
+
 {% block title -%}
     {%- if editingSelf -%}
         Edit Profile
@@ -27,6 +37,8 @@
                         Editing :: {{ player.name }}
                     {%- endif -%}</h1>
                 </section>
+
+                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
             </div>
         </section>
 
