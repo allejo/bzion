@@ -1,10 +1,13 @@
 <?php
 namespace BZIon\Form\Type;
 
-use BZIon\Form\Transformer\ModelTransformer;
+use BZIon\Form\Transformer\MultipleModelTransformer;
+use BZIon\Form\Transformer\SingleModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -46,8 +49,33 @@ class ModelType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new ModelTransformer($this->type);
+        if ($options['multiple']) {
+            $transformer = new MultipleModelTransformer($this->type);
+        } else {
+            $transformer = new SingleModelTransformer($this->type);
+        }
+
         $builder->addModelTransformer($transformer);
+    }
+
+    /**
+     * Render a list of comma-separated usernames for the user to see
+     *
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($this->type === 'Role') {
+            foreach ($view->vars['choices'] as $choice) {
+                $role = new \Role($choice->value);
+                $icon = $role->getDisplayIcon();
+                if ($icon !== null) {
+                    $choice->attr['data-icon'] = $icon;
+                }
+            }
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -7,6 +7,7 @@
 
 namespace BZIon\Form\Creator;
 
+use BZIon\Form\Type\ModelType;
 use BZIon\Form\Type\TimezoneType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
@@ -34,7 +35,7 @@ class ProfileFormCreator extends ModelFormCreator
      *                             player
      */
     public function setEditingSelf($editingSelf) {
-        $this->editingSelf = false;
+        $this->editingSelf = $editingSelf;
     }
 
     /**
@@ -91,8 +92,18 @@ class ProfileFormCreator extends ModelFormCreator
             ->add('timezone', new TimezoneType($this->editing->getTimezone()), array(
                 'constraints' => new NotBlank(),
                 'data'        => $this->editing->getTimezone()
-            ))
-            ->add('enter', 'submit');
+            ));
+
+        if (!$this->editingSelf) {
+            $builder->add('roles', new ModelType('Role', false), array(
+                'constraints' => new NotBlank(),
+                'data' => \Role::getRoles($this->editing->getId()),
+                'multiple' => true,
+                'required' => false
+            ));
+        }
+
+        $builder->add('enter', 'submit');
 
         $address = $this->editing->getEmailAddress();
         if (!$this->editingSelf && !empty($address) && !$this->editing->isVerified()) {
@@ -123,6 +134,10 @@ class ProfileFormCreator extends ModelFormCreator
             $player->resetAvatar();
         } else {
             $player->setAvatarFile($form->get('avatar')->getData());
+        }
+
+        if (!$this->editingSelf) {
+            $player->setRoles($form->get('roles')->getData());
         }
     }
 }

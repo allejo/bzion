@@ -353,4 +353,19 @@ class Role extends Model
             )
         );
     }
+
+    /**
+     * Get a query builder for Roles
+     *
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Role', array(
+            'columns' => array(
+                'name' => 'name'
+            ),
+            'name' => 'name'
+        ));
+    }
 }

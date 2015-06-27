@@ -32,6 +32,8 @@ ul {
     }
 
     li {
-        list-style-type: circle;
+        &:not(.select2-selection__choice, .select2-search--inline) {
+            list-style-type: circle;
+        }
     }
 }

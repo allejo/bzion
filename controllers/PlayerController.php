@@ -31,7 +31,7 @@ class PlayerController extends JSONController
         );
     }
 
-    public function editAction(Player $player, Player $me, Request $request)
+    public function editAction(Player $player, Player $me)
     {
         if (!$me->canEdit($player)) {
             throw new ForbiddenException("You are not allowed to edit other players");

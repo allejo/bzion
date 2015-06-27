@@ -99,6 +99,16 @@
                 </article>
             </section>
 
+            {% if form.roles is defined %}
+                <section class="o-layout c-form__actions">
+                    <article class="o-layout__body--full">
+                        {{ form_label(form.roles) }}
+                        {{ form_errors(form.roles) }}
+                        {{ form_widget(form.roles) }}
+                    </article>
+                </section>
+            {% endif %}
+
             <section class="o-layout o-layout--no-margin c-form__actions">
                 {{ form_rest(form) }}
             </section>

@@ -47,7 +47,7 @@ abstract class BaseModel implements ModelInterface
      * Whether the lazy parameters of the model have been loaded
      * @var boolean
      */
-    private $loaded = false;
+    protected $loaded = false;
 
     /**
      * The name of the database table used for queries
@@ -322,11 +322,12 @@ abstract class BaseModel implements ModelInterface
     /**
      * Load all the properties of the model that haven't been loaded yet
      *
+     * @param  bool $force Whether to force a reload
      * @return self
      */
-    protected function lazyLoad()
+    protected function lazyLoad($force = false)
     {
-        if (!$this->loaded && $this->valid) {
+        if ((!$this->loaded || $force) && $this->valid) {
             $this->loaded = true;
 
             $columns = $this->getLazyColumns();
@@ -407,6 +408,11 @@ abstract class BaseModel implements ModelInterface
     public function refresh()
     {
         parent::__construct($this->id);
+
+        if ($this->loaded) {
+            // Load the lazy parameters of the model if they're loaded already
+            $this->lazyLoad(true);
+        }
 
         return $this;
     }

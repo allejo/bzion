@@ -84,6 +84,12 @@ abstract class CachedModel extends BaseModel
     private function getFromDatabase()
     {
         parent::__construct($this->id);
+
+        if ($this->loaded) {
+            // Load the lazy parameters of the model if they're loaded already
+            $this->lazyLoad(true);
+        }
+
         $this->storeInCache();
     }
 

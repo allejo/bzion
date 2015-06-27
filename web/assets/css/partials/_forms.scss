@@ -50,25 +50,27 @@ label {
 #{$all-text-inputs},
 select[multiple=multiple],
 textarea {
-    background-color: $Form-Base_Background_Color;
-    border: $Border-Default;
-    border-radius: $Border-Radius;
-    box-shadow: $Form-Box_Shadow;
-    box-sizing: border-box;
-    font-family: $Font-Sans_Serif;
-    font-size: 16px;
-    padding: $Form-Spacing / 3;
-    transition: border-color;
-    width: 100%;
+    &:not(.select2-search__field) {
+        background-color: $Form-Base_Background_Color;
+        border: $Border-Default;
+        border-radius: $Border-Radius;
+        box-shadow: $Form-Box_Shadow;
+        box-sizing: border-box;
+        font-family: $Font-Sans_Serif;
+        font-size: 16px;
+        padding: $Form-Spacing / 3;
+        transition: border-color;
+        width: 100%;
 
-    &:hover {
-        border-color: darken($Form-Border_Color, 10%);
-    }
+        &:hover {
+            border-color: darken($Form-Border_Color, 10%);
+        }
 
-    &:focus {
-        border-color: $Form-Action_Color;
-        box-shadow: $Form-Box_Shadow_Focus;
-        outline: none;
+        &:focus {
+            border-color: $Form-Action_Color;
+            box-shadow: $Form-Box_Shadow_Focus;
+            outline: none;
+        }
     }
 }
 

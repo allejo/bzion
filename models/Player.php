@@ -195,7 +195,10 @@ class Player extends AvatarModel implements NamedModel
             }
         }
 
-        return $this->modifyRole($role_id, "add");
+        $status = $this->modifyRole($role_id, "add");
+        $this->refresh();
+
+        return $status;
     }
 
     /**
@@ -518,8 +521,10 @@ class Player extends AvatarModel implements NamedModel
      */
     public function removeRole($role_id)
     {
-        $this->lazyLoad();
-        return $this->modifyRole($role_id, "remove");
+        $status = $this->modifyRole($role_id, "remove");
+        $this->refresh();
+
+        return $status;
     }
 
     /**
@@ -711,6 +716,37 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
+     * Set the roles of a user
+     *
+     * @todo   Is it worth making this faster?
+     * @param  Role[] $roles The new roles of the user
+     * @return self
+     */
+    public function setRoles($roles)
+    {
+        $this->lazyLoad();
+
+        $oldRoles = Role::mapToIds($this->roles);
+        $this->roles = $roles;
+        $roleIds = Role::mapToIds($roles);
+
+        $newRoles     = array_diff($roleIds, $oldRoles);
+        $removedRoles = array_diff($oldRoles, $roleIds);
+
+        foreach ($newRoles as $role) {
+            $this->modifyRole($role, 'add');
+        }
+
+        foreach ($removedRoles as $role) {
+            $this->modifyRole($role, 'remove');
+        }
+
+        $this->refresh();
+
+        return $this;
+    }
+
+    /**
      * Give or remove a role to/form a player
      *
      * @param int    $role_id The role ID to add or remove
@@ -727,9 +763,9 @@ class Player extends AvatarModel implements NamedModel
                 $this->db->query("INSERT INTO player_roles (user_id, role_id) VALUES (?, ?)", "ii", array($this->getId(), $role_id));
             } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));
+            } else {
+                throw new Exception("Unrecognized role action");
             }
-            $this->updateUserPermissions();
-            $this->refresh();
 
             return true;
         }
