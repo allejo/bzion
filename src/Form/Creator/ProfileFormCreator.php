@@ -98,8 +98,7 @@ class ProfileFormCreator extends ModelFormCreator
             $builder->add('roles', new ModelType('Role', false), array(
                 'constraints' => new NotBlank(),
                 'data' => \Role::getRoles($this->editing->getId()),
-                'multiple' => true,
-                'required' => false
+                'multiple' => true
             ));
         }
 
