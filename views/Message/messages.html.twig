@@ -7,7 +7,7 @@
 {% for message in events|reverse %}
     {% if message.isMessage %}
         <li data-id="{{ message.id }}" class="message">
-            {%- if message.author.id != previousAuthor %}
+            {%- if message.author.id != previousAuthor or previousMessage | date('M j, y') != message.creationDate | date('M j, y') %}
                 <div class="details">
                     <div class='author'>{{ link_to(message.author) }}</div>
                     <div class='date'>{{ message.creationDate | humanTime }}</div>
@@ -46,4 +46,5 @@
     {% endif %}
 
     {% set previousAuthor = message.author.id %}
+    {% set previousMessage = message.creationDate %}
 {% endfor %}
