@@ -466,6 +466,6 @@ class Ban extends UrlModel implements NamedModel
             return null;
         }
 
-        return new Ban($bans[0]);
+        return Ban::get($bans[0]);
     }
 }

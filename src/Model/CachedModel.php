@@ -29,7 +29,7 @@ abstract class CachedModel extends BaseModel
             return parent::get($id);
         }
 
-        if ($model = static::getFromCache($id)) {
+        if ($model = self::getFromCache($id)) {
             // The model exists in the cache, return that to the caller
             return $model;
         } else {
@@ -62,7 +62,7 @@ abstract class CachedModel extends BaseModel
      */
     private static function getFromCache($id)
     {
-        if (!static::existsInCache($id)) {
+        if (!self::existsInCache($id)) {
             return null;
         }
 
@@ -102,7 +102,7 @@ abstract class CachedModel extends BaseModel
      */
     private function getFromDatabase()
     {
-        parent::__construct($this->id);
+        parent::get($this->id);
 
         if ($this->loaded) {
             // Reload the lazy parameters of the model if they're loaded already

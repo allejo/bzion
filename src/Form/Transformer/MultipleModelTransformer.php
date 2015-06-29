@@ -24,7 +24,7 @@ class MultipleModelTransformer implements DataTransformerInterface
     /**
      * Transforms objects (models) to integers (IDs)
      *
-     * @param  Model|Model[]|null $model
+     * @param  Model|Model[]|null $models The models to transform
      * @return int[]
      */
     public function transform($models)
@@ -39,7 +39,7 @@ class MultipleModelTransformer implements DataTransformerInterface
     /**
      * Transforms IDs to a list of objects
      *
-     * @param  int|int[]                     $id
+     * @param  int|int[] $ids The model IDs to transform
      * @return Model[]
      * @throws TransformationFailedException if the team is not found.
      */

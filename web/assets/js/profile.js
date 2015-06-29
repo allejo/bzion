@@ -14,7 +14,7 @@ function formatRole(role) {
         return role.text;
     }
 
-    var icon = role['element'].getAttribute('data-icon');
+    var icon = role.element.getAttribute('data-icon');
 
     if (icon === null) {
         return role.text;
@@ -37,5 +37,5 @@ $(document).ready(function() {
         templateResult: formatRole,
         templateSelection: formatRole,
         width: '100%'
-    })
-})
+    });
+});

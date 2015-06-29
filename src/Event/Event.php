@@ -41,7 +41,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
 
             // We just need to store IDs and types for models
             if ($value !== null && $this->isModel($param)) {
-                if ($param->getClass()->isInstantiable()) {
+                if (!$param->getClass()->isAbstract()) {
                     // The parameter is a non-abstract model, we can just
                     // store its ID since the type will be known when
                     // unserializing
