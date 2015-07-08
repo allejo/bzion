@@ -75,5 +75,10 @@
                 }
             }
         }
+
+        @include element('response') {
+            border-top: $Border-Default;
+            padding: $Settings-Page_Section-Small_Margin;
+        }
     }
 }
