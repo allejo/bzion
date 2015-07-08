@@ -99,11 +99,11 @@ class Message extends Model implements GroupEventInterface
 
     /**
      * Gets a human-readable representation of the time when the message was sent
-     * @return string
+     * @return \TimeDate
      */
     public function getCreationDate()
     {
-        return $this->timestamp->diffForHumans();
+        return $this->timestamp;
     }
 
     /**

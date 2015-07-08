@@ -1,16 +1,20 @@
 {% extends 'Message/layout.html.twig' %}
 
-{% form_theme form _self %}
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('message_list'),
+        'icon': 'inbox',
+        'text': 'Inbox',
+        'condition': true
+    }
+] %}
 
-{% block messages %}
-    <section id="groupMessages" class="chat_area">
-        <div class="dimmable">
-            <div class="conversation_details">
-                <div class="meta nopadding">
-                    <div class="subject">Compose a new message</div>
-                </div>
-            </div>
+{% set viewTitle = "Compose Message" %}
 
+{% block messages_body %}
+    <section id="groupMessages" class="o-row">
+        <div class="o-row__column--full">
             {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
                 {{ form_errors(form) }}
                 <div class="input_group">
@@ -18,7 +22,7 @@
                     {{ form_row(form.Subject, { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
                 </div>
                 <div class="editor">
-                    {{ form_row(form.Message,    { attr: { 'placeholder': 'Enter your message here...'} }) }}
+                    {{ form_row(form.Message, { attr: { 'placeholder': 'Enter your message here...'} }) }}
                 </div>
 
                 <div class="buttons">

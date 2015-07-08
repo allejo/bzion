@@ -12,10 +12,15 @@ class HumanDateFilter
      */
     public function __invoke($time, $format = "")
     {
-        $timeElement = '<span class="c-timestamp js-timestamp" title="%s">%s</span>';
-        $outputTime = (empty($format)) ? $time->diffForHumans() : $time->format($format);
+        $timeFormat = '<span class="c-timestamp js-timestamp" title="%s">%s</span>';
 
-        return sprintf($timeElement, $time->format("F j, Y g:ia"), $outputTime);
+        // If the date is older than 3 weeks ago, we'll automatically spell out the date
+        $defaultTimeLiteral = (strtotime($time) < strtotime('-21 day')) ? $time->format(\TimeDate::DATE_FULL) : $time->diffForHumans();
+
+        // If have specified a format, use that format and ignore $defaultTimeLiteral
+        $timeLiteral = (empty($format)) ? $defaultTimeLiteral : $time->format($format);
+
+        return sprintf($timeFormat, $time->format("F j, Y g:ia"), $timeLiteral);
     }
 
     public static function get()

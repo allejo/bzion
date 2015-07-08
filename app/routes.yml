@@ -76,6 +76,10 @@ match_delete:
 
 message_list:
     path:     /messages
+    defaults: { _controller: 'Message', _action: 'list' }
+
+message_compose:
+    path:     /messages/compose
     defaults: { _controller: 'Message', _action: 'compose' }
 
 message_search:

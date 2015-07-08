@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Messages{% endblock %}
+{% block title %}{{ viewTitle }}{% endblock %}
 
 {% block button_row %}
     {% set type = type|default('submit') %}
@@ -12,70 +12,31 @@
 {% endblock button_row %}
 
 {% block content %}
-    <main class="messaging">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>Messages</h1>
-                {% if renameForm and inviteForm %}
-                    {{ form(renameForm)}}
-                    {{ form(inviteForm)}}
-                {% endif %}
-            </article>
-        </section>
-
-        <section class="messages">
-            <section class="conversations">
-                {{ form_start(searchForm, { attr: { class: "search" } } ) }}
-                    <div class="icon">
-                        <i class="fa fa-search"></i>
-                    </div>
-                    {{ form_widget(searchForm.q, { attr: { class: "field", placeholder: "Search..."} } ) }}
-                    <div class="icon">
-                        <i class="fa fa-cog"></i>
-                    </div>
-                {{ form_end(searchForm) }}
-
-                <section class="chat_messages">
-                    <ul class="chats">
-                        {% for group in groups %}
-                            <li>
-                                <a data-id="{{ group.id }}" href="{{ group.url }}">
-                                    <section class="meta">
-                                        <p class="subject">{{ group.subject }}</p>
-                                        <p class="timestamp">{{ group.lastActivity }}</p>
-                                    </section>
-
-                                    <p class="members">
-                                        {% if group.members is not empty %}
-                                            {% for member in group.members %}
-                                                {{- member.name -}}
-                                                {%- if not loop.last -%}
-                                                    {{- ', ' -}}
-                                                {%- endif -%}
-                                            {% endfor %}
-                                        {% else %}
-                                            No other recipients
-                                        {% endif %}
-                                    </p>
-
-                                    <article class="last_message">
-                                        {% set lastmessage = group.lastmessage %}
-                                        {% if lastmessage is valid %}
-                                            <strong>{{ lastmessage.author.username }}:</strong>
-                                            {{ lastmessage.content|markdown(true, false)|striptags|truncate(50)|raw }}
-                                        {% endif %}
-                                    </article>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+    <main class="c-page s-message-inbox">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>{{ viewTitle }}</h1>
                 </section>
-            </section>
 
-            {% block messages %}
-
-            {% endblock %}
+                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+            </div>
         </section>
+
+        {# @TODO Uhm... Figure out where these things go #}
+        {#{% if renameForm and inviteForm %}#}
+            {#{{ form(renameForm)}}#}
+            {#{{ form(inviteForm)}}#}
+        {#{% endif %}#}
+
+        {% block messages_body %}
+
+        {% endblock %}
+
+        {# @TODO Figure out what to do with this thing #}
+        {#{% block messages %}#}
+
+        {#{% endblock %}#}
     </main>
 {% endblock %}
 

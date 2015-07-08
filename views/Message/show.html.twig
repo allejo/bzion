@@ -1,50 +1,67 @@
 {% extends 'Message/layout.html.twig' %}
 
-{% from 'Message/layout.html.twig' import member %}
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('message_list'),
+        'icon': 'inbox',
+        'text': 'Inbox',
+        'condition': true
+    },
+    {
+        'color': 'blue',
+        'url': path('message_compose'),
+        'icon': 'pencil',
+        'text': 'Compose',
+        'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+    }
+] %}
 
-{% form_theme form _self %}
+{% set viewTitle = "Subject: " ~ group.subject %}
 
-{% block messages %}
-    <section id="groupMessages" class="chat_area" data-id="{{ group.id }}">
-        <div class="dimmable">
-            <section class="conversation_details">
-                <div class="meta">
-                    <p class="subject">{{ group.subject }}</p>
+{% block messages_body %}
+    <section class="o-row c-messenger">
+        <aside class="c-messenger__sidebar">
+            {% include "Message/searchbar.html.twig" %}
+            {% include "Message/conversations.html.twig" %}
+        </aside>
 
-                    <div class="tools">
-                        <i class="fa fa-cog"></i>
-                        <i class="fa fa-times close"></i>
+        <section class="c-messenger__conversation" data-id="{{ group.id }}" id="groupMessages">
+            <div class="dimmable">
+                <section class="c-messenger__conversation__details">
+                    <p class="c-messenger__conversation__details__members">
+                        Conversation with
+                        {% if group.members is not empty %}
+                            {% for member in group.members %}
+                                {% if me.name != member.name %}
+                                    {{- link_to(member) -}}
+                                    {%- if not loop.last -%}
+                                        {{- ', ' -}}
+                                    {%- endif -%}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            No other recipients
+                        {% endif %}
+                    </p>
+                </section>
+
+                <section class="c-messenger__conversation__container">
+                    <ul id="messageView" class="c-messenger__conversation__container__messages">
+                        {% include 'Message/messages.html.twig' %}
+                    </ul>
+                </section>
+
+                {{ form_start(form, {'attr': {'class': 'c-messenger__conversation__response', 'autocomplete': 'off'} }) }}
+                    {{ form_errors(form) }}
+                    <div class="quick_reply">
+                        {{ form_errors(form.message) }}
+                        {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
+
+                        {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
                     </div>
-                </div>
-                <p class="members">
-                    {% if group.members is not empty %}
-                        {% for member in group.members %}
-                            {{- member(member) -}}
-                            {%- if not loop.last -%}
-                                {{- ', ' -}}
-                            {%- endif -%}
-                        {% endfor %}
-                    {% else %}
-                        No other recipients
-                    {% endif %}
-                </p>
-            </section>
-
-            <section class="scrollable_messages">
-                <ul id="messageView" class="messages">
-                    {% include 'Message/messages.html.twig' %}
-                </ul>
-            </section>
-
-            {{ form_start(form, {'attr': {'class': 'reply_form', 'autocomplete': 'off'} }) }}
-                {{ form_errors(form) }}
-                <div class="quick_reply">
-                    {{ form_errors(form.message) }}
-                    {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
-
-                    {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
-                </div>
-            {{ form_end(form) }}
-        </div>
+                {{ form_end(form) }}
+            </div>
+        </section>
     </section>
 {% endblock %}

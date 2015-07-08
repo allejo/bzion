@@ -13,7 +13,7 @@
         </section>
 
         {% for section in role_sections %}
-            <section class="o-layout">
+            <section class="o-row">
                 <p class="c-button c-button--{{ section.role.displayColor }} c-button--display">
                     {% if section.role.displayIcon is not null %}
                         <i class="fa {{ section.role.displayIcon }}"></i>
@@ -23,9 +23,9 @@
                 </p>
             </section>
 
-            <section class="o-layout">
+            <section class="o-row">
                 {% for player in section.members %}
-                    <article class="o-layout__body--quarter c-player-badge">
+                    <article class="o-row__column--quarter c-player-badge">
                         <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
                         <section class="c-player-badge__info c-player-badge__info--callsign-only">
                             <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}

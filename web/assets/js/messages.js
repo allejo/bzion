@@ -188,7 +188,7 @@ $(document).ready(function() {
     initPage();
 });
 
-var pageSelector = $(".messaging");
+var pageSelector = $(".c-page");
 
 $.fn.startSpinners = function() {
     this.children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
@@ -235,7 +235,7 @@ function updateSelectors(selectors) {
 
 function updatePage() {
     $("#groupMessages").startSpinners();
-    return updateSelectors([".messaging", "nav"]);
+    return updateSelectors([".c-page", "nav"]);
 }
 
 function updateLastMessage(html) {
@@ -289,7 +289,7 @@ pageSelector.on("submit", ".compose_form", function(event) {
 });
 
 // Group click event
-pageSelector.on("click", ".chats a", function(event) {
+pageSelector.on("click", ".c-messages__inbox__message", function(event) {
     event.preventDefault();
     redirect($(this).attr("data-id"));
 });

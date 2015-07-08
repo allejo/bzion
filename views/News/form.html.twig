@@ -8,19 +8,19 @@
     </section>
 
     {{ form_start(form, { 'attr': { 'class': 'c-form' } }) }}
-        <section class="o-layout c-form__editor">
-            <article class="o-layout__body--with-sidebar c-form__editor__body">
+        <section class="o-row c-form__editor">
+            <article class="o-row__column--with-sidebar c-form__editor__body">
                 {{ form_row(form.subject) }}
                 {{ form_row(form.content, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
             </article>
 
-            <aside class="o-layout__sidebar c-form__editor__meta">
+            <aside class="o-row__sidebar c-form__editor__meta">
                 {{ form_row(form.category) }}
                 {{ form_row(form.status) }}
             </aside>
         </section>
 
-        <section class="o-layout o-layout--no-margin c-form__buttons">
+        <section class="o-row o-row--no-margin c-form__buttons">
             {{ form_rest(form) }}
         </section>
     {{ form_end(form) }}

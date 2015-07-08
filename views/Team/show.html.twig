@@ -54,21 +54,21 @@
             </div>
         </section>
 
-        <section class="o-layout c-team">
-            <section class="o-layout__body--with-sidebar c-team__information">
+        <section class="o-row c-team">
+            <section class="o-row__column--with-sidebar c-team__information">
                 <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
                 <article class="c-team__information__bio s-markdown">
                     {{ team.description | markdown }}
                 </article>
             </section>
 
-            <section class="o-layout__sidebar  c-team__profile-picture">
+            <section class="o-row__sidebar  c-team__profile-picture">
                 <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
             </section>
         </section>
 
-        <section class="o-layout c-team">
-            <section class="o-layout__body--half c-team__match-stats">
+        <section class="o-row c-team">
+            <section class="o-row__column--half c-team__match-stats">
                 <h4>
                     Match Statistics
                     <small>
@@ -91,7 +91,7 @@
                 </section>
             </section>
 
-            <section class="o-layout__body--half c-team__activity">
+            <section class="o-row__column--half c-team__activity">
                 <h4>
                     Team Activity
                     <small>
@@ -101,8 +101,8 @@
             </section>
         </section>
 
-        <section class="o-layout c-team">
-            <section class="o-layout__body--half c-team__roster">
+        <section class="o-row c-team">
+            <section class="o-row__column--half c-team__roster">
                 <h4>Team Members</h4>
                 <article class="c-table c-table--no-border c-table--no-hover">
                     {% for player in team.members %}
@@ -129,7 +129,7 @@
                 </article>
             </section>
 
-            <section class="o-layout__body--half c-team__matches">
+            <section class="o-row__column--half c-team__matches">
                 <h4>Recent Matches</h4>
                 <article class="c-table">
                     {% for match in team.matches %}

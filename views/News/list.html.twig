@@ -35,10 +35,10 @@
             </div>
         </section>
 
-        <section class="o-layout">
+        <section class="o-row">
             {% include "News/categories.html.twig" %}
 
-            <section class="o-layout__body--with-sidebar">
+            <section class="o-row__column--with-sidebar">
                 {% for article in news %}
                     {% include "News/article.html.twig" with { 'article': article } %}
                 {% endfor %}
