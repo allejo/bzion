@@ -69,7 +69,7 @@
 
                 <aside class="o-row__sidebar c-form__editor__meta">
                     <div class="c-avatar-container__image">
-                        <img src="{{ me.avatar | imagine_filter('huge_thumb') }}" />
+                        <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
                     </div>
 
                     <div class="c-avatar-container__options">
@@ -79,7 +79,7 @@
                             {{ form_widget(form.avatar) }}
                         </div>
 
-                        {% if me.avatar is not null %}
+                        {% if player.avatar is not null %}
                             {{ form_row(form.delete_avatar) }}
                         {% endif %}
                     </div>
