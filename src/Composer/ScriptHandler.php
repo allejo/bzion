@@ -16,24 +16,16 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Yaml;
+
 
 /**
  * A manager for composer events
  */
 class ScriptHandler
 {
-    /**
-     * Clears the Symfony cache.
-     *
-     * @param $event Event Composer's event
-     */
-    public static function clearCache(Event $event)
-    {
-        static::executeCommand($event, 'cache:clear');
-    }
-
     /**
      * Shows what changed since the last update
      *
@@ -42,6 +34,63 @@ class ScriptHandler
     public static function showChangelog(Event $event)
     {
         static::executeCommand($event, 'bzion:changes');
+    }
+
+    /**
+     * Clears the Symfony cache.
+     *
+     * This command won't fail if the current cache prevents the kernel from
+     * booting
+
+     * @todo  Remove directories as well?
+     *
+     * @param $event Event       Composer's event
+     * @param $env   string|null The environment to clear the cache for, 'all'
+     *                           to clear the cache for all environments
+     */
+    public static function clearCache(Event $event, $env = null)
+    {
+        $io = $event->getIO();
+        $args = $event->getArguments();
+
+        if ($env === null) {
+	    if (isset($args[0])) {
+		$env = $args[0];
+	    } elseif (getenv('SYMFONY_ENV')) {
+		$env = getenv('SYMFONY_ENV');
+	    } else {
+		$env = \AppKernel::guessDevEnvironment();
+	    }
+	}
+
+	// Delete all cache files
+	$finder = new Finder();
+	$cacheDirectory = __DIR__ . '/../../app/cache/';
+
+	if ($env === 'all') {
+	    $finder->in($cacheDirectory)->depth('> 0');
+	} else {
+	    $env = str_replace('/', '', $env);
+	    $finder->in($cacheDirectory . $env);
+	}
+
+	foreach ($finder->files() as $file) {
+	    unlink($file);
+	}
+
+        if ($env === 'prod' || $env === 'all') {
+	    static::executeCommand($event, 'cache:warmup');
+        }
+    }
+
+    /**
+     * Clear the cache for all environments
+     *
+     * @param $event Event Composer's event
+     */
+    public static function clearAllCaches(Event $event)
+    {
+	return static::clearCache($event, 'all');
     }
 
     /**
