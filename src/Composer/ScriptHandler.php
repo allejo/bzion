@@ -45,7 +45,9 @@ class ScriptHandler
      *
      * @param $event Event       Composer's event
      * @param $env   string|null The environment to clear the cache for, 'all'
-     *                           to clear the cache for all environments
+     *                           to clear the cache for all environments, null
+     *                           to pick an environment based on command line
+     *                           arguments (defaults to 'all')
      */
     public static function clearCache(Event $event, $env = null)
     {
@@ -58,7 +60,7 @@ class ScriptHandler
 	    } elseif (getenv('SYMFONY_ENV')) {
 		$env = getenv('SYMFONY_ENV');
 	    } else {
-		$env = \AppKernel::guessDevEnvironment();
+		$env = 'all';
 	    }
 	}
 
@@ -87,7 +89,7 @@ class ScriptHandler
 	    }
 	}
 
-	if ($clear)
+	if ($clear) {
 	    // We use Symfony's Filesystem component to delete files recursively
 	    $fs->remove($finder);
 	}
