@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ee7a006ada053805a370f1db85b06bd3",
+    "hash": "f6458e10c2e10aa2aa9629dc906c9af9",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -2066,12 +2066,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/select2/select2.git",
-                "reference": "81a670bd6278ffb17525ea731b69df8a5e2dfe22"
+                "reference": "5021356751a2bd5da6b09a3d0886f91ee39b6fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/select2/select2/zipball/81a670bd6278ffb17525ea731b69df8a5e2dfe22",
-                "reference": "81a670bd6278ffb17525ea731b69df8a5e2dfe22",
+                "url": "https://api.github.com/repos/select2/select2/zipball/5021356751a2bd5da6b09a3d0886f91ee39b6fe5",
+                "reference": "5021356751a2bd5da6b09a3d0886f91ee39b6fe5",
                 "shasum": ""
             },
             "require": {
@@ -2096,7 +2096,7 @@
             ],
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "https://select2.github.io/",
-            "time": "2015-08-10 17:50:14"
+            "time": "2015-08-12 14:19:50"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -4996,12 +4996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a979cc78ed141855a76b7f196d24205c41107bbc"
+                "reference": "a4fb4dbcea018af0493d648db11f5f2720fb7fa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/a979cc78ed141855a76b7f196d24205c41107bbc",
-                "reference": "a979cc78ed141855a76b7f196d24205c41107bbc",
+                "url": "https://api.github.com/repos/composer/composer/zipball/a4fb4dbcea018af0493d648db11f5f2720fb7fa2",
+                "reference": "a4fb4dbcea018af0493d648db11f5f2720fb7fa2",
                 "shasum": ""
             },
             "require": {
@@ -5060,7 +5060,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-08-11 10:20:39"
+            "time": "2015-08-12 11:50:07"
         },
         {
             "name": "composer/spdx-licenses",

@@ -16,6 +16,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Yaml;
@@ -41,8 +42,6 @@ class ScriptHandler
      *
      * This command won't fail if the current cache prevents the kernel from
      * booting
-
-     * @todo  Remove directories as well?
      *
      * @param $event Event       Composer's event
      * @param $env   string|null The environment to clear the cache for, 'all'
@@ -67,15 +66,30 @@ class ScriptHandler
 	$finder = new Finder();
 	$cacheDirectory = __DIR__ . '/../../app/cache/';
 
+	$fs = new Filesystem();
+
+	$clear = true;
+
+	// We make sure that the root directories for each environment aren't
+	// removed, so that permission settings are kept
 	if ($env === 'all') {
-	    $finder->in($cacheDirectory)->depth('> 0');
+	    $io->write("Clearing cache for <fg=green;bold>all</> environments");
+	    $finder->in($cacheDirectory)->depth('== 1');
 	} else {
-	    $env = str_replace('/', '', $env);
-	    $finder->in($cacheDirectory . $env);
+	    $directory = $cacheDirectory . str_replace('/', '', $env);
+
+	    if ($fs->exists($directory)) {
+		$io->write("Clearing cache for the <fg=green>$env</> environment");
+		$finder->in($directory)->depth('== 0');
+	    } else {
+		$io->write("Cache directory for the <fg=green>$env</> environment doesn't exist and won't be cleared");
+		$clear = false;
+	    }
 	}
 
-	foreach ($finder->files() as $file) {
-	    unlink($file);
+	if ($clear)
+	    // We use Symfony's Filesystem component to delete files recursively
+	    $fs->remove($finder);
 	}
 
         if ($env === 'prod' || $env === 'all') {
