@@ -81,10 +81,17 @@ class ChangesCommand extends ContainerAwareCommand
         $listed = $this->parseChangelog($changelog);
 
         if (!$markRead) {
+	    if ($date) {
+		$last = $date->isFuture() ? 'next' : 'last';
+		$since = "in the $last " . $date->diffForHumans(null, true);
+	    } else {
+		$since = 'since the last update';
+	    }
+
             if ($this->isEmpty($listed)) {
-                $output->writeln("No significant changes since the last update.");
+                $output->writeln("No significant changes $since.");
             } else {
-                $output->writeln("Changes since last update:");
+                $output->writeln("Changes $since:");
                 $this->renderChangeList($listed, $output);
             }
         }
@@ -104,12 +111,12 @@ class ChangesCommand extends ContainerAwareCommand
      * @param  OutputInterface $output         The command's output
      * @return void
      */
-    private function parseOptions($lastUpdatePath, $date, $output)
+    private function parseOptions($lastUpdatePath, &$date, $output)
     {
         $message = null;
 
         if ($date) {
-            $this->lastUpdateDate = \TimeDate::from($date)->startOfDay();
+            $this->lastUpdateDate = $date = \TimeDate::from($date)->startOfDay();
         } elseif (!file_exists($lastUpdatePath)) {
             $message = "Last update file not found, a new one is going to be created";
         } else {
