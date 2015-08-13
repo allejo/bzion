@@ -21,7 +21,7 @@
 // %USERNAME% that will be replaced with the real username and token when the
 // URL is called. For example:
 //
-// http://my.bzflag.org/weblogin.php?action=weblogin&url=http://www.mysite.com/mydir/login.php?token=%TOKEN%&username=%USERNAME%
+// https://my.bzflag.org/weblogin.php?action=weblogin&url=http://www.mysite.com/mydir/login.php?token=%TOKEN%&username=%USERNAME%
 //
 // NOTE: The URL passed MUST be URL encoded.  The example above shows the URL
 // in plain text to make it clearer what is happening.
@@ -48,7 +48,7 @@ function validate_token($token, $username, $groups = array(), $checkIP = true)
     $listserver = Array();
 
     // First off, start with the base URL
-    $listserver['url'] = 'http://my.bzflag.org/db/';
+    $listserver['url'] = 'https://my.bzflag.org/db/';
     // Add on the action and the username
     $listserver['url'] .= '?action=CHECKTOKENS&checktokens='.urlencode($username);
     // Make sure we match the IP address of the user

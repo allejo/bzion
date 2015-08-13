@@ -141,7 +141,7 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->children()
                         ->scalarNode('list_server')
-                            ->defaultValue('http://my.bzflag.org/db/?action=LIST&version=BZFS0221')
+                            ->defaultValue('https://my.bzflag.org/db/?action=LIST&version=BZFS0221')
                             ->info('Path to the BZFlag List Server')
                             ->isRequired()
                         ->end()

@@ -40,7 +40,7 @@ bzion:
             port: 9200
     miscellaneous:
         # BZFlag List Server
-        list_server: "http://my.bzflag.org/db/?action=LIST&version=BZFS0221"
+        list_server: "https://my.bzflag.org/db/?action=LIST&version=BZFS0221"
         # The BZFlag callsign of the website's administrator
         admin: brad
         # Server polling interval

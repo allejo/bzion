@@ -1,3 +1,6 @@
+13 August 2015:
+    Notes:
+        - Since my.bzflag.org can now be accessed over HTTPS, you can update the miscellaneous.list_server option in your configuration
 17 August 2014:
     Features:
         - Finalized support for the LeagueOverseer plugin
