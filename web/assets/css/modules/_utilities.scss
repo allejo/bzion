@@ -1,7 +1,7 @@
 /// Automatically set the margin-bottom of an element to a specified value but have the last
 /// type of that element to have margin bottom 0
 ///
-/// @param {Number [unit]} [30px] $margin
+/// @param {Number [unit]} $margin [30px]
 ///   The margin bottom that will be used
 
 @mixin autoMarginBottom($margin: $Settings-Page_Section-Margin) {
