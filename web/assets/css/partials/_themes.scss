@@ -1,12 +1,14 @@
 $default: (
-    "hyperlink-color": blue,
-    "background-color": white
+    "link-color": $Color-Sky_Blue,
+    "body-bg": $Color-White,
+    "font-color": $Font-Color-Default
 );
 
 $themes: (
     "light": $default,
     "dark": (
-        "hyperlink": yellow,
-        "background": darkgrey
+        "link-color": #8FD5FF,
+        "body-bg": $Color-Dark_Grey,
+        "font-color": $Color-White
     )
 );
