@@ -1,7 +1,8 @@
-/// This function loops through all of the available themes and generates the appropriate rules based on the theme rules.
+/// This function loops through all of the available themes and generates the appropriate
+/// CSS based on the theme definition
 ///
 /// @param {String} $rule
-///   The CSS rule that will be effected based on the theme
+///   The CSS keyword that will be effected based on the theme
 /// @param {String} $variable
 ///   The name of the key used in the theme map
 ///
