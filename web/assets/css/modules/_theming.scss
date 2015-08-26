@@ -1,0 +1,35 @@
+/// This function loops through all of the available themes and generates the appropriate rules based on the theme rules.
+///
+/// @param {String} $rule
+///   The CSS rule that will be effected based on the theme
+/// @param {String} $variable
+///   The name of the key used in the theme map
+///
+/// @example scss
+///   a {
+///       @include theme-specific("color", "hyperlink");
+///   }
+///
+/// @example css
+///   .t-light a {
+///       color: blue;
+///   }
+///
+///   .t-dark a {
+///       color: yellow;
+///   }
+
+@mixin theme-specific ($rule, $variable) {
+    @each $name, $settings in $themes {
+        @at-root {
+            .t-#{$name} & {
+                @if map-has-key($settings, $variable) {
+                    #{$rule}: #{map-get($settings, $variable)};
+                }
+                @else {
+                    #{$rule}: #{map-get($default, $variable)};
+                }
+            }
+        }
+    }
+}

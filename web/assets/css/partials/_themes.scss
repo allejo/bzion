@@ -1,0 +1,12 @@
+$default: (
+    "hyperlink-color": blue,
+    "background-color": white
+);
+
+$themes: (
+    "light": $default,
+    "dark": (
+        "hyperlink": yellow,
+        "background": darkgrey
+    )
+);
