@@ -1,9 +1,10 @@
 a {
-    color: $Font-Color-Hyperlink;
+    @include theme-specific("color", "link-color");
+
     text-decoration: none;
 
     &:hover {
-        color: darken($Font-Color-Hyperlink, 15%);
+        @include theme-specific("color", "link-color", darken, 1, 15%);
     }
 
     // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
