@@ -33,7 +33,7 @@ header {
     }
 
     &.site-header {
-        @include linear-gradient($Color-White, #F2F2F2);
+        @include theme-specific("background-image", "header-bg");
 
         box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
         border-bottom: 1px solid $Color-Header_Border;
@@ -44,7 +44,8 @@ header {
             @include display(flex);
 
             .mobile-menu {
-                color: $Color-Medium_Grey;
+                @include theme-specific("color", "header-color");
+
                 cursor: pointer;
                 display: none;
                 line-height: $Settings-Line_Height;
@@ -66,9 +67,14 @@ header {
                 width: auto;
 
                 a {
-                    color: $Color-Medium_Grey;
+                    @include theme-specific("color", "header-color");
+
                     font-size: 26px;
                     line-height: 56px;
+
+                    &:hover {
+                        @include theme-specific("color", "header-color-hover");
+                    }
 
                     img {
                         margin-right: 3px;
@@ -98,7 +104,8 @@ header {
                         list-style: none;
 
                         a {
-                            color: $Color-Medium_Grey;
+                            @include theme-specific("color", "header-color");
+
                             display: block;
                             padding: 17px 15px;
 
@@ -109,7 +116,7 @@ header {
                             }
 
                             &:hover {
-                                color: $Color-Black;
+                                @include theme-specific("color", "header-color-hover");
                             }
 
                             @include respond-to(phones) {
@@ -130,7 +137,8 @@ header {
                     &.pages {
                         @include flex(1);
                         @include respond-to(tablets) {
-                            background-color: $Color-Almost_White;
+                            @include theme-specific("background-color", "nav-bg");
+
                             border-bottom: 1px solid $Color-Header_Border;
                             border-top: 1px solid $Color-Header_Border;
                             display: none;
