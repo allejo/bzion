@@ -2,7 +2,7 @@
     @include component('jumbotron') {
         background-attachment: scroll;
         background-image: url('../imgs/cover_photo.png');
-        background-position: 0 -185px;
+        background-position: center center;
         background-repeat: no-repeat;
         margin-bottom: $Settings-Page_Section-Margin;
 
