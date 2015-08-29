@@ -5,7 +5,9 @@ $default: (
     "header-bg": linear-gradient($Color-White, #F2F2F2),
     "header-color": $Color-Medium_Grey,
     "header-color-hover": $Color-Black,
-    "nav-bg": $Color-Almost_White
+    "nav-bg": $Color-Almost_White,
+    "news-title": $Color-Blue,
+    "news-meta": $Color-Medium_Grey
 );
 
 $themes: (
@@ -17,6 +19,8 @@ $themes: (
         "header-bg": linear-gradient(#777777, #424242),
         "header-color": $Color-White,
         "header-color-hover": #8FD5FF,
-        "nav-bg": #777777
+        "nav-bg": #777777,
+        "news-title": $Color-Light_Grey,
+        "news-meta": $Color-White
     )
 );
