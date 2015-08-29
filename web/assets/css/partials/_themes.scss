@@ -7,7 +7,8 @@ $default: (
     "header-color-hover": $Color-Black,
     "nav-bg": $Color-Almost_White,
     "news-title": $Color-Blue,
-    "news-meta": $Color-Medium_Grey
+    "news-meta": $Color-Medium_Grey,
+    "news-sidebar-bg": $Color-Almost_White
 );
 
 $themes: (
@@ -21,6 +22,7 @@ $themes: (
         "header-color-hover": #8FD5FF,
         "nav-bg": #777777,
         "news-title": $Color-Light_Grey,
-        "news-meta": $Color-White
+        "news-meta": $Color-White,
+        "news-sidebar-bg": lighten(#4C5156, 15%)
     )
 );

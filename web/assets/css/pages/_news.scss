@@ -78,7 +78,7 @@
 
                 i {
                     @include theme-specific('color', 'news-meta');
-                    
+
                     margin-right: 10px;
                 }
             }
@@ -97,11 +97,11 @@
             }
 
             &.active {
-                background-color: $Color-Almost_White;
+                @include theme-specific('background-color', 'news-sidebar-bg');
             }
 
             &:hover {
-                background-color: lighten($Color-Almost_White, 1%);
+                @include theme-specific('background-color', 'news-sidebar-bg', lighten, 1, 15%);
             }
 
             &:last-child {
