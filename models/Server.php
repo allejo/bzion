@@ -21,10 +21,16 @@ class Server extends UrlModel implements NamedModel
     protected $name;
 
     /**
-     * The address of the server
+     * The domain of the server
      * @var string
      */
-    protected $address;
+    protected $domain;
+
+    /**
+     * The port of the server
+     * @var int
+     */
+    protected $port;
 
     /**
      * The id of the country the server is located in
@@ -78,7 +84,8 @@ class Server extends UrlModel implements NamedModel
     protected function assignResult($server)
     {
         $this->name = $server['name'];
-        $this->address = $server['address'];
+        $this->domain = $server['domain'];
+        $this->port = $server['port'];
         $this->country = Country::get($server['country']);
         $this->owner = $server['owner'];
         $this->online = $server['online'];
@@ -91,21 +98,23 @@ class Server extends UrlModel implements NamedModel
      * Add a new server
      *
      * @param string $name    The name of the server
-     * @param string $address The address of the server (e.g: server.com:5155)
+     * @param string $domain  The domain of the server (e.g. server.com)
+     * @param string $port    The port of the server (e.g. 5154)
      * @param int    $country The ID of the country
      * @param int    $owner   The ID of the server owner
      *
      * @return Server An object that represents the sent message
      */
-    public static function addServer($name, $address, $country, $owner)
+    public static function addServer($name, $domain, $port, $country, $owner)
     {
         $server = self::create(array(
             'name'    => $name,
-            'address' => $address,
+            'domain'  => $domain,
+            'port'    => $port,
             'country' => $country,
             'owner'   => $owner,
             'status'  => 'active',
-        ), 'ssiis', 'updated');
+        ), 'ssiiis', 'updated');
         $server->forceUpdate();
 
         return $server;
@@ -218,12 +227,32 @@ class Server extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the domain of the server
+     *
+     * @return string The server's domain
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * Get the port of the server
+     *
+     * @return int The port number
+     */
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    /**
      * Get the server's IP address or hostname
      * @return string
      */
     public function getAddress()
     {
-        return $this->address;
+        return $this->domain . ":" . $this->port;
     }
 
     /**
@@ -280,11 +309,42 @@ class Server extends UrlModel implements NamedModel
      *
      * @param string $address The new address of the server
      *
+     * @deprecated Use setDomain() and setPort() instead
+     *
      * @return self
      */
     public function setAddress($address)
     {
-        return $this->updateProperty($this->address, 'address', $address, 's');
+        list($domain, $port) = explode(":", $address);
+
+        $this->setDomain($domain);
+        $this->setPort($port);
+
+        return $this;
+    }
+
+    /**
+     * Set the domain of the server
+     *
+     * @param $domain string The new domain of the server
+     *
+     * @return self
+     */
+    public function setDomain($domain)
+    {
+        return $this->updateProperty($this->domain, 'domain', $domain, 's');
+    }
+
+    /**
+     * Set the port of the server
+     *
+     * @param $port int The new port of the server
+     *
+     * @return self
+     */
+    public function setPort($port)
+    {
+        return $this->updateProperty($this->port, 'port', $port, 'i');
     }
 
     /**
