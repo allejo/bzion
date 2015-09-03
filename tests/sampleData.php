@@ -78,8 +78,8 @@ $fradis->update("activity", 3.14159265358979323846, "d");
 echo " done!";
 
 echo "\nAdding servers...";
-Server::addServer("BZPro Public HiX FFA", "bzpro.net:5154", 227, $tw1sted->getId());
-Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net:5155", 227, $tw1sted->getId());
+Server::addServer("BZPro Public HiX FFA", "bzpro.net", 5154, 227, $tw1sted->getId());
+Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net", 5155, 227, $tw1sted->getId());
 echo " done!";
 
 echo "\nAdding messages...";
