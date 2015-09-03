@@ -107,12 +107,15 @@ class Server extends UrlModel implements NamedModel
      */
     public static function addServer($name, $domain, $port, $country, $owner)
     {
+        $key = ApiKey::getKeyByOwner($owner);
+
         $server = self::create(array(
             'name'    => $name,
             'domain'  => $domain,
             'port'    => $port,
             'country' => $country,
             'owner'   => $owner,
+            'api_key' => $key->getId(),
             'status'  => 'active',
         ), 'ssiiis', 'updated');
         $server->forceUpdate();
