@@ -99,7 +99,7 @@ abstract class BaseModel implements ModelInterface
      *
      * @param int $id The ID of the model
      */
-    private function __construct($id)
+    protected function __construct($id)
     {
         $this->db = Database::getInstance();
 
