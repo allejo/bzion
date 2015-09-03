@@ -21,7 +21,7 @@ class ApiKey extends Model
     protected function assignResult($key)
     {
         $this->name   = $key['name'];
-        $this->owner  = $key['owner'];
+        $this->owner  = Player::get($key['owner']);
         $this->key    = $key['key'];
         $this->status = $key['status'];
     }
@@ -62,7 +62,7 @@ class ApiKey extends Model
 
     public function getOwner()
     {
-        return Player::get($this->owner);
+        return $this->owner;
     }
 
     public function getStatus()

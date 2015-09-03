@@ -40,7 +40,7 @@ class Server extends UrlModel implements NamedModel
 
     /**
      * The id of the owner of the server
-     * @var int
+     * @var Player
      */
     protected $owner;
 
@@ -58,7 +58,7 @@ class Server extends UrlModel implements NamedModel
 
     /**
      * The ID of the API key assigned to this server
-     * @var int
+     * @var ApiKey
      */
     protected $api_key;
 
@@ -93,10 +93,10 @@ class Server extends UrlModel implements NamedModel
         $this->domain = $server['domain'];
         $this->port = $server['port'];
         $this->country = Country::get($server['country']);
-        $this->owner = $server['owner'];
+        $this->owner = Player::get($server['owner']);
         $this->online = $server['online'];
         $this->info = unserialize($server['info']);
-        $this->api_key = $server['api_key'];
+        $this->api_key = ApiKey::get($server['api_key']);
         $this->updated = TimeDate::fromMysql($server['updated']);
         $this->status = $server['status'];
     }
@@ -225,7 +225,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function getApiKey()
     {
-        return ApiKey::get($this->api_key);
+        return $this->api_key;
     }
 
     /**
@@ -299,7 +299,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function getOwner()
     {
-        return Player::get($this->owner);
+        return $this->owner;
     }
 
     /**
