@@ -57,6 +57,12 @@ class Server extends UrlModel implements NamedModel
     protected $info;
 
     /**
+     * The ID of the API key assigned to this server
+     * @var int
+     */
+    protected $api_key;
+
+    /**
      * The date of the last bzfquery of the server
      * @var TimeDate
      */
@@ -90,6 +96,7 @@ class Server extends UrlModel implements NamedModel
         $this->owner = $server['owner'];
         $this->online = $server['online'];
         $this->info = unserialize($server['info']);
+        $this->api_key = $server['api_key'];
         $this->updated = TimeDate::fromMysql($server['updated']);
         $this->status = $server['status'];
     }
@@ -117,7 +124,7 @@ class Server extends UrlModel implements NamedModel
             'owner'   => $owner,
             'api_key' => $key->getId(),
             'status'  => 'active',
-        ), 'ssiiis', 'updated');
+        ), 'ssiiiis', 'updated');
         $server->forceUpdate();
 
         return $server;
@@ -151,7 +158,7 @@ class Server extends UrlModel implements NamedModel
 
         foreach ($servers as $server) {
             list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
-            if ($this->address == $host) {
+            if ($this->getAddress() == $host) {
                 $online = true;
             }
         }
@@ -209,6 +216,16 @@ class Server extends UrlModel implements NamedModel
         $update_time->modify(Service::getParameter('bzion.miscellaneous.update_interval'));
 
         return TimeDate::now() >= $update_time;
+    }
+
+    /**
+     * The ApiKey assigned to this server
+     *
+     * @return \CachedModel|int|null|static
+     */
+    public function getApiKey()
+    {
+        return ApiKey::get($this->api_key);
     }
 
     /**

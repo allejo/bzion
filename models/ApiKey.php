@@ -20,18 +20,20 @@ class ApiKey extends Model
      */
     protected function assignResult($key)
     {
-        $this->name = $key['name'];
-        $this->owner = $key['owner'];
-        $this->key = $key['key'];
+        $this->name   = $key['name'];
+        $this->owner  = $key['owner'];
+        $this->key    = $key['key'];
+        $this->status = $key['status'];
     }
 
     public static function createKey($name, $owner)
     {
         $key = self::create(array(
-            'name'  => $name,
-            'owner' => $owner,
-            'key'   => self::generateKey()
-        ), 'sis');
+            'name'   => $name,
+            'owner'  => $owner,
+            'key'    => self::generateKey(),
+            'status' => "active"
+        ), 'siss');
 
         return $key;
     }
@@ -42,10 +44,10 @@ class ApiKey extends Model
 
         if ($key == null)
         {
-            $key = self::create("Automatically generated key", $owner);
+            return self::createKey("Automatically generated key", $owner);
         }
 
-        return $key;
+        return ApiKey::get($key);
     }
 
     public function getKey()
