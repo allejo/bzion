@@ -42,6 +42,8 @@
                 {% for article in news %}
                     {% include "News/article.html.twig" with { 'article': article } %}
                 {% endfor %}
+
+                {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
             </section>
         </section>
     </main>

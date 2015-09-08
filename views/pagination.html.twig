@@ -1,0 +1,32 @@
+<ul class="paginator">
+    {% set url = app.request.baseUrl %}
+
+    {% if totalPages > 5 and currentPage > 1 %}
+        <li><a href="{{ url }}?page={{ currentPage - 1 }}">&laquo;</a></li>
+    {% endif %}
+
+    {% if totalPages <= 5 %}
+        {% set begin = currentPage %}
+        {% set end = totalPages %}
+    {% else %}
+        {% if currentPage < 3 %}
+            {% set begin = 1 %}
+            {% set end = currentPage + 4 %}
+        {% else %}
+            {% set begin = currentPage - 2 %}
+            {% set end = currentPage + 2 %}
+        {% endif %}
+    {% endif %}
+
+    {% for i in begin..end if i <= 5 %}
+        {% if i == currentPage %}
+            <li class="c-pagination--current">{{ i }}</li>
+        {% else %}
+            <li><a href="{{ url }}?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if totalPages > 5 and currentPage < totalPages %}
+        <li><a href="{{ url }}?page={{ currentPage + 1 }}">&raquo;</a></li>
+    {% endif %}
+</ul>

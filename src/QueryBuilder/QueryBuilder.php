@@ -542,6 +542,15 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Get the amount of results that are returned per page
+     * @return int
+     */
+    public function getResultsPerPage()
+    {
+        return $this->resultsPerPage;
+    }
+
+    /**
      * Select a column to perform opeations on
      *
      * This is identical to the `where()` method, except that the column is

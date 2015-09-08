@@ -11,13 +11,23 @@ class NewsController extends CRUDController
 
     public function listAction(Request $request, NewsCategory $category = null)
     {
-        $news = $this->getQueryBuilder()
-            ->sortBy('created')->reverse()
+        $qb = $this->getQueryBuilder();
+
+        $news = $qb->sortBy('created')->reverse()
             ->where('category')->is($category)
             ->limit(5)->fromPage($request->query->get('page', 1))
             ->getModels();
 
-        return array("news" => $news, "categories" => $this->getCategories(), "category" => $category);
+        $totalPages = ceil($qb->count() / $qb->getResultsPerPage());
+        $currentPage = $request->query->get('page', 1);
+
+        return array(
+            "news" => $news,
+            "categories" => $this->getCategories(),
+            "category" => $category,
+            "currentPage" => $currentPage,
+            "totalPages" => $totalPages
+        );
     }
 
     public function createAction(Player $me)
