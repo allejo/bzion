@@ -1,11 +1,18 @@
 {% set url = app.request.baseUrl %}
+{% set disabledCSS = "c-pagination--disabled" %}
+{% set showButtons = totalPages > 5 %}
+{% set prev = showButtons and currentPage > 1 %}
+{% set next = showButtons and currentPage < totalPages %}
 
 <ul class="c-pagination">
-    {% set url = app.request.baseUrl %}
-
-    {# We're defining a previous button if we have more than 5 pages and we're past the first page #}
-    {% if totalPages > 5 and currentPage > 1 %}
-        <li><a href="{{ url }}?page={{ currentPage - 1 }}">&laquo;</a></li>
+    {% if showButtons %}
+        <li class="{{ prev ?: disabledCSS }}">
+            {% if prev %}
+                <a href="{{ url }}?page={{ currentPage - 1 }}"><i class="fa fa-angle-left"></i></a>
+            {% else %}
+                <i class="fa fa-angle-left"></i>
+            {% endif %}
+        </li>
     {% endif %}
 
     {% if totalPages <= 5 %}
@@ -32,7 +39,13 @@
         {% endif %}
     {% endfor %}
 
-    {% if totalPages > 5 and currentPage < totalPages %}
-        <li><a href="{{ url }}?page={{ currentPage + 1 }}">&raquo;</a></li>
+    {% if showButtons %}
+        <li class="{{ next ?: disabledCSS }}">
+            {% if next %}
+                <a href="{{ url }}?page={{ currentPage + 1 }}"><i class="fa fa-angle-right"></i></a>
+            {% else %}
+                <i class="fa fa-angle-right"></i>
+            {% endif %}
+        </li>
     {% endif %}
 </ul>

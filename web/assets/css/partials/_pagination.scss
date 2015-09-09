@@ -1,0 +1,35 @@
+%activePage {
+    background-color: $Color-Blue;
+
+    &, a {
+        color: $Color-White;
+    }
+}
+
+@include component('pagination') {
+    padding-left: 0;
+    text-align: center;
+
+    li {
+        $size: 30px;
+
+        border: $Border-Default;
+        display: inline-block;
+        height: $size;
+        line-height: $size;
+        text-align: center;
+        width: $size;
+
+        &:hover {
+            @extend %activePage;
+        }
+    }
+
+    @include modifier('current') {
+        @extend %activePage;
+    }
+
+    @include modifier('disabled') {
+        color: $Color-Light_Grey;
+    }
+}
