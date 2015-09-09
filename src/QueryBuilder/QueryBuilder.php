@@ -517,11 +517,13 @@ class QueryBuilder implements Countable
     public function count()
     {
         $table  = $this->getTable();
-        $params = $this->createQueryParams();
+        $params = $this->createQueryParams(false);
         $db     = Database::getInstance();
+        $query  = "SELECT COUNT(*) FROM $table $params";
 
-        $query   = "SELECT COUNT(*) FROM $table $params";
-        $results = $db->query($query, $this->getTypes(), $this->getParameters());
+        // We don't want pagination to affect our results so don't use the functions that combine
+        // pagination results
+        $results = $db->query($query, $this->types, $this->parameters);
 
         return $results[0]['COUNT(*)'];
     }
@@ -602,14 +604,21 @@ class QueryBuilder implements Countable
 
     /**
      * Get the MySQL extra parameters
+     *
+     * @param  bool $respectPagination Whether to respect pagination or not; useful for when pagination should be ignored such as count
      * @return string
      */
-    protected function createQueryParams()
+    protected function createQueryParams($respectPagination = true)
     {
         $extras     = $this->extras;
         $conditions = $this->createQueryConditions();
         $order      = $this->createQueryOrder();
-        $pagination = $this->createQueryPagination();
+        $pagination = "";
+
+        if ($respectPagination)
+        {
+            $pagination = $this->createQueryPagination();
+        }
 
         return "$extras $conditions $order $pagination";
     }
