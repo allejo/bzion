@@ -1,24 +1,30 @@
-<ul class="paginator">
+{% set url = app.request.baseUrl %}
+
+<ul class="c-pagination">
     {% set url = app.request.baseUrl %}
 
+    {# We're defining a previous button if we have more than 5 pages and we're past the first page #}
     {% if totalPages > 5 and currentPage > 1 %}
         <li><a href="{{ url }}?page={{ currentPage - 1 }}">&laquo;</a></li>
     {% endif %}
 
     {% if totalPages <= 5 %}
-        {% set begin = currentPage %}
+        {% set begin = 1 %}
         {% set end = totalPages %}
     {% else %}
         {% if currentPage < 3 %}
             {% set begin = 1 %}
-            {% set end = currentPage + 4 %}
+            {% set end = begin + 4 %}
+        {% elseif currentPage + 2 >= totalPages %}
+            {% set begin = totalPages - 4 %}
+            {% set end = totalPages %}
         {% else %}
             {% set begin = currentPage - 2 %}
             {% set end = currentPage + 2 %}
         {% endif %}
     {% endif %}
 
-    {% for i in begin..end if i <= 5 %}
+    {% for i in begin..end %}
         {% if i == currentPage %}
             <li class="c-pagination--current">{{ i }}</li>
         {% else %}
