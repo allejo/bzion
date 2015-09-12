@@ -5,8 +5,8 @@
 
     @include component('article') {
         border-bottom: $Border-Default;
-        margin-bottom: 20px;
-        padding-bottom: 20px;
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+        padding-bottom: $Settings-Page_Section-Small_Margin;
 
         @include element('title') {
             color: $Color-Blue;
@@ -33,7 +33,7 @@
 
         @include element('meta') {
             font-size: 14px;
-            padding: 5px 0 10px;
+            padding: 5px 0 0;
 
             li {
                 color: $Color-Medium_Grey;
