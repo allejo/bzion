@@ -7,12 +7,21 @@ class MatchController extends CRUDController
 {
     public function listAction(Request $request, Team $team = null, $type = null)
     {
-        $query = $this->getQueryBuilder()
-               ->sortBy('time')->reverse()
+        $qb = $this->getQueryBuilder();
+
+        $query = $qb->sortBy('time')->reverse()
                ->with($team, $type)
                ->limit(50)->fromPage($request->query->get('page', 1));
 
-        return array("matches" => $query->getModels(), "team" => $team);
+        $totalPages = ceil($qb->count() / $qb->getResultsPerPage());
+        $currentPage = $request->query->get('page', 1);
+
+        return array(
+            "matches" => $query->getModels(),
+            "team" => $team,
+            "currentPage" => $currentPage,
+            "totalPages" => $totalPages
+    );
     }
 
     public function createAction(Player $me)
