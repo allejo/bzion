@@ -77,8 +77,8 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'web/assets/js/min/main-ck.js' :  [ 'web/assets/js/main.js' ],
-                    'web/assets/js/min/teams-ck.js':  [ 'web/assets/js/teams.js' ]
+                    'web/assets/js/min/main.js' :  [ 'web/assets/js/main.js' ],
+                    'web/assets/js/min/teams.js':  [ 'web/assets/js/teams.js' ]
                 }
             }
         },
