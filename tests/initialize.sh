@@ -5,7 +5,7 @@ if [[ $BZION_HHVM -eq 1 ]]; then
    COMPOSER_ARGS="-v"
 fi
 
-php composer.phar install $COMPOSER_ARGS --prefer-source
+php composer.phar install $COMPOSER_ARGS --prefer-source --ignore-platform-reqs
 
 FILE=app/config.yml
 cp app/config.example.yml $FILE
