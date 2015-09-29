@@ -128,7 +128,7 @@ class AppKernel extends Kernel
 
     private function setUpTwig()
     {
-        $cacheDir = $this->isDebug() ? null : $this->getCacheDir() . '/twig';
+        $cacheDir = $this->isDebug() ? false : $this->getCacheDir() . '/twig';
 
         // Set up the twig templating environment to parse views
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../views');
