@@ -8,7 +8,7 @@
 namespace BZIon\Search;
 
 use BZIon\Debug\Debug;
-use Elastica\Query\Bool;
+use Elastica\Query\BoolQuery;
 use Elastica\Query\HasParent;
 use Elastica\Query\Match;
 use Elastica\Query\Term;
