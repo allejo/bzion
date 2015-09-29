@@ -72,7 +72,7 @@ class MessageSearch
     private function elasticSearch($query)
     {
         $finder = \Service::getContainer()->get('fos_elastica.finder.search');
-        $boolQuery = new Bool();
+        $boolQuery = new BoolQuery();
 
         // We have only stored "active" messages and groups on Elasticsearch's
         // database, so there is no check for that again
