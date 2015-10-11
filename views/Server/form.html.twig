@@ -1,0 +1,47 @@
+<main class="c-page news">
+    <section class="c-page__header">
+        <div class="c-page__header__container">
+            <section class="c-page__header__container__title">
+                <h1>{{ pageTitle }}</h1>
+            </section>
+        </div>
+    </section>
+
+    {{ form_start(form, { 'attr': { 'class': 'c-form' } }) }}
+        <section class="o-row c-form__editor">
+            <article class="o-row__column--with-sidebar">
+                {{ form_row(form.name) }}
+            </article>
+
+            <article class="o-row__column--sidebar">
+                {{ form_row(form.owner) }}
+            </article>
+
+            <article class="o-row__column--third">
+                {{ form_row(form.domain) }}
+            </article>
+
+            <article class="o-row__column--third">
+                {{ form_row(form.port) }}
+            </article>
+
+            <article class="o-row__column--full">
+                {{ form_row(form.country, { 'attr': { 'class': 'js-select__country' }}) }}
+            </article>
+
+            {#<article class="o-row__column--with-sidebar c-form__editor__body">#}
+                {#{{ form_row(form.subject) }}#}
+                {#{{ form_row(form.content, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}#}
+            {#</article>#}
+
+            {#<aside class="o-row__sidebar c-form__editor__meta">#}
+                {#{{ form_row(form.category) }}#}
+                {#{{ form_row(form.status) }}#}
+            {#</aside>#}
+        </section>
+
+        <section class="o-row o-row--no-margin c-form__buttons">
+            {{ form_rest(form) }}
+        </section>
+    {{ form_end(form) }}
+</main>

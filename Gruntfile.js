@@ -73,12 +73,14 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                mangle: true
+                mangle: true,
+                screwIE8: true
             },
             dist: {
                 files: {
-                    'web/assets/js/min/main.js' :  [ 'web/assets/js/main.js' ],
-                    'web/assets/js/min/teams.js':  [ 'web/assets/js/teams.js' ]
+                    'web/assets/js/min/utilities.js': [ 'web/assets/js/partials/*.js' ],
+                    'web/assets/js/min/main.js' : [ 'web/assets/js/main.js' ],
+                    'web/assets/js/min/teams.js': [ 'web/assets/js/teams.js' ]
                 }
             }
         },
@@ -95,7 +97,7 @@ module.exports = function(grunt) {
                 }
             },
             scripts: {
-                files: [ 'web/assets/js/main.js', 'web/assets/js/teams.js'],
+                files: [ 'web/assets/js/**/*.js' ],
                 tasks: [ 'js' ],
                 options: {
                     spawn: true

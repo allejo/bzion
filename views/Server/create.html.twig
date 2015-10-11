@@ -3,7 +3,10 @@
 {% block title %}Servers :: Add Server{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "Server/form.html.twig" with {
+        'pageTitle': 'Add New Server',
+        'form': form }
+    %}
 {% endblock %}
 
 {% block javascripts %}
