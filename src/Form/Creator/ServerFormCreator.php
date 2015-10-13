@@ -7,6 +7,7 @@
 
 namespace BZIon\Form\Creator;
 
+use BZIon\Form\Type\AdvancedModelType;
 use BZIon\Form\Type\PlayerType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -36,7 +37,7 @@ class ServerFormCreator extends ModelFormCreator
                     )),
                 ),
             ))
-            ->add('owner', new PlayerType())
+            ->add('owner', new AdvancedModelType('player'))
             ->add('enter', 'submit');
     }
 

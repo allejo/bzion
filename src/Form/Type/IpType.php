@@ -36,9 +36,7 @@ class IpType extends AbstractType
             'placeholder' => '192.0.2.193, *.example.com, ...',
         ));
 
-        $resolver->setNormalizers(array(
-            'constraints' => $addTypeConstraint
-        ));
+        $resolver->setNormalizer('constraints', $addTypeConstraint);
     }
 
     public function getParent()

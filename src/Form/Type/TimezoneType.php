@@ -87,7 +87,6 @@ class TimezoneType extends AbstractType
         if ($offset == 0) {
             $formattedOffset = 'GMT';
         } else {
-            dump($offset);
             $sign = ($offset > 0) ? '+' : '-';
 
             $formattedOffset = 'GMT' . $sign . date('H:i', mktime(0, abs($offset)/60));

@@ -18,7 +18,7 @@
             {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
                 {{ form_errors(form) }}
                 <div class="input_group">
-                    {{ form_row(form.Recipients.players) }}
+                    {{ form_row(form.Recipients) }}
                     {{ form_row(form.Subject, { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
                 </div>
                 <div class="editor">

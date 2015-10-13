@@ -50,7 +50,7 @@ class MessageController extends JSONController
         $form = $creator->create()->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if (count($form->get('Recipients')->getData()) < 2) {
+            if (count($form->get('Recipients')->getData()) < 1) {
                 $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
             }
             if ($form->isValid()) {
@@ -127,6 +127,7 @@ class MessageController extends JSONController
             throw new ForbiddenException("You can't abandon the conversation you started!");
         }
 
+        // TODO: Fix that later
         return $this->showConfirmationForm(function () use ($discussion, $me) {
             $discussion->removeMember($me);
 
@@ -181,6 +182,8 @@ class MessageController extends JSONController
     /**
      * @param Group  $discussion
      * @param Player $me
+     *
+     * @return $this|Form|\Symfony\Component\Form\FormInterface
      */
     private function showInviteForm($discussion, $me)
     {

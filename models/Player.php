@@ -792,7 +792,9 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getFromUsername($username)
     {
-        return Player::get(self::fetchIdFrom($username, 'username', 's'));
+        $player = static::get(self::fetchIdFrom($username, 'username', 's'));
+
+        return $player->inject('name', $username);
     }
 
     /**
@@ -870,7 +872,7 @@ class Player extends AvatarModel implements NamedModel
     {
         return new QueryBuilder('Player', array(
             'columns' => array(
-                'username' => 'username',
+                'name'     => 'username',
                 'team'     => 'team',
                 'outdated' => 'outdated',
                 'status'   => 'status'

@@ -179,18 +179,6 @@ abstract class BaseModel implements ModelInterface
     }
 
     /**
-     * Check if a status of the object is 'deleted'
-     * @return bool
-     */
-    public function isDeleted()
-    {
-        if (isset($this->status)) {
-            return $this->status == "deleted";
-        }
-        return false;
-    }
-
-    /**
      * Counts the elements of the database that match a specific query
      *
      * @param  string $additional_query The MySQL query string (e.g. `WHERE id = ?`)

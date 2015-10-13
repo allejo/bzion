@@ -14,10 +14,10 @@
  * add a number of different filters.
  *
  * <code>
- *     return Player::getQueryBuilder()
+ *     return Team::getQueryBuilder()
  *     ->active()
- *     ->where('username')->startsWith('a')
- *     ->sortBy('username')->reverse()
+ *     ->where('name')->startsWith('a')
+ *     ->sortBy('name')->reverse()
  *     ->getModels();
  * </code>
  *

@@ -7,7 +7,7 @@
 
 namespace BZIon\Form\Creator;
 
-use BZIon\Form\Type\PlayerType;
+use BZIon\Form\Type\AdvancedModelType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -21,7 +21,7 @@ class GroupInviteFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('players', new PlayerType(), array(
+            ->add('players', new AdvancedModelType('player'), array(
                 'constraints' => new NotBlank(),
                 'multiple'    => true,
             ))

@@ -142,6 +142,24 @@ abstract class Model extends CachedModel
     }
 
     /**
+     * Change a parameter if a model is not valid
+     *
+     * Useful for form validation
+     *
+     * @param  string $property The name of the property to change
+     * @param  mixed  $value    The value of the property
+     * @return self
+     */
+    protected function inject($property, $value)
+    {
+        if (!$this->isValid()) {
+            $this->{$property} = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * Takes a CamelCase string and converts it to a snake_case one
      * @param  string $input The string to convert
      * @return string

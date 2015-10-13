@@ -150,6 +150,10 @@ profile_confirm:
     path:     /profile/confirm/{token}
     defaults: { _controller: 'Profile', _action: 'confirm' }
 
+search:
+    path:    /search
+    defaults: { _controller: 'Search', _action: 'search' }
+
 server_list:
     path:     /servers
     defaults: { _controller: 'Server', _action: 'list' }

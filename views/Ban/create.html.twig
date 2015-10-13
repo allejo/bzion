@@ -3,10 +3,15 @@
 {% block title %}Bans :: New{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    <h1 class="btn">clicky</h1>
+    {% include "Ban/form.html.twig" with {
+        'pageTitle': "Create Ban",
+        'form': form }
+    %}
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('assets/js/autocomplete.js') }}"></script>
     <script src="{{ asset('assets/js/bans.js') }}"></script>
-    <script src="{{ asset('components/select2/dist/js/select2.js') }}"></script>
+    <script src="{{ asset('components/select2/dist/js/select2.full.js') }}"></script>
 {% endblock %}

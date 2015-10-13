@@ -49,10 +49,6 @@ class PlayerController extends JSONController
     {
         $query = $this->getQueryBuilder();
 
-        if ($startsWith = $request->query->get('startsWith')) {
-            $query->where('username')->startsWith($startsWith);
-        }
-
         if ($team) {
             $query->where('team')->is($team);
         }
@@ -61,13 +57,9 @@ class PlayerController extends JSONController
             $query->except($me);
         }
 
-        $query->sortBy('username');
+        $query->sortBy('name');
 
-        if ($this->isJson()) {
-            return new JsonResponse(array('players' => $query->getArray(array('username', 'outdated'))));
-        } else {
-            return array('players' => $query->getModels());
-        }
+        return array('players' => $query->getModels());
     }
 
     /**

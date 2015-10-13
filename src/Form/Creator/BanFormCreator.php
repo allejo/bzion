@@ -8,7 +8,7 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\IpType;
-use BZIon\Form\Type\PlayerType;
+use BZIon\Form\Type\AdvancedModelType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,8 +23,10 @@ class BanFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('player', new PlayerType(), array(
+            ->add('player', new AdvancedModelType(array('player', 'team')), array(
+                'constraints' => new NotBlank,
                 'disabled' => $this->isEdit(),
+                'data' => $this->editing
             ))
             ->add(
                 $builder->create('automatic_expiration', 'checkbox', array(
@@ -40,6 +42,7 @@ class BanFormCreator extends ModelFormCreator
             )
             ->add('reason', 'textarea', array(
                 'constraints' => new NotBlank(),
+                'required' => true
             ))
             ->add('server_join_allowed', 'checkbox', array(
                 'data'     => true,
@@ -63,7 +66,7 @@ class BanFormCreator extends ModelFormCreator
      */
     public function fill($form, $ban)
     {
-        $form->get('player')->get('players')->setData($ban->getVictim());
+        $form->get('player')->setData($ban->getVictim());
         $form->get('reason')->setData($ban->getReason());
         $form->get('server_message')->setData($ban->getServerMessage());
         $form->get('server_join_allowed')->setData($ban->allowedServerJoin());

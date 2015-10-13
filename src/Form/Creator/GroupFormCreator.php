@@ -7,6 +7,7 @@
 
 namespace BZIon\Form\Creator;
 
+use BZIon\Form\Type\AdvancedModelType;
 use BZIon\Form\Type\PlayerType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,7 +24,7 @@ class GroupFormCreator extends ModelFormCreator
         $notBlank = array('constraints' => new NotBlank());
 
         return $builder
-            ->add('Recipients', new PlayerType(), array(
+            ->add('Recipients', new AdvancedModelType('player'), array(
                 'constraints' => new NotBlank(array(
                     'message' => 'You need to specify the recipients of your message'
                 )),

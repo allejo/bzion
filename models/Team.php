@@ -351,7 +351,7 @@ class Team extends AvatarModel
      */
     public function getName()
     {
-        if (!$this->valid) {
+        if ($this->name === null) {
             return "None";
         }
         return $this->name;
@@ -578,7 +578,9 @@ class Team extends AvatarModel
      */
     public static function getFromName($name)
     {
-        return Team::get(self::fetchIdFrom($name, 'name', 's'));
+        $team = static::get(self::fetchIdFrom($name, 'name', 's'));
+
+        return $team->inject('name', $name);
     }
 
     /**
