@@ -9,7 +9,8 @@ $(document).ready(function() {
         var select = $('<select />')
             .attr('id', input.attr('id') + '-select')
             .attr('disabled', input.attr('disabled'))
-            .css('width', '200px')
+            .attr('multiple', input.attr('data-multiple'))
+            .css('width', '100%')
             .insertAfter(input);
 
         var label = $('<label />')
@@ -125,8 +126,6 @@ $(document).ready(function() {
         })).trigger("change");
 
         input.parents('form').submit(function (e) {
-            console.log('submitting');
-
             var selected = select.val();
             var value = [];
 
@@ -138,6 +137,10 @@ $(document).ready(function() {
             }
 
             for (var i in selected) {
+                if (selected[i] === null) {
+                    continue;
+                }
+
                 var id = selected[i].split('#');
 
                 value.push({
@@ -155,7 +158,7 @@ $(document).ready(function() {
                 modified: true
             });
 
-            console.log(selected, value);
+            console.log(value);
 
             input.val(value);
         });

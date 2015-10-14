@@ -8,7 +8,6 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
-use BZIon\Form\Type\PlayerType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**

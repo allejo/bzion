@@ -16,8 +16,6 @@ function initPage() {
 
 $(document).ready(function() {
     initPage();
-
-    $("#form_owner").playerlist();
 });
 
 $(".servers").on("click", ".server-refresh", function(event) {

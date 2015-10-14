@@ -34,13 +34,13 @@ class Server extends UrlModel implements NamedModel
 
     /**
      * The id of the country the server is located in
-     * @var Country
+     * @var int
      */
     protected $country;
 
     /**
      * The id of the owner of the server
-     * @var Player
+     * @var int
      */
     protected $owner;
 
@@ -92,8 +92,8 @@ class Server extends UrlModel implements NamedModel
         $this->name = $server['name'];
         $this->domain = $server['domain'];
         $this->port = $server['port'];
-        $this->country = Country::get($server['country']);
-        $this->owner = Player::get($server['owner']);
+        $this->country = $server['country'];
+        $this->owner = $server['owner'];
         $this->online = $server['online'];
         $this->info = unserialize($server['info']);
         $this->api_key = ApiKey::get($server['api_key']);
@@ -290,7 +290,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function getCountry()
     {
-        return $this->country;
+        return Country::get($this->country);
     }
 
     /**
@@ -299,7 +299,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function getOwner()
     {
-        return $this->owner;
+        return Player::get($this->owner);
     }
 
     /**
@@ -377,6 +377,18 @@ class Server extends UrlModel implements NamedModel
     public function setOwner($ownerId)
     {
         return $this->updateProperty($this->owner, 'owner', $ownerId, 'i');
+    }
+
+    /**
+     * Set the id of the country of the server
+     *
+     * @param int $countryId The ID of the new country of the server
+     *
+     * @return self
+     */
+    public function setCountry($countryId)
+    {
+        return $this->updateProperty($this->country, 'country', $countryId, 'i');
     }
 
     /**

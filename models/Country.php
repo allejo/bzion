@@ -113,4 +113,19 @@ class Country extends Model
     {
         return self::fetchIdFrom($iso, 'iso');
     }
+
+    /**
+     * Get a query builder for countries
+     *
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Country', array(
+            'columns' => array(
+                'name'   => 'name',
+            ),
+            'name' => 'name',
+        ));
+    }
 }

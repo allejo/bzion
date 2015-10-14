@@ -15,7 +15,9 @@ class MultipleAdvancedModelTransformer extends AdvancedModelTransformer
     public function reverseTransform($data)
     {
         // Handle the data provided by Javascript, if any
-        if ($transformed = parent::transformJSON($data)) {
+        $transformed = parent::transformJSON($data);
+
+        if ($transformed !== false) {
             return $transformed;
         }
 

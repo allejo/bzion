@@ -30,6 +30,7 @@ class ModelValidator extends ConstraintValidator
         }
 
         if ($constraint->single && count($value) > 1) {
+            dump($constraint);
             $this->context
                 ->buildViolation($constraint->tooManyMessage)
                 ->addViolation();

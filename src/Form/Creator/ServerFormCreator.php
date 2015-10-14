@@ -8,7 +8,7 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
-use BZIon\Form\Type\PlayerType;
+use BZIon\Form\Type\ModelType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,12 +23,16 @@ class ServerFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('address', 'text', array(
+            ->add('domain', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
                         'max' => 50,
                     )),
                 ),
+            ))
+            ->add('port', 'integer', array(
+                'constraints' => new NotBlank(),
+                'data' => 5154
             ))
             ->add('name', 'text', array(
                 'constraints' => array(
@@ -37,7 +41,10 @@ class ServerFormCreator extends ModelFormCreator
                     )),
                 ),
             ))
-            ->add('owner', new AdvancedModelType('player'))
+            ->add('country', new ModelType('Country'))
+            ->add('owner', new AdvancedModelType('Player'), array(
+                'constraints' => new NotBlank()
+            ))
             ->add('enter', 'submit');
     }
 
@@ -47,8 +54,10 @@ class ServerFormCreator extends ModelFormCreator
     public function fill($form, $server)
     {
         $form->get('name')->setData($server->getName());
-        $form->get('address')->setData($server->getAddress());
-        $form->get('owner')->get('players')->setData($server->getOwner());
+        $form->get('domain')->setData($server->getDomain());
+        $form->get('port')->setData($server->getPort());
+        $form->get('country')->setData($server->getCountry());
+        $form->get('owner')->setData($server->getOwner());
     }
 
     /**
@@ -57,7 +66,9 @@ class ServerFormCreator extends ModelFormCreator
     public function update($form, $server)
     {
         $server->setName($form->get('name')->getData())
-               ->setAddress($form->get('address')->getData())
+               ->setDomain($form->get('domain')->getData())
+               ->setPort($form->get('port')->getData())
+               ->setCountry($form->get('country')->getData()->getId())
                ->setOwner($form->get('owner')->getData()->getId())
                ->forceUpdate();
     }
@@ -69,8 +80,9 @@ class ServerFormCreator extends ModelFormCreator
     {
         return \Server::addServer(
             $form->get('name')->getData(),
-            $form->get('address')->getData(),
-            1,
+            $form->get('domain')->getData(),
+            $form->get('port')->getData(),
+            $form->get('country')->getData()->getId(),
             $form->get('owner')->getData()->getId()
         );
     }

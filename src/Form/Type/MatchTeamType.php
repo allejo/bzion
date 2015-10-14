@@ -22,7 +22,7 @@ class MatchTeamType extends AbstractType
                     new GreaterThanOrEqual(0)
                 )
             ))
-            ->add('participants', new PlayerType(), array(
+            ->add('participants', new AdvancedModelType('player'), array(
                 'multiple' => true,
                 'required' => false,
             ))
@@ -37,23 +37,17 @@ class MatchTeamType extends AbstractType
      */
     public function checkTeamMembers(FormEvent $event)
     {
-        $form = $event->getForm()->get('participants')->get('players');
+        $players = $event->getForm()->get('participants');
         $team = $event->getForm()->get('team')->getData();
 
         if (!$team || !$team->isValid()) {
             return;
         }
 
-        $players = $form->getParent()->getData();
-
-        if (!is_array($players)) {
-            $players = array($players);
-        }
-
-        foreach ($players as $player) {
+        foreach ($players->getData() as $player) {
             if ($player && !$team->isMember($player->getId())) {
                 $message = "{$player->getUsername()} is not a member of {$team->getName()}";
-                $form->addError(new FormError($message));
+                $players->addError(new FormError($message));
             }
         }
     }

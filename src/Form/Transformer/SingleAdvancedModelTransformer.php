@@ -15,7 +15,9 @@ class SingleAdvancedModelTransformer extends AdvancedModelTransformer
     public function reverseTransform($data)
     {
         // Handle the data provided by Javascript, if any
-        if ($transformed = parent::transformJSON($data)) {
+        $transformed = parent::transformJSON($data);
+
+        if ($transformed !== false) {
             if (count($transformed) > 1) {
                 // Return array so that the model validator can show an error
                 // (throwing an exception here would not show a proper message

@@ -51,7 +51,6 @@ class AdvancedModelType extends AbstractType
         $this->types = array_map('strtolower', $this->types);
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -143,7 +142,7 @@ class AdvancedModelType extends AbstractType
             $value = is_object($value) ? array($value) : (array) $value;
 
             $value[] = new ValidModel(array(
-                'single' => !$this->multiple
+                'single' => !$options['multiple']
             ));
 
             return $value;
