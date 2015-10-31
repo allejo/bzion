@@ -29,7 +29,7 @@ class SingleAdvancedModelTransformer extends AdvancedModelTransformer
         }
 
         foreach ($this->types as $type) {
-            $model = $this->getModelFromName($data[$type], $type);
+            $model = $this->getModelFromName(trim($data[$type]), $type);
 
             if ($model !== null) {
                 return $model;

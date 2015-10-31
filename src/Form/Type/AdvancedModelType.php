@@ -64,6 +64,12 @@ class AdvancedModelType extends AbstractType
             $this->multiple = $options['multiple'];
         }
 
+        if ($this->include && !$this->multiple) {
+            throw new \LogicException(
+                "You can't include an object in a single selection!"
+            );
+        }
+
         $builderName = ucfirst($builder->getName());
 
         // TODO: Use a more accurate placeholder
@@ -100,6 +106,9 @@ class AdvancedModelType extends AbstractType
 
         if ($this->multiple) {
             $transformer = new MultipleAdvancedModelTransformer($this->types);
+            if ($this->include) {
+                $transformer->addInclude($this->include);
+            }
         } else {
             $transformer = new SingleAdvancedModelTransformer($this->types);
         }

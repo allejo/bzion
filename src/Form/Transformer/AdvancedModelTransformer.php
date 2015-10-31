@@ -24,10 +24,10 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms an object (model) to an integer (int) .
+     * Transforms an object (model) to the form representation
      *
      * @param  Model|null $model
-     * @return int
+     * @return array
      */
     public function transform($models)
     {
@@ -84,8 +84,6 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
      */
     protected function getModelFromName($name, $type)
     {
-        $name = trim($name);
-
         if ($name === '') {
             return null;
         }

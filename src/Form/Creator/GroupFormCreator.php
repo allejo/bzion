@@ -8,6 +8,7 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -24,8 +25,9 @@ class GroupFormCreator extends ModelFormCreator
 
         return $builder
             ->add('Recipients', new AdvancedModelType('player'), array(
-                'constraints' => new NotBlank(array(
-                    'message' => 'You need to specify the recipients of your message'
+                'constraints' => new Count(array(
+                    'min' => 2, // myself is always included
+                    'minMessage' => 'You need to specify the recipients of your message'
                 )),
                 'multiple' => true,
                 'include'  => $this->editing,
@@ -33,6 +35,7 @@ class GroupFormCreator extends ModelFormCreator
             ->add('Subject', 'text', $notBlank)
             ->add('Message', 'textarea', $notBlank)
             ->add('Send', 'submit')
+
             // Prevents JS from going crazy if we load a page with AJAX
             ->setAction(\Service::getGenerator()->generate('message_compose'));
     }

@@ -50,9 +50,6 @@ class MessageController extends JSONController
         $form = $creator->create()->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if (count($form->get('Recipients')->getData()) < 1) {
-                $form->get('Recipients')->addError(new FormError("You can't send a message to yourself!"));
-            }
             if ($form->isValid()) {
                 $subject = $form->get('Subject')->getData();
                 $content = $form->get('Message')->getData();
