@@ -7,7 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends JSONController
 {
-    const ACCEPTABLE_TYPES = array('player', 'team');
+    /**
+     * A list of types that can be returned when searching
+     *
+     * @var array
+     */
+    private static $acceptableTypes = array('player', 'team');
 
     public function searchAction(Request $request, Player $me)
     {
@@ -20,7 +25,7 @@ class SearchController extends JSONController
         $queries = $results = array();
 
         foreach ($types as $type) {
-            if (!in_array($type, self::ACCEPTABLE_TYPES)) {
+            if (!in_array($type, self::$acceptableTypes)) {
                 throw new \BadRequestException("An invalid type was provided");
             }
 
@@ -60,7 +65,7 @@ class SearchController extends JSONController
         }
 
         if ($request->query->has('exceptMe')) {
-            $query->except($me);
+            $query->except($this->getMe());
         }
 
         return $query->getArray(array('name', 'outdated'));
