@@ -17,13 +17,13 @@ Feature: Matches
        When I go to "/matches/enter"
        And I select "Inimitable habitués" from "form_first_team_team"
        And I select "Inimitable habitués" from "form_second_team_team"
-       And I fill in "form_first_team_participants_players" with "uncherished, ..., , ,,, ,,,, Wildcat, uNmErCIFUl"
+       And I fill in "form_first_team_participants_player" with "uncherished, ..., , ,,, ,,,, Wildcat, uNmErCIFUl"
        And I press "Enter"
        Then I should see "You can't report a match where a team played against itself!"
        And I should see "This value should not be blank."
        And I should see "uncherished is not a member of Inimitable habitués"
-       And I should see "There is no player called ..."
-       And the "form_first_team_participants_players" field should contain "uncherished, unmercifuL, Wildcat"
+       And I should see "There is no player called \"...\""
+       And the "form_first_team_participants_player" field should contain "uncherished, ..., Wildcat, unmercifuL"
        But I should not see "The match was created successfully"
 
    Scenario: Enter match

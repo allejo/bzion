@@ -1,8 +1,6 @@
 <?php
 namespace BZIon\Form\Transformer;
 
-use Symfony\Component\Form\Exception\TransformationFailedException;
-
 class MultipleAdvancedModelTransformer extends AdvancedModelTransformer
 {
     /**
@@ -22,7 +20,7 @@ class MultipleAdvancedModelTransformer extends AdvancedModelTransformer
     public function reverseTransform($data)
     {
         // Handle the data provided by Javascript, if any
-        $transformed = parent::transformJSON($data);
+        $transformed = parent::transformJSON($data, $this->included);
 
         if ($transformed !== false) {
             return $transformed;
@@ -40,9 +38,11 @@ class MultipleAdvancedModelTransformer extends AdvancedModelTransformer
             $ids = array();
 
             // Add force-included models
-            foreach ($this->included[$type] as $model) {
-                $ids[$model->getID()] = true; // Prevent duplication
-                $models[] = $model;
+            if (isset($this->included[$type])) {
+                foreach ($this->included[$type] as $model) {
+                    $ids[$model->getID()] = true; // Prevent duplication
+                    $models[] = $model;
+                }
             }
 
             $input = explode(',', $data[$type]);

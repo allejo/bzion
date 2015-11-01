@@ -84,15 +84,15 @@ echo " done!";
 
 echo "\nAdding messages...";
 $group_to = Group::createGroup("New blog", $snake->getId(), array(
-    $alezakos->getId(),
-    $allejo->getId(),
-    $ashvala->getId(),
-    $autoreport->getId(),
-    $blast->getId(),
-    $kierra->getId(),
-    $mdskpr->getId(),
-    $snake->getId(),
-    $tw1sted->getId()
+    $alezakos,
+    $allejo,
+    $ashvala,
+    $autoreport,
+    $blast,
+    $kierra,
+    $mdskpr,
+    $snake,
+    $tw1sted
 ));
 
 $event = new GroupRenameEvent($group_to, "New message", "New blorg", $snake);

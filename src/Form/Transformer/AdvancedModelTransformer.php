@@ -102,10 +102,12 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
      *
      * @param  string $json The JSON provided to us by javascript, containing
      *                      a list of Model IDs and types
+     * @param  array  $include An array of Models of each type that will be
+     *                         included in the final result
      * @return boolean|Model[] A list of models, or false if the data was not
      *                         provided by javascript as JSON
      */
-    protected function transformJSON(&$data)
+    protected function transformJSON(&$data, $include)
     {
         $json = json_decode($data['ids'], true);
 
@@ -115,10 +117,23 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
             return false;
         }
 
+        // Array to store IDs for quick access so we can be sure that no
+        // duplicates are saved
+        $ids = array();
+
         $models = array();
+
+        foreach ($include as $type => $includedModels) {
+            foreach ($includedModels as $model) {
+                $ids[$type][$model->getID()] = true; // Prevent duplication
+                $models[] = $model;
+            }
+        }
 
         foreach ($json['data'] as $key => $object) {
             if ($key === 'modified') {
+                // This is just an object that lets us know javascript provided
+                // data, we should ignore it
                 continue;
             }
 
@@ -135,7 +150,10 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
                 );
             }
 
-            $model = $object['type']::get($object['id']);
+            $class = ucfirst($object['type']);
+            $type = strtolower($object['type']);
+            $model = $class::get($object['id']);
+
 
             if ($model->isDeleted()) {
                 // Show an error message if the model provided by javascript is
@@ -144,9 +162,13 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
                 throw new TransformationFailedException(
                     "Invalid model ID provided"
                 );
+            } elseif (!isset($ids[$type][$model->getID()])) {
+                // The model passed the duplication check
+                $models[] = $model;
+                $ids[$type][$model->getID()] = true;
             }
 
-            $models[] = $model;
+
         }
 
         return $models;

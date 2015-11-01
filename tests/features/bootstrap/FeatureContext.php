@@ -232,7 +232,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
             $recipient = Player::getFromUsername($recipient);
         }
 
-        $participants = array($sender->getId(), $recipient->getId());
+        $participants = array($sender, $recipient);
 
         $group = Group::createGroup("Subject", $sender->getId(), $participants);
         $message = $group->sendMessage($sender, $content);

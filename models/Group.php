@@ -273,7 +273,7 @@ class Group extends UrlModel implements NamedModel
      *
      * @param  string $subject   The subject of the group
      * @param  int    $creatorId The ID of the player who created the group
-     * @param  array  $members   A list of IDs representing the group's members
+     * @param  array  $members   A list of Models representing the group's members
      * @return Group  An object that represents the created group
      */
     public static function createGroup($subject, $creatorId, $members = array())
@@ -284,11 +284,8 @@ class Group extends UrlModel implements NamedModel
             'status'  => "active",
         ), 'sis', 'last_activity');
 
-        foreach ($members as $mid) {
-            parent::create(array(
-                'player' => $mid,
-                'group'  => $group->getId(),
-            ), 'ii', null, 'player_groups');
+        foreach ($members as $member) {
+            $group->addMember($member);
         }
 
         return $group;

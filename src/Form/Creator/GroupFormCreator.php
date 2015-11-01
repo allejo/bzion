@@ -24,7 +24,7 @@ class GroupFormCreator extends ModelFormCreator
         $notBlank = array('constraints' => new NotBlank());
 
         return $builder
-            ->add('Recipients', new AdvancedModelType('player'), array(
+            ->add('Recipients', new AdvancedModelType(array('player', 'team')), array(
                 'constraints' => new Count(array(
                     'min' => 2, // myself is always included
                     'minMessage' => 'You need to specify the recipients of your message'

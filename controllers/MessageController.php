@@ -53,13 +53,9 @@ class MessageController extends JSONController
             if ($form->isValid()) {
                 $subject = $form->get('Subject')->getData();
                 $content = $form->get('Message')->getData();
-                $recipientIds = array();
+                $recipients = $form->get('Recipients')->getData();
 
-                foreach ($form->get('Recipients')->getData() as $player) {
-                    $recipientIds[] = $player->getId();
-                }
-
-                $group_to = Group::createGroup($subject, $me->getId(), $recipientIds);
+                $group_to = Group::createGroup($subject, $me->getId(), $recipients);
                 $message = $group_to->sendMessage($me, $content);
 
                 $event = new NewMessageEvent($message, true);
