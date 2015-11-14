@@ -1,0 +1,59 @@
+/// This function loops through all of the available themes and generates the appropriate
+/// CSS based on the theme definition
+///
+/// @param {String} $rule
+///   The CSS keyword that will be effected based on the theme
+/// @param {String} $variable
+///   The name of the key used in the theme map
+/// @param {String} $function [""]
+///   The name of the function that will be called with `call()`
+/// @param {Number [unitless]} $nth [0]
+///   The index that the value will belong in with respect to the `call()` function
+/// @param {Arglist} $args
+///   The arguments that will be passed to the `call()` function
+///
+/// @example scss
+///   a {
+///       @include theme-specific("color", "hyperlink");
+///   }
+///
+/// @example css
+///   .t-light a {
+///       color: blue;
+///   }
+///
+///   .t-dark a {
+///       color: yellow;
+///   }
+///
+/// @example scss - Usage with w/function call
+///   a {
+///       @include theme-specific("color", "link-color", darken, 1, 15%);
+///   }
+///
+/// @example scss - Pseudo code of previous example
+///   a {
+///       // We use index 1 because the fetched value is the first argument in the function call
+///       color: darken(<'link-color' value @ index 1>, 15%);
+///   }
+///
+
+@mixin theme-specific ($rule, $variable, $function: "", $nth: 0, $args...) {
+    @each $name, $settings in $themes {
+        @at-root {
+            .t-#{$name} & {
+                $map: if(map-has-key($settings, $variable), $settings, $default);
+                $value: map-get($map, $variable);
+
+                @if $function == "" {
+                    #{$rule}: $value;
+                }
+                @else {
+                    $params: insert-nth($args, $nth, $value);
+
+                    #{$rule}: call($function, $params...);
+                }
+            }
+        }
+    }
+}

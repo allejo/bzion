@@ -915,10 +915,16 @@ pre {
   box-sizing: inherit; }
 
 body {
-  background-color: #FFFFFF;
-  color: #000000;
   font-family: "Lato", sans-serif;
   line-height: 1.4em; }
+  .t-light body {
+    background-color: #FFFFFF; }
+  .t-dark body {
+    background-color: #4C5156; }
+  .t-light body {
+    color: #000000; }
+  .t-dark body {
+    color: #FFFFFF; }
 
 html {
   box-sizing: border-box; }
@@ -945,12 +951,17 @@ h4 {
   font-size: 18px;
   font-weight: bold; }
 
-a {
-  color: #009EFF;
+a:not(.c-button) {
   text-decoration: none; }
-  a:hover {
+  .t-light a:not(.c-button) {
+    color: #009EFF; }
+  .t-dark a:not(.c-button) {
+    color: #8FD5FF; }
+  .t-light a:not(.c-button):hover {
     color: #006fb3; }
-  a[href^="http"]:after {
+  .t-dark a:not(.c-button):hover {
+    color: #43b8ff; }
+  a:not(.c-button)[href^="http"]:after {
     content: '\F08E';
     font-family: FontAwesome;
     font-size: 0.6em;
@@ -1601,11 +1612,12 @@ header .u-mobile-only {
       display: block; } }
 
 header.site-header {
-  background-color: #FFFFFF;
-  background-image: -webkit-linear-gradient(#FFFFFF, #F2F2F2);
-  background-image: linear-gradient(#FFFFFF, #F2F2F2, , , , , , , , );
   box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
   border-bottom: 1px solid #D4D4D4; }
+  .t-light header.site-header {
+    background-image: linear-gradient(#FFFFFF, #F2F2F2); }
+  .t-dark header.site-header {
+    background-image: linear-gradient(#777777, #424242); }
   header.site-header .menu-bar {
     display: -webkit-box;
     display: -moz-box;
@@ -1615,11 +1627,14 @@ header.site-header {
     display: -ms-flexbox;
     display: flex; }
     header.site-header .menu-bar .mobile-menu {
-      color: #656565;
       cursor: pointer;
       display: none;
       line-height: 56px;
       margin-right: 15px; }
+      .t-light header.site-header .menu-bar .mobile-menu {
+        color: #656565; }
+      .t-dark header.site-header .menu-bar .mobile-menu {
+        color: #FFFFFF; }
       @media only screen and (max-width: 992px) {
         header.site-header .menu-bar .mobile-menu {
           display: block; } }
@@ -1637,9 +1652,16 @@ header.site-header {
       margin-right: 15px;
       width: auto; }
       header.site-header .menu-bar h1 a {
-        color: #656565;
         font-size: 26px;
         line-height: 56px; }
+        .t-light header.site-header .menu-bar h1 a {
+          color: #656565; }
+        .t-dark header.site-header .menu-bar h1 a {
+          color: #FFFFFF; }
+        .t-light header.site-header .menu-bar h1 a:hover {
+          color: #000000; }
+        .t-dark header.site-header .menu-bar h1 a:hover {
+          color: #8FD5FF; }
         header.site-header .menu-bar h1 a img {
           margin-right: 3px;
           margin-top: -7px;
@@ -1671,13 +1693,18 @@ header.site-header {
           float: left;
           list-style: none; }
           header.site-header .menu-bar nav ul li a {
-            color: #656565;
             display: block;
             padding: 17px 15px; }
+            .t-light header.site-header .menu-bar nav ul li a {
+              color: #656565; }
+            .t-dark header.site-header .menu-bar nav ul li a {
+              color: #FFFFFF; }
             header.site-header .menu-bar nav ul li a:after {
               display: none; }
-            header.site-header .menu-bar nav ul li a:hover {
+            .t-light header.site-header .menu-bar nav ul li a:hover {
               color: #000000; }
+            .t-dark header.site-header .menu-bar nav ul li a:hover {
+              color: #8FD5FF; }
             @media only screen and (max-width: 480px) {
               header.site-header .menu-bar nav ul li a {
                 padding-left: 2px;
@@ -1696,7 +1723,6 @@ header.site-header {
           flex: 1; }
           @media only screen and (max-width: 992px) {
             header.site-header .menu-bar nav ul.pages {
-              background-color: #F7F7F7;
               border-bottom: 1px solid #D4D4D4;
               border-top: 1px solid #D4D4D4;
               display: none;
@@ -1705,6 +1731,10 @@ header.site-header {
               top: 56px;
               width: 100%;
               z-index: 100; }
+              .t-light header.site-header .menu-bar nav ul.pages {
+                background-color: #F7F7F7; }
+              .t-dark header.site-header .menu-bar nav ul.pages {
+                background-color: #777777; }
               header.site-header .menu-bar nav ul.pages li {
                 display: block;
                 float: none;
@@ -2073,25 +2103,6 @@ header.site-header {
   margin-bottom: 10px;
   margin-top: 10px; }
 
-.c-pagination li:hover, .c-pagination--current {
-  background-color: #258EC9; }
-  .c-pagination li:hover, .c-pagination--current, .c-pagination li:hover a, .c-pagination--current a {
-    color: #FFFFFF; }
-
-.c-pagination {
-  margin-top: 15px;
-  padding-left: 0;
-  text-align: center; }
-  .c-pagination li {
-    border: 1px solid #E9E9E9;
-    display: inline-block;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    width: 30px; }
-  .c-pagination--disabled {
-    color: #B8B8B8; }
-
 .c-rank {
   background: url("../imgs/ranks.png") no-repeat top left;
   display: inline-block;
@@ -2400,7 +2411,7 @@ header.site-header {
 .s-landing .c-jumbotron {
   background-attachment: scroll;
   background-image: url("../imgs/cover_photo.png");
-  background-position: 0 -185px;
+  background-position: center center;
   background-repeat: no-repeat;
   margin-bottom: 30px; }
   @media only screen and (max-width: 992px) {
@@ -2854,30 +2865,39 @@ header.site-header {
 
 .s-newsstand .c-article {
   border-bottom: 1px solid #E9E9E9;
-  margin-bottom: 15px;
-  padding-bottom: 15px; }
+  margin-bottom: 20px;
+  padding-bottom: 20px; }
   .s-newsstand .c-article__title {
-    color: #258EC9;
     font-size: 25px;
     margin-bottom: 5px; }
+    .t-light .s-newsstand .c-article__title {
+      color: #258EC9; }
+    .t-dark .s-newsstand .c-article__title {
+      color: #B8B8B8; }
     @media only screen and (max-width: 992px) {
       .s-newsstand .c-article__title {
         text-align: left; } }
   .s-newsstand .c-article__date {
-    color: #656565;
     font-size: 13px; }
+    .t-light .s-newsstand .c-article__date {
+      color: #656565; }
+    .t-dark .s-newsstand .c-article__date {
+      color: #FFFFFF; }
   .s-newsstand .c-article__content {
     padding: 15px 0; }
     .s-newsstand .c-article__content > p {
       margin: 5px 0 10px; }
   .s-newsstand .c-article__meta {
     font-size: 14px;
-    padding: 5px 0 0; }
+    padding: 5px 0 10px; }
     .s-newsstand .c-article__meta li {
-      color: #656565;
       display: inline-block;
       margin-left: 0;
       margin-right: 15px; }
+      .t-light .s-newsstand .c-article__meta li {
+        color: #656565; }
+      .t-dark .s-newsstand .c-article__meta li {
+        color: #FFFFFF; }
       .s-newsstand .c-article__meta li i {
         margin-right: 3px; }
   .s-newsstand .c-article:last-child {
@@ -2899,8 +2919,11 @@ header.site-header {
       display: block;
       padding: 10px; }
       .s-newsstand .c-categories li a i {
-        color: #656565;
         margin-right: 10px; }
+        .t-light .s-newsstand .c-categories li a i {
+          color: #656565; }
+        .t-dark .s-newsstand .c-categories li a i {
+          color: #FFFFFF; }
     .s-newsstand .c-categories li.active,
     .s-newsstand .c-categories li:hover {
       border-right: 2px solid #FF6700; }
@@ -2910,10 +2933,14 @@ header.site-header {
       .s-newsstand .c-categories li.active:last-child,
       .s-newsstand .c-categories li:hover:last-child {
         border-bottom-right-radius: 3px; }
-    .s-newsstand .c-categories li.active {
+    .t-light .s-newsstand .c-categories li.active {
       background-color: #F7F7F7; }
-    .s-newsstand .c-categories li:hover {
-      background-color: #fafafa; }
+    .t-dark .s-newsstand .c-categories li.active {
+      background-color: #70777f; }
+    .t-light .s-newsstand .c-categories li:hover {
+      background-color: white; }
+    .t-dark .s-newsstand .c-categories li:hover {
+      background-color: #979ea4; }
     .s-newsstand .c-categories li:last-child {
       border-bottom: 0; }
 

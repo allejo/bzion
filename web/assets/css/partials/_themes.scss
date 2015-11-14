@@ -1,0 +1,28 @@
+$default: (
+    "link-color": $Color-Sky_Blue,
+    "body-bg": $Color-White,
+    "font-color": $Font-Color-Default,
+    "header-bg": linear-gradient($Color-White, #F2F2F2),
+    "header-color": $Color-Medium_Grey,
+    "header-color-hover": $Color-Black,
+    "nav-bg": $Color-Almost_White,
+    "news-title": $Color-Blue,
+    "news-meta": $Color-Medium_Grey,
+    "news-sidebar-bg": $Color-Almost_White
+);
+
+$themes: (
+    "light": $default,
+    "dark": (
+        "link-color": #8FD5FF,
+        "body-bg": #4C5156,
+        "font-color": $Color-White,
+        "header-bg": linear-gradient(#777777, #424242),
+        "header-color": $Color-White,
+        "header-color-hover": #8FD5FF,
+        "nav-bg": #777777,
+        "news-title": $Color-Light_Grey,
+        "news-meta": $Color-White,
+        "news-sidebar-bg": lighten(#4C5156, 15%)
+    )
+);

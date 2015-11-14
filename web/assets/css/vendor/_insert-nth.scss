@@ -1,0 +1,55 @@
+/// Adds `$value` at `$index` in `$list`.
+///
+/// @author Hugo Giraudel
+///
+/// @param {List}    $list  - list to update
+/// @param {Number}  $index - index to add
+/// @param {*}       $value - value to add
+///
+/// @throws List index $index is not a number for `insert-nth`.
+/// @throws List index $index must be a non-zero integer for `insert-nth`.
+///
+/// @example
+///   insert-nth(a b c, 2, z)
+///   // a z b c
+///
+/// @example
+///   insert-nth(a b c, 42, z)
+///   // a b c z
+///
+/// @example
+///   insert-nth(a b c, -42, z)
+///   // null
+///
+/// @return {List | Null}
+
+
+@function insert-nth($list, $index, $value) {
+    $result: null;
+
+    @if type-of($index) != number {
+        @warn "$index: #{quote($index)} is not a number for `insert-nth`.";
+    }
+
+    @else if $index < 1 {
+        @warn "List index 0 must be a non-zero integer for `insert-nth`";
+    }
+
+    @else if $index > length($list) {
+        @warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
+    }
+
+    @else {
+        $result: ();
+
+        @for $i from 1 through length($list) {
+            @if $i == $index {
+                $result: append($result, $value);
+            }
+
+            $result: append($result, nth($list, $i));
+        }
+    }
+
+    @return $result;
+}

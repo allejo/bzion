@@ -1,21 +1,24 @@
 a {
-    color: $Font-Color-Hyperlink;
-    text-decoration: none;
+    &:not(.c-button) {
+        @include theme-specific("color", "link-color");
 
-    &:hover {
-        color: darken($Font-Color-Hyperlink, 15%);
-    }
+        text-decoration: none;
 
-    // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
-    // of our internal links are relative so this is a safe move.
-    &[href^="http"] {
-        &:after {
-            content: '\F08E';
-            font-family: FontAwesome;
-            font-size: 0.6em;
-            margin-left: 5px;
-            text-decoration: none;
-            vertical-align: top;
+        &:hover {
+            @include theme-specific("color", "link-color", darken, 1, 15%);
+        }
+
+        // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
+        // of our internal links are relative so this is a safe move.
+        &[href^="http"] {
+            &:after {
+                content: '\F08E';
+                font-family: FontAwesome;
+                font-size: 0.6em;
+                margin-left: 5px;
+                text-decoration: none;
+                vertical-align: top;
+            }
         }
     }
 }
