@@ -10,13 +10,13 @@
         top: 10px;
     }
 
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         @include set-circular-size(65px);
 
         border: 0;
     }
 
-    @include respond-to(phones) {
+    @include respond-to(xs) {
         @include set-circular-size(45px);
 
         font-size: 35px;

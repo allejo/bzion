@@ -7,7 +7,7 @@
         border-left: $Border-Default;
         border-right: $Border-Default;
 
-        @include respond-to(phablets) {
+        @include respond-to(sm) {
             display: none;
         }
     }

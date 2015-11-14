@@ -20,14 +20,14 @@
         flex: 1;
         text-align: right;
 
-        @include respond-to(phablets) {
+        @include respond-to(sm) {
             text-align: left;
         }
 
         li {
             margin-left: 20px;
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 margin: {
                     bottom: 10px;
                     left: 0;
@@ -35,13 +35,13 @@
                 }
             }
 
-            @include respond-to(phones) {
+            @include respond-to(xs) {
                 margin-right: 10px;
             }
         }
     }
 
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         flex-direction: column-reverse;
     }
 }

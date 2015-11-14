@@ -4,7 +4,7 @@
     @include element('bullet') {
         @include phablet-container();
 
-        @include respond-to(phablets) {
+        @include respond-to(sm) {
             margin-bottom: 15px;
 
             &:last-child {
@@ -27,7 +27,7 @@
         }
     }
 
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         margin: {
             bottom: 10px;
             top: 10px;

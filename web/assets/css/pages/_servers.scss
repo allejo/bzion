@@ -41,7 +41,7 @@
             }
         }
 
-        @include respond-only-to(desktops, tablets) {
+        @include respond-to(md) {
             &:nth-child(odd) {
                 padding-right: 10px;
             }

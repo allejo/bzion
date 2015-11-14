@@ -22,7 +22,7 @@
             @include desktop-columns(9);
             @include phablet-columns(12);
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 margin-bottom: $Settings-Page_Section-Small_Margin;
             }
         }
@@ -36,24 +36,24 @@
         // Take up a third of the parent container
         @include modifier('third') {
             @extend %phablet-margin;
-            @include desktop-columns(4, 0);
-            @include phablet-columns(6, 0);
-            @include phone-columns(12);
+            @include desktop-columns(4);
+            @include tablet-columns(6);
+            @include phablet-columns(12);
         }
 
         // Take up a forth of the parent container
         @include modifier('quarter') {
             @extend %phablet-margin;
-            @include desktop-columns(3, 0);
-            @include tablet-columns(4, 0);
-            @include phablet-columns(6, 0);
+            @include desktop-columns(3);
+            @include tablet-columns(4);
+            @include phablet-columns(6);
             @include phone-columns(12);
         }
 
         // Take up half of the parent container
         @include modifier('half') {
             @extend %phablet-margin;
-            @include desktop-columns(6, 0);
+            @include desktop-columns(6);
             @include phablet-columns(12);
         }
     }

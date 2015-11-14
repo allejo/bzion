@@ -14,7 +14,7 @@ $score_padding_small: 10px;
 
     margin-bottom: $Settings-Page_Section-Small_Margin;
 
-    @include respond-to(phones) {
+    @include respond-to(xs) {
         margin-bottom: 20px;
     }
 
@@ -23,7 +23,7 @@ $score_padding_small: 10px;
         @include desktop-columns(6, 0);
         @include phone-columns(12);
 
-        @include respond-to(phones) {
+        @include respond-to(xs) {
             margin-bottom: 5px;
 
             &:last-child {
@@ -47,7 +47,7 @@ $score_padding_small: 10px;
             @include desktop-columns(3);
             @include phone-columns(2);
 
-            @include respond-to(phones) {
+            @include respond-to(xs) {
                 img {
                     margin: {
                         right: auto;
@@ -74,7 +74,7 @@ $score_padding_small: 10px;
             @include desktop-columns(2);
 
             p {
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     margin-left: auto;
                 }
             }
@@ -88,7 +88,7 @@ $score_padding_small: 10px;
 
             .c-match-summary__team__image {
                 img {
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         margin: {
                             left: 0;
                         }
@@ -98,7 +98,7 @@ $score_padding_small: 10px;
 
             .c-match-summary__team__name {
                 p {
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         margin: {
                             left: 0;
                         }
@@ -109,11 +109,11 @@ $score_padding_small: 10px;
             .c-match-summary__team__score {
                 padding-right: $score_padding;
 
-                @include respond-to(phablets) {
+                @include respond-to(sm) {
                     padding-right: $score_padding_small;
                 }
 
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     padding-right: 0;
                 }
             }
@@ -133,16 +133,16 @@ $score_padding_small: 10px;
 
                 padding-left: $score_padding;
 
-                @include respond-to(phablets) {
+                @include respond-to(sm) {
                     padding-left: $score_padding_small;
                 }
 
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     padding-left: 0;
                 }
             }
 
-            @include respond-to(phones) {
+            @include respond-to(xs) {
                 .c-match-summary__team__image,
                 .c-match-summary__team__name,
                 .c-match-summary__team__score {

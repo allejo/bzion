@@ -34,16 +34,16 @@
     img {
         width: 100%;
 
-        @include respond-to(phablets) {
+        @include respond-to(sm) {
             width: 30%;
         }
 
-        @include respond-to(phones) {
+        @include respond-to(xs) {
             width: 40%;
         }
     }
 
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         margin-bottom: 30px;
         text-align: center;
     }

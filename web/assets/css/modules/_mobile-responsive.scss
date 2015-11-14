@@ -5,15 +5,16 @@
 ///   Accepted view sizes: `phones`, `phablets`, `tablets`
 ///
 
-@function get-max-size($media) {
-    // scss-lint:disable ElsePlacement
+@function get-max-size($size, $bp: $breakpoints) {
+    $bp-names: map-keys($bp);
+    $n: index($bp-names, $size);
+    $size: if($n < length($bp-names), nth($bp-names, $n + 1), null);
 
-    @if      $media == phones   { @return $phone-max-size; }
-    @else if $media == phablets { @return $phablet-max-size; }
-    @else if $media == tablets  { @return $tablet-max-size; }
-    @else if $media == desktops { @return 0; }
+    @if $size != null {
+        @return map-get($bp, $size) - 1;
+    }
 
-    @error "An unsupported (#{$media}) viewsize was passed to get-max-size()";
+    @return 0;
 }
 
 
@@ -23,15 +24,14 @@
 ///   Accepted view sizes: `phones`, `phablets`, `tablets`
 ///
 
-@function get-min-size($media) {
-    // scss-lint:disable ElsePlacement
+@function get-min-size($size, $bp: $breakpoints) {
+    $value: map-get($bp, $size);
 
-    @if      $media == phones   { @return $phone-min-size; }
-    @else if $media == phablets { @return $phablet-min-size; }
-    @else if $media == tablets  { @return $tablet-min-size; }
-    @else if $media == desktops { @return $desktop-min-size; }
+    @if $value != null {
+        @return $value;
+    }
 
-    @error "An unsupported (#{$media}) viewsize was passed to get-min-size()";
+    @return 0;
 }
 
 
@@ -44,8 +44,8 @@
 ///
 
 @mixin valid-viewsize($media) {
-    @if not index(phones phablets tablets desktops, $media) {
-        @error "Unknown view size (#{$media}) given to _respond-only-to()";
+    @if not map-has-key($breakpoints, $media) {
+        @error "Unknown view size (#{$media}) given to valid-viewsize()";
     }
 }
 
@@ -103,7 +103,7 @@
 ///   An argument list of Viewsizes that the specified CSS rules will be applied to
 ///
 /// @example scss - Usage
-///   @include respond-to(phablets) {
+///   @include respond-to(sm) {
 ///       .phablet-only {
 ///           display: block;
 ///       }
@@ -139,7 +139,7 @@
 ///   The Viewsize (and smaller) that will have the specified CSS rules applied to
 ///
 /// @example scss - Usage
-///   @include respond-to(phablets) {
+///   @include respond-to(sm) {
 ///       .phablet-and-smaller {
 ///           display: block;
 ///       }
@@ -154,11 +154,5 @@
 
 @mixin respond-to($media) {
     @include valid-viewsize($media);
-
-    @if index(phones phablets tablets, $media) {
-        @include media-size(0, get-max-size($media)) { @content; }
-    }
-    @else {
-        @content;
-    }
+    @include media-size(0, get-min-size($media)) { @content; }
 }

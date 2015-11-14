@@ -6,7 +6,7 @@
         background-repeat: no-repeat;
         margin-bottom: $Settings-Page_Section-Margin;
 
-        @include respond-to(tablets) {
+        @include respond-to(md) {
             background-position: center center;
         }
 
@@ -33,7 +33,7 @@
             @include desktop-columns(5);
             @include phablet-columns(12);
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 margin-bottom: $Settings-Page_Section-Margin;
             }
 
@@ -82,7 +82,7 @@
                     @include desktop-columns(4, 0);
                     @include phone-columns(6, 0);
 
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         &:nth-child(n+3) {
                             margin-top: 15px;
                         }
@@ -100,7 +100,7 @@
 
                                 display: block;
 
-                                @include respond-to(phones) {
+                                @include respond-to(xs) {
                                     height: 55px;
                                     width: 55px;
                                 }

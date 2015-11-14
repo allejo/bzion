@@ -5,7 +5,7 @@
                 margin-top: $Settings-Page_Section-Small_Margin;
             }
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 order: 2;
             }
         }
@@ -15,7 +15,7 @@
 
             text-align: right;
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 order: 1;
             }
         }
@@ -30,12 +30,12 @@
                     height: $size;
                     width: $size;
 
-                    @include respond-to(tablets) {
+                    @include respond-to(md) {
                         display: block;
                         margin: 0 auto;
                     }
 
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         margin-top: 10px;
                     }
                 }
@@ -46,14 +46,14 @@
                     flex: 1;
                     margin: auto;
 
-                    @include respond-to(tablets) {
+                    @include respond-to(md) {
                         margin: 20px 0 0;
                         text-align: center;
                         width: 100%;
                     }
 
                     > li {
-                        @include respond-to(tablets) {
+                        @include respond-to(md) {
                             display: inline-block;
                             margin: 0 5px;
                         }
@@ -82,7 +82,7 @@
                     }
                 }
 
-                @include respond-to(tablets) {
+                @include respond-to(md) {
                     display: block;
                 }
             }
@@ -106,7 +106,7 @@
                     }
                 }
 
-                @include respond-to(phablets) {
+                @include respond-to(sm) {
                     margin-left: 0;
                 }
             }
@@ -137,7 +137,7 @@
                     border-bottom: $Border-Default;
                     color: $Color-Black;
 
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         padding: {
                             bottom: 5px;
                             top: 5px;
@@ -145,7 +145,7 @@
                     }
 
                     @include utility('date') {
-                        @include respond-to(phones) {
+                        @include respond-to(xs) {
                             order: 1;
                             padding-bottom: 0;
                         }
@@ -154,14 +154,14 @@
                     @include utility('opponent') {
                         flex: 2;
 
-                        @include respond-to(phones) {
+                        @include respond-to(xs) {
                             flex-basis: 100%;
                             order: 3;
                         }
                     }
 
                     @include utility('score') {
-                        @include respond-to(phones) {
+                        @include respond-to(xs) {
                             order: 2;
                             text-align: right;
                         }
@@ -171,7 +171,7 @@
                         border: 0;
                         padding: 5px 10px;
 
-                        @include respond-to(phones) {
+                        @include respond-to(xs) {
                             padding: 5px 1px;
                         }
 
@@ -182,7 +182,7 @@
                         }
                     }
 
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         flex-wrap: wrap;
                     }
 
@@ -227,7 +227,7 @@
                 @include element('name') {
                     font-size: 24px;
 
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         display: block;
                         font-size: 20px;
                     }
@@ -236,7 +236,7 @@
                 @include element('elo') {
                     margin-left: 10px;
 
-                    @include respond-to(phones) {
+                    @include respond-to(xs) {
                         margin: 0;
                     }
 
@@ -253,7 +253,7 @@
             // The matches element will have all of the wins, losses, and draws
             @include element('matches') {
                 // We're hiding it on a phone because there's not enough room and this information isn't imperative
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     display: none;
                 }
 
@@ -271,7 +271,7 @@
                 font-size: 14px;
                 margin-right: 25px;
 
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     display: block;
                     margin-right: 0;
                 }

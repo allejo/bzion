@@ -1,5 +1,5 @@
 /// Set the visibility of a specific element to be visible or hidden based on the screen width. An element will only be
-/// visible when the screen is at the specified width. For example, if you have an element only be visible on phones,
+/// visible when the screen is at the specified width. For example, if you have an element only be visible on xs,
 /// you would set the minimum and maximum screen size a phone would have. You can use pre-defined values such as
 /// `$phone-min-size` and `$phone-max-size` to stay consistent with the project. This function should not be accessed
 /// directly and instead should only be used through convenience mixins.
@@ -32,7 +32,7 @@
 ///   }
 
 @mixin invisible-desktop() {
-    @include set-visible(false, desktops);
+    @include set-visible(false, lg);
 }
 
 
@@ -44,7 +44,7 @@
 ///   }
 
 @mixin invisible-tablet() {
-    @include set-visible(false, tablets);
+    @include set-visible(false, md);
 }
 
 
@@ -56,7 +56,7 @@
 ///   }
 
 @mixin invisible-phablet() {
-    @include set-visible(false, phablets);
+    @include set-visible(false, sm);
 }
 
 
@@ -68,7 +68,7 @@
 ///   }
 
 @mixin invisible-phone() {
-    @include set-visible(false, phones);
+    @include set-visible(false, xs);
 }
 
 
@@ -80,7 +80,7 @@
 ///   }
 
 @mixin visible-desktop() {
-    @include set-visible(true, desktops);
+    @include set-visible(true, lg);
 }
 
 
@@ -92,7 +92,7 @@
 ///   }
 
 @mixin visible-tablet() {
-    @include set-visible(true, tablets);
+    @include set-visible(true, md);
 }
 
 
@@ -104,7 +104,7 @@
 ///   }
 
 @mixin visible-phablet() {
-    @include set-visible(true, phablets);
+    @include set-visible(true, sm);
 }
 
 
@@ -116,5 +116,5 @@
 ///   }
 
 @mixin visible-phone() {
-    @include set-visible(true, phones);
+    @include set-visible(true, xs);
 }

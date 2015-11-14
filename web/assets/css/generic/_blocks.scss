@@ -56,11 +56,11 @@ hr {
     margin: 50px auto;
     width: $Settings-Global_Width;
 
-    @include respond-to(tablets) {
+    @include respond-to(md) {
         width: 100%;
     }
 
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         margin: 30px auto;
     }
 }

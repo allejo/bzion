@@ -27,7 +27,7 @@ header {
     .u-mobile-only {
         display: none;
 
-        @include respond-to(tablets) {
+        @include respond-to(md) {
             display: block;
         }
     }
@@ -52,11 +52,11 @@ header {
                 line-height: $Settings-Line_Height;
                 margin-right: 15px;
 
-                @include respond-to(tablets) {
+                @include respond-to(md) {
                     display: block;
                 }
 
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     margin-right: 10px;
                 }
             }
@@ -82,12 +82,12 @@ header {
                         margin-top: -7px;
                         vertical-align: middle;
 
-                        @include respond-to(tablets) {
+                        @include respond-to(md) {
                             display: none;
                         }
                     }
 
-                    @include respond-to(phablets) {
+                    @include respond-to(sm) {
                         font-size: 22px;
                     }
                 }
@@ -120,7 +120,7 @@ header {
                                 @include theme-specific("color", "header-color-hover");
                             }
 
-                            @include respond-to(phones) {
+                            @include respond-to(xs) {
                                 padding-left: 2px;
                                 padding-right: 2px;
                             }
@@ -138,7 +138,7 @@ header {
                     &.pages {
                         flex: 1;
 
-                        @include respond-to(tablets) {
+                        @include respond-to(md) {
                             @include theme-specific("background-color", "nav-bg");
 
                             border-bottom: 1px solid $Color-Header_Border;
@@ -166,7 +166,18 @@ header {
                     &.user {
                         margin-left: auto;
 
-                        @include respond-to(tablets) {
+                        @include respond-to(lg) {
+                            li {
+                                a {
+                                    padding: {
+                                        left: 5px;
+                                        right: 5px;
+                                    }
+                                }
+                            }
+                        }
+
+                        @include respond-to(md) {
                             li:last-child {
                                 a {
                                     padding-right: 0;

@@ -6,7 +6,7 @@
         @extend %phablet-margin;
 
         // For phablets and phones, we'll be making the columns into full rows
-        @include respond-to(phablets) {
+        @include respond-to(sm) {
             flex-wrap: wrap;
         }
 
@@ -14,7 +14,7 @@
         @include element('label') {
             display: none;
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 display: inline-block;
                 font-weight: bold;
                 width: 120px;
@@ -42,11 +42,11 @@
             text-align: center;
 
             // On desktops, all columns are equal size. On tablets, the info column will adjust to the fa-info-circle size
-            @include respond-to(tablets) {
+            @include respond-to(md) {
                 flex: 0 1 auto;
             }
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 text-align: left;
             }
 
@@ -54,7 +54,7 @@
             @include element('details') {
                 // On desktops and tablets, we'll display an 'info circle' but we'll have a text version for phablets/phones so hide it at that point
                 @include modifier('desktop') {
-                    @include respond-to(phablets) {
+                    @include respond-to(sm) {
                         display: none;
                     }
                 }
@@ -63,7 +63,7 @@
                 @include modifier('mobile') {
                     display: none;
 
-                    @include respond-to(phablets) {
+                    @include respond-to(sm) {
                         display: inline-block;
                     }
                 }
@@ -72,7 +72,7 @@
 
         // Convert columns into rows for phablets and smaller
         .c-table__row__column {
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 flex-basis: 100%;
                 padding: 2px 0;
             }
@@ -81,7 +81,7 @@
 
     // Hide the header row for phablets and smaller since we'll be displaying the spans
     .c-table__row--header {
-        @include respond-to(phablets) {
+        @include respond-to(sm) {
             display: none;
         }
     }

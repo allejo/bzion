@@ -12,7 +12,7 @@
                 top: 15px;
             };
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 padding: {
                     bottom: 15px;
                     top: 15px;
@@ -26,7 +26,7 @@
                     font-size: 24px;
                     margin: auto;
 
-                    @include respond-to(phablets) {
+                    @include respond-to(sm) {
                         font-size: 20px;
                     }
                 }
@@ -42,13 +42,13 @@
                     margin-left: 5px;
                 }
 
-                @include respond-to(tablets) {
+                @include respond-to(md) {
                     display: none;
                 }
             }
         }
 
-        @include respond-to(phones) {
+        @include respond-to(xs) {
             margin-bottom: $Settings-Page_Section-Small_Margin;
         }
     }

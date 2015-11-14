@@ -22,3 +22,12 @@ $tablet-max-size: 992px;
 
 /// The minimum width that will be considered a "desktop" with media queries.
 $desktop-min-size: $tablet-max-size + 1;
+
+$breakpoints: (
+    xs:  320px,  // phones
+    sm:  480px,  // phablets
+    md:  768px,  // tablets
+    lg:  992px,  // desktops
+    xl:  1200px, // widescreen
+    xxl: 1600px, // x-large
+);

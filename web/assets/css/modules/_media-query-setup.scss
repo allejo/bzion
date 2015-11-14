@@ -4,19 +4,31 @@
 // For more information: https://github.com/aaronjensen/sass-media_query_combiner/issues/10
 
 .media-query-setup {
-    @include respond-to(tablets) {
+    @include respond-to(xs) {
         html:before {
             font-size: inherit;
         }
     }
 
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         html:before {
             font-size: inherit;
         }
     }
 
-    @include respond-to(phones) {
+    @include respond-to(md) {
+        html:before {
+            font-size: inherit;
+        }
+    }
+
+    @include respond-to(lg) {
+        html:before {
+            font-size: inherit;
+        }
+    }
+
+    @include respond-to(xl) {
         html:before {
             font-size: inherit;
         }

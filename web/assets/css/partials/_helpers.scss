@@ -152,12 +152,6 @@
     font-size: 16px;
 }
 
-.wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    width: $Settings-Global_Width;
-
-    @include respond-to(tablets) {
-        width: 100%;
-    }
+@include object('container') {
+    @extend %wrapper;
 }

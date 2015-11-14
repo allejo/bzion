@@ -47,7 +47,7 @@
 /// setting and set the last child to have no margin bottom on view sizes of a phablet and smaller
 
 %phablet-margin {
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         @include autoMarginBottom();
     }
 }
@@ -57,7 +57,7 @@
 /// setting and set the last child to have no margin bottom on phones
 
 %phone-margin {
-    @include respond-to(phones) {
+    @include respond-to(xs) {
         @include autoMarginBottom();
     }
 }
@@ -67,7 +67,7 @@
 /// setting and set the last child to have no margin bottom on view sizes of a tablet and smaller
 
 %tablet-margin {
-    @include respond-to(tablets) {
+    @include respond-to(md) {
         @include autoMarginBottom($Settings-Page_Section-Small_Margin);
     }
 }
@@ -80,9 +80,21 @@
 %wrapper {
     @extend %margin-center;
 
-    width: $Settings-Global-Width;
+    width: map-get($breakpoints, xxl);
 
-    @include respond-to(tablets) {
+    @include respond-to(xxl) {
+        width: map-get($breakpoints, xl);
+    }
+
+    @include respond-to(xl) {
+        width: map-get($breakpoints, lg);
+    }
+
+    @include respond-to(lg) {
+        width: map-get($breakpoints, md);
+    }
+
+    @include respond-to(md) {
         padding: {
             left: 20px;
             right: 20px;
@@ -90,7 +102,7 @@
         width: 100%;
     }
 
-    @include respond-to(phones) {
+    @include respond-to(xs) {
         padding: {
             left: 15px;
             right: 15px;

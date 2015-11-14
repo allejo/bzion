@@ -176,12 +176,12 @@ select {
         }
 
         @include element('meta') {
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 div {
                     float: left;
                     margin-right: 15px;
 
-                    @include respond-to(phablets) {
+                    @include respond-to(sm) {
                         margin-bottom: 0;
                     }
 
@@ -238,7 +238,7 @@ select {
             display: inline-block;
             margin-right: 10px;
 
-            @include respond-only-to(phones) {
+            @include respond-only-to(xs) {
                 display: block;
             }
 
@@ -258,20 +258,20 @@ select {
 
 @include scope('avatar-form') {
     @include component('avatar-container') {
-        @include respond-only-to(phablets) {
+        @include respond-only-to(sm) {
             @include make-container();
         }
 
         @include element('image') {
-            @include respond-only-to(phablets) {
+            @include respond-only-to(sm) {
                 @include make-columns(5);
             }
 
-            @include respond-to(phablets) {
+            @include respond-to(sm) {
                 margin-bottom: 0;
             }
 
-            @include respond-to(phones) {
+            @include respond-to(xs) {
                 margin-bottom: $Settings-Page_Section-Small_Margin;
                 text-align: center;
             }
@@ -279,7 +279,7 @@ select {
             img {
                 width: 100%;
 
-                @include respond-to(phones) {
+                @include respond-to(xs) {
                     width: 60%;
                 }
             }
@@ -290,7 +290,7 @@ select {
                 margin-bottom: 5px;
             }
 
-            @include respond-only-to(phablets) {
+            @include respond-only-to(sm) {
                 @include make-columns(7);
             }
         }

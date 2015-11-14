@@ -11,12 +11,12 @@
 /// Creates a flex box container available to tablets and smaller screen sizes that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
-///   @include respond-to(tablets) {
+///   @include respond-to(md) {
 ///       @include outer-container($width);
 ///   }
 
 @mixin tablet-container() {
-    @include respond-to(tablets) {
+    @include respond-to(md) {
         @include make-container();
     }
 }
@@ -25,12 +25,12 @@
 /// Creates a flex box container available to phablets and smaller screen sizes that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
-///   @include respond-to(phablets) {
+///   @include respond-to(sm) {
 ///       @include outer-container($width);
 ///   }
 
 @mixin phablet-container() {
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         @include make-container();
     }
 }
@@ -39,12 +39,12 @@
 /// Creates a flex box container available to phones that will contain flex children
 ///
 /// @example scss - SCSS Equivalent
-///   @include respond-to(phones) {
+///   @include respond-to(xs) {
 ///       @include outer-container($width);
 ///   }
 
 @mixin phone-container() {
-    @include respond-to(phones) {
+    @include respond-to(xs) {
         @include make-container();
     }
 }
@@ -73,12 +73,12 @@
 /// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
 ///
 /// @example scss - SCSS Equivalent
-///   @include respond-to(tablets) {
+///   @include respond-to(md) {
 ///       @include span-columns($columns);
 ///   }
 
 @mixin tablet-columns($columns, $gutter: $rocks-gutter) {
-    @include respond-to(tablets) {
+    @include respond-to(md) {
         @include make-columns($columns, $gutter);
     }
 }
@@ -92,12 +92,12 @@
 /// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
 ///
 /// @example scss - SCSS Equivalent
-///   @include respond-to(phablets) {
+///   @include respond-to(sm) {
 ///       @include span-columns($columns);
 ///   }
 
 @mixin phablet-columns($columns, $gutter: $rocks-gutter) {
-    @include respond-to(phablets) {
+    @include respond-to(sm) {
         @include make-columns($columns, $gutter);
     }
 }
@@ -111,12 +111,12 @@
 /// @link http://thoughtbot.github.io/neat-docs/latest/#span-columns
 ///
 /// @example scss - SCSS Equivalent
-///   @include respond-to(phones) {
+///   @include respond-to(xs) {
 ///       @include span-columns($columns);
 ///   }
 
 @mixin phone-columns($columns, $gutter: $rocks-gutter) {
-    @include respond-to(phones) {
+    @include respond-to(xs) {
         @include make-columns($columns, $gutter);
     }
 }
