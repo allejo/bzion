@@ -9,24 +9,23 @@
     width: $width;
 
     @include element('item') {
-        @include animation(slide linear 1s forwards);
-        @include animation-delay(3s);
-        @include transform-origin(50% 50%);
-
+        animation: slide linear 1s forwards;
+        animation-delay: 3s;
         border: 1px solid;
         border-bottom-left-radius: $Border-Radius;
         border-bottom-right-radius: $Border-Radius;
         border-top: 0;
         padding: 10px 0;
         text-align: center;
+        transform-origin: 50% 50%;
     }
 }
 
-@include keyframes(slide) {
+@keyframes slide {
     0% {
-        @include transform(translate(0px, 0px));
+        transform: translate(0px, 0px);
     }
     100% {
-        @include transform(translate(0px, -45px));
+        transform: translate(0px, -45px);
     }
 }

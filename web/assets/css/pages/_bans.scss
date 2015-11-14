@@ -7,7 +7,7 @@
 
         // For phablets and phones, we'll be making the columns into full rows
         @include respond-to(phablets) {
-            @include flex-wrap(wrap);
+            flex-wrap: wrap;
         }
 
         // "Display" the column headers next the columns that become rows in phablet view
@@ -43,7 +43,7 @@
 
             // On desktops, all columns are equal size. On tablets, the info column will adjust to the fa-info-circle size
             @include respond-to(tablets) {
-                @include flex(0 1 auto);
+                flex: 0 1 auto;
             }
 
             @include respond-to(phablets) {
@@ -73,7 +73,7 @@
         // Convert columns into rows for phablets and smaller
         .c-table__row__column {
             @include respond-to(phablets) {
-                @include flex-basis(100%);
+                flex-basis: 100%;
                 padding: 2px 0;
             }
         }
@@ -104,7 +104,7 @@
     }
 
     @include element('server-settings') {
-        @include display(flex);
+        display: flex;
 
         @include element('message') {
             @include desktop-columns(10);

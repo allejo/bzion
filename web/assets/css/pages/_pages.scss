@@ -5,8 +5,8 @@
 
         @include element('container') {
             @extend %wrapper;
-            @include display(flex);
 
+            display: flex;
             padding: {
                 bottom: 15px;
                 top: 15px;
@@ -20,7 +20,7 @@
             }
 
             @include element('title') {
-                @include display(flex);
+                display: flex;
 
                 h1 {
                     font-size: 24px;
@@ -33,10 +33,10 @@
             }
 
             @include element('options') {
-                @include align-items(center);
-                @include display(flex);
-                @include flex(1);
-                @include justify-content(flex-end);
+                align-items: center;
+                display: flex;
+                flex: 1;
+                justify-content: flex-end;
 
                 @include component('button') {
                     margin-left: 5px;

@@ -1,6 +1,5 @@
 // The CSS class that will be used as the main layout
 @include object('row') {
-    @extend %wrapper;
     @include desktop-container;
 
     margin-bottom: $Settings-Page_Section-Margin;

@@ -2,8 +2,7 @@
 // random objects
 
 .badge {
-    @include background-image(linear-gradient(#F65D5F, #E93631));
-
+    background-image: linear-gradient(#F65D5F, #E93631);
     border-radius: 2px;
     box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 1px rgba(0, 0, 0, 0.2);
     color: $Color-White;
@@ -60,10 +59,9 @@
 
 @include component('table') {
     @include element('row') {
-        @include display(flex);
-
         border-bottom: $Table-Border;
         border-top: $Table-Border;
+        display: flex;
 
         @include modifier('header') {
             .c-table__row__column {
@@ -72,11 +70,10 @@
         }
 
         @include element('column') {
-            @include flex(1);
-
             border-left: $Table-Border;
             border-right: $Table-Border;
             box-sizing: border-box;
+            flex: 1;
             padding: $Table-Cell_Padding;
         }
 

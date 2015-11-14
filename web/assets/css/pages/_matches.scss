@@ -121,15 +121,15 @@ $score_padding_small: 10px;
 
         @include modifier('loser') {
             .c-match-summary__team__image {
-                @include order(3);
+                order: 3;
             }
 
             .c-match-summary__team__name {
-                @include order(2);
+                order: 2;
             }
 
             .c-match-summary__team__score {
-                @include order(1);
+                order: 1;
 
                 padding-left: $score_padding;
 

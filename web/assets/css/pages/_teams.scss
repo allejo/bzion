@@ -6,7 +6,7 @@
             }
 
             @include respond-to(phablets) {
-                @include order(2);
+                order: 2;
             }
         }
 
@@ -16,7 +16,7 @@
             text-align: right;
 
             @include respond-to(phablets) {
-                @include order(1);
+                order: 1;
             }
         }
 
@@ -42,8 +42,8 @@
 
                 @include element('legend') {
                     @extend %no-padding-ul;
-                    @include flex(1);
 
+                    flex: 1;
                     margin: auto;
 
                     @include respond-to(tablets) {
@@ -112,8 +112,7 @@
             }
 
             @include element('option') {
-                @include flex(none);
-
+                flex: none;
                 text-align: center;
                 width: 30px;
 
@@ -147,25 +146,23 @@
 
                     @include utility('date') {
                         @include respond-to(phones) {
-                            @include order(1);
-
+                            order: 1;
                             padding-bottom: 0;
                         }
                     }
 
                     @include utility('opponent') {
-                        @include flex(2);
+                        flex: 2;
 
                         @include respond-to(phones) {
-                            @include flex-basis(100%);
-                            @include order(3);
+                            flex-basis: 100%;
+                            order: 3;
                         }
                     }
 
                     @include utility('score') {
                         @include respond-to(phones) {
-                            @include order(2);
-
+                            order: 2;
                             text-align: right;
                         }
                     }
@@ -186,7 +183,7 @@
                     }
 
                     @include respond-to(phones) {
-                        @include flex-wrap(wrap);
+                        flex-wrap: wrap;
                     }
 
                     &:last-child {
@@ -207,8 +204,7 @@
 // On the team list page, a widget is the element each team will have with all their information
 // and statistics
 @include component('team-widget') {
-    @include display(flex);
-
+    display: flex;
     margin-bottom: $Settings-Page_Section-Margin;
 
     // The rank icon
@@ -218,15 +214,15 @@
 
     // All of the information relating to the team
     @include element('info') {
-        @include flex(1);
+        flex: 1;
 
         // The header of each "widget" which will contain a summary and match stats
         @include element('header') {
-            @include display(flex);
+            display: flex;
 
             // A summary will contain the team name and the elo
             @include element('summary') {
-                @include flex(1);
+                flex: 1;
 
                 @include element('name') {
                     font-size: 24px;

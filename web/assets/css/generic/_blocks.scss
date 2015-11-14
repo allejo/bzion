@@ -50,12 +50,7 @@ code {
 }
 
 hr {
-    @include linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0),
-            rgba(0, 0, 0, 0.2) 50%,
-            rgba(0, 0, 0, 0) 100%);
-
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
     border: 0;
     height: 1px;
     margin: 50px auto;

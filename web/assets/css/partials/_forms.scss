@@ -79,7 +79,7 @@ textarea {
 }
 
 input[type="search"] {
-    @include appearance(none);
+    appearance: none;
 }
 
 input[type="checkbox"],

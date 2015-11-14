@@ -1,7 +1,6 @@
 @include component('jumbotron') {
-    @include display(flex);
-
     background-size: cover;
+    display: flex;
     min-height: 350px;
     width: 100%;
 

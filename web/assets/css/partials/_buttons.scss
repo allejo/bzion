@@ -31,8 +31,7 @@ $Button-Colors: (
         @include modifier($color) {
             $dark_color: darken($value, 7%);
 
-            @include linear-gradient($value, $dark_color);
-
+            background: linear-gradient($value, $dark_color);
             border: 1px solid $dark_color;
             color: set-text-from-color($value);
 
@@ -44,8 +43,7 @@ $Button-Colors: (
                     $hoverColor: darken($value, 3%);
                     $hoverDarkColor: darken($hoverColor, 7%);
 
-                    @include linear-gradient($hoverColor, $hoverDarkColor);
-
+                    background: linear-gradient($hoverColor, $hoverDarkColor);
                     border-color: $hoverDarkColor;
                     color: set-text-from-color($hoverColor);
                 }

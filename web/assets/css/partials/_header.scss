@@ -41,7 +41,8 @@ header {
         // The menu bar container that will keep the menu in the wrapper
         .menu-bar {
             @extend %wrapper;
-            @include display(flex);
+
+            display: flex;
 
             .mobile-menu {
                 @include theme-specific("color", "header-color");
@@ -93,8 +94,8 @@ header {
             }
 
             nav {
-                @include display(flex);
-                @include flex(1);
+                display: flex;
+                flex: 1;
 
                 ul {
                     padding-left: 0;
@@ -135,7 +136,8 @@ header {
                     }
 
                     &.pages {
-                        @include flex(1);
+                        flex: 1;
+
                         @include respond-to(tablets) {
                             @include theme-specific("background-color", "nav-bg");
 

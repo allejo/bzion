@@ -10,9 +10,8 @@
     margin-bottom: 0;
 
     @include element('search') {
-        @include display(flex);
-
         border-bottom: $Border-Default;
+        display: flex;
         margin-bottom: 0;
         padding: {
             bottom: 5px;
@@ -21,12 +20,12 @@
 
         @include element('input') {
             @extend %remove-input-style;
-            @include flex(1);
+
+            flex: 1;
         }
 
         @include element('icon') {
-            @include display(flex);
-
+            display: flex;
             padding: 0 10px;
 
             i {
@@ -43,11 +42,10 @@
             padding: $Settings-Page_Section-Small_Margin;
 
             @include element('meta') {
-                @include display(flex);
+                display: flex;
 
                 @include element('subject') {
-                    @include flex(1);
-
+                    flex: 1;
                     font-size: 20px;
                     font-weight: bold;
                 }
