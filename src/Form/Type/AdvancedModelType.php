@@ -30,8 +30,8 @@ class AdvancedModelType extends AbstractType
     private $listNames = false;
 
     /**
-     * A player to always include
-     * @var Player|null
+     * An object to always include
+     * @var Model|null
      */
     private $include = null;
 
@@ -75,10 +75,17 @@ class AdvancedModelType extends AbstractType
         // TODO: Use a more accurate placeholder
         $placeholder = ($this->multiple) ? 'brad, kierra, ...' : null;
 
+        if ($this->include) {
+            $exclude = $this->include->getType() . ':' . $this->include->getId();
+        } else {
+            $exclude = null;
+        }
+
         // Model IDs that will be manipulated by javascript
         $builder->add('ids', 'hidden', array(
             'attr' => array(
                 'class' => 'select2-compatible',
+                'data-exclude' => $exclude,
                 'data-label' => $builderName,
                 'data-multiple' => $this->multiple,
                 'data-required' => $options['required']

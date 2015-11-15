@@ -43,10 +43,10 @@ $(document).ready(function() {
                 var icon = 'circle-o';
 
                 switch (item.type) {
-                    case 'player':
+                    case 'Player':
                         icon = 'user';
                         break;
-                    case 'team':
+                    case 'Team':
                         icon = 'users';
                         break;
                 }
@@ -87,7 +87,8 @@ $(document).ready(function() {
                     var data = {
                         format: 'json',
                         types: types,
-                        startsWith: params.term
+                        startsWith: params.term,
+                        exclude: input.data('exclude')
                     };
 
                     return data;
@@ -157,8 +158,6 @@ $(document).ready(function() {
                 // javascript and that the content of the text inputs should be ignored
                 modified: true
             });
-
-            console.log(value);
 
             input.val(value);
         });

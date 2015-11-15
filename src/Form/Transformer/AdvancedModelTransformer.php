@@ -143,15 +143,16 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
                 );
             }
 
+            $type = strtolower($object['type']);
+
             // Sanity check so that the user can't generate arbitrary classes
-            if (!in_array($object['type'], $this->types)) {
+            if (!in_array($type, $this->types)) {
                 throw new TransformationFailedException(
                     "Objects of type \"{$object['type']}\" are not supported"
                 );
             }
 
             $class = ucfirst($object['type']);
-            $type = strtolower($object['type']);
             $model = $class::get($object['id']);
 
 

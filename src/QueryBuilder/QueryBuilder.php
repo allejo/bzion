@@ -298,13 +298,17 @@ class QueryBuilder implements Countable
     /**
      * Request that a specific model is not returned
      *
-     * @param  Model $model The model you don't want to get
+     * @param  Model|int $model The ID or model you don't want to get
      * @return self
      */
     public function except($model)
     {
+        if ($model instanceof Model) {
+            $model = $model->getId();
+        }
+
         $this->where('id');
-        $this->addColumnCondition("!= ?", $model->getId(), 'i');
+        $this->addColumnCondition("!= ?", $model, 'i');
 
         return $this;
     }
