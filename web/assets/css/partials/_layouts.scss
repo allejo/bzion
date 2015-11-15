@@ -36,8 +36,7 @@
         // Take up a third of the parent container
         @include modifier('third') {
             @include make-margin(sm);
-            @include view-columns(xxl, 3);
-            @include view-columns(lg, 4);
+            @include view-columns(xxl, 4);
             @include view-columns(md, 6);
             @include view-columns(sm, 12);
         }

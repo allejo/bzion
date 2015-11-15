@@ -25,12 +25,12 @@
 
     @include component('latest-updates') {
         @extend %container;
-        @include view-container(lg);
+        @include view-container();
 
         margin-bottom: $Settings-Page_Section-Margin;
 
         @include component('news-container') {
-            @include view-columns(lg, 5);
+            @include view-columns(xxl, 5);
             @include view-columns(sm, 12);
 
             @include respond-to(sm) {
@@ -69,7 +69,7 @@
         }
 
         @include component('match-container') {
-            @include view-columns(lg, 7);
+            @include view-columns(xxl, 7);
             @include view-columns(sm, 12);
 
             @include element('matches') {
@@ -78,9 +78,12 @@
                 margin-top: 15px;
 
                 @include element('match') {
-                    @include view-container(lg);
+                    @include view-container();
+                    @include view-columns(xxl, 3);
                     @include view-columns(lg, 4);
                     @include view-columns(xs, 6);
+
+                    margin-bottom: $Settings-Page_Section-Small_Margin;
 
                     @include respond-to(xs) {
                         &:nth-child(n+3) {
@@ -89,7 +92,7 @@
                     }
 
                     @include element('team-container') {
-                        @include view-columns(lg, 6);
+                        @include view-columns(xxl, 6);
 
                         @include element('team') {
                             display: inline-block;
@@ -118,13 +121,9 @@
                     }
 
                     @include element('stats') {
-                        @include view-columns(lg, 12);
+                        @include view-columns(xxl, 12);
 
                         text-align: center;
-                    }
-
-                    &:nth-child(n+4) {
-                        margin-top: 15px;
                     }
                 }
             }

@@ -84,7 +84,11 @@
         }
     }
 
-    &.o-layout__body--third {
+    &.o-row__column--third {
+        @include respond-only-to(xl, xxl) {
+            @include view-columns(xxl, 3);
+        }
+
         @include respond-to(md) {
             &:nth-last-child(-n+3) {
                 margin-bottom: 0;
@@ -104,7 +108,7 @@
         }
     }
 
-    &.o-layout__body--quarter {
+    &.o-row__column--quarter {
         @include respond-to(lg) {
             &:nth-last-child(-n+4) {
                 margin-bottom: 0;
