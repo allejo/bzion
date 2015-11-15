@@ -1,6 +1,6 @@
 // The CSS class that will be used as the main layout
 @include object('row') {
-    @include desktop-container;
+    @include view-container();
 
     margin-bottom: $Settings-Page_Section-Margin;
 
@@ -11,16 +11,16 @@
 
     // An element that will be a sidebar
     @include element('sidebar') {
-        @include desktop-columns(3);
-        @include phablet-columns(12);
+        @include view-columns(xxl, 3);
+        @include view-columns(sm, 12);
     }
 
     // An element that will have the important content of a page
     @include element('column') {
         // When a page has a sidebar, this modifier will appropriately use the remaining space
         @include modifier('with-sidebar') {
-            @include desktop-columns(9);
-            @include phablet-columns(12);
+            @include view-columns(xxl, 9);
+            @include view-columns(sm, 12);
 
             @include respond-to(sm) {
                 margin-bottom: $Settings-Page_Section-Small_Margin;
@@ -30,31 +30,36 @@
         // Take up the whole parent container; i.e. the 'o-layout' element
         @include modifier('full') {
             @extend %desktop-margin;
-            @include desktop-columns(12);
+
+            @include view-columns(xxl, 12);
         }
 
         // Take up a third of the parent container
         @include modifier('third') {
             @extend %phablet-margin;
-            @include desktop-columns(4);
-            @include tablet-columns(6);
-            @include phablet-columns(12);
+
+            @include view-columns(xxl, 3);
+            @include view-columns(lg, 4);
+            @include view-columns(md, 6);
+            @include view-columns(sm, 12);
         }
 
         // Take up a forth of the parent container
         @include modifier('quarter') {
             @extend %phablet-margin;
-            @include desktop-columns(3);
-            @include tablet-columns(4);
-            @include phablet-columns(6);
-            @include phone-columns(12);
+
+            @include view-columns(xxl, 3);
+            @include view-columns(md, 4);
+            @include view-columns(sm, 6);
+            @include view-columns(xs, 12);
         }
 
         // Take up half of the parent container
         @include modifier('half') {
             @extend %phablet-margin;
-            @include desktop-columns(6);
-            @include phablet-columns(12);
+
+            @include view-columns(xxl, 6);
+            @include view-columns(sm, 12);
         }
     }
 
@@ -65,7 +70,7 @@
 
 // A CSS scope where user inputted HTML will be available, so we'll have some sanity checks
 @include scope('user-html') {
-    @extend %wrapper;
+    @extend %container;
 
     display: block;
     margin-bottom: $Settings-Page_Section-Margin;

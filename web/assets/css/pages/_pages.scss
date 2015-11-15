@@ -4,7 +4,7 @@
         margin-bottom: $Settings-Page_Section-Margin;
 
         @include element('container') {
-            @extend %wrapper;
+            @extend %container;
 
             display: flex;
             padding: {

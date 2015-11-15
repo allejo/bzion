@@ -107,11 +107,11 @@
         display: flex;
 
         @include element('message') {
-            @include desktop-columns(10);
+            @include view-columns(lg, 10);
         }
 
         @include element('allow-join') {
-            @include desktop-columns(2);
+            @include view-columns(lg, 2);
 
             text-align: center;
         }

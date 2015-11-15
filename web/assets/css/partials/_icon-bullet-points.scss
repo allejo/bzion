@@ -2,7 +2,7 @@
     text-align: center;
 
     @include element('bullet') {
-        @include phablet-container();
+        @include view-container(sm);
 
         @include respond-to(sm) {
             margin-bottom: 15px;
@@ -13,11 +13,11 @@
         }
 
         @include element('icon') {
-            @include phablet-columns(2);
+            @include view-columns(sm, 2);
         }
 
         @include element('content') {
-            @include phablet-columns(10);
+            @include view-columns(sm, 10);
 
             h3 {
                 font-size: 24px;

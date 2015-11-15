@@ -1,5 +1,5 @@
 @include component('footer') {
-    @extend %wrapper;
+    @extend %container;
 
     border-top: 1px solid $Border-Color;
     display: flex;

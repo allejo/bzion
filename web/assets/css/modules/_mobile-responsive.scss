@@ -154,5 +154,11 @@
 
 @mixin respond-to($media) {
     @include valid-viewsize($media);
-    @include media-size(0, get-min-size($media)) { @content; }
+
+    @if map-has-key(map-remove($breakpoints, xxl), $media) {
+        @include media-size(0, get-min-size($media)) { @content; }
+    }
+    @else {
+        @content;
+    }
 }

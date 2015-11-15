@@ -19,19 +19,19 @@
         margin-bottom: $Settings-Page_Section-Margin;
 
         .o-layout__body--third {
-            @include phablet-columns(12);
+            @include view-columns(sm, 12);
         }
     }
 
     @include component('latest-updates') {
-        @extend %wrapper;
-        @include desktop-container();
+        @extend %container;
+        @include view-container(lg);
 
         margin-bottom: $Settings-Page_Section-Margin;
 
         @include component('news-container') {
-            @include desktop-columns(5);
-            @include phablet-columns(12);
+            @include view-columns(lg, 5);
+            @include view-columns(sm, 12);
 
             @include respond-to(sm) {
                 margin-bottom: $Settings-Page_Section-Margin;
@@ -69,18 +69,18 @@
         }
 
         @include component('match-container') {
-            @include desktop-columns(7);
-            @include phablet-columns(12);
+            @include view-columns(lg, 7);
+            @include view-columns(sm, 12);
 
             @include element('matches') {
-                @include desktop-container;
+                @include view-container(lg);
 
                 margin-top: 15px;
 
                 @include element('match') {
-                    @include desktop-container();
-                    @include desktop-columns(4, 0);
-                    @include phone-columns(6, 0);
+                    @include view-container(lg);
+                    @include view-columns(lg, 4);
+                    @include view-columns(xs, 6);
 
                     @include respond-to(xs) {
                         &:nth-child(n+3) {
@@ -89,7 +89,7 @@
                     }
 
                     @include element('team-container') {
-                        @include desktop-columns(6, 0);
+                        @include view-columns(lg, 6);
 
                         @include element('team') {
                             display: inline-block;
@@ -118,7 +118,7 @@
                     }
 
                     @include element('stats') {
-                        @include desktop-columns(12);
+                        @include view-columns(lg, 12);
 
                         text-align: center;
                     }

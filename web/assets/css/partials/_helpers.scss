@@ -153,5 +153,5 @@
 }
 
 @include object('container') {
-    @extend %wrapper;
+    @extend %container;
 }

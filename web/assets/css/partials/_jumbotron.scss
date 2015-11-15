@@ -13,7 +13,7 @@
     }
 
     article {
-        @extend %wrapper;
+        @extend %container;
 
         // Set a padding to have a minimum space from the edge should be no top and bottom margin
         // The flex box will handle the centering so the padding won't affect the centering

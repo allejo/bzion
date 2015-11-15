@@ -10,7 +10,7 @@ $score_padding_small: 10px;
 }
 
 @include component('match-summary') {
-    @include desktop-container();
+    @include view-container(lg);
 
     margin-bottom: $Settings-Page_Section-Small_Margin;
 
@@ -19,9 +19,9 @@ $score_padding_small: 10px;
     }
 
     @include element('team') {
-        @include desktop-container();
-        @include desktop-columns(6, 0);
-        @include phone-columns(12);
+        @include view-container(lg);
+        @include view-columns(lg, 6);
+        @include view-columns(xs, 12);
 
         @include respond-to(xs) {
             margin-bottom: 5px;
@@ -44,8 +44,8 @@ $score_padding_small: 10px;
         }
 
         @include element('image') {
-            @include desktop-columns(3);
-            @include phone-columns(2);
+            @include view-columns(lg, 3);
+            @include view-columns(xs, 2);
 
             @include respond-to(xs) {
                 img {
@@ -59,8 +59,8 @@ $score_padding_small: 10px;
         }
 
         @include element('name') {
-            @include desktop-columns(7);
-            @include phone-columns(8);
+            @include view-columns(lg, 7);
+            @include view-columns(xs, 8);
 
             p {
                 max-width: 100%;
@@ -71,7 +71,7 @@ $score_padding_small: 10px;
         }
 
         @include element('score') {
-            @include desktop-columns(2);
+            @include view-columns(lg, 2);
 
             p {
                 @include respond-to(xs) {
@@ -146,7 +146,7 @@ $score_padding_small: 10px;
                 .c-match-summary__team__image,
                 .c-match-summary__team__name,
                 .c-match-summary__team__score {
-                    @include order(initial);
+                    order: initial;
                 }
             }
         }

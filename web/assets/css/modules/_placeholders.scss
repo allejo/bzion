@@ -77,7 +77,7 @@
 /// Because this project is mobile responsive, any view sizes smaller than a desktop will have
 /// 100% width.
 
-%wrapper {
+%container {
     @extend %margin-center;
 
     width: map-get($breakpoints, xxl);

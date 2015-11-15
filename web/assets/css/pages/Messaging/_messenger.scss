@@ -2,7 +2,7 @@
     margin-bottom: 0;
 
     @include element('sidebar') {
-        @include desktop-columns(4, 0);
+        @include view-columns(lg, 4);
 
         border-left: $Border-Default;
         border-right: $Border-Default;
@@ -13,8 +13,8 @@
     }
 
     @include element('conversation') {
-        @include desktop-columns(8, 0);
-        @include phablet-columns(12);
+        @include view-columns(lg, 8);
+        @include view-columns(sm, 12);
 
         border-right: $Border-Default;
 
@@ -52,13 +52,13 @@
 
                     &.message {
                         .details {
-                            @include desktop-container();
+                            @include view-container(lg);
 
                             margin-bottom: 5px;
 
                             .author,
                             .date {
-                                @include desktop-columns(6);
+                                @include view-columns(lg, 6);
                             }
 
                             .author {
