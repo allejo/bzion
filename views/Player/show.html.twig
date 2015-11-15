@@ -36,73 +36,74 @@
             </div>
         </section>
 
-        <section class="o-row c-public-profile">
-            <section class="o-row__sidebar c-public-profile__profile-picture">
-                <img src="{{ player.avatar|imagine_filter('huge_thumb') }}">
-            </section>
+        <section class="o-container c-public-profile">
+            <section class="o-row">
+                <section class="o-row__sidebar c-public-profile__profile-picture">
+                    <img src="{{ player.avatar|imagine_filter('huge_thumb') }}">
+                </section>
 
-            <section class="o-row__column--with-sidebar c-public-profile__details">
-                <p>
-                    {% if player.id == player.team.leader.id %}
-                        <strong>Leader of</strong> {{ link_to(player.team) }}
-                    {% else %}
-                        <strong>Affiliated with</strong>
-                        {% if player.team is valid %}
-                            {{ link_to(player.team) }}
+                <section class="o-row__column--with-sidebar c-public-profile__details">
+                    <p>
+                        {% if player.id == player.team.leader.id %}
+                            <strong>Leader of</strong> {{ link_to(player.team) }}
                         {% else %}
-                            no team
+                            <strong>Affiliated with</strong>
+                            {% if player.team is valid %}
+                                {{ link_to(player.team) }}
+                            {% else %}
+                                no team
+                            {% endif %}
                         {% endif %}
+                    </p>
+                    <p><strong>Joined on</strong> {{ player.joinedDate(constant("TimeDate::DATE_FULL")) }}</p>
+                    <p><strong>Last seen</strong> {{ player.lastLogin }}</p>
+
+                    {% if player.description is not empty %}
+                        <section class="c-public-profile__details__bio s-markdown">
+                            {{ player.description | markdown }}
+                        </section>
                     {% endif %}
-                </p>
-                <p><strong>Joined on</strong> {{ player.joinedDate(constant("TimeDate::DATE_FULL")) }}</p>
-                <p><strong>Last seen</strong> {{ player.lastLogin }}</p>
+                </section>
+            </section>
 
-                {% if player.description is not empty %}
-                    <section class="c-public-profile__details__bio s-markdown">
-                        {{ player.description | markdown }}
+            {% if me.hasPermission("view_visitor_log") %}
+                <hr>
+
+                <section class="o-row c-private-profile">
+                    <section class="o-row__column--half c-private-profile__callsigns">
+                        <h4>
+                            Previous Callsigns
+                            <small>
+                                [<a id="prev_callsigns" href="#" original-title="This is may not be the complete list. View more or add more.">?</a>]
+                            </small>
+                        </h4>
+
+                        <ul>
+                            {% for callsign in player.pastCallsigns %}
+                                <li>{{ callsign }}</li>
+                            {% endfor %}
+                        </ul>
                     </section>
-                {% endif %}
-            </section>
-        </section>
 
-        {% if me.hasPermission("view_visitor_log") %}
-            <hr>
-
-            <section class="o-row c-private-profile">
-                <section class="o-row__column--half c-private-profile__callsigns">
-                    <h4>
-                        Previous Callsigns
-                        <small>
-                            [<a id="prev_callsigns" href="#" original-title="This is may not be the complete list. View more or add more.">?</a>]
-                        </small>
-                    </h4>
-
-                    <ul>
-                        {% for callsign in player.pastCallsigns %}
-                            <li>{{ callsign }}</li>
-                        {% endfor %}
-                    </ul>
+                    <section class="o-row__column--half c-private-profile__ips">
+                        <h4>
+                            Known IP Addresses
+                            <small>
+                                [<a id="known_ips" href="#" original-title="This is may not be all of the IPs. View the complete list.">?</a>]
+                            </small>
+                        </h4>
+                        <ul>
+                            {% for address in player.knownIPs %}
+                                <li>{{ address.ip }} - {{ address.host }}</li>
+                            {% endfor %}
+                        </ul>
+                    </section>
                 </section>
 
-                <section class="o-row__column--half c-private-profile__ips">
-                    <h4>
-                        Known IP Addresses
-                        <small>
-                            [<a id="known_ips" href="#" original-title="This is may not be all of the IPs. View the complete list.">?</a>]
-                        </small>
-                    </h4>
-                    <ul>
-                        {% for address in player.knownIPs %}
-                            <li>{{ address.ip }} - {{ address.host }}</li>
-                        {% endfor %}
-                    </ul>
-                </section>
-            </section>
-
-            <section class="o-row c-private-profile">
-                <section class="o-row__column--full c-private-profile__notes">
-                    <h4>Admin Notes</h4>
-                    {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
+                <section class="o-row c-private-profile">
+                    <section class="o-row__column--full c-private-profile__notes">
+                        <h4>Admin Notes</h4>
+                        {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
                         {{ form_errors(adminNotesForm) }}
 
                         <section class="c-form__editor">
@@ -112,10 +113,11 @@
                         <section class="c-form__buttons">
                             {{ form_rest(adminNotesForm) }}
                         </section>
-                    {{ form_end(adminNotesForm) }}
+                        {{ form_end(adminNotesForm) }}
+                    </section>
                 </section>
-            </section>
-        {% endif %}
+            {% endif %}
+        </section>
     </main>
 {% endblock %}
 

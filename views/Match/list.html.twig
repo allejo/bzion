@@ -44,52 +44,54 @@
             </div>
         </section>
 
-        <section class="o-row c-match-history">
-            {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
-            {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
-            {% set lastMatchDate = "" %}
+        <section class="o-container">
+            <section class="o-row c-match-history">
+                {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
+                {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
+                {% set lastMatchDate = "" %}
 
-            {% for match in matches %}
-                {% set currentMatchDate = match.timestamp(dateFormat) %}
+                {% for match in matches %}
+                    {% set currentMatchDate = match.timestamp(dateFormat) %}
 
-                {% if lastMatchDate != currentMatchDate %}
-                    {% if not loop.first %} {# Close previous date's container #}
+                    {% if lastMatchDate != currentMatchDate %}
+                        {% if not loop.first %} {# Close previous date's container #}
+                            </section>
+                        {% endif %}
+
+                        <section class="o-row__column--full c-match-history__date">
+                            {% set currentYear = "now" | date("Y") %}
+
+                            <h4>
+                                {% if match.timestamp("Y") != currentYear %}
+                                    {{ match.timestamp(dateFormatArchive) }}
+                                {% else %}
+                                    {{ currentMatchDate }}
+                                {% endif %}
+                            </h4>
                         </section>
+
+                        <section class="o-row__column--full">
                     {% endif %}
 
-                    <section class="o-row__column--full c-match-history__date">
-                        {% set currentYear = "now" | date("Y") %}
+                    <article class="c-match-summary">
+                        <div class="c-match-summary__team c-match-summary__team--winner">
+                            {{ this.team_summary(match, match.winner) }}
+                        </div>
+                        <div class="c-match-summary__team c-match-summary__team--loser">
+                            {{ this.team_summary(match, match.loser) }}
+                        </div>
+                    </article>
 
-                        <h4>
-                            {% if match.timestamp("Y") != currentYear %}
-                                {{ match.timestamp(dateFormatArchive) }}
-                            {% else %}
-                                {{ currentMatchDate }}
-                            {% endif %}
-                        </h4>
-                    </section>
+                    {% set lastMatchDate = match.timestamp(dateFormat) %}
 
-                    <section class="o-row__column--full">
-                {% endif %}
+                    {% if loop.last %} {# Close last date's container #}
+                        </section>
+                    {% endif %}
+                {% endfor %}
 
-                <article class="c-match-summary">
-                    <div class="c-match-summary__team c-match-summary__team--winner">
-                        {{ this.team_summary(match, match.winner) }}
-                    </div>
-                    <div class="c-match-summary__team c-match-summary__team--loser">
-                        {{ this.team_summary(match, match.loser) }}
-                    </div>
-                </article>
-
-                {% set lastMatchDate = match.timestamp(dateFormat) %}
-
-                {% if loop.last %} {# Close last date's container #}
-                    </section>
-                {% endif %}
-            {% endfor %}
-
-            <section class="o-row__column--full">
-                {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+                <section class="o-row__column--full">
+                    {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+                </section>
             </section>
         </section>
     </main>

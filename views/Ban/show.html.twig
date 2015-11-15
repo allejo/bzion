@@ -31,60 +31,62 @@
             </div>
         </section>
 
-        <div class="o-row">
-            <section class="o-row__column--full">
-                <strong>Victim</strong>
-                <p>{{ link_to(ban.victim) }}</p>
-            </section>
-
-            <section class="o-row__column--full">
-                <strong>Banned by</strong>
-                <p>{{ link_to(ban.author) }}</p>
-            </section>
-
-            <section class="o-row__column--full">
-                <strong>Date</strong>
-                <p>{{ ban.created }}</p>
-            </section>
-
-            <section class="o-row__column--full">
-                <strong>Expiration</strong>
-                <p>
-                    {% if ban.willExpire %}
-                        {{ ban.expiration | date(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
-                    {% else %}
-                        <em>Until further notice</em>
-                    {% endif %}
-                </p>
-            </section>
-
-            <section class="o-row__column--full">
-                <strong>Reason</strong>
-                <article class="s-markdown">
-                    {{ ban.reason | markdown }}
-                </article>
-            </section>
-
-            {% if me.hasPermission("edit_ban") %}
+        <section class="o-container">
+            <div class="o-row">
                 <section class="o-row__column--full">
-                    <strong>Server Ban Message</strong>
-                    <p>{{ ban.serverMessage | raw }}</p>
+                    <strong>Victim</strong>
+                    <p>{{ link_to(ban.victim) }}</p>
                 </section>
 
                 <section class="o-row__column--full">
-                    <strong>Allow Server Join</strong>
-                    <p>{{ ban.allowedServerJoin | yesNo }}</p>
+                    <strong>Banned by</strong>
+                    <p>{{ link_to(ban.author) }}</p>
                 </section>
 
                 <section class="o-row__column--full">
-                    <strong>Banned IP Addresses</strong>
-                    <ul>
-                        {% for ip in ban.ipAddresses %}
-                            <li>{{ ip }}</li>
-                        {% endfor %}
-                    </ul>
+                    <strong>Date</strong>
+                    <p>{{ ban.created }}</p>
                 </section>
-            {% endif %}
-        </div>
+
+                <section class="o-row__column--full">
+                    <strong>Expiration</strong>
+                    <p>
+                        {% if ban.willExpire %}
+                            {{ ban.expiration | date(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
+                        {% else %}
+                            <em>Until further notice</em>
+                        {% endif %}
+                    </p>
+                </section>
+
+                <section class="o-row__column--full">
+                    <strong>Reason</strong>
+                    <article class="s-markdown">
+                        {{ ban.reason | markdown }}
+                    </article>
+                </section>
+
+                {% if me.hasPermission("edit_ban") %}
+                    <section class="o-row__column--full">
+                        <strong>Server Ban Message</strong>
+                        <p>{{ ban.serverMessage | raw }}</p>
+                    </section>
+
+                    <section class="o-row__column--full">
+                        <strong>Allow Server Join</strong>
+                        <p>{{ ban.allowedServerJoin | yesNo }}</p>
+                    </section>
+
+                    <section class="o-row__column--full">
+                        <strong>Banned IP Addresses</strong>
+                        <ul>
+                            {% for ip in ban.ipAddresses %}
+                                <li>{{ ip }}</li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                {% endif %}
+            </div>
+        </section>
     </main>
 {% endblock %}

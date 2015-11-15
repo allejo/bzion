@@ -35,15 +35,17 @@
             </div>
         </section>
 
-        <section class="o-row">
-            {% include "News/categories.html.twig" %}
+        <section class="o-container">
+            <section class="o-row">
+                {% include "News/categories.html.twig" %}
 
-            <section class="o-row__column--with-sidebar">
-                {% for article in news %}
-                    {% include "News/article.html.twig" with { 'article': article } %}
-                {% endfor %}
+                <section class="o-row__column--with-sidebar">
+                    {% for article in news %}
+                        {% include "News/article.html.twig" with { 'article': article } %}
+                    {% endfor %}
 
-                {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+                    {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+                </section>
             </section>
         </section>
     </main>

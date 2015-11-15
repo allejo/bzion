@@ -24,34 +24,36 @@
             </div>
         </section>
 
-        <section class="o-row">
-            {% for team in teams %}
-                <article class="o-row__column--full c-team-widget">
-                    {{ team.rankImageLiteral | raw }}
-                    <section class="c-team-widget__info">
-                        <article class="c-team-widget__info__header">
-                            <section class="c-team-widget__info__header__summary">
-                                <span class="c-team-widget__info__header__summary__name">{{ link_to(team) }}</span>
-                                <span class="c-team-widget__info__header__summary__elo">{{ team.elo }}</span>
-                            </section>
+        <section class="o-container">
+            <section class="o-row">
+                {% for team in teams %}
+                    <article class="o-row__column--full c-team-widget">
+                        {{ team.rankImageLiteral | raw }}
+                        <section class="c-team-widget__info">
+                            <article class="c-team-widget__info__header">
+                                <section class="c-team-widget__info__header__summary">
+                                    <span class="c-team-widget__info__header__summary__name">{{ link_to(team) }}</span>
+                                    <span class="c-team-widget__info__header__summary__elo">{{ team.elo }}</span>
+                                </section>
 
-                            <section class="c-team-widget__info__header__matches">
-                                <p class="c-team-widget__info__header__matches__stats">
-                                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}">{{ team.matchesWon }}</a> -
-                                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}">{{ team.matchesLost }}</a> -
-                                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}">{{ team.matchesDraw }}</a>
-                                </p>
-                            </section>
-                        </article>
+                                <section class="c-team-widget__info__header__matches">
+                                    <p class="c-team-widget__info__header__matches__stats">
+                                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}">{{ team.matchesWon }}</a> -
+                                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}">{{ team.matchesLost }}</a> -
+                                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}">{{ team.matchesDraw }}</a>
+                                    </p>
+                                </section>
+                            </article>
 
-                        <article class="c-team-widget__info__meta">
-                            <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
-                            <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
-                            <span><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</span>
-                        </article>
-                    </section>
-                </article>
-            {% endfor %}
+                            <article class="c-team-widget__info__meta">
+                                <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
+                                <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
+                                <span><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</span>
+                            </article>
+                        </section>
+                    </article>
+                {% endfor %}
+            </section>
         </section>
     </main>
 {% endblock %}

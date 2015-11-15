@@ -12,27 +12,29 @@
             </div>
         </section>
 
-        <sections class="o-row">
-            {% for month in notifications %}
-                <section class="o-row__column--full">
-                    <h3>{{ month.date.format('F Y') }}</h3>
+        <section class="o-container">
+            <section class="o-row">
+                {% for month in notifications %}
+                    <section class="o-row__column--full">
+                        <h3>{{ month.date.format('F Y') }}</h3>
 
-                    <ul class="c-notifications has-no-padding">
-                        {% for notification in month.notifications %}
-                            {% set class = (notification.read) ? "read" : "unread" %}
+                        <ul class="c-notifications has-no-padding">
+                            {% for notification in month.notifications %}
+                                {% set class = (notification.read) ? "read" : "unread" %}
 
-                            <li class="c-notifications__notification c-notifications__notification--{{ class }}">
-                                <span class="c-notifications__notification__message">{{ include('Notification/item.html.twig') }}</span>
-                                <span class="c-notifications__notification__timestamp">{{ notification.timestamp.diffForHumans }}</span>
-                                {% for title, link in notification.actions %}
-                                    <a class="c-notifications__notification__action" href="{{ link }}">[{{ title }}]</a>
-                                {% endfor %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </section>
-            {% endfor %}
-        </sections>
+                                <li class="c-notifications__notification c-notifications__notification--{{ class }}">
+                                    <span class="c-notifications__notification__message">{{ include('Notification/item.html.twig') }}</span>
+                                    <span class="c-notifications__notification__timestamp">{{ notification.timestamp.diffForHumans }}</span>
+                                    {% for title, link in notification.actions %}
+                                        <a class="c-notifications__notification__action" href="{{ link }}">[{{ title }}]</a>
+                                    {% endfor %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                {% endfor %}
+            </section>
+        </section>
     </main>
 {% endblock %}
 

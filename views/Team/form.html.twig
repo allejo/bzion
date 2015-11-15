@@ -7,7 +7,7 @@
         </div>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form' } }) }}
+    {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form o-container' } }) }}
         <section class="o-row c-form__editor">
             <article class="o-row__column--with-sidebar c-form__editor__body">
                 {{ form_row(form.name) }}
@@ -48,7 +48,7 @@
             </section>
         </section>
 
-        <section class="o-row o-row--no-margin c-form__buttons">
+        <section class="o-row c-form__buttons">
             {{ form_rest(form) }}
         </section>
     {{ form_end(form) }}

@@ -24,42 +24,44 @@
             </div>
         </section>
 
-        <section class="o-row">
-            <section class="o-row__column--full c-table c-table--no-border c-table--no-hover c-banlist">
-                <div class="c-table__row c-table__row--header">
-                    <div class="c-table__row__column c-ban__creation">Date</div>
-                    <div class="c-table__row__column c-ban__victim">Victim</div>
-                    <div class="c-table__row__column c-ban__author">Banner</div>
-                    <div class="c-table__row__column c-ban__expiration">Expires</div>
-                    <div class="c-table__row__column c-ban__info"></div>
-                </div>
-
-                {% for ban in bans %}
-                    <div class="c-table__row c-ban">
-                        <div class="c-table__row__column c-ban__creation">
-                            <span class="c-ban__label">Ban issued:</span> {{ ban.created | humanTime }}
-                        </div>
-                        <div class="c-table__row__column c-ban__victim">
-                            <span class="c-ban__label">Ban victim:</span> {{ link_to(ban.victim) }}
-                        </div>
-                        <div class="c-table__row__column c-ban__author">
-                            <span class="c-ban__label">Banner:</span> {{ link_to(ban.author) }}
-                        </div>
-                        <div class="c-table__row__column c-ban__expiration">
-                            <span class="c-ban__label">Ban expiration:</span>
-
-                            {% if ban.willExpire %}
-                                {{ ban.expiration.format(constant('TimeDate::DATE_FULL')) }}
-                            {% else %}
-                                <em>Never</em>
-                            {% endif %}
-                        </div>
-                        <div class="c-table__row__column c-ban__info">
-                            {{ link_to(ban, icon='info-circle', class='c-ban__info__details--desktop') }}
-                            {{ link_to(ban, class='c-ban__info__details--mobile', content='View ban details') }}
-                        </div>
+        <section class="o-container">
+            <section class="o-row">
+                <section class="o-row__column--full c-table c-table--no-border c-table--no-hover c-banlist">
+                    <div class="c-table__row c-table__row--header">
+                        <div class="c-table__row__column c-ban__creation">Date</div>
+                        <div class="c-table__row__column c-ban__victim">Victim</div>
+                        <div class="c-table__row__column c-ban__author">Banner</div>
+                        <div class="c-table__row__column c-ban__expiration">Expires</div>
+                        <div class="c-table__row__column c-ban__info"></div>
                     </div>
-                {% endfor %}
+
+                    {% for ban in bans %}
+                        <div class="c-table__row c-ban">
+                            <div class="c-table__row__column c-ban__creation">
+                                <span class="c-ban__label">Ban issued:</span> {{ ban.created | humanTime }}
+                            </div>
+                            <div class="c-table__row__column c-ban__victim">
+                                <span class="c-ban__label">Ban victim:</span> {{ link_to(ban.victim) }}
+                            </div>
+                            <div class="c-table__row__column c-ban__author">
+                                <span class="c-ban__label">Banner:</span> {{ link_to(ban.author) }}
+                            </div>
+                            <div class="c-table__row__column c-ban__expiration">
+                                <span class="c-ban__label">Ban expiration:</span>
+
+                                {% if ban.willExpire %}
+                                    {{ ban.expiration.format(constant('TimeDate::DATE_FULL')) }}
+                                {% else %}
+                                    <em>Never</em>
+                                {% endif %}
+                            </div>
+                            <div class="c-table__row__column c-ban__info">
+                                {{ link_to(ban, icon='info-circle', class='c-ban__info__details--desktop') }}
+                                {{ link_to(ban, class='c-ban__info__details--mobile', content='View ban details') }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
             </section>
         </section>
     </main>
