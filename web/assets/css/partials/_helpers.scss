@@ -40,20 +40,10 @@
     position: fixed;
     text-align: center;
 
-    .desktop {
-        @include visible-desktop();
-    }
-
-    .tablet {
-        @include visible-tablet();
-    }
-
-    .phablet {
-        @include visible-phablet();
-    }
-
-    .phone {
-        @include visible-phone();
+    @each $size in map-keys($breakpoints) {
+        .#{$size} {
+            @include visible($size);
+        }
     }
 }
 

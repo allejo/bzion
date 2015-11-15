@@ -29,15 +29,13 @@
 
         // Take up the whole parent container; i.e. the 'o-layout' element
         @include modifier('full') {
-            @extend %desktop-margin;
-
+            @include make-margin(xxl);
             @include view-columns(xxl, 12);
         }
 
         // Take up a third of the parent container
         @include modifier('third') {
-            @extend %phablet-margin;
-
+            @include make-margin(sm);
             @include view-columns(xxl, 3);
             @include view-columns(lg, 4);
             @include view-columns(md, 6);
@@ -46,8 +44,7 @@
 
         // Take up a forth of the parent container
         @include modifier('quarter') {
-            @extend %phablet-margin;
-
+            @include make-margin(sm);
             @include view-columns(xxl, 3);
             @include view-columns(md, 4);
             @include view-columns(sm, 6);
@@ -56,8 +53,7 @@
 
         // Take up half of the parent container
         @include modifier('half') {
-            @extend %phablet-margin;
-
+            @include make-margin(sm);
             @include view-columns(xxl, 6);
             @include view-columns(sm, 12);
         }

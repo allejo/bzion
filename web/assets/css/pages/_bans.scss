@@ -3,7 +3,7 @@
 @include component('banlist') {
     // An individual row in the '.c-banlist' CSS table. A single row per ban will be used
     @include component('ban') {
-        @extend %phablet-margin;
+        @include make-margin(sm);
 
         // For phablets and phones, we'll be making the columns into full rows
         @include respond-to(sm) {

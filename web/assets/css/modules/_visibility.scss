@@ -15,7 +15,7 @@
 ///   (Optional) The maximum size a screen should have in order for the specified element to be displayed. If no maximum
 ///   or 0 is specified, then the element will be displayed on a screen size at least `$min` in width.
 
-@mixin set-visible($hide, $media) {
+@mixin __set-visible($hide, $media) {
     display: if($hide, none, block);
 
     @include respond-only-to($media) {
@@ -24,97 +24,31 @@
 }
 
 
-/// A mixin that will hide the specified element only on a desktop
+/// A mixin that will hide the specified element
+///
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
 ///
 /// @example scss
 ///   .hide-desktop-only {
-///       @include invisible-desktop();
+///       @include invisible(lg);
 ///   }
 
-@mixin invisible-desktop() {
-    @include set-visible(false, lg);
+@mixin invisible($viewSize) {
+    @include __set-visible(false, $viewSize);
 }
 
 
-/// A mixin that will hide the specified element only on a tablet
+/// A mixin that will make the specified element
 ///
-/// @example scss
-///   .hide-tablet-only {
-///       @include invisible-tablet();
-///   }
-
-@mixin invisible-tablet() {
-    @include set-visible(false, md);
-}
-
-
-/// A mixin that will hide the specified element only on a phablet
-///
-/// @example scss
-///   .hide-phablet-only {
-///       @include invisible-phablet();
-///   }
-
-@mixin invisible-phablet() {
-    @include set-visible(false, sm);
-}
-
-
-/// A mixin that will hide the specified element only on a phone
-///
-/// @example scss
-///   .hide-phone-only {
-///       @include invisible-phone();
-///   }
-
-@mixin invisible-phone() {
-    @include set-visible(false, xs);
-}
-
-
-/// A mixin that will make the specified element appear only on a desktop
-///
-/// @example scss
-///   .display-desktop-only {
-///       @include visible-desktop();
-///   }
-
-@mixin visible-desktop() {
-    @include set-visible(true, lg);
-}
-
-
-/// A mixin that will make the specified element appear only on a table
-///
-/// @example scss
-///   .display-tablet-only {
-///       @include visible-tablet();
-///   }
-
-@mixin visible-tablet() {
-    @include set-visible(true, md);
-}
-
-
-/// A mixin that will make the specified element appear only on a phablet
-///
-/// @example scss
-///   .display-phablet-only {
-///       @include visible-phablet();
-///   }
-
-@mixin visible-phablet() {
-    @include set-visible(true, sm);
-}
-
-
-/// A mixin that will make the specified element appear only on a phone
+/// @param {String} $media
+///   Accepted view sizes: `phones`, `phablets`, `tablets`
 ///
 /// @example scss
 ///   .display-phone-only {
-///       @include visible-phone();
+///       @include visible(xs);
 ///   }
 
-@mixin visible-phone() {
-    @include set-visible(true, xs);
+@mixin visible($viewSize) {
+    @include __set-visible(true, $viewSize);
 }

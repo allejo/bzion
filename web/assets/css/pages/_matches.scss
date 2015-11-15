@@ -10,7 +10,7 @@ $score_padding_small: 10px;
 }
 
 @include component('match-summary') {
-    @include view-container(lg);
+    @include view-container();
 
     margin-bottom: $Settings-Page_Section-Small_Margin;
 
@@ -19,8 +19,8 @@ $score_padding_small: 10px;
     }
 
     @include element('team') {
-        @include view-container(lg);
-        @include view-columns(lg, 6);
+        @include view-container();
+        @include view-columns(xxl, 6);
         @include view-columns(xs, 12);
 
         @include respond-to(xs) {
@@ -44,7 +44,7 @@ $score_padding_small: 10px;
         }
 
         @include element('image') {
-            @include view-columns(lg, 3);
+            @include view-columns(xxl, 3);
             @include view-columns(xs, 2);
 
             @include respond-to(xs) {
@@ -59,7 +59,7 @@ $score_padding_small: 10px;
         }
 
         @include element('name') {
-            @include view-columns(lg, 7);
+            @include view-columns(xxl, 7);
             @include view-columns(xs, 8);
 
             p {
@@ -71,7 +71,7 @@ $score_padding_small: 10px;
         }
 
         @include element('score') {
-            @include view-columns(lg, 2);
+            @include view-columns(xxl, 2);
 
             p {
                 @include respond-to(xs) {

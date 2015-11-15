@@ -14,14 +14,6 @@
 }
 
 
-/// A placeholder that will automatically set the margin bottom of an element to the global
-/// setting and set the last child to have no margin bottom on all view sizes
-
-%desktop-margin {
-    @include autoMarginBottom($Settings-Page_Section-Small_Margin);
-}
-
-
 /// A placeholder that will automatically horizontally center a block element
 
 %margin-center {
@@ -31,6 +23,7 @@
     }
 }
 
+
 /// A placeholder that will remove the left padding of an element. This placeholder is intended
 /// to easily remove the padding of `ul` or `ol` elements.
 
@@ -39,36 +32,6 @@
 
     li {
         list-style-type: none;
-    }
-}
-
-
-/// A placeholder that will automatically set the margin bottom of an element to the global
-/// setting and set the last child to have no margin bottom on view sizes of a phablet and smaller
-
-%phablet-margin {
-    @include respond-to(sm) {
-        @include autoMarginBottom();
-    }
-}
-
-
-/// A placeholder that will automatically set the margin bottom of an element to the global
-/// setting and set the last child to have no margin bottom on phones
-
-%phone-margin {
-    @include respond-to(xs) {
-        @include autoMarginBottom();
-    }
-}
-
-
-/// A placeholder that will automatically set the margin bottom of an element to the global
-/// setting and set the last child to have no margin bottom on view sizes of a tablet and smaller
-
-%tablet-margin {
-    @include respond-to(md) {
-        @include autoMarginBottom($Settings-Page_Section-Small_Margin);
     }
 }
 

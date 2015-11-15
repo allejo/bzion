@@ -32,10 +32,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-@media only screen and (max-width: 320px) {
-  .media-query-setup html:before {
-    font-size: inherit; } }
-
 @media only screen and (max-width: 480px) {
   .media-query-setup html:before {
     font-size: inherit; } }
@@ -52,14 +48,13 @@ table {
   .media-query-setup html:before {
     font-size: inherit; } }
 
+@media only screen and (max-width: 1600px) {
+  .media-query-setup html:before {
+    font-size: inherit; } }
+
 .c-button i, button i, .s-notifications .c-notifications__notification__message .fa {
   text-align: center;
   width: 1.2857142857em; }
-
-.o-row__column--full {
-  margin-bottom: 15px; }
-  .o-row__column--full:last-child {
-    margin-bottom: 0; }
 
 .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container, .c-circular-fa, .s-landing .c-latest-updates .c-match-container__matches__match__team-container__team img {
   margin-left: auto;
@@ -70,27 +65,21 @@ table {
   .s-landing .c-latest-updates .c-news-container__newsstand li, .s-newsstand .c-categories li, .s-team-profile .c-team__match-stats__visual__legend li {
     list-style-type: none; }
 
-@media only screen and (max-width: 480px) {
-  .o-row__column--third, .o-row__column--quarter, .o-row__column--half, .c-banlist .c-ban {
-    margin-bottom: 30px; }
-    .o-row__column--third:last-child, .o-row__column--quarter:last-child, .o-row__column--half:last-child, .c-banlist .c-ban:last-child {
-      margin-bottom: 0; } }
-
 .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container {
-  width: 1600px;
-  width: 1200px; }
+  width: 1920px;
+  width: 1600px; }
+  @media only screen and (max-width: 1600px) {
+    .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container {
+      width: 1200px; } }
   @media only screen and (max-width: 1200px) {
     .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container {
       width: 992px; } }
   @media only screen and (max-width: 992px) {
     .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container {
-      width: 768px; } }
-  @media only screen and (max-width: 768px) {
-    .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container {
       padding-left: 20px;
       padding-right: 20px;
       width: 100%; } }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .c-footer, header.site-header .menu-bar, .c-jumbotron article, .s-user-html, .s-landing .c-latest-updates, .c-page__header__container, .o-container {
       padding-left: 15px;
       padding-right: 15px; } }
@@ -697,10 +686,10 @@ hr {
   height: 1px;
   margin: 50px auto;
   width: 980px; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     hr {
       width: 100%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     hr {
       margin: 30px auto; } }
 
@@ -1038,7 +1027,7 @@ table {
   margin-top: 10px; }
   .c-circular-fa.u-gamepad-fix {
     line-height: 90px; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-circular-fa {
       border-radius: 50%;
       display: inline-block;
@@ -1050,7 +1039,7 @@ table {
       border: 0; }
       .c-circular-fa.u-gamepad-fix {
         line-height: 55px; } }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .c-circular-fa {
       border-radius: 50%;
       display: inline-block;
@@ -1132,83 +1121,86 @@ select {
   max-width: 100%;
   width: auto; }
 
-.c-form {
-  margin-bottom: 30px; }
-  .c-form__editor {
-    margin-bottom: 15px; }
-    .c-form__editor__body__content {
-      min-height: 270px; }
-      .c-form__editor__body__content--small {
-        min-height: 140px; }
-    .c-form__editor__body__extra {
-      float: right;
-      font-size: 15px; }
-      .c-form__editor__body__extra--success {
-        color: #008000; }
-      .c-form__editor__body__extra--error {
-        color: #FF0000; }
-    .c-form__editor__body__timestamp__date, .c-form__editor__body__timestamp__time {
+.c-form__editor {
+  margin-bottom: 15px; }
+  .c-form__editor__body__content {
+    min-height: 270px; }
+    .c-form__editor__body__content--small {
+      min-height: 140px; }
+  .c-form__editor__body__extra {
+    float: right;
+    font-size: 15px; }
+    .c-form__editor__body__extra--success {
+      color: #008000; }
+    .c-form__editor__body__extra--error {
+      color: #FF0000; }
+  .c-form__editor__body__timestamp__date, .c-form__editor__body__timestamp__time {
+    display: inline-block;
+    width: auto; }
+    .c-form__editor__body__timestamp__date select, .c-form__editor__body__timestamp__time select {
       display: inline-block;
-      width: auto; }
-      .c-form__editor__body__timestamp__date select, .c-form__editor__body__timestamp__time select {
-        display: inline-block;
-        margin-right: 7px; }
-        .c-form__editor__body__timestamp__date select:last-child, .c-form__editor__body__timestamp__time select:last-child {
-          margin-right: 0; }
-      .c-form__editor__body__timestamp__date:last-child, .c-form__editor__body__timestamp__time:last-child {
+      margin-right: 7px; }
+      .c-form__editor__body__timestamp__date select:last-child, .c-form__editor__body__timestamp__time select:last-child {
         margin-right: 0; }
-    .c-form__editor__body__timestamp__date {
-      margin-right: 15px; }
-    .c-form__editor__body__timestamp__time select {
-      margin-left: 7px; }
-      .c-form__editor__body__timestamp__time select:first-child {
-        margin-left: 0; }
-    .c-form__editor__body div {
-      margin-bottom: 0.75em; }
-      .c-form__editor__body div:last-child {
-        margin-bottom: 0; }
-    @media only screen and (max-width: 480px) {
-      .c-form__editor__meta div {
-        float: left;
-        margin-right: 15px; } }
-  @media only screen and (max-width: 480px) and (max-width: 480px) {
+    .c-form__editor__body__timestamp__date:last-child, .c-form__editor__body__timestamp__time:last-child {
+      margin-right: 0; }
+  .c-form__editor__body__timestamp__date {
+    margin-right: 15px; }
+  .c-form__editor__body__timestamp__time select {
+    margin-left: 7px; }
+    .c-form__editor__body__timestamp__time select:first-child {
+      margin-left: 0; }
+  .c-form__editor__body div {
+    margin-bottom: 0.75em; }
+    .c-form__editor__body div:last-child {
+      margin-bottom: 0; }
+  @media only screen and (max-width: 768px) {
+    .c-form__editor__meta div {
+      float: left;
+      margin-right: 15px; } }
+  @media only screen and (max-width: 768px) and (max-width: 768px) {
     .c-form__editor__meta div {
       margin-bottom: 0; } }
-    @media only screen and (max-width: 480px) {
-        .c-form__editor__meta div:last-child {
-          margin-right: 0; } }
-    .c-form__editor__meta div {
-      margin-bottom: 1.5em; }
+  @media only screen and (max-width: 768px) {
       .c-form__editor__meta div:last-child {
-        margin-bottom: 0; }
-    .c-form__editor > section > div {
-      width: 100%; }
-  .c-form__actions, .c-form__buttons {
-    text-align: left; }
-  .c-form__actions article > div,
-  .c-form__actions section > div {
-    display: inline-block;
-    margin-bottom: 15px;
-    margin-right: 20px; }
-    .c-form__actions article > div:last-child,
-    .c-form__actions section > div:last-child {
+        margin-right: 0; } }
+  .c-form__editor__meta div {
+    margin-bottom: 1.5em; }
+    .c-form__editor__meta div:last-child {
       margin-bottom: 0; }
-  .c-form__buttons > div {
-    display: inline-block;
-    margin-right: 10px; }
-  .c-form__choice-list__item {
-    display: inline-block;
-    margin-right: 10px; }
-    @media only screen and (min-width: 320px) and (max-width: 479px) {
-      .c-form__choice-list__item {
-        display: block; } }
-    .c-form__choice-list__item input,
-    .c-form__choice-list__item label {
-      display: inline-block; }
-  .c-form__choice-list--vertical .c-form__choice-list__item {
-    display: block; }
+  .c-form__editor > section > div {
+    width: 100%; }
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {
+.c-form__actions, .c-form__buttons {
+  text-align: left; }
+
+.c-form__actions article > div,
+.c-form__actions section > div {
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-right: 20px; }
+  .c-form__actions article > div:last-child,
+  .c-form__actions section > div:last-child {
+    margin-bottom: 0; }
+
+.c-form__buttons > div {
+  display: inline-block;
+  margin-right: 10px; }
+
+.c-form__choice-list__item {
+  display: inline-block;
+  margin-right: 10px; }
+  @media only screen and (min-width: 480px) and (max-width: 767px) {
+    .c-form__choice-list__item {
+      display: block; } }
+  .c-form__choice-list__item input,
+  .c-form__choice-list__item label {
+    display: inline-block; }
+
+.c-form__choice-list--vertical .c-form__choice-list__item {
+  display: block; }
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
   .s-avatar-form .c-avatar-container {
     display: flex;
     flex: 0 1 auto;
@@ -1217,32 +1209,32 @@ select {
     margin-left: -1%;
     margin-right: -1%; } }
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {
+@media only screen and (min-width: 768px) and (max-width: 991px) {
   .s-avatar-form .c-avatar-container__image {
     flex-basis: 41.6666666667%;
     max-width: 41.6666666667%;
     padding-left: 1%;
     padding-right: 1%; } }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .s-avatar-form .c-avatar-container__image {
     margin-bottom: 0; } }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 480px) {
   .s-avatar-form .c-avatar-container__image {
     margin-bottom: 15px;
     text-align: center; } }
 
 .s-avatar-form .c-avatar-container__image img {
   width: 100%; }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .s-avatar-form .c-avatar-container__image img {
       width: 60%; } }
 
 .s-avatar-form .c-avatar-container__options__upload {
   margin-bottom: 5px; }
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {
+@media only screen and (min-width: 768px) and (max-width: 991px) {
   .s-avatar-form .c-avatar-container__options {
     flex-basis: 58.3333333333%;
     max-width: 58.3333333333%;
@@ -1267,20 +1259,20 @@ select {
   .c-footer__pages {
     flex: 1;
     text-align: right; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .c-footer__pages {
         text-align: left; } }
     .c-footer__pages li {
       margin-left: 20px; }
-      @media only screen and (max-width: 480px) {
+      @media only screen and (max-width: 768px) {
         .c-footer__pages li {
           margin-bottom: 10px;
           margin-left: 0;
           margin-right: 20px; } }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         .c-footer__pages li {
           margin-right: 10px; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-footer {
       flex-direction: column-reverse; } }
 
@@ -1293,7 +1285,7 @@ header .pages li:last-child hr {
 
 header .u-mobile-only {
   display: none; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     header .u-mobile-only {
       display: block; } }
 
@@ -1315,10 +1307,10 @@ header.site-header {
         color: #656565; }
       .t-dark header.site-header .menu-bar .mobile-menu {
         color: #FFFFFF; }
-      @media only screen and (max-width: 768px) {
+      @media only screen and (max-width: 992px) {
         header.site-header .menu-bar .mobile-menu {
           display: block; } }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         header.site-header .menu-bar .mobile-menu {
           margin-right: 10px; } }
     header.site-header .menu-bar h1 {
@@ -1346,10 +1338,10 @@ header.site-header {
           margin-right: 3px;
           margin-top: -7px;
           vertical-align: middle; }
-          @media only screen and (max-width: 768px) {
+          @media only screen and (max-width: 992px) {
             header.site-header .menu-bar h1 a img {
               display: none; } }
-        @media only screen and (max-width: 480px) {
+        @media only screen and (max-width: 768px) {
           header.site-header .menu-bar h1 a {
             font-size: 22px; } }
     header.site-header .menu-bar nav {
@@ -1373,7 +1365,7 @@ header.site-header {
               color: #000000; }
             .t-dark header.site-header .menu-bar nav ul li a:hover {
               color: #8FD5FF; }
-            @media only screen and (max-width: 320px) {
+            @media only screen and (max-width: 480px) {
               header.site-header .menu-bar nav ul li a {
                 padding-left: 2px;
                 padding-right: 2px; } }
@@ -1383,7 +1375,7 @@ header.site-header {
             box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1); }
         header.site-header .menu-bar nav ul.pages {
           flex: 1; }
-          @media only screen and (max-width: 768px) {
+          @media only screen and (max-width: 992px) {
             header.site-header .menu-bar nav ul.pages {
               border-bottom: 1px solid #D4D4D4;
               border-top: 1px solid #D4D4D4;
@@ -1405,11 +1397,11 @@ header.site-header {
                   padding: 15px; } }
         header.site-header .menu-bar nav ul.user {
           margin-left: auto; }
-          @media only screen and (max-width: 992px) {
+          @media only screen and (max-width: 1200px) {
             header.site-header .menu-bar nav ul.user li a {
               padding-left: 5px;
               padding-right: 5px; } }
-          @media only screen and (max-width: 768px) {
+          @media only screen and (max-width: 992px) {
             header.site-header .menu-bar nav ul.user li:last-child a {
               padding-right: 0; } }
   header.site-header .notification {
@@ -1443,7 +1435,7 @@ header.site-header {
 
 .c-icon-bullet-points {
   text-align: center; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-icon-bullet-points__bullet {
       display: flex;
       flex: 0 1 auto;
@@ -1451,18 +1443,18 @@ header.site-header {
       flex-wrap: wrap;
       margin-left: -1%;
       margin-right: -1%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-icon-bullet-points__bullet {
       margin-bottom: 15px; }
       .c-icon-bullet-points__bullet:last-child {
         margin-bottom: 0; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-icon-bullet-points__bullet__icon {
       flex-basis: 16.6666666667%;
       max-width: 16.6666666667%;
       padding-left: 1%;
       padding-right: 1%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-icon-bullet-points__bullet__content {
       flex-basis: 83.3333333333%;
       max-width: 83.3333333333%;
@@ -1472,7 +1464,7 @@ header.site-header {
     font-size: 24px;
     font-weight: 400;
     margin: 10px 0; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-icon-bullet-points {
       margin-bottom: 10px;
       margin-top: 10px;
@@ -1483,10 +1475,10 @@ header.site-header {
   display: flex;
   min-height: 350px;
   width: 100%; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     .c-jumbotron {
       min-height: 250px; } }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .c-jumbotron {
       min-height: 200px; } }
   .c-jumbotron article {
@@ -1501,14 +1493,14 @@ header.site-header {
       font-size: 48px;
       line-height: 48px;
       margin-bottom: 20px; }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         .c-jumbotron article h1 {
           font-size: 30px;
           line-height: 30px;
           margin-bottom: 15px; } }
     .c-jumbotron article h2 {
       font-size: 24px; }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         .c-jumbotron article h2 {
           font-size: 22px; } }
 
@@ -1527,7 +1519,7 @@ header.site-header {
     max-width: 25%;
     padding-left: 1%;
     padding-right: 1%; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .o-row__sidebar {
         flex-basis: 100%;
         max-width: 100%;
@@ -1538,38 +1530,46 @@ header.site-header {
     max-width: 75%;
     padding-left: 1%;
     padding-right: 1%; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .o-row__column--with-sidebar {
         flex-basis: 100%;
         max-width: 100%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .o-row__column--with-sidebar {
         margin-bottom: 15px; } }
   .o-row__column--full {
+    margin-bottom: 15px;
     flex-basis: 100%;
     max-width: 100%;
     padding-left: 1%;
     padding-right: 1%; }
+    .o-row__column--full:last-child {
+      margin-bottom: 0; }
   .o-row__column--third {
     flex-basis: 25%;
     max-width: 25%;
     padding-left: 1%;
     padding-right: 1%; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 768px) {
+      .o-row__column--third {
+        margin-bottom: 15px; }
+        .o-row__column--third:last-child {
+          margin-bottom: 0; } }
+    @media only screen and (max-width: 1200px) {
       .o-row__column--third {
         flex-basis: 33.3333333333%;
         max-width: 33.3333333333%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 992px) {
       .o-row__column--third {
         flex-basis: 50%;
         max-width: 50%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .o-row__column--third {
         flex-basis: 100%;
         max-width: 100%;
@@ -1582,17 +1582,22 @@ header.site-header {
     padding-right: 1%; }
     @media only screen and (max-width: 768px) {
       .o-row__column--quarter {
+        margin-bottom: 15px; }
+        .o-row__column--quarter:last-child {
+          margin-bottom: 0; } }
+    @media only screen and (max-width: 992px) {
+      .o-row__column--quarter {
         flex-basis: 33.3333333333%;
         max-width: 33.3333333333%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .o-row__column--quarter {
         flex-basis: 50%;
         max-width: 50%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .o-row__column--quarter {
         flex-basis: 100%;
         max-width: 100%;
@@ -1603,7 +1608,12 @@ header.site-header {
     max-width: 50%;
     padding-left: 1%;
     padding-right: 1%; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
+      .o-row__column--half {
+        margin-bottom: 15px; }
+        .o-row__column--half:last-child {
+          margin-bottom: 0; } }
+    @media only screen and (max-width: 768px) {
       .o-row__column--half {
         flex-basis: 100%;
         max-width: 100%;
@@ -1758,24 +1768,24 @@ header.site-header {
   .c-messenger__sidebar {
     border-left: 1px solid #E9E9E9;
     border-right: 1px solid #E9E9E9; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .c-messenger__sidebar {
         flex-basis: 33.3333333333%;
         max-width: 33.3333333333%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .c-messenger__sidebar {
         display: none; } }
   .c-messenger__conversation {
     border-right: 1px solid #E9E9E9; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .c-messenger__conversation {
         flex-basis: 66.6666666667%;
         max-width: 66.6666666667%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .c-messenger__conversation {
         flex-basis: 100%;
         max-width: 100%;
@@ -1798,7 +1808,7 @@ header.site-header {
           margin-top: 5px; }
         .c-messenger__conversation__container__messages li.message .details {
           margin-bottom: 5px; }
-          @media only screen and (max-width: 992px) {
+          @media only screen and (max-width: 1200px) {
             .c-messenger__conversation__container__messages li.message .details {
               display: flex;
               flex: 0 1 auto;
@@ -1806,7 +1816,7 @@ header.site-header {
               flex-wrap: wrap;
               margin-left: -1%;
               margin-right: -1%; } }
-          @media only screen and (max-width: 992px) {
+          @media only screen and (max-width: 1200px) {
             .c-messenger__conversation__container__messages li.message .details .author,
             .c-messenger__conversation__container__messages li.message .details .date {
               flex-basis: 50%;
@@ -1821,13 +1831,19 @@ header.site-header {
       border-top: 1px solid #E9E9E9;
       padding: 15px; }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
+  .c-banlist .c-ban {
+    margin-bottom: 15px; }
+    .c-banlist .c-ban:last-child {
+      margin-bottom: 0; } }
+
+@media only screen and (max-width: 768px) {
   .c-banlist .c-ban {
     flex-wrap: wrap; } }
 
 .c-banlist .c-ban__label {
   display: none; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-banlist .c-ban__label {
       display: inline-block;
       font-weight: bold;
@@ -1836,27 +1852,27 @@ header.site-header {
 .c-banlist .c-ban__info {
   min-width: 30px;
   text-align: center; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     .c-banlist .c-ban__info {
       flex: 0 1 auto; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-banlist .c-ban__info {
       text-align: left; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .c-banlist .c-ban__info__details--desktop {
       display: none; } }
   .c-banlist .c-ban__info__details--mobile {
     display: none; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .c-banlist .c-ban__info__details--mobile {
         display: inline-block; } }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .c-banlist .c-ban .c-table__row__column {
     flex-basis: 100%;
     padding: 2px 0; } }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .c-banlist .c-table__row--header {
     display: none; } }
 
@@ -1871,7 +1887,7 @@ header.site-header {
 
 .c-ban-form__server-settings {
   display: flex; }
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     .c-ban-form__server-settings__message {
       flex-basis: 83.3333333333%;
       max-width: 83.3333333333%;
@@ -1879,7 +1895,7 @@ header.site-header {
       padding-right: 1%; } }
   .c-ban-form__server-settings__allow-join {
     text-align: center; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .c-ban-form__server-settings__allow-join {
         flex-basis: 16.6666666667%;
         max-width: 16.6666666667%;
@@ -1903,7 +1919,7 @@ header.site-header {
   background-position: center center;
   background-repeat: no-repeat;
   margin-bottom: 30px; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     .s-landing .c-jumbotron {
       background-position: center center; } }
   .s-landing .c-jumbotron .c-button, .s-landing .c-jumbotron button {
@@ -1911,7 +1927,7 @@ header.site-header {
 
 .s-landing .c-icon-bullet-points {
   margin-bottom: 30px; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-landing .c-icon-bullet-points .o-layout__body--third {
       flex-basis: 100%;
       max-width: 100%;
@@ -1920,7 +1936,7 @@ header.site-header {
 
 .s-landing .c-latest-updates {
   margin-bottom: 30px; }
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     .s-landing .c-latest-updates {
       display: flex;
       flex: 0 1 auto;
@@ -1928,19 +1944,19 @@ header.site-header {
       flex-wrap: wrap;
       margin-left: -1%;
       margin-right: -1%; } }
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     .s-landing .c-latest-updates .c-news-container {
       flex-basis: 41.6666666667%;
       max-width: 41.6666666667%;
       padding-left: 1%;
       padding-right: 1%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-landing .c-latest-updates .c-news-container {
       flex-basis: 100%;
       max-width: 100%;
       padding-left: 1%;
       padding-right: 1%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-landing .c-latest-updates .c-news-container {
       margin-bottom: 30px; } }
   .s-landing .c-latest-updates .c-news-container__newsstand {
@@ -1959,13 +1975,13 @@ header.site-header {
       .s-landing .c-latest-updates .c-news-container__newsstand li:last-child {
         border-bottom: 0;
         padding-bottom: 0; }
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     .s-landing .c-latest-updates .c-match-container {
       flex-basis: 58.3333333333%;
       max-width: 58.3333333333%;
       padding-left: 1%;
       padding-right: 1%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-landing .c-latest-updates .c-match-container {
       flex-basis: 100%;
       max-width: 100%;
@@ -1973,7 +1989,7 @@ header.site-header {
       padding-right: 1%; } }
   .s-landing .c-latest-updates .c-match-container__matches {
     margin-top: 15px; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .s-landing .c-latest-updates .c-match-container__matches {
         display: flex;
         flex: 0 1 auto;
@@ -1981,7 +1997,7 @@ header.site-header {
         flex-wrap: wrap;
         margin-left: -1%;
         margin-right: -1%; } }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .s-landing .c-latest-updates .c-match-container__matches__match {
         display: flex;
         flex: 0 1 auto;
@@ -1989,22 +2005,22 @@ header.site-header {
         flex-wrap: wrap;
         margin-left: -1%;
         margin-right: -1%; } }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .s-landing .c-latest-updates .c-match-container__matches__match {
         flex-basis: 33.3333333333%;
         max-width: 33.3333333333%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-landing .c-latest-updates .c-match-container__matches__match {
         flex-basis: 50%;
         max-width: 50%;
         padding-left: 1%;
         padding-right: 1%; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-landing .c-latest-updates .c-match-container__matches__match:nth-child(n+3) {
         margin-top: 15px; } }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1200px) {
       .s-landing .c-latest-updates .c-match-container__matches__match__team-container {
         flex-basis: 50%;
         max-width: 50%;
@@ -2015,7 +2031,7 @@ header.site-header {
       text-align: center; }
       .s-landing .c-latest-updates .c-match-container__matches__match__team-container__team img {
         display: block; }
-        @media only screen and (max-width: 320px) {
+        @media only screen and (max-width: 480px) {
           .s-landing .c-latest-updates .c-match-container__matches__match__team-container__team img {
             height: 55px;
             width: 55px; } }
@@ -2026,7 +2042,7 @@ header.site-header {
       padding-left: 5px; }
     .s-landing .c-latest-updates .c-match-container__matches__match__stats {
       text-align: center; }
-      @media only screen and (max-width: 992px) {
+      @media only screen and (max-width: 1200px) {
         .s-landing .c-latest-updates .c-match-container__matches__match__stats {
           flex-basis: 100%;
           max-width: 100%;
@@ -2039,135 +2055,127 @@ header.site-header {
   margin-bottom: 0; }
 
 .c-match-summary {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: -1%;
+  margin-right: -1%;
   margin-bottom: 15px; }
-  @media only screen and (max-width: 992px) {
-    .c-match-summary {
-      display: flex;
-      flex: 0 1 auto;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-left: -1%;
-      margin-right: -1%; } }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .c-match-summary {
       margin-bottom: 20px; } }
-  @media only screen and (max-width: 992px) {
-    .c-match-summary__team {
-      display: flex;
-      flex: 0 1 auto;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-left: -1%;
-      margin-right: -1%; } }
-  @media only screen and (max-width: 992px) {
-    .c-match-summary__team {
-      flex-basis: 50%;
-      max-width: 50%;
-      padding-left: 1%;
-      padding-right: 1%; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team {
-      flex-basis: 100%;
-      max-width: 100%;
-      padding-left: 1%;
-      padding-right: 1%; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team {
-      margin-bottom: 5px; }
-      .c-match-summary__team:last-child {
-        margin-bottom: 0; } }
-  .c-match-summary__team__image, .c-match-summary__team__name, .c-match-summary__team__score {
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex; }
-    .c-match-summary__team__image img,
-    .c-match-summary__team__image p, .c-match-summary__team__name img,
-    .c-match-summary__team__name p, .c-match-summary__team__score img,
-    .c-match-summary__team__score p {
-      margin-bottom: auto;
-      margin-top: auto; }
-  @media only screen and (max-width: 992px) {
+  .c-match-summary__team {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -1%;
+    margin-right: -1%;
+    flex-basis: 50%;
+    max-width: 50%;
+    padding-left: 1%;
+    padding-right: 1%; }
+    @media only screen and (max-width: 480px) {
+      .c-match-summary__team {
+        flex-basis: 100%;
+        max-width: 100%;
+        padding-left: 1%;
+        padding-right: 1%; } }
+    @media only screen and (max-width: 480px) {
+      .c-match-summary__team {
+        margin-bottom: 5px; }
+        .c-match-summary__team:last-child {
+          margin-bottom: 0; } }
+    .c-match-summary__team__image, .c-match-summary__team__name, .c-match-summary__team__score {
+      display: -webkit-box;
+      display: -moz-box;
+      display: box;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flexbox;
+      display: flex; }
+      .c-match-summary__team__image img,
+      .c-match-summary__team__image p, .c-match-summary__team__name img,
+      .c-match-summary__team__name p, .c-match-summary__team__score img,
+      .c-match-summary__team__score p {
+        margin-bottom: auto;
+        margin-top: auto; }
     .c-match-summary__team__image {
       flex-basis: 25%;
       max-width: 25%;
       padding-left: 1%;
-      padding-right: 1%; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team__image {
-      flex-basis: 16.6666666667%;
-      max-width: 16.6666666667%;
-      padding-left: 1%;
-      padding-right: 1%; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team__image img {
-      margin-right: auto;
-      max-height: 100%;
-      max-width: 100%; } }
-  @media only screen and (max-width: 992px) {
+      padding-right: 1%; }
+      @media only screen and (max-width: 480px) {
+        .c-match-summary__team__image {
+          flex-basis: 16.6666666667%;
+          max-width: 16.6666666667%;
+          padding-left: 1%;
+          padding-right: 1%; } }
+      @media only screen and (max-width: 480px) {
+        .c-match-summary__team__image img {
+          margin-right: auto;
+          max-height: 100%;
+          max-width: 100%; } }
     .c-match-summary__team__name {
       flex-basis: 58.3333333333%;
       max-width: 58.3333333333%;
       padding-left: 1%;
-      padding-right: 1%; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team__name {
-      flex-basis: 66.6666666667%;
-      max-width: 66.6666666667%;
-      padding-left: 1%;
-      padding-right: 1%; } }
-  .c-match-summary__team__name p {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; }
-  @media only screen and (max-width: 992px) {
+      padding-right: 1%; }
+      @media only screen and (max-width: 480px) {
+        .c-match-summary__team__name {
+          flex-basis: 66.6666666667%;
+          max-width: 66.6666666667%;
+          padding-left: 1%;
+          padding-right: 1%; } }
+      .c-match-summary__team__name p {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
     .c-match-summary__team__score {
       flex-basis: 16.6666666667%;
       max-width: 16.6666666667%;
       padding-left: 1%;
-      padding-right: 1%; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team__score p {
-      margin-left: auto; } }
-  .c-match-summary__team--winner img,
-  .c-match-summary__team--winner p {
-    margin-left: auto; }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team--winner .c-match-summary__team__image img {
-      margin-left: 0; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team--winner .c-match-summary__team__name p {
-      margin-left: 0; } }
-  .c-match-summary__team--winner .c-match-summary__team__score {
-    padding-right: 15px; }
+      padding-right: 1%; }
+      @media only screen and (max-width: 480px) {
+        .c-match-summary__team__score p {
+          margin-left: auto; } }
+    .c-match-summary__team--winner img,
+    .c-match-summary__team--winner p {
+      margin-left: auto; }
     @media only screen and (max-width: 480px) {
-      .c-match-summary__team--winner .c-match-summary__team__score {
-        padding-right: 10px; } }
-    @media only screen and (max-width: 320px) {
-      .c-match-summary__team--winner .c-match-summary__team__score {
-        padding-right: 0; } }
-  .c-match-summary__team--loser .c-match-summary__team__image {
-    order: 3; }
-  .c-match-summary__team--loser .c-match-summary__team__name {
-    order: 2; }
-  .c-match-summary__team--loser .c-match-summary__team__score {
-    order: 1;
-    padding-left: 15px; }
+      .c-match-summary__team--winner .c-match-summary__team__image img {
+        margin-left: 0; } }
     @media only screen and (max-width: 480px) {
-      .c-match-summary__team--loser .c-match-summary__team__score {
-        padding-left: 10px; } }
-    @media only screen and (max-width: 320px) {
-      .c-match-summary__team--loser .c-match-summary__team__score {
-        padding-left: 0; } }
-  @media only screen and (max-width: 320px) {
-    .c-match-summary__team--loser .c-match-summary__team__image,
-    .c-match-summary__team--loser .c-match-summary__team__name,
+      .c-match-summary__team--winner .c-match-summary__team__name p {
+        margin-left: 0; } }
+    .c-match-summary__team--winner .c-match-summary__team__score {
+      padding-right: 15px; }
+      @media only screen and (max-width: 768px) {
+        .c-match-summary__team--winner .c-match-summary__team__score {
+          padding-right: 10px; } }
+      @media only screen and (max-width: 480px) {
+        .c-match-summary__team--winner .c-match-summary__team__score {
+          padding-right: 0; } }
+    .c-match-summary__team--loser .c-match-summary__team__image {
+      order: 3; }
+    .c-match-summary__team--loser .c-match-summary__team__name {
+      order: 2; }
     .c-match-summary__team--loser .c-match-summary__team__score {
-      order: initial; } }
+      order: 1;
+      padding-left: 15px; }
+      @media only screen and (max-width: 768px) {
+        .c-match-summary__team--loser .c-match-summary__team__score {
+          padding-left: 10px; } }
+      @media only screen and (max-width: 480px) {
+        .c-match-summary__team--loser .c-match-summary__team__score {
+          padding-left: 0; } }
+    @media only screen and (max-width: 480px) {
+      .c-match-summary__team--loser .c-match-summary__team__image,
+      .c-match-summary__team--loser .c-match-summary__team__name,
+      .c-match-summary__team--loser .c-match-summary__team__score {
+        order: initial; } }
   .c-match-summary:last-child {
     margin-bottom: 0; }
 
@@ -2185,7 +2193,7 @@ header.site-header {
       color: #258EC9; }
     .t-dark .s-newsstand .c-article__title {
       color: #B8B8B8; }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 992px) {
       .s-newsstand .c-article__title {
         text-align: left; } }
   .s-newsstand .c-article__date {
@@ -2219,7 +2227,7 @@ header.site-header {
 .s-newsstand .c-categories {
   border: 1px solid #E9E9E9;
   border-radius: 3px; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-newsstand .c-categories {
       display: none; } }
   .s-newsstand .c-categories li {
@@ -2275,7 +2283,7 @@ header.site-header {
     display: flex;
     padding-bottom: 15px;
     padding-top: 15px; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .c-page__header__container {
         padding-bottom: 15px;
         padding-top: 15px; } }
@@ -2284,7 +2292,7 @@ header.site-header {
       .c-page__header__container__title h1 {
         font-size: 24px;
         margin: auto; }
-        @media only screen and (max-width: 480px) {
+        @media only screen and (max-width: 768px) {
           .c-page__header__container__title h1 {
             font-size: 20px; } }
     .c-page__header__container__options {
@@ -2294,23 +2302,23 @@ header.site-header {
       justify-content: flex-end; }
       .c-page__header__container__options .c-button, .c-page__header__container__options button {
         margin-left: 5px; }
-      @media only screen and (max-width: 768px) {
+      @media only screen and (max-width: 992px) {
         .c-page__header__container__options {
           display: none; } }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .c-page__header {
       margin-bottom: 15px; } }
 
 .s-player-profile .c-public-profile__profile-picture img {
   width: 100%; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-player-profile .c-public-profile__profile-picture img {
       width: 30%; } }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (max-width: 480px) {
     .s-player-profile .c-public-profile__profile-picture img {
       width: 40%; } }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .s-player-profile .c-public-profile__profile-picture {
     margin-bottom: 30px;
     text-align: center; } }
@@ -2350,32 +2358,32 @@ header.site-header {
     .c-player-badge__info--callsign-only {
       padding-bottom: 10px;
       padding-top: 10px; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     .c-player-badge.o-layout__body--third:nth-last-child(-n+3) {
       margin-bottom: 0; } }
-  @media only screen and (min-width: 480px) and (max-width: 767px) {
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
     .c-player-badge.o-layout__body--third:nth-last-child(-n+2) {
       margin-bottom: 0; } }
-  @media only screen and (min-width: 320px) and (max-width: 479px) {
+  @media only screen and (min-width: 480px) and (max-width: 767px) {
     .c-player-badge.o-layout__body--third:last-child {
       margin-bottom: 0; } }
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     .c-player-badge.o-layout__body--quarter:nth-last-child(-n+4) {
       margin-bottom: 0; } }
-  @media only screen and (min-width: 768px) and (max-width: 991px) {
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .c-player-badge.o-layout__body--quarter:nth-last-child(-n+3) {
       margin-bottom: 0; } }
-  @media only screen and (min-width: 480px) and (max-width: 767px) {
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
     .c-player-badge.o-layout__body--quarter:nth-last-child(-n+2) {
       margin-bottom: 0; } }
-  @media only screen and (min-width: 320px) and (max-width: 479px) {
+  @media only screen and (min-width: 480px) and (max-width: 767px) {
     .c-player-badge.o-layout__body--quarter:last-child {
       margin-bottom: 0; } }
 
 .s-team-profile .c-team__information__bio {
   margin-top: 15px; }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .s-team-profile .c-team__information {
     order: 2; } }
 
@@ -2383,17 +2391,17 @@ header.site-header {
   text-align: right; }
   .s-team-profile .c-team__profile-picture img {
     width: 100%; }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       .s-team-profile .c-team__profile-picture img {
         width: 30%; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-team-profile .c-team__profile-picture img {
         width: 40%; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-team-profile .c-team__profile-picture {
       margin-bottom: 30px;
       text-align: center; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-team-profile .c-team__profile-picture {
       order: 1; } }
 
@@ -2408,22 +2416,22 @@ header.site-header {
   .s-team-profile .c-team__match-stats__visual__graph {
     height: 150px;
     width: 150px; }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 992px) {
       .s-team-profile .c-team__match-stats__visual__graph {
         display: block;
         margin: 0 auto; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-team-profile .c-team__match-stats__visual__graph {
         margin-top: 10px; } }
   .s-team-profile .c-team__match-stats__visual__legend {
     flex: 1;
     margin: auto; }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 992px) {
       .s-team-profile .c-team__match-stats__visual__legend {
         margin: 20px 0 0;
         text-align: center;
         width: 100%; } }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 992px) {
       .s-team-profile .c-team__match-stats__visual__legend > li {
         display: inline-block;
         margin: 0 5px; } }
@@ -2439,7 +2447,7 @@ header.site-header {
         background-color: #B80101; }
       .s-team-profile .c-team__match-stats__visual__legend > li > div.draws {
         background-color: #B6D1D8; }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     .s-team-profile .c-team__match-stats__visual {
       display: block; } }
 
@@ -2451,7 +2459,7 @@ header.site-header {
       color: #000000; }
       .s-team-profile .c-team__roster .c-table__row__column a:hover {
         color: #009EFF; }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     .s-team-profile .c-team__roster .c-table {
       margin-left: 0; } }
 
@@ -2470,35 +2478,35 @@ header.site-header {
     border: 0;
     border-bottom: 1px solid #E9E9E9;
     color: #000000; }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-team-profile .c-team__matches .c-table__row {
         padding-bottom: 5px;
         padding-top: 5px; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-team-profile .c-team__matches .c-table__row .u-date {
         order: 1;
         padding-bottom: 0; } }
     .s-team-profile .c-team__matches .c-table__row .u-opponent {
       flex: 2; }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         .s-team-profile .c-team__matches .c-table__row .u-opponent {
           flex-basis: 100%;
           order: 3; } }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-team-profile .c-team__matches .c-table__row .u-score {
         order: 2;
         text-align: right; } }
     .s-team-profile .c-team__matches .c-table__row__column {
       border: 0;
       padding: 5px 10px; }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         .s-team-profile .c-team__matches .c-table__row__column {
           padding: 5px 1px; } }
       .s-team-profile .c-team__matches .c-table__row__column .u-match-outcome {
         display: inline-block;
         text-align: center;
         width: 20px; }
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 480px) {
       .s-team-profile .c-team__matches .c-table__row {
         flex-wrap: wrap; } }
     .s-team-profile .c-team__matches .c-table__row:last-child {
@@ -2520,20 +2528,20 @@ header.site-header {
         flex: 1; }
         .c-team-widget__info__header__summary__name {
           font-size: 24px; }
-          @media only screen and (max-width: 320px) {
+          @media only screen and (max-width: 480px) {
             .c-team-widget__info__header__summary__name {
               display: block;
               font-size: 20px; } }
         .c-team-widget__info__header__summary__elo {
           margin-left: 10px; }
-          @media only screen and (max-width: 320px) {
+          @media only screen and (max-width: 480px) {
             .c-team-widget__info__header__summary__elo {
               margin: 0; } }
           .c-team-widget__info__header__summary__elo:before {
             content: '('; }
           .c-team-widget__info__header__summary__elo:after {
             content: ')'; }
-      @media only screen and (max-width: 320px) {
+      @media only screen and (max-width: 480px) {
         .c-team-widget__info__header__matches {
           display: none; } }
     .c-team-widget__info__meta {
@@ -2541,7 +2549,7 @@ header.site-header {
       .c-team-widget__info__meta span {
         font-size: 14px;
         margin-right: 25px; }
-        @media only screen and (max-width: 320px) {
+        @media only screen and (max-width: 480px) {
           .c-team-widget__info__meta span {
             display: block;
             margin-right: 0; } }
@@ -2573,7 +2581,7 @@ header.site-header {
   .c-servers__server__options li {
     margin-left: 5px; }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 992px) {
   .c-servers__server:nth-child(odd) {
     padding-right: 10px; }
   .c-servers__server:nth-child(even) {
@@ -2611,25 +2619,35 @@ header.site-header {
   padding: 0 5px;
   position: fixed;
   text-align: center; }
-  .css-dev .desktop {
-    display: none; }
-    @media only screen and (min-width: 992px) and (max-width: 1199px) {
-      .css-dev .desktop {
-        display: block; } }
-  .css-dev .tablet {
-    display: none; }
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
-      .css-dev .tablet {
-        display: block; } }
-  .css-dev .phablet {
+  .css-dev .xs {
     display: none; }
     @media only screen and (min-width: 480px) and (max-width: 767px) {
-      .css-dev .phablet {
+      .css-dev .xs {
         display: block; } }
-  .css-dev .phone {
+  .css-dev .sm {
     display: none; }
-    @media only screen and (min-width: 320px) and (max-width: 479px) {
-      .css-dev .phone {
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      .css-dev .sm {
+        display: block; } }
+  .css-dev .md {
+    display: none; }
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+      .css-dev .md {
+        display: block; } }
+  .css-dev .lg {
+    display: none; }
+    @media only screen and (min-width: 1200px) and (max-width: 1599px) {
+      .css-dev .lg {
+        display: block; } }
+  .css-dev .xl {
+    display: none; }
+    @media only screen and (min-width: 1600px) and (max-width: 1919px) {
+      .css-dev .xl {
+        display: block; } }
+  .css-dev .xxl {
+    display: none; }
+    @media only screen and (min-width: 1920px) {
+      .css-dev .xxl {
         display: block; } }
 
 .c-table__row {

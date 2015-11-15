@@ -4,13 +4,24 @@
 /// @param {Number [unit]} $margin [30px]
 ///   The margin bottom that will be used
 
-@mixin autoMarginBottom($margin: $Settings-Page_Section-Margin) {
+@mixin autoMarginBottom($margin: $Settings-Page_Section-Small_Margin) {
     margin-bottom: $margin;
 
     &:last-child {
         margin-bottom: 0;
     }
 }
+
+
+/// Automatically set the margin bottom of an element to the global setting and set the last
+/// child to have no margin bottom on the specified views
+
+@mixin make-margin($viewSize) {
+    @include respond-to($viewSize) {
+        @include autoMarginBottom();
+    }
+}
+
 
 /// Return a dark color or a light color based on the color given. This function can be used
 /// when wanting to dynamically set the font-color based on the background color.

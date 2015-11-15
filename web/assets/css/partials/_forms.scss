@@ -103,8 +103,6 @@ select {
 // ========================================
 
 @include component('form') {
-    margin-bottom: $Settings-Page_Section-Margin;
-
     @include element('editor') {
         margin-bottom: $Settings-Page_Section-Small_Margin;
 
