@@ -18,7 +18,8 @@
     @include component('icon-bullet-points') {
         margin-bottom: $Settings-Page_Section-Margin;
 
-        .o-layout__body--third {
+        @include element("bullet") {
+            @include view-columns(xxl, 4);
             @include view-columns(sm, 12);
         }
     }
