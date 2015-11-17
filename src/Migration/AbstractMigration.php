@@ -26,7 +26,7 @@ class AbstractMigration extends BaseMigration
      *                            altered. The return value can be the desired
      *                            BZIon\Migration\EditAction or null.
      */
-    protected function editConversationEvent($typeQuery, $callback)
+    protected function editGroupEvent($typeQuery, $callback)
     {
         return $this->editSerializedData(
             "group_events",
