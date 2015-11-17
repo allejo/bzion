@@ -268,9 +268,7 @@ class Group extends UrlModel implements NamedModel
 
     /**
      * Create a new message group
-     *
-     * @todo Support team members
-     *
+     **
      * @param  string $subject   The subject of the group
      * @param  int    $creatorId The ID of the player who created the group
      * @param  array  $members   A list of Models representing the group's members
@@ -295,10 +293,10 @@ class Group extends UrlModel implements NamedModel
      * Send a new message to the group's members
      * @param  Player  $from    The sender
      * @param  string  $message The body of the message
-     * @param  string  $status  The status of the message - can be 'sent', 'hidden', 'deleted' or 'reported'
+     * @param  string  $status  The status of the message - can be 'visible', 'hidden', 'deleted' or 'reported'
      * @return Message An object that represents the sent message
      */
-    public function sendMessage($from, $message, $status = 'sent')
+    public function sendMessage($from, $message, $status = 'visible')
     {
         $message = Message::sendMessage($this->getId(), $from->getId(), $message, $status);
 

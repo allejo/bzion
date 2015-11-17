@@ -13,26 +13,8 @@ use BZIon\Event\Event;
  * An event that happened in a group
  * @package    BZiON\Models
  */
-class GroupEvent extends Model implements GroupEventInterface
+class GroupEvent extends AbstractMessage implements GroupEventInterface
 {
-    /**
-     * The ID of the group where the event took place
-     * @var int
-     */
-    protected $group;
-
-    /**
-     * The timestamp of when the message was sent
-     * @var TimeDate
-     */
-    protected $timestamp;
-
-    /**
-     * The type of the event
-     * @var string
-     */
-    protected $type;
-
     /**
      * The event
      * @var Event
@@ -40,32 +22,21 @@ class GroupEvent extends Model implements GroupEventInterface
     protected $event;
 
     /**
-     * The status of the event
-     *
-     * Can be 'visible' or 'deleted'
-     * @var string
-     */
-    protected $status;
-
-    /**
-     * The name of the database table used for queries
-     */
-    const TABLE = "group_events";
-
-    /**
      * {@inheritDoc}
      */
     protected function assignResult($event)
     {
-        $this->group = $event['group_to'];
-        $this->event = unserialize($event['event']);
-        $this->type = $event['type'];
-        $this->timestamp = TimeDate::fromMysql($event['timestamp']);
-        $this->status = $event['status'];
+        parent::assignResult($event);
+
+        $this->event = unserialize($event['message']);
+
+        if ($this->isMessage()) {
+            throw new Exception("A message cannot be represented by the GroupEvent class.");
+        }
     }
 
     /**
-     * Get the Event
+     * Get the event object
      * @return Event
      */
     public function getEvent()
@@ -87,71 +58,31 @@ class GroupEvent extends Model implements GroupEventInterface
     }
 
     /**
-     * Get the group where the event took place
-     * @return Group
-     */
-    public function getGroup()
-    {
-        return Group::get($this->group);
-    }
-
-    /**
-     * Get the time when the event occurred
-     * @return TimeDate
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public static function getActiveStatuses()
-    {
-        return array('visible');
-    }
-
-    /**
      * Store a group event in the database
      *
      * @param  int        $group     The ID of the group
      * @param  Event      $event     The event
      * @param  mixed      $timestamp The timestamp when the event took place
-     * @param  string     $status    The status of the event
+     * @param  string     $status    The status of the event, can be 'visible', 'hidden', 'deleted' or 'reported'
      * @return GroupEvent
      */
     public static function storeEvent($group, $event, $type, $timestamp = 'now', $status = 'visible')
     {
         return self::create(array(
-            "group_to"  => $group,
-            "event"     => serialize($event),
-            "type"      => $type,
-            "timestamp" => TimeDate::from($timestamp)->toMysql(),
-            "status"    => $status
+            "group_to"   => $group,
+            "message"    => serialize($event),
+            "event_type" => $type,
+            "timestamp"  => TimeDate::from($timestamp)->toMysql(),
+            "status"     => $status
         ), 'issss');
     }
 
     /**
-     * Get a query builder for messages
+     * Get a query builder for events
      * @return QueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('GroupEvent', array(
-            'columns' => array(
-                'group'  => 'group_to',
-                'time'   => 'timestamp',
-                'status' => 'status'
-            )
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isMessage()
-    {
-        return false;
+        return parent::getQueryBuilder()->eventsOnly();
     }
 }

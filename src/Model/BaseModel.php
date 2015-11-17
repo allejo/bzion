@@ -32,12 +32,6 @@ abstract class BaseModel implements ModelInterface
     protected $valid;
 
     /**
-     * The result of the database query to locate the object with a specific ID
-     * @var array
-     */
-    protected $result;
-
-    /**
      * The database variable used for queries
      * @var Database
      */
@@ -57,12 +51,7 @@ abstract class BaseModel implements ModelInterface
     const TABLE = "";
 
     /**
-     * Construct a new Model
-     *
-     * This method takes the ID of the object to look for and creates a
-     * $this->db object which can be used to communicate with the database,
-     * as well as a $this->result array which is the single result of the
-     * $this->db->query function
+     * Get a Model based on its ID
      *
      * @throws InvalidArgumentException If $id is an object of an incorrect type
      * @param  int|static $id The ID of the object to look for, or the object
@@ -81,7 +70,7 @@ abstract class BaseModel implements ModelInterface
 
         $id = (int) $id;
 
-        return new static($id);
+        return static::chooseModelFromDatabase($id);
     }
 
     /**
@@ -95,33 +84,39 @@ abstract class BaseModel implements ModelInterface
     /**
      * Fetch the columns of a model
      *
+     * This method takes the ID of the object to look for and creates a
+     * $this->db object which can be used to communicate with the database and
+     * calls $this->assignResult() so that the child class can populate the
+     * properties of the Model based on the database data
+     *
      * If the $id is specified as 0, then an invalid object will be returned
      *
      * @param int $id The ID of the model
+     * @param array|null $results The column values of the model, or NULL to
+     *                            generate them using $this->fetchColumnValues()
      */
-    protected function __construct($id)
+    protected function __construct($id, $results = null)
     {
         $this->db = Database::getInstance();
-
         $this->table = static::TABLE;
 
         if ($id == 0) {
-            $this->valid  = false;
-            $this->result = array();
+            $this->valid = false;
 
             return;
         }
 
         $this->id = $id;
 
-        $columns = static::getEagerColumns();
-        $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($id));
+        if ($results == null) {
+            $results = $this->fetchColumnValues($id);
+        }
 
-        if (count($results) < 1) {
+        if ($results === null) {
             $this->valid = false;
         } else {
             $this->valid = true;
-            $this->assignResult($results[0]);
+            $this->assignResult($results);
         }
     }
 
@@ -176,6 +171,38 @@ abstract class BaseModel implements ModelInterface
     public function isValid()
     {
         return $this->valid;
+    }
+
+    /**
+     * Fetch a model based on its ID, useful for abstract model classes
+     *
+     * @param int $id The ID of the model
+     * @return Model
+     */
+    protected static function chooseModelFromDatabase($id)
+    {
+        return new static($id);
+    }
+
+    /**
+     * Query the database to get the eager column values for the Model
+     *
+     * @param $id int The ID of the model to fetch
+     * @return array|null The results or null if a model wasn't found
+     */
+    protected static function fetchColumnValues($id)
+    {
+        $table = static::TABLE;
+        $columns = static::getEagerColumns();
+
+        $results = Database::getInstance()
+            ->query("SELECT $columns FROM $table WHERE id = ? LIMIT 1", "i", array($id));
+
+        if (count($results) < 1) {
+            return null;
+        }
+
+        return $results[0];
     }
 
     /**

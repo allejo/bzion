@@ -15,71 +15,27 @@
 class MessageQueryBuilder extends QueryBuilder
 {
     /**
-     * A QueryBuilder for group events
-     * @var QueryBuilder
+     * Only include messages
+     *
+     * @return self
      */
-    private $eventQuery;
-
-    /**
-     * Whether the query was specified to start at a specific Message
-     * @var boolean
-     */
-    private $start = false;
-
-    /**
-     * Whether the query was specified to end at a specific Message
-     * @var boolean
-     */
-    private $end = false;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __construct($type, $options = array())
+    public function messagesOnly()
     {
-        $this->eventQuery = GroupEvent::getQueryBuilder();
+        $this->conditions[] = 'event_type IS NULL';
 
-        parent::__construct($type, $options);
+        return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * Only include group events
+     *
+     * @return self
      */
-    public function active()
+    public function eventsOnly()
     {
-        $this->eventQuery->active();
+        $this->conditions[] = 'event_type IS NOT NULL';
 
-        return parent::active();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function startAt($model, $inclusive = false, $reverse = false)
-    {
-        if ($model) {
-            if (!($model instanceof Model) || $model->isValid()) {
-                if ($reverse) {
-                    $this->end = true;
-                } else {
-                    $this->start = true;
-                }
-            }
-        }
-
-        return parent::startAt($model, $inclusive, $reverse);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function is($number)
-    {
-        if ($this->currentColumnRaw === $this->columns['group']) {
-            $this->eventQuery->where('group')->is($number);
-        }
-
-        return parent::is($number);
+        return $this;
     }
 
     /**
@@ -101,12 +57,12 @@ class MessageQueryBuilder extends QueryBuilder
         return $this;
     }
 
-    /**
-     * Locate messages that contain keywords in a search string
-     *
-     * @param  string $query The search query
-     * @return self
-     */
+    /*
+    * Locate messages that contain keywords in a search string
+    *
+    * @param  string $query The search query
+    * @return self
+    */
     public function search($query)
     {
         $keywords = preg_split('/\s+/', trim($query));
@@ -127,70 +83,8 @@ class MessageQueryBuilder extends QueryBuilder
         }
 
         $this->conditions[] = $query;
+
         return $this;
     }
 
-    /**
-     * Get Messages and GroupEvents
-     *
-     * This method requires that you use the MessageQueryBuilder::startAt()
-     * and MessageQueryBuilder::endAt() methods for pagination
-     *
-     * @return array
-     */
-    public function getAllEvents()
-    {
-        // Get one extra message that can be used later to find out when to stop
-        // fetching group events and will be popped later so that the correct
-        // result set is returned
-        $this->resultsPerPage++;
-        $messages = $this->getModels();
-
-        $events = array();
-
-        if (empty($messages)) {
-            if (!$this->end) {
-                // There are no messages in the discussion - just return all
-                // the events
-                $events = $this->eventQuery->getModels();
-            }
-        } else {
-            $events = $this->eventQuery;
-            $newest = $messages[0];
-
-            // Pop the added element unless it's the last one in the discussion
-            if (count($messages) == $this->resultsPerPage) {
-                $oldest = array_pop($messages);
-                $events->where('time')->isAfter($oldest->getTimestamp());
-            } elseif ($this->start) {
-                $oldest = end($messages);
-                $events->where('time')->isAfter($oldest->getTimestamp());
-            }
-
-            // Only show events that have occured after the message if that
-            // message is the last one in the discussion
-            if ($this->end) {
-                $events->where('time')->isBefore($newest->getTimestamp(), true);
-            }
-
-            $events = $events->getModels();
-        }
-
-        // Merge and sort events and messages
-        $results = array_merge($messages, $events);
-        usort($results, function (GroupEventInterface $a, GroupEventInterface $b) {
-            $timeA = $a->getTimestamp();
-            $timeB = $b->getTimestamp();
-
-            if ($timeA == $timeB) {
-                return 0;
-            }
-            return ($timeA > $timeB) ? -1 : 1;
-        });
-
-        return array(
-            'events'   => $results,
-            'messages' => $messages
-        );
-    }
 }

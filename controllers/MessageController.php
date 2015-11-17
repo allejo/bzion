@@ -87,21 +87,20 @@ class MessageController extends JSONController
         $inviteForm = $this->showInviteForm($discussion, $me);
         $renameForm = $this->showRenameForm($discussion, $me);
 
-        $messages = $this->getQueryBuilder()
+        $messages = $this->getQueryBuilder('AbstractMessage')
                   ->where('group')->is($discussion)
                   ->sortBy('time')->reverse()
                   ->limit(10)->fromPage($request->query->get('page', 1))
                   ->startAt($request->query->get('end'))
                   ->endAt($request->query->get('start'))
-                  ->getAllEvents();
+                  ->getModels();
 
         $params = array(
             "form"       => $form->createView(),
             "inviteForm" => $inviteForm->createView(),
             "renameForm" => $renameForm->createView(),
             "group"      => $discussion,
-            "messages"   => $messages['messages'],
-            "events"     => $messages['events']
+            "messages"   => $messages
         );
 
         if ($request->query->has('nolayout')) {
