@@ -29,7 +29,7 @@ class AbstractMigration extends BaseMigration
     protected function editConversationEvent($typeQuery, $callback)
     {
         return $this->editSerializedData(
-            "conversation_events",
+            "group_events",
             "event",
             "WHERE `type` = '$typeQuery'",
             $callback
