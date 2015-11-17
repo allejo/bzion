@@ -206,7 +206,6 @@
 // and statistics
 @include component('team-widget') {
     display: flex;
-    margin-bottom: $Settings-Page_Section-Margin;
 
     // The rank icon
     @include component('rank') {
