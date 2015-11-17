@@ -26,7 +26,7 @@ class BanFormCreator extends ModelFormCreator
             ->add('player', new AdvancedModelType(array('player', 'team')), array(
                 'constraints' => new NotBlank(),
                 'disabled'    => $this->isEdit(),
-                'data'        => $this->editing
+                'data'        => $this->controller->data->get('player')
             ))
             ->add(
                 $builder->create('automatic_expiration', 'checkbox', array(

@@ -79,6 +79,13 @@ abstract class Controller extends ContainerAware
      */
     protected $parent;
 
+    /*
+     * An array of data to pass between different parts of the application
+     *
+     * @var ParameterBag
+     */
+    public $data;
+
     /**
      * @param ParameterBag    $parameters The array returned by $request->attributes
      * @param Controller|null $parent     The controller who invoked this controller
@@ -87,6 +94,7 @@ abstract class Controller extends ContainerAware
     {
         $this->parameters = $parameters;
         $this->parent = $parent ?: $this;
+        $this->data = new ParameterBag();
 
         $this->setContainer(Service::getContainer());
     }

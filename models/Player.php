@@ -126,6 +126,12 @@ class Player extends AvatarModel implements NamedModel
     protected $admin_notes;
 
     /**
+     * The ban of the player, or null if the player is not banned
+     * @var Ban|null
+     */
+    protected $player;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "players";
@@ -168,6 +174,7 @@ class Player extends AvatarModel implements NamedModel
         $this->joined = TimeDate::fromMysql($player['joined']);
         $this->last_login = TimeDate::fromMysql($player['last_login']);
         $this->admin_notes = $player['admin_notes'];
+        $this->ban = Ban::getBan($this->id);
 
         $this->updateUserPermissions();
     }
@@ -505,10 +512,27 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Find out if a player is banned
+     *
+     * @return bool
      */
     public function isBanned()
     {
         return (Ban::getBan($this->id) !== null);
+    }
+
+    /**
+     * Get the ban of the player
+     *
+     * This method performs a load of all the lazy parameters of the Player
+     *
+     * @return Ban|null The current ban of the player, or null if the player is
+     *                  is not banned
+     */
+    public function getBan()
+    {
+        $this->lazyLoad();
+
+        return $this->ban;
     }
 
     /**

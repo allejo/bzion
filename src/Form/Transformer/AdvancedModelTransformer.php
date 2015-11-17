@@ -108,7 +108,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
      * @return bool|Model[] A list of models, or false if the data was not
      *                         provided by javascript as JSON
      */
-    protected function transformJSON(&$data, $include)
+    protected function transformJSON(&$data, $include = array())
     {
         $json = json_decode($data['ids'], true);
 

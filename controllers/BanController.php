@@ -18,8 +18,10 @@ class BanController extends CRUDController
             ->getModels());
     }
 
-    public function createAction(Player $me)
+    public function createAction(Player $me, Player $player = null)
     {
+        $this->data->set('player', $player);
+
         return $this->create($me);
     }
 

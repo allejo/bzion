@@ -26,6 +26,10 @@ ban_create:
     path:     /bans/new
     defaults: { _controller: 'Ban', _action: 'create' }
 
+ban_create_player:
+    path:     /bans/new/{player}
+    defaults: { _controller: 'Ban', _action: 'create' }
+
 ban_show:
     path:     /bans/{ban}
     defaults: { _controller: 'Ban', _action: 'show' }

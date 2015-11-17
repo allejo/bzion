@@ -21,6 +21,20 @@
         icon: 'edit',
         text: 'Edit',
         condition: me.canEdit(player)
+    },
+    {
+        color: 'red',
+        url: path('ban_create_player', { player: player.id }),
+        icon: 'lock',
+        text: 'Ban',
+        condition: me.hasPermission(constant('Permission::ADD_BAN')) and player.ban is null
+    },
+    {
+        color: 'red',
+        url: player.ban.url('expire'),
+        icon: 'unlock',
+        text: 'Unban',
+        condition: me.hasPermission(constant('Permission::EDIT_BAN')) and player.ban is not null
     }
 ] %}
 
