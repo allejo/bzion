@@ -126,7 +126,7 @@ class DatabaseQuery
     /**
      * Get the value the MySQL query
      *
-     * @param  boolean $highlight Whether HTML should be used to highlight to the query
+     * @param  bool $highlight Whether HTML should be used to highlight to the query
      * @return string
      */
     public function getQuery($highlight = false)
@@ -203,7 +203,7 @@ class DatabaseQuery
     /**
      * Get the query string parts
      *
-     * @param  boolean $highlight Whether HTML should be used to highlight to the query
+     * @param  bool $highlight Whether HTML should be used to highlight to the query
      * @return array
      */
     public function getQueryParts($highlight = false)
@@ -215,7 +215,7 @@ class DatabaseQuery
      * Get the resolved query strings (where all `?`s are replaced with the
      * actual parameter values)
      *
-     * @param  boolean $highlight Whether HTML should be used to highlight to the query
+     * @param  bool $highlight Whether HTML should be used to highlight to the query
      * @return string
      */
     public function getResolvedQuery($highlight = false)

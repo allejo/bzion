@@ -40,8 +40,8 @@ abstract class PermissionModel extends Model
      * Find out whether a player should know that a model exists
      *
      * @param  Player  $player      The player in question
-     * @param  boolean $showDeleted false to hide deleted models even from admins
-     * @return boolean
+     * @param  bool $showDeleted false to hide deleted models even from admins
+     * @return bool
      */
     public function canBeSeenBy($player, $showDeleted = false)
     {
@@ -67,7 +67,7 @@ abstract class PermissionModel extends Model
      *
      * If possible, prefer to override PermissionModel::CREATE_PERMISSION
      *
-     * @return boolean
+     * @return bool
      */
     public static function canBeCreatedBy($player)
     {
@@ -81,7 +81,7 @@ abstract class PermissionModel extends Model
      * PermissionModel::isEditor()
      *
      * @param  Player  $player
-     * @return boolean
+     * @return bool
      */
     public function canBeEditedBy($player)
     {
@@ -95,7 +95,7 @@ abstract class PermissionModel extends Model
      * and/or PermissionModel::isEditor()
      *
      * @param  Player  $player
-     * @return boolean
+     * @return bool
      */
     public function canBeSoftDeletedBy($player)
     {
@@ -108,7 +108,7 @@ abstract class PermissionModel extends Model
      * If possible, prefer to override PermissionModel::HARD_DELETE_PERMISSION
      *
      * @param  Player  $player
-     * @return boolean
+     * @return bool
      */
     public function canBeHardDeletedBy($player)
     {
@@ -120,7 +120,7 @@ abstract class PermissionModel extends Model
      * having the appropriate permissions (for example, a team owner should be
      * able to edit their team)
      *
-     * @return boolean
+     * @return bool
      */
     protected function isEditor($player)
     {

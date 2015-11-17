@@ -56,7 +56,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
     abstract protected function build($builder);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create()
     {
@@ -115,7 +115,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
 
     /**
      * Are we editing or creating a model?
-     * @return boolean True if editing, false when creating a model
+     * @return bool True if editing, false when creating a model
      */
     protected function isEdit()
     {

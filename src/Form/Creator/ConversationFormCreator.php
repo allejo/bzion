@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ConversationFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -26,7 +26,7 @@ class ConversationFormCreator extends ModelFormCreator
         return $builder
             ->add('Recipients', new AdvancedModelType(array('player', 'team')), array(
                 'constraints' => new Count(array(
-                    'min' => 2, // myself is always included
+                    'min'        => 2, // myself is always included
                     'minMessage' => 'You need to specify the recipients of your message'
                 )),
                 'multiple' => true,

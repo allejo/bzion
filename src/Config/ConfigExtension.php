@@ -20,7 +20,7 @@ class ConfigExtension extends ConfigurableExtension
     private $conf = array();
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * Loads the configuration from the yml file into container parameters
      */
@@ -39,7 +39,7 @@ class ConfigExtension extends ConfigurableExtension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAlias()
     {

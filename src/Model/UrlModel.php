@@ -44,7 +44,7 @@ abstract class UrlModel extends PermissionModel
      * Get an object's url
      *
      * @param string  $action   The action to perform (e.g `show`, `list` or `delete`)
-     * @param boolean $absolute Whether to return an absolute URL
+     * @param bool $absolute Whether to return an absolute URL
      * @param array   $params   Extra parameters to pass to the URL generator
      *
      * @return string A link
@@ -58,7 +58,7 @@ abstract class UrlModel extends PermissionModel
      * Get an object's permanent url
      *
      * @param string  $action   The action to perform (e.g `show`, `list` or `delete`)
-     * @param boolean $absolute Whether to return an absolute URL
+     * @param bool $absolute Whether to return an absolute URL
      * @param array   $params   Extra parameters to pass to the URL generator
      *
      * @return string A permanent link
@@ -73,7 +73,7 @@ abstract class UrlModel extends PermissionModel
      *
      * @param mixed   $identifier A parameter representing the model (e.g an ID or alias)
      * @param string  $action     The action to perform
-     * @param boolean $absolute   Whether to return an absolute URL
+     * @param bool $absolute   Whether to return an absolute URL
      * @param array   $params     Extra parameters to pass to the URL generator
      *
      * @return string A link

@@ -23,24 +23,24 @@ class GroupTeamEvents extends AbstractMigration
     public function up()
     {
         // Teams can now join groups
-        $this->editGroupEvent('group.join', function(&$data) {
+        $this->editGroupEvent('group.join', function (&$data) {
             if (!isset($data['teams'])) {
                 $data['teams'] = array();
             }
         });
 
         // Teams can now get kicked from groups
-        $this->editGroupEvent('group.kick', function(&$data) {
+        $this->editGroupEvent('group.kick', function (&$data) {
             $data['kicked'] = array(
-                'id' => $data['kicked'],
+                'id'   => $data['kicked'],
                 'type' => 'Player'
             );
         });
 
         // Teams can now abandon groups
-        $this->editGroupEvent('group.abandon', function(&$data) {
+        $this->editGroupEvent('group.abandon', function (&$data) {
             $data['member'] = array(
-                'id' => $data['player'],
+                'id'   => $data['player'],
                 'type' => 'Player'
             );
             unset($data['player']);
@@ -55,7 +55,7 @@ class GroupTeamEvents extends AbstractMigration
         // No need to rollback the group.join event, team information can stay
 
         // Teams can't be kicked from groups
-        $this->editGroupEvent('group.kick', function(&$data) {
+        $this->editGroupEvent('group.kick', function (&$data) {
             if ($data['kicked']['type'] === 'Player') {
                 $data['kicked'] = $data['kicked']['id'];
             } else {
@@ -65,7 +65,7 @@ class GroupTeamEvents extends AbstractMigration
         });
 
         // Teams can't abandon groups
-        $this->editGroupEvent('group.abandon', function(&$data) {
+        $this->editGroupEvent('group.abandon', function (&$data) {
             if ($data['member']['type'] === 'Player') {
                 $data['player'] = $data['member']['id'];
                 unset($data['member']);

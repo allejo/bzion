@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MessageFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {

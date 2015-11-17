@@ -34,7 +34,7 @@ class NewsCategory extends AliasModel
     const TABLE = "news_categories";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($category)
     {
@@ -164,7 +164,7 @@ class NewsCategory extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -187,7 +187,7 @@ class NewsCategory extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getParamName()
     {
@@ -195,7 +195,7 @@ class NewsCategory extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getTypeForHumans()
     {

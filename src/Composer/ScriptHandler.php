@@ -12,15 +12,14 @@ use Composer\IO\ConsoleIO;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Phinx\Console\PhinxApplication;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Yaml;
-
 
 /**
  * A manager for composer events
@@ -55,47 +54,47 @@ class ScriptHandler
         $args = $event->getArguments();
 
         if ($env === null) {
-	    if (isset($args[0])) {
-		$env = $args[0];
-	    } elseif (getenv('SYMFONY_ENV')) {
-		$env = getenv('SYMFONY_ENV');
-	    } else {
-		$env = 'all';
-	    }
-	}
+            if (isset($args[0])) {
+                $env = $args[0];
+            } elseif (getenv('SYMFONY_ENV')) {
+                $env = getenv('SYMFONY_ENV');
+            } else {
+                $env = 'all';
+            }
+        }
 
-	// Delete all cache files
-	$finder = new Finder();
-	$cacheDirectory = __DIR__ . '/../../app/cache/';
+    // Delete all cache files
+    $finder = new Finder();
+        $cacheDirectory = __DIR__ . '/../../app/cache/';
 
-	$fs = new Filesystem();
+        $fs = new Filesystem();
 
-	$clear = true;
+        $clear = true;
 
-	// We make sure that the root directories for each environment aren't
-	// removed, so that permission settings are kept
-	if ($env === 'all') {
-	    $io->write("Clearing cache for <fg=green;bold>all</> environments");
-	    $finder->in($cacheDirectory)->depth('== 1');
-	} else {
-	    $directory = $cacheDirectory . str_replace('/', '', $env);
+    // We make sure that the root directories for each environment aren't
+    // removed, so that permission settings are kept
+    if ($env === 'all') {
+        $io->write("Clearing cache for <fg=green;bold>all</> environments");
+        $finder->in($cacheDirectory)->depth('== 1');
+    } else {
+        $directory = $cacheDirectory . str_replace('/', '', $env);
 
-	    if ($fs->exists($directory)) {
-		$io->write("Clearing cache for the <fg=green>$env</> environment");
-		$finder->in($directory)->depth('== 0');
-	    } else {
-		$io->write("Cache directory for the <fg=green>$env</> environment doesn't exist and won't be cleared");
-		$clear = false;
-	    }
-	}
+        if ($fs->exists($directory)) {
+            $io->write("Clearing cache for the <fg=green>$env</> environment");
+            $finder->in($directory)->depth('== 0');
+        } else {
+            $io->write("Cache directory for the <fg=green>$env</> environment doesn't exist and won't be cleared");
+            $clear = false;
+        }
+    }
 
-	if ($clear) {
-	    // We use Symfony's Filesystem component to delete files recursively
-	    $fs->remove($finder);
-	}
+        if ($clear) {
+            // We use Symfony's Filesystem component to delete files recursively
+        $fs->remove($finder);
+        }
 
         if ($env === 'prod' || $env === 'all') {
-	    static::executeCommand($event, 'cache:warmup');
+            static::executeCommand($event, 'cache:warmup');
         }
     }
 
@@ -106,7 +105,7 @@ class ScriptHandler
      */
     public static function clearAllCaches(Event $event)
     {
-	return static::clearCache($event, 'all');
+        return static::clearCache($event, 'all');
     }
 
     /**
@@ -268,7 +267,7 @@ class ScriptHandler
     /**
      * Get the database's configuration
      *
-     * @param  boolean    $testing Whether to retrieve the test database credentials
+     * @param  bool    $testing Whether to retrieve the test database credentials
      * @return array|null The configuration as defined in the config.yml file, null if no configuration was found
      */
     public static function getDatabaseConfig($testing = false)

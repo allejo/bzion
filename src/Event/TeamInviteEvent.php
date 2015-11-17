@@ -38,7 +38,7 @@ class TeamInviteEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function notify($type)
     {

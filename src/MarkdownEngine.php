@@ -15,7 +15,7 @@ class MarkdownEngine extends \Parsedown
 {
     /**
      * Whether or not to allow images to be rendered. If set to false, it'll be rendered as a hyperlink
-     * @var boolean
+     * @var bool
      */
     protected $allowImages;
 
@@ -29,8 +29,7 @@ class MarkdownEngine extends \Parsedown
      */
     protected function inlineImage($Excerpt)
     {
-        if ($this->allowImages)
-        {
+        if ($this->allowImages) {
             return parent::inlineImage($Excerpt);
         }
 

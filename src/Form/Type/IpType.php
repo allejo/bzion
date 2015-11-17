@@ -1,13 +1,10 @@
 <?php
+
 namespace BZIon\Form\Type;
 
-use BZIon\Form\Transformer\IpTransformer;
 use BZIon\Form\Constraint\IpAddress;
-use BZIon\Form\Constraint\IpAddressValidator;
+use BZIon\Form\Transformer\IpTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Extension\Validator\EventListener\ValidationListener;
-use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationMapper;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +18,7 @@ class IpType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $addTypeConstraint = function($options, $value) {
+        $addTypeConstraint = function ($options, $value) {
             // Constraint should always be converted to an array
             $value = is_object($value) ? array($value) : (array) $value;
 

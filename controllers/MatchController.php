@@ -17,10 +17,10 @@ class MatchController extends CRUDController
         $currentPage = $request->query->get('page', 1);
 
         return array(
-            "matches" => $query->getModels(),
-            "team" => $team,
+            "matches"     => $query->getModels(),
+            "team"        => $team,
             "currentPage" => $currentPage,
-            "totalPages" => $totalPages
+            "totalPages"  => $totalPages
     );
     }
 
@@ -40,7 +40,7 @@ class MatchController extends CRUDController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getMessages($type, $name = '')
     {

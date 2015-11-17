@@ -29,7 +29,7 @@ class ChangesCommand extends ContainerAwareCommand
     private $alreadyListedChanges = array();
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -65,7 +65,7 @@ class ChangesCommand extends ContainerAwareCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -81,12 +81,12 @@ class ChangesCommand extends ContainerAwareCommand
         $listed = $this->parseChangelog($changelog);
 
         if (!$markRead) {
-	    if ($date) {
-		$last = $date->isFuture() ? 'next' : 'last';
-		$since = "in the $last " . $date->diffForHumans(null, true);
-	    } else {
-		$since = 'since the last update';
-	    }
+            if ($date) {
+                $last = $date->isFuture() ? 'next' : 'last';
+                $since = "in the $last " . $date->diffForHumans(null, true);
+            } else {
+                $since = 'since the last update';
+            }
 
             if ($this->isEmpty($listed)) {
                 $output->writeln("No significant changes $since.");
@@ -244,7 +244,7 @@ class ChangesCommand extends ContainerAwareCommand
      * isn't shown the same changes in the future
      *
      * @param  string  $path The path to the last update file
-     * @param  boolean $date The date command line argument (used to determine
+     * @param  bool $date The date command line argument (used to determine
      *                       whether we should store the last update or not)
      * @return void
      */
@@ -268,7 +268,7 @@ class ChangesCommand extends ContainerAwareCommand
      * Recursively find out if an array is empty
      *
      * @param  array   $array The array to test
-     * @return boolean|null
+     * @return bool|null
      */
     private function isEmpty(array $array)
     {

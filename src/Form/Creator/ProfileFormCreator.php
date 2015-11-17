@@ -23,23 +23,24 @@ class ProfileFormCreator extends ModelFormCreator
      * True if the player is editing their own profile, false if an admin is
      * editing the player
      *
-     * @var boolean
+     * @var bool
      */
     private $editingSelf = true;
 
     /**
      * Set whether the player is editing their own profile
      *
-     * @param boolean $editingSelf True if the player is editing their own
+     * @param bool $editingSelf True if the player is editing their own
      *                             profile, false if an admin is editing the
      *                             player
      */
-    public function setEditingSelf($editingSelf) {
+    public function setEditingSelf($editingSelf)
+    {
         $this->editingSelf = $editingSelf;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -97,8 +98,8 @@ class ProfileFormCreator extends ModelFormCreator
         if (!$this->editingSelf) {
             $builder->add('roles', new ModelType('Role', false), array(
                 'constraints' => new NotBlank(),
-                'data' => \Role::getRoles($this->editing->getId()),
-                'multiple' => true
+                'data'        => \Role::getRoles($this->editing->getId()),
+                'multiple'    => true
             ));
         }
 
@@ -120,7 +121,7 @@ class ProfileFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function update($form, $player)
     {

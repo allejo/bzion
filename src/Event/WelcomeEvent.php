@@ -55,7 +55,7 @@ class WelcomeEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function notify($type)
     {

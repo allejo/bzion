@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Twig;
 
 class LinkToFunction
@@ -10,9 +11,9 @@ class LinkToFunction
      * @param  \Model  $model     The model we want to link to
      * @param  string  $icon      A font awesome icon identifier to show instead of text
      * @param  string  $action    The action to link to (e.g show or edit)
-     * @param  boolean $linkAll   Whether to link to inactive or deleted models
+     * @param  bool $linkAll   Whether to link to inactive or deleted models
      * @param  string  $class     The CSS class(es) to apply to the link
-     * @param  boolean $forceText Whether to show both the icon and text
+     * @param  bool $forceText Whether to show both the icon and text
      * @param  string  $content   Override the content that will automatically be used
      *
      * @return string The HTML link
@@ -29,8 +30,7 @@ class LinkToFunction
     ) {
         if (empty($content)) {
             $content = $this->getContent($model, $icon, $forceText);
-        }
-        else if ($icon) {
+        } elseif ($icon) {
             $content = "<i class=\"fa fa-$icon\"></i> " . $content;
         }
 
@@ -53,7 +53,7 @@ class LinkToFunction
      *
      * @param  \Model  $model     The model we want to link to
      * @param  string  $icon      A font awesome icon identifier to show instead of text
-     * @param  boolean $forceText Whether to show both the icon and text
+     * @param  bool $forceText Whether to show both the icon and text
      * @return string  The link's content
      */
     private function getContent($model, $icon, $forceText)

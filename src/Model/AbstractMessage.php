@@ -46,7 +46,7 @@ abstract class AbstractMessage extends Model
     const TABLE = "messages";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($event)
     {
@@ -78,7 +78,7 @@ abstract class AbstractMessage extends Model
      * Find out whether the event is a message and not a generic conversation event
      * (such as a rename or member join)
      *
-     * @return boolean
+     * @return bool
      */
     public function isMessage()
     {
@@ -86,7 +86,7 @@ abstract class AbstractMessage extends Model
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -94,21 +94,21 @@ abstract class AbstractMessage extends Model
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getQueryBuilder()
     {
         return new MessageQueryBuilder('AbstractMessage', array(
             'columns' => array(
-                'conversation'  => 'conversation_to',
-                'time'   => 'timestamp',
-                'status' => 'status'
+                'conversation' => 'conversation_to',
+                'time'         => 'timestamp',
+                'status'       => 'status'
             )
         ));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function chooseModelFromDatabase($id)
     {

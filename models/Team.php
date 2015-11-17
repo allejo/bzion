@@ -36,7 +36,7 @@ class Team extends AvatarModel
     /**
      * The team's activity
      *
-     * @var double
+     * @var float
      */
     protected $activity;
 
@@ -105,7 +105,7 @@ class Team extends AvatarModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_TEAM;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($team)
     {
@@ -131,7 +131,7 @@ class Team extends AvatarModel
      *
      * @param int $id The id of the player to add to the team
      *
-     * @return boolean|null True if both the player was added to the team AND the team member count was incremented
+     * @return bool|null True if both the player was added to the team AND the team member count was incremented
      */
     public function addMember($id)
     {
@@ -229,7 +229,7 @@ class Team extends AvatarModel
     /**
      * Get the description of the team
      *
-     * @param  boolean $md false for HTML format, true for the original markdown
+     * @param  bool $md false for HTML format, true for the original markdown
      * @return string  The description of the team
      */
     public function getDescription()
@@ -505,7 +505,7 @@ class Team extends AvatarModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete()
     {
@@ -534,19 +534,19 @@ class Team extends AvatarModel
         $created = TimeDate::from($created);
 
         $team = self::create(array(
-            'name'             => $name,
-            'alias'            => self::generateAlias($name),
-            'description'   => $description,
-            'elo'              => 1200,
-            'activity'         => 0.00,
-            'matches_won'      => 0,
-            'matches_draw'     => 0,
-            'matches_lost'     => 0,
-            'members'          => 0,
-            'avatar'           => $avatar,
-            'leader'           => $leader,
-            'status'           => $status,
-            'created'          => $created->toMysql(),
+            'name'         => $name,
+            'alias'        => self::generateAlias($name),
+            'description'  => $description,
+            'elo'          => 1200,
+            'activity'     => 0.00,
+            'matches_won'  => 0,
+            'matches_draw' => 0,
+            'matches_lost' => 0,
+            'members'      => 0,
+            'avatar'       => $avatar,
+            'leader'       => $leader,
+            'status'       => $status,
+            'created'      => $created->toMysql(),
         ), 'sssidiiiissss');
 
         $team->addMember($leader);
@@ -595,7 +595,7 @@ class Team extends AvatarModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -618,7 +618,7 @@ class Team extends AvatarModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function isEditor($player)
     {

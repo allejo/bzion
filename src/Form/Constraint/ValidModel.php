@@ -33,7 +33,7 @@ class ValidModel extends Constraint
     public $tooManyMessage = 'You can only provide one object';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validatedBy()
     {

@@ -13,7 +13,7 @@ abstract class HTMLController extends Controller
 {
     /**
      * Whether twig has been prepared
-     * @var boolean
+     * @var bool
      */
     public $twigReady = false;
 
@@ -47,7 +47,7 @@ abstract class HTMLController extends Controller
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      * @param string $view
      */
     protected function render($view, $parameters = array())
@@ -58,7 +58,7 @@ abstract class HTMLController extends Controller
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws ModelNotFoundException
      */
@@ -81,7 +81,7 @@ abstract class HTMLController extends Controller
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function callAction($action = null)
     {
@@ -132,7 +132,8 @@ abstract class HTMLController extends Controller
 
         $urls = $request->getSession()->get('previous_paths', array());
         foreach ($urls as $url) {
-            if ($url != $request->getPathInfo()) {// Don't redirect to the same page
+            if ($url != $request->getPathInfo()) {
+                // Don't redirect to the same page
                 return $request->getBaseUrl() . $url;
             }
         }
@@ -176,7 +177,7 @@ abstract class HTMLController extends Controller
      * models or not.
      *
      * @param  Model Model Model in question
-     * @return boolean
+     * @return bool
      */
     public static function canSee($model)
     {
@@ -189,8 +190,8 @@ abstract class HTMLController extends Controller
 
     /**
      * Assert that the user is logged in
-     * @throws HTTPException
      * @param  string        $message The message to show if the user is not logged in
+     * @throws HTTPException
      * @return void
      */
     protected function requireLogin(

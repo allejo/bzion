@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Type;
 
 use BZIon\Form\Transformer\TimezoneTransformer;
@@ -41,7 +42,7 @@ class TimezoneType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -49,7 +50,7 @@ class TimezoneType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -60,7 +61,7 @@ class TimezoneType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -68,7 +69,7 @@ class TimezoneType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -89,7 +90,7 @@ class TimezoneType extends AbstractType
         } else {
             $sign = ($offset > 0) ? '+' : '-';
 
-            $formattedOffset = 'GMT' . $sign . date('H:i', mktime(0, abs($offset)/60));
+            $formattedOffset = 'GMT' . $sign . date('H:i', mktime(0, abs($offset) / 60));
         }
 
         if (substr($timezone->getName(), 0, 7) === 'Etc/GMT') {

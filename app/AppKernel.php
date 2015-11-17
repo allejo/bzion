@@ -2,8 +2,8 @@
 
 use BZIon\Cache\ModelCache;
 use BZIon\Session\DatabaseSessionHandler;
-use BZIon\Twig\InvalidTest;
 use BZIon\Twig\HumanDateFilter;
+use BZIon\Twig\InvalidTest;
 use BZIon\Twig\LinkToFunction;
 use BZIon\Twig\MarkdownFilter;
 use BZIon\Twig\PluralFilter;
@@ -20,12 +20,6 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Debug\Debug;
-use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
-use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
-use Symfony\Component\Form\Extension\DataCollector\DataCollectorExtension;
-use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
-use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
-use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -38,7 +32,6 @@ use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Validator\Validation;
 
 require_once __DIR__ . '/../bzion-load.php';
 

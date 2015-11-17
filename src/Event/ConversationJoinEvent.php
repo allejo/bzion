@@ -55,7 +55,7 @@ class ConversationJoinEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function serialize()
     {
@@ -70,14 +70,14 @@ class ConversationJoinEvent extends Event
         }
 
         return serialize(array(
-            'conversation'   => $this->conversation->getId(),
-            'players' => \Player::mapToIDs($players),
-            'teams' => \Team::mapToIDs($teams)
+            'conversation' => $this->conversation->getId(),
+            'players'      => \Player::mapToIDs($players),
+            'teams'        => \Team::mapToIDs($teams)
         ));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function unserialize($data)
     {

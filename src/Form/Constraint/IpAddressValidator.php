@@ -16,7 +16,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class IpAddressValidator extends ConstraintValidator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
     {
@@ -46,7 +46,7 @@ class IpAddressValidator extends ConstraintValidator
      * Finds out whether a string is a valid IP address
      * @param  $string The IP address to check
      *
-     * @return boolean
+     * @return bool
      */
     private function isValidIP($string)
     {
@@ -59,7 +59,7 @@ class IpAddressValidator extends ConstraintValidator
      * Finds out whether a string is a valid hostname
      * @param  $string The hostname to check
      *
-     * @return boolean
+     * @return bool
      */
     private function isValidHostname($string)
     {

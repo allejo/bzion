@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-use BZIon\Event\Events;
 use BZIon\Event\ConversationRenameEvent;
+use BZIon\Event\Events;
 use BZIon\Event\WelcomeEvent;
 
 require_once __DIR__ . "/../bzion-load.php";

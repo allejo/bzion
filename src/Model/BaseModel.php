@@ -27,7 +27,7 @@ abstract class BaseModel implements ModelInterface
     /**
      * False if there isn't any row in the database representing
      * the requested object ID
-     * @var boolean
+     * @var bool
      */
     protected $valid;
 
@@ -39,7 +39,7 @@ abstract class BaseModel implements ModelInterface
 
     /**
      * Whether the lazy parameters of the model have been loaded
-     * @var boolean
+     * @var bool
      */
     protected $loaded = false;
 
@@ -53,9 +53,9 @@ abstract class BaseModel implements ModelInterface
     /**
      * Get a Model based on its ID
      *
-     * @throws InvalidArgumentException If $id is an object of an incorrect type
      * @param  int|static $id The ID of the object to look for, or the object
      *                        itself
+     * @throws InvalidArgumentException If $id is an object of an incorrect type
      */
     public static function get($id)
     {
@@ -430,7 +430,8 @@ abstract class BaseModel implements ModelInterface
         $question_marks = rtrim($question_marks, ','); // Remove last comma
 
         if ($now) {
-            if (!is_array($now)) {// Convert $now to an array if it's a string
+            if (!is_array($now)) {
+                // Convert $now to an array if it's a string
                 $now = array($now);
             }
 

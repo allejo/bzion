@@ -73,7 +73,7 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Whether the callsign of the player is outdated
-     * @var boolean
+     * @var bool
      */
     protected $outdated;
 
@@ -140,7 +140,7 @@ class Player extends AvatarModel implements NamedModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_USER;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($player)
     {
@@ -154,7 +154,7 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignLazyResult($player)
     {
@@ -181,8 +181,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function addRole($role_id)
     {
-        if ($role_id instanceof Role)
-        {
+        if ($role_id instanceof Role) {
             $role_id = $role_id->getId();
         }
 
@@ -284,7 +283,7 @@ class Player extends AvatarModel implements NamedModel
      * message
      *
      * @param  string  $type
-     * @return boolean `true` if the player should be sent an e-mail
+     * @return bool `true` if the player should be sent an e-mail
      */
     public function canReceive($type)
     {
@@ -602,7 +601,7 @@ class Player extends AvatarModel implements NamedModel
     /**
      * Set whether the callsign of the player is outdated
      *
-     * @param  boolean $outdated Whether the callsign is outdated
+     * @param  bool $outdated Whether the callsign is outdated
      * @return self
      */
     public function setOutdated($outdated)
@@ -781,7 +780,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getFromBZID($bzid)
     {
-        return Player::get(self::fetchIdFrom($bzid, "bzid", "s"));
+        return self::get(self::fetchIdFrom($bzid, "bzid", "s"));
     }
 
     /**
@@ -841,7 +840,7 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -849,7 +848,7 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getEagerColumns()
     {
@@ -857,7 +856,7 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getLazyColumns()
     {
@@ -986,8 +985,8 @@ class Player extends AvatarModel implements NamedModel
      * Find whether the player can delete a model
      *
      * @param  PermissionModel $model       The model that will be seen
-     * @param  boolean         $showDeleted Whether to show deleted models to admins
-     * @return boolean
+     * @param  bool         $showDeleted Whether to show deleted models to admins
+     * @return bool
      */
     public function canSee($model, $showDeleted = false)
     {
@@ -998,9 +997,9 @@ class Player extends AvatarModel implements NamedModel
      * Find whether the player can delete a model
      *
      * @param  PermissionModel $model The model that will be deleted
-     * @param  boolean         $hard  Whether to check for hard-delete perms, as opposed
+     * @param  bool         $hard  Whether to check for hard-delete perms, as opposed
      *                                to soft-delete ones
-     * @return boolean
+     * @return bool
      */
     public function canDelete($model, $hard = false)
     {
@@ -1015,7 +1014,7 @@ class Player extends AvatarModel implements NamedModel
      * Find whether the player can create a model
      *
      * @param  string  $modelName The PHP class identifier of the model type
-     * @return boolean
+     * @return bool
      */
     public function canCreate($modelName)
     {
@@ -1026,7 +1025,7 @@ class Player extends AvatarModel implements NamedModel
      * Find whether the player can edit a model
      *
      * @param  PermissionModel $model The model which will be edited
-     * @return boolean
+     * @return bool
      */
     public function canEdit($model)
     {

@@ -72,7 +72,7 @@ class ElasticaEventSubscriber implements EventSubscriberInterface
             'conversation.abandon' => 'update',
             'conversation.join'    => 'update',
             'conversation.kick'    => 'update',
-            'message.new'   => 'onNew',
+            'message.new'          => 'onNew',
         );
     }
 

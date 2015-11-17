@@ -15,7 +15,7 @@ abstract class JSONController extends HTMLController
     protected $attributes;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct($parameters)
     {
@@ -42,7 +42,7 @@ abstract class JSONController extends HTMLController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function handleReturnValue($return, $action)
     {

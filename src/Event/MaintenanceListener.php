@@ -18,13 +18,13 @@ class MaintenanceListener
 {
     /**
      * Whether maintenance mode is enabled
-     * @var boolean
+     * @var bool
      */
     private $maintenance;
 
     /**
      * Construct new MaintenanceListener
-     * @param boolean $maintenance Whether maintenance mode is enabled
+     * @param bool $maintenance Whether maintenance mode is enabled
      */
     public function __construct($maintenance)
     {

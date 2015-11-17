@@ -25,7 +25,7 @@ class Message extends AbstractMessage
     protected $message;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($message)
     {
@@ -73,10 +73,10 @@ class Message extends AbstractMessage
     public static function sendMessage($to, $from, $message, $status = 'visible')
     {
         return self::create(array(
-            'conversation_to'    => $to,
-            'player_from' => $from,
-            'message'     => $message,
-            'status'      => $status,
+            'conversation_to' => $to,
+            'player_from'     => $from,
+            'message'         => $message,
+            'status'          => $status,
         ), 'iiss', 'timestamp');
     }
 

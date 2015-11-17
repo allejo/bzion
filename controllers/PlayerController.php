@@ -2,7 +2,6 @@
 
 use BZIon\Form\Creator\PlayerAdminNotesFormCreator as FormCreator;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PlayerController extends JSONController
@@ -38,7 +37,7 @@ class PlayerController extends JSONController
         }
 
         $params = array(
-            'me' => $player,
+            'me'   => $player,
             'self' => false
         );
 

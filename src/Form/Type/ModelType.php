@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Type;
 
 use BZIon\Form\Transformer\MultipleModelTransformer;
@@ -23,7 +24,7 @@ class ModelType extends AbstractType
 
     /**
      * Whether to include an empty element in the list
-     * @var boolean
+     * @var bool
      */
     private $emptyElem;
 
@@ -36,7 +37,7 @@ class ModelType extends AbstractType
     /**
      * Get a new ModelType
      * @param string        $type      The type of the model
-     * @param boolean       $emptyElem Whether to include an empty element in the list
+     * @param bool       $emptyElem Whether to include an empty element in the list
      * @param callable|null $modifier  A function which modifies the query builder
      *                                 used to fetch the Models
      */
@@ -82,7 +83,7 @@ class ModelType extends AbstractType
     {
         $type = $this->getTypeForHumans();
 
-        $emptyElement = ($this->emptyElem) ? array( null => '' ) : array();
+        $emptyElement = ($this->emptyElem) ? array(null => '') : array();
         $names = $emptyElement + $this->getAll();
 
         $resolver->setDefaults(array(

@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 use BZIon\Form\Type\TimezoneType;
@@ -16,7 +17,8 @@ class TimezoneTransformer implements DataTransformerInterface
      * Create a new TimezoneTransformer
      * @param array $timezones An array of timezones, defaults to TimezoneType::getTimezones()
      */
-    public function __construct(array $timezones = null) {
+    public function __construct(array $timezones = null)
+    {
         $this->timezones = ($timezones === null) ? TimezoneType::getTimezones() : $timezones;
     }
 

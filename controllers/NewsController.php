@@ -22,11 +22,11 @@ class NewsController extends CRUDController
         $currentPage = $request->query->get('page', 1);
 
         return array(
-            "news" => $news,
-            "categories" => $this->getCategories(),
-            "category" => $category,
+            "news"        => $news,
+            "categories"  => $this->getCategories(),
+            "category"    => $category,
             "currentPage" => $currentPage,
-            "totalPages" => $totalPages
+            "totalPages"  => $totalPages
         );
     }
 

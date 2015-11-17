@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -23,12 +24,12 @@ class IpTransformer implements DataTransformerInterface
     /**
      * Transforms an ID to an object
      *
-     * @return Model
      * @throws TransformationFailedException if the team is not found.
+     * @return Model
      */
     public function reverseTransform($ips)
     {
-        return array_filter(preg_split("/[\s,]+/", strtolower($ips)), function($value) {
+        return array_filter(preg_split("/[\s,]+/", strtolower($ips)), function ($value) {
             return $value !== '';
         });
     }

@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class TeamFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -63,7 +63,7 @@ class TeamFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fill($form, $team)
     {
@@ -74,7 +74,7 @@ class TeamFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function enter($form)
     {
@@ -88,7 +88,7 @@ class TeamFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function update($form, $team)
     {

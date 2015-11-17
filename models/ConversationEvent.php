@@ -22,7 +22,7 @@ class ConversationEvent extends AbstractMessage
     protected $event;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($event)
     {
@@ -50,7 +50,7 @@ class ConversationEvent extends AbstractMessage
      * Do not use ConversationEvent::getType(), as it returns the name of the class
      * (i.e. conversationEvent)
      *
-     * @return integer
+     * @return int
      */
     public function getCategory()
     {
@@ -69,11 +69,11 @@ class ConversationEvent extends AbstractMessage
     public static function storeEvent($conversation, $event, $type, $timestamp = 'now', $status = 'visible')
     {
         return self::create(array(
-            "conversation_to"   => $conversation,
-            "message"    => serialize($event),
-            "event_type" => $type,
-            "timestamp"  => TimeDate::from($timestamp)->toMysql(),
-            "status"     => $status
+            "conversation_to" => $conversation,
+            "message"         => serialize($event),
+            "event_type"      => $type,
+            "timestamp"       => TimeDate::from($timestamp)->toMysql(),
+            "status"          => $status
         ), 'issss');
     }
 

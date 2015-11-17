@@ -17,6 +17,5 @@ class NullableHostColumn extends AbstractMigration
      */
     public function down()
     {
-
     }
 }

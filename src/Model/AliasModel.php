@@ -95,7 +95,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getURL($action = 'show', $absolute = false, $params = array())
     {
@@ -117,7 +117,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      * @return AliasModel
      */
     public static function fetchFromSlug($slug)
@@ -161,7 +161,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
         // indistinguishable from an ID. If it does, add a dash in the end.
         // Also prevent aliases from taking names such as "new",
         while (preg_match("/^[0-9]+$/", $name)) {
-            $name = $name.'-';
+            $name = $name . '-';
         }
 
         return self::getUniqueAlias($name, ($id) ?: 0);
@@ -188,7 +188,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
         // in the end of it and keep incrementing it until there is we find
         // an open spot.
         $currentAlias = $alias;
-        for ($i = 2;; $i++) {
+        for ($i = 2;; ++$i) {
             if (!in_array($currentAlias, $aliases)
             &&  !in_array($currentAlias, static::getDisallowedAliases())) {
                 break;

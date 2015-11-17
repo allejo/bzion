@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -55,7 +56,7 @@ class AppGlobal
     /**
      * Find out whether the kernel has enabled debugging
      *
-     * @return boolean
+     * @return bool
      */
     public function isDebug()
     {
@@ -65,7 +66,7 @@ class AppGlobal
     /**
      * Find out whether maintenance mode is enabled for users of the website
      *
-     * @return boolean
+     * @return bool
      */
     public function isMaintenance()
     {

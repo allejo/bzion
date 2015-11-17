@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 class ExceptionListener extends BaseListener
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function duplicateRequest(\Exception $exception, Request $request)
     {
@@ -34,7 +34,7 @@ class ExceptionListener extends BaseListener
     }
 
      /**
-      * {@inheritDoc}
+      * {@inheritdoc}
       */
      protected function logException(\Exception $exception, $message, $original = true)
      {

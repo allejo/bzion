@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ConversationInviteFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -30,7 +30,7 @@ class ConversationInviteFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getName()
     {

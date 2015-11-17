@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -40,8 +41,8 @@ class MultipleModelTransformer implements DataTransformerInterface
      * Transforms IDs to a list of objects
      *
      * @param  int|int[] $ids The model IDs to transform
-     * @return Model[]
      * @throws TransformationFailedException if the team is not found.
+     * @return Model[]
      */
     public function reverseTransform($ids)
     {

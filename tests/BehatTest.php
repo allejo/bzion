@@ -1,7 +1,6 @@
 <?php
 
 use Behat\Behat\ApplicationFactory as BehatFactory;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 

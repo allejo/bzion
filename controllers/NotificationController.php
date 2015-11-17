@@ -42,7 +42,7 @@ class NotificationController extends HTMLController
                     'date'          => $date
                 );
 
-                $index++;
+                ++$index;
             }
 
             $result[$index]['notifications'][] = $notification;

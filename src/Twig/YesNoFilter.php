@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Twig;
 
 class YesNoFilter
@@ -6,7 +7,7 @@ class YesNoFilter
     /**
      * Convert a boolean into a readable yes/no value
      *
-     * @param  boolean $boolean
+     * @param  bool $boolean
      * @return string  Yes or No
      */
     public function __invoke($boolean)

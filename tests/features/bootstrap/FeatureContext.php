@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class FeatureContext extends MinkContext implements SnippetAcceptingContext, KernelAwareContext
 {
     /**
-     * @var \Symfony\Component\HttpKernel\KernelInterface $kernel
+     * @var \Symfony\Component\HttpKernel\KernelInterface
      */
     private $kernel = null;
     private $client = null;
@@ -59,7 +59,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
         // Try to find a valid bzid
         $bzid = 300;
         while (Player::getFromBZID($bzid)->isValid()) {
-            $bzid++;
+            ++$bzid;
 
             if ($bzid > 15000) {
                 throw new Exception("bzid too big");

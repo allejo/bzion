@@ -171,10 +171,10 @@ class TeamController extends CRUDController
      * Make sure that a player can edit a team
      *
      * Throws an exception if a player is not an admin or the leader of a team
-     * @throws HTTPException
      * @param  Player        $player  The player to test
      * @param  Team          $team    The team
      * @param  string        $message The error message to show
+     * @throws HTTPException
      * @return void
      */
     private function assertCanEdit(Player $player, Team $team, $message = "You are not allowed to edit that team")

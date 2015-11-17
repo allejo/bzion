@@ -83,7 +83,7 @@ class Role extends Model
     const TABLE = "roles";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($role)
     {
@@ -288,7 +288,7 @@ class Role extends Model
     /**
      * Set the content of the page
      *
-     * @param  boolean $display
+     * @param  bool $display
      * @return self
      */
     public function setDisplayAsLeader($display)

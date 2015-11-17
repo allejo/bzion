@@ -58,7 +58,7 @@ class Command extends ContainerAwareCommand
 
         foreach (array('cache:clear', 'cache:warmup') as $commandName) {
             $command = $this->getApplication()->find($commandName);
-            $arguments = array( 'command' => $commandName );
+            $arguments = array('command' => $commandName);
             $input = new ArrayInput($arguments);
             $command->run($input, $commandOutput);
             $this->advance();

@@ -85,7 +85,7 @@ class Server extends UrlModel implements NamedModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_SERVER;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($server)
     {

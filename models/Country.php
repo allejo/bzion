@@ -30,7 +30,7 @@ class Country extends Model
     const TABLE = "countries";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($country)
     {
@@ -123,7 +123,7 @@ class Country extends Model
     {
         return new QueryBuilder('Country', array(
             'columns' => array(
-                'name'   => 'name',
+                'name' => 'name',
             ),
             'name' => 'name',
         ));

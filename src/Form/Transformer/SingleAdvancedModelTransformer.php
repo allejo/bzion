@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -9,8 +10,8 @@ class SingleAdvancedModelTransformer extends AdvancedModelTransformer
      * Transforms data to an object
      *
      * @param  string $data
-     * @return Model|null
      * @throws TransformationFailedException if the team is not found.
+     * @return Model|null
      */
     public function reverseTransform($data)
     {

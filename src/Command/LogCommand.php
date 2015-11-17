@@ -94,8 +94,8 @@ class LogCommand extends ContainerAwareCommand
      * Get a type name to put into the YAML file from whatever the user gave us
      *
      * @param  string            $type The user's input
-     * @return string
      * @throws \RuntimeException
+     * @return string
      */
     private function getTypeName($type)
     {

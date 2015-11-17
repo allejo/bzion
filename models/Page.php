@@ -38,7 +38,7 @@ class Page extends AliasModel
 
     /**
      * Whether the page is the home page
-     * @var boolean
+     * @var bool
      */
     protected $home;
 
@@ -59,7 +59,7 @@ class Page extends AliasModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_PAGE;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($page)
     {
@@ -71,7 +71,7 @@ class Page extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignLazyResult($page)
     {
@@ -213,7 +213,7 @@ class Page extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function getDisallowedAliases()
     {
@@ -223,7 +223,7 @@ class Page extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -231,7 +231,7 @@ class Page extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getEagerColumns()
     {
@@ -239,7 +239,7 @@ class Page extends AliasModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getLazyColumns()
     {
@@ -267,6 +267,6 @@ class Page extends AliasModel
      */
     public static function getHomePage()
     {
-        return Page::get(parent::fetchIdFrom(1, "home"));
+        return self::get(parent::fetchIdFrom(1, "home"));
     }
 }

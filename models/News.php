@@ -71,7 +71,7 @@ class News extends UrlModel implements NamedModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_NEWS;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($news)
     {
@@ -190,7 +190,7 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -198,7 +198,7 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getParamName()
     {
@@ -206,7 +206,7 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getRouteName($action = 'show')
     {
@@ -279,7 +279,7 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {

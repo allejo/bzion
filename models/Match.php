@@ -137,7 +137,7 @@ class Match extends PermissionModel implements NamedModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_MATCH;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($match)
     {
@@ -197,7 +197,8 @@ class Match extends PermissionModel implements NamedModel
      *
      * @return string Either "W", "L", or "T" relative to the team
      */
-    public function getMatchLetter($teamID) {
+    public function getMatchLetter($teamID)
+    {
         return strtoupper(substr($this->getMatchDescription($teamID), 0, 1));
     }
 
@@ -583,13 +584,13 @@ class Match extends PermissionModel implements NamedModel
      */
     public static function calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration)
     {
-        $prob = 1.0 / (1 + pow(10, (($b_elo-$a_elo)/400.0)));
+        $prob = 1.0 / (1 + pow(10, (($b_elo - $a_elo) / 400.0)));
         if ($a_points > $b_points) {
-            $diff = 50*(1-$prob);
+            $diff = 50 * (1 - $prob);
         } elseif ($a_points == $b_points) {
-            $diff = 50*(0.5-$prob);
+            $diff = 50 * (0.5 - $prob);
         } else {
-            $diff = 50*(0-$prob);
+            $diff = 50 * (0 - $prob);
         }
 
         // Apply ELO modifiers from `config.yml`
@@ -632,7 +633,7 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete()
     {
@@ -643,7 +644,7 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -651,7 +652,7 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

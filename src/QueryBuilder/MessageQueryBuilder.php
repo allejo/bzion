@@ -86,5 +86,4 @@ class MessageQueryBuilder extends QueryBuilder
 
         return $this;
     }
-
 }

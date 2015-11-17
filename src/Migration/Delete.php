@@ -13,7 +13,7 @@ namespace BZIon\Migration;
 class Delete extends EditAction
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function perform($pdo, $table, $column, $id)
     {

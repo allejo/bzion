@@ -1,7 +1,6 @@
 <?php
 
 use BZIon\Form\Creator\ProfileFormCreator;
-use Monolog\Logger;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,12 +16,12 @@ class ProfileController extends HTMLController
      *
      * @param  Player  $me      The player's profile to edit
      * @param  Request $request
-     * @param  boolean $self    Whether a player is editing their own profile,
+     * @param  bool $self    Whether a player is editing their own profile,
      *                          instead of an admin editing another player's
      *                          profile
      * @return array
      */
-    public function editAction(Player $me, Request $request, $self=true)
+    public function editAction(Player $me, Request $request, $self = true)
     {
         $creator = new ProfileFormCreator($me);
         $creator->setEditingSelf($self);
@@ -57,8 +56,8 @@ class ProfileController extends HTMLController
 
         return $this->render('Profile/edit.html.twig', array(
             "editingSelf" => $self,
-            "player" => $me,
-            "form" => $form->createView()
+            "player"      => $me,
+            "form"        => $form->createView()
         ));
     }
 

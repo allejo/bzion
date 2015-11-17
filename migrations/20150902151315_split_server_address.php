@@ -16,8 +16,7 @@ class SplitServerAddress extends AbstractMigration
 
         $rows = $this->fetchAll("SELECT * FROM servers");
 
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $id = $row["id"];
             list($domain, $port) = explode(":", $row["domain"]);
 
@@ -34,8 +33,7 @@ class SplitServerAddress extends AbstractMigration
 
         $rows = $this->fetchAll("SELECT * FROM servers");
 
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $newValue = "${row['domain']}:${row['port']}";
 
             $this->query("UPDATE servers SET domain='${newValue}' WHERE id=${row['id']}");

@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MatchFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -53,7 +53,7 @@ class MatchFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function enter($form)
     {

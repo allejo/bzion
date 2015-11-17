@@ -18,7 +18,7 @@ class NewMessageEvent extends Event
     protected $message;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $first;
 
@@ -26,7 +26,7 @@ class NewMessageEvent extends Event
      * Create a new event
      *
      * @param \Message $message The new message
-     * @param boolean  $first   Whether the message is the first in its discussion
+     * @param bool  $first   Whether the message is the first in its discussion
      */
     public function __construct(\Message $message, $first)
     {
@@ -45,7 +45,7 @@ class NewMessageEvent extends Event
 
     /**
      * Find out if the message is the first in its Conversation
-     * @return boolean
+     * @return bool
      */
     public function isFirst()
     {

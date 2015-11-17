@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Twig;
 
 use Doctrine\Common\Inflector\Inflector;

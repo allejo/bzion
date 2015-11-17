@@ -44,7 +44,7 @@ class Conversation extends UrlModel implements NamedModel
     const TABLE = "conversations";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($conversation)
     {
@@ -142,7 +142,7 @@ class Conversation extends UrlModel implements NamedModel
      * Find whether the last message in the conversation has been read by a player
      *
      * @param  int     $playerId The ID of the player
-     * @return boolean
+     * @return bool
      */
     public function isReadBy($playerId)
     {
@@ -182,7 +182,7 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getRouteName($action = 'show')
     {
@@ -190,7 +190,7 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -198,7 +198,7 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -224,7 +224,7 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Get a list containing the IDs of each member player of the conversation
      * @param  int|null  $hide     The ID of a player to ignore
-     * @param  boolean   $distinct Whether to only return players who were
+     * @param  bool   $distinct Whether to only return players who were
      *                             specifically invited to the conversation, and
      *                             are not participating only as members of a team
      * @return integer[] An array of player IDs

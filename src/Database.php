@@ -90,14 +90,14 @@ class Database
                     throw new Exception('You have to specify a MySQL database for testing in the bzion.testing section of your configuration file.');
                 }
 
-                self::$Database = new Database(
+                self::$Database = new self(
                     Service::getParameter('bzion.testing.host'),
                     Service::getParameter('bzion.testing.username'),
                     Service::getParameter('bzion.testing.password'),
                     Service::getParameter('bzion.testing.database')
                 );
             } else {
-                self::$Database = new Database(
+                self::$Database = new self(
                     Service::getParameter('bzion.mysql.host'),
                     Service::getParameter('bzion.mysql.username'),
                     Service::getParameter('bzion.mysql.password'),
@@ -191,7 +191,7 @@ class Database
             if ($typeDef) {
                 $bindParams = array();
                 $bindParamsReferences = array();
-                $bindParams = array_pad($bindParams, (count($params, 1) - count($params))/count($params), "");
+                $bindParams = array_pad($bindParams, (count($params, 1) - count($params)) / count($params), "");
 
                 foreach ($bindParams as $key => $value) {
                     $bindParamsReferences[$key] = &$bindParams[$key];

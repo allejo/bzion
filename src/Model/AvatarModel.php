@@ -69,7 +69,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     /**
      * Get the path for the image used as the object's avatar
      *
-     * @param  boolean $url Whether to return an absolute URL
+     * @param  bool $url Whether to return an absolute URL
      * @return string  The path for the avatar
      */
     public function getAvatar($url = false)

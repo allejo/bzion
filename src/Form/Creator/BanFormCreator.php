@@ -7,8 +7,8 @@
 
 namespace BZIon\Form\Creator;
 
-use BZIon\Form\Type\IpType;
 use BZIon\Form\Type\AdvancedModelType;
+use BZIon\Form\Type\IpType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -18,15 +18,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class BanFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
         return $builder
             ->add('player', new AdvancedModelType(array('player', 'team')), array(
-                'constraints' => new NotBlank,
-                'disabled' => $this->isEdit(),
-                'data' => $this->editing
+                'constraints' => new NotBlank(),
+                'disabled'    => $this->isEdit(),
+                'data'        => $this->editing
             ))
             ->add(
                 $builder->create('automatic_expiration', 'checkbox', array(
@@ -42,7 +42,7 @@ class BanFormCreator extends ModelFormCreator
             )
             ->add('reason', 'textarea', array(
                 'constraints' => new NotBlank(),
-                'required' => true
+                'required'    => true
             ))
             ->add('server_join_allowed', 'checkbox', array(
                 'data'     => true,
@@ -62,7 +62,7 @@ class BanFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fill($form, $ban)
     {
@@ -80,7 +80,7 @@ class BanFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function update($form, $ban)
     {
@@ -92,7 +92,7 @@ class BanFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function enter($form)
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 class MultipleAdvancedModelTransformer extends AdvancedModelTransformer

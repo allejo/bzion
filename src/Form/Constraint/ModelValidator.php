@@ -16,7 +16,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ModelValidator extends ConstraintValidator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
     {

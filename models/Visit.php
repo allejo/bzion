@@ -54,7 +54,7 @@ class Visit extends Model
     const TABLE = "visits";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($visit)
     {
@@ -81,12 +81,12 @@ class Visit extends Model
         $timestamp = TimeDate::from($timestamp);
 
         return self::create(array(
-            'player' => $visitor,
-            'ip' => $ip,
-            'host' => $host,
+            'player'     => $visitor,
+            'ip'         => $ip,
+            'host'       => $host,
             'user_agent' => $user_agent,
-            'referer' => $referrer,
-            'timestamp' => $timestamp->toMysql(),
+            'referer'    => $referrer,
+            'timestamp'  => $timestamp->toMysql(),
         ), 'isssss');
     }
 }

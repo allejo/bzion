@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ConversationRenameFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -32,7 +32,7 @@ class ConversationRenameFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getName()
     {

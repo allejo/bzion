@@ -42,12 +42,11 @@ class ApiKey extends Model
     {
         $key = parent::fetchIdFrom($owner, "owner", 'i');
 
-        if ($key == null)
-        {
+        if ($key == null) {
             return self::createKey("Automatically generated key", $owner);
         }
 
-        return ApiKey::get($key);
+        return self::get($key);
     }
 
     public function getKey()
@@ -72,8 +71,7 @@ class ApiKey extends Model
 
     public static function getKeys($owner = -1)
     {
-        if ($owner > 0)
-        {
+        if ($owner > 0) {
             $ids = self::fetchIdsFrom("owner", array($owner), "i", false, "WHERE status = 'active'");
             return self::arrayIdToModel($ids);
         }

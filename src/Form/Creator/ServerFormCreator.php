@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ServerFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -32,7 +32,7 @@ class ServerFormCreator extends ModelFormCreator
             ))
             ->add('port', 'integer', array(
                 'constraints' => new NotBlank(),
-                'data' => 5154
+                'data'        => 5154
             ))
             ->add('name', 'text', array(
                 'constraints' => array(
@@ -49,7 +49,7 @@ class ServerFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fill($form, $server)
     {
@@ -61,7 +61,7 @@ class ServerFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function update($form, $server)
     {
@@ -74,7 +74,7 @@ class ServerFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function enter($form)
     {

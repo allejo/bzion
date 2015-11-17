@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Type;
 
 use Symfony\Component\Form\AbstractType;

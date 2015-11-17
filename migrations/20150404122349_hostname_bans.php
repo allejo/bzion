@@ -35,6 +35,5 @@ class HostnameBans extends AbstractMigration
      */
     public function down()
     {
-
     }
 }

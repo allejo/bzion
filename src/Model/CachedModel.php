@@ -13,7 +13,7 @@
 abstract class CachedModel extends BaseModel
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function get($id)
     {
@@ -85,7 +85,6 @@ abstract class CachedModel extends BaseModel
         return $this;
     }
 
-
     /**
      * Fetch a model's data from the database again
      * @return static The new model
@@ -111,7 +110,7 @@ abstract class CachedModel extends BaseModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function create($params, $types, $now = null, $table = '')
     {

@@ -31,10 +31,10 @@ abstract class CRUDController extends JSONController
 
     /**
      * Delete a model
-     * @throws ForbiddenException
      * @param  PermissionModel    $model     The model we want to delete
      * @param  Player             $me        The user who wants to delete the model
      * @param  Closure|null       $onSuccess Something to do when the model is deleted
+     * @throws ForbiddenException
      * @return mixed              The response to show to the user
      */
     protected function delete(PermissionModel $model, Player $me, $onSuccess = null)
@@ -78,8 +78,8 @@ abstract class CRUDController extends JSONController
      * This method requires that you have implemented enter() and a form creator
      * for the model
      *
-     * @throws ForbiddenException
      * @param  Player             $me The user who wants to create the model
+     * @throws ForbiddenException
      * @return mixed              The response to show to the user
      */
     protected function create(Player $me)
@@ -95,11 +95,11 @@ abstract class CRUDController extends JSONController
             $this->validate($form);
             $this->validateNew($form);
             if ($form->isValid()) {
-                 $model = $creator->enter($form);
-                 $this->getFlashBag()->add("success",
+                $model = $creator->enter($form);
+                $this->getFlashBag()->add("success",
                      $this->getMessage($model, 'create', 'success'));
 
-                 return $this->redirectTo($model);
+                return $this->redirectTo($model);
             }
         }
 
@@ -112,10 +112,10 @@ abstract class CRUDController extends JSONController
      * This method requires that you have implemented update() and a form creator
      * for the model
      *
-     * @throws ForbiddenException
      * @param  PermissionModel    $model The model we want to edit
      * @param  Player             $me    The user who wants to edit the model
      * @param  string             $type  The name of the variable to pass to the view
+     * @throws ForbiddenException
      * @return mixed              The response to show to the user
      */
     protected function edit(PermissionModel $model, Player $me, $type)
@@ -146,8 +146,8 @@ abstract class CRUDController extends JSONController
      *
      * @param  Player          $player The player who wants to delete the model
      * @param  PermissionModel $model  The model that will be deleted
-     * @param  boolean         $hard   Whether to hard-delete the model instead of soft-deleting it
-     * @return boolean
+     * @param  bool         $hard   Whether to hard-delete the model instead of soft-deleting it
+     * @return bool
      */
     protected function canDelete($player, $model, $hard = false)
     {
@@ -158,7 +158,7 @@ abstract class CRUDController extends JSONController
      * Find whether a player can create a model
      *
      * @param  Player  $player The player who wants to create a model
-     * @return boolean
+     * @return bool
      */
     protected function canCreate($player)
     {
@@ -172,7 +172,7 @@ abstract class CRUDController extends JSONController
      *
      * @param  Player          $player The player who wants to delete the model
      * @param  PermissionModel $model  The model which will be edited
-     * @return boolean
+     * @return bool
      */
     protected function canEdit($player, $model)
     {
@@ -273,7 +273,7 @@ abstract class CRUDController extends JSONController
         return array(
             'hardDelete' => array(
                 'confirm' => array(
-                    'named'   => <<<"WARNING"
+                    'named' => <<<"WARNING"
 Are you sure you want to wipe <strong>$name</strong>?<br />
 <strong><em>DANGER</em></strong>: This action will <strong>permanently</strong>
 erase the $type from the database, including any objects directly related to it!

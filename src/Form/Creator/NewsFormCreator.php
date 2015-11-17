@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class NewsFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -44,7 +44,7 @@ class NewsFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fill($form, $article)
     {
@@ -55,7 +55,7 @@ class NewsFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function update($form, $article)
     {
@@ -68,7 +68,7 @@ class NewsFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function enter($form)
     {

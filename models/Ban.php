@@ -83,7 +83,7 @@ class Ban extends UrlModel implements NamedModel
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_BAN;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($ban)
     {
@@ -101,7 +101,7 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignLazyResult($result)
     {
@@ -341,7 +341,7 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Set whether the ban's victim is allowed to enter a match server
-     * @param  boolean $allowServerJoin
+     * @param  bool $allowServerJoin
      * @return self
      */
     public function setAllowServerJoin($allowServerJoin)
@@ -412,7 +412,7 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -420,7 +420,7 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete()
     {
@@ -429,7 +429,7 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {
@@ -437,7 +437,7 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getLazyColumns()
     {
@@ -466,6 +466,6 @@ class Ban extends UrlModel implements NamedModel
             return null;
         }
 
-        return Ban::get($bans[0]);
+        return self::get($bans[0]);
     }
 }

@@ -28,7 +28,7 @@ class Update extends EditAction
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function perform($pdo, $table, $column, $id)
     {

@@ -36,7 +36,7 @@ class ConfirmationFormCreator implements FormCreatorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create()
     {

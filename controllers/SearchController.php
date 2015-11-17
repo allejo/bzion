@@ -1,7 +1,5 @@
 <?php
 
-use BZIon\Form\Creator\PlayerAdminNotesFormCreator as FormCreator;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -74,8 +72,6 @@ class SearchController extends JSONController
             } else {
                 throw new \BadRequestException("Malformed excluded object");
             }
-
-
         }
 
         foreach ($queries as $type => $query) {

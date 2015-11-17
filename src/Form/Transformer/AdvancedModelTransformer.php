@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -41,7 +42,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
         foreach ($models as $model) {
             $data[$model->getType()][] = $model->getName();
             $json[] = array(
-                'id' => $model->getID(),
+                'id'   => $model->getID(),
                 'name' => $model->getName(),
                 'type' => $model->getType()
             );
@@ -104,7 +105,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
      *                      a list of Model IDs and types
      * @param  array  $include An array of Models of each type that will be
      *                         included in the final result
-     * @return boolean|Model[] A list of models, or false if the data was not
+     * @return bool|Model[] A list of models, or false if the data was not
      *                         provided by javascript as JSON
      */
     protected function transformJSON(&$data, $include)
@@ -155,7 +156,6 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
             $class = ucfirst($object['type']);
             $model = $class::get($object['id']);
 
-
             if ($model->isDeleted()) {
                 // Show an error message if the model provided by javascript is
                 // invalid - we don't let the validator handle this error, so
@@ -168,8 +168,6 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
                 $models[] = $model;
                 $ids[$type][$model->getID()] = true;
             }
-
-
         }
 
         return $models;

@@ -20,7 +20,7 @@ class LeagueOverseerHookController extends PlainTextController
     private $params;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -106,8 +106,8 @@ class LeagueOverseerHookController extends PlainTextController
 
             // API v2+
             "player_bzid" => $bzid,
-            "team_id" => $team->getId(),
-            "team_name" => $teamName,
+            "team_id"     => $team->getId(),
+            "team_name"   => $teamName,
         ));
     }
 
@@ -137,8 +137,8 @@ class LeagueOverseerHookController extends PlainTextController
                 "members" => $teamMembers,
 
                 // API v2+
-                "team_id"   => $teamID,
-                "team_name" => $teamName,
+                "team_id"      => $teamID,
+                "team_name"    => $teamName,
                 "team_members" => $teamMembers
             );
         }
@@ -265,7 +265,7 @@ class LeagueOverseerHookController extends PlainTextController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function getLogChannel()
     {

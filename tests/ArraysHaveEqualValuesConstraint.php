@@ -3,13 +3,11 @@
 class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint
 {
     /**
-     *
      * @var array|ArrayAccess
      */
     protected $value;
 
     /**
-     *
      * @param  array|ArrayAccess           $value
      * @throws PHPUnit_Framework_Exception
      */

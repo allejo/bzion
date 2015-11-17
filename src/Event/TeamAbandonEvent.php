@@ -55,7 +55,7 @@ class TeamAbandonEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function notify($type)
     {

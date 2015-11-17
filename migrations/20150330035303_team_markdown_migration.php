@@ -20,6 +20,5 @@ class TeamMarkdownMigration extends AbstractMigration
      */
     public function down()
     {
-
     }
 }

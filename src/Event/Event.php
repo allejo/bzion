@@ -107,7 +107,7 @@ abstract class Event extends SymfonyEvent implements \Serializable
      * Find out if the specified parameter of the Event's constructor needs a Model
      *
      * @param  \ReflectionParameter $param The constructor's parameter
-     * @return boolean
+     * @return bool
      */
     private static function isModel($param)
     {

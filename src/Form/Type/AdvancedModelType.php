@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Type;
 
 use BZIon\Form\Constraint\ValidModel;
@@ -8,9 +9,6 @@ use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +23,7 @@ class AdvancedModelType extends AbstractType
 
     /**
      * Whether the user gave us names instead of IDs
-     * @var boolean
+     * @var bool
      */
     private $listNames = false;
 
@@ -37,7 +35,7 @@ class AdvancedModelType extends AbstractType
 
     /**
      * Whether more than 1 players can be provided
-     * @var boolean
+     * @var bool
      */
     private $multiple = false;
 
@@ -52,7 +50,7 @@ class AdvancedModelType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -84,9 +82,9 @@ class AdvancedModelType extends AbstractType
         // Model IDs that will be manipulated by javascript
         $builder->add('ids', 'hidden', array(
             'attr' => array(
-                'class' => 'select2-compatible',
-                'data-exclude' => $exclude,
-                'data-label' => $builderName,
+                'class'         => 'select2-compatible',
+                'data-exclude'  => $exclude,
+                'data-label'    => $builderName,
                 'data-multiple' => $this->multiple,
                 'data-required' => $options['required']
             ),
@@ -127,14 +125,14 @@ class AdvancedModelType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         // Make sure that the view values are set properly, so that, for
         // example, the JSON input is updated to the data from the plain-text
         // input (allowing the client to switch JS on and off arbitrarily)
-        foreach($view->children as &$child) {
+        foreach ($view->children as &$child) {
             $name = $child->vars['name'];
 
             // TODO: Show the old value to the user when needed to correct
@@ -149,11 +147,11 @@ class AdvancedModelType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $addValidModelConstraint = function($options, $value) {
+        $addValidModelConstraint = function ($options, $value) {
             // A constraint should always be converted to an array
             $value = is_object($value) ? array($value) : (array) $value;
 
@@ -166,18 +164,18 @@ class AdvancedModelType extends AbstractType
 
         $resolver->setDefined(array('include'));
         $resolver->setDefaults(array(
-            'compound' => true,
-            'data_class' => null,
+            'compound'       => true,
+            'data_class'     => null,
             'error_bubbling' => false,
-            'label'    => false,
-            'multiple' => false,
+            'label'          => false,
+            'multiple'       => false,
         ));
 
         $resolver->setNormalizer('constraints', $addValidModelConstraint);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -185,7 +183,7 @@ class AdvancedModelType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

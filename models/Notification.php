@@ -60,7 +60,7 @@ class Notification extends Model
     const TABLE = "notifications";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($notification)
     {
@@ -114,7 +114,7 @@ class Notification extends Model
 
     /**
      * Show the number of notifications the user hasn't read yet
-     * @param  integer $receiver
+     * @param  int $receiver
      * @return int
      */
     public static function countUnreadNotifications($receiver)
@@ -138,7 +138,7 @@ class Notification extends Model
      * Do not use Notification::getType(), as it returns the name of the class
      * (i.e. notification)
      *
-     * @return integer
+     * @return int
      */
     public function getCategory()
     {
@@ -272,7 +272,7 @@ class Notification extends Model
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getActiveStatuses()
     {

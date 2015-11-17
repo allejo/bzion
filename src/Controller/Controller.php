@@ -80,7 +80,6 @@ abstract class Controller extends ContainerAware
     protected $parent;
 
     /**
-     *
      * @param ParameterBag    $parameters The array returned by $request->attributes
      * @param Controller|null $parent     The controller who invoked this controller
      */
@@ -374,7 +373,7 @@ abstract class Controller extends ContainerAware
       * Generates a URL from the given parameters.
       * @param  string  $name       The name of the route
       * @param  mixed   $parameters An array of parameters
-      * @param  boolean $absolute   Whether to generate an absolute URL
+      * @param  bool $absolute   Whether to generate an absolute URL
       * @return string  The generated URL
       */
      public static function generate($name, $parameters = array(), $absolute = false)
@@ -403,7 +402,7 @@ abstract class Controller extends ContainerAware
     /**
      * Find out whether debugging is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isDebug()
     {

@@ -57,7 +57,7 @@ class DatabaseDataCollector implements DataCollectorInterface
     public function logCacheFetch($type, $id)
     {
         if (isset($this->cacheFetches[$type])) {
-            $this->cacheFetches[$type]++;
+            ++$this->cacheFetches[$type];
         } else {
             $this->cacheFetches[$type] = 1;
         }
@@ -97,14 +97,14 @@ class DatabaseDataCollector implements DataCollectorInterface
         foreach ($this->data['queries'] as $query) {
             if (0 === strpos(trim($query->getQuery()), 'SELECT *')) {
                 $sum += $query->getDuration();
-                $count++;
+                ++$count;
             }
         }
 
         if ($count == 0) {
             return 0;
         } else {
-            return array_sum($this->data['cacheFetches']) * $sum/$count/1000;
+            return array_sum($this->data['cacheFetches']) * $sum / $count / 1000;
         }
     }
 
@@ -123,7 +123,7 @@ class DatabaseDataCollector implements DataCollectorInterface
             if (!isset($return[$resolved])) {
                 $return[$resolved] = 1;
             } else {
-                $return[$resolved]++;
+                ++$return[$resolved];
             }
         }
 

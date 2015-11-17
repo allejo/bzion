@@ -24,12 +24,21 @@ return Symfony\CS\Config\Config::create()
 	->fixers(array(
 		'-empty_return',
 		'-multiline_array_trailing_comma',
+		'-no_empty_lines_after_phpdocs', // Workaround for removed spaces before use declarations
+		'-phpdoc_no_empty_return',
+		'-phpdoc_no_package',
 		'-phpdoc_params',
+		'-phpdoc_separation',
+		'-phpdoc_short_description',
+		'-single_quote',
 		'-return',
+		'-unalign_equals',
 		'align_double_arrow',
 		'concat_with_spaces',
 		'multiline_spaces_before_semicolon',
-		'ordered_use'
+		'newline_after_open_tag',
+		'ordered_use',
+		'phpdoc_order'
 	))
 	->finder($finder)
 ;

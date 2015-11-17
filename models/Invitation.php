@@ -49,7 +49,7 @@ class Invitation extends UrlModel
     const TABLE = "invitations";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($invitation)
     {
@@ -71,11 +71,11 @@ class Invitation extends UrlModel
     public static function sendInvite($to, $from, $teamid, $message = "")
     {
         $invitation = self::create(array(
-            "invited_player"  => $to,
-            "sent_by"         => $from,
-            "team"            => $teamid,
-            "text"            => $message,
-            "expiration"      => TimeDate::now()->addWeek()->toMysql(),
+            "invited_player" => $to,
+            "sent_by"        => $from,
+            "team"           => $teamid,
+            "text"           => $message,
+            "expiration"     => TimeDate::now()->addWeek()->toMysql(),
         ), 'iiiss');
 
         return $invitation;
@@ -144,9 +144,9 @@ class Invitation extends UrlModel
     /**
      * Find whether there are unexpired invitations for a player and a team
      *
-     * @param  integer $player
-     * @param  integer $team
-     * @return integer
+     * @param  int $player
+     * @param  int $team
+     * @return int
      */
     public static function hasOpenInvitation($player, $team)
     {

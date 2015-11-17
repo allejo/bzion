@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class PageFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -42,7 +42,7 @@ class PageFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fill($form, $page)
     {
@@ -52,7 +52,7 @@ class PageFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function update($form, $page)
     {
@@ -63,7 +63,7 @@ class PageFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function enter($form)
     {

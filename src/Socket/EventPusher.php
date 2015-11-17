@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Socket;
 
 use BZIon\Event\EventSubscriber;
@@ -36,7 +37,7 @@ class EventPusher implements MessageComponentInterface
 
     /**
      * Max pong time and interval between pings in seconds
-     * @var integer
+     * @var int
      */
     const KEEP_ALIVE = 300;
 

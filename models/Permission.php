@@ -69,7 +69,7 @@ class Permission extends Model
     const TABLE = "permissions";
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function assignResult($permission)
     {

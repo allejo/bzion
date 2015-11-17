@@ -23,7 +23,7 @@ abstract class Model extends CachedModel
     /**
      * Find if the model is in the trash can (or doesn't exist)
      *
-     * @return boolean True if the model has been deleted
+     * @return bool True if the model has been deleted
      */
     public function isDeleted()
     {
@@ -37,7 +37,7 @@ abstract class Model extends CachedModel
     /**
      * Find if the model is active (i.e. visible to everyone)
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {

@@ -7,14 +7,13 @@
 
 namespace BZIon\Form\Creator;
 
-
 /**
  * Form creator for searching messages
  */
 class MessageSearchFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {
@@ -25,7 +24,7 @@ class MessageSearchFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getFormOptions()
     {
@@ -35,7 +34,7 @@ class MessageSearchFormCreator extends ModelFormCreator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getName()
     {

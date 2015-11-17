@@ -13,7 +13,7 @@ namespace BZIon\Form\Creator;
 class PlayerAdminNotesFormCreator extends ModelFormCreator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function build($builder)
     {

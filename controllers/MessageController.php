@@ -1,10 +1,10 @@
 <?php
 
-use BZIon\Event\Events;
 use BZIon\Event\ConversationAbandonEvent;
 use BZIon\Event\ConversationJoinEvent;
 use BZIon\Event\ConversationKickEvent;
 use BZIon\Event\ConversationRenameEvent;
+use BZIon\Event\Events;
 use BZIon\Event\NewMessageEvent;
 use BZIon\Form\Creator\ConversationFormCreator;
 use BZIon\Form\Creator\ConversationInviteFormCreator;
@@ -13,7 +13,6 @@ use BZIon\Form\Creator\MessageFormCreator;
 use BZIon\Form\Creator\MessageSearchFormCreator;
 use BZIon\Search\MessageSearch;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,11 +95,11 @@ class MessageController extends JSONController
                   ->getModels();
 
         $params = array(
-            "form"       => $form->createView(),
-            "inviteForm" => $inviteForm->createView(),
-            "renameForm" => $renameForm->createView(),
-            "conversation"      => $conversation,
-            "messages"   => $messages
+            "form"         => $form->createView(),
+            "inviteForm"   => $inviteForm->createView(),
+            "renameForm"   => $renameForm->createView(),
+            "conversation" => $conversation,
+            "messages"     => $messages
         );
 
         if ($request->query->has('nolayout')) {
@@ -261,10 +260,10 @@ class MessageController extends JSONController
      *
      * Throws an exception if a player is not an admin or a member of that conversation
      * @todo Permission for spying on other people's conversations?
-     * @throws HTTPException
      * @param  Player        $player  The player to test
      * @param  Conversation         $conversation   The message conversation
      * @param  string        $message The error message to show
+     * @throws HTTPException
      * @return void
      */
     private function assertCanParticipate(Player $player, Conversation $conversation,
@@ -278,13 +277,13 @@ class MessageController extends JSONController
     /**
      * Sends a message to a conversation
      *
-     * @throws HTTPException Thrown if the user doesn't have the
-     *                              SEND_PRIVATE_MSG permission
      * @param  Player        $from   The sender
      * @param  Conversation         $to     The conversation that will receive the message
      * @param  Form          $form   The message's form
      * @param  Form          $form   The form before it handled the request
      * @param  Form          $cloned
+     * @throws HTTPException Thrown if the user doesn't have the
+     *                              SEND_PRIVATE_MSG permission
      * @return void
      */
     private function sendMessage(Player $from, Conversation $to, &$form, $cloned)
@@ -331,10 +330,10 @@ class MessageController extends JSONController
      * Make sure that a player can edit a conversation
      *
      * Throws an exception if a player is not an admin or the leader of a team
-     * @throws HTTPException
      * @param  Player        $player  The player to test
      * @param  Conversation         $conversation   The team
      * @param  string        $message The error message to show
+     * @throws HTTPException
      * @return void
      */
     private function assertCanEdit(Player $player, Conversation $conversation, $message = "You are not allowed to edit the discussion")

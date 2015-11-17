@@ -81,7 +81,7 @@ class QueryBuilder implements Countable
 
     /**
      * Whether to reverse the results
-     * @var boolean
+     * @var bool
      */
     private $reverseSort = false;
 
@@ -106,7 +106,7 @@ class QueryBuilder implements Countable
 
     /**
      * Whether to return the results as arrays instead of models
-     * @var boolean
+     * @var bool
      */
     private $returnArray = false;
 
@@ -118,7 +118,7 @@ class QueryBuilder implements Countable
 
     /**
      * Whether the ID of the first/last element has been provided
-     * @var boolean
+     * @var bool
      */
     private $limited = false;
 
@@ -374,8 +374,8 @@ class QueryBuilder implements Countable
      * End with a specific result
      *
      * @param  int|Model $model     The model (or database ID) after the first result
-     * @param  boolean   $inclusive Whether to include the provided model
-     * @param  boolean   $reverse   Whether to reverse the results
+     * @param  bool   $inclusive Whether to include the provided model
+     * @param  bool   $reverse   Whether to reverse the results
      * @return self
      */
     public function endAt($model, $inclusive = false, $reverse = false)
@@ -387,8 +387,8 @@ class QueryBuilder implements Countable
      * Start with a specific result
      *
      * @param  int|Model $model     The model (or database ID) before the first result
-     * @param  boolean   $inclusive Whether to include the provided model
-     * @param  boolean   $reverse   Whether to reverse the results
+     * @param  bool   $inclusive Whether to include the provided model
+     * @param  bool   $reverse   Whether to reverse the results
      * @return self
      */
     public function startAt($model, $inclusive = false, $reverse = false)
@@ -444,7 +444,7 @@ class QueryBuilder implements Countable
      * in your query builder if necessary.
      *
      * @param  Player  $player      The player in question
-     * @param  boolean $showDeleted false to hide deleted models even from admins
+     * @param  bool $showDeleted false to hide deleted models even from admins
      * @return self
      */
     public function visibleTo($player, $showDeleted = false)
@@ -535,7 +535,7 @@ class QueryBuilder implements Countable
     /**
      * Find if there is any result
      *
-     * @return boolean
+     * @return bool
      */
     public function any()
     {
@@ -619,8 +619,7 @@ class QueryBuilder implements Countable
         $order      = $this->createQueryOrder();
         $pagination = "";
 
-        if ($respectPagination)
-        {
+        if ($respectPagination) {
             $pagination = $this->createQueryPagination();
         }
 

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class PlainTextController extends Controller
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function callAction($action = null)
     {

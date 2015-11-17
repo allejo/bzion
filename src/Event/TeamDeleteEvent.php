@@ -72,7 +72,7 @@ class TeamDeleteEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function notify($type)
     {
@@ -80,7 +80,7 @@ class TeamDeleteEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function serialize()
     {
@@ -91,7 +91,7 @@ class TeamDeleteEvent extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function unserialize($data)
     {

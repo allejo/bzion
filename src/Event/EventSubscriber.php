@@ -64,19 +64,19 @@ class EventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'conversation.abandon'      => 'conversation',
-            'conversation.join'         => 'conversation',
-            'conversation.kick'         => 'conversation',
-            'conversation.rename'       => 'conversation',
-            'message.new'        => 'onNewMessage',
-            'notification.new'   => 'onNewNotification',
-            'team.delete'        => 'notify',
-            'team.abandon'       => 'notify',
-            'team.kick'          => 'notify',
-            'team.join'          => 'notify',
-            'team.invite'        => 'notify',
-            'team.leader_change' => 'notify',
-            'welcome'            => 'notify',
+            'conversation.abandon' => 'conversation',
+            'conversation.join'    => 'conversation',
+            'conversation.kick'    => 'conversation',
+            'conversation.rename'  => 'conversation',
+            'message.new'          => 'onNewMessage',
+            'notification.new'     => 'onNewNotification',
+            'team.delete'          => 'notify',
+            'team.abandon'         => 'notify',
+            'team.kick'            => 'notify',
+            'team.join'            => 'notify',
+            'team.invite'          => 'notify',
+            'team.leader_change'   => 'notify',
+            'welcome'              => 'notify',
         );
     }
 

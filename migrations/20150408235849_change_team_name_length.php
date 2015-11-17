@@ -11,18 +11,13 @@ class ChangeTeamNameLength extends AbstractMigration
     {
         $table = $this->table('teams');
 
-        foreach ($table->getColumns() as $column)
-        {
-            if ($column->getName() === 'name' || $column->getName() === 'alias')
-            {
+        foreach ($table->getColumns() as $column) {
+            if ($column->getName() === 'name' || $column->getName() === 'alias') {
                 $column->setLimit(42);
 
-                if ($column->getName() === 'name')
-                {
+                if ($column->getName() === 'name') {
                     $column->setComment("The team's name");
-                }
-                else
-                {
+                } else {
                     $column->setComment("The team's URL slug for viewing the team's profile");
                 }
 
@@ -36,6 +31,5 @@ class ChangeTeamNameLength extends AbstractMigration
      */
     public function down()
     {
-
     }
 }

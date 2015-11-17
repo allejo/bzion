@@ -17,7 +17,7 @@ use BZIon\Debug\Debug;
 class WebSocketAdapter extends NotificationAdapter
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @todo Error handling
      */
@@ -42,7 +42,7 @@ class WebSocketAdapter extends NotificationAdapter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function isEnabled()
     {

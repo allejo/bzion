@@ -1,4 +1,5 @@
 <?php
+
 namespace BZIon\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -38,8 +39,8 @@ class SingleModelTransformer implements DataTransformerInterface
      * Transforms an ID to an object
      *
      * @param  int                           $id
-     * @return Model
      * @throws TransformationFailedException if the team is not found.
+     * @return Model
      */
     public function reverseTransform($id)
     {

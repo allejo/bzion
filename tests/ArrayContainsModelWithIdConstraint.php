@@ -3,13 +3,11 @@
 class ArrayContainsModelWithIdConstraint extends PHPUnit_Framework_Constraint
 {
     /**
-     *
      * @var int
      */
     protected $value;
 
     /**
-     *
      * @param  int                         $value
      * @throws PHPUnit_Framework_Exception
      */
