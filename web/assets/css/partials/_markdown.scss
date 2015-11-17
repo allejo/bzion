@@ -3,6 +3,8 @@
 //
 // e.g. Not have a markdown parsed H1 be the same size as an H1 used in a page header
 @include scope('markdown') {
+    overflow-x: scroll;
+
     h1,
     h2 {
         border-bottom: 1px dotted $Color-Light_Grey;
@@ -55,5 +57,6 @@
             bottom: 10px;
             top: 10px;
         }
+        max-width: 100%;
     }
 }
