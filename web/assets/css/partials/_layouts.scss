@@ -49,6 +49,10 @@
 
     @include respond-to(sm) {
         margin-bottom: $Settings-Page_Section-Small_Margin;
+
+        &:last-child {
+            margin-bottom: $Settings-Page_Section-Margin;
+        }
     }
 
     .o-row__column--half,
@@ -74,12 +78,9 @@
 
 // A CSS scope where user inputted HTML will be available, so we'll have some sanity checks
 @include scope('user-html') {
-    @extend %container;
-
     display: block;
-    margin-bottom: $Settings-Page_Section-Margin;
 
     p {
-        margin-bottom: 15px;
+        margin-bottom: $Settings-Page_Section-Small_Margin;
     }
 }

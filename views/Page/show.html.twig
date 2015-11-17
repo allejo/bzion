@@ -20,7 +20,7 @@
 {% block title %}{{ page.name }}{% endblock %}
 
 {% block content %}
-    <main class="c-page s-matches">
+    <main class="c-page">
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
@@ -31,7 +31,7 @@
             </div>
         </section>
 
-        <section class="s-user-html o-container">
+        <section class="s-user-html o-container o-section">
             {{ page.content | markdown(false) }}
         </section>
     </main>
