@@ -106,6 +106,12 @@
     }
 }
 
+@include utility('hide-on-empty') {
+    &:empty {
+        display: none;
+    }
+}
+
 @include utility('no-margin') {
     // scss-lint:disable ImportantRule
 

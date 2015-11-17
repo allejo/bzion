@@ -58,9 +58,11 @@
             <section class="o-row o-section">
                 <section class="o-row__column--with-sidebar c-team__information">
                     <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
-                    <article class="c-team__information__bio s-markdown">
-                        {{ team.description | markdown }}
-                    </article>
+                    {% spaceless %}
+                        <article class="c-team__information__bio s-markdown u-hide-on-empty">
+                            {{ team.description | markdown }}
+                        </article>
+                    {% endspaceless %}
                 </section>
 
                 <section class="o-row__sidebar c-team__profile-picture">
