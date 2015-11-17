@@ -44,7 +44,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
             $json[] = array(
                 'id'   => $model->getID(),
                 'name' => $model->getName(),
-                'type' => $model->getType()
+                'type' => ucfirst($model->getType())
             );
         }
 

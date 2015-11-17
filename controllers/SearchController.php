@@ -26,9 +26,9 @@ class SearchController extends JSONController
         }
 
         $types = explode(',', $request->query->get('types'));
-        $excludeQuery = explode(',', $request->query->get('exclude'));
+        $excludeQuery = $request->query->get('exclude');
 
-        $queries = $results = $excluded = array();
+        $queries = $results = array();
 
         foreach ($types as &$type) {
             if (!in_array($type, self::$acceptableTypes)) {
@@ -36,43 +36,10 @@ class SearchController extends JSONController
             }
 
             $type = ucfirst($type);
-
-            $excluded[$type] = array();
             $queries[$type] = $type::getQueryBuilder();
         }
 
-        if (count($excludeQuery) > self::MAX_EXCLUDED_OBJECTS) {
-            throw new \BadRequestException("Too many excluded objects provided");
-        }
-
-        foreach ($excludeQuery as $excludedObject) {
-            if ($excludedObject === '') {
-                continue;
-            }
-
-            $excludedObject = explode(':', $excludedObject, 3);
-            if (count($excludedObject) === 2) {
-                $class = ucfirst($excludedObject[0]);
-                $id = (int) $excludedObject[1];
-
-                if (!in_array($class, $types)) {
-                    throw new \BadRequestException("Invalid excluded type");
-                }
-
-                $excluded[$class][] = $id;
-            } elseif (count($excludedObject) === 1) {
-                // No type was provided
-                if (count('types') > 1) {
-                    throw new \BadRequestException(
-                        "You need to provide the type of the excluded object"
-                    );
-                }
-
-                $excluded[$types[0]][] = (int) $excludedObject[0];
-            } else {
-                throw new \BadRequestException("Malformed excluded object");
-            }
-        }
+        $excluded = $this->decompose($excludeQuery, $types, false, self::MAX_EXCLUDED_OBJECTS);
 
         foreach ($queries as $type => $query) {
             if ($startsWith = $request->query->get('startsWith')) {

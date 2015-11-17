@@ -72,6 +72,14 @@ class MessageController extends JSONController
             } elseif ($this->isJson()) {
                 throw new BadRequestException($this->getErrorMessage($form));
             }
+        } else {
+            // Load the list of recipients from the URL
+            if ($request->query->has('recipients')) {
+                $form->get('Recipients')->setData($this->decompose(
+                    $request->query->get('recipients'),
+                    array('Player', 'Team')
+                ));
+            }
         }
 
         return array("form" => $form->createView());

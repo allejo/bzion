@@ -250,4 +250,87 @@ abstract class HTMLController extends Controller
             'message' => $message
         ));
     }
+
+    /**
+     * Decompose a list of object IDs into the corresponding IDs
+     *
+     * @param string $query  The user's query
+     * @param array  $types  A list of the acceptable model types (will NOT be sanitized)
+     * @param bool   $models Whether to return an array of models instead of an array of IDs
+     * @param int|null $max  The largest number of models to accept, or null for infinite models
+     *
+     * @throws BadRequestException
+     */
+    protected function decompose($query, array $types, $models = true, $max = null) {
+        $query = explode(',', $query);
+
+        if ($max !== null && count($query) > $max) {
+            throw new \BadRequestException("Too many objects provided");
+        }
+
+        $result = array();
+        $firstType = reset($types);
+
+        if (!$models) {
+            // Make sure the result array has a subarray for each type
+            foreach ($types as $type) {
+                $result[$type] = array();
+            }
+        }
+
+
+        foreach ($query as $object) {
+            if ($object === '') {
+                continue;
+            }
+
+            $object = explode(':', $object, 3);
+            if (count($object) === 2) {
+                $class = ucfirst($object[0]);
+                $id = (int) $object[1];
+
+                if (!in_array($class, $types)) {
+                    throw new \BadRequestException("Invalid object type");
+                }
+
+                if ($models) {
+                    $this->assertVisibility($result[] = $class::get($id));
+                } else {
+                    $result[$class][] = $id;
+                }
+            } elseif (count($object) === 1) {
+                // No type was provided
+                if (count('types') > 1) {
+                    throw new \BadRequestException(
+                        "You need to provide the type of the object"
+                    );
+                }
+
+                if ($models) {
+                    $this->assertVisibility($result[] = $firstType::get($id));
+                } else {
+                    $result[$firstType][] = (int)$object[0];
+                }
+            } else {
+                throw new \BadRequestException("Malformed object");
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Throw an innocent exception if a player can't see a Model or if it
+     * doesn't exist
+     *
+     * @param $model The model to test
+     *
+     * @throws BadRequestException
+     */
+    private function assertVisibility(PermissionModel $model)
+    {
+        if (!$this->getMe()->canSee($model)) {
+            throw new \BadRequestException("Invalid object provided");
+        }
+    }
 }
