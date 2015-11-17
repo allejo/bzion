@@ -1,0 +1,38 @@
+/// Reverse the order of a Sass map
+///
+/// @author Sean McEmerson
+///
+/// @param {map} $map - a Sass map to be reversed
+///
+/// @throws There was an error reversing the order of "$map"
+/// @throws "$map" is not a valid map
+///
+/// @link https://gist.github.com/seanislegend/107ccf9c81ec9fd1aae0 Original Gist
+
+@function map-reverse ($map) {
+    $result: null;
+
+    @if type-of($map) == "map" {
+        $keys: map-keys($map);
+        $map-reversed: ();
+
+        @for $i from length($keys) through 1 {
+            $map-reversed: map-merge(
+                            $map-reversed,
+                            (nth($keys, $i): map-get($map, nth($keys, $i)))
+            );
+        }
+
+        @if type-of($map-reversed) == "map" {
+            $result: $map-reversed;
+        }
+        @else {
+            @error 'There was an error reversing the order of "#{$map}"';
+        }
+    }
+    @else {
+        @error '"#{$map}" is not a valid map';
+    }
+
+    @return $result;
+}

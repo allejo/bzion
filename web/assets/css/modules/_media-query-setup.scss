@@ -1,36 +1,18 @@
-// Because BZiON uses `sass-media_query_combiner` to combine the media queries together, the order the media queries are placed are changed.
-// To fix this issue, here are some dummy CSS rules that'll basically "trick" the SASS plug-in to order the media queries as specified here.
+// Because BZiON uses `sass-media_query_combiner` to combine the media queries together, the order the media queries
+// are placed are changed. To fix this issue, here are some dummy CSS rules that'll basically "trick" the SASS plug-in
+// to order the media queries as specified here.
 //
 // For more information: https://github.com/aaronjensen/sass-media_query_combiner/issues/10
 
 .media-query-setup {
-    @include respond-to(xs) {
-        html:before {
-            font-size: inherit;
-        }
-    }
+    // These media query definitions should range from largest to smallest in a desktop-first website.
+    $breakpoints-reversed: map-reverse($breakpoints);
 
-    @include respond-to(sm) {
-        html:before {
-            font-size: inherit;
-        }
-    }
-
-    @include respond-to(md) {
-        html:before {
-            font-size: inherit;
-        }
-    }
-
-    @include respond-to(lg) {
-        html:before {
-            font-size: inherit;
-        }
-    }
-
-    @include respond-to(xl) {
-        html:before {
-            font-size: inherit;
+    @each $viewSize in map-keys($breakpoints-reversed) {
+        @include respond-to($viewSize) {
+            html:before {
+                font-size: inherit;
+            }
         }
     }
 }
