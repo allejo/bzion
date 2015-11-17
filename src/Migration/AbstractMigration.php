@@ -16,7 +16,7 @@ use Phinx\Migration\AbstractMigration as BaseMigration;
 class AbstractMigration extends BaseMigration
 {
     /**
-     * Edit the serialized data of a group event
+     * Edit the serialized data of a conversation event
      *
      * @param string   $typeQuery The MySQL string for the event type
      * @param \Closure $callback  The callback function to edit the event. The
@@ -26,10 +26,10 @@ class AbstractMigration extends BaseMigration
      *                            altered. The return value can be the desired
      *                            BZIon\Migration\EditAction or null.
      */
-    protected function editGroupEvent($typeQuery, $callback)
+    protected function editConversationEvent($typeQuery, $callback)
     {
         return $this->editSerializedData(
-            "group_events",
+            "conversation_events",
             "event",
             "WHERE `type` = '$typeQuery'",
             $callback
@@ -37,7 +37,7 @@ class AbstractMigration extends BaseMigration
     }
 
     /**
-     * Edit the serialized data of a group event
+     * Edit the serialized data of a conversation event
      *
      * @param string   $table      The name of the table to edit
      * @param string   $column     The name of the column to edit

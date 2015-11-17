@@ -26,11 +26,11 @@ class ElasticaEventSubscriber implements EventSubscriberInterface
     protected $objectPersister;
 
     /**
-     * Persister to Elasticsearch database for groups
+     * Persister to Elasticsearch database for conversations
      *
      * @var ObjectPersister
      */
-    protected $groupPersister;
+    protected $conversationPersister;
 
     /**
      * Persister to Elasticsearch database for messages
@@ -43,15 +43,15 @@ class ElasticaEventSubscriber implements EventSubscriberInterface
      * You will probably not need to instantiate an object of this class,
      * Symfony already does the hard work for us
      *
-     * @param Type $groupType   The elasticsearch type for Groups
+     * @param Type $conversationType   The elasticsearch type for Conversations
      * @param Type $messageType The elasticsearch type for Messages
      */
-    public function __construct(Type $groupType, Type $messageType)
+    public function __construct(Type $conversationType, Type $messageType)
     {
-        $groupTransformer = new GroupToElasticaTransformer();
+        $conversationTransformer = new ConversationToElasticaTransformer();
         $messageTransformer = new MessageToElasticaTransformer();
 
-        $this->groupPersister = new ObjectPersister($groupType, $groupTransformer, '\Group', array());
+        $this->conversationPersister = new ObjectPersister($conversationType, $conversationTransformer, '\Conversation', array());
         $this->messagePersister = new ObjectPersister($messageType, $messageTransformer, '\Message', array());
     }
 
@@ -69,21 +69,21 @@ class ElasticaEventSubscriber implements EventSubscriberInterface
         }
 
         return array(
-            'group.abandon' => 'update',
-            'group.join'    => 'update',
-            'group.kick'    => 'update',
+            'conversation.abandon' => 'update',
+            'conversation.join'    => 'update',
+            'conversation.kick'    => 'update',
             'message.new'   => 'onNew',
         );
     }
 
     /**
-     * Update the elastica index when a Group gets updated
+     * Update the elastica index when a Conversation gets updated
      *
      * @param Event $event The event
      */
     public function update(Event $event)
     {
-        $this->groupPersister->replaceOne($event->getGroup());
+        $this->conversationPersister->replaceOne($event->getConversation());
     }
 
     /**
@@ -95,7 +95,7 @@ class ElasticaEventSubscriber implements EventSubscriberInterface
     {
         if ($event->isFirst()) {
             // A new discussion was created, add it to the elasticsearch index
-            $this->groupPersister->insertOne($event->getMessage()->getGroup());
+            $this->conversationPersister->insertOne($event->getMessage()->getConversation());
         }
 
         $this->messagePersister->insertOne($event->getMessage());

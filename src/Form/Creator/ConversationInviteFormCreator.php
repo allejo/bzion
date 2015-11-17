@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains a form creator for player invitations to Groups
+ * This file contains a form creator for player invitations to Conversations
  *
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
@@ -11,9 +11,9 @@ use BZIon\Form\Type\AdvancedModelType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Form creator for group invitations
+ * Form creator for conversation invitations
  */
-class GroupInviteFormCreator extends ModelFormCreator
+class ConversationInviteFormCreator extends ModelFormCreator
 {
     /**
      * {@inheritDoc}

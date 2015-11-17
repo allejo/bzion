@@ -92,9 +92,9 @@ reactor.addEventListener("push-event", function(data) {
         return;
     }
 
-    groupId = $("#groupMessages").attr("data-id");
+    conversationId = $("#conversationMessages").attr("data-id");
 
-    if (groupId && groupId == data.data.discussion) {
+    if (conversationId && conversationId == data.data.conversation) {
         q.addRefresh(data.data.message);
     } else {
         updateSelectors([".conversations", "nav"]);
@@ -131,7 +131,7 @@ function initializeSelect() {
     $("#form_Recipients_ListUsernames").attr('value', '0');
 }
 
-var messageView, groupMessages;
+var messageView, conversationMessages;
 
 function initPage() {
     // Hide any dimmers that might have been left
@@ -148,9 +148,9 @@ function initPage() {
     });
 
     var noMoreScrolling = false;
-    groupMessages   = $("#groupMessages");
+    conversationMessages   = $("#conversationMessages");
 
-    if (groupMessages.attr("data-id")) {
+    if (conversationMessages.attr("data-id")) {
         messageView = $("#messageView");
         var olderMessageLink = messageView.hideOlder();
 
@@ -234,7 +234,7 @@ function updateSelectors(selectors) {
 }
 
 function updatePage() {
-    $("#groupMessages").startSpinners();
+    $("#conversationMessages").startSpinners();
     return updateSelectors([".c-page", "nav"]);
 }
 
@@ -243,7 +243,7 @@ function updateLastMessage(html) {
 
     loadedView = html.find("#messageView > *").not(".older_messages");
     loadedView.appendTo(messageView);
-    groupMessages.stopSpinners();
+    conversationMessages.stopSpinners();
 
     // Scroll message list to the bottom
     messageView.animate({ scrollTop: messageView.prop("scrollHeight") });
@@ -288,7 +288,7 @@ pageSelector.on("submit", ".compose_form", function(event) {
     });
 });
 
-// Group click event
+// Conversation click event
 pageSelector.on("click", ".c-messages__inbox__message", function(event) {
     event.preventDefault();
     redirect($(this).attr("data-id"));
@@ -309,7 +309,7 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
  * Get the ID of the last sent message
  */
 function getLastID() {
-    return groupMessages.find("li.message").last().attr('data-id');
+    return conversationMessages.find("li.message").last().attr('data-id');
 }
 
 /**
@@ -322,7 +322,7 @@ function sendMessage(form, onSuccess, onError, spinners) {
     }
 
     if (spinners !== undefined && spinners) {
-        groupMessages.startSpinners();
+        conversationMessages.startSpinners();
     }
 
     $.ajax({
@@ -338,7 +338,7 @@ function sendMessage(form, onSuccess, onError, spinners) {
         if (msg.success) {
             onSuccess(msg, form);
         } else {
-            groupMessages.stopSpinners();
+            conversationMessages.stopSpinners();
         }
     }).error(function( jqXHR, textStatus, errorThrown ) {
         // TODO: Catch bad JSON
@@ -356,12 +356,12 @@ function sendMessage(form, onSuccess, onError, spinners) {
     });
 }
 
-function redirect(groupTo) {
-    var groupId = typeof groupTo !== 'undefined' ? groupTo : null;
-    var stateObj = { group: groupId };
+function redirect(conversationTo) {
+    var conversationId = typeof conversationTo !== 'undefined' ? conversationTo : null;
+    var stateObj = { conversation: conversationId };
     var url = baseURLNoHost + "/messages";
 
-    url += (groupId) ? "/"+groupId : "";
+    url += (conversationId) ? "/"+conversationId : "";
 
     history.pushState(stateObj, "", url);
 

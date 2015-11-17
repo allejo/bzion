@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains a form creator to create a Group
+ * This file contains a form creator to create a Conversation
  *
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * Form creator for creating new conversations
  */
-class GroupFormCreator extends ModelFormCreator
+class ConversationFormCreator extends ModelFormCreator
 {
     /**
      * {@inheritDoc}

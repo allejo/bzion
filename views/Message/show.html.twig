@@ -17,7 +17,7 @@
     }
 ] %}
 
-{% set viewTitle = "Subject: " ~ group.subject %}
+{% set viewTitle = "Subject: " ~ conversation.subject %}
 
 {% block messages_body %}
     <section class="o-row c-messenger">
@@ -26,13 +26,13 @@
             {% include "Message/conversations.html.twig" %}
         </aside>
 
-        <section class="c-messenger__conversation" data-id="{{ group.id }}" id="groupMessages">
+        <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
             <div class="dimmable">
                 <section class="c-messenger__conversation__details">
                     <p class="c-messenger__conversation__details__members">
                         Conversation with
-                        {% if group.members is not empty %}
-                            {% for member in group.members %}
+                        {% if conversation.members is not empty %}
+                            {% for member in conversation.members %}
                                 {% if me.name != member.name %}
                                     {{- link_to(member) -}}
                                     {%- if not loop.last -%}

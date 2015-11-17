@@ -1,12 +1,12 @@
 <?php
 
-use BZIon\Form\Creator\GroupFormCreator;
+use BZIon\Form\Creator\ConversationFormCreator;
 
 class AdminController extends HTMLController
 {
     public function listAction()
     {
-        $toast = new GroupFormCreator();
+        $toast = new ConversationFormCreator();
 
         $rolesToDisplay = Role::getLeaderRoles();
         $roles = array();

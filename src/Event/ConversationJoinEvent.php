@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains a group event
+ * This file contains a conversation event
  *
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
@@ -8,14 +8,14 @@
 namespace BZIon\Event;
 
 /**
- * Event thrown when players join a group
+ * Event thrown when players join a conversation
  */
-class GroupJoinEvent extends Event
+class ConversationJoinEvent extends Event
 {
     /**
-     * @var \Group
+     * @var \Conversation
      */
-    protected $group;
+    protected $conversation;
 
     /**
      * @var \Model[]
@@ -25,27 +25,27 @@ class GroupJoinEvent extends Event
     /**
      * Create a new event
      *
-     * @param \Group   $group   The group in question
-     * @param \Model[] $members The players and teams who joined the group
+     * @param \Conversation   $conversation   The conversation in question
+     * @param \Model[] $members The players and teams who joined the conversation
      */
-    public function __construct(\Group $group, array $members)
+    public function __construct(\Conversation $conversation, array $members)
     {
-        $this->group  = $group;
+        $this->conversation  = $conversation;
         $this->members = $members;
     }
 
     /**
-     * Get the group that was renamed
+     * Get the conversation that was renamed
      *
-     * @return \Group
+     * @return \Conversation
      */
-    public function getGroup()
+    public function getConversation()
     {
-        return $this->group;
+        return $this->conversation;
     }
 
     /**
-     * Get the Players and Teams who joined the group
+     * Get the Players and Teams who joined the conversation
      *
      * @return \Model[]
      */
@@ -70,7 +70,7 @@ class GroupJoinEvent extends Event
         }
 
         return serialize(array(
-            'group'   => $this->group->getId(),
+            'conversation'   => $this->conversation->getId(),
             'players' => \Player::mapToIDs($players),
             'teams' => \Team::mapToIDs($teams)
         ));
@@ -83,11 +83,11 @@ class GroupJoinEvent extends Event
     {
         $data = unserialize($data);
 
-        $group = \Group::get($data['group']);
+        $conversation = \Conversation::get($data['conversation']);
 
         $players = \Player::arrayIdToModel($data['players']);
         $teams = \Team::arrayIdToModel($data['teams']);
 
-        $this->__construct($group, array_merge($players, $teams));
+        $this->__construct($conversation, array_merge($players, $teams));
     }
 }

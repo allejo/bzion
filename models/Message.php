@@ -10,7 +10,7 @@
  * A message between players or teams
  * @package    BZiON\Models
  */
-class Message extends AbstractMessage implements GroupEventInterface
+class Message extends AbstractMessage
 {
     /**
      * The ID of the player who sent the message
@@ -35,7 +35,7 @@ class Message extends AbstractMessage implements GroupEventInterface
         $this->message = $message['message'];
 
         if (!$this->isMessage()) {
-            throw new Exception("A group event cannot be represented by the Message class.");
+            throw new Exception("A conversation event cannot be represented by the Message class.");
         }
     }
 
@@ -61,10 +61,10 @@ class Message extends AbstractMessage implements GroupEventInterface
      * Create a new message
      *
      * This method only stores a message in the database (doesn't update the
-     * unread count or push live notifications), prefer to use Group::sendMessage()
+     * unread count or push live notifications), prefer to use Conversation::sendMessage()
      * instead.
      *
-     * @param  int     $to      The id of the group the message is sent to
+     * @param  int     $to      The id of the conversation the message is sent to
      * @param  int     $from    The ID of the sender
      * @param  string  $message The body of the message
      * @param  string  $status  The status of the message - can be 'visible', 'hidden', 'deleted' or 'reported'
@@ -73,7 +73,7 @@ class Message extends AbstractMessage implements GroupEventInterface
     public static function sendMessage($to, $from, $message, $status = 'visible')
     {
         return self::create(array(
-            'group_to'    => $to,
+            'conversation_to'    => $to,
             'player_from' => $from,
             'message'     => $message,
             'status'      => $status,

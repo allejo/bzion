@@ -27,7 +27,7 @@ class MessageQueryBuilder extends QueryBuilder
     }
 
     /**
-     * Only include group events
+     * Only include conversation events
      *
      * @return self
      */
@@ -47,12 +47,12 @@ class MessageQueryBuilder extends QueryBuilder
     public function forPlayer($player)
     {
         $this->extras .= '
-            LEFT JOIN `groups` ON groups.id = messages.group_to
-            LEFT JOIN `player_groups` ON player_groups.group=groups.id
+            LEFT JOIN `conversations` ON conversations.id = messages.conversation_to
+            LEFT JOIN `player_conversations` ON player_conversations.conversation=conversations.id
         ';
 
-        $this->column('player_groups.player')->is($player);
-        $this->column('groups.status')->isOneOf(Group::getActiveStatuses());
+        $this->column('player_conversations.player')->is($player);
+        $this->column('conversations.status')->isOneOf(Conversation::getActiveStatuses());
 
         return $this;
     }

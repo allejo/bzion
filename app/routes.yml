@@ -86,16 +86,16 @@ message_search:
     path:     /messages/search
     defaults: { _controller: 'Message', _action: 'search' }
 
-message_discussion_show:
-    path:     /messages/{discussion}
+message_conversation_show:
+    path:     /messages/{conversation}
     defaults: { _controller: 'Message', _action: 'show' }
 
-message_discussion_leave:
-    path:     /messages/{discussion}/leave
+message_conversation_leave:
+    path:     /messages/{conversation}/leave
     defaults: { _controller: 'Message', _action: 'leave' }
 
-message_discussion_kick:
-    path:     /messages/{discussion}/kick/{player}
+message_conversation_kick:
+    path:     /messages/{conversation}/kick/{player}
     defaults: { _controller: 'Message', _action: 'kick' }
 
 news_list:

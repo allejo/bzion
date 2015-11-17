@@ -74,14 +74,14 @@ class MessageSearch
         $finder = \Service::getContainer()->get('fos_elastica.finder.search');
         $boolQuery = new BoolQuery();
 
-        // We have only stored "active" messages and groups on Elasticsearch's
+        // We have only stored "active" messages and conversations on Elasticsearch's
         // database, so there is no check for that again
         if ($this->player) {
-            // Make sure that the parent of the message (i.e. the group that the
+            // Make sure that the parent of the message (i.e. the conversation that the
             // message belongs into) has the current player as its member
             $recipientQuery = new Term();
             $recipientQuery->setTerm('members', $this->player->getId());
-            $parentQuery = new HasParent($recipientQuery, 'group');
+            $parentQuery = new HasParent($recipientQuery, 'conversation');
             $boolQuery->addMust($parentQuery);
         }
 

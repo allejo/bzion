@@ -1,14 +1,14 @@
 <section class="{{ customClass }} c-messages__inbox">
-    {% for group in groups %}
-        <a class="c-messages__inbox__message" data-id="{{ group.id }}" href="{{ group.url }}">
+    {% for conversation in conversations %}
+        <a class="c-messages__inbox__message" data-id="{{ conversation.id }}" href="{{ conversation.url }}">
             <section class="c-messages__inbox__message__meta">
-                <p class="c-messages__inbox__message__meta__subject">{{ group.subject }}</p>
-                <p class="c-messages__inbox__message__meta__timestamp">{{ group.lastActivity }}</p>
+                <p class="c-messages__inbox__message__meta__subject">{{ conversation.subject }}</p>
+                <p class="c-messages__inbox__message__meta__timestamp">{{ conversation.lastActivity }}</p>
             </section>
 
             <p class="c-messages__inbox__message__members">
-                {% if group.members is not empty %}
-                    {% for member in group.members %}
+                {% if conversation.members is not empty %}
+                    {% for member in conversation.members %}
                         {{- member.name -}}
                         {%- if not loop.last -%}
                             {{- ', ' -}}
@@ -20,7 +20,7 @@
             </p>
 
             <article class="c-messages__inbox__message__latest-message">
-                {% set lastmessage = group.lastmessage %}
+                {% set lastmessage = conversation.lastmessage %}
                 {% if lastmessage is valid %}
                     <strong>{{ lastmessage.author.username }}:</strong>
                     {{ lastmessage.content|markdown(true, false)|striptags|truncate(50)|raw }}

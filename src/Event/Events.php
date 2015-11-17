@@ -13,42 +13,42 @@ namespace BZIon\Event;
 class Events
 {
     /**
-     * The group abandon event is thrown when a player leaves a group
+     * The conversation abandon event is thrown when a player leaves a conversation
      *
-     * The event listener receives a BZIon\Event\GroupAbandonEvent instance
-     *
-     * @var string
-     */
-    const GROUP_ABANDON = 'group.abandon';
-
-    /**
-     * The group join event is announced whenever new players join a group
-     *
-     * The event listener receives a BZIon\Event\GroupJoinEvent instance
+     * The event listener receives a BZIon\Event\ConversationAbandonEvent instance
      *
      * @var string
      */
-    const GROUP_JOIN = 'group.join';
+    const CONVERSATION_ABANDON = 'conversation.abandon';
 
     /**
-     * The group kick event is thrown every time a player gets kicked from a
-     * group
+     * The conversation join event is announced whenever new players join a conversation
      *
-     * The event listener receives a BZIon\Event\GroupKickEvent instance
+     * The event listener receives a BZIon\Event\ConversationJoinEvent instance
      *
      * @var string
      */
-    const GROUP_KICK = 'group.kick';
+    const CONVERSATION_JOIN = 'conversation.join';
 
     /**
-     * The group rename event is dispatched each time a new notification is sent
+     * The conversation kick event is thrown every time a player gets kicked from a
+     * conversation
+     *
+     * The event listener receives a BZIon\Event\ConversationKickEvent instance
+     *
+     * @var string
+     */
+    const CONVERSATION_KICK = 'conversation.kick';
+
+    /**
+     * The conversation rename event is dispatched each time a new notification is sent
      * to a player
      *
-     * The event listener receives a BZIon\Event\GroupRenameEvent instance
+     * The event listener receives a BZIon\Event\ConversationRenameEvent instance
      *
      * @var string
      */
-    const GROUP_RENAME = 'group.rename';
+    const CONVERSATION_RENAME = 'conversation.rename';
 
     /**
      * The message event is thrown each time a new message is sent or a

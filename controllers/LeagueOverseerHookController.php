@@ -239,7 +239,7 @@ class LeagueOverseerHookController extends PlainTextController
     }
 
     /**
-     * Queries the database to get the team which a group of players belong to
+     * Queries the database to get the team which a conversation of players belong to
      *
      * @param  int[] $players The IDs of players
      * @return Team  The team

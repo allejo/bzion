@@ -69,14 +69,14 @@ fos_elastica:
         search:
             finder: ~
             types:
-                group:
+                conversation:
                     mappings:
                         members: ~
                 message:
                     mappings:
                         content: ~
                     _parent:
-                        type: group
+                        type: conversation
 
 nelmio_api_doc: ~
 
@@ -115,7 +115,7 @@ services:
     bzion.search_listener:
         class: BZIon\Search\ElasticaEventSubscriber
         arguments:
-            - @fos_elastica.index.search.group
+            - @fos_elastica.index.search.conversation
             - @fos_elastica.index.search.message
         tags:
             - { name: kernel.event_subscriber }
@@ -125,12 +125,12 @@ services:
             - @fos_elastica.index.search.message
         tags:
             - { name: fos_elastica.provider, index: search, type: message }
-    bzion.search_provider.group:
-        class: BZIon\Search\GroupProvider
+    bzion.search_provider.conversation:
+        class: BZIon\Search\ConversationProvider
         arguments:
-            - @fos_elastica.index.search.group
+            - @fos_elastica.index.search.conversation
         tags:
-            - { name: fos_elastica.provider, index: search, type: group }
+            - { name: fos_elastica.provider, index: search, type: conversation }
     bzion.search_transformer.elastica_to_message:
         class: BZIon\Search\ElasticaToMessageTransformer
         tags:

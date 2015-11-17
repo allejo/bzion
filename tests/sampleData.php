@@ -2,7 +2,7 @@
 <?php
 
 use BZIon\Event\Events;
-use BZIon\Event\GroupRenameEvent;
+use BZIon\Event\ConversationRenameEvent;
 use BZIon\Event\WelcomeEvent;
 
 require_once __DIR__ . "/../bzion-load.php";
@@ -83,7 +83,7 @@ Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net", 5155, 227, $tw1s
 echo " done!";
 
 echo "\nAdding messages...";
-$group_to = Group::createGroup("New blog", $snake->getId(), array(
+$conversation_to = Conversation::createConversation("New blog", $snake->getId(), array(
     $alezakos,
     $allejo,
     $ashvala,
@@ -95,12 +95,12 @@ $group_to = Group::createGroup("New blog", $snake->getId(), array(
     $tw1sted
 ));
 
-$event = new GroupRenameEvent($group_to, "New message", "New blorg", $snake);
-GroupEvent::storeEvent($group_to->getId(), $event, Events::GROUP_RENAME);
-$event = new GroupRenameEvent($group_to, "New blorg", "New blog", $snake);
-GroupEvent::storeEvent($group_to->getId(), $event, Events::GROUP_RENAME);
+$event = new ConversationRenameEvent($conversation_to, "New message", "New blorg", $snake);
+ConversationEvent::storeEvent($conversation_to->getId(), $event, Events::CONVERSATION_RENAME);
+$event = new ConversationRenameEvent($conversation_to, "New blorg", "New blog", $snake);
+ConversationEvent::storeEvent($conversation_to->getId(), $event, Events::CONVERSATION_RENAME);
 
-$group_to->sendMessage($snake, "Check out my new blog!");
+$conversation_to->sendMessage($snake, "Check out my new blog!");
 echo " done!";
 
 echo "\nAdding bans...";

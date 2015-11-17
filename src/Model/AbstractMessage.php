@@ -8,16 +8,16 @@
  */
 
 /**
- * An abstraction for group events
+ * An abstraction for conversation events
  * @package    BZiON\Models
  */
-abstract class AbstractMessage extends Model implements GroupEventInterface
+abstract class AbstractMessage extends Model
 {
     /**
-     * The ID of the group where the event took place
+     * The ID of the conversation where the event took place
      * @var int
      */
-    protected $group;
+    protected $conversation;
 
     /**
      * The timestamp of when the event took place
@@ -50,19 +50,19 @@ abstract class AbstractMessage extends Model implements GroupEventInterface
      */
     protected function assignResult($event)
     {
-        $this->group = $event['group_to'];
+        $this->conversation = $event['conversation_to'];
         $this->type = $event['event_type'];
         $this->timestamp = TimeDate::fromMysql($event['timestamp']);
         $this->status = $event['status'];
     }
 
     /**
-     * Get the group where the event took place
-     * @return Group
+     * Get the conversation where the event took place
+     * @return Conversation
      */
-    public function getGroup()
+    public function getConversation()
     {
-        return Group::get($this->group);
+        return Conversation::get($this->conversation);
     }
 
     /**
@@ -75,7 +75,7 @@ abstract class AbstractMessage extends Model implements GroupEventInterface
     }
 
     /**
-     * Find out whether the event is a message and not a generic group event
+     * Find out whether the event is a message and not a generic conversation event
      * (such as a rename or member join)
      *
      * @return boolean
@@ -100,7 +100,7 @@ abstract class AbstractMessage extends Model implements GroupEventInterface
     {
         return new MessageQueryBuilder('AbstractMessage', array(
             'columns' => array(
-                'group'  => 'group_to',
+                'conversation'  => 'conversation_to',
                 'time'   => 'timestamp',
                 'status' => 'status'
             )
@@ -128,7 +128,7 @@ abstract class AbstractMessage extends Model implements GroupEventInterface
         if ($columns['event_type'] === null) {
             return new Message($id, $columns);
         } else {
-            return new GroupEvent($id, $columns);
+            return new ConversationEvent($id, $columns);
         }
     }
 }

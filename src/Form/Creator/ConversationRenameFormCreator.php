@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains a form creator to rename a Group's subject
+ * This file contains a form creator to rename a Conversation's subject
  *
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
@@ -11,9 +11,9 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Form creator for group renames
+ * Form creator for conversation renames
  */
-class GroupRenameFormCreator extends ModelFormCreator
+class ConversationRenameFormCreator extends ModelFormCreator
 {
     /**
      * {@inheritDoc}

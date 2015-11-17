@@ -710,7 +710,7 @@ class Player extends AvatarModel implements NamedModel
     public function markMessagesAsRead()
     {
         $this->db->query(
-            "UPDATE `player_groups` SET `read` = 1 WHERE `player` = ? AND `read` = 0",
+            "UPDATE `player_conversations` SET `read` = 1 WHERE `player` = ? AND `read` = 0",
             'i', array($this->id)
         );
     }
@@ -824,7 +824,7 @@ class Player extends AvatarModel implements NamedModel
     public function countUnreadMessages()
     {
         return $this->fetchCount("WHERE `player` = ? AND `read` = 0",
-            'i', $this->id, 'player_groups'
+            'i', $this->id, 'player_conversations'
         );
     }
 

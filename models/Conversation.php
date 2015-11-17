@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains functionality relating to the participants of a group message
+ * This file contains functionality relating to the participants of a conversation message
  *
  * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
@@ -10,28 +10,28 @@
  * A discussion (group of messages)
  * @package    BZiON\Models
  */
-class Group extends UrlModel implements NamedModel
+class Conversation extends UrlModel implements NamedModel
 {
     /**
-     * The subject of the group
+     * The subject of the conversation
      * @var string
      */
     protected $subject;
 
     /**
-     * The time of the last message to the group
+     * The time of the last message to the conversation
      * @var TimeDate
      */
     protected $last_activity;
 
     /**
-     * The id of the creator of the group
+     * The id of the creator of the conversation
      * @var int
      */
     protected $creator;
 
     /**
-     * The status of the group
+     * The status of the conversation
      *
      * Can be 'active', 'disabled', 'deleted' or 'reported'
      * @var string
@@ -41,17 +41,17 @@ class Group extends UrlModel implements NamedModel
     /**
      * The name of the database table used for queries
      */
-    const TABLE = "groups";
+    const TABLE = "conversations";
 
     /**
      * {@inheritDoc}
      */
-    protected function assignResult($group)
+    protected function assignResult($conversation)
     {
-        $this->subject = $group['subject'];
-        $this->last_activity = TimeDate::fromMysql($group['last_activity']);
-        $this->creator = $group['creator'];
-        $this->status = $group['status'];
+        $this->subject = $conversation['subject'];
+        $this->last_activity = TimeDate::fromMysql($conversation['last_activity']);
+        $this->creator = $conversation['creator'];
+        $this->status = $conversation['status'];
     }
 
     /**
@@ -75,7 +75,7 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Determine whether a player is the one who created the message group
+     * Determine whether a player is the one who created the message conversation
      *
      * @param  int  $id The ID of the player to test for
      * @return bool
@@ -86,7 +86,7 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Get the time when the group was most recently active
+     * Get the time when the conversation was most recently active
      *
      * @param  bool            $human True to output the last activity in a human-readable string, false to return a TimeDate object
      * @return string|TimeDate
@@ -101,7 +101,7 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Update the group's last activity timestamp
+     * Update the conversation's last activity timestamp
      *
      * @return void
      */
@@ -112,7 +112,7 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Update the group's subject
+     * Update the conversation's subject
      *
      * @param  string $subject The new subject
      * @return self
@@ -123,13 +123,13 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Get the last message of the group
+     * Get the last message of the conversation
      *
      * @return Message
      */
     public function getLastMessage()
     {
-        $ids = self::fetchIdsFrom('group_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
+        $ids = self::fetchIdsFrom('conversation_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
 
         if (!isset($ids[0])) {
             return Message::invalid();
@@ -139,21 +139,21 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Find whether the last message in the group has been read by a player
+     * Find whether the last message in the conversation has been read by a player
      *
      * @param  int     $playerId The ID of the player
      * @return boolean
      */
     public function isReadBy($playerId)
     {
-        $query = $this->db->query("SELECT `read` FROM `player_groups` WHERE `player` = ? AND `group` = ?",
+        $query = $this->db->query("SELECT `read` FROM `player_conversations` WHERE `player` = ? AND `conversation` = ?",
             'ii', array($playerId, $this->id));
 
         return ($query[0]['read'] == 1);
     }
 
     /**
-     * Mark the last message in the group as having been read by a player
+     * Mark the last message in the conversation as having been read by a player
      *
      * @param  int  $playerId The ID of the player
      * @return void
@@ -161,13 +161,13 @@ class Group extends UrlModel implements NamedModel
     public function markReadBy($playerId)
     {
         $this->db->query(
-            "UPDATE `player_groups` SET `read` = 1 WHERE `player` = ? AND `group` = ? AND `read` = 0",
+            "UPDATE `player_conversations` SET `read` = 1 WHERE `player` = ? AND `conversation` = ? AND `read` = 0",
             'ii', array($playerId, $this->id)
         );
     }
 
     /**
-     * Mark the last message in the group as unread by the group's members
+     * Mark the last message in the conversation as unread by the conversation's members
      *
      * @param  int  $except The ID of a player to exclude
      * @return void
@@ -175,7 +175,7 @@ class Group extends UrlModel implements NamedModel
     public function markUnread($except)
     {
         $this->db->query(
-            "UPDATE `player_groups` SET `read` = 0 WHERE `group` = ? AND `player` != ?",
+            "UPDATE `player_conversations` SET `read` = 0 WHERE `conversation` = ? AND `player` != ?",
             'ii',
             array($this->id, $except)
         );
@@ -186,15 +186,7 @@ class Group extends UrlModel implements NamedModel
      */
     public static function getRouteName($action = 'show')
     {
-        return "message_discussion_$action";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public static function getParamName()
-    {
-        return "discussion";
+        return "message_conversation_$action";
     }
 
     /**
@@ -214,7 +206,7 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Get a list containing each member of the group
+     * Get a list containing each member of the conversation
      * @param  int|null $hide The ID of a player to ignore
      * @return Model[]  An array of players and teams
      */
@@ -230,7 +222,7 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Get a list containing the IDs of each member player of the group
+     * Get a list containing the IDs of each member player of the conversation
      * @param  int|null  $hide     The ID of a player to ignore
      * @param  boolean   $distinct Whether to only return players who were
      *                             specifically invited to the conversation, and
@@ -239,7 +231,7 @@ class Group extends UrlModel implements NamedModel
      */
     public function getPlayerIds($hide = null, $distinct = false)
     {
-        $additional_query = "WHERE `group` = ?";
+        $additional_query = "WHERE `conversation` = ?";
         $types = "i";
         $params = array($this->id);
 
@@ -253,44 +245,44 @@ class Group extends UrlModel implements NamedModel
             $additional_query .= " AND `distinct` = 1";
         }
 
-        return parent::fetchIds($additional_query, $types, $params, "player_groups", "player");
+        return parent::fetchIds($additional_query, $types, $params, "player_conversations", "player");
     }
 
     /**
-     * Get a list containing the IDs of each member team of the group
+     * Get a list containing the IDs of each member team of the conversation
      *
      * @return integer[] An array of team IDs
      */
     public function getTeamIds()
     {
-        return parent::fetchIds("WHERE `group` = ?", "i", $this->id, "team_groups", "team");
+        return parent::fetchIds("WHERE `conversation` = ?", "i", $this->id, "team_conversations", "team");
     }
 
     /**
-     * Create a new message group
+     * Create a new message conversation
      **
-     * @param  string $subject   The subject of the group
-     * @param  int    $creatorId The ID of the player who created the group
-     * @param  array  $members   A list of Models representing the group's members
-     * @return Group  An object that represents the created group
+     * @param  string $subject   The subject of the conversation
+     * @param  int    $creatorId The ID of the player who created the conversation
+     * @param  array  $members   A list of Models representing the conversation's members
+     * @return Conversation  An object that represents the created conversation
      */
-    public static function createGroup($subject, $creatorId, $members = array())
+    public static function createConversation($subject, $creatorId, $members = array())
     {
-        $group = self::create(array(
+        $conversation = self::create(array(
             'subject' => $subject,
             'creator' => $creatorId,
             'status'  => "active",
         ), 'sis', 'last_activity');
 
         foreach ($members as $member) {
-            $group->addMember($member);
+            $conversation->addMember($member);
         }
 
-        return $group;
+        return $conversation;
     }
 
     /**
-     * Send a new message to the group's members
+     * Send a new message to the conversation's members
      * @param  Player  $from    The sender
      * @param  string  $message The body of the message
      * @param  string  $status  The status of the message - can be 'visible', 'hidden', 'deleted' or 'reported'
@@ -306,31 +298,31 @@ class Group extends UrlModel implements NamedModel
     }
 
     /**
-     * Get all the groups in the database a player belongs to that are not disabled or deleted
+     * Get all the conversations in the database a player belongs to that are not disabled or deleted
      * @todo Move this to the Player class
-     * @param  int     $id The id of the player whose groups are being retrieved
-     * @return Group[] An array of group objects
+     * @param  int     $id The id of the player whose conversations are being retrieved
+     * @return Conversation[] An array of conversation objects
      */
-    public static function getGroups($id)
+    public static function getConversations($id)
     {
-        $additional_query = "LEFT JOIN groups ON player_groups.group=groups.id
-                             WHERE player_groups.player = ? AND groups.status
+        $additional_query = "LEFT JOIN conversations ON player_conversations.conversation=conversations.id
+                             WHERE player_conversations.player = ? AND conversations.status
                              NOT IN (?, ?) ORDER BY last_activity DESC";
         $params = array($id, "disabled", "deleted");
 
-        return self::arrayIdToModel(self::fetchIds($additional_query, "iss", $params, "player_groups", "groups.id"));
+        return self::arrayIdToModel(self::fetchIds($additional_query, "iss", $params, "player_conversations", "conversations.id"));
     }
 
     /**
-     * Checks if a player or team belongs in the group
+     * Checks if a player or team belongs in the conversation
      * @param  Player|Team $member The player or team to check
-     * @return bool True if the given object belongs in the group, false if they don't
+     * @return bool True if the given object belongs in the conversation, false if they don't
      */
     public function isMember($member)
     {
         $type = ($member instanceof Player) ? 'player' : 'team';
 
-        $result = $this->db->query("SELECT 1 FROM `{$type}_groups` WHERE `group` = ?
+        $result = $this->db->query("SELECT 1 FROM `{$type}_conversations` WHERE `conversation` = ?
                                     AND `$type` = ?", "ii", array($this->id, $member->getId()));
 
         return count($result) > 0;
@@ -348,24 +340,24 @@ class Group extends UrlModel implements NamedModel
             // Mark individual players as distinct by creating or updating the
             // entry on the table
             $this->db->query(
-                "INSERT INTO `player_groups` (`group`, `player`, `distinct`) VALUES (?, ?, 1)
+                "INSERT INTO `player_conversations` (`conversation`, `player`, `distinct`) VALUES (?, ?, 1)
                     ON DUPLICATE KEY UPDATE `distinct` = 1",
                 "ii",
                 array($this->getId(), $member->getId())
             );
         } elseif ($member instanceof Team) {
-            // Add the team to the team_groups table...
+            // Add the team to the team_conversations table...
             $this->db->query(
-                "INSERT INTO `team_groups` (`group`, `team`) VALUES (?, ?)",
+                "INSERT INTO `team_conversations` (`conversation`, `team`) VALUES (?, ?)",
                 "ii",
                 array($this->getId(), $member->getId())
             );
 
-            // ...and each of its members in the player_groups table as
+            // ...and each of its members in the player_conversations table as
             // non-distinct (unless they were already there)
             foreach ($member->getMembers() as $player) {
                 $this->db->query(
-                    "INSERT IGNORE INTO `player_groups` (`group`, `player`, `distinct`) VALUES (?, ?, 0)",
+                    "INSERT IGNORE INTO `player_conversations` (`conversation`, `player`, `distinct`) VALUES (?, ?, 0)",
                     "ii",
                     array($this->getId(), $player->getId())
                 );
@@ -384,14 +376,14 @@ class Group extends UrlModel implements NamedModel
     public function removeMember($member)
     {
         if ($member instanceof Player) {
-            $this->db->query("DELETE FROM `player_groups` WHERE `group` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId()));
+            $this->db->query("DELETE FROM `player_conversations` WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId()));
         } else {
             throw new Exception("Not implemented yet");
         }
     }
 
     /**
-     * Find out which members of the group should receive an e-mail after a new
+     * Find out which members of the conversation should receive an e-mail after a new
      * message has been sent
      *
      * @param  int   $except The ID of a player who won't receive an e-mail (e.g. message author)
@@ -400,20 +392,20 @@ class Group extends UrlModel implements NamedModel
     public function getWaitingForEmailIDs($except)
     {
         return $this->fetchIds(
-            'LEFT JOIN players ON pg.player = players.id WHERE pg.group = ? AND pg.read = 1 AND pg.player != ?  AND players.verified = 1 AND players.receives != "nothing"',
+            'LEFT JOIN players ON pg.player = players.id WHERE pg.conversation = ? AND pg.read = 1 AND pg.player != ?  AND players.verified = 1 AND players.receives != "nothing"',
             'ii',
             array($this->id, $except),
-            'player_groups AS pg',
+            'player_conversations AS pg',
             'pg.player');
     }
 
     /**
-     * Get a query builder for groups
+     * Get a query builder for conversations
      * @return QueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Group', array(
+        return new QueryBuilder('Conversation', array(
             'columns' => array(
                 'status' => 'status'
             ),

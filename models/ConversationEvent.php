@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains functionality relating to events that happen in a group
+ * This file contains functionality relating to events that happen in a conversation
  * except for Messages
  *
  * @package    BZiON\Models
@@ -10,10 +10,10 @@
 use BZIon\Event\Event;
 
 /**
- * An event that happened in a group
+ * An event that happened in a conversation
  * @package    BZiON\Models
  */
-class GroupEvent extends AbstractMessage implements GroupEventInterface
+class ConversationEvent extends AbstractMessage
 {
     /**
      * The event
@@ -31,7 +31,7 @@ class GroupEvent extends AbstractMessage implements GroupEventInterface
         $this->event = unserialize($event['message']);
 
         if ($this->isMessage()) {
-            throw new Exception("A message cannot be represented by the GroupEvent class.");
+            throw new Exception("A message cannot be represented by the ConversationEvent class.");
         }
     }
 
@@ -47,8 +47,8 @@ class GroupEvent extends AbstractMessage implements GroupEventInterface
     /**
      * Get the type of the event
      *
-     * Do not use GroupEvent::getType(), as it returns the name of the class
-     * (i.e. groupEvent)
+     * Do not use ConversationEvent::getType(), as it returns the name of the class
+     * (i.e. conversationEvent)
      *
      * @return integer
      */
@@ -58,18 +58,18 @@ class GroupEvent extends AbstractMessage implements GroupEventInterface
     }
 
     /**
-     * Store a group event in the database
+     * Store a conversation event in the database
      *
-     * @param  int        $group     The ID of the group
+     * @param  int        $conversation     The ID of the conversation
      * @param  Event      $event     The event
      * @param  mixed      $timestamp The timestamp when the event took place
      * @param  string     $status    The status of the event, can be 'visible', 'hidden', 'deleted' or 'reported'
-     * @return GroupEvent
+     * @return ConversationEvent
      */
-    public static function storeEvent($group, $event, $type, $timestamp = 'now', $status = 'visible')
+    public static function storeEvent($conversation, $event, $type, $timestamp = 'now', $status = 'visible')
     {
         return self::create(array(
-            "group_to"   => $group,
+            "conversation_to"   => $conversation,
             "message"    => serialize($event),
             "event_type" => $type,
             "timestamp"  => TimeDate::from($timestamp)->toMysql(),

@@ -132,15 +132,15 @@ class EventPusher implements MessageComponentInterface
         // ones who didn't
         $received = array();
 
-        $group = \Group::get($event->data->discussion);
+        $conversation = \Conversation::get($event->data->conversation);
 
-        $groupMembers = $group->getPlayerIds();
+        $conversationMembers = $conversation->getPlayerIds();
 
         foreach ($this->clients as $client) {
             $player = $client->Player;
 
-            if (!in_array($player->getId(), $groupMembers)) {
-                // Don't notify that player, he doesn't belong in the group
+            if (!in_array($player->getId(), $conversationMembers)) {
+                // Don't notify that player, he doesn't belong in the conversation
                 continue;
             }
 

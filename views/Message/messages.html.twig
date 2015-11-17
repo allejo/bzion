@@ -1,5 +1,5 @@
 {% if messages %}
-    <a href="{{ path('message_discussion_show', {discussion: group.id, start: (messages|last).id }) }}" class="older_messages">
+    <a href="{{ path('message_conversation_show', {conversation: conversation.id, start: (messages|last).id }) }}" class="older_messages">
         Load older messages
     </a>
 {% endif %}
@@ -21,13 +21,13 @@
         {% set event = message.event %}
 
         <li class="action">
-            {% if type == 'group.rename' %}
+            {% if type == 'conversation.rename' %}
                 <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
-            {% elseif type == 'group.abandon' %}
+            {% elseif type == 'conversation.abandon' %}
                 <i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion
-            {% elseif type == 'group.kick' %}
+            {% elseif type == 'conversation.kick' %}
                 <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion
-            {% elseif type == 'group.join' %}
+            {% elseif type == 'conversation.join' %}
                 <i class="fa fa-plus-circle"></i>
                 {% for member in event.newMembers -%}
                     {%- if not loop.first -%}

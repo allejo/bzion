@@ -46,21 +46,21 @@ class Role extends Model
     protected $display;
 
     /**
-     * A Font Awesome CSS class for the icon to be used for the group
+     * A Font Awesome CSS class for the icon to be used for the conversation
      *
      * @var string
      */
     protected $displayIcon;
 
     /**
-     * A CSS class that will represent the color of the group in their tab
+     * A CSS class that will represent the color of the conversation in their tab
      *
      * @var string
      */
     protected $displayColor;
 
     /**
-     * The collective name the group will be called if this role is displayed on the 'Admins' page
+     * The collective name the conversation will be called if this role is displayed on the 'Admins' page
      * @var string
      */
     protected $displayName;
@@ -176,7 +176,7 @@ class Role extends Model
     /**
      * Get the name of the role as displayed in the admin interface
      *
-     * @return string The name of the group
+     * @return string The name of the conversation
      */
     public function getName()
     {
@@ -184,7 +184,7 @@ class Role extends Model
     }
 
     /**
-     * Check if this role is for a group of users or if it's a role for a single user
+     * Check if this role is for a conversation of users or if it's a role for a single user
      *
      * @return bool True if multiple users can be assigned this role
      */

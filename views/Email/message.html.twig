@@ -3,7 +3,7 @@
 
 {% block content %}
     {{ open_block() }}
-        <strong>{{ message.author.name }}</strong> sent a new message on {{ link(message.group.url('show', true), message.group.subject) }}
+        <strong>{{ message.author.name }}</strong> sent a new message on {{ link(message.conversation.url('show', true), message.conversation.subject) }}
     {{ close_block() }}
 
     {{ open_block() }}

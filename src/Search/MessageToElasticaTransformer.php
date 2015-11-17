@@ -31,7 +31,7 @@ class MessageToElasticaTransformer implements ModelToElasticaTransformerInterfac
         );
 
         $document = new Document($message->getId(), $data);
-        $document->setParent($message->getGroup()->getId());
+        $document->setParent($message->getConversation()->getId());
 
         return $document;
     }

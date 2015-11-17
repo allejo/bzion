@@ -224,10 +224,10 @@ class Notification extends Model
         switch ($type) {
             case 'message':
                 $message = array(
-                    'discussion' => $data['message']->getGroup()->getId(),
-                    'message'    => $data['message']->getId(),
-                    'author'     => $data['message']->getAuthor()->getId(),
-                    'recipients' => $data['recipients']
+                    'conversation' => $data['message']->getConversation()->getId(),
+                    'message'      => $data['message']->getId(),
+                    'author'       => $data['message']->getAuthor()->getId(),
+                    'recipients'   => $data['recipients']
                 );
                 break;
             case 'notification':

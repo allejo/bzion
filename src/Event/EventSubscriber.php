@@ -64,10 +64,10 @@ class EventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'group.abandon'      => 'group',
-            'group.join'         => 'group',
-            'group.kick'         => 'group',
-            'group.rename'       => 'group',
+            'conversation.abandon'      => 'conversation',
+            'conversation.join'         => 'conversation',
+            'conversation.kick'         => 'conversation',
+            'conversation.rename'       => 'conversation',
             'message.new'        => 'onNewMessage',
             'notification.new'   => 'onNewNotification',
             'team.delete'        => 'notify',
@@ -88,9 +88,9 @@ class EventSubscriber implements EventSubscriberInterface
     {
         // Get a list of everyone who can see the message so we can notify them -
         // the sender of the message is excluded
-        $group = $event->getMessage()->getGroup();
+        $conversation = $event->getMessage()->getConversation();
         $author = $event->getMessage()->getAuthor()->getId();
-        $recipients = $group->getWaitingForEmailIDs($author);
+        $recipients = $conversation->getWaitingForEmailIDs($author);
 
         // The websocket will handle emails if it is enabled
         if (!WebSocketAdapter::isEnabled()) {
@@ -102,7 +102,7 @@ class EventSubscriber implements EventSubscriberInterface
             );
         }
 
-        $event->getMessage()->getGroup()->markUnread($author);
+        $event->getMessage()->getConversation()->markUnread($author);
         \Notification::pushEvent('message', array(
             'message'    => $event->getMessage(),
             'recipients' => $recipients
@@ -137,14 +137,14 @@ class EventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Called when a group event needs to be stored in the database
+     * Called when a conversation event needs to be stored in the database
      *
      * @param Event  $event The event
      * @param string $name  The name of the event
      */
-    public function group(Event $event, $name)
+    public function conversation(Event $event, $name)
     {
-        \GroupEvent::storeEvent($event->getGroup()->getId(), $event, $name);
+        \ConversationEvent::storeEvent($event->getConversation()->getId(), $event, $name);
     }
 
     /**

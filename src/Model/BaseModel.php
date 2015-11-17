@@ -271,7 +271,7 @@ abstract class BaseModel implements ModelInterface
         }
 
         // Find the correct value if the user specified a table.
-        // For example, if $select is "groups.id", we should convert it to
+        // For example, if $select is "conversations.id", we should convert it to
         // "id", because that's how MySQLi stores column names in the $results
         // array.
         $selectArray = explode(".", $select);

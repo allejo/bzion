@@ -1,5 +1,5 @@
 Feature: Teams
-   In order to manage groups of players
+   In order to manage conversations of players
    As a bzion user
    I need to be able to store and manage teams
 

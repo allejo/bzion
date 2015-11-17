@@ -1,7 +1,7 @@
-{{ message.author.name }} just sent a message on "{{ message.group.subject }}"
+{{ message.author.name }} just sent a message on "{{ message.conversation.subject }}"
 You can view the conversation by visiting the following link:
 
-{{ message.group.url('show', true) }}
+{{ message.conversation.url('show', true) }}
 
 The message content is as follows:
 

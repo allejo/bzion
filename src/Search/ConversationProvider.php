@@ -11,33 +11,33 @@ use Elastica\Type;
 use FOS\ElasticaBundle\Provider\ProviderInterface;
 
 /**
- * Stores groups to be managed by Elasticsearch
+ * Stores conversations to be managed by Elasticsearch
  */
-class GroupProvider implements ProviderInterface
+class ConversationProvider implements ProviderInterface
 {
     /**
-     * The elastica type of the Group
+     * The elastica type of the Conversation
      *
      * @var Type
      */
-    protected $groupType;
+    protected $conversationType;
 
     /**
      * The transformer that converts our models to elastica objects
      *
-     * @var GroupToElasticaTransformer
+     * @var ConversationToElasticaTransformer
      */
     protected $transformer;
 
     /**
      * Load the dependencies for the MessageProvider
      *
-     * @param Type $groupType The elastica type
+     * @param Type $conversationType The elastica type
      */
-    public function __construct(Type $groupType)
+    public function __construct(Type $conversationType)
     {
-        $this->groupType = $groupType;
-        $this->transformer = new GroupToElasticaTransformer();
+        $this->conversationType = $conversationType;
+        $this->transformer = new ConversationToElasticaTransformer();
     }
 
     /**
@@ -49,16 +49,16 @@ class GroupProvider implements ProviderInterface
     public function populate(\Closure $loggerClosure = null, array $options = array())
     {
         if ($loggerClosure) {
-            $loggerClosure('Indexing groups');
+            $loggerClosure('Indexing conversations');
         }
 
-        $groups = \Group::getQueryBuilder()->active()->getModels();
+        $conversations = \Conversation::getQueryBuilder()->active()->getModels();
         $documents = array();
 
-        foreach ($groups as $group) {
-            $documents[] = $this->transformer->transform($group, array());
+        foreach ($conversations as $conversation) {
+            $documents[] = $this->transformer->transform($conversation, array());
         }
 
-        $this->groupType->addDocuments($documents);
+        $this->conversationType->addDocuments($documents);
     }
 }

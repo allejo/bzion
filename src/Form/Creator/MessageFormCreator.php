@@ -10,7 +10,7 @@ namespace BZIon\Form\Creator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Form creator for sending messages to groups
+ * Form creator for sending messages to conversations
  */
 class MessageFormCreator extends ModelFormCreator
 {

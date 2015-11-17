@@ -44,7 +44,7 @@ class NewMessageEvent extends Event
     }
 
     /**
-     * Find out if the message is the first in its Group
+     * Find out if the message is the first in its Conversation
      * @return boolean
      */
     public function isFirst()
