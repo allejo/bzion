@@ -2,13 +2,6 @@
 @include object('row') {
     @include view-container();
 
-    margin-bottom: $Settings-Page_Section-Margin;
-
-    // By default, each element will have a bottom margin, so have a modifier class to remove it
-    @include modifier('no-margin') {
-        margin-bottom: 0;
-    }
-
     // An element that will be a sidebar
     @include element('sidebar') {
         @include view-columns(xxl, 3);
@@ -21,21 +14,15 @@
         @include modifier('with-sidebar') {
             @include view-columns(xxl, 9);
             @include view-columns(sm, 12);
-
-            @include respond-to(sm) {
-                margin-bottom: $Settings-Page_Section-Small_Margin;
-            }
         }
 
-        // Take up the whole parent container; i.e. the 'o-layout' element
+        // Take up the whole parent container; i.e. the 'o-row' element
         @include modifier('full') {
-            @include make-margin(xxl);
             @include view-columns(xxl, 12);
         }
 
         // Take up a third of the parent container
         @include modifier('third') {
-            @include make-margin(sm);
             @include view-columns(xxl, 4);
             @include view-columns(md, 6);
             @include view-columns(sm, 12);
@@ -43,7 +30,6 @@
 
         // Take up a forth of the parent container
         @include modifier('quarter') {
-            @include make-margin(sm);
             @include view-columns(xxl, 3);
             @include view-columns(md, 4);
             @include view-columns(sm, 6);
@@ -52,14 +38,37 @@
 
         // Take up half of the parent container
         @include modifier('half') {
-            @include make-margin(sm);
             @include view-columns(xxl, 6);
             @include view-columns(sm, 12);
         }
     }
+}
 
-    h4 {
+@include object('section') {
+    margin-bottom: $Settings-Page_Section-Margin;
+
+    @include respond-to(sm) {
         margin-bottom: $Settings-Page_Section-Small_Margin;
+    }
+
+    .o-row__column--half,
+    .o-row__column--third,
+    .o-row__column--quarter {
+        @include respond-to(sm) {
+            margin-bottom: $Settings-Page_Section-Small_Margin;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    @include element('header') {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+
+        @include respond-to(sm) {
+            margin-bottom: 5px;
+        }
     }
 }
 

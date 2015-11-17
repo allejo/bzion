@@ -55,7 +55,7 @@
         </section>
 
         <section class="o-container c-team">
-            <section class="o-row">
+            <section class="o-row o-section">
                 <section class="o-row__column--with-sidebar c-team__information">
                     <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
                     <article class="c-team__information__bio s-markdown">
@@ -63,14 +63,14 @@
                     </article>
                 </section>
 
-                <section class="o-row__sidebar  c-team__profile-picture">
+                <section class="o-row__sidebar c-team__profile-picture">
                     <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
                 </section>
             </section>
 
-            <section class="o-row">
+            <section class="o-row o-section">
                 <section class="o-row__column--half c-team__match-stats">
-                    <h4>
+                    <h4 class="o-section__header">
                         Match Statistics
                         <small>
                             [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
@@ -93,7 +93,7 @@
                 </section>
 
                 <section class="o-row__column--half c-team__activity">
-                    <h4>
+                    <h4 class="o-section__header">
                         Team Activity
                         <small>
                             [<a id="activity_stats" href="#" original-title="Like activity stats? There's more!">?</a>]
@@ -102,18 +102,12 @@
                 </section>
             </section>
 
-            <section class="o-row">
+            <section class="o-row o-section">
                 <section class="o-row__column--half c-team__roster">
-                    <h4>Team Members</h4>
+                    <h4 class="o-section__header">Team Members</h4>
                     <article class="c-table c-table--no-border c-table--no-hover">
                         {% for player in team.members %}
                             <div class="c-table__row">
-                                <div class="c-table__row__column c-team__roster__option">
-                                    {% if player.id == team.leader.id %}
-                                        <i class="fa fa-star" title="Team Leader"></i>
-                                    {% endif %}
-                                </div>
-
                                 {% if me.canEdit(team) %}
                                     <div class="c-table__row__column c-team__roster__option">
                                         <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
@@ -124,6 +118,10 @@
 
                                 <div class="c-table__row__column c-team__roster__callsign">
                                     {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
+
+                                    {% if player.id == team.leader.id %}
+                                        <i class="fa fa-star" title="Team Leader"></i>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
@@ -131,7 +129,7 @@
                 </section>
 
                 <section class="o-row__column--half c-team__matches">
-                    <h4>Recent Matches</h4>
+                    <h4 class="o-section__header">Recent Matches</h4>
                     <article class="c-table">
                         {% for match in team.matches %}
                             <a class="c-table__row" href="#">
