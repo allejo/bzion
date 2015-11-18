@@ -1,0 +1,22 @@
+{% set dataAttributes = "" %}
+
+{% for key, value in data %}
+    {% set rAttributes = value | split(".") %}
+    {% set initialObject = player %}
+
+    {% for obj in rAttributes %}
+        {% set initialObject = attribute(initialObject, obj) %}
+    {% endfor %}
+
+    {% set dataAttributes = '%s data-%s="%s"' | format(dataAttributes, key, initialObject) %}
+{% endfor %}
+
+<article class="c-player-badge {{ css }}" {{ dataAttributes | raw }}>
+    <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
+    <section class="c-player-badge__info">
+        <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+        {% if showTeam %}
+            <p class="c-player-badge__info__team">{{ link_to(player.team) }}</p>
+        {% endif %}
+    </section>
+</article>

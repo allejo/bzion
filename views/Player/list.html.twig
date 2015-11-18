@@ -15,13 +15,18 @@
         <section class="o-container c-roll-call">
             <section class="o-row">
                 {% for player in players %}
-                    <article class="o-row__column--third c-player-badge" data-callsign="{{ player.username }}" data-team="{{ player.team.name }}" data-country="{{ player.country.name }}">
-                        <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
-                        <section class="c-player-badge__info">
-                            <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
-                            <p class="c-player-badge__info__team">{{ link_to(player.team) }}</p>
-                        </section>
-                    </article>
+                    {% include "player-badge.html.twig" with {
+                        css: 'o-row__column--third',
+                        player: player,
+                        showTeam: true,
+                        data: {
+                            callsign: "username",
+                            teamid: "team.id",
+                            team: "team.name",
+                            iso: "country.iso",
+                            country: "country.name"
+                        }}
+                    %}
                 {% endfor %}
             </section>
         </section>

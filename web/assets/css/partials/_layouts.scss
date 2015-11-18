@@ -60,10 +60,10 @@
     .o-row__column--quarter {
         @include respond-to(sm) {
             margin-bottom: $Settings-Page_Section-Small_Margin;
-        }
 
-        &:last-child {
-            margin-bottom: 0;
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
 

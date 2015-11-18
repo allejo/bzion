@@ -14,7 +14,7 @@
 
         <section class="o-container">
             {% for section in role_sections %}
-                <section class="o-row">
+                <section class="o-section">
                     <p class="c-button c-button--{{ section.role.displayColor }} c-button--display">
                         {% if section.role.displayIcon is not null %}
                             <i class="fa {{ section.role.displayIcon }}"></i>
@@ -24,14 +24,12 @@
                     </p>
                 </section>
 
-                <section class="o-row">
+                <section class="o-row o-section">
                     {% for player in section.members %}
-                        <article class="o-row__column--quarter c-player-badge">
-                            <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
-                            <section class="c-player-badge__info c-player-badge__info--callsign-only">
-                                <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
-                            </section>
-                        </article>
+                        {% include "player-badge.html.twig" with {
+                            css: 'o-row__column--quarter',
+                            player: player }
+                        %}
                     {% endfor %}
                 </section>
             {% endfor %}

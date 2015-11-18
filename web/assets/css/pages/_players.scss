@@ -45,7 +45,6 @@
 
 @include component('player-badge') {
     display: flex;
-    margin-bottom: 10px;
 
     @include element('avatar') {
         $avatarSize: 50px;
@@ -55,9 +54,10 @@
     }
 
     @include element('info') {
-        flex: 1;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
         padding-left: 10px;
-        vertical-align: top;
 
         @include element('callsign') {
             display: inline-block;
@@ -66,6 +66,7 @@
 
         @include element('team') {
             font-size: 14px;
+            width: 100%;
 
             a {
                 color: $Color-Medium_Grey;
@@ -73,13 +74,6 @@
                 &:hover {
                     color: lighten($Color-Medium_Grey, 15%);
                 }
-            }
-        }
-
-        @include modifier('callsign-only') {
-            padding: {
-                bottom: 10px;
-                top: 10px;
             }
         }
     }
