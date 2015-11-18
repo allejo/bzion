@@ -23,7 +23,7 @@ class BanFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('player', new AdvancedModelType(array('player', 'team')), array(
+            ->add('player', new AdvancedModelType('player'), array(
                 'constraints' => new NotBlank(),
                 'disabled'    => $this->isEdit(),
                 'data'        => $this->controller->data->get('player')
