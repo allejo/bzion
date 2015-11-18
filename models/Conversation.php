@@ -129,7 +129,7 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function getLastMessage()
     {
-        $ids = self::fetchIdsFrom('conversation_to', array($this->id), 'i', false, 'ORDER BY id DESC LIMIT 0,1', 'messages');
+        $ids = self::fetchIdsFrom('conversation_to', array($this->id), 'i', false, 'AND event_type IS null ORDER BY id DESC LIMIT 0,1', 'messages');
 
         if (!isset($ids[0])) {
             return Message::invalid();
