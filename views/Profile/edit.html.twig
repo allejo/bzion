@@ -43,9 +43,9 @@
         </section>
 
         {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form o-container' } }) }}
-            <section class="o-row c-form__editor">
-                <article class="o-row__column--with-sidebar c-form__editor__body">
-                    <div>
+            <section class="o-row c-form__section">
+                <article class="o-row__column--with-sidebar">
+                    <div class="c-form__group">
                         <label for="{{ form.email.vars.id }}">
                             {{ form.email.vars.label }}
                             {% if not editingSelf and player.emailAddress is not empty %}
@@ -64,24 +64,26 @@
                         {{ form_widget(form.email) }}
                     </div>
 
-                    {{ form_row(form.description, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
+                    <div class="c-form__group">
+                        {{ form_label(form.description) }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
                 </article>
 
-                <aside class="o-row__sidebar c-form__editor__meta">
-                    <div class="c-avatar-container__image">
+                <aside class="o-row__sidebar c-avatar-manager">
+                    <div class="c-avatar-manager__preview">
                         <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
-                    </div>
-
-                    <div class="c-avatar-container__options">
-                        <div class="c-avatar-container__options__upload">
-                            {{ form_label(form.avatar) }}
-                            {{ form_errors(form.avatar) }}
-                            {{ form_widget(form.avatar) }}
-                        </div>
 
                         {% if player.avatar is not null %}
-                            {{ form_row(form.delete_avatar) }}
+                            <div class="c-avatar-manager__preview__delete">
+                                {{ form_widget(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+                            </div>
                         {% endif %}
+                    </div>
+
+                    <div class="c-avatar-manager__uploader">
+                        {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
                     </div>
                 </aside>
             </section>

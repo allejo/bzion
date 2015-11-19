@@ -189,7 +189,10 @@
             {% set label = name|humanize %}
         {%- endif -%}
     {%- endif -%}
-    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label }}</button>
+    {%- if icon is not empty -%}
+        {% set fa_icon = '<i class="fa fa-%s"></i> ' | format(icon) %}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ fa_icon | raw }}{{ label }}</button>
 {%- endblock button_widget -%}
 
 {%- block submit_widget -%}

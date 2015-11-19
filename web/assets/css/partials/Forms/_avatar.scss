@@ -1,0 +1,43 @@
+@include component('avatar-manager') {
+    @include element('preview') {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+        position: relative;
+        text-align: center;
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        @include element('delete') {
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+
+            button {
+                background: rgba($Color-Black, 0.5);
+                border: 0;
+                display: block;
+                margin: auto;
+                padding: 10px 0;
+                width: 100%;
+
+                &:hover {
+                    background: rgba($Color-Red, 0.75);
+                }
+            }
+        }
+
+        @include respond-to(sm) {
+            margin: {
+                left: auto;
+                right: auto;
+            }
+            width: 65%;
+        }
+    }
+
+    @include element('uploader') {
+
+    }
+}
