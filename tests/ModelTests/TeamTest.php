@@ -134,7 +134,7 @@ class TeamTest extends TestCase
 
         $team = Team::get($this->team->getId());
 
-        $this->assertEquals("now", $team->getCreationDate());
+        $this->assertEquals("now", $team->getCreationDate()->diffForHumans());
     }
 
     public function tearDown()
