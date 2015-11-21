@@ -339,20 +339,13 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Get the joined date of the player
-     *
-     * @param string $format
-     *
-     * @return string The joined date of the player
+     * @return TimeDate The joined date of the player
      */
-    public function getJoinedDate($format = "")
+    public function getJoinedDate()
     {
         $this->lazyLoad();
 
-        if (empty($format)) {
-            return $this->joined->diffForHumans();
-        }
-
-        return $this->joined->format($format);
+        return $this->joined;
     }
 
     /**
@@ -367,18 +360,13 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Get the last login for a player
-     * @param  bool   $human Whether to get the literal time stamp or a relative time
-     * @return string The date of the last login
+     * @return TimeDate The date of the last login
      */
-    public function getLastLogin($human = true)
+    public function getLastLogin()
     {
         $this->lazyLoad();
 
-        if ($human) {
-            return $this->last_login->diffForHumans();
-        } else {
-            return $this->last_login;
-        }
+        return $this->last_login;
     }
 
     /**
@@ -900,7 +888,7 @@ class Player extends AvatarModel implements NamedModel
                 'outdated' => 'outdated',
                 'status'   => 'status'
             ),
-            'name' => 'username',
+            'name' => 'name',
         ));
     }
 

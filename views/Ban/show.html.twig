@@ -45,14 +45,14 @@
 
                 <section class="o-row__column--full">
                     <strong>Date</strong>
-                    <p>{{ ban.created }}</p>
+                    <p>{{ ban.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
                 </section>
 
                 <section class="o-row__column--full">
                     <strong>Expiration</strong>
                     <p>
                         {% if ban.willExpire %}
-                            {{ ban.expiration | date(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
+                            {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
                         {% else %}
                             <em>Until further notice</em>
                         {% endif %}

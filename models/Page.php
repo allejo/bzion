@@ -93,24 +93,24 @@ class Page extends AliasModel
 
     /**
      * Get the page's submission time
-     * @return string The time when the page was created in a human-readable format
+     * @return TimeDate
      */
     public function getCreated()
     {
         $this->lazyLoad();
 
-        return $this->created->diffForHumans();
+        return $this->created;
     }
 
     /**
      * Get the time when the page was last updated
-     * @return string The page's last update time in a human-readable form
+     * @return TimeDate
      */
     public function getUpdated()
     {
         $this->lazyLoad();
 
-        return $this->updated->diffForHumans();
+        return $this->updated;
     }
 
     /**

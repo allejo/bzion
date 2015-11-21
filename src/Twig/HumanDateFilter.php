@@ -5,14 +5,17 @@ namespace BZIon\Twig;
 class HumanDateFilter
 {
     /**
-     * @param \TimeDate $time   The TimeDate object we'll be representing as text
-     * @param string    $format The format that will be shown. If a format isn't set, it'll return the difference in human readable time
+     * @param \TimeDate $time    The TimeDate object we'll be representing as text
+     * @param string    $format  The format that will be shown. If a format isn't set, it'll return the difference in human readable time
+     * @param bool      $tooltip Whether to show a tooltip with the absolute timestamp when a user hovers over it, defaults to false if
+     *                           $format is provided and true if it's not.
+     *
      *
      * @return string
      */
-    public function __invoke($time, $format = "")
+    public function __invoke($time, $format = "", $tooltip = true)
     {
-        $timeFormat = '<span class="c-timestamp js-timestamp" title="%s">%s</span>';
+        $timeFormat = '<span class="c-timestamp js-timestamp"%s>%s</span>';
 
         // If the date is older than 3 weeks ago, we'll automatically spell out the date
         $defaultTimeLiteral = (strtotime($time) < strtotime('-21 day')) ? $time->format(\TimeDate::DATE_FULL) : $time->diffForHumans();
@@ -20,7 +23,11 @@ class HumanDateFilter
         // If have specified a format, use that format and ignore $defaultTimeLiteral
         $timeLiteral = (empty($format)) ? $defaultTimeLiteral : $time->format($format);
 
-        return sprintf($timeFormat, $time->format("F j, Y g:ia"), $timeLiteral);
+        // Add a title attribute to the span so that the user sees an accurate representation of the timestamp on hover
+        $absoluteTime = $time->format("F j, Y g:ia");
+        $tooltipLiteral = ($tooltip) ? " title=\"$absoluteTime\"" : "";
+
+        return sprintf($timeFormat, $tooltipLiteral, $timeLiteral);
     }
 
     public static function get()

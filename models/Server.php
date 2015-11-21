@@ -303,13 +303,12 @@ class Server extends UrlModel implements NamedModel
     }
 
     /**
-     * Returns the amount of time passed since the server was
-     * last updated in a human-readable form
-     * @return string
+     * Returns the amount of time passed since the server was last updated
+     * @return TimeDate
      */
-    public function lastUpdate()
+    public function getLastUpdate()
     {
-        return $this->updated->diffForHumans();
+        return $this->updated;
     }
 
     /**

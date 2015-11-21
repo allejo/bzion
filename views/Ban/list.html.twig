@@ -50,7 +50,7 @@
                                 <span class="c-ban__label">Ban expiration:</span>
 
                                 {% if ban.willExpire %}
-                                    {{ ban.expiration.format(constant('TimeDate::DATE_FULL')) }}
+                                    {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }}
                                 {% else %}
                                     <em>Never</em>
                                 {% endif %}

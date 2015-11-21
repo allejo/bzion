@@ -38,7 +38,7 @@
     </ul>
 {% endif %}
 
-<small>Updated {{ server.lastUpdate }}</small>
+<small>Updated {{ server.lastUpdate | humanTime }}</small>
 
 {% macro team(player) %}
     {% set team = player.team %}

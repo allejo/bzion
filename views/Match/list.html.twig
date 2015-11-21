@@ -51,7 +51,7 @@
                 {% set lastMatchDate = "" %}
 
                 {% for match in matches %}
-                    {% set currentMatchDate = match.timestamp(dateFormat) %}
+                    {% set currentMatchDate = match.timestamp.format(dateFormat) %}
 
                     {% if lastMatchDate != currentMatchDate %}
                         {% if not loop.first %} {# Close previous date's container #}
@@ -62,11 +62,12 @@
                             {% set currentYear = "now" | date("Y") %}
 
                             <h4>
-                                {% if match.timestamp("Y") != currentYear %}
-                                    {{ match.timestamp(dateFormatArchive) }}
-                                {% else %}
-                                    {{ currentMatchDate }}
-                                {% endif %}
+                                {%- if match.timestamp.year != currentYear -%}
+                                    {%- set format = dateFormatArchive -%}
+                                {%- else -%}
+                                    {%- set format = dateFormat -%}
+                                {%- endif -%}
+                                {{ match.timestamp | humanTime(format, tooltip = false) }}
                             </h4>
                         </section>
 
@@ -82,7 +83,7 @@
                         </div>
                     </article>
 
-                    {% set lastMatchDate = match.timestamp(dateFormat) %}
+                    {% set lastMatchDate = match.timestamp.format(dateFormat) %}
 
                     {% if loop.last %} {# Close last date's container #}
                         </section>

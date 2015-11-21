@@ -7,7 +7,7 @@
 {% for message in messages|reverse %}
     {% if message.isMessage %}
         <li data-id="{{ message.id }}" class="message">
-            {%- if message.author.id != previousAuthor or previousMessage | date('M j, y') != message.timestamp | date('M j, y') %}
+            {%- if message.author.id != previousAuthor or not previousMessage.isSameDay(message.timestamp) %}
                 <div class="details">
                     <div class='author'>{{ link_to(message.author) }}</div>
                     <div class='date'>{{ message.timestamp | humanTime }}</div>

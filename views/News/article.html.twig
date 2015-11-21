@@ -5,7 +5,7 @@
         {% endif %}
         {{ link_to(article) }}
     </h1>
-    <p class="c-article__date">{{ article.created | date(constant('TimeDate::DATE_FULL')) }}</p>
+    <p class="c-article__date">{{ article.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
 
     <section class="c-article__content s-markdown">
         {{ article.content | markdown }}

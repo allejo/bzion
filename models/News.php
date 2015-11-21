@@ -141,18 +141,6 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * Get the data creation with a span containing the date with a different format
-     *
-     * @param string $format The format of the time that will appear on hover
-     *
-     * @return string HTML of the data with a span with a title
-     */
-    public function getCreatedLiteral($format = TimeDate::DATE_FULL)
-    {
-        return '<span title="' . $this->getCreated() . '">' . $this->getCreated()->format($format) . '</span>';
-    }
-
-    /**
      * Get the time when the article was last updated
      *
      * @return TimeDate The article's last update time

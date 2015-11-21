@@ -3,7 +3,7 @@
         <a class="c-messages__inbox__message" data-id="{{ conversation.id }}" href="{{ conversation.url }}">
             <section class="c-messages__inbox__message__meta">
                 <p class="c-messages__inbox__message__meta__subject">{{ conversation.subject }}</p>
-                <p class="c-messages__inbox__message__meta__timestamp">{{ conversation.lastActivity }}</p>
+                <p class="c-messages__inbox__message__meta__timestamp">{{ conversation.lastActivity | humanTime(tooltip = false) }}</p>
             </section>
 
             <p class="c-messages__inbox__message__members">

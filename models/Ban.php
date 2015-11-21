@@ -234,11 +234,11 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Get the time when the ban was last updated
-     * @return string
+     * @return TimeDate
      */
     public function getUpdated()
     {
-        return $this->updated->diffForHumans();
+        return $this->updated;
     }
 
     /**

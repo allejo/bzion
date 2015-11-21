@@ -57,7 +57,7 @@
 
                                 <p class="c-servers__server__info__address">{{ server.address }}</p>
                                 <p class="c-servers__server__info__playerCount">Player count: {{ server.numPlayers }}</p>
-                                <small class="c-servers__server__info__updated">Updated {{ server.lastUpdate }}</small>
+                                <small class="c-servers__server__info__updated">Updated {{ server.lastUpdate | humanTime }}</small>
                             </div>
                         </div>
                     </div>

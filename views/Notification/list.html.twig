@@ -24,7 +24,7 @@
 
                                 <li class="c-notifications__notification c-notifications__notification--{{ class }}">
                                     <span class="c-notifications__notification__message">{{ include('Notification/item.html.twig') }}</span>
-                                    <span class="c-notifications__notification__timestamp">{{ notification.timestamp.diffForHumans }}</span>
+                                    <span class="c-notifications__notification__timestamp">{{ notification.timestamp | humanTime }}</span>
                                     {% for title, link in notification.actions %}
                                         <a class="c-notifications__notification__action" href="{{ link }}">[{{ title }}]</a>
                                     {% endfor %}

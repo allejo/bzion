@@ -76,8 +76,8 @@
                             {% endif %}
                         {% endif %}
                     </p>
-                    <p><strong>Joined on</strong> {{ player.joinedDate(constant("TimeDate::DATE_FULL")) }}</p>
-                    <p><strong>Last seen</strong> {{ player.lastLogin }}</p>
+                    <p><strong>Joined on</strong> {{ player.joinedDate | humanTime(constant("TimeDate::DATE_FULL"), tooltip = false) }}</p>
+                    <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
 
                     {% if player.description is not empty %}
                         <section class="c-public-profile__details__bio s-markdown">

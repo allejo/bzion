@@ -88,16 +88,11 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Get the time when the conversation was most recently active
      *
-     * @param  bool            $human True to output the last activity in a human-readable string, false to return a TimeDate object
-     * @return string|TimeDate
+     * @return TimeDate
      */
-    public function getLastActivity($human = true)
+    public function getLastActivity()
     {
-        if ($human) {
-            return $this->last_activity->diffForHumans();
-        } else {
-            return $this->last_activity;
-        }
+        return $this->last_activity;
     }
 
     /**

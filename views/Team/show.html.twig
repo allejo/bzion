@@ -64,7 +64,7 @@
         <section class="o-container c-team">
             <section class="o-row o-section">
                 <section class="o-row__column--with-sidebar c-team__information">
-                    <p><strong>Founded:</strong> {{ team.creationDateFormat }}</p>
+                    <p><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
                     {% spaceless %}
                         <article class="c-team__information__bio s-markdown u-hide-on-empty">
                             {{ team.description | markdown }}
@@ -143,7 +143,7 @@
                         {% for match in team.matches %}
                             <a class="c-table__row" href="#">
                             <span class="c-table__row__column u-date">
-                                {{ match.timestamp('D, M d') }}
+                                {{ match.timestamp | humanTime('D, M d') }}
                             </span>
                             <span class="c-table__row__column u-opponent">
                                 <strong>vs.</strong> {{ match.opponent(team.id).name }}

@@ -197,7 +197,7 @@ class Team extends AvatarModel
     /**
      * Get the activity of the team
      *
-     * @return string The team's activity formated to two decimal places
+     * @return string The team's activity formatted to two decimal places
      */
     public function getActivity()
     {
@@ -207,23 +207,11 @@ class Team extends AvatarModel
     /**
      * Get the creation date of the team
      *
-     * @return string The creation date of the team
+     * @return TimeDate The creation date of the team
      */
     public function getCreationDate()
     {
-        return $this->created->diffForHumans();
-    }
-
-    /**
-     * Get the creation date for the team in a specified format
-     *
-     * @param string $format The format of the data
-     *
-     * @return string
-     */
-    public function getCreationDateFormat($format = "Y-m-d")
-    {
-        return $this->created->format($format);
+        return $this->created;
     }
 
     /**

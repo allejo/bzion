@@ -261,18 +261,12 @@ class Match extends PermissionModel implements NamedModel
 
     /**
      * Get the timestamp of the match
-     *
-     * @param string $format The date format. Leave blank if you want a relative time (e.g. 2 days ago)
-     *
-     * @return string The match's timestamp
+     **
+     * @return TimeDate The match's timestamp
      */
-    public function getTimestamp($format = "")
+    public function getTimestamp()
     {
-        if (empty($format)) {
-            return $this->timestamp->diffForHumans();
-        }
-
-        return $this->timestamp->format($format);
+        return $this->timestamp;
     }
 
     /**
