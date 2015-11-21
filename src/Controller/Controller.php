@@ -400,6 +400,10 @@ abstract class Controller extends ContainerAware
 
     /**
      * Gets the currently logged in player
+     *
+     * If the user is not logged in, a Player object that is invalid will be
+     * returned
+     *
      * @return Player
      */
     public static function getMe()

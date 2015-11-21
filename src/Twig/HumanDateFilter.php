@@ -5,6 +5,7 @@ namespace BZIon\Twig;
 class HumanDateFilter
 {
     /**
+     * @param           $context Twig's context
      * @param \TimeDate $time    The TimeDate object we'll be representing as text
      * @param string    $format  The format that will be shown. If a format isn't set, it'll return the difference in human readable time
      * @param bool      $tooltip Whether to show a tooltip with the absolute timestamp when a user hovers over it, defaults to false if
@@ -13,8 +14,13 @@ class HumanDateFilter
      *
      * @return string
      */
-    public function __invoke($time, $format = "", $tooltip = true)
+    public function __invoke($context, $time, $format = "", $tooltip = true)
     {
+        if ($context['app']->getController()) {
+            $timezone = $context['app']->getController()->getMe()->getTimezone();
+            $time = $time->copy()->timezone($timezone);
+        }
+
         $timeFormat = '<span class="c-timestamp js-timestamp"%s>%s</span>';
 
         // If the date is older than 3 weeks ago, we'll automatically spell out the date
@@ -35,7 +41,10 @@ class HumanDateFilter
         return new \Twig_SimpleFilter(
             'humanTime',
             new self(),
-            array('is_safe' => array('html'))
+            array(
+                'is_safe' => array('html'),
+                'needs_context' => true
+            )
         );
     }
 }

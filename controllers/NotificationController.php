@@ -33,7 +33,11 @@ class NotificationController extends HTMLController
         $index  = -1;
 
         foreach ($notifications as $notification) {
-            $date = $notification->getTimestamp()->copy()->startOfMonth();
+            $timezone = $this->getMe()->getTimezone();
+            $date = $notification->getTimestamp()
+                ->copy()
+                ->timezone($timezone)
+                ->startOfMonth();
 
             // Create a new element in the $result array for every month
             if ($index == -1 || $result[$index]['date'] != $date) {
