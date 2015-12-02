@@ -7,12 +7,16 @@
  */
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Class Service
+ */
 abstract class Service
 {
     /**
@@ -53,9 +57,9 @@ abstract class Service
 
     /**
      * The AppKernel's container
-     * @var ContainerInterface
+     * @var AppKernel
      */
-    private static $container;
+    private static $kernel;
 
     /**
      * @param Request $request
@@ -65,6 +69,9 @@ abstract class Service
         self::$request = $request;
     }
 
+    /**
+     * @return Request
+     */
     public static function getRequest()
     {
         if (!self::$request) {
@@ -86,6 +93,9 @@ abstract class Service
         self::$generator = $generator;
     }
 
+    /**
+     * @return UrlGeneratorInterface
+     */
     public static function getGenerator()
     {
         return self::$generator;
@@ -130,6 +140,9 @@ abstract class Service
         return $newSession;
     }
 
+    /**
+     * @return Twig_Environment
+     */
     public static function getTemplateEngine()
     {
         return self::$templateEngine;
@@ -143,6 +156,9 @@ abstract class Service
         self::$templateEngine = $templateEngine;
     }
 
+    /**
+     * @return FormFactory
+     */
     public static function getFormFactory()
     {
         return self::$formFactory;
@@ -156,6 +172,9 @@ abstract class Service
         self::$formFactory = $formFactory;
     }
 
+    /**
+     * @return string
+     */
     public static function getEnvironment()
     {
         return self::$environment;
@@ -169,6 +188,9 @@ abstract class Service
         self::$environment = $environment;
     }
 
+    /**
+     * @return ModelCache
+     */
     public static function getModelCache()
     {
         return self::$modelCache;
@@ -182,21 +204,33 @@ abstract class Service
         self::$modelCache = $modelCache;
     }
 
+    /**
+     * @return ContainerInterface
+     */
     public static function getContainer()
     {
-        return self::$container;
+        return self::$kernel->getContainer();
     }
 
-    public static function setContainer($container)
+    /**
+     * @param $kernel
+     */
+    public static function setKernel($kernel)
     {
-        self::$container = $container;
+        self::$kernel = $kernel;
     }
 
+    /**
+     * @return EventDispatcher
+     */
     public static function getDispatcher()
     {
         return self::$container->get('event_dispatcher');
     }
 
+    /**
+     * @return bool
+     */
     public static function isDebug()
     {
         return self::getParameter('kernel.debug');

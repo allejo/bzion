@@ -69,6 +69,8 @@ class AppKernel extends Kernel
 
     public function boot()
     {
+        Service::setKernel($this);
+
         parent::boot();
 
         if (!$this->container->getParameter('bzion.miscellaneous.development')) {
@@ -88,7 +90,6 @@ class AppKernel extends Kernel
         Service::setGenerator($this->container->get('router')->getGenerator());
         Service::setEnvironment($this->getEnvironment());
         Service::setModelCache(new ModelCache());
-        Service::setContainer($this->container);
         $this->setUpTwig();
 
         // Ratchet doesn't support PHP's native session storage, so use our own

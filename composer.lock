@@ -1634,16 +1634,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "19f765b66c6fbb56ee3b11bc16d52e38eebdc295"
+                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/19f765b66c6fbb56ee3b11bc16d52e38eebdc295",
-                "reference": "19f765b66c6fbb56ee3b11bc16d52e38eebdc295",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a208865a5aeffc2dbbef2a5b3409887272d93f32",
+                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32",
                 "shasum": ""
             },
             "require": {
@@ -1678,7 +1678,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-11-10 00:45:41"
+            "time": "2015-12-01 02:52:15"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -5503,12 +5503,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "26a74a12001046481ee7dc237418aceb40f93947"
+                "reference": "dc0627617935da9208124e580b9f0e39dd214ae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/26a74a12001046481ee7dc237418aceb40f93947",
-                "reference": "26a74a12001046481ee7dc237418aceb40f93947",
+                "url": "https://api.github.com/repos/composer/composer/zipball/dc0627617935da9208124e580b9f0e39dd214ae5",
+                "reference": "dc0627617935da9208124e580b9f0e39dd214ae5",
                 "shasum": ""
             },
             "require": {
@@ -5569,7 +5569,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-11-30 15:11:02"
+            "time": "2015-12-01 14:57:35"
         },
         {
             "name": "composer/semver",
