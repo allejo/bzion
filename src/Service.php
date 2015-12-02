@@ -225,7 +225,7 @@ abstract class Service
      */
     public static function getDispatcher()
     {
-        return self::$container->get('event_dispatcher');
+        return self::getContainer()->get('event_dispatcher');
     }
 
     /**
