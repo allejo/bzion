@@ -12,7 +12,6 @@ matrix:
             - NO_COVERAGE=1
             - BZION_HHVM=1
     allow_failures:
-        - php: 7
         - php: hhvm
     fast_finish: true
 
@@ -35,4 +34,4 @@ cache:
 
 notifications:
   webhooks:
-    - http://helit.org:8093/+sujevo-dev/showSuccessfulBuildMessages=always
+    - http://helit.tech:8093/+sujevo-dev/showSuccessfulBuildMessages=always
