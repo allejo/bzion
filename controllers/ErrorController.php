@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ErrorController extends JSONController
 {
     /**
-     * Show an error message, provided that the ecxception is stored in the
+     * Show an error message, provided that the exception is stored in the
      * request's attributes
      *
      * @return mixed

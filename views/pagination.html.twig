@@ -31,7 +31,7 @@
         {% endif %}
     {% endif %}
 
-    {% for i in begin..end %}
+    {% for i in begin..end if totalPages > 0 %}
         {% if i == currentPage %}
             <li class="c-pagination--current">{{ i }}</li>
         {% else %}
