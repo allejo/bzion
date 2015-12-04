@@ -13,7 +13,7 @@
         url: path('message_compose', { recipients: 'player:' ~ player.id }),
         icon: 'send',
         text: 'Send Message',
-        condition: me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+        condition: me.id != player.id and me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     },
     {
         color: 'blue',
