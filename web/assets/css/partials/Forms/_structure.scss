@@ -24,11 +24,18 @@
     .c-form__section__main {
         display: flex;
         flex-direction: column;
+
+        @include respond-to(sm) {
+            order: 2;
+        }
     }
 
     // In the two column layout, this column will take up the lesser of the two columns; also dubbed as a sidebar.
     .c-form__section__aside {
-
+        @include respond-to(sm) {
+            margin-bottom: $Settings-Page_Section-Small_Margin;
+            order: 1;
+        }
     }
 }
 
@@ -50,6 +57,10 @@
 
     textarea {
         min-height: 50px;
+
+        @include respond-to(md) {
+            min-height: 150px;
+        }
     }
 
     // The last form group inside of the parent shouldn't add any extra margin bottom
