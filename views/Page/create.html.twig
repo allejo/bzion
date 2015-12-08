@@ -1,7 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}New Page{% endblock %}
+{% block title %}Create Page{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "Page/form.html.twig" with {
+        'pageTitle': 'Create New Page',
+        'form': form }
+    %}
 {% endblock %}

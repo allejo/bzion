@@ -3,5 +3,8 @@
 {% block title %}{{ page.name }} :: Edit{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "Page/form.html.twig" with {
+        'pageTitle': 'Editing :: ' ~ page.name,
+        'form': form }
+    %}
 {% endblock %}
