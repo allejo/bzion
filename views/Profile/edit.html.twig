@@ -94,17 +94,20 @@
             </section>
 
             <section class="c-form__section">
-                {{ form_row(form.receive, {
-                    'attr': { 'class': 'c-form__choices' },
-                    'container_attr': { 'class': 'c-form__group' }
-                }) }}
+                <div class="c-form__group">
+                    {{ form_label(form.receive) }}
+                    {{ form_errors(form.receive) }}
+                    {{ form_widget(form.receive, { 'attr': { 'class': 'c-form__choices' } }) }}
+                </div>
             </section>
 
             {% if form.roles is defined %}
-                <section class="c-form__actions">
-                    {{ form_label(form.roles) }}
-                    {{ form_errors(form.roles) }}
-                    {{ form_widget(form.roles) }}
+                <section class="c-form__section">
+                    <div class="c-form__group">
+                        {{ form_label(form.roles) }}
+                        {{ form_errors(form.roles) }}
+                        {{ form_widget(form.roles) }}
+                    </div>
                 </section>
             {% endif %}
 
