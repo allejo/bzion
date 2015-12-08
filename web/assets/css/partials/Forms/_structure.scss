@@ -57,11 +57,7 @@
     margin-bottom: $Settings-Page_Section-Small_Margin;
 
     textarea {
-        min-height: 50px;
-
-        @include respond-to(md) {
-            min-height: 150px;
-        }
+        min-height: 150px;
     }
 
     // The last form group inside of the parent shouldn't add any extra margin bottom
