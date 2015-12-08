@@ -43,8 +43,8 @@
         </section>
 
         {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form o-container' } }) }}
-            <section class="o-row c-form__section">
-                <article class="o-row__column--with-sidebar">
+            <section class="o-row c-form__section c-form__section--sidebar">
+                <article class="o-row__column--with-sidebar c-form__section__main">
                     <div class="c-form__group">
                         <label for="{{ form.email.vars.id }}">
                             {{ form.email.vars.label }}
@@ -64,14 +64,14 @@
                         {{ form_widget(form.email) }}
                     </div>
 
-                    <div class="c-form__group">
+                    <div class="c-form__group c-form__group--flex">
                         {{ form_label(form.description) }}
                         {{ form_errors(form.description) }}
                         {{ form_widget(form.description) }}
                     </div>
                 </article>
 
-                <aside class="o-row__sidebar c-avatar-manager">
+                <aside class="o-row__sidebar c-avatar-manager c-form__section__aside">
                     <div class="c-avatar-manager__preview">
                         <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
 
@@ -88,30 +88,27 @@
                 </aside>
             </section>
 
-            <section class="o-row c-form__actions">
-                <article class="o-row__column--full">
-                    {{ form_row(form.country) }}
-                    {{ form_row(form.timezone) }}
-                </article>
+            <section class="c-form__section c-form__section--inline">
+                {{ form_row(form.country , { 'container_attr': { 'class': 'c-form__group' } }) }}
+                {{ form_row(form.timezone, { 'container_attr': { 'class': 'c-form__group' } }) }}
             </section>
 
-            <section class="o-row c-form__actions">
-                <article class="o-row__column--full">
-                    {{ form_row(form.receive, { 'attr': { 'class': 'c-form__choice-list' } }) }}
-                </article>
+            <section class="c-form__section">
+                {{ form_row(form.receive, {
+                    'attr': { 'class': 'c-form__choices' },
+                    'container_attr': { 'class': 'c-form__group' }
+                }) }}
             </section>
 
             {% if form.roles is defined %}
-                <section class="o-row c-form__actions">
-                    <article class="o-row__column--full">
-                        {{ form_label(form.roles) }}
-                        {{ form_errors(form.roles) }}
-                        {{ form_widget(form.roles) }}
-                    </article>
+                <section class="c-form__actions">
+                    {{ form_label(form.roles) }}
+                    {{ form_errors(form.roles) }}
+                    {{ form_widget(form.roles) }}
                 </section>
             {% endif %}
 
-            <section class="o-row o-row--no-margin c-form__actions">
+            <section class="c-form__section">
                 {{ form_rest(form) }}
             </section>
         {{ form_end(form) }}

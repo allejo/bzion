@@ -45,7 +45,7 @@
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
     {%- for child in form %}
-        <div class="c-form__choice-list__item">
+        <div>
             {{- form_widget(child) -}}
             {{- form_label(child) -}}
         </div>
