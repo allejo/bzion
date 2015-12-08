@@ -7,48 +7,44 @@
         </div>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'c-form s-avatar-form o-container' } }) }}
-        <section class="o-row c-form__editor">
-            <article class="o-row__column--with-sidebar c-form__editor__body">
-                {{ form_row(form.name) }}
-                {{ form_row(form.description, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
+    {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
+        <section class="o-row c-form__section c-form__section--sidebar">
+            <article class="o-row__column--with-sidebar c-form__section__main">
+                {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
+                {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
             </article>
 
-            <aside class="o-row__sidebar c-form__editor__meta c-avatar-container">
-                <div class="c-avatar-container__image">
+            <aside class="o-row__sidebar c-avatar-manager c-form__section__aside">
+                <div class="c-avatar-manager__preview">
                     {# Only show an avatar if we're editing an existing team #}
                     {% if avatar is not null %}
                         <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
                     {% endif %}
-                </div>
-
-                <div class="c-avatar-container__options">
-                    <div class="c-avatar-container__options__upload">
-                        {{ form_label(form.avatar) }}
-                        {{ form_errors(form.avatar) }}
-                        {{ form_widget(form.avatar) }}
-                    </div>
 
                     {# Only show the option to delete an avatar if we're editing an existing team #}
                     {% if form.delete_avatar is not null %}
-                        {{ form_row(form.delete_avatar) }}
+                        <div class="c-avatar-manager__preview__delete">
+                            {{ form_row(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+                        </div>
                     {% endif %}
+                </div>
+
+                <div class="c-avatar-manager__uploader">
+                    {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
                 </div>
             </aside>
         </section>
 
-        <section class="o-row c-form__actions">
-            <section class="o-row__column--full">
-                {# Only show the option to edit leadership if we're editing an existing team #}
-                {% if form.leader is not null %}
-                    {{ form_row(form.leader) }}
-                {% endif %}
+        <section class="c-form__section c-form__section--inline">
+            {# Only show the option to edit leadership if we're editing an existing team #}
+            {% if form.leader is not null %}
+                {{ form_row(form.leader, { 'container_attr': { 'class': 'c-form__group' } }) }}
+            {% endif %}
 
-                {{ form_row(form.status) }}
-            </section>
+            {{ form_row(form.status, { 'container_attr': { 'class': 'c-form__group' } }) }}
         </section>
 
-        <section class="o-row c-form__buttons">
+        <section class="c-form__section">
             {{ form_rest(form) }}
         </section>
     {{ form_end(form) }}

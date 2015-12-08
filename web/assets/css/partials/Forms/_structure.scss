@@ -45,6 +45,7 @@
 .c-form__section--inline {
     .c-form__group {
         display: inline-block;
+        margin-bottom: 0;
         margin-right: $Settings_Page_Section-Small_Margin;
     }
 }
