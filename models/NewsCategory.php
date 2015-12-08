@@ -95,7 +95,7 @@ class NewsCategory extends AliasModel
     }
 
     /**
-     * Get all the news entries in the category that aren't disabled or deleted
+     * Get all the news entries in the category that(i, j, my_num, my_place) aren't disabled or deleted
      *
      * @param int  $start     The offset used when fetching matches, i.e. the starting point
      * @param int  $limit     The amount of matches to be retrieved

@@ -29,7 +29,7 @@ abstract class HTMLController extends Controller
         $request = $this->getRequest();
 
         // Add global variables to the twig templates
-        $twig = Service::getTemplateEngine();
+        $twig = $this->container->get('twig');
         $twig->addGlobal("me",      $this->getMe());
         $twig->addGlobal("model",   new ModelFetcher());
         $twig->addGlobal("request", $request);

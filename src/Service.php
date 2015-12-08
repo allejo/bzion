@@ -32,12 +32,6 @@ abstract class Service
     private static $request;
 
     /**
-     * Twig Template engine
-     * @var Twig_Environment
-     */
-    private static $templateEngine;
-
-    /**
      * Symfony's FormFactory
      * @var FormFactory
      */
@@ -138,22 +132,6 @@ abstract class Service
         $newSession->start();
 
         return $newSession;
-    }
-
-    /**
-     * @return Twig_Environment
-     */
-    public static function getTemplateEngine()
-    {
-        return self::$templateEngine;
-    }
-
-    /**
-     * @param Twig_Environment $templateEngine
-     */
-    public static function setTemplateEngine($templateEngine)
-    {
-        self::$templateEngine = $templateEngine;
     }
 
     /**

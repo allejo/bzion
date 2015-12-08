@@ -17,7 +17,10 @@ framework:
 
 twig:
     paths:
-        "%kernel.root_dir%/../views": bzion
+        "%kernel.root_dir%/../views": ~
+#        "%kernel.root_dir%/../vendor/symfony/twig-bridge/Resources/views": symfony
+    form_themes:
+        - form_layout.html.twig
 
 monolog:
     channels: ["app", "api", "mysql"]
@@ -87,31 +90,32 @@ parameters:
     twig.exception_listener.class: BZIon\Event\ExceptionListener
 
 services:
-    main.warmer.twig_warmer:
-        class: BZIon\Twig\TwigCacheWarmer
-        tags:
-            - { name: kernel.cache_warmer, priority: 0 }
     data_collector.bzion_database_collector:
         class: BZIon\Debug\DatabaseDataCollector
         tags:
-            - { name: data_collector, template: "@bzion/Profiler/database", id: "database"  }
+            - { name: data_collector, template: "Profiler/database", id: "database"  }
     kernel.subscriber.bzion_subscriber:
         class: BZIon\Event\EventSubscriber
-        arguments: [@mailer, %bzion.email.from%, %bzion.site.name%]
+        arguments: [@mailer, @twig, %bzion.email.from%, %bzion.site.name%]
         tags:
             - { name: kernel.event_subscriber }
+    bzion.twig_extension:
+        class: BZIon\Twig\TwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }
     bzion.command.changes_command:
         class: BZIon\Command\ChangesCommand
         tags:
-            -  { name: console.command }
+            - { name: console.command }
     bzion.command.server_command:
         class: BZIon\Command\ServerCommand
         tags:
-            -  { name: console.command }
+            - { name: console.command }
     bzion.command.success_command:
         class: BZIon\Command\SuccessCommand
         tags:
-            -  { name: console.command }
+            - { name: console.command }
     bzion.search_listener:
         class: BZIon\Search\ElasticaEventSubscriber
         arguments:

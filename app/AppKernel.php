@@ -2,22 +2,6 @@
 
 use BZIon\Cache\ModelCache;
 use BZIon\Session\DatabaseSessionHandler;
-use BZIon\Twig\HumanDateFilter;
-use BZIon\Twig\InvalidTest;
-use BZIon\Twig\LinkToFunction;
-use BZIon\Twig\MarkdownFilter;
-use BZIon\Twig\PluralFilter;
-use BZIon\Twig\TruncateFilter;
-use BZIon\Twig\ValidTest;
-use BZIon\Twig\YesNoFilter;
-use Liip\ImagineBundle\Templating\ImagineExtension;
-use Symfony\Bridge\Twig\Extension\AssetExtension;
-use Symfony\Bridge\Twig\Extension\DumpExtension;
-use Symfony\Bridge\Twig\Extension\FormExtension;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
-use Symfony\Bridge\Twig\Extension\StopwatchExtension;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,7 +74,6 @@ class AppKernel extends Kernel
         Service::setGenerator($this->container->get('router')->getGenerator());
         Service::setEnvironment($this->getEnvironment());
         Service::setModelCache(new ModelCache());
-        $this->setUpTwig();
 
         // Ratchet doesn't support PHP's native session storage, so use our own
         // if we need it
@@ -118,54 +101,6 @@ class AppKernel extends Kernel
         }
 
         return 'dev';
-    }
-
-    private function setUpTwig()
-    {
-        $cacheDir = $this->isDebug() ? false : $this->getCacheDir() . '/twig';
-
-        // Set up the twig templating environment to parse views
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../views');
-
-        $twig = new Twig_Environment($loader, array(
-            'cache' => $cacheDir,
-            'debug' => $this->isDebug()
-        ));
-
-        // Load the routing extension to twig, which adds functions such as path()
-        $formEngine = new TwigRendererEngine(array('form_layout.html.twig'));
-        $formEngine->setEnvironment($twig);
-        $twig->addExtension(new RoutingExtension(Service::getGenerator()));
-        $twig->addExtension(
-            new FormExtension(new TwigRenderer($formEngine))
-        );
-        $twig->addExtension(
-            new ImagineExtension($this->container->get('liip_imagine.cache.manager'))
-        );
-        $twig->addExtension(
-            new AssetExtension($this->container->get('assets.packages'))
-        );
-        $twig->addExtension(
-            new StopwatchExtension($this->container->get('debug.stopwatch', null))
-        );
-
-        if ($this->getEnvironment() == 'profile') {
-            $twig->addExtension(new DumpExtension($this->container->get('var_dumper.cloner')));
-        }
-
-        $twig->addFunction(LinkToFunction::get());
-        $twig->addFilter(HumanDateFilter::get());
-        $twig->addFilter(TruncateFilter::get());
-        $twig->addFilter(MarkdownFilter::get());
-        $twig->addFilter(PluralFilter::get());
-        $twig->addFilter(YesNoFilter::get());
-        $twig->addTest(ValidTest::get());
-        $twig->addTest(InvalidTest::get());
-        if ($this->isDebug()) {
-            $twig->addExtension(new Twig_Extension_Debug());
-        }
-
-        Service::setTemplateEngine($twig);
     }
 
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)

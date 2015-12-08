@@ -32,28 +32,29 @@ class EventSubscriber implements EventSubscriberInterface
     protected $from;
 
     /**
-     * The title of the website
-     * @var string
-     */
-    protected $siteTitle;
-
-    /**
      * Constructor
      *
      * You will probably not need to instantiate an object of this class,
      * Symfony already does the hard work for us
      *
      * @param \Swift_Mailer $mailer    The mailer
+     * @param \Twig_Environment $twig  The twig environment
      * @param string        $from      The FROM e-mail address
      * @param string        $siteTitle The title of the website
      */
-    public function __construct(\Swift_Mailer $mailer, $from, $siteTitle)
+    public function __construct(\Swift_Mailer $mailer, $twig, $from, $siteTitle)
     {
         $this->mailer = $mailer;
-        $this->twig   = \Service::getTemplateEngine();
+        $this->twig   = $twig;
         $this->from   = $from;
         $this->siteTitle = $siteTitle;
     }
+
+    /**
+     * The title of the website
+     * @var string
+     */
+    protected $siteTitle;
 
     /**
      * Returns all the events that this subscriber handles, and which method
@@ -153,7 +154,7 @@ class EventSubscriber implements EventSubscriberInterface
      */
     public function emailNotification(\Notification $notification)
     {
-        $text = \Service::getTemplateEngine()->render(
+        $text = $this->twig->render(
             'Notification/item.html.twig',
             array('notification' => $notification)
         );

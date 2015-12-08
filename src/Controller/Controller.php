@@ -466,8 +466,7 @@ abstract class Controller extends ContainerAware
     {
         Debug::startStopwatch('view.render');
 
-        $template = Service::getTemplateEngine();
-        $ret = $template->render($view, $parameters);
+        $ret = $this->container->get('twig')->render($view, $parameters);
 
         Debug::finishStopwatch('view.render');
 

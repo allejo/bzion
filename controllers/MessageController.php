@@ -27,11 +27,11 @@ class MessageController extends JSONController
     protected function prepareTwig()
     {
         $conversations = Conversation::getConversations($this->getMe()->getId());
-        Service::getTemplateEngine()->addGlobal("conversations", $conversations);
+        $this->container->get('twig')->addGlobal("conversations", $conversations);
 
         $creator = new MessageSearchFormCreator();
         $searchForm = $creator->create();
-        Service::getTemplateEngine()->addGlobal("searchForm", $searchForm->createView());
+        $this->container->get('twig')->addGlobal("searchForm", $searchForm->createView());
     }
 
     public function listAction()
