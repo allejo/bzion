@@ -40,15 +40,5 @@
                 margin-left: 5px;
             }
         }
-
-        @include respond-to(md) {
-            &:nth-child(odd) {
-                padding-right: 10px;
-            }
-
-            &:nth-child(even) {
-                padding-left: 10px;
-            }
-        }
     }
 }

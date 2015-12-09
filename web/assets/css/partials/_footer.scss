@@ -3,9 +3,14 @@
 
     border-top: 1px solid $Border-Color;
     display: flex;
+    margin-top: $Settings-Page_Section-Margin;
     padding: {
         bottom: 20px;
         top: 20px;
+    }
+
+    @include respond-to(xs) {
+        margin-top: $Settings-Page_Section-Small_Margin;
     }
 
     @include element('copyright') {
