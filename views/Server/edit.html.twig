@@ -3,7 +3,10 @@
 {% block title %}Servers :: Edit{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "Server/form.html.twig" with {
+        'pageTitle': 'Edit Server',
+        'form': form }
+    %}
 {% endblock %}
 
 {% block javascripts %}
