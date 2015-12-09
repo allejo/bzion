@@ -25,6 +25,8 @@
     @include view-columns(sm, 12);
 
     border-right: $Border-Default;
+    display: flex;
+    flex-direction: column;
 }
 
 // Since we are inheriting OnTheRocks' grid system, we need to clear the padding that is automatically added
@@ -34,6 +36,15 @@
         left: 0;
         right: 0;
     }
+}
+
+// This is the element that actually contains all of the elements that make up the actually "messaging app UI" which
+// is what I'll call it
+.c-messenger__conversation__container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 // This is the header of a conversation with all of the details of the conversation such as recipients
@@ -50,7 +61,8 @@
 // The height of this element will be limited and its overflow will be hidden. This is intended to have its child be
 // scrollable
 .c-messenger__conversation__scrolling {
-
+    flex: 1;
+    overflow: scroll;
 }
 
 // This object actually contains the list of messages as individual objects. This element will be much taller than its
