@@ -3,5 +3,16 @@
 {% block title %}Error{% endblock %}
 
 {% block content %}
-    {{ message }}
+    <main class="c-page">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>{{ block('title') }}</h1>
+                </section>
+            </div>
+        </section>
+
+        {# TODO: Style this #}
+        {{ message }}
+    </main>
 {% endblock %}

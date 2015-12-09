@@ -1,7 +1,30 @@
-{% extends 'layout.html.twig' %}
+{% extends 'Error/genericError.html.twig' %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('custom_page_create', { name: request.pathInfo|trim('/')|replace('-', ' ')|humanize|title }),
+        'icon': 'plus',
+        'text': 'Create Page',
+        'condition': type == "page" and me.canCreate("Page")
+    }
+] %}
 
 {% block title %}{{ type|plural|capitalize }}{% endblock %}
 
 {% block content %}
-    {{ message }}
+    <main class="c-page">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>{{ block('title') }}</h1>
+                </section>
+
+                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+            </div>
+        </section>
+
+        {# TODO: Style this #}
+        {{ message }}
+    </main>
 {% endblock %}

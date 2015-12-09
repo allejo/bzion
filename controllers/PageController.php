@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends CRUDController
 {
@@ -20,8 +21,10 @@ class PageController extends CRUDController
         return array("page" => $page);
     }
 
-    public function createAction(Player $me)
+    public function createAction(Player $me, Request $request)
     {
+        $this->data->set('name', $request->query->get('name'));
+
         return $this->create($me);
     }
 

@@ -27,6 +27,7 @@ class PageFormCreator extends ModelFormCreator
                         'max' => 32,
                     )),
                 ),
+                'data' => $this->controller->data->get('name')
             ))
             ->add('content', 'textarea', array(
                 'constraints' => new NotBlank()
