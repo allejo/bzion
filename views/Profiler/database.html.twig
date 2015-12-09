@@ -39,6 +39,18 @@
     {{ parent() }}
 
     <style>
+        .container {
+            max-width: unset;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        thead th {
+            vertical-align: middle;
+        }
+
         span.database-query {
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC3klEQVQ4ja2TS0sbYRSGP7oquA3UCooLIagohVK3BekPqKhUcWs3NtoWi1YF8UJcNGBtayN0ZVdtcSG40KjYXGqT1GQStabzTSaZmLG5TBInY0ZjoiVvF2pQ3HTRA2d5Hs5zXg4h/6luarXa+uampsc6nW5Er9dPGQwGo+GVwWgwnPXExMQbnU430tLS0qnVauuvTA8ODj4J8vxhNBJBSBDA+/3wUwruUlOWBWVZcJTCZrUeaTSa20XAzMzMy2w2++fk5AQHigJFUZDJZCDvy0gmk4jH4wgEeLhdLjidTljM5tOysrKKImBoaKgnFosd5/N5qKoKNZMpAhKShGg0Cj/HgWEY/HA6YVpaOtZoNGVFQG9vb7eHYbIB3g+e9yMkCAjv7iIUEhAMBMBxFJteL76vr8P8dQ1zc3NXAUajsT+bzZ7mcjnI+zLS6TQODg7OFBIJSJIEIRiEx+OBa2PjusLw8PDTeCx2nLukoJ4rpJJJiOEwGLcbyyYTTEtLWFxczF3ZoK+vr2drc/PYTykoZRHgeQjBIIRgEJRlsbK8DKvVAovZjIWFBXz5/AlVVVX3i4Dp6ekrCvK+DEVRkEqlYLNawTAMWMrB7XbDbneAcTPoaG9/X1paWkMIIWR8fPx5IiHl8vk8MucJHKoq9vb24LDbIYq/QVmKra0tOB0O2Gw2uDY20NDQ0HkR47NfPl8uJAgICQLEcBixaBTfbFZwHAdJkrAnivg4OwuL2Qy3ywWH3Y62trbpaymk02ko6TRUVUU4vAvG5YKqqkgmEvB6vfi5vQ3fjg82qw2PWlvfEUIIGR0d7ZZl+QgAUCigUCgAAFKpFLwMA1EUcXGfSCQCjlKsra6isrKyeMibtbW1Nc3Nze1dXV29AwMD+rGxsdd6vf7tQH//h9WVlSOnw5GR4nH4dnYwPz+fulNX11FSUnLrn161oqLibnl5+b2pyUlPXXX1wweNjS8IITcIIeQvJVxrZAwadncAAAAASUVORK5CYII=');
             width: 16px;
@@ -197,54 +209,58 @@
     </table>
 
     <table>
-        <tr>
-            <th style="text-align: center">T<br />y<br />p<br />e</th>
-            <th>Duration</th>
-            <th>Query</th>
-            <th>Results</th>
-        </tr>
-        {% set frequencies = collector.queryFrequencies %}
-        {% for query in collector.queries %}
-            {% set frequency = frequencies[query.resolvedQuery] %}
-            <tr {{- frequency > 1 ? ' class="duplicated-query"' : '' }}>
-                {% if frequency > 1 %}
-                    <th title="Query executed {{ frequency }} times">
-                {% else %}
-                    <th>
-                {% endif %}
-                    <span class="database-query {{ query.queryType|lower }}-query" title="{{ query.queryType|upper }} query" />
-                </th>
-                <td>
-                    <b>{{ query.duration|number_format }}</b> &micro;s
-                </td>
-                <td>
-                    {%- if noresolve -%}
-                        {{- query.query(true)|raw -}}
-                    {%- else -%}
-                        {%- for key, part in query.queryParts(true) -%}
-                            {{- part|raw -}}
-                            {%- if query.params[key] is defined -%}
-                                <b><i>
-                                    {%- if query.types[key:1] in ['s', 'b'] -%}
-                                        "{{ query.params[key]|escape('html_attr') }}"
-                                    {%- else -%}
-                                        {{ query.params[key] }}
-                                    {%- endif -%}
-                                </i></b>
-                            {%- endif -%}
-                        {%- endfor -%}
-                    {% endif %}
-                </td>
-                <td>
-                    <div class="query-section" data-state="collapsed" onclick="return showResults(this);" title="Show results" data-target-id="code-{{ loop.index }}" style="cursor: pointer;">
-                        <img alt="+" style="display: inline;" src="data:image/gif;base64,R0lGODlhEgASAMQTANft99/v+Ga44bHb8ITG52S44dXs9+z1+uPx+YvK6WC24G+944/M6W28443L6dnu+Ge54v/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAASABIAQAVS4DQBTiOd6LkwgJgeUSzHSDoNaZ4PU6FLgYBA5/vFID/DbylRGiNIZu74I0h1hNsVxbNuUV4d9SsZM2EzWe1qThVzwWFOAFCQFa1RQq6DJB4iIQA7" />
-                        <img alt="-" style="display: none;" src="data:image/gif;base64,R0lGODlhEgASAMQSANft94TG57Hb8GS44ez1+mC24IvK6ePx+Wa44dXs92+942e54o3L6W2844/M6dnu+P/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABIALAAAAAASABIAQAVCoCQBTBOd6Kk4gJhGBCTPxysJb44K0qD/ER/wlxjmisZkMqBEBW5NHrMZmVKvv9hMVsO+hE0EoNAstEYGxG9heIhCADs=" />
-                    </div>
-
-                    <pre id="original-query-{{ loop.index }}" class="query-results" style="display:none">
-                        {{- query.results|yaml_encode(2) -}}
-                    </pre>
+        <thead>
+            <tr>
+                <th style="text-align: center">T<br />y<br />p<br />e</th>
+                <th>Duration</th>
+                <th>Query</th>
+                <th>Results</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% set frequencies = collector.queryFrequencies %}
+            {% for query in collector.queries %}
+                {% set frequency = frequencies[query.resolvedQuery] %}
+                <tr {{- frequency > 1 ? ' class="duplicated-query"' : '' }}>
+                    {% if frequency > 1 %}
+                        <th title="Query executed {{ frequency }} times">
+                    {% else %}
+                        <th>
+                    {% endif %}
+                        <span class="database-query {{ query.queryType|lower }}-query" title="{{ query.queryType|upper }} query" />
+                    </th>
+                    <td style="text-align: right;">
+                        <b>{{ query.duration|number_format }}</b> &micro;s
+                    </td>
+                    <td>
+                        {%- if noresolve -%}
+                            {{- query.query(true)|raw -}}
+                        {%- else -%}
+                            {%- for key, part in query.queryParts(true) -%}
+                                {{- part|raw -}}
+                                {%- if query.params[key] is defined -%}
+                                    <b><i>
+                                        {%- if query.types[key:1] in ['s', 'b'] -%}
+                                            "{{ query.params[key]|escape('html_attr') }}"
+                                        {%- else -%}
+                                            {{ query.params[key] }}
+                                        {%- endif -%}
+                                    </i></b>
+                                {%- endif -%}
+                            {%- endfor -%}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="query-section" data-state="collapsed" onclick="return showResults(this);" title="Show results" data-target-id="code-{{ loop.index }}" style="cursor: pointer;">
+                            <img alt="+" style="display: inline;" src="data:image/gif;base64,R0lGODlhEgASAMQTANft99/v+Ga44bHb8ITG52S44dXs9+z1+uPx+YvK6WC24G+944/M6W28443L6dnu+Ge54v/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAASABIAQAVS4DQBTiOd6LkwgJgeUSzHSDoNaZ4PU6FLgYBA5/vFID/DbylRGiNIZu74I0h1hNsVxbNuUV4d9SsZM2EzWe1qThVzwWFOAFCQFa1RQq6DJB4iIQA7" />
+                            <img alt="-" style="display: none;" src="data:image/gif;base64,R0lGODlhEgASAMQSANft94TG57Hb8GS44ez1+mC24IvK6ePx+Wa44dXs92+942e54o3L6W2844/M6dnu+P/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABIALAAAAAASABIAQAVCoCQBTBOd6Kk4gJhGBCTPxysJb44K0qD/ER/wlxjmisZkMqBEBW5NHrMZmVKvv9hMVsO+hE0EoNAstEYGxG9heIhCADs=" />
+                        </div>
+
+                        <pre id="original-query-{{ loop.index }}" class="query-results" style="display:none">
+                            {{- query.results|yaml_encode(2) -}}
+                        </pre>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

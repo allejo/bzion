@@ -32,6 +32,12 @@ class EventSubscriber implements EventSubscriberInterface
     protected $from;
 
     /**
+     * The title of the website
+     * @var string
+     */
+    protected $siteTitle;
+
+    /**
      * Constructor
      *
      * You will probably not need to instantiate an object of this class,
@@ -49,12 +55,6 @@ class EventSubscriber implements EventSubscriberInterface
         $this->from   = $from;
         $this->siteTitle = $siteTitle;
     }
-
-    /**
-     * The title of the website
-     * @var string
-     */
-    protected $siteTitle;
 
     /**
      * Returns all the events that this subscriber handles, and which method
