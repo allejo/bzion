@@ -18,10 +18,11 @@
 ] %}
 
 {% set viewTitle = "Subject: " ~ conversation.subject %}
+{% set pageWideCSS = "s-fullflex" %}
 
 {% block messages_body %}
-    <section class="o-row c-messenger">
-        <aside class="c-messenger__sidebar">
+    <section class="c-messenger">
+        <aside class="c-messenger__sidebar c-fullflex--scrollable">
             {% include "Message/searchbar.html.twig" %}
             {% include "Message/conversations.html.twig" %}
         </aside>
@@ -46,8 +47,8 @@
                     </p>
                 </section>
 
-                <section class="c-messenger__conversation__container">
-                    <ul id="messageView" class="c-messenger__conversation__container__messages">
+                <section class="c-messenger__conversation__scrolling">
+                    <ul id="messageView" class="c-messenger__conversation__messages">
                         {% include 'Message/messages.html.twig' %}
                     </ul>
                 </section>

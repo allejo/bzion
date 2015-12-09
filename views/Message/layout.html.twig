@@ -12,7 +12,7 @@
 {% endblock button_row %}
 
 {% block content %}
-    <main class="c-page s-message-inbox">
+    <main class="c-page s-messaging">
         <section class="c-page__header">
             <div class="c-page__header__container">
                 <section class="c-page__header__container__title">
@@ -29,9 +29,11 @@
             {#{{ form(inviteForm)}}#}
         {#{% endif %}#}
 
-        {% block messages_body %}
+        <div class="o-container">
+            {% block messages_body %}
 
-        {% endblock %}
+            {% endblock %}
+        </div>
 
         {# @TODO Figure out what to do with this thing #}
         {#{% block messages %}#}

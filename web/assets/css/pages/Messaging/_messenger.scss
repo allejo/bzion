@@ -1,84 +1,108 @@
-@include component('messenger') {
-    margin-bottom: 0;
+// A Messenger defines the view with a list of conversations on the side and a main view of the current conversation
+.c-messenger {
+    @include view-container();
 
-    @include element('sidebar') {
-        @include view-columns(lg, 4);
+    margin: 0;
+}
 
-        border-left: $Border-Default;
-        border-right: $Border-Default;
+// The sidebar in this view contains the search bar and the list of conversations
+.c-messenger__sidebar {
+    @include view-columns(xxl, 3);
+    @include view-columns(lg, 4);
 
-        @include respond-to(sm) {
-            display: none;
-        }
+    border-left: $Border-Default;
+    border-right: $Border-Default;
+
+    @include respond-to(sm) {
+        display: none;
+    }
+}
+
+// This container has the current conversation and all of the chat messages
+.c-messenger__conversation {
+    @include view-columns(xxl, 9);
+    @include view-columns(lg, 8);
+    @include view-columns(sm, 12);
+
+    border-right: $Border-Default;
+}
+
+// Since we are inheriting OnTheRocks' grid system, we need to clear the padding that is automatically added
+.c-messenger__sidebar,
+.c-messenger__conversation {
+    padding: {
+        left: 0;
+        right: 0;
+    }
+}
+
+// This is the header of a conversation with all of the details of the conversation such as recipients
+.c-messenger__conversation__details {
+    background-color: $Alert-Informational-Background;
+    color: $Alert-Informational-Text;
+    padding: $Settings-Page_Section-Small_Margin;
+}
+
+.c-messenger__conversation__details__members {
+
+}
+
+// The height of this element will be limited and its overflow will be hidden. This is intended to have its child be
+// scrollable
+.c-messenger__conversation__scrolling {
+
+}
+
+// This object actually contains the list of messages as individual objects. This element will be much taller than its
+// parent container.
+.c-messenger__conversation__messages {
+    padding: {
+        left: $Settings-Page_Section-Small_Margin;
+        right: $Settings-Page_Section-Small_Margin;
     }
 
-    @include element('conversation') {
-        @include view-columns(lg, 8);
-        @include view-columns(sm, 12);
+    li {
+        list-style-type: none;
+        margin: {
+            bottom: 10px;
+            top: 10px;
+        }
 
-        border-right: $Border-Default;
-
-        @include element('details') {
-            background-color: $Alert-Informational-Background;
-            color: $Alert-Informational-Text;
-            padding: $Settings-Page_Section-Small_Margin;
-
-            @include element('members') {
-
+        &.action {
+            font-size: 0.8em;
+            margin: {
+                bottom: 5px;
+                top: 5px;
             }
         }
 
-        @include element('container') {
-            @include element('messages') {
-                padding: {
-                    left: $Settings-Page_Section-Small_Margin;
-                    right: $Settings-Page_Section-Small_Margin;
+        &.message {
+            .details {
+                @include view-container(lg);
+
+                margin-bottom: 5px;
+
+                .author,
+                .date {
+                    @include view-columns(lg, 6);
                 }
 
-                li {
-                    list-style-type: none;
-                    margin: {
-                        bottom: 10px;
-                        top: 10px;
-                    }
+                .author {
 
-                    &.action {
-                        font-size: 0.8em;
-                        margin: {
-                            bottom: 5px;
-                            top: 5px;
-                        }
-                    }
+                }
 
-                    &.message {
-                        .details {
-                            @include view-container(lg);
-
-                            margin-bottom: 5px;
-
-                            .author,
-                            .date {
-                                @include view-columns(lg, 6);
-                            }
-
-                            .author {
-
-                            }
-
-                            .date {
-                                font-size: 12px;
-                                margin: 0;
-                                text-align: right;
-                            }
-                        }
-                    }
+                .date {
+                    font-size: 12px;
+                    margin: 0;
+                    text-align: right;
                 }
             }
         }
-
-        @include element('response') {
-            border-top: $Border-Default;
-            padding: $Settings-Page_Section-Small_Margin;
-        }
     }
+}
+
+// This object is the container for the reply section of a conversation
+.c-messenger__conversation__response {
+    border-top: $Border-Default;
+    padding: $Settings-Page_Section-Small_Margin;
 }
