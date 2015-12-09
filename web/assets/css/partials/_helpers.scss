@@ -106,48 +106,44 @@
     }
 }
 
-@include utility('hide-on-empty') {
+.o-container {
+    @extend %container;
+}
+
+.u-hide-on-empty {
     &:empty {
         display: none;
     }
 }
 
-@include utility('no-margin') {
-    // scss-lint:disable ImportantRule
-
-    @include modifier('bottom') {
-        margin-bottom: 0 !important;
-    }
-
-    @include modifier('left') {
-        margin-left: 0 !important;
-    }
-
-    @include modifier('right') {
-        margin-right: 0 !important;
-    }
-
-    @include modifier('top') {
-        margin-top: 0 !important;
-    }
+.u-no-margin--bottom {
+    margin-bottom: 0 !important;
 }
 
-@include utility('text-center') {
+.u-no-margin--left {
+    margin-left: 0 !important;
+}
+
+.u-no-margin--right {
+    margin-right: 0 !important;
+}
+
+.u-no-margin--top {
+    margin-top: 0 !important;
+}
+
+.u-text-center {
     text-align: center;
 }
 
-@include utility('text-left') {
+.u-text-left {
     text-align: left;
 }
 
-@include utility('text-right') {
+.u-text-right {
     text-align: right;
 }
 
 .tipsy {
     font-size: 16px;
-}
-
-@include object('container') {
-    @extend %container;
 }

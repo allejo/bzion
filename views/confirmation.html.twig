@@ -10,13 +10,16 @@
             </div>
         </section>
 
-        <section class="c-confirmation">
-            <article class="c-confirmation__message">
-                {{ message|raw }}
-            </article>
-            <div class="c-confirmation__actions">
-                {{ form(form) }}
-            </div>
-        </section>
+        {{ form_start(form, { 'attr': { 'class': 'c-form o-container u-text-center' } }) }}
+            <section class="c-form__section">
+                {{ message | raw }}
+            </section>
+
+            <section class="c-form__section">
+                <div class="c-form__buttons">
+                    {{ form_rest(form) }}
+                </div>
+            </section>
+        {{ form_end(form) }}
     </main>
 {% endblock %}
