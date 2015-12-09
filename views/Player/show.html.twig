@@ -23,6 +23,13 @@
         condition: me.canEdit(player)
     },
     {
+        color: 'blue',
+        url: path('profile_edit'),
+        icon: 'edit',
+        text: 'Edit Profile',
+        condition: me.id == player.id
+    },
+    {
         color: 'red',
         url: path('ban_create_player', { player: player.id }),
         icon: 'lock',
