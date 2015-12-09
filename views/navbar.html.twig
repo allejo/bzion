@@ -47,7 +47,7 @@
     </ul>
 
     <ul class="user">
-        {% if session.get('username') %}
+        {% if me is valid %}
             {{ navbar.page(
                 navbar.badge(me.countUnreadNotifications, "unreadNotificationCount"),
                 'Notification', 'notification_list', 'bell'
@@ -67,7 +67,7 @@
             </li>
         {% else %}
             <li>
-                <a href="https://my.bzflag.org/weblogin.php?action=weblogin&amp;url={{ url('login') ~ '?token=%TOKEN%&username=%USERNAME%'|e('url') }}">
+                <a href="{{ loginUrl }}">
                     <i class="fa fa-sign-in"></i>
                 </a>
             </li>

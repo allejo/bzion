@@ -8,7 +8,7 @@
                 <h2>{{ app.siteSlug }}</h2>
 
                 {% if me is invalid %}
-                    <a class="c-button c-button--green" href="#">Register</a>
+                    <a class="c-button c-button--green" href="{{ loginUrl }}">Register</a>
                 {% endif %}
             </article>
         </section>

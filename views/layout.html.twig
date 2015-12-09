@@ -1,3 +1,7 @@
+{%- if me is not valid -%}
+    {%- set loginUrl = 'https://my.bzflag.org/weblogin.php?action=weblogin&url=' ~ url('login') ~ '?token=%TOKEN%&username=%USERNAME%'|e('url') -%}
+{%- endif -%}
+
 <!DOCTYPE html>
 <html class="t-light {{ pageWideCSS }}">
     <head>
