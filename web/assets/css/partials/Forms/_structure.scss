@@ -79,6 +79,13 @@
     }
 }
 
+// A modification to form buttons that makes sure a group of buttons doesn't get spanned between multiple lines
+.c-form__buttons {
+    > div {
+        display: inline-block;
+    }
+}
+
 
 // A form choices is a radio button section. This section will by default take up 100% of the container
 .c-form__choices {

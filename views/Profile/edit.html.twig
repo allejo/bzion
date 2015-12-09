@@ -112,7 +112,9 @@
             {% endif %}
 
             <section class="c-form__section">
-                {{ form_rest(form) }}
+                <div class="c-form__buttons">
+                    {{ form_rest(form) }}
+                </div>
             </section>
         {{ form_end(form) }}
     </main>
