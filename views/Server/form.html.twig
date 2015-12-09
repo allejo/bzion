@@ -8,39 +8,36 @@
     </section>
 
     {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-        <section class="o-row c-form__editor">
-            <article class="o-row__column--with-sidebar">
-                {{ form_row(form.name) }}
+        <section class="o-row c-form__section c-form__section--sidebar">
+            <article class="o-row__column--with-sidebar o-row__section__main">
+                {{ form_row(form.name, { 'container__attr': { 'class': 'c-form__group' } }) }}
             </article>
 
-            <article class="o-row__column--sidebar">
-                {{ form_row(form.owner) }}
+            <article class="o-row__sidebar o-row__section--aside">
+                {{ form_row(form.owner, { 'container__attr': { 'class': 'c-form__group' } }) }}
             </article>
-
-            <article class="o-row__column--third">
-                {{ form_row(form.domain) }}
-            </article>
-
-            <article class="o-row__column--third">
-                {{ form_row(form.port) }}
-            </article>
-
-            <article class="o-row__column--full">
-                {{ form_row(form.country, { 'attr': { 'class': 'js-select__country' }}) }}
-            </article>
-
-            {#<article class="o-row__column--with-sidebar c-form__editor__body">#}
-                {#{{ form_row(form.subject) }}#}
-                {#{{ form_row(form.content, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}#}
-            {#</article>#}
-
-            {#<aside class="o-row__sidebar c-form__editor__meta">#}
-                {#{{ form_row(form.category) }}#}
-                {#{{ form_row(form.status) }}#}
-            {#</aside>#}
         </section>
 
-        <section class="o-row o-row--no-margin c-form__buttons">
+        <section class="o-row c-form__section">
+            <article class="o-row__column--third">
+                {{ form_row(form.domain, { 'container__attr': { 'class': 'c-form__group' } }) }}
+            </article>
+
+            <article class="o-row__column--third">
+                {{ form_row(form.port, { 'container__attr': { 'class': 'c-form__group' } }) }}
+            </article>
+        </section>
+
+        <section class="c-form__section">
+            <article>
+                {{ form_row(form.country, {
+                    'attr': { 'class': 'js-select__country' },
+                    'container__attr': { 'class': 'c-form__group' }
+                }) }}
+            </article>
+        </section>
+
+        <section class="c-form__section">
             {{ form_rest(form) }}
         </section>
     {{ form_end(form) }}
