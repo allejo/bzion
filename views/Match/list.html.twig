@@ -45,7 +45,7 @@
         </section>
 
         <section class="o-container">
-            <section class="o-row c-match-history">
+            <section class="c-match-history">
                 {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
                 {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
                 {% set lastMatchDate = "" %}
@@ -58,7 +58,7 @@
                             </section>
                         {% endif %}
 
-                        <section class="o-row__column--full c-match-history__date">
+                        <section class="c-match-history__date">
                             {% set currentYear = "now" | date("Y") %}
 
                             <h4>
@@ -71,7 +71,7 @@
                             </h4>
                         </section>
 
-                        <section class="o-row__column--full">
+                        <section>
                     {% endif %}
 
                     <article class="c-match-summary">
@@ -90,7 +90,7 @@
                     {% endif %}
                 {% endfor %}
 
-                <section class="o-row__column--full">
+                <section>
                     {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
                 </section>
             </section>

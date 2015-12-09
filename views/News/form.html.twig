@@ -9,12 +9,12 @@
 
     {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
         <section class="o-row c-form__section c-form__section--sidebar">
-            <article class="o-row__column--with-sidebar c-form__section__main">
+            <article class="o-col--main c-form__section__main">
                 {{ form_row(form.subject, { 'container_attr': { 'class': 'c-form__group' } }) }}
                 {{ form_row(form.content, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
             </article>
 
-            <aside class="o-row__sidebar c-form__section__aside">
+            <aside class="o-col--aside c-form__section__aside">
                 {{ form_row(form.category, { 'container_attr': { 'class': 'c-form__group' } }) }}
                 {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
             </aside>

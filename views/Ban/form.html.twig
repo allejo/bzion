@@ -8,8 +8,8 @@
     </section>
 
     {{ form_start(form, {'attr': {'class': 'o-container'}}) }}
-        <section class="o-row c-form__editor c-ban-form">
-            <div class="o-row__column--full c-ban-form__settings">
+        <section class="c-form__editor c-ban-form">
+            <div class="c-ban-form__settings">
                 {{ form_row(form.player) }}
 
                 <div class="c-form__editor__body__timestamp">
@@ -22,20 +22,20 @@
                 {{ form_row(form.automatic_expiration, { 'container_attr': { 'class': 'c-ban-form__settings__expiration' } }) }}
             </div>
 
-            <div class="o-row__column--full">
+            <div>
                 {{ form_row(form.reason, { 'attr': { 'class': 'c-form__editor__body__content' } }) }}
             </div>
 
-            <div class="o-row__column--full c-ban-form__server-settings">
+            <div class="c-ban-form__server-settings">
                 {{ form_row(form.server_message, { 'container_attr': { 'class': 'c-ban-form__server-settings__message' } }) }}
                 {{ form_row(form.server_join_allowed, { 'container_attr': { 'class': 'c-ban-form__server-settings__allow-join' } }) }}
             </div>
 
-            <div class="o-row__column--full">
+            <div>
                 {{ form_row(form.ip_addresses) }}
             </div>
 
-            <section class="o-row__column--full c-form__buttons">
+            <section class="c-form__buttons">
                 {{ form_rest(form) }}
             </section>
         </section>

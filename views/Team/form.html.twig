@@ -9,12 +9,12 @@
 
     {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
         <section class="o-row c-form__section c-form__section--sidebar">
-            <article class="o-row__column--with-sidebar c-form__section__main">
+            <article class="o-col--main c-form__section__main">
                 {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
                 {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
             </article>
 
-            <aside class="o-row__sidebar c-avatar-manager c-form__section__aside">
+            <aside class="o-col--aside c-avatar-manager c-form__section__aside">
                 <div class="c-avatar-manager__preview">
                     {# Only show an avatar if we're editing an existing team #}
                     {% if avatar is not null %}

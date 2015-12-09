@@ -63,7 +63,7 @@
 
         <section class="o-container c-team">
             <section class="o-row o-section">
-                <section class="o-row__column--with-sidebar c-team__information">
+                <section class="o-col--main c-team__information">
                     <p><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
                     {% spaceless %}
                         <article class="c-team__information__bio s-markdown u-hide-on-empty">
@@ -72,14 +72,14 @@
                     {% endspaceless %}
                 </section>
 
-                <section class="o-row__sidebar c-team__profile-picture">
+                <section class="o-col--aside c-team__profile-picture">
                     <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
                 </section>
             </section>
 
             <section class="o-row o-section">
-                <section class="o-row__column--half c-team__match-stats">
-                    <h4 class="o-section__header">
+                <section class="o-col--half c-team__match-stats">
+                    <h4>
                         Match Statistics
                         <small>
                             [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
@@ -101,8 +101,8 @@
                     </section>
                 </section>
 
-                <section class="o-row__column--half c-team__activity">
-                    <h4 class="o-section__header">
+                <section class="o-col--half c-team__activity">
+                    <h4>
                         Team Activity
                         <small>
                             [<a id="activity_stats" href="#" original-title="Like activity stats? There's more!">?</a>]
@@ -112,8 +112,8 @@
             </section>
 
             <section class="o-row o-section">
-                <section class="o-row__column--half c-team__roster">
-                    <h4 class="o-section__header">Team Members</h4>
+                <section class="o-col--half c-team__roster">
+                    <h4>Team Members</h4>
                     <article class="c-table c-table--no-border c-table--no-hover">
                         {% for player in team.members %}
                             <div class="c-table__row">
@@ -137,8 +137,8 @@
                     </article>
                 </section>
 
-                <section class="o-row__column--half c-team__matches">
-                    <h4 class="o-section__header">Recent Matches</h4>
+                <section class="o-col--half c-team__matches">
+                    <h4>Recent Matches</h4>
                     <article class="c-table">
                         {% for match in team.matches %}
                             <a class="c-table__row" href="#">

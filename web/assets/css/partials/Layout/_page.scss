@@ -1,0 +1,26 @@
+// This is a convenience class that defines a horizontal section of a page. This is typically used in conjunction with
+// `.o-row` but these styles should NOT be applied to `.o-row` because a grid system does not imply that it is an
+// actually page section
+.o-section {
+    margin-bottom: $Settings-Page_Section-Margin;
+
+    @include respond-to(sm) {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+
+        &:last-child {
+            margin-bottom: $Settings-Page_Section-Margin;
+        }
+    }
+
+    .o-row__column--half,
+    .o-row__column--third,
+    .o-row__column--quarter {
+        @include respond-to(sm) {
+            margin-bottom: $Settings-Page_Section-Small_Margin;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

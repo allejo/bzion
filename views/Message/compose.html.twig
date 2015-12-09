@@ -13,8 +13,8 @@
 {% set viewTitle = "Compose Message" %}
 
 {% block messages_body %}
-    <section id="conversationMessages" class="o-row">
-        <div class="o-row__column--full">
+    <section id="conversationMessages">
+        <div>
             {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
                 {{ form_errors(form) }}
                 <div class="input_conversation">

@@ -59,11 +59,11 @@
 
         <section class="o-container c-public-profile">
             <section class="o-row">
-                <section class="o-row__sidebar c-public-profile__profile-picture">
+                <section class="o-col--aside c-public-profile__profile-picture">
                     <img src="{{ player.avatar|imagine_filter('huge_thumb') }}">
                 </section>
 
-                <section class="o-row__column--with-sidebar c-public-profile__details">
+                <section class="o-col--main c-public-profile__details">
                     <p>
                         {% if player.id == player.team.leader.id %}
                             <strong>Leader of</strong> {{ link_to(player.team) }}
@@ -91,7 +91,7 @@
                 <hr>
 
                 <section class="o-row c-private-profile">
-                    <section class="o-row__column--half c-private-profile__callsigns">
+                    <section class="o-col--half c-private-profile__callsigns">
                         <h4>
                             Previous Callsigns
                             <small>
@@ -106,7 +106,7 @@
                         </ul>
                     </section>
 
-                    <section class="o-row__column--half c-private-profile__ips">
+                    <section class="o-col--half c-private-profile__ips">
                         <h4>
                             Known IP Addresses
                             <small>
@@ -121,8 +121,8 @@
                     </section>
                 </section>
 
-                <section class="o-row c-private-profile">
-                    <section class="o-row__column--full c-private-profile__notes">
+                <section class="c-private-profile">
+                    <section class="c-private-profile__notes">
                         <h4>Admin Notes</h4>
                         {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
                         {{ form_errors(adminNotesForm) }}

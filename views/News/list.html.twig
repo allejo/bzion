@@ -39,7 +39,7 @@
             <section class="o-row">
                 {% include "News/categories.html.twig" %}
 
-                <section class="o-row__column--with-sidebar">
+                <section class="o-col--main">
                     {% for article in news %}
                         {% include "News/article.html.twig" with { 'article': article } %}
                     {% endfor %}

@@ -44,7 +44,7 @@
 
         {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
             <section class="o-row c-form__section c-form__section--sidebar">
-                <article class="o-row__column--with-sidebar c-form__section__main">
+                <article class="o-col--main c-form__section__main">
                     <div class="c-form__group">
                         <label for="{{ form.email.vars.id }}">
                             {{ form.email.vars.label }}
@@ -71,7 +71,7 @@
                     </div>
                 </article>
 
-                <aside class="o-row__sidebar c-avatar-manager c-form__section__aside">
+                <aside class="o-col--aside c-avatar-manager c-form__section__aside">
                     <div class="c-avatar-manager__preview">
                         <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
 

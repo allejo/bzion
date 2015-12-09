@@ -9,21 +9,21 @@
 
     {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
         <section class="o-row c-form__section c-form__section--sidebar">
-            <article class="o-row__column--with-sidebar o-row__section__main">
+            <article class="o-col--main o-row__section__main">
                 {{ form_row(form.name, { 'container__attr': { 'class': 'c-form__group' } }) }}
             </article>
 
-            <article class="o-row__sidebar o-row__section--aside">
+            <article class="o-col--aside o-row__section--aside">
                 {{ form_row(form.owner, { 'container__attr': { 'class': 'c-form__group' } }) }}
             </article>
         </section>
 
         <section class="o-row c-form__section">
-            <article class="o-row__column--third">
+            <article class="o-col--third">
                 {{ form_row(form.domain, { 'container__attr': { 'class': 'c-form__group' } }) }}
             </article>
 
-            <article class="o-row__column--third">
+            <article class="o-col--third">
                 {{ form_row(form.port, { 'container__attr': { 'class': 'c-form__group' } }) }}
             </article>
         </section>

@@ -50,6 +50,15 @@
 
 
 //
+// Layout styling
+//    (CSS for layouts and the grid system)
+//
+@import 'partials/Layout/columns';
+@import 'partials/Layout/page';
+@import 'partials/Layout/user-content';
+
+
+//
 // Form styling
 //    (CSS for forms and their related classes)
 //
@@ -71,7 +80,6 @@
 @import 'partials/header';
 @import 'partials/icon-bullet-points';
 @import 'partials/jumbotron';
-@import 'partials/layouts';
 @import 'partials/markdown';
 @import 'partials/pagination';
 @import 'partials/ranks';

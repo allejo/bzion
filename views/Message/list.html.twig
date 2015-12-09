@@ -13,8 +13,8 @@
 {% set viewTitle = "Messages" %}
 
 {% block messages_body %}
-    <section class="o-row c-messages">
-        {% include "Message/searchbar.html.twig" with {'customClass': 'o-row__column--full'} %}
-        {% include "Message/conversations.html.twig" with {'customClass': 'o-row__column--full'} %}
+    <section class="o-container c-messages">
+        {% include "Message/searchbar.html.twig" %}
+        {% include "Message/conversations.html.twig" %}
     </section>
 {% endblock %}
