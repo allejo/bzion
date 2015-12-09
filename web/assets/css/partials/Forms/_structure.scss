@@ -94,12 +94,48 @@
         label {
             display: inline-block;
         }
+
+        label {
+            &.required:after {
+                content: '';
+            }
+        }
     }
 }
+
 
 // A modification to the form choices radio section but the options will be listed vertically
 .c-form__choices--vertical {
     > div {
         display: block;
+    }
+}
+
+
+//
+.c-form__timestamp {
+    > div {
+        display: inline-block;
+        margin-right: 15px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        select {
+            display: inline-block;
+            margin-right: 5px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+
+.c-form__timestamp__time {
+    select:not(:first-child) {
+        margin-left: 5px;
     }
 }

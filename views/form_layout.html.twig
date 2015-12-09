@@ -23,6 +23,35 @@
     </div>
 {%- endblock form_row %}
 
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div>
+                {{- form_widget(child) -}}
+                {{- form_label(child) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{%- block datetime_widget -%}
+    {% if widget == 'single_text' %}
+        {{- block('form_widget_simple') -}}
+    {%- else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- form_errors(form.date) -}}
+            {{- form_errors(form.time) -}}
+
+            <div class="c-form__timestamp__date">
+                {{- form_widget(form.date) -}}
+            </div>
+            <div class="c-form__timestamp__time">
+                {{- form_widget(form.time) -}}
+            </div>
+        </div>
+    {%- endif -%}
+{%- endblock datetime_widget -%}
+
 {% block container_attributes -%}
     {%- for attrname, attrvalue in container_attr -%}
         {%- if attrname in ['placeholder', 'title'] -%}

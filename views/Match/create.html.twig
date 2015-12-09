@@ -3,7 +3,10 @@
 {% block title %}Matches :: New Match{% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    {% include "Match/form.html.twig" with {
+        'pageTitle': 'Enter Match',
+        'form': form
+    } %}
 {% endblock %}
 
 {% block javascripts %}
