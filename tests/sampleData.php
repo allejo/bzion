@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+use BZIon\Event\ConversationAbandonEvent;
+use BZIon\Event\ConversationJoinEvent;
+use BZIon\Event\ConversationKickEvent;
 use BZIon\Event\ConversationRenameEvent;
 use BZIon\Event\Events;
 use BZIon\Event\WelcomeEvent;
@@ -16,7 +19,7 @@ if ($testPlayer->isValid()) {
 }
 
 echo "Adding players...";
-$alezakos   = Player::newPlayer(94341, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description", 84);
+$alezakos   = Player::newPlayer(49434, "alezakos", null, "active", Player::DEVELOPER, "", "Sample description", 84);
 $allejo     = Player::newPlayer(10981, "allejo", null, "active", Player::DEVELOPER, "", "I'm the one who breaks the build", 227);
 $ashvala    = Player::newPlayer(43513, "ashvala", null, "active", Player::DEVELOPER, "", "", 100);
 $autoreport = Player::newPlayer(59716, "AutoReport", null, "test");
@@ -26,6 +29,20 @@ $mdskpr     = Player::newPlayer(3112, "mdskpr");
 $snake      = Player::newPlayer(44197, "Snake12534");
 $tw1sted    = Player::newPlayer(7316, "tw1sted", null, "active", Player::DEVELOPER);
 $brad       = Player::newPlayer(0310, "brad", null, "active", Player::S_ADMIN, "", "I keep nagging about when this project will be done");
+$constitution = Player::newPlayer(9972, "Constitution", null, "active", Player::S_ADMIN);
+
+$allPlayers = array(
+    $alezakos,
+    $allejo,
+    $ashvala,
+    $autoreport,
+    $blast,
+    $kierra,
+    $mdskpr,
+    $snake,
+    $tw1sted,
+    $brad,
+    $constitution);
 echo " done!";
 
 echo "\nSending notifications...";
@@ -53,7 +70,7 @@ $gsepar->changeElo('100');
 $fradis    = Team::createTeam("Fractiouss disinclination", $ashvala->getId(), "", "");
 echo " done!";
 
-echo "\nAdding members tos teams...";
+echo "\nAdding members to teams...";
 $lweak->addMember($autoreport->getId());
 $fflood->addMember($blast->getId());
 $fradis->addMember($alezakos->getId());
@@ -83,24 +100,109 @@ Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net", 5155, 227, $tw1s
 echo " done!";
 
 echo "\nAdding messages...";
-$conversation_to = Conversation::createConversation("New blog", $snake->getId(), array(
-    $alezakos,
-    $allejo,
-    $ashvala,
-    $autoreport,
-    $blast,
-    $kierra,
-    $mdskpr,
-    $snake,
-    $tw1sted
-));
+$conversation = Conversation::createConversation("New blog", $snake->getId(), $allPlayers);
 
-$event = new ConversationRenameEvent($conversation_to, "New message", "New blorg", $snake);
-ConversationEvent::storeEvent($conversation_to->getId(), $event, Events::CONVERSATION_RENAME);
-$event = new ConversationRenameEvent($conversation_to, "New blorg", "New blog", $snake);
-ConversationEvent::storeEvent($conversation_to->getId(), $event, Events::CONVERSATION_RENAME);
+for ($i = 0; $i <= 10; $i++) {
+    Conversation::createConversation("Extra test $i", $alezakos->getId(), $allPlayers)->sendMessage($allejo, "This is a test conversation");
+}
 
-$conversation_to->sendMessage($snake, "Check out my new blog!");
+$event = new ConversationRenameEvent($conversation, "New message", "New blorg", $snake);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_RENAME);
+$event = new ConversationRenameEvent($conversation, "New blorg", "New blog", $snake);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_RENAME);
+$conversation->sendMessage($snake, "Check out my new blog!");
+
+$conversation = Conversation::createConversation("Serious discussion", $constitution->getId(), $allPlayers);
+$conversation->sendMessage($ashvala, "hey");
+$conversation->sendMessage($alezakos, "hm, what different machine learning some reason why I turned on the cloud version");
+$conversation->sendMessage($allejo, "then I can type at 12,000 wpm?");
+$conversation->sendMessage($blast, "like:");
+$conversation->sendMessage($allejo, "tea?");
+$conversation->sendMessage($allejo, "what would have some.");
+$conversation->sendMessage($snake, "hahaha I'm sure I've used a url shorten urls book I'm not sure it would be used it");
+$conversation->sendMessage($blast, "so I assume you're the correlative still always_ goes down history\"'s for anything");
+$conversation->sendMessage($kierra, "I had a page. No addon, plugin to windows it...");
+$conversation->sendMessage($allejo, "so I'm the world  (which was amazing :)");
+$conversation->sendMessage($brad, "she also going to essential command and to https://github Releases?\"  \"No!\"  \"STOP! IT!\"  \"*pbbbttt*\"  \"That's interesting I want help");
+$conversation->sendMessage($brad, "I wonder 600KB) screenshot here. but how much I know all I was doing to debug, visual studio");
+$conversation->sendMessage($brad, "and night night!");
+$conversation->sendMessage($constitution, "okay??\" \"for sandalism on wikipedia?");
+$event = new ConversationJoinEvent($conversation, array($autoreport));
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_JOIN);
+$conversation->sendMessage($blast, "and the migrate-database, usually is reversed");
+$conversation->sendMessage($alezakos, "uhm");
+$conversation->sendMessage($blast, "lol");
+$conversation->sendMessage($alezakos, "That makes a look at the kai responsibility issue: https://twig.sensiolabs.org/doc/function closer than that's an x-wing the default search engineering can use to acknowledge");
+$conversation->sendMessage($constitution, "Makes sense.");
+$conversation->sendMessage($autoreport, "yes, it counts as pseudocode.");
+$conversation->sendMessage($autoreport, "does a bot have consequency trading?");
+$conversation->sendMessage($allejo, "autoreport: Without sound effect (and then connection)");
+$conversation->sendMessage($snake, "allejo");
+$conversation->sendMessage($brad, "what's your self-interest?");
+$conversation->sendMessage($autoreport, "none, but I have a hammer");
+$conversation->sendMessage($autoreport, "that's way beyond, but the mouse is with me, snake?");
+$conversation->sendMessage($snake, "that's red to sleep. ZZZzzzâ€¦)");
+$conversation->sendMessage($autoreport, "okay, that was never look up \"github has a web programs\", but hey, I never look up to see if restart bzflag are general use.");
+$conversation->sendMessage($autoreport, "that's left?");
+$conversation->sendMessage($autoreport, "assuming language in a new ADD message to an interesting pads for cell phones");
+$conversation->sendMessage($autoreport, "and not in sausage");
+$event = new ConversationAbandonEvent($conversation, $autoreport);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_ABANDON);
+$conversation->sendMessage($autoreport, "hey, I never release is the first join properly making on a PC where was over 2 hours until you read there, and instead of globally affirming with UTF8 character, and in here the printers or are them :P");
+$conversation->sendMessage($autoreport, ":)");
+
+$conversation = Conversation::createConversation("½ ¼ ¾ ⅓ ⅔ ÷ ± ∞ π", $ashvala->getId(), $allPlayers);
+$conversation->sendMessage($autoreport, "this is a test message to the conversation");
+$conversation->sendMessage($autoreport, "this is another test message to the conversation");
+$conversation->sendMessage($autoreport, "this is yet another test message to the conversation");
+$conversation->sendMessage($autoreport, "this is a fourth test message to the conversation");
+$conversation->sendMessage($autoreport, "this is a message to the conversation");
+$conversation->sendMessage($autoreport, "this is also a message to the conversation");
+$conversation->sendMessage($autoreport, "I am sending a lot of messages to this conversation");
+$conversation->sendMessage($autoreport, "This conversation is full of my messages");
+$conversation->sendMessage($autoreport, "This conversation is full of many of my messages");
+$conversation->sendMessage($autoreport, "This conversation is full of a large amount of my messages");
+$conversation->sendMessage($autoreport, "This conversation has messages by AutoReport");
+$conversation->sendMessage($autoreport, "This conversation contains messages by AutoReport");
+$conversation->sendMessage($autoreport, "This conversation includes messages by AutoReport");
+$conversation->sendMessage($autoreport, "This is a test message by AutoReport");
+$conversation->sendMessage($autoreport, "This is another test message by AutoReport");
+$conversation->sendMessage($autoreport, "This is yet another test message by AutoReport");
+$conversation->sendMessage($autoreport, "This test complements the list of test messages by AutoReport");
+$conversation->sendMessage($autoreport, "This test message contains various characters: ↛ ħĽřƒƕƜƷǟʤϠℋℕℹ⅖Ⅲ");
+$event = new ConversationAbandonEvent($conversation, $brad);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_ABANDON);
+$conversation->sendMessage($autoreport, "This is a message");
+$conversation->sendMessage($autoreport, "This is another message");
+$conversation->sendMessage($autoreport, "This is yet another message");
+
+
+$conversation = Conversation::createConversation("Test", $alezakos->getId(), array($olfm, $reptitles, $fflood, $fradis, $lweak, $gsepar, $constitution));
+$conversation->sendMessage($allejo, "then I can type at 12,000 wpm?");
+$conversation->sendMessage($blast, "like:");
+$event = new ConversationAbandonEvent($conversation, $brad);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_ABANDON);
+$event = new ConversationAbandonEvent($conversation, $mdskpr);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_ABANDON);
+$conversation->sendMessage($allejo, "tea?");
+$event = new ConversationJoinEvent($conversation, array($brad, $mdskpr, $lweak));
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_JOIN);
+$event = new ConversationRenameEvent($conversation, "test", "Test", $alezakos);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_RENAME);
+$conversation->sendMessage($allejo, "what would have some.");
+$conversation->sendMessage($snake, "hahaha I'm sure I've used a url shorten urls book I'm not sure it would be used it");
+$conversation->sendMessage($blast, "so I assume you're the correlative still always_ goes down history\"'s for anything");
+$conversation->sendMessage($kierra, "I had a page. No addon, plugin to windows it...");
+$conversation->sendMessage($allejo, "so I'm the world  (which was amazing :)");
+$event = new ConversationKickEvent($conversation, $lweak, $alezakos);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_KICK);
+$event = new ConversationKickEvent($conversation, $brad, $alezakos);
+ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATION_KICK);
+$conversation->sendMessage($autoreport, "she also going to essential command and to https://github Releases?\"  \"No!\"  \"STOP! IT!\"  \"*pbbbttt*\"  \"That's interesting I want help");
+$conversation->sendMessage($autoreport, "I wonder 600KB) screenshot here. but how much I know all I was doing to debug, visual studio");
+$conversation->sendMessage($autoreport, "and night night!");
+
+
 echo " done!";
 
 echo "\nAdding bans...";
