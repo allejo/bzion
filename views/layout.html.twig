@@ -67,6 +67,10 @@
             </section>
 
             <ul class="c-footer__pages is-horizontal">
+                {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
+                    <li><a href="{{ path('custom_page_create') }}">+</a></li>
+                {% endif %}
+
                 {% for page in app.pages %}
                     {% if not page.isHomePage %}
                         <li>{{ link_to(page) }}</li>
