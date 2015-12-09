@@ -3,8 +3,17 @@ $score_padding_small: 10px;
 
 @include component('match-history') {
     @include element('date') {
+        &:first-child {
+            h4 {
+                margin-top: 0;
+            }
+        }
+
         h4 {
-            margin-bottom: 0;
+            margin: {
+                bottom: $Settings-Page_Section-Small_Margin;
+                top: $Settings-Page_Section-Small_Margin;
+            }
         }
     }
 }
