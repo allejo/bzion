@@ -61,6 +61,8 @@
                     </div>
                 {% endfor %}
             </section>
+
+            {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
         </section>
     </main>
 {% endblock %}

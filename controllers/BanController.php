@@ -12,10 +12,17 @@ class BanController extends CRUDController
 
     public function listAction(Request $request)
     {
-        return array("bans" => $this->getQueryBuilder()
+        $currentPage = $request->query->get('page', 1);
+
+        $qb = $this->getQueryBuilder()
             ->sortBy('updated')->reverse()
-            ->limit(15)->fromPage($request->query->get('page', 1))
-            ->getModels());
+            ->limit(15)->fromPage($currentPage);
+
+        return array(
+            "bans" => $qb->getModels(),
+            "currentPage" => $currentPage,
+            "totalPages" => $qb->countPages()
+        );
     }
 
     public function createAction(Player $me, Player $player = null)

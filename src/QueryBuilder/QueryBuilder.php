@@ -533,6 +533,14 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Count the number of pages that all the models could be separated into
+     */
+    public function countPages()
+    {
+        return ceil($this->count() / $this->getResultsPerPage());
+    }
+
+    /**
      * Find if there is any result
      *
      * @return bool

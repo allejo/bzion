@@ -13,20 +13,19 @@ class NewsController extends CRUDController
     {
         $qb = $this->getQueryBuilder();
 
+        $currentPage = $request->query->get('page', 1);
+
         $news = $qb->sortBy('created')->reverse()
             ->where('category')->is($category)
             ->limit(5)->fromPage($request->query->get('page', 1))
             ->getModels();
-
-        $totalPages = ceil($qb->count() / $qb->getResultsPerPage());
-        $currentPage = $request->query->get('page', 1);
 
         return array(
             "news"        => $news,
             "categories"  => $this->getCategories(),
             "category"    => $category,
             "currentPage" => $currentPage,
-            "totalPages"  => $totalPages
+            "totalPages"  => $qb->countPages()
         );
     }
 

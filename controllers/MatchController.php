@@ -9,18 +9,18 @@ class MatchController extends CRUDController
     {
         $qb = $this->getQueryBuilder();
 
+        $currentPage = $request->query->get('page', 1);
+
         $query = $qb->sortBy('time')->reverse()
                ->with($team, $type)
-               ->limit(50)->fromPage($request->query->get('page', 1));
+               ->limit(50)->fromPage($currentPage);
 
-        $totalPages = ceil($qb->count() / $qb->getResultsPerPage());
-        $currentPage = $request->query->get('page', 1);
 
         return array(
             "matches"     => $query->getModels(),
             "team"        => $team,
             "currentPage" => $currentPage,
-            "totalPages"  => $totalPages
+            "totalPages"  => $qb->countPages()
     );
     }
 
