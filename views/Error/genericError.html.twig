@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Error{% endblock %}
+{% block title %}Generic Error{% endblock %}
 
 {% block content %}
     <main class="c-page">
@@ -12,7 +12,8 @@
             </div>
         </section>
 
-        {# TODO: Style this #}
-        {{ message }}
+        <section class="o-container">
+            {{ message }}
+        </section>
     </main>
 {% endblock %}

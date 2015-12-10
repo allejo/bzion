@@ -10,7 +10,7 @@
     }
 ] %}
 
-{% block title %}{{ type|plural|capitalize }}{% endblock %}
+{% block title %}{{ type|plural|capitalize }} Error{% endblock %}
 
 {% block content %}
     <main class="c-page">
@@ -24,7 +24,8 @@
             </div>
         </section>
 
-        {# TODO: Style this #}
-        {{ message }}
+        <section class="o-container">
+            {{ message }}
+        </section>
     </main>
 {% endblock %}
