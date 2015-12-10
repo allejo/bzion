@@ -147,7 +147,7 @@ $score_padding_small: 10px;
                 }
 
                 @include respond-to(xs) {
-                    padding-left: 0;
+                    padding-right: 0;
                 }
             }
 
