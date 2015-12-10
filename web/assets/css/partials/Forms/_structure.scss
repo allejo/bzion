@@ -6,7 +6,6 @@
 // A section inside of a form is defined as a row with content inside of it. This "row" will take up 100% of the
 // container.
 .c-form__section {
-    display: block;
     margin-bottom: $Settings-Page_Section-Small_Margin;
 
     &:last-child {
