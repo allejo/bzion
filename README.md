@@ -18,6 +18,7 @@ These individuals have made multiple significant contributions to the project on
 These individuals have assisted significantly with guiding the project in its current direction and have contributed several suggestions to continuously improve the project.
 
 - [blast007](https://github.com/blast007)
+- [Constitution](https://github.com/macsforme)
 
 ## Installation
 
