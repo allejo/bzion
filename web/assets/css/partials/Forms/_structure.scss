@@ -14,6 +14,14 @@
 }
 
 
+// This class is intended for adding a custom heading to a form section if a label is not apt
+.c-form__section__heading {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
 // This section will take up 100% of the container but it is defined as a flexbox and allows for a two column layout;
 // one column is a sidebar.
 .c-form__section--sidebar {
@@ -75,6 +83,17 @@
 
     textarea {
         flex: 1;
+    }
+}
+
+
+// This modifier for a form group that will expect a list of checkboxes and their respective labels; this class will
+// ensure that checkboxes and labels are next to each other
+.c-form__options {
+    label {
+        display: inline-block;
+        font-weight: normal;
+        margin-left: 5px;
     }
 }
 
