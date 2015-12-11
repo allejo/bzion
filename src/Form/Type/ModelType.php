@@ -76,6 +76,11 @@ class ModelType extends AbstractType
                     $choice->attr['data-icon'] = $icon;
                 }
             }
+        } elseif ($this->type === 'Country') {
+            foreach ($view->vars['choices'] as $choice) {
+                $country = \Country::get($choice->value);
+                $choice->attr['data-iso'] = $country->getISO();
+            }
         }
     }
 
@@ -88,7 +93,7 @@ class ModelType extends AbstractType
 
         $resolver->setDefaults(array(
             'attr' => array(
-                'class'            => "$type-select",
+                'class'            => "js-select__$type",
                 'data-placeholder' => "Select a $type..."
             ),
             'choices' => $names,

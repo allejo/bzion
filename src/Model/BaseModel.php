@@ -55,6 +55,7 @@ abstract class BaseModel implements ModelInterface
      *
      * @param  int|static $id The ID of the object to look for, or the object
      *                        itself
+     * @return static
      * @throws InvalidArgumentException If $id is an object of an incorrect type
      */
     public static function get($id)

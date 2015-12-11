@@ -66,10 +66,8 @@ class ProfileFormCreator extends ModelFormCreator
                 'required' => false
             ))
             ->add('delete_avatar', 'submit')
-            ->add('country', 'choice', array(
-                'choices'  => \Country::getCountriesWithISO(),
-                'data'     => $this->editing->getCountry()->getISO(),
-                'required' => false
+            ->add('country', new ModelType('Country'), array(
+                'data' => $this->editing->getCountry()
             ))
             ->add('email', 'email', array(
                 'constraints' => $emailConstraints,
@@ -127,7 +125,7 @@ class ProfileFormCreator extends ModelFormCreator
     {
         $player->setDescription($form->get('description')->getData());
         $player->setTimezone($form->get('timezone')->getData());
-        $player->setCountry($form->get('country')->getData());
+        $player->setCountry($form->get('country')->getData()->getId());
         $player->setReceives($form->get('receive')->getData());
 
         if ($form->get('delete_avatar')->isClicked()) {

@@ -663,16 +663,11 @@ class Player extends AvatarModel implements NamedModel
 
     /**
      * Set the player's country
-     * @param  string|int $country The ID or ISO code of the new country
+     * @param  int   $country The ID of the new country
      * @return self
      */
     public function setCountry($country)
     {
-        if (is_string($country)) {
-            // $country is an ISO code, convert it to a database ID
-            $country = Country::getIdFromISO($country);
-        }
-
         return $this->updateProperty($this->country, 'country', $country, 'i');
     }
 

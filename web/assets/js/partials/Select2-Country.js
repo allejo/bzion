@@ -1,10 +1,16 @@
 function formatCountry(country) {
-    if (!country.id) {
+    if (!country.id || country.element === undefined) {
         return country.text;
     }
 
+    var icon = country.element.getAttribute('data-iso');
+
+    if (icon === null) {
+        return role.text;
+    }
+
     return $(
-        '<div class="c-flag c-flag--' + country.element.value.toLowerCase() + '"></div> <span>' + country.text + '</span>'
+        '<div class="c-flag c-flag--' + icon.toLowerCase() + '"></div> <span>' + country.text + '</span>'
     );
 }
 
