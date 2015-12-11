@@ -70,7 +70,7 @@ function bzfquery ($hostport) {
   $get_prot = getprotobyname($protocol);
   if ($get_prot == -1) {
      // if nothing found, returns -1
-     echo 'Invalid Protocol';
+     $server['error'] = 'Invalid Protocol';
      return $server;
   }
   if (!$server['port']) {
@@ -79,9 +79,9 @@ function bzfquery ($hostport) {
     $server['port'] = getservbyname($server['port'], $protocol);
   }
   $server['ip'] = gethostbyname($server['host']);
-  $fp = fsockopen($server['host'], $server['port'], $errno, $errstr, 5);
+  $fp = @fsockopen($server['host'], $server['port'], $errno, $errstr, 5);
   if (!$fp) {
-    echo "$errstr ($errno)\n";
+    $server['error'] = $errstr;
     return $server;
   }
 
@@ -90,20 +90,19 @@ function bzfquery ($hostport) {
   $buffer=fread($fp, 9);
   //var_dump($buffer);
   if (strlen($buffer) != 9) {
-    echo "not a bzflag server";
-    return $server;
+    $server['error'] = "not a bzflag server";
   }
   # parse reply
   $server += unpack("a4magic/a4protocol/Cid", $buffer);
   //var_dump($server);
   if ($server['magic'] != "BZFS") {
-    echo "not a bzflag server\n";
+    $server['error'] = "not a bzflag server";
     fclose($fp);
     return $server;
   }
 
   if ($server['protocol'] != '0221') {
-    echo "incompatible version\n";
+    $server['error'] = "incompatible version";
     fclose($fp);
     return $server;
   }

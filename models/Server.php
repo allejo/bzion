@@ -136,34 +136,28 @@ class Server extends UrlModel implements NamedModel
      */
     public function forceUpdate()
     {
-        $this->info = @bzfquery($this->address);
+        $this->info = bzfquery($this->getAddress());
         $this->updated = TimeDate::now();
-        $this->db->query("UPDATE servers SET info = ?, updated = UTC_TIMESTAMP() WHERE id = ?", "si", array(serialize($this->info), $this->id));
+        $this->online = !isset($this->info['error']);
 
-        $this->updateOnline();
+        $this->db->query(
+	    "UPDATE servers SET info = ?, online = ?, updated = UTC_TIMESTAMP() WHERE id = ?",
+	    "sii",
+	    array(serialize($this->info), $this->online, $this->id)
+	);
 
-        return $this;
-    }
+	// If a server is offline, log it
+        if (!$this->online) {
+	    if ($logger = \Service::getContainer()->get('logger')) {
+		$id = $this->getId();
+		$address = $this->getAddress();
+		$reason = $this->info['error'];
 
-    /**
-     * Checks if the server is online (listed on the public list server)
-     * @todo   Fix performance issues (many calls to the list server)
-     * @return self
-     */
-    private function updateOnline()
-    {
-        $online = false;
-        $listServer = Service::getParameter('bzion.miscellaneous.list_server');
-        $servers = file($listServer);
-
-        foreach ($servers as $server) {
-            list($host, $protocol, $hex, $ip, $title) = explode(' ', $server, 5);
-            if ($this->getAddress() == $host) {
-                $online = true;
-            }
+		$logger->notice("Connection to server #$id ($address) failed: $reason");
+	    }
         }
 
-        return $this->updateProperty($this->online, 'online', $online, 'i');
+        return $this;
     }
 
     /**
