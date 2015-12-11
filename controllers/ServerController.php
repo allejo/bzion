@@ -11,6 +11,9 @@ class ServerController extends CRUDController
         return array("servers" => $servers);
     }
 
+    /**
+     * @todo An unstyled page might not be great
+     */
     public function showAction(Server $server, Player $me, Request $request)
     {
         if ($server->staleInfo()) {
@@ -37,5 +40,12 @@ class ServerController extends CRUDController
     public function editAction(Player $me, Server $server)
     {
         return $this->edit($server, $me, "server");
+    }
+
+
+    protected function redirectTo($model)
+    {
+        // Redirect to the server list after creating/editing a server
+        return $this->redirectToList($model);
     }
 }

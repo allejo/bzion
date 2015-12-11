@@ -1,59 +1,28 @@
-{% import _self as serverlist %}
+<header>
+    {% set status = (server.online) ? "online" : "offline" %}
 
-<section class="title">
-    {% set status = "offline" %}
-
-    {% if server.online %}
-        {% set status = "online" %}
-    {% endif %}
-
-    <span class="status {{ status }}" title="Server is currently {{ status }}">&bull;</span>
-    <span class="name">{{ server.name }}</span>
+    <span class="c-servers__server__info__status c-servers__server__info__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
+    <span class="c-servers__server__info__name">{{ server.name }}</span>
     {{ server.country.flagLiteral | raw }}
 
-    <ul>
-        {% if me.canEdit(server) %}
-            <li>
-                <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
-                    <i class="fa fa-refresh"></i>
-                </a>
-            </li>
-            <li>{{ link_to(server, 'pencil', 'edit') }}</li>
-        {% endif %}
+    {% if me.canEdit(server) or me.canDelete(server) %}
+        <ul class="c-servers__server__options is-horizontal has-no-padding">
+            {% if me.canEdit(server) %}
+                <li>
+                    <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </li>
+                <li>{{ link_to(server, 'pencil', 'edit') }}</li>
+            {% endif %}
 
-        {% if me.canDelete(server) %}
-            <li>{{ link_to(server, 'minus', 'delete') }}</li>
-        {% endif %}
-    </ul>
-</section>
-
-<p class="address">{{ server.address }}</p>
-<p class="playerCount">Player count: {{ server.numPlayers }}</p>
-
-{% if server.players is not empty %}
-    <ul class="players">
-        {% for player in server.players %}
-            <li>{{ player.sign ~ " " ~ serverlist.team(player) | trim }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-<small>Updated {{ server.lastUpdate | humanTime }}</small>
-
-{% macro team(player) %}
-    {% set team = player.team %}
-
-    {% if team == 0 %}
-        (Rogue)
-    {% elseif team == 1 %}
-        (Red)
-    {% elseif team == 2 %}
-        (Green)
-    {% elseif team == 3 %}
-        (Blue)
-    {% elseif team == 4 %}
-        (Purple)
-    {% elseif team == 5 %}
-        (Observer)
+            {% if me.canDelete(server) %}
+                <li>{{ link_to(server, 'minus', 'delete') }}</li>
+            {% endif %}
+        </ul>
     {% endif %}
-{% endmacro %}
+</header>
+
+<p class="c-servers__server__info__address">{{ server.address }}</p>
+<p class="c-servers__server__info__playerCount">Player count: {{ server.numPlayers }}</p>
+<small class="c-servers__server__info__updated">Updated {{ server.lastUpdate | humanTime }}</small>

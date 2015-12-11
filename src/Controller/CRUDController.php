@@ -188,7 +188,7 @@ abstract class CRUDController extends JSONController
      * @param  ModelInterface $model The model to redirect to
      * @return Response
      */
-    private function redirectTo($model)
+    protected function redirectTo($model)
     {
         if ($model instanceof UrlModel) {
             return new RedirectResponse($model->getUrl());

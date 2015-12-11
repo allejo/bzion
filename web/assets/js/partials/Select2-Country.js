@@ -15,6 +15,10 @@ function formatCountry(country) {
 }
 
 $(document).ready(function() {
+    if (!$.fn.select2) {
+        return;
+    }
+
     $(".js-select__country").select2({
         templateResult: formatCountry,
         templateSelection: formatCountry

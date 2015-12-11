@@ -15,6 +15,10 @@ function formatRole(role) {
 }
 
 $(document).ready(function() {
+    if (!$.fn.select2) {
+        return;
+    }
+
     $(".js-select__role").select2({
         templateResult: formatRole,
         templateSelection: formatRole,
