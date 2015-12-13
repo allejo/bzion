@@ -62,8 +62,7 @@ header {
             }
 
             h1 {
-                @include flex(initial);
-
+                flex: initial;
                 margin-right: 15px;
                 width: auto;
 
@@ -191,10 +190,10 @@ header {
 
         // The notification that will appear on the header for status of requests
         .notification {
-            @include border-bottom-radius(5px);
-
             background-color: $Color-White;
             border: 2px solid $Color-Black;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
             border-top: none;
             display: none;
             left: 25em;

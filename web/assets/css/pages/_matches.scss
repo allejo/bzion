@@ -41,7 +41,7 @@ $score_padding_small: 10px;
         }
 
         @include element('image', 'name', 'score') {
-            @include display(flex);
+            display: flex;
 
             img,
             p {
