@@ -14,6 +14,7 @@
 @import 'partials/themes';
 @import 'vendor/insert-nth';
 @import 'vendor/map-reverse';
+@import 'vendor/include-media/dist/include-media';
 @import 'modules/bem-utilities';
 @import 'modules/mobile-responsive';
 @import 'modules/grid';
@@ -30,10 +31,10 @@
 //    (everything that wasn't written by us)
 //
 
-@import 'vendor/text-inputs';
 @import 'vendor/OnTheRocks/src/rocks';
 @import 'vendor/flags';
 @import 'vendor/loaders';
+@import 'vendor/text-inputs';
 
 
 //

@@ -79,23 +79,13 @@ $Table-Cell_Padding_Condensed: 5px;
 $Font-Sans_Serif: 'Lato', sans-serif;
 $Font-Serif: 'Merriweather', serif;
 
-// Breakpoints
+// Mobile-first Breakpoints
 $breakpoints: (
-    xs:  480px,  // phones
-    sm:  768px,  // phablets
-    md:  992px,  // tablets
-    lg:  1200px, // desktops
-    xl:  1600px, // x-large
-    xxl: 1920px  // xx-large
+    xs: 0,
+    sm: 480px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1600px,
+    xxxl: 1920px
 );
-
-// Mobile-first move
-//$breakpoints: (
-//    xs: 0,
-//    sm: 480px,
-//    md: 768px,
-//    lg: 992px,
-//    xl: 1200px,
-//    xxl: 1600px,
-//    xxxl: 1920px
-//);

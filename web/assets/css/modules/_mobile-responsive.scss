@@ -129,36 +129,13 @@
     }
 }
 
-
-/// Have the specified content inside of the mixin respond to a specific view size. Because
-/// BZiON is "desktop first," all of the applied styles will also be applied to smaller views.
-///
-/// @content
-///
-/// @param {Viewsize} $media
-///   The Viewsize (and smaller) that will have the specified CSS rules applied to
-///
-/// @example scss - Usage
-///   @include respond-to(sm) {
-///       .phablet-and-smaller {
-///           display: block;
-///       }
-///   }
-///
-/// @example css - CSS Output
-///   @media only screen and (max-width: 768px) {
-///       .phablet-and-smaller {
-///           display: block;
-///       }
-///   }
-
-@mixin respond-to($media) {
-    @include valid-viewsize($media);
-
-    @if map-has-key(map-remove($breakpoints, xxl), $media) {
-        @include media-size(0, get-min-size($media)) { @content; }
+@mixin respond-to($viewSize) {
+    @if map-get($breakpoints, $viewSize) == 0 {
+        @content;
     }
     @else {
-        @content;
+        @include media(">=" + $viewSize) {
+            @content;
+        }
     }
 }
