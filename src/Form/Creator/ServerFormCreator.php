@@ -30,10 +30,13 @@ class ServerFormCreator extends ModelFormCreator
                     )),
                 ),
             ))
-            ->add('port', 'integer', array(
-                'constraints' => new NotBlank(),
-                'data'        => 5154
-            ))
+            ->add(
+                $builder->create('port', 'integer', array(
+                    'constraints' => new NotBlank(),
+                    'data'        => 5154
+                ))->setDataLocked(false) // Don't lock the data so we can change
+                                         // the default value later if needed
+            )
             ->add('name', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
