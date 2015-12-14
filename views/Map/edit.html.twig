@@ -1,0 +1,11 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Map :: {{ map.name }} :: Edit{% endblock %}
+
+{% block content %}
+    {% include "Map/form.html.twig" with {
+        'pageTitle': 'Editing :: ' ~ map.name,
+        'avatar': map.avatar,
+        'form': form }
+    %}
+{% endblock %}

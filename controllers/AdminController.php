@@ -27,7 +27,7 @@ class AdminController extends HTMLController
 
     public function wipeAction(Player $me)
     {
-        $wipeable = array('Ban', 'Match', 'News', 'NewsCategory', 'Page', 'Server', 'Team');
+        $wipeable = array('Ban', 'Map', 'Match', 'News', 'NewsCategory', 'Page', 'Server', 'Team');
         $models   = array();
 
         foreach ($wipeable as $type) {

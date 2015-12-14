@@ -77,15 +77,32 @@ $fradis->addMember($alezakos->getId());
 $reptitles->addMember($brad->getId());
 echo " done!";
 
+echo "\nAdding maps...";
+$six = Map::addMap("Six", "six", "six is the best map ever");
+$monocati = Map::addMap("Monocati", "monocati", "a single map");
+$toast = Map::addMap("Toast", null, <<<TOAST
+Toast is a very old map with **deterministic** outcome. A *true* map for *true* masters.
+
+#### Choice
+Toast has been the **map of choice** for many of the league's players and teams, including
+but not limited to LakeWeakness, Fractious Disinclination and Former Gratification. The map
+has been providing inspiration and will be providing inspiration for years to come, sparking
+interesting matches, clever matching techniques, and even spin-offs of a similar style.
+However, match goers have remained attached to toast's simple yet powerful layout, taking
+advantage of all the improbable possibilities, bringing enjoyment to all kinds of BZFlag
+players around the globe.
+TOAST
+);
+
 echo "\nAdding matches...";
-Match::enterMatch($reptitles->getId(), $gsepar->getId(), 1, 9000, 17, $kierra->getId());
-Match::enterMatch($olfm->getId(), $lweak->getId(), 0, 0, 20, $blast->getId());
-Match::enterMatch($fflood->getId(), $lweak->getId(), 1, 15, 20, $autoreport->getId());
-Match::enterMatch($gsepar->getId(), $fradis->getId(), 8, 23, 30, $kierra->getId());
+Match::enterMatch($reptitles->getId(), $gsepar->getId(), 1, 9000, 17, $kierra->getId(), "now", [], [], null, null, null, $six->getId());
+Match::enterMatch($olfm->getId(), $lweak->getId(), 0, 0, 20, $blast->getId(), "now", [], [], null, null, null, $toast->getId());
+Match::enterMatch($fflood->getId(), $lweak->getId(), 1, 15, 20, $autoreport->getId(), "now", [], [], null, null, null, $six->getId());
+Match::enterMatch($gsepar->getId(), $fradis->getId(), 8, 23, 30, $kierra->getId(), "now", [], [], null, null, null, $toast->getId());
 Match::enterMatch($olfm->getId(), $lweak->getId(), 5, 4, 20, $kierra->getId());
-Match::enterMatch($reptitles->getId(), $gsepar->getId(), 1, 1500, 20, $autoreport->getId());
-Match::enterMatch($olfm->getId(), $lweak->getId(), 1, 1, 30, $autoreport->getId());
-Match::enterMatch($fradis->getId(), $gsepar->getId(), 1, 2, 20, $kierra->getId());
+Match::enterMatch($reptitles->getId(), $gsepar->getId(), 1, 1500, 20, $autoreport->getId(), "now", [], [], null, null, null, $monocati->getId());
+Match::enterMatch($olfm->getId(), $lweak->getId(), 1, 1, 30, $autoreport->getId(), "now", [], [], null, null, null, $monocati->getId());
+Match::enterMatch($fradis->getId(), $gsepar->getId(), 1, 2, 20, $kierra->getId(), "now", [], [], null, null, null, $monocati->getId());
 echo " done!";
 
 echo "\nUpdating teams...";
@@ -95,7 +112,7 @@ $fradis->update("activity", 3.14159265358979323846, "d");
 echo " done!";
 
 echo "\nAdding servers...";
-Server::addServer("BZPro Public HiX FFA", "bzpro.net", 5154, 227, $tw1sted->getId());
+Server::addServer("Wingfights Fountains", "helit.tech", 5154, 151, $alezakos->getId());
 Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net", 5155, 227, $tw1sted->getId());
 echo " done!";
 

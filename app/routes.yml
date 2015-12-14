@@ -58,6 +58,26 @@ logout:
     path:     /logout
     defaults: { _controller: 'Login', _action: 'logout', _noMaint: true }
 
+map_list:
+    path:     /maps/
+    defaults: { _controller: 'Map', _action: 'list' }
+
+map_add:
+    path:     /maps/new
+    defaults: { _controller: 'Map', _action: 'create' }
+
+map_show:
+    path:     /maps/{map}
+    defaults: { _controller: 'Map', _action: 'list' }
+
+map_edit:
+    path:     /maps/{map}/edit
+    defaults: { _controller: 'Map', _action: 'edit' }
+
+map_delete:
+    path:     /maps/{map}/delete
+    defaults: { _controller: 'Map', _action: 'delete' }
+
 match_list:
     path:     /matches
     defaults: { _controller: 'Match', _action: 'list' }

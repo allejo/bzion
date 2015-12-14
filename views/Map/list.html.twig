@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': path('map_add'),
+        'icon': 'plus',
+        'text': 'Add New',
+        'condition': me.canCreate("Map")
+    }
+] %}
+
+{% block title %}Maps{% endblock %}
+
+{% block content %}
+    {# TODO: Style this page #}
+
+    <main class="c-page s-team">
+        <section class="c-page__header">
+            <div class="c-page__header__container">
+                <section class="c-page__header__container__title">
+                    <h1>League Maps</h1>
+                </section>
+
+                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+            </div>
+        </section>
+
+        <section class="o-container">
+            {% for map in maps %}
+                <article class="o-section c-team-widget">
+                    {% if map.avatar is not null %}
+                        <img class="c-map__icon" src="{{ map.avatar | imagine_filter('large_thumb') }}">
+                    {% endif %}
+
+                    <section class="c-team-widget__info">
+                        <article class="c-team-widget__info__header">
+                            <section class="c-team-widget__info__header__summary">
+                                <span class="c-team-widget__info__header__summary__name">{{ map.name }}</span>
+                            </section>
+                        </article>
+
+                        <article class="c-team-widget__info__meta">
+                            {{ map.description|markdown }}
+                        </article>
+
+
+                    </section>
+
+                    <article class="c-team-widget__info__meta">
+                        {% if me.canEdit(map) %}
+                            <span><i class="fa fa-wrench"></i> {{ map.alias }}</span>
+                            <span>{{ link_to(map, content='Edit', icon='pencil', action='edit') }}</span>
+                        {% endif %}
+                        {% if me.canDelete(map) %}
+                            <span>{{ link_to(map, content='Delete', icon='trash-o', action='delete') }}</span>
+                        {% endif %}
+                    </article>
+                </article>
+
+                {% if not loop.last %}
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
+{% endblock %}

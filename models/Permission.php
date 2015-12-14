@@ -13,6 +13,7 @@
 class Permission extends Model
 {
     const ADD_BAN            = "add_ban";
+    const ADD_MAP            = "add_map";
     const ADD_SERVER         = "add_server";
     const CREATE_NEWS        = "add_news";
     const CREATE_PAGE        = "add_page";
@@ -20,6 +21,7 @@ class Permission extends Model
     const CREATE_TEAM        = "add_team";
     const CREATE_USER        = "add_user";
     const EDIT_BAN           = "edit_ban";
+    const EDIT_MAP           = "edit_map";
     const EDIT_MATCH         = "edit_match";
     const EDIT_NEWS          = "edit_news";
     const EDIT_PAGE          = "edit_page";
@@ -29,6 +31,7 @@ class Permission extends Model
     const EDIT_USER          = "edit_user";
     const ENTER_MATCH        = "add_match";
     const HARD_DELETE_BAN    = "wipe_ban";
+    const HARD_DELETE_MAP    = "wipe_map";
     const HARD_DELETE_MATCH  = "wipe_match";
     const HARD_DELETE_NEWS   = "wipe_news";
     const HARD_DELETE_PAGE   = "wipe_page";
@@ -41,6 +44,7 @@ class Permission extends Model
     const SEND_PRIVATE_MSG   = "send_pm";
     const SOFT_DELETE_BAN    = "del_ban";
     const SOFT_DELETE_MATCH  = "del_match";
+    const SOFT_DELETE_MAP    = "del_map";
     const SOFT_DELETE_NEWS   = "del_news";
     const SOFT_DELETE_PAGE   = "del_page";
     const SOFT_DELETE_ROLE   = "del_role";

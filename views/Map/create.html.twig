@@ -1,0 +1,10 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Maps :: New Map{% endblock %}
+
+{% block content %}
+    {% include "Map/form.html.twig" with {
+        'pageTitle': 'Create Map',
+        'form': form }
+    %}
+{% endblock %}

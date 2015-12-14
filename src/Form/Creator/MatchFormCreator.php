@@ -9,6 +9,7 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\DatetimeWithTimezoneType;
 use BZIon\Form\Type\MatchTeamType;
+use BZIon\Form\Type\ModelType;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -49,6 +50,9 @@ class MatchFormCreator extends ModelFormCreator
                 ),
                 'data' => \TimeDate::now(\Controller::getMe()->getTimezone())
             ))
+            ->add('map', new ModelType('Map'), array(
+                'required' => false
+            ))
             ->add('enter', 'submit');
     }
 
@@ -79,7 +83,9 @@ class MatchFormCreator extends ModelFormCreator
             $firstPlayers,
             $secondPlayers,
             $serverInfo[0],
-            $serverInfo[1]
+            $serverInfo[1],
+            null,
+            $form->get('map')->getData()->getId()
         );
 
         return $match;

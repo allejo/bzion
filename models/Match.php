@@ -61,10 +61,10 @@ class Match extends PermissionModel implements NamedModel
     protected $team_b_elo_new;
 
     /**
-     * The map name used in the match if the league supports more than one map
-     * @var string
+     * The map ID used in the match if the league supports more than one map
+     * @var int
      */
-    protected $map_played;
+    protected $map;
 
     /**
      * A JSON string of events that happened during a match, such as captures and substitutions
@@ -149,7 +149,7 @@ class Match extends PermissionModel implements NamedModel
         $this->team_b_players = $match['team_b_players'];
         $this->team_a_elo_new = $match['team_a_elo_new'];
         $this->team_b_elo_new = $match['team_b_elo_new'];
-        $this->map_played = $match['map_played'];
+        $this->map = $match['map'];
         $this->match_details = $match['match_details'];
         $this->port = $match['port'];
         $this->server = $match['server'];
@@ -391,12 +391,12 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
-     * Get the name of the map where the match was played on
-     * @return string Returns null if the league doesn't host multiple maps
+     * Get the map where the match was played on
+     * @return Map Returns an invalid map if no map was found
      */
-    public function getMapPlayed()
+    public function getMap()
     {
-        return $this->map_played;
+        return Map::get($this->map);
     }
 
     /**
@@ -519,13 +519,13 @@ class Match extends PermissionModel implements NamedModel
      * @param  string|null     $server     The address of the server where the match was played
      * @param  int|null        $port       The port of the server where the match was played
      * @param  string          $replayFile The name of the replay file of the match
-     * @param  string          $mapPlayed  The name of the map where the map was played, only for rotational leagues
+     * @param  int             $map        The ID of the map where the match was played, only for rotational leagues
      * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch(
         $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now",
         $a_players = array(), $b_players = array(), $server = null, $port = null,
-        $replayFile = null, $mapPlayed = null
+        $replayFile = null, $map = null
     ) {
         $team_a = Team::get($a);
         $team_b = Team::get($b);
@@ -554,7 +554,7 @@ class Match extends PermissionModel implements NamedModel
             'server'         => $server,
             'port'           => $port,
             'replay_file'    => $replayFile,
-            'map_played'     => $mapPlayed,
+            'map'            => $map,
             'status'         => 'entered'
         ), 'iiiissiiisiisisss', 'updated');
 

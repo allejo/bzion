@@ -41,9 +41,9 @@ abstract class AvatarModel extends AliasModel implements NamedModel
             ->info('Generating new identicon for "' . $this->getName() . '" in ' . static::AVATAR_LOCATION . $fileName);
 
         $identicon = new Identicon();
-        $imageDataUri = $identicon->getImageDataUri($idData, 250);
+        $imageData = $identicon->getImageData($idData, 250);
 
-        file_put_contents(DOC_ROOT . static::AVATAR_LOCATION . $fileName, file_get_contents($imageDataUri));
+        file_put_contents(DOC_ROOT . static::AVATAR_LOCATION . $fileName, $imageData);
 
         return static::AVATAR_LOCATION . $fileName;
     }
@@ -74,7 +74,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     public function getAvatar($url = false)
     {
-        if (empty($this->avatar)) {
+        if (empty($this->avatar) && $this->avatar !== null) {
             $this->resetAvatar();
         }
 

@@ -78,7 +78,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      * @param  string $alias The new alias
      * @return void
      */
-    protected function setAlias($alias)
+    public function setAlias($alias)
     {
         $this->updateProperty($this->alias, 'alias', $alias, 's');
     }

@@ -54,6 +54,10 @@ liip_imagine:
             filters:
                 background: ~
                 thumbnail: { size: [500, 500], mode: inset }
+        large_thumb:
+            filters:
+                background: ~
+                thumbnail: { size: [200, 200], mode: inset }
         medium_thumb:
             filters:
                 background: ~
