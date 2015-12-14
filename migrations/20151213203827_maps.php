@@ -6,25 +6,7 @@ use Phinx\Migration\AbstractMigration;
 class Maps extends AbstractMigration
 {
     /**
-     * Change Method.
-     *
-     * Write your reversible migrations using this method.
-     *
-     * More information on writing migrations is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-     *
-     * The following commands can be used in this method and Phinx will
-     * automatically reverse them when rolling back:
-     *
-     *    createTable
-     *    renameTable
-     *    addColumn
-     *    renameColumn
-     *    addIndex
-     *    addForeignKey
-     *
-     * Remember to call "create()" or "update()" and NOT "save()" when working
-     * with the Table class.
+     * {@inheritdoc}
      */
     public function change()
     {
@@ -64,8 +46,6 @@ class Maps extends AbstractMigration
         ];
         $rolePermissions->insert($data)->save();
 
-
-
         $matches = $this->table('matches');
         $matches
             ->addColumn('map', 'integer', array('limit' => 10, 'signed' => false, 'null' => true, 'comment' => 'The map that was played'))
@@ -96,15 +76,22 @@ class Maps extends AbstractMigration
         return $return;
     }
 
-
+    /**
+     * Convert map strings to IDs in the matches table, inserting new maps in the maps table
+     */
     private function updateMatches()
     {
-        $matches = $this->table('matches');
         $maps = $this->table('maps');
+
+        $storedMaps = $this->fetchAll("SELECT DISTINCT(map_played) AS map FROM matches WHERE map_played REGEXP '^[A-Za-z0-9]+$'");
+
+        if (empty($storedMaps)) {
+	    // Prevent fatal error with phinx on older PHP versions
+	    return;
+        }
 
         $insert = array();
 
-        $storedMaps = $this->fetchAll("SELECT DISTINCT(map_played) AS map FROM matches WHERE map_played REGEXP '^[A-Za-z0-9]+$'");
         foreach($storedMaps as $map) {
             $insert[] = [ 'name' => $map[0], 'alias' => null, 'avatar' => null ];
         }
@@ -115,6 +102,7 @@ class Maps extends AbstractMigration
             $name = $map[0];
             // $name contains only alphanumeric characters, meaning there can't be any MySQL injection
             $row = $this->fetchRow("SELECT id FROM maps WHERE name = '$name'");
+            $this->execute("UPDATE matches SET map = {$row['id']} WHERE map_played='$name'");
         }
     }
 }
