@@ -1,133 +1,68 @@
-/// Convenience method to return the maximum size of a view size. A desktop view size will
-/// return 0
-///
-/// @param {String} $media
-///   Accepted view sizes: `phones`, `phablets`, `tablets`
-///
-
-@function get-max-size($size, $bp: $breakpoints) {
-    $bp-names: map-keys($bp);
-    $n: index($bp-names, $size);
-    $size: if($n < length($bp-names), nth($bp-names, $n + 1), null);
-
-    @if $size != null {
-        @return map-get($bp, $size) - 1;
-    }
-
-    @return 0;
-}
-
-
-/// Convenience method to return the minimum size of a view size
-///
-/// @param {String} $media
-///   Accepted view sizes: `phones`, `phablets`, `tablets`
-///
-
-@function get-min-size($size, $bp: $breakpoints) {
-    $value: map-get($bp, $size);
-
-    @if $value != null {
-        @return $value;
-    }
-
-    @return 0;
-}
-
-
-/// A convenience method to test if the provided view size is a supported one
-///
-/// Supported viewsizes: `phones`, `phablets`, `tablets`, `desktops`
-///
-/// @param {Viewsize} $media
-///   The Viewsize that will be checked
-///
-
-@mixin valid-viewsize($media) {
-    @if not map-has-key($breakpoints, $media) {
-        @error "Unknown view size (#{$media}) given to valid-viewsize()";
-    }
-}
-
-
-/// Create a media query that will automatically handle max or min widths. When both $min
-/// and $max are set, both of them will be used and generate a media query with a minimum
-/// and maximum width. This mixin shouldn't be accessed directly but instead should only
-/// be used through one of the convenience mixins that uses this mixin.
-///
-/// @access private
-/// @content
-///
-/// @param {Number [unit]} $min [0]
-///   The minimum width for this media query to consider. When set to 0, a media query
-///   with a max-width will be generated
-///
-/// @param {Number [unit]} $max [0]
-///   The maximum width for this media query to consider. When set to 0, a media query
-///   with a min-width will be generated
-///
-
-@mixin media-size($min: 0, $max: 0) {
-    @if $min == $max {
-        @error "media-size() does not allow $min and $max both be equal to each other."
-    }
-    @else if $min > $max and $max != 0 {
-        @error "media-size() does not allow $min to be greater $max.";
-    }
-    @else if $min < 0 or $max < 0 {
-        @error "media-size() does not allow either $min or $max to be less than 0.";
-    }
-
-    @if $min == 0 and $max != 0 {
-        @media only screen and (max-width: $max) { @content; }
-    }
-    @else if $min != 0 and $max == 0 {
-        @media only screen and (min-width: $min) { @content; }
-    }
-    @else if $min != 0 and $max != 0 {
-        @media only screen and (min-width: $min) and (max-width: $max) { @content; }
-    }
-    @else {
-        @error "media-size() does not allow $min and $max both be 0.";
-    }
-}
-
-
-/// Similar to `respond-to` with the exception that instead of smaller views also inheriting
-/// these CSS rules, only a specific view size will able to see the content. Multiple view
-/// points can be specified and the rules will be applied to each view point
+/// Similar to `respond-to()`, this mixin will restrict the content to only the specified Breakpoint and will not apply
+/// to a larger Breakpoint. This mixin will take Breakpoints with no larger or smaller Breakpoints and handle them
+/// appropriately with an efficient media query.
 ///
 /// @content
 ///
-/// @param {Viewsize} $media
-///   An argument list of Viewsizes that the specified CSS rules will be applied to
+/// @param {Arglist} $media_list - Breakpoints that will be individually targeted
 ///
 /// @example scss - Usage
-///   @include respond-to(sm) {
-///       .phablet-only {
+///   .phablets-only {
+///       @include respond-only-to(sm) {
 ///           display: block;
 ///       }
 ///   }
 ///
 /// @example css - CSS Output
-///   @media only screen and (min-width: 481px) and (max-width: 768px) {
-///       .phablet-only {
+///   @media only screen and (min-width: 480px) and (max-width: 767px) {
+///       .phablets-only {
 ///           display: block;
 ///       }
 ///   }
 
 @mixin respond-only-to($media_list...) {
     @each $media in $media_list {
-        @include valid-viewsize($media);
+        $nextBreakPoint: get-next-key($breakpoints, $media);
 
-        @if get-max-size($media) == 0 {
-            @include media-size(get-min-size($media)) { @content; }
+        @if $nextBreakPoint == null {
+            @include media(">=" + $media) {
+                @content;
+            }
+        }
+        @else if map-get($breakpoints, $media) == 0 {
+            @include media("<" + $nextBreakPoint) {
+                @content;
+            }
         }
         @else {
-            @include media-size(get-min-size($media), get-max-size($media)) { @content; }
+            @include media(">=" + $media, "<" + $nextBreakPoint) {
+                @content;
+            }
         }
     }
 }
+
+
+/// Have the specified content inside of the mixin respond to the specified Breakpoint and larger. BZiON is mobile-first
+/// so everything applied to a phone will be reflected on a desktop.
+///
+/// @content
+///
+/// @param {Breakpoint} $media - The Breakpoint (and larger) that will have the specified CSS rules applied to
+///
+/// @example scss - Usage
+///   .phablet-and-larger {
+///       @include respond-to(sm) {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (min-width: 480px) {
+///       .phablet-and-larger {
+///           display: block;
+///       }
+///   }
 
 @mixin respond-to($viewSize) {
     @if map-get($breakpoints, $viewSize) == 0 {

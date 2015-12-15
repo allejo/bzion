@@ -14,13 +14,13 @@
 @import 'partials/themes';
 @import 'vendor/insert-nth';
 @import 'vendor/map-reverse';
+@import 'modules/utilities';
 @import 'vendor/include-media/dist/include-media';
 @import 'modules/bem-utilities';
 @import 'modules/mobile-responsive';
 @import 'modules/grid';
 @import 'modules/visibility';
 @import 'modules/media-query-setup';
-@import 'modules/utilities';
 @import 'modules/font-awesome-utilities';
 @import 'modules/placeholders';
 @import 'modules/theming';
@@ -29,7 +29,7 @@
 //
 // Vendor
 //    (everything that wasn't written by us)
-//
+//m
 
 @import 'vendor/OnTheRocks/src/rocks';
 @import 'vendor/flags';
