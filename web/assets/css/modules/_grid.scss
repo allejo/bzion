@@ -1,14 +1,7 @@
 /// Creates a flex box container available to specified viewsize and smaller screen sizes that will contain flex children
-///
-/// @param {String} $viewSize Accepted values: xs, sm, md, lg, xl, xxl
-///
-/// @example scss - SCSS Equivalent
-///   @include view-container(lg);
 
-@mixin view-container($viewSize: xxl) {
-    @include respond-to($viewSize) {
-        @include make-container();
-    }
+@mixin view-container() {
+    @include make-container();
 }
 
 /// A mixin specify the amount of columns an element should take up

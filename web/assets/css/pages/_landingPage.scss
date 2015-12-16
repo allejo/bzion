@@ -74,7 +74,7 @@
             @include view-columns(sm, 12);
 
             @include element('matches') {
-                @include view-container(lg);
+                @include view-container();
 
                 margin-top: 15px;
 

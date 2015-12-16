@@ -90,7 +90,7 @@
 
         &.message {
             .details {
-                @include view-container(lg);
+                @include view-container();
 
                 margin-bottom: 5px;
 
