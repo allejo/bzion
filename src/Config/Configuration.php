@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('mysql')
                     ->isRequired()
                     ->children()
-                        ->scalarNode('host')->defaultValue('localhost')->isRequired()->attribute('asked', true)->end()
+                        ->scalarNode('host')->defaultValue('127.0.0.1')->isRequired()->attribute('asked', true)->end()
                         ->scalarNode('database')->defaultValue('bzion')->isRequired()->attribute('asked', true)->end()
                         ->scalarNode('username')->defaultValue('bzion_admin')->isRequired()->attribute('asked', true)->end()
                         ->scalarNode('password')->isRequired()->attribute('asked', true)->end()

@@ -18,7 +18,6 @@ framework:
 twig:
     paths:
         "%kernel.root_dir%/../views": ~
-#        "%kernel.root_dir%/../vendor/symfony/twig-bridge/Resources/views": symfony
     form_themes:
         - form_layout.html.twig
 
