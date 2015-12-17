@@ -21,14 +21,16 @@ class PageFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('name', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
-                        'max' => 32,
-                    )),
-                ),
-                'data' => $this->controller->data->get('name')
-            ))
+            ->add(
+                $builder->create('name', 'text', array(
+                    'constraints' => array(
+                        new NotBlank(), new Length(array(
+                            'max' => 32,
+                        )),
+                    ),
+                    'data' => $this->controller->data->get('name')
+                ))->setDataLocked(false)
+            )
             ->add('content', 'textarea', array(
                 'constraints' => new NotBlank()
             ))
