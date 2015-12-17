@@ -52,6 +52,8 @@ class ProfileController extends HTMLController
                     }
                 }
             }
+
+            $this->getFlashBag()->add("success", "Your profile has been updated.");
         }
 
         return $this->render('Profile/edit.html.twig', array(
