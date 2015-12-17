@@ -152,7 +152,7 @@ class AdvancedModelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $addValidModelConstraint = function ($options, $value) {
-            // A constraint should always be converted to an array
+            // One constraint should always be converted to an array
             $value = is_object($value) ? array($value) : (array) $value;
 
             $value[] = new ValidModel(array(

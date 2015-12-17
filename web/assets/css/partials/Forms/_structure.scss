@@ -164,3 +164,33 @@
         margin-left: 5px;
     }
 }
+
+.c-form__errors {
+    $errorColor: darken($Color-Red, 20%);
+
+    border: 1px solid $errorColor;
+    border-radius: 2px;
+    margin: 20px 0 4px;
+
+    // Red exclamation icon container
+    .c-form__errors__icon {
+        background-color: $errorColor;
+
+        display: flex;
+        align-items: center;
+
+        // Vertically centered exclamation icon
+        i {
+            color: $Color-Almost_White;
+            padding: 5px 15px;
+        }
+    }
+
+    ul {
+        padding: 5px 15px;
+
+        li {
+            list-style: none;
+        }
+    }
+}

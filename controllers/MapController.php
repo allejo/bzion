@@ -32,4 +32,10 @@ class MapController extends CRUDController
     {
         return $this->delete($map, $me);
     }
+
+    protected function redirectTo($model)
+    {
+        // Redirect to the map list after creating/editing a map
+        return $this->redirectToList($model);
+    }
 }

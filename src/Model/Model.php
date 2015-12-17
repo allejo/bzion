@@ -17,6 +17,10 @@ abstract class Model extends CachedModel
      */
     public function __toString()
     {
+        if (!$this->isValid()) {
+            return "";
+        }
+
         return get_class($this) . " #" . $this->getId();
     }
 

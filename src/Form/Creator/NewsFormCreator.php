@@ -22,7 +22,9 @@ class NewsFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('category', new ModelType('NewsCategory'))
+            ->add('category', new ModelType('NewsCategory'), array(
+                'constraints' => new NotBlank()
+            ))
             ->add('subject', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(

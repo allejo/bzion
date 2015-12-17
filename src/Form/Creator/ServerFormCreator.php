@@ -44,7 +44,9 @@ class ServerFormCreator extends ModelFormCreator
                     )),
                 ),
             ))
-            ->add('country', new ModelType('Country'))
+            ->add('country', new ModelType('Country'), array(
+                'constraints' => new NotBlank()
+            ))
             ->add('owner', new AdvancedModelType('Player'), array(
                 'constraints' => new NotBlank()
             ))

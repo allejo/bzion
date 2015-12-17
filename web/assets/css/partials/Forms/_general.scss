@@ -69,6 +69,16 @@ textarea {
             box-shadow: $Form-Box_Shadow_Focus;
             outline: none;
         }
+
+        .c-form__group--error & {
+            background-color: transparentize($Form-Error_Color, 0.98);
+            border-color: $Form-Error_Color;
+            box-shadow: $Form-Box_Shadow_Error;
+
+            &:focus {
+                box-shadow: $Form-Box_Shadow_Error_Focus;
+            }
+        }
     }
 }
 

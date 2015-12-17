@@ -8,6 +8,7 @@
     </section>
 
     {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
+        {{ form_errors(form) }}
         <section class="o-row c-form__section c-form__section--sidebar">
             <article class="o-col--main c-form__section__main">
                 {{ form_row(form.subject, { 'container_attr': { 'class': 'c-form__group' } }) }}

@@ -53,6 +53,16 @@
 {%- endblock datetime_widget -%}
 
 {% block container_attributes -%}
+    {# Add error modifier to highlight invalid inputs #}
+    {%- if (not compound or force_error|default(false)) and not valid -%}
+        {%- set container_attr = container_attr|default([])|merge(
+            {
+                'class': container_attr['class']|default('') ~ ' c-form__group--error'
+            }
+        )
+        -%}
+    {%- endif -%}
+
     {%- for attrname, attrvalue in container_attr -%}
         {%- if attrname in ['placeholder', 'title'] -%}
             {{- attrname }}="{{ attrvalue }}"
@@ -63,3 +73,18 @@
         {%- endif -%}
     {%- endfor -%}
 {%- endblock container_attributes %}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <section class="c-form__errors o-row">
+            <aside class="c-form__errors__icon">
+                <i class="fa fa-exclamation-circle"></i>
+            </aside>
+            <ul>
+                {%- for error in errors -%}
+                    <li>{{ error.message }}</li>
+                {%- endfor -%}
+            </ul>
+        </section>
+    {%- endif -%}
+{%- endblock form_errors -%}

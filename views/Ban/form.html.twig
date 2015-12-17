@@ -8,6 +8,7 @@
     </section>
 
     {{ form_start(form, {'attr': {'class': 'c-form o-container'}}) }}
+        {{ form_errors(form) }}
         <section class="o-row c-form__section">
             <div class="o-col--third">
                 {{ form_row(form.player, { 'attr': { 'class': 'c-form__group' } }) }}

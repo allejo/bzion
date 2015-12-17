@@ -62,11 +62,14 @@ $Alert-Neutral-Border: darken(adjust-hue($Alert-Neutral-Background, -10), 5%);
 
 // Form Settings
 $Form-Action_Color: $Color-Sky_Blue;
+$Form-Error_Color: desaturate($Color-Red, 60%);
 $Form-Base_Background_Color: $Color-White;
 $Form-Border_Color: #DDDDDD;
 $Form-Border_Radius: 3px;
 $Form-Box_Shadow: inset 0 1px 3px rgba($Color-Black, 0.06);
+$Form-Box_Shadow_Error: inset 0 0 7px rgba($Form-Error_Color, 0.3);
 $Form-Box_Shadow_Focus: $Form-Box_Shadow, 0 0 5px adjust-color($Form-Action_Color, $lightness: -5%, $alpha: -0.3);
+$Form-Box_Shadow_Error_Focus: $Form-Box_Shadow_Error, 0 0 5px adjust-color($Form-Error_Color, $lightness: -5%, $alpha: -0.3);
 $Form-Spacing: 1.5em;
 $Form-Small_Spacing: $Form-Spacing / 2;
 

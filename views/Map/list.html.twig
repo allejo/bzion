@@ -49,7 +49,7 @@
 
                     <article class="c-team-widget__info__meta">
                         {% if me.canEdit(map) %}
-                            <span><i class="fa fa-wrench"></i> {{ map.alias }}</span>
+                            <span><i title="Alias" class="fa fa-wrench"></i> {{ map.alias }}</span>
                             <span>{{ link_to(map, content='Edit', icon='pencil', action='edit') }}</span>
                         {% endif %}
                         {% if me.canDelete(map) %}

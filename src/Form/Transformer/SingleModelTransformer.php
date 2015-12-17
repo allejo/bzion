@@ -21,14 +21,14 @@ class SingleModelTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms an object (model) to an integer (int) .
+     * Transforms an object (model) to an integer (int).
      *
      * @param  Model|null $model
      * @return int
      */
     public function transform($model)
     {
-        if (null === $model) {
+        if (empty($model)) {
             return 0;
         }
 
@@ -45,15 +45,12 @@ class SingleModelTransformer implements DataTransformerInterface
     public function reverseTransform($id)
     {
         $id = (int) $id;
+
         $type = $this->type;
 
+        // We don't need to check for the validity of the model, since Symfony
+        // already checks if it's a member of the list we provided
         $model = $type::get($id);
-
-        if (!$model->isValid()) {
-            throw new TransformationFailedException(
-                "A $type with ID \"$id\" does not exist"
-            );
-        }
 
         return $model;
     }

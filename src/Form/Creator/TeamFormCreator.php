@@ -50,7 +50,9 @@ class TeamFormCreator extends ModelFormCreator
             $builder->add('leader', new ModelType('Player', false, function ($query) use ($team) {
                 // Only list players belonging in that team
                 return $query->where('team')->is($team);
-            }));
+            }), array(
+                'constraints' => new NotBlank()
+            ));
         }
 
         return $builder->add('status', 'choice', array(
