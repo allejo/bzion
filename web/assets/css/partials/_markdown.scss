@@ -2,14 +2,30 @@
 // HTML elements different from the rest of the website.
 //
 // e.g. Not have a markdown parsed H1 be the same size as an H1 used in a page header
+
+%markdown-spacing {
+    margin: {
+        bottom: $Settings-Page_Section-Small_Margin;
+        top: $Settings_Page_Section-Small_Margin;
+    }
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
 @include scope('markdown') {
     overflow-x: auto;
 
     h1, h2, h3,
     h4, h5, h6 {
-        &:first-child {
-            margin-top: 0;
-        }
+        @extend %markdown-spacing;
+
+        font-weight: bold;
     }
 
     h1,
@@ -18,34 +34,12 @@
         padding-bottom: 10px;
     }
 
-    h1,
-    h2,
-    h3 {
-        margin: {
-            bottom: $Settings-Page_Section-Small_Margin;
-            top: $Settings_Page_Section-Small_Margin;
-        }
-    }
-
-    h4,
-    h5,
-    h6,
-    p {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
     h1 {
         font-size: 22px;
-        font-weight: bold;
     }
 
     h2 {
         font-size: 20px;
-        font-weight: bold;
     }
 
     h3 {
@@ -68,5 +62,9 @@
             top: 10px;
         }
         max-width: 100%;
+    }
+
+    p {
+        @extend %markdown-spacing;
     }
 }
