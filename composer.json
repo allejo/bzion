@@ -21,6 +21,7 @@
         "select2/select2"            : "dev-master",
         "sensio/framework-extra-bundle": "~3.0",
         "symfony/icu"                : "1.0.*",
+        "symfony/monolog-bundle"     : "~2.8",
         "symfony/symfony"            : "~2.8",
         "symfony/swiftmailer-bundle" : ">=2.3.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
@@ -77,6 +78,7 @@
     },
     "autoload": {
         "classmap" : [
+            "app/AppKernel.php",
             "models/",
             "controllers/",
             "src/Controller",
@@ -88,7 +90,6 @@
             "src/TimeDate.php"
         ],
         "psr-4"    : {
-            "": "app/",
             "BZIon\\": "src/"
         }
     },
