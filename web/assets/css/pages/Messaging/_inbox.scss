@@ -4,6 +4,11 @@
     .c-page__header {
         margin-bottom: 0;
     }
+
+    // Our messaging system will be "full screen" so it'll take up all the extra spacing on the edges
+    .o-container {
+        padding: 0;
+    }
 }
 
 .c-messages {
@@ -17,6 +22,13 @@
     padding: {
         bottom: 5px;
         top: 5px;
+    }
+
+    @include respond-to(md) {
+        padding: {
+            left: 10px;
+            right: 10px;
+        }
     }
 }
 
@@ -35,15 +47,15 @@
     }
 }
 
-.c-messages__inbox {
+.c-conversations {
 
 }
 
-.c-messages__inbox__message {
+.c-conversation {
     border-bottom: $Border-Default;
     color: $Color-Black;
     display: block;
-    padding: $Settings-Page_Section-Small_Margin;
+    padding: 20px;
 
     &:hover {
         background-color: $Color-Blue_Grey
@@ -54,27 +66,70 @@
     }
 }
 
-.c-messages__inbox__message__meta {
+.c-conversation__meta {
     display: flex;
 }
 
-.c-messages__inbox__message__meta__subject {
+.c-conversation__subject {
+    color: $Color-Black;
     flex: 1;
     font-size: 20px;
     font-weight: bold;
 }
 
-.c-messages__inbox__message__meta__timestamp {
+.c-conversation__timestamp {
     color: $Color-Medium_Grey;
     font-size: 14px;
+
+    .human-date {
+        @include respond-to(sm) {
+            display: none;
+        }
+    }
+
+    .short-date {
+        display: none;
+
+        @include respond-to(sm) {
+            display: inline-block;
+        }
+    }
 }
 
-.c-messages__inbox__message__members {
+.c-conversation__members {
     color: $Color-Medium_Grey;
     font-size: 14px;
-    font-style: italic;
+
+    .always-show {
+        display: inline;
+    }
+
+    .summed-view {
+        @extend .c-alert;
+        @extend .c-alert--info;
+
+        border-radius: 3px;
+        font-size: 12px;
+        font-style: normal;
+        margin-top: 5px;
+        padding: 0 3px;
+        display: none;
+
+        @include respond-to(sm) {
+            display: inline-block;
+        }
+    }
+
+    .extend-view {
+        display: inline-block;
+
+        @include respond-to(sm) {
+            display: none;
+        }
+    }
 }
 
-.c-messages__inbox__message__latest-message {
+.c-conversation__latest-message {
+    color: $Color-Medium_Grey;
     margin-top: 10px;
 }

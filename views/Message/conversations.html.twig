@@ -1,25 +1,46 @@
-<section class="{{ customClass }} c-messages__inbox">
+{% import _self as self %}
+
+{% macro listMembers(members) %}
+    {%- for member in members -%}
+        {%- set next  = members[loop.index0 + 1] -%} {# The next item in the loop #}
+        {%- set after = members[loop.index0 + 2] -%} {# The next next item in the loop #}
+
+        {# We don't want to output or own names #}
+        {%- if member.name != me.name -%}
+            {{- member.name -}}
+
+            {%- if not loop.last and (next.name != me.name or after is not null) -%}
+                {{- ', ' -}}
+            {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+{% endmacro %}
+
+<section class="{{ customClass }} c-conversations">
     {% for conversation in conversations %}
-        <a class="c-messages__inbox__message" data-id="{{ conversation.id }}" href="{{ conversation.url }}">
-            <section class="c-messages__inbox__message__meta">
-                <p class="c-messages__inbox__message__meta__subject">{{ conversation.subject }}</p>
-                <p class="c-messages__inbox__message__meta__timestamp">{{ conversation.lastActivity | humanTime(tooltip = false) }}</p>
+        <a class="c-conversation" data-id="{{ conversation.id }}" href="{{ conversation.url }}">
+            <section class="c-conversation__meta">
+                <p class="c-conversation__subject">{{ conversation.subject }}</p>
+                <p class="c-conversation__timestamp">
+                    <span class="human-date">{{ conversation.lastActivity | humanTime(tooltip = false) }}</span>
+                    <span class="short-date">{{ conversation.lastActivity | date(constant("TimeDate::DATE_SHORT")) }}</span>
+                </p>
             </section>
 
-            <p class="c-messages__inbox__message__members">
-                {% if conversation.members is not empty %}
-                    {% for member in conversation.members %}
-                        {{- member.name -}}
-                        {%- if not loop.last -%}
-                            {{- ', ' -}}
-                        {%- endif -%}
-                    {% endfor %}
-                {% else %}
-                    No other recipients
-                {% endif %}
+            <p class="c-conversation__members">
+                {% set members = conversation.members %}
+
+                {%- if members|length == 2 -%}
+                    <span class="always-view">{{ self.listMembers(members) }}</span>
+                {%- elseif members|length > 2 -%}
+                    <span class="summed-view">{{ members | length }} participants</span>
+                    <span class="extend-view">{{ self.listMembers(members) }}</span>
+                {%- else -%}
+                    <span class="always-view">No other recipients</span>
+                {%- endif -%}
             </p>
 
-            <article class="c-messages__inbox__message__latest-message">
+            <article class="c-conversation__latest-message">
                 {% set lastmessage = conversation.lastmessage %}
                 {% if lastmessage is valid %}
                     <strong>{{ lastmessage.author.username }}:</strong>
