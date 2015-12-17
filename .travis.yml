@@ -33,5 +33,6 @@ cache:
   - vendor
 
 notifications:
+  email: false
   webhooks:
     - http://helit.tech:8093/+sujevo-dev/showSuccessfulBuildMessages=always
