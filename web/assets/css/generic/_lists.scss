@@ -32,7 +32,8 @@ ul {
     }
 
     li {
-        &:not(.select2-selection__choice, .select2-search--inline) {
+        &:not(.select2-search--inline),
+        &:not(.select2-selection__choice) {
             list-style-type: circle;
         }
     }
