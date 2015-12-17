@@ -13,20 +13,44 @@
     }
 }
 
+%alert-success {
+    @include make-alert($Alert-Success-Background, $Alert-Success-Border, $Alert-Success-Text);
+}
+
+%alert-informational {
+    @include make-alert($Alert-Informational-Background, $Alert-Informational-Border, $Alert-Informational-Text);
+}
+
+%alert-warning {
+    @include make-alert($Alert-Warning-Background, $Alert-Warning-Border, $Alert-Warning-Text);
+}
+
+%alert-danger {
+    @include make-alert($Alert-Danger-Background, $Alert-Danger-Border, $Alert-Danger-Text);
+}
+
+%alert-neutral {
+    @include make-alert($Alert-Neutral-Background, $Alert-Neutral-Border, $Alert-Neutral-Text);
+}
+
 @include component('alert') {
     @include modifier('success') {
-        @include make-alert($Alert-Success-Background, $Alert-Success-Border, $Alert-Success-Text);
+        @extend %alert-success;
     }
 
     @include modifier('info') {
-        @include make-alert($Alert-Informational-Background, $Alert-Informational-Border, $Alert-Informational-Text);
+        @extend %alert-informational;
     }
 
     @include modifier('warning') {
-        @include make-alert($Alert-Warning-Background, $Alert-Warning-Border, $Alert-Warning-Text);
+        @extend %alert-warning;
     }
 
     @include modifier('danger') {
-        @include make-alert($Alert-Danger-Background, $Alert-Danger-Border, $Alert-Danger-Text);
+        @extend %alert-danger;
+    }
+
+    @include modifier('neutral') {
+        @extend %alert-neutral;
     }
 }

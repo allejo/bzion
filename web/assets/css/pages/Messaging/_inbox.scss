@@ -105,10 +105,11 @@
     }
 
     .summed-view {
-        @extend .c-alert;
-        @extend .c-alert--info;
+        @extend %alert-neutral;
 
         border-radius: 3px;
+        border-style: solid;
+        border-width: 1px;
         font-size: 12px;
         font-style: normal;
         margin-top: 5px;

@@ -56,6 +56,10 @@ $Alert-Danger-Background: #F2DEDE;
 $Alert-Danger-Text: #A94442;
 $Alert-Danger-Border: darken(adjust-hue($Alert-Danger-Background, -10), 5%);
 
+$Alert-Neutral-Background: #f2f2f2;
+$Alert-Neutral-Text: #a9a9a9;
+$Alert-Neutral-Border: darken(adjust-hue($Alert-Neutral-Background, -10), 5%);
+
 // Form Settings
 $Form-Action_Color: $Color-Sky_Blue;
 $Form-Base_Background_Color: $Color-White;
