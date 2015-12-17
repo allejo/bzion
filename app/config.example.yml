@@ -1,6 +1,6 @@
 bzion:
     mysql:
-        host: 127.0.0.1
+        host: localhost
         database: bzion
         username: bzion_admin
         password: password

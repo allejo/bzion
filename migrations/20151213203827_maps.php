@@ -15,7 +15,7 @@ class Maps extends AbstractMigration
             ->addColumn('name', 'string', array('limit' => 42, 'null' => false, 'comment' => 'The name of the map'))
             ->addColumn('alias', 'string', array('limit' => 42, 'null' => true, 'comment' => 'The alias of the map'))
             ->addColumn('avatar', 'string', array('limit' => 200, 'null' => true, 'comment' => 'The path to the map\'s image'))
-            ->addColumn('description', 'text', array('null' => false, 'default' => '', 'comment' => 'A description of the map'))
+            ->addColumn('description', 'text', array('null' => false, 'comment' => 'A description of the map'))
             ->addColumn('status', 'set', array('values' => array('active', 'hidden', 'disabled', 'deleted'), 'null' => false,
                 'default' => 'active', 'comment' => 'The status of the map'))
             ->addIndex('alias', array('unique' => true))

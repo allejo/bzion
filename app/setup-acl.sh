@@ -14,6 +14,6 @@ else
         sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX $FOLDERS
         sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX $FOLDERS
     else
-        echo "You're missing ACL on your system. Install the `acl` package respectively with apt-get or yum."
+        echo "You're missing ACL on your system. Install the \`acl\` package respectively with apt-get or yum."
     fi
 fi
