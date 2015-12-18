@@ -183,7 +183,7 @@ class LeagueOverseerHookController extends PlainTextController
             throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match.");
         }
 
-        if ($teamOne->getId() == $teamTwo->getId()) {
+        if ($teamOne->isSameAs($teamTwo)) {
             $log->addNotice("The '" . $teamOne->getName() . "' team played against each other in an official match. Match invalidated.");
             throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
         }

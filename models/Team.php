@@ -421,7 +421,7 @@ class Team extends AvatarModel
     {
         $player = Player::get($playerID);
 
-        return ($player->getTeam()->getId() == $this->getId());
+        return ($player->getTeam()->isSameAs($this));
     }
 
     /**
@@ -610,6 +610,6 @@ class Team extends AvatarModel
      */
     protected function isEditor($player)
     {
-        return $player->getId() == $this->getLeader()->getId();
+        return $player->isSameAs($this->getLeader());
     }
 }

@@ -77,7 +77,7 @@ class TeamController extends CRUDController
     {
         $this->assertCanEdit($me, $team, "You are not allowed to kick a player off that team!");
 
-        if ($team->getLeader()->getId() == $player->getId()) {
+        if ($team->getLeader()->isSameAs($player)) {
             throw new ForbiddenException("You can't kick the leader off their team.");
         }
 
@@ -101,7 +101,7 @@ class TeamController extends CRUDController
             throw new ForbiddenException("You are not a member of that team!");
         }
 
-        if ($team->getLeader()->getId() == $me->getId()) {
+        if ($team->getLeader()->isSameAs($me)) {
             throw new ForbiddenException("You can't abandon the team you are leading.");
         }
 
@@ -120,7 +120,7 @@ class TeamController extends CRUDController
 
         if (!$team->isMember($player->getId())) {
             throw new ForbiddenException("The specified player is not a member of {$team->getName()}");
-        } elseif ($team->getLeader()->getId() == $player->getId()) {
+        } elseif ($team->getLeader()->isSameAs($player)) {
             throw new ForbiddenException("{$player->getUsername()} is already the leader of {$team->getName()}");
         }
 

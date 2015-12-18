@@ -122,7 +122,7 @@ class MessageController extends JSONController
     {
         if (!$conversation->isMember($me)) {
             throw new ForbiddenException("You are not a member of this discussion.");
-        } elseif ($conversation->getCreator()->getId() == $me->getId()) {
+        } elseif ($conversation->getCreator()->isSameAs($me)) {
             throw new ForbiddenException("You can't abandon the conversation you started!");
         }
 

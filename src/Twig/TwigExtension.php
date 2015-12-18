@@ -49,4 +49,15 @@ class TwigExtension extends \Twig_Extension
     {
         return 'bzion_extension';
     }
+
+    public function getOperators()
+    {
+        return array(
+            array(),
+            array(
+                '~~'  => array('precedence' => 20, 'class' => '\BZIon\Twig\ModelEqualityOperator', 'associativity' => \Twig_ExpressionParser::OPERATOR_LEFT),
+                '~/~' => array('precedence' => 20, 'class' => '\BZIon\Twig\ModelInequalityOperator', 'associativity' => \Twig_ExpressionParser::OPERATOR_LEFT),
+            ),
+        );
+    }
 }

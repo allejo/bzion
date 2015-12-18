@@ -69,7 +69,7 @@ class MatchController extends CRUDController
             return;
         }
 
-        if ($firstTeam->getId() == $secondTeam->getId()) {
+        if ($firstTeam->isSameAs($secondTeam)) {
             $message = "You can't report a match where a team played against itself!";
             $form->addError(new FormError($message));
         }

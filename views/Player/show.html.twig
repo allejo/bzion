@@ -6,14 +6,14 @@
         url: me.team.url('invite', false, { player: player.id }),
         icon: 'plus',
         text: 'Invite to team',
-        condition: me.isValid and not me.isTeamless and me.team.leader.id == me.id
+        condition: me.isValid and not me.isTeamless and me.team.leader ~~ me
     },
     {
         color: 'blue',
         url: path('message_compose', { recipients: 'player:' ~ player.id }),
         icon: 'send',
         text: 'Send Message',
-        condition: me.id != player.id and me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+        condition: me ~/~ player and me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     },
     {
         color: 'blue',
@@ -27,7 +27,7 @@
         url: path('profile_edit'),
         icon: 'edit',
         text: 'Edit Profile',
-        condition: me.id == player.id
+        condition: me ~~ player
     },
     {
         color: 'red',
@@ -72,7 +72,7 @@
 
                 <section class="o-col--main c-public-profile__details">
                     <p>
-                        {% if player.id == player.team.leader.id %}
+                        {% if player ~~ player.team.leader %}
                             <strong>Leader of</strong> {{ link_to(player.team) }}
                         {% else %}
                             <strong>Affiliated with</strong>

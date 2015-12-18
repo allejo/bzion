@@ -17,10 +17,6 @@ abstract class Model extends CachedModel
      */
     public function __toString()
     {
-        if (!$this->isValid()) {
-            return "";
-        }
-
         return get_class($this) . " #" . $this->getId();
     }
 
@@ -60,6 +56,20 @@ abstract class Model extends CachedModel
         }
 
         return $this->status;
+    }
+
+    /**
+     * Find if two objects represent the same model
+     *
+     * @param  Model   $model The model to compare
+     * @return boolean
+     */
+    public function isSameAs(Model $model) {
+        if (!$this->isValid() || !$model->isValid()) {
+            return false;
+        }
+
+        return $this->getType() === $model->getType() && $this->getId() === $model->getId();
     }
 
     /**

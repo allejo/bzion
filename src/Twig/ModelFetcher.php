@@ -5,7 +5,7 @@ namespace BZIon\Twig;
 /**
  * A twig global that enables the creation of Models from their IDs
  *
- * Example usage: `fetcher.newsCategory(15).id`
+ * Example usage: `model.newsCategory(15).id`
  */
 class ModelFetcher
 {
@@ -20,7 +20,7 @@ class ModelFetcher
         $class = new \ReflectionClass("\\" . ucfirst($type));
 
         if (!$class->isSubclassOf("\\Model")) {
-            throw new Exception("$type is not a model");
+            throw new \Exception("$type is not a model");
         }
 
         return $class->getMethod('get')

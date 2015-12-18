@@ -120,6 +120,7 @@ abstract class PermissionModel extends Model
      * having the appropriate permissions (for example, a team owner should be
      * able to edit their team)
      *
+     * @param  Player $player
      * @return bool
      */
     protected function isEditor($player)
