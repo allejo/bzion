@@ -53,7 +53,8 @@ class ProfileController extends HTMLController
                 }
             }
 
-            $this->getFlashBag()->add("success", "Your profile has been updated.");
+            $message = ($self) ? "Your profile has been updated." : $me->getUsername() . "'s profile has been updated.";
+            $this->getFlashBag()->add("success", $message);
         }
 
         return $this->render('Profile/edit.html.twig', array(
