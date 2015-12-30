@@ -5,6 +5,7 @@ $(function () {
         var $this = $(this);
         var $target = $($this.data("toggle"));
 
-        $target.slideToggle();
+        $target.css("height", ($target.height() ? 0 : $target[0].scrollHeight));
+        $target.toggleClass("open");
     });
 });

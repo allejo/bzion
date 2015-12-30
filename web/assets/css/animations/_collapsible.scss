@@ -1,7 +1,15 @@
+$Collapsing-Duration: 0.5s;
+
 .collapsible-trigger {
     cursor: pointer;
 }
 
 .collapsible-entity {
-    display: none;
+    height: 0;
+    overflow: hidden;
+    transition: height $Collapsing-Duration ease-out;
+
+    &.open {
+        transition: height $Collapsing-Duration ease-in;
+    }
 }

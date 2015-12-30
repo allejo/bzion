@@ -1,1 +1,1 @@
-$(function(){$(".collapsible-trigger").click(function(){var a=$(this),b=$(a.data("toggle"));b.slideToggle()})});
+$(function(){$(".collapsible-trigger").click(function(){var a=$(this),b=$(a.data("toggle"));b.css("height",b.height()?0:b[0].scrollHeight),b.toggleClass("open")})});
