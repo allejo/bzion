@@ -24,7 +24,7 @@
     <section class="c-messenger">
         <aside class="c-messenger__sidebar c-fullflex--scrollable">
             {% include "Message/searchbar.html.twig" %}
-            {% include "Message/conversations.html.twig" %}
+            {% include "Message/conversations.html.twig" with { customClass: 'c-conversation--compressed' } %}
         </aside>
 
         <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">

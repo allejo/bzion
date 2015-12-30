@@ -16,7 +16,7 @@
     {%- endfor -%}
 {% endmacro %}
 
-<section class="{{ customClass }} c-conversations">
+<section class="c-conversations {{ customClass }}">
     {% for conversation in conversations %}
         <a class="c-conversation" data-id="{{ conversation.id }}" href="{{ conversation.url }}">
             <section class="c-conversation__meta">
