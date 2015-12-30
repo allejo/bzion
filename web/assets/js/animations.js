@@ -5,6 +5,6 @@ $(function () {
         var $this = $(this);
         var $target = $($this.data("toggle"));
 
-        $target.toggleClass("open");
+        $target.slideToggle();
     });
 });

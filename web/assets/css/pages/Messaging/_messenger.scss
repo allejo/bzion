@@ -52,12 +52,11 @@
     border-bottom: $Border-Default;
     padding: $Settings-Page_Section-Small_Margin;
 
-    .collapsible-entity {
-        &.open {
-            padding: {
-                bottom: $Settings-Page_Section-Small_Margin;
-                top: $Settings-Page_Section-Small_Margin;
-            }
+    .c-messenger__option {
+        form {
+            border-top: $Border-Default;
+            margin-top: $Settings-Page_Section-Small_Margin;
+            padding-top: $Settings-Page_Section-Small_Margin;
         }
     }
 }

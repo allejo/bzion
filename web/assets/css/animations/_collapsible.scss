@@ -3,12 +3,5 @@
 }
 
 .collapsible-entity {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-out;
-
-    &.open {
-        max-height: 1000px;
-        transition: max-height 0.5s ease-in;
-    }
+    display: none;
 }
