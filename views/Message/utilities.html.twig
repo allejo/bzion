@@ -1,0 +1,22 @@
+{#
+    Create a comma separated list of the members in an array without the current player that's logged in
+
+    @param array members An array of Player objects
+    @param bool  links   Set to true if each player's name should be hyperlinked to their profile
+#}
+
+{% macro listMembers(members, links) %}
+    {%- for member in members -%}
+        {%- set next  = members[loop.index0 + 1] -%} {# The next item in the loop #}
+        {%- set after = members[loop.index0 + 2] -%} {# The next next item in the loop #}
+
+        {# We don't want to output or own names #}
+        {%- if member.name != me.name -%}
+            {{- links ? link_to(member) : member.name | raw -}}
+
+            {%- if not loop.last and (next.name != me.name or after is not null) -%}
+                {{- ', ' -}}
+            {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+{% endmacro %}

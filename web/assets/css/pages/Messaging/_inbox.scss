@@ -19,36 +19,23 @@
     border-bottom: $Border-Default;
     display: flex;
     margin-bottom: 0;
-    padding: {
-        bottom: 5px;
-        top: 5px;
-    }
-
-    @include respond-to(md) {
-        padding: {
-            left: 10px;
-            right: 10px;
-        }
-    }
+    padding: $Settings-Page_Section-Small_Margin;
 }
 
 .c-messages__search__input {
     @extend %remove-input-style;
 
     flex: 1;
+    padding: 0 !important;
 }
 
 .c-messages__search__icon {
     display: flex;
-    padding: 0 10px;
+    padding-right: $Settings-Page_Section-Tiny_Margin;
 
     i {
         margin: auto;
     }
-}
-
-.c-conversations {
-
 }
 
 .c-conversation {

@@ -78,9 +78,10 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
+                    'web/assets/js/min/animations.js': [ 'web/assets/js/animations.js' ],
                     'web/assets/js/min/utilities.js': [ 'web/assets/js/partials/*.js' ],
-                    'web/assets/js/min/main.js' : [ 'web/assets/js/main.js' ],
-                    'web/assets/js/min/teams.js': [ 'web/assets/js/teams.js' ]
+                    'web/assets/js/min/teams.js': [ 'web/assets/js/teams.js' ],
+                    'web/assets/js/min/main.js' : [ 'web/assets/js/main.js' ]
                 }
             }
         },
@@ -97,7 +98,10 @@ module.exports = function(grunt) {
                 }
             },
             scripts: {
-                files: [ 'web/assets/js/**/*.js' ],
+                files: [
+                    'web/assets/js/**/*.js',
+                    '!web/assets/js/min/*.js'
+                ],
                 tasks: [ 'js' ],
                 options: {
                     spawn: true

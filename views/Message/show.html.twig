@@ -1,3 +1,4 @@
+{% import 'Message/utilities.html.twig' as msgutils %}
 {% extends 'Message/layout.html.twig' %}
 
 {% set pageButtons = [
@@ -29,28 +30,32 @@
 
         <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
             <div class="c-messenger__conversation__container dimmable">
-                <section class="c-messenger__conversation__details">
-                    <p class="c-messenger__conversation__details__members">
-                        Conversation with
-                        {% if conversation.members is not empty %}
-                            {% for member in conversation.members %}
-                                {% if me.name != member.name %}
-                                    {{- link_to(member) -}}
-                                    {%- if not loop.last -%}
-                                        {{- ', ' -}}
-                                    {%- endif -%}
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            No other recipients
-                        {% endif %}
-                    </p>
+                <section class="c-messenger__conversation__options">
+                    <div class="o-row">
+                        <p class="o-col--half">
+                            Conversation with {{ msgutils.listMembers(conversation.members, true) }}
+                        </p>
+                        <p class="o-col--half u-text-right">
+                            <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
+                            <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
+                        </p>
+                    </div>
+
+                    {% if renameForm %}
+                        <div id="SubjectRenameForm" class="collapsible-entity">
+                            {{ form(renameForm)}}
+                        </div>
+                    {% endif %}
+
+                    {% if inviteForm %}
+                        <div id="InviteForm" class="collapsible-entity">
+                            {{ form(inviteForm)}}
+                        </div>
+                    {% endif %}
                 </section>
 
                 <section class="c-messenger__conversation__scrolling">
-                    <ul id="messageView" class="c-messenger__conversation__messages">
-                        {% include 'Message/messages.html.twig' %}
-                    </ul>
+                    {% include 'Message/messages.html.twig' %}
                 </section>
 
                 {{ form_start(form, {'attr': {'class': 'c-messenger__conversation__response', 'autocomplete': 'off'} }) }}

@@ -1,50 +1,55 @@
 {% if messages %}
-    <a href="{{ path('message_conversation_show', {conversation: conversation.id, start: (messages|last).id }) }}" class="older_messages">
-        Load older messages
-    </a>
+    <div class="c-messenger__conversation__archiver">
+        <a href="{{ path('message_conversation_show', {conversation: conversation.id, start: (messages|last).id }) }}">
+            <i class="fa fa-refresh"></i>
+            <span>Load older messages</span>
+        </a>
+    </div>
 {% endif %}
 
-{% for message in messages|reverse %}
-    {% if message.isMessage %}
-        <li data-id="{{ message.id }}" class="message">
-            {%- if message.author.id != previousAuthor or not previousMessage.isSameDay(message.timestamp) %}
-                <div class="details">
-                    <div class='author'>{{ link_to(message.author) }}</div>
-                    <div class='date'>{{ message.timestamp | humanTime }}</div>
-                </div>
-            {% endif -%}
+<ul id="messageView" class="c-messenger__conversation__messages">
+    {% for message in messages|reverse %}
+        {% if message.isMessage %}
+            <li data-id="{{ message.id }}" class="message">
+                {%- if message.author.id != previousAuthor or not previousMessage.isSameDay(message.timestamp) %}
+                    <div class="details">
+                        <div class="author">{{ link_to(message.author) }}</div>
+                        <div class="date">{{ message.timestamp | humanTime }}</div>
+                    </div>
+                {% endif -%}
 
-            <p>{{ message.content|markdown(true, false) }}</p>
-        </li>
-    {% else %}
-        {% set type = message.category %}
-        {% set event = message.event %}
+                <p>{{ message.content|markdown(true, false) }}</p>
+            </li>
+        {% else %}
+            {% set type = message.category %}
+            {% set event = message.event %}
 
-        <li class="action">
-            {% if type == 'conversation.rename' %}
-                <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
-            {% elseif type == 'conversation.abandon' %}
-                <i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion
-            {% elseif type == 'conversation.kick' %}
-                <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion
-            {% elseif type == 'conversation.join' %}
-                <i class="fa fa-plus-circle"></i>
-                {% for member in event.newMembers -%}
-                    {%- if not loop.first -%}
-                        {%- if loop.last %} and
-                        {% else -%} ,
-                        {% endif -%}
-                    {%- endif -%}
+            <li class="action">
+                {% if type == 'conversation.rename' %}
+                    <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
+                {% elseif type == 'conversation.abandon' %}
+                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion
+                {% elseif type == 'conversation.kick' %}
+                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion
+                {% elseif type == 'conversation.join' %}
+                    <i class="fa fa-plus-circle"></i>
+                    {% for member in event.newMembers -%}
+                        {%- if not loop.first -%}
+                            {%- if loop.last %} and
+                            {% else -%} ,
+                            {% endif -%}
+                        {%- endif -%}
 
-                    {{ link_to(member) }}
-                {%- else -%}
-                    Nobody
-                {%- endfor %}
-                joined the discussion
-            {% endif %}
-        </li>
-    {% endif %}
+                        {{ link_to(member) }}
+                    {%- else -%}
+                        Nobody
+                    {%- endfor %}
+                    joined the discussion
+                {% endif %}
+            </li>
+        {% endif %}
 
-    {% set previousAuthor = message.author.id %}
-    {% set previousMessage = message.timestamp %}
-{% endfor %}
+        {% set previousAuthor = message.author.id %}
+        {% set previousMessage = message.timestamp %}
+    {% endfor %}
+</ul>

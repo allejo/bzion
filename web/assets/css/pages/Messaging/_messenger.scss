@@ -48,14 +48,18 @@
 }
 
 // This is the header of a conversation with all of the details of the conversation such as recipients
-.c-messenger__conversation__details {
-    background-color: $Alert-Informational-Background;
-    color: $Alert-Informational-Text;
+.c-messenger__conversation__options {
+    border-bottom: $Border-Default;
     padding: $Settings-Page_Section-Small_Margin;
-}
 
-.c-messenger__conversation__details__members {
-
+    .collapsible-entity {
+        &.open {
+            padding: {
+                bottom: $Settings-Page_Section-Small_Margin;
+                top: $Settings-Page_Section-Small_Margin;
+            }
+        }
+    }
 }
 
 // The height of this element will be limited and its overflow will be hidden. This is intended to have its child be
@@ -63,6 +67,15 @@
 .c-messenger__conversation__scrolling {
     flex: 1;
     overflow: scroll;
+}
+
+// The container for the "Load older messages" button in a conversation
+.c-messenger__conversation__archiver {
+    padding: {
+        bottom: $Settings-Page_Section-Small_Margin;
+        top: $Settings-Page_Section-Small_Margin;
+    }
+    text-align: center;
 }
 
 // This object actually contains the list of messages as individual objects. This element will be much taller than its
@@ -81,22 +94,24 @@
         }
 
         &.action {
+            color: $Color-Medium_Grey;
             font-size: 0.8em;
             margin: {
                 bottom: 5px;
                 top: 5px;
             }
+            text-align: center;
         }
 
         &.message {
             .details {
-                @include view-container(lg);
+                @include view-container();
 
                 margin-bottom: 5px;
 
                 .author,
                 .date {
-                    @include view-columns(lg, 6);
+                    @include view-columns(xxl, 6);
                 }
 
                 .author {
@@ -118,3 +133,4 @@
     border-top: $Border-Default;
     padding: $Settings-Page_Section-Small_Margin;
 }
+

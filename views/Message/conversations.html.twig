@@ -1,20 +1,4 @@
-{% import _self as self %}
-
-{% macro listMembers(members) %}
-    {%- for member in members -%}
-        {%- set next  = members[loop.index0 + 1] -%} {# The next item in the loop #}
-        {%- set after = members[loop.index0 + 2] -%} {# The next next item in the loop #}
-
-        {# We don't want to output or own names #}
-        {%- if member.name != me.name -%}
-            {{- member.name -}}
-
-            {%- if not loop.last and (next.name != me.name or after is not null) -%}
-                {{- ', ' -}}
-            {%- endif -%}
-        {%- endif -%}
-    {%- endfor -%}
-{% endmacro %}
+{% import "Message/utilities.html.twig" as msgutils %}
 
 <section class="c-conversations {{ customClass }}">
     {% for conversation in conversations %}
@@ -31,10 +15,10 @@
                 {% set members = conversation.members %}
 
                 {%- if members|length == 2 -%}
-                    <span class="always-view">{{ self.listMembers(members) }}</span>
+                    <span class="always-view">{{ msgutils.listMembers(members, false) }}</span>
                 {%- elseif members|length > 2 -%}
                     <span class="summed-view">{{ members | length }} participants</span>
-                    <span class="extend-view">{{ self.listMembers(members) }}</span>
+                    <span class="extend-view">{{ msgutils.listMembers(members, false) }}</span>
                 {%- else -%}
                     <span class="always-view">No other recipients</span>
                 {%- endif -%}
