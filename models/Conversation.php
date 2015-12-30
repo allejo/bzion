@@ -86,6 +86,14 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isEditor ($player)
+    {
+        return $this->isCreator($player->getId());
+    }
+
+    /**
      * Get the time when the conversation was most recently active
      *
      * @return TimeDate

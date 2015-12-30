@@ -36,18 +36,18 @@
                             Conversation with {{ msgutils.listMembers(conversation.members, true) }}
                         </p>
                         <p class="o-col--half u-text-right">
-                            <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
-                            <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
+                            {% if me.canEdit(conversation) %}
+                                <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
+                                <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
+                            {% endif %}
                         </p>
                     </div>
 
-                    {% if renameForm %}
+                    {% if me.canEdit(conversation) %}
                         <div id="SubjectRenameForm" class="c-messenger__option collapsible-entity">
                             {{ form(renameForm)}}
                         </div>
-                    {% endif %}
 
-                    {% if inviteForm %}
                         <div id="InviteForm" class="c-messenger__option collapsible-entity">
                             {{ form(inviteForm)}}
                         </div>
