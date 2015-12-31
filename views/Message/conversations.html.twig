@@ -17,7 +17,7 @@
                 {%- if members|length == 2 -%}
                     <span class="always-view">{{ msgutils.listMembers(members, false) }}</span>
                 {%- elseif members|length > 2 -%}
-                    <span class="summed-view">{{ members | length }} participants</span>
+                    <span class="summed-view">{{ members | length - 1 }} participants</span>
                     <span class="extend-view">{{ msgutils.listMembers(members, false) }}</span>
                 {%- else -%}
                     <span class="always-view">No other recipients</span>
