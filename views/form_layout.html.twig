@@ -15,6 +15,12 @@
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ fa_icon | raw }}{{ label }}</button>
 {%- endblock button_widget -%}
 
+{%- block button_row -%}
+    <div {{ block('container_attributes') }}>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row -%}
+
 {% block form_row -%}
     <div {{ block('container_attributes') }}>
         {{- form_label(form) -}}

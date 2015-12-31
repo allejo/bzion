@@ -51,14 +51,55 @@
 .c-messenger__conversation__options {
     border-bottom: $Border-Default;
     padding: $Settings-Page_Section-Small_Margin;
+}
 
-    .c-messenger__option {
-        form {
-            border-top: $Border-Default;
-            margin-top: $Settings-Page_Section-Small_Margin;
-            padding-top: $Settings-Page_Section-Small_Margin;
-        }
+.c-messenger__options__header {
+    @include view-container();
+}
+
+.c-messenger__options__header__meta {
+    @include view-columns(xxl, 9);
+}
+
+.c-messenger__options__header__actions {
+    @include view-columns(xxl, 3);
+
+    text-align: right;
+
+    i {
+        color: $Color-Medium_Grey;
+        margin-left: $Settings-Page_Section-Tiny_Margin;
     }
+}
+
+.c-messenger__option {
+    form {
+        border-top: $Border-Default;
+        margin-top: $Settings-Page_Section-Small_Margin;
+        padding-top: $Settings-Page_Section-Small_Margin;
+    }
+}
+
+.c-messenger__option__action {
+    display: flex;
+    position: relative;
+}
+
+.c-messenger__option__action__close {
+    color: $Color-Medium_Grey;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.c-messenger__option__action__input {
+    flex-grow: 1;
+    padding-right: $Settings-Page_Section-Small_Margin;
+}
+
+.c-messenger__option__action__buttons {
+    align-items: flex-end;
+    display: flex;
 }
 
 // The height of this element will be limited and its overflow will be hidden. This is intended to have its child be
@@ -70,6 +111,7 @@
 
 // The container for the "Load older messages" button in a conversation
 .c-messenger__conversation__archiver {
+    display: none;
     padding: {
         bottom: $Settings-Page_Section-Small_Margin;
         top: $Settings-Page_Section-Small_Margin;

@@ -1,4 +1,6 @@
+{% import _self as self %}
 {% import 'Message/utilities.html.twig' as msgutils %}
+
 {% extends 'Message/layout.html.twig' %}
 
 {% set pageButtons = [
@@ -21,6 +23,34 @@
 {% set viewTitle = "Subject: " ~ conversation.subject %}
 {% set pageWideCSS = "s-fullflex" %}
 
+{% macro conversation_action(id, form, input, action) %}
+    <div id="{{ id }}" class="c-messenger__option collapsible-entity">
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="c-messenger__option__action">
+                <p class="c-messenger__option__action__close collapsible-close" data-close="#{{ id }}">
+                    <i class="fa fa-close"></i>
+                </p>
+
+                {{ form_row(input, {
+                    'container_attr': {
+                        'class': 'c-messenger__option__action__input'
+                    }
+                }) }}
+
+                {{ form_row(action, {
+                    'container_attr': {
+                        'class': 'c-messenger__option__action__buttons'
+                    }
+                }) }}
+            </div>
+
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endmacro %}
+
 {% block messages_body %}
     <section class="c-messenger">
         <aside class="c-messenger__sidebar c-fullflex--scrollable">
@@ -31,11 +61,11 @@
         <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
             <div class="c-messenger__conversation__container dimmable">
                 <section class="c-messenger__conversation__options">
-                    <div class="o-row">
-                        <p class="o-col--half">
+                    <div class="c-messenger__options__header o-row">
+                        <p class="c-messenger__options__header__meta">
                             Conversation with {{ msgutils.listMembers(conversation.members, true) }}
                         </p>
-                        <p class="o-col--half u-text-right">
+                        <p class="c-messenger__options__header__actions">
                             {% if me.canEdit(conversation) %}
                                 <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
                                 <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
@@ -44,13 +74,8 @@
                     </div>
 
                     {% if me.canEdit(conversation) %}
-                        <div id="SubjectRenameForm" class="c-messenger__option collapsible-entity">
-                            {{ form(renameForm)}}
-                        </div>
-
-                        <div id="InviteForm" class="c-messenger__option collapsible-entity">
-                            {{ form(inviteForm)}}
-                        </div>
+                        {{ self.conversation_action("SubjectRenameForm", renameForm, renameForm.subject, renameForm.Rename) }}
+                        {{ self.conversation_action("InviteForm", inviteForm, inviteForm.players, inviteForm.Invite) }}
                     {% endif %}
                 </section>
 

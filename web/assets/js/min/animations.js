@@ -1,1 +1,1 @@
-$(function(){$(".collapsible-trigger").click(function(){var a=$(this),b=$(a.data("toggle"));b.css("height",b.height()?0:b[0].scrollHeight),b.toggleClass("open")})});
+$(function(){$(".collapsible-trigger").click(function(){var a=$(this),b=$(a.data("toggle"));b.css("height",b.height()?0:b[0].scrollHeight)}),$(".collapsible-open").click(function(){var a=$(this),b=$(a.data("open"));b.css("height",b[0].scrollHeight)}),$(".collapsible-close").click(function(){var a=$(this),b=$(a.data("close"));b.css("height",0)})});
