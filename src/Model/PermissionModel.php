@@ -67,6 +67,7 @@ abstract class PermissionModel extends Model
      *
      * If possible, prefer to override PermissionModel::CREATE_PERMISSION
      *
+     * @param  Player $player
      * @return bool
      */
     public static function canBeCreatedBy($player)

@@ -6,7 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
-use \Identicon\Identicon;
+use Identicon\Identicon;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -35,17 +35,17 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     protected function getIdenticon($idData)
     {
-        $fileName = $this->getAvatarFileName();
-
         Service::getContainer()->get('logger')
-            ->info('Generating new identicon for "' . $this->getName() . '" in ' . static::AVATAR_LOCATION . $fileName);
+            ->info('Generating new identicon for "' . $this->getName() . '" in ' . $this->getAvatarPath());
 
         $identicon = new Identicon();
         $imageData = $identicon->getImageData($idData, 250);
 
-        file_put_contents(DOC_ROOT . static::AVATAR_LOCATION . $fileName, $imageData);
+        $path = $this->getAvatarPath($imageData);
 
-        return static::AVATAR_LOCATION . $fileName;
+        file_put_contents(DOC_ROOT . $path, $imageData);
+
+        return $path;
     }
 
     /**
@@ -57,10 +57,15 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     public function setAvatarFile($file)
     {
         if ($file) {
-            $filename = $this->getAvatarFileName();
+            $openFile = $file->openFile('r');
+            $content = $openFile->fread($openFile->getSize());
 
-            $file->move(DOC_ROOT . static::AVATAR_LOCATION, $filename);
-            $this->setAvatar(static::AVATAR_LOCATION . $filename);
+            $path = $this->getAvatarPath(null, false, false);
+            $filename = $this->getAvatarFileName($content);
+
+            $file->move(DOC_ROOT . $path, $filename);
+
+            $this->setAvatar($path . $filename);
         }
 
         return $this;
@@ -93,9 +98,14 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     public function setAvatar($avatar)
     {
+        if (!empty($this->avatar)) {
+            // Remove the old avatar
+            unlink(DOC_ROOT . $this->avatar);
+        }
+
         // Clear the thumbnail cache
         $imagine = Service::getContainer()->get('liip_imagine.cache.manager');
-        $imagine->remove($avatar);
+        $imagine->remove($this->avatar);
 
         return $this->updateProperty($this->avatar, 'avatar', $avatar, 's');
     }
@@ -107,16 +117,55 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     public function resetAvatar()
     {
-        return $this->setAvatar($this->getIdenticon($this->getName()));
+        $path = $this->getIdenticon($this->getName());
+
+        return $this->setAvatar($path);
     }
 
     /**
-     * Get the filename for the avatar
+     * Get the path to the avatar
      *
+     * @param string|null $content The avatar data
+     * @param bool $full Whether to return the full absolute path
+     * @param bool $file Whether to include the name of the file
+     * @return string The path to the avatar
+     */
+    private function getAvatarPath($content = null, $full = false, $file = true)
+    {
+        $path = static::AVATAR_LOCATION . $this->id . '/';
+
+        if ($full) {
+            $path = DOC_ROOT . $path;
+        }
+
+        if ($file) {
+            $path .= $this->getAvatarFileName($content);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get the filename for the avatar, creating its directory if it doesn't
+     * exist
+     *
+     * @param  string|null $content The avatar data
      * @return string The file name of the avatar
      */
-    protected function getAvatarFileName()
+    private function getAvatarFileName(&$content = null)
     {
-        return $this->id . ".png";
+        // Calculate the avatar contents' hash, which is used to force the
+        // browser to reload an image stored in the cache whenever it changes
+        // (cache busting)
+        //
+        // MD5 is used because it's fast and we don't require a
+        // cryptographically secure hashing function
+        if ($content !== null) {
+            $hash = substr(md5($content), 0, 7);
+        } else {
+            $hash = 'avatar';
+        }
+
+        return "$hash.png";
     }
 }
