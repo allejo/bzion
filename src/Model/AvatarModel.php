@@ -98,7 +98,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     public function setAvatar($avatar)
     {
-        if (!empty($this->avatar)) {
+        if (!empty($this->avatar) && $avatar != $this->avatar) {
             // Remove the old avatar
             unlink(DOC_ROOT . $this->avatar);
         }
@@ -123,7 +123,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     }
 
     /**
-     * Get the path to the avatar
+     * Get the path to the avatar, creating its directory if it doesn't exist
      *
      * @param string|null $content The avatar data
      * @param bool $full Whether to return the full absolute path
@@ -133,6 +133,10 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     private function getAvatarPath($content = null, $full = false, $file = true)
     {
         $path = static::AVATAR_LOCATION . $this->id . '/';
+
+        if (!@file_exists(DOC_ROOT . $path)) {
+            mkdir(DOC_ROOT . $path);
+        }
 
         if ($full) {
             $path = DOC_ROOT . $path;
@@ -146,8 +150,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     }
 
     /**
-     * Get the filename for the avatar, creating its directory if it doesn't
-     * exist
+     * Get the filename for the avatar
      *
      * @param  string|null $content The avatar data
      * @return string The file name of the avatar
