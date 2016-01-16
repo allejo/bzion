@@ -1,0 +1,116 @@
+.c-menulinks,
+.c-menuoptions {
+    display: flex;
+    padding-left: 0;
+
+    a {
+        display: block;
+        padding: {
+            bottom: 17px;
+            top: 17px;
+        }
+    }
+
+    li {
+        position: relative;
+
+        &.active {
+            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        &:hover {
+            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+.c-menulinks {
+    flex: 1;
+    padding-left: $Settings-Page_Section-Small_Margin;
+
+    a {
+        padding: {
+            left: 15px;
+            right: 15px;
+        }
+
+        @include respond-to(md) {
+            padding: {
+                bottom: 10px;
+                top: 10px;
+            }
+        }
+    }
+
+    hr {
+        margin: {
+            bottom: 10px;
+            top: 10px;
+        }
+    }
+
+    li {
+        @include respond-to(md) {
+            display: block;
+        }
+    }
+
+    .c-useroptions {
+        display: none;
+
+        &:hover,
+        &.active {
+            box-shadow: none;
+        }
+
+        a {
+            padding: {
+                left: $Settings-Page_Section-Margin;
+                right: $Settings-Page_Section-Margin;
+            }
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+        }
+
+        @include respond-to(xs) {
+            display: block;
+        }
+    }
+
+    @include respond-to(md) {
+        @include theme-specific("background-color", "nav-bg");
+
+        border-bottom: 1px solid $Color-Header_Border;
+        display: none;
+        padding-left: 0;
+        left: 0;
+        position: absolute;
+        top: 57px;
+        width: 100%;
+        z-index: 100;
+    }
+}
+
+.c-menuoptions {
+    a {
+        padding: {
+            left: 10px;
+            right: 10px;
+        }
+    }
+
+    @include respond-to(md) {
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    .c-useroptions {
+        @include respond-to(xs) {
+            display: none;
+        }
+    }
+}

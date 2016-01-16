@@ -1,0 +1,73 @@
+// Hex values for colors that are used only in the header; there's no need to store them
+// globally in the base file
+$Color-Header_Border: #D4D4D4;
+
+.c-header {
+    @include theme-specific("background-image", "header-bg");
+
+    border-bottom: 1px solid $Color-Header_Border;
+    box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
+
+    a {
+        @include theme-specific("color", "header-color");
+
+        // This rule exists because all outgoing links automatically have an external link symbol added
+        // so we need to hide it in the navigation for the login button
+        &:after {
+            display: none;
+        }
+
+        &:hover {
+            @include theme-specific("color", "header-color-hover");
+        }
+    }
+
+    .o-container {
+        align-items: center;
+        display: flex;
+
+        .c-navigation {
+            display: flex;
+            flex: 1;
+        }
+    }
+}
+
+.c-badge {
+    background-image: linear-gradient(#F65D5F, #E93631);
+    border-radius: 2px;
+    box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 1px rgba(0, 0, 0, 0.2);
+    color: $Color-White;
+    font-size: 11px;
+    line-height: 16px;
+    padding: 0 4px;
+    position: absolute;
+    right: 0;
+    text-shadow: 0 1px #902A27;
+    top: 10px;
+}
+
+.c-branding {
+    align-items: center;
+    display: flex;
+    font-size: 26px;
+
+    img {
+        vertical-align: middle;
+    }
+
+    @include respond-to(sm) {
+        font-size: 22px;
+    }
+}
+
+.c-mobilemenu {
+    @include theme-specific("color", "header-color");
+
+    cursor: pointer;
+    margin-right: $Settings-Page_Section-Small_Margin;
+
+    @include respond-to(xs) {
+        margin-right: 10px;
+    }
+}

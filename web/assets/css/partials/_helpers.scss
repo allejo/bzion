@@ -1,21 +1,6 @@
 // This file contains any generic CSS classes that don't belong anyone and just help styling
 // random objects
 
-.badge {
-    background-image: linear-gradient(#F65D5F, #E93631);
-    border-radius: 2px;
-    box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 1px rgba(0, 0, 0, 0.2);
-    color: $Color-White;
-    display: inline-block;
-    font-size: 11px;
-    line-height: 16px;
-    margin-left: -10px;
-    padding: 0 4px;
-    position: relative;
-    text-shadow: 0 1px #902A27;
-    top: -10px;
-}
-
 .clearfix {
     zoom: 1;
 
@@ -113,6 +98,14 @@
 .u-hide-on-empty {
     &:empty {
         display: none;
+    }
+}
+
+.u-mobile-only {
+    display: none;
+
+    @include respond-to(md) {
+        display: block;
     }
 }
 

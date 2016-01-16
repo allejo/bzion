@@ -56,23 +56,20 @@
 @import 'generic/tables';
 
 
-//
-// Layout styling
-//    (CSS for layouts and the grid system)
-//
+// Layout + Grid
 @import 'partials/Layout/columns';
 @import 'partials/Layout/page';
 @import 'partials/Layout/user-content';
 @import 'partials/Layout/fullflex';
 
-
-//
 // Form styling
-//    (CSS for forms and their related classes)
-//
 @import 'partials/Forms/general';
 @import 'partials/Forms/avatar';
 @import 'partials/Forms/structure';
+
+// Header + Navigation
+@import 'partials/Header/header';
+@import 'partials/Header/navigation';
 
 
 //
@@ -85,7 +82,6 @@
 @import 'partials/flashbag';
 @import 'partials/font-awesome';
 @import 'partials/footer';
-@import 'partials/header';
 @import 'partials/icon-bullet-points';
 @import 'partials/jumbotron';
 @import 'partials/markdown';

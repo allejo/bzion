@@ -28,11 +28,13 @@
             </div>
         <![endif]-->
 
-        <header class="site-header">
-            <section class="menu-bar">
-                <span id="mobile-menu" class="mobile-menu"><i class="fa fa-bars"></i></span>
+        <header class="c-header">
+            <section class="o-container">
+                <div id="mobile-menu" class="u-mobile-only c-mobilemenu">
+                    <i class="fa fa-bars"></i>
+                </div>
 
-                <h1>
+                <h1 class="c-branding">
                     <a href="{{ path('index') }}">
                         <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
                         {{ app.siteTitle }}
@@ -41,11 +43,12 @@
 
                 {% include "navbar.html.twig" %}
             </section>
-
-            <div class="notification">
-                <i class="fa fa-check"></i><span></span>
-            </div>
         </header>
+
+        {# @TODO Uncomment or remove this, once I remember what this is for #}
+        {#<div class="notification">#}
+            {#<i class="fa fa-check"></i><span></span>#}
+        {#</div>#}
 
         <section class="c-flashbag">
             {% for message in session.flashbag.all %}
