@@ -4,7 +4,7 @@
 .o-section {
     margin-bottom: $Settings-Page_Section-Margin;
 
-    @include respond-to(sm) {
+    @include respond-up(sm) {
         margin-bottom: $Settings-Page_Section-Small_Margin;
 
         &:last-child {
@@ -15,7 +15,7 @@
     .o-row__column--half,
     .o-row__column--third,
     .o-row__column--quarter {
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             margin-bottom: $Settings-Page_Section-Small_Margin;
 
             &:last-child {

@@ -4,11 +4,11 @@
     min-height: 350px;
     width: 100%;
 
-    @include respond-to(md) {
+    @include respond-up(md) {
         min-height: 250px;
     }
 
-    @include respond-to(xs) {
+    @include respond-up(xs) {
         min-height: 200px;
     }
 
@@ -32,7 +32,7 @@
             line-height: 48px;
             margin-bottom: 20px;
 
-            @include respond-to(xs) {
+            @include respond-up(xs) {
                 font-size: 30px;
                 line-height: 30px;
                 margin-bottom: 15px;
@@ -42,7 +42,7 @@
         h2 {
             font-size: 24px;
 
-            @include respond-to(xs) {
+            @include respond-up(xs) {
                 font-size: 22px;
             }
         }

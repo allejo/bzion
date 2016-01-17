@@ -9,7 +9,7 @@
         top: 20px;
     }
 
-    @include respond-to(xs) {
+    @include respond-up(xs) {
         margin-top: $Settings-Page_Section-Small_Margin;
     }
 
@@ -25,14 +25,14 @@
         flex: 1;
         text-align: right;
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             text-align: left;
         }
 
         li {
             margin-left: 20px;
 
-            @include respond-to(sm) {
+            @include respond-up(sm) {
                 margin: {
                     bottom: 10px;
                     left: 0;
@@ -40,13 +40,13 @@
                 }
             }
 
-            @include respond-to(xs) {
+            @include respond-up(xs) {
                 margin-right: 10px;
             }
         }
     }
 
-    @include respond-to(sm) {
+    @include respond-up(sm) {
         flex-direction: column-reverse;
     }
 }

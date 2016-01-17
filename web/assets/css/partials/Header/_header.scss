@@ -52,14 +52,14 @@ $Color-Header_Border: #D4D4D4;
 .c-branding {
     align-items: center;
     display: flex;
-    font-size: 26px;
+    font-size: 22px;
 
     img {
         vertical-align: middle;
     }
 
-    @include respond-to(sm) {
-        font-size: 22px;
+    @include respond-up(md) {
+        font-size: 26px;
     }
 }
 
@@ -68,9 +68,9 @@ $Color-Header_Border: #D4D4D4;
     @include theme-specific("color", "header-color");
 
     cursor: pointer;
-    margin-right: $Settings-Page_Section-Small_Margin;
+    margin-right: 10px;
 
-    @include respond-to(xs) {
-        margin-right: 10px;
+    @include respond-up(sm) {
+        margin-right: $Settings-Page_Section-Small_Margin;
     }
 }

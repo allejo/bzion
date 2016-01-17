@@ -49,26 +49,26 @@
     }
     width: 100%;
 
-    @include respond-to(sm) {
+    @include respond-up(sm) {
         padding: {
             left: 20px;
             right: 20px;
         }
     }
 
-    @include respond-to(lg) {
+    @include respond-up(lg) {
         width: map-get($breakpoints, lg);
     }
 
-    @include respond-to(xl) {
+    @include respond-up(xl) {
         width: map-get($breakpoints, xl);
     }
 
-    @include respond-to(xxl) {
+    @include respond-up(xxl) {
         width: map-get($breakpoints, xxl);
     }
 
-    @include respond-to(xxxl) {
+    @include respond-up(xxxl) {
         width: map-get($breakpoints, xxxl);
     }
 }

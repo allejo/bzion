@@ -6,7 +6,7 @@
 
 .media-query-setup {
     @each $viewSize in map-keys($breakpoints) {
-        @include respond-to($viewSize) {
+        @include respond-up($viewSize) {
             html:before {
                 font-size: inherit;
             }

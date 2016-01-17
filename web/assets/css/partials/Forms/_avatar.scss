@@ -28,7 +28,7 @@
             }
         }
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             margin: {
                 left: auto;
                 right: auto;

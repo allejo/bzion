@@ -14,7 +14,7 @@
             font-size: 25px;
             margin-bottom: 5px;
 
-            @include respond-to(md) {
+            @include respond-up(md) {
                 text-align: left;
             }
         }
@@ -63,7 +63,7 @@
         border: $Border-Default;
         border-radius: 3px;
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             display: none;
         }
 

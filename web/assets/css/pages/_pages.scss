@@ -12,7 +12,7 @@
                 top: 15px;
             };
 
-            @include respond-to(sm) {
+            @include respond-up(sm) {
                 padding: {
                     bottom: 15px;
                     top: 15px;
@@ -26,7 +26,7 @@
                     font-size: 24px;
                     margin: auto;
 
-                    @include respond-to(sm) {
+                    @include respond-up(sm) {
                         font-size: 20px;
                     }
                 }
@@ -42,13 +42,13 @@
                     margin-left: 5px;
                 }
 
-                @include respond-to(md) {
+                @include respond-up(md) {
                     display: none;
                 }
             }
         }
 
-        @include respond-to(xs) {
+        @include respond-up(xs) {
             margin-bottom: $Settings-Page_Section-Small_Margin;
         }
     }

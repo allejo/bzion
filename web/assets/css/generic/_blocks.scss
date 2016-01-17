@@ -56,11 +56,11 @@ hr {
     margin: 50px auto;
     width: $Settings-Global_Width;
 
-    @include respond-to(md) {
+    @include respond-up(md) {
         width: 100%;
     }
 
-    @include respond-to(sm) {
+    @include respond-up(sm) {
         margin: 30px auto;
     }
 }

@@ -93,7 +93,7 @@
     font-size: 14px;
 
     .human-date {
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             display: none;
         }
     }
@@ -101,7 +101,7 @@
     .short-date {
         display: none;
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             display: inline-block;
         }
     }
@@ -127,7 +127,7 @@
         padding: 0 3px;
         display: none;
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             display: inline-block;
         }
     }
@@ -135,7 +135,7 @@
     .extend-view {
         display: inline-block;
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             display: none;
         }
     }

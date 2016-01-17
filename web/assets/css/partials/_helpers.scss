@@ -102,10 +102,10 @@
 }
 
 .u-mobile-only {
-    display: none;
+    display: block;
 
-    @include respond-to(md) {
-        display: block;
+    @include respond-up(lg) {
+        display: none;
     }
 }
 

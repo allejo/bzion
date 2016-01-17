@@ -6,7 +6,7 @@
         background-repeat: no-repeat;
         margin-bottom: $Settings-Page_Section-Margin;
 
-        @include respond-to(md) {
+        @include respond-up(md) {
             background-position: center center;
         }
 
@@ -34,7 +34,7 @@
             @include view-columns(xxl, 5);
             @include view-columns(sm, 12);
 
-            @include respond-to(sm) {
+            @include respond-up(sm) {
                 margin-bottom: $Settings-Page_Section-Margin;
             }
 
@@ -86,7 +86,7 @@
 
                     margin-bottom: $Settings-Page_Section-Small_Margin;
 
-                    @include respond-to(xs) {
+                    @include respond-up(xs) {
                         &:nth-child(n+3) {
                             margin-top: 15px;
                         }
@@ -104,7 +104,7 @@
 
                                 display: block;
 
-                                @include respond-to(xs) {
+                                @include respond-up(xs) {
                                     height: 55px;
                                     width: 55px;
                                 }

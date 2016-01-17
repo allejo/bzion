@@ -4,7 +4,7 @@
     @include element('bullet') {
         @include view-container();
 
-        @include respond-to(sm) {
+        @include respond-up(sm) {
             margin-bottom: 15px;
 
             &:last-child {
@@ -27,7 +27,7 @@
         }
     }
 
-    @include respond-to(sm) {
+    @include respond-up(sm) {
         margin: {
             bottom: 10px;
             top: 10px;

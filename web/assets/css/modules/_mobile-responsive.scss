@@ -1,3 +1,7 @@
+@function next-breakpoint($breakpoint) {
+    @return get-next-key($breakpoints, $breakpoint);
+}
+
 /// Similar to `respond-to()`, this mixin will restrict the content to only the specified Breakpoint and will not apply
 /// to a larger Breakpoint. This mixin will take Breakpoints with no larger or smaller Breakpoints and handle them
 /// appropriately with an efficient media query.
@@ -22,7 +26,7 @@
 
 @mixin respond-only-to($media_list...) {
     @each $media in $media_list {
-        $nextBreakPoint: get-next-key($breakpoints, $media);
+        $nextBreakPoint: next-breakpoint($media);
 
         @if $nextBreakPoint == null {
             @include media(">=" + $media) {
@@ -43,6 +47,44 @@
 }
 
 
+/// The specified content will be applied only to a specific range. If the start Breakpoint is `xs`, then it will
+/// automatically use only the max-width.
+///
+/// @content
+///
+/// @param {Breakpoint} $start - The Breakpoint the media query will be applied from
+/// @param {Breakpoint} $end   - The Breakpoint the media query will be applied to
+///
+/// @example scss - Usage
+///   .xs-to-md {
+///       @include respond-from(xs, md) {
+///           display: block;
+///       }
+///   }
+///
+/// @example css - CSS Output
+///   @media only screen and (max-width: 992px) {
+///       .xs-to-md {
+///           display: block;
+///       }
+///   }
+
+@mixin respond-from($start, $end) {
+    $endBreakpoint: next-breakpoint($end);
+
+    @if map-get($breakpoints, $start) == 0 {
+        @include media("<" + $endBreakpoint) {
+            @content;
+        }
+    }
+    @else {
+        @include media(">=" + $start, "<" + $endBreakpoint) {
+            @content;
+        }
+    }
+}
+
+
 /// Have the specified content inside of the mixin respond to the specified Breakpoint and larger. BZiON is mobile-first
 /// so everything applied to a phone will be reflected on a desktop.
 ///
@@ -52,7 +94,7 @@
 ///
 /// @example scss - Usage
 ///   .phablet-and-larger {
-///       @include respond-to(sm) {
+///       @include respond-up(sm) {
 ///           display: block;
 ///       }
 ///   }
@@ -64,7 +106,7 @@
 ///       }
 ///   }
 
-@mixin respond-to($viewSize) {
+@mixin respond-up($viewSize) {
     @if map-get($breakpoints, $viewSize) == 0 {
         @content;
     }

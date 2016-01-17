@@ -13,7 +13,7 @@
     border-left: $Border-Default;
     border-right: $Border-Default;
 
-    @include respond-to(sm) {
+    @include respond-up(sm) {
         display: none;
     }
 }

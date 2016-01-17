@@ -14,7 +14,7 @@
 ///   @include span-columns($columns);
 
 @mixin view-columns($viewSize, $columns) {
-    @include respond-to($viewSize) {
+    @include respond-up($viewSize) {
         @include make-columns($columns);
     }
 }
