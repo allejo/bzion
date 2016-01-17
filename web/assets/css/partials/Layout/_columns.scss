@@ -9,33 +9,32 @@
 
 // This class is meant to define a universal sidebar width
 .o-col--aside {
-    @include view-columns(xxl, 3);
-    @include view-columns(sm, 12);
+    @include view-columns(xs, 12);
+    @include view-columns(md, 3);
 }
 
 // This class is meant to be used as a sibling to `.o-col--aside` as it takes up the remaining space in the grid
 .o-col--main {
-    @include view-columns(xxl, 9);
-    @include view-columns(sm, 12);
+    @include view-columns(xs, 12);
+    @include view-columns(md, 9);
 }
 
 // Take up a third of the grid (3 columns)
 .o-col--third {
-    @include view-columns(xxl, 4);
+    @include view-columns(xs, 12);
     @include view-columns(md, 6);
-    @include view-columns(sm, 12);
+    @include view-columns(lg, 4);
 }
 
 // Take up a fourth of the grid (4 columns)
 .o-col--quarter {
-    @include view-columns(xxl, 3);
-    @include view-columns(md, 4);
-    @include view-columns(sm, 6);
     @include view-columns(xs, 12);
+    @include view-columns(md, 6);
+    @include view-columns(lg, 3);
 }
 
 // Take up half of the grid (6 columns)
 .o-col--half {
-    @include view-columns(xxl, 6);
-    @include view-columns(sm, 12);
+    @include view-columns(xs, 12);
+    @include view-columns(md, 6);
 }

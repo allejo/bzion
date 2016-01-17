@@ -59,3 +59,25 @@
         text-align: center;
     }
 }
+
+/// Get the next key in a map. This function will return null if the key provided is the last key in the map.
+///
+/// @param {Map}    $map - The target map we will be looking through
+/// @param {String} $key - The key where it's following key needs to be found
+///
+/// @example scss - Usage
+///   $map: (
+///     foo: 1,
+///     bar: 2,
+///     qux: 3
+///   );
+///
+///   $next-key: get-next-key($map, bar); // "qux"
+
+@function get-next-key($map, $key) {
+    $key-names: map-keys($map);
+    $n: index($key-names, $key);
+    $size: if($n < length($key-names), nth($key-names, $n + 1), null);
+
+    @return $size;
+}

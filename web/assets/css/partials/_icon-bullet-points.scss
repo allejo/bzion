@@ -2,7 +2,7 @@
     text-align: center;
 
     @include element('bullet') {
-        @include view-container(sm);
+        @include view-container();
 
         @include respond-to(sm) {
             margin-bottom: 15px;

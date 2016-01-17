@@ -43,32 +43,32 @@
 %container {
     @extend %margin-center;
 
-    width: map-get($breakpoints, xxl);
-
-    @include respond-to(xxl) {
-        width: map-get($breakpoints, xl);
+    padding: {
+        left: 15px;
+        right: 15px;
     }
+    width: 100%;
 
-    @include respond-to(xl) {
-        width: map-get($breakpoints, lg);
-    }
-
-    @include respond-to(lg) {
-        width: map-get($breakpoints, md);
-    }
-
-    @include respond-to(md) {
+    @include respond-to(sm) {
         padding: {
             left: 20px;
             right: 20px;
         }
-        width: 100%;
     }
 
-    @include respond-to(xs) {
-        padding: {
-            left: 15px;
-            right: 15px;
-        }
+    @include respond-to(lg) {
+        width: map-get($breakpoints, lg);
+    }
+
+    @include respond-to(xl) {
+        width: map-get($breakpoints, xl);
+    }
+
+    @include respond-to(xxl) {
+        width: map-get($breakpoints, xxl);
+    }
+
+    @include respond-to(xxxl) {
+        width: map-get($breakpoints, xxxl);
     }
 }
