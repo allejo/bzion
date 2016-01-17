@@ -24,6 +24,7 @@
     }
 }
 
+// The container of the links to public pages; e.g. News, Matches, etc. This element will have icon + text links
 .c-menulinks {
     flex: 1;
     padding-left: $Settings-Page_Section-Small_Margin;
@@ -55,6 +56,7 @@
         }
     }
 
+    // These are icon-only links in the menu that need special treatment based on the screen size
     .c-useroptions {
         display: none;
 
@@ -95,6 +97,8 @@
     }
 }
 
+// The container of the links to pages that typically require you to be logged in; e.g. Messages, Notifications, etc.
+// This element will have icon-only links
 .c-menuoptions {
     a {
         padding: {

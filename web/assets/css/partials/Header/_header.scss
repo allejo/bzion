@@ -2,6 +2,7 @@
 // globally in the base file
 $Color-Header_Border: #D4D4D4;
 
+// The entire top navigation bar
 .c-header {
     @include theme-specific("background-image", "header-bg");
 
@@ -47,6 +48,7 @@ $Color-Header_Border: #D4D4D4;
     top: 10px;
 }
 
+// The website's heading and icon/logo
 .c-branding {
     align-items: center;
     display: flex;
@@ -61,6 +63,7 @@ $Color-Header_Border: #D4D4D4;
     }
 }
 
+// The set of bars to expand the menu on mobile devices
 .c-mobilemenu {
     @include theme-specific("color", "header-color");
 

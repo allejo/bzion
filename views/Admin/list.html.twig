@@ -15,7 +15,7 @@
         <section class="o-container">
             {% for section in role_sections %}
                 <section class="o-section">
-                    <p class="c-button c-button--{{ section.role.displayColor }} c-button--display">
+                    <p class="c-button c-button--{{ section.role.displayColor }} c-button--skinny c-button--no-click c-button--no-hover">
                         {% if section.role.displayIcon is not null %}
                             <i class="fa {{ section.role.displayIcon }}"></i>
                         {% endif %}
