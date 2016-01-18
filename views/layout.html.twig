@@ -56,9 +56,27 @@
             {% endfor %}
         </section>
 
-        {% block content %}
+        <main class="{{ scopeClass | default('') }}">
+            {% block pageHeader %}
+                <section class="c-page__header">
+                    <div class="o-container">
+                        <section class="c-page__header__title">
+                            {% block pageTitle %}{% endblock %}
+                        </section>
 
-        {% endblock %}
+                        <section class="c-page__header__options">
+                            {% for button in pageButtons %}
+                                {% if button.condition %}
+                                    <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}"><i class="fa fa-{{ button.icon }}"></i> {{ button.text }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </section>
+                    </div>
+                </section>
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+        </main>
 
         <footer class="c-footer">
             <section class="c-footer__copyright">
@@ -127,7 +145,7 @@
 
         {% if app.debug %}
             <script src="{{ asset('assets/js/debug.js') }}"></script>
-            <script src="//localhost:35729/livereload.js"></script>
+            <script src="{{ request.schemeAndHTTPHost }}:35729/livereload.js"></script>
         {% endif %}
 
         {{ configuration.count }}

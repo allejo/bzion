@@ -105,7 +105,7 @@
     display: block;
 
     @include respond-up(lg) {
-        display: none;
+        display: none !important;
     }
 }
 

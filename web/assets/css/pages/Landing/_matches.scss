@@ -8,4 +8,9 @@
     border-bottom: $Border-Default;
     margin-top: $Settings-Page_Section-Small_Margin;
     padding-bottom: $Settings-Page_Section-Small_Margin;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
 }
