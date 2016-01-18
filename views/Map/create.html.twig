@@ -2,9 +2,10 @@
 
 {% block title %}Maps :: New Map{% endblock %}
 
+{% block pageTitle %}
+    <h1>Create Map</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Map/form.html.twig" with {
-        'pageTitle': 'Create Map',
-        'form': form }
-    %}
+    {% include "Map/form.html.twig" with { 'form': form } %}
 {% endblock %}

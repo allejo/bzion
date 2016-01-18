@@ -2,11 +2,12 @@
 
 {% block title %}Matches :: New Match{% endblock %}
 
+{% block pageTitle %}
+    <h1>Enter Match</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Match/form.html.twig" with {
-        'pageTitle': 'Enter Match',
-        'form': form
-    } %}
+    {% include "Match/form.html.twig" with { 'form': form } %}
 {% endblock %}
 
 {% block javascripts %}

@@ -2,11 +2,12 @@
 
 {% block title %}Bans :: New{% endblock %}
 
+{% block pageTitle %}
+    <h1>Create Ban</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Ban/form.html.twig" with {
-        'pageTitle': "Create Ban",
-        'form': form }
-    %}
+    {% include "Ban/form.html.twig" with { 'form': form } %}
 {% endblock %}
 
 {% block javascripts %}

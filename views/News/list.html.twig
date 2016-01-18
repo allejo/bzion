@@ -1,5 +1,6 @@
 {% extends 'layout.html.twig' %}
 
+{% set scopeClass = "s-newsstand" %}
 {% set pageButtons = [
     {
         'color': 'blue',
@@ -18,35 +19,27 @@
     {% endif %}
 {% endblock %}
 
+{% block pageTitle %}
+    <h1>
+        League News
+        {% if category %}
+            in '{{ category.name }}' category
+        {% endif %}
+    </h1>
+{% endblock %}
+
 {% block content %}
-    <main class="c-page s-newsstand">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>
-                        League News
-                        {% if category %}
-                            in '{{ category.name }}' category
-                        {% endif %}
-                    </h1>
-                </section>
+    <section class="o-container">
+        <section class="o-row">
+            {% include "News/categories.html.twig" %}
 
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-            </div>
-        </section>
+            <section class="o-col--main">
+                {% for article in news %}
+                    {% include "News/article.html.twig" with { 'article': article } %}
+                {% endfor %}
 
-        <section class="o-container">
-            <section class="o-row">
-                {% include "News/categories.html.twig" %}
-
-                <section class="o-col--main">
-                    {% for article in news %}
-                        {% include "News/article.html.twig" with { 'article': article } %}
-                    {% endfor %}
-
-                    {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
-                </section>
+                {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
             </section>
         </section>
-    </main>
+    </section>
 {% endblock %}

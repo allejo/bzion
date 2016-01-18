@@ -1,19 +1,13 @@
 {% extends 'layout.html.twig' %}
 
-{% block content %}
-    <main class="c-page">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>We'll be right back</h1>
-                </section>
-            </div>
-        </section>
+{% block pageTitle %}
+    <h1>We'll be right back</h1>
+{% endblock %}
 
-        <section class="o-container s-user-html">
-            <p>We are currently performing some maintenance on this website; this most likely means we're fixing things that brad broke.</p>
-            <p>Check back later!</p>
-            <img class="u-horizontal-center" src="{{ asset('assets/imgs/maintenance.png') }}" alt="Under maintenance">
-        </section>
-    </main>
+{% block content %}
+    <section class="o-container s-user-html">
+        <p>We are currently performing some maintenance on this website; this most likely means we're fixing things that brad broke.</p>
+        <p>Check back later!</p>
+        <img class="u-horizontal-center" src="{{ asset('assets/imgs/maintenance.png') }}" alt="Under maintenance">
+    </section>
 {% endblock %}

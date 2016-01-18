@@ -2,6 +2,7 @@
 
 {% import _self as this %}
 
+{% set scopeClass = "s-matches" %}
 {% set pageButtons = [
     {
         'color': 'blue',
@@ -20,6 +21,10 @@
     {% endif %}
 {% endblock %}
 
+{% block pageTitle %}
+    <h1>{{ block('title') }}</h1>
+{% endblock %}
+
 {% macro team_summary(match, team) %}
     <div class="c-match-summary__team__image">
         <img src="{{ team.avatar | imagine_filter('small_thumb') }}" />
@@ -33,69 +38,57 @@
 {% endmacro %}
 
 {% block content %}
-    <main class="c-page s-matches">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>Matches</h1>
-                </section>
+    <section class="o-container">
+        <section class="c-match-history">
+            {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
+            {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
+            {% set lastMatchDate = "" %}
 
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-            </div>
-        </section>
+            {% for match in matches %}
+                {% set currentMatchDate = match.timestamp.format(dateFormat) %}
 
-        <section class="o-container">
-            <section class="c-match-history">
-                {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
-                {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
-                {% set lastMatchDate = "" %}
-
-                {% for match in matches %}
-                    {% set currentMatchDate = match.timestamp.format(dateFormat) %}
-
-                    {% if lastMatchDate != currentMatchDate %}
-                        {% if not loop.first %} {# Close previous date's container #}
-                            </section>
-                        {% endif %}
-
-                        <section class="c-match-history__date">
-                            {% set currentYear = "now" | date("Y") %}
-
-                            <h4>
-                                {%- if match.timestamp.year != currentYear -%}
-                                    {%- set format = dateFormatArchive -%}
-                                {%- else -%}
-                                    {%- set format = dateFormat -%}
-                                {%- endif -%}
-                                {{ match.timestamp | humanTime(format, tooltip = false) }}
-                            </h4>
-                        </section>
-
-                        <section>
-                    {% endif %}
-
-                    <article class="c-match-summary">
-                        <div class="c-match-summary__team c-match-summary__team--winner">
-                            {{ this.team_summary(match, match.winner) }}
-                        </div>
-                        <div class="c-match-summary__team c-match-summary__team--loser">
-                            {{ this.team_summary(match, match.loser) }}
-                        </div>
-                    </article>
-
-                    {% set lastMatchDate = match.timestamp.format(dateFormat) %}
-
-                    {% if loop.last %} {# Close last date's container #}
+                {% if lastMatchDate != currentMatchDate %}
+                    {% if not loop.first %} {# Close previous date's container #}
                         </section>
                     {% endif %}
-                {% endfor %}
 
-                <section>
-                    {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
-                </section>
+                    <section class="c-match-history__date">
+                        {% set currentYear = "now" | date("Y") %}
+
+                        <h4>
+                            {%- if match.timestamp.year != currentYear -%}
+                                {%- set format = dateFormatArchive -%}
+                            {%- else -%}
+                                {%- set format = dateFormat -%}
+                            {%- endif -%}
+                            {{ match.timestamp | humanTime(format, tooltip = false) }}
+                        </h4>
+                    </section>
+
+                    <section>
+                {% endif %}
+
+                <article class="c-match-summary">
+                    <div class="c-match-summary__team c-match-summary__team--winner">
+                        {{ this.team_summary(match, match.winner) }}
+                    </div>
+                    <div class="c-match-summary__team c-match-summary__team--loser">
+                        {{ this.team_summary(match, match.loser) }}
+                    </div>
+                </article>
+
+                {% set lastMatchDate = match.timestamp.format(dateFormat) %}
+
+                {% if loop.last %} {# Close last date's container #}
+                    </section>
+                {% endif %}
+            {% endfor %}
+
+            <section>
+                {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
             </section>
         </section>
-    </main>
+    </section>
 {% endblock %}
 
 {% block javascripts %}

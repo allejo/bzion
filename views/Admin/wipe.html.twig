@@ -1,55 +1,53 @@
 {% extends 'layout.html.twig' %}
 
+{# TODO: These are not bans! #}
+{% set scopeClass = "bans" %}
+
 {% block title %}Deleted objects{% endblock %}
 
-{% block content %}
-    {# TODO: These are not bans! #}
-    <main class="bans">
-        <section class="content_header">
-            <article class="wrapper">
-                <h1>Deleted Objects</h1>
-            </article>
-        </section>
+{% block pageTitle %}
+    <h1>Deleted Objects</h1>
+{% endblock %}
 
-        <section class="punishments">
-            <article class="css-table ban_list">
-                <div class="row header">
+{% block content %}
+    <section class="punishments">
+        <article class="css-table ban_list">
+            <div class="row header">
+                <div class="column">
+                    <strong>Type</strong>
+                </div>
+                <div class="column">
+                    <strong>Name</strong>
+                </div>
+                <div class="column">
+                    <strong>Delete</strong>
+                </div>
+            </div>
+            {% for model in models %}
+                <div class="row">
+                    {% set icons = {
+                        ban: 'ban',
+                        map: 'map-o',
+                        match: 'gamepad',
+                        news: 'newspaper-o',
+                        news_category: 'tag',
+                        page: 'file-text-o',
+                        player: 'user',
+                        server: 'tasks',
+                        team: 'users'
+                    }%}
+
                     <div class="column">
-                        <strong>Type</strong>
+                        {{ model.typeForHumans|capitalize }}
                     </div>
                     <div class="column">
-                        <strong>Name</strong>
+                        <i class="fa fa-{{ icons[model.type] }}"></i> {{ link_to(model, linkAll = true) }}
                     </div>
                     <div class="column">
-                        <strong>Delete</strong>
+                        {{ link_to(model, icon = 'trash', action='delete', class= 'button orange', linkAll = true) }}
                     </div>
                 </div>
-                {% for model in models %}
-                    <div class="row">
-                        {% set icons = {
-                            ban: 'ban',
-                            map: 'map-o',
-                            match: 'gamepad',
-                            news: 'newspaper-o',
-                            news_category: 'tag',
-                            page: 'file-text-o',
-                            player: 'user',
-                            server: 'tasks',
-                            team: 'users'
-                        }%}
-
-                        <div class="column">
-                            {{ model.typeForHumans|capitalize }}
-                        </div>
-                        <div class="column">
-                            <i class="fa fa-{{ icons[model.type] }}"></i> {{ link_to(model, linkAll = true) }}
-                        </div>
-                        <div class="column">
-                            {{ link_to(model, icon = 'trash', action='delete', class= 'button orange', linkAll = true) }}
-                        </div>
-                    </div>
-                {% endfor %}
-            </article>
-        </section>
-    </main>
+            {% endfor %}
+        </article>
+</section>
 {% endblock %}

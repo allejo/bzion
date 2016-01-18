@@ -12,20 +12,12 @@
 
 {% block title %}{{ type|plural|capitalize }} Error{% endblock %}
 
+{% block pageTitle %}
+    <h1>{{ block('title') }}</h1>
+{% endblock %}
+
 {% block content %}
-    <main class="c-page">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>{{ block('title') }}</h1>
-                </section>
-
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-            </div>
-        </section>
-
-        <section class="o-container">
-            {{ message }}
-        </section>
-    </main>
+    <section class="o-container">
+        {{ message }}
+    </section>
 {% endblock %}

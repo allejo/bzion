@@ -2,9 +2,10 @@
 
 {% block title %}News :: {{ article.subject }} :: Edit{% endblock %}
 
+{% block pageTitle %}
+    <h1>Editing :: {{ article.subject }}</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "News/form.html.twig" with {
-        'pageTitle': 'Editing :: ' ~ article.subject,
-        'form': form }
-    %}
+    {% include "News/form.html.twig" with { 'form': form } %}
 {% endblock %}

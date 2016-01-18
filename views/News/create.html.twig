@@ -2,9 +2,10 @@
 
 {% block title %}News :: New Article{% endblock %}
 
+{% block pageTitle %}
+    <h1>Create News Post</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "News/form.html.twig" with {
-        'pageTitle': 'Create News Post',
-        'form': form }
-    %}
+    {% include "News/form.html.twig" with { 'form': form } %}
 {% endblock %}

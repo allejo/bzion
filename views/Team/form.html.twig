@@ -1,52 +1,42 @@
-<main class="c-page s-team-form">
-    <section class="c-page__header">
-        <div class="c-page__header__container">
-            <section class="c-page__header__container__title">
-                <h1>{{ pageTitle }}</h1>
-            </section>
-        </div>
+{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
+    {{ form_errors(form) }}
+    <section class="o-row c-form__section c-form__section--sidebar">
+        <article class="o-col--main c-form__section__main">
+            {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
+            {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
+        </article>
+
+        <aside class="o-col--aside c-avatar-manager c-form__section__aside">
+            <div class="c-avatar-manager__preview">
+                {# Only show an avatar if we're editing an existing team #}
+                {% if avatar is not null %}
+                    <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
+                {% endif %}
+
+                {# Only show the option to delete an avatar if we're editing an existing team #}
+                {% if form.delete_avatar is not null %}
+                    <div class="c-avatar-manager__preview__delete">
+                        {{ form_row(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="c-avatar-manager__uploader">
+                {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
+            </div>
+        </aside>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-        {{ form_errors(form) }}
-        <section class="o-row c-form__section c-form__section--sidebar">
-            <article class="o-col--main c-form__section__main">
-                {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
-                {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
-            </article>
+    <section class="c-form__section c-form__section--inline">
+        {# Only show the option to edit leadership if we're editing an existing team #}
+        {% if form.leader is not null %}
+            {{ form_row(form.leader, { 'container_attr': { 'class': 'c-form__group' } }) }}
+        {% endif %}
 
-            <aside class="o-col--aside c-avatar-manager c-form__section__aside">
-                <div class="c-avatar-manager__preview">
-                    {# Only show an avatar if we're editing an existing team #}
-                    {% if avatar is not null %}
-                        <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
-                    {% endif %}
+        {{ form_row(form.status, { 'container_attr': { 'class': 'c-form__group' } }) }}
+    </section>
 
-                    {# Only show the option to delete an avatar if we're editing an existing team #}
-                    {% if form.delete_avatar is not null %}
-                        <div class="c-avatar-manager__preview__delete">
-                            {{ form_row(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="c-avatar-manager__uploader">
-                    {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
-                </div>
-            </aside>
-        </section>
-
-        <section class="c-form__section c-form__section--inline">
-            {# Only show the option to edit leadership if we're editing an existing team #}
-            {% if form.leader is not null %}
-                {{ form_row(form.leader, { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {% endif %}
-
-            {{ form_row(form.status, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </section>
-
-        <section class="c-form__section">
-            {{ form_rest(form) }}
-        </section>
-    {{ form_end(form) }}
-</main>
+    <section class="c-form__section">
+        {{ form_rest(form) }}
+    </section>
+{{ form_end(form) }}

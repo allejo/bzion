@@ -17,74 +17,66 @@
     }
 ] %}
 
+{% block pageTitle %}
+    <h1>{{ ban.victim.username }}'s Ban</h1>
+{% endblock %}
+
 {% block title %}Bans{% endblock %}
 
 {% block content %}
-    <main class="c-page">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>{{ ban.victim.username }}'s Ban</h1>
-                </section>
-
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-            </div>
+    <section class="o-container">
+        <section class="o-section">
+            <strong>Victim</strong>
+            <p>{{ link_to(ban.victim) }}</p>
         </section>
 
-        <section class="o-container">
-            <section class="o-section">
-                <strong>Victim</strong>
-                <p>{{ link_to(ban.victim) }}</p>
-            </section>
-
-            <section class="o-section">
-                <strong>Banned by</strong>
-                <p>{{ link_to(ban.author) }}</p>
-            </section>
-
-            <section class="o-section">
-                <strong>Date</strong>
-                <p>{{ ban.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
-            </section>
-
-            <section class="o-section">
-                <strong>Expiration</strong>
-                <p>
-                    {% if ban.willExpire %}
-                        {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
-                    {% else %}
-                        <em>Until further notice</em>
-                    {% endif %}
-                </p>
-            </section>
-
-            <section class="o-section">
-                <strong>Reason</strong>
-                <article class="s-markdown">
-                    {{ ban.reason | markdown }}
-                </article>
-            </section>
-
-            {% if me.hasPermission("edit_ban") %}
-                <section class="o-section">
-                    <strong>Server Ban Message</strong>
-                    <p>{{ ban.serverMessage | raw }}</p>
-                </section>
-
-                <section class="o-section">
-                    <strong>Allow Server Join</strong>
-                    <p>{{ ban.allowedServerJoin | yesNo }}</p>
-                </section>
-
-                <section class="o-section">
-                    <strong>Banned IP Addresses</strong>
-                    <ul>
-                        {% for ip in ban.ipAddresses %}
-                            <li>{{ ip }}</li>
-                        {% endfor %}
-                    </ul>
-                </section>
-            {% endif %}
+        <section class="o-section">
+            <strong>Banned by</strong>
+            <p>{{ link_to(ban.author) }}</p>
         </section>
-    </main>
+
+        <section class="o-section">
+            <strong>Date</strong>
+            <p>{{ ban.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
+        </section>
+
+        <section class="o-section">
+            <strong>Expiration</strong>
+            <p>
+                {% if ban.willExpire %}
+                    {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
+                {% else %}
+                    <em>Until further notice</em>
+                {% endif %}
+            </p>
+        </section>
+
+        <section class="o-section">
+            <strong>Reason</strong>
+            <article class="s-markdown">
+                {{ ban.reason | markdown }}
+            </article>
+        </section>
+
+        {% if me.hasPermission("edit_ban") %}
+            <section class="o-section">
+                <strong>Server Ban Message</strong>
+                <p>{{ ban.serverMessage | raw }}</p>
+            </section>
+
+            <section class="o-section">
+                <strong>Allow Server Join</strong>
+                <p>{{ ban.allowedServerJoin | yesNo }}</p>
+            </section>
+
+            <section class="o-section">
+                <strong>Banned IP Addresses</strong>
+                <ul>
+                    {% for ip in ban.ipAddresses %}
+                        <li>{{ ip }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    </section>
 {% endblock %}

@@ -2,9 +2,10 @@
 
 {% block title %}Create Page{% endblock %}
 
+{% block pageTitle %}
+    <h1>Create New Page</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Page/form.html.twig" with {
-        'pageTitle': 'Create New Page',
-        'form': form
-    } %}
+    {% include "Page/form.html.twig" with { 'form': form } %}
 {% endblock %}

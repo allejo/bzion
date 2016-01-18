@@ -1,10 +1,11 @@
 {% extends 'layout.html.twig' %}
 
+{% block pageTitle %}
+    <h1>Editing :: {{ ban.victim.name }}'s ban</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Ban/form.html.twig" with {
-        'pageTitle': 'Editing :: ' ~ ban.victim.name ~ "'s ban",
-        'form': form }
-    %}
+    {% include "Ban/form.html.twig" with { 'form': form } %}
 {% endblock %}
 
 {% block javascripts %}
