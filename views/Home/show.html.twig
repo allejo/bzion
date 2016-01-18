@@ -1,45 +1,55 @@
 {% extends 'layout.html.twig' %}
 
+{% import '/Match/widget.html.twig' as matchUi %}
+
 {% block content %}
     <main class="s-landing">
-        <section class="c-jumbotron">
+        <section class="c-jumbotron c-jumbotron--landing">
             <article>
                 <h1>{{ app.siteWelcome }}</h1>
                 <h2>{{ app.siteSlug }}</h2>
-
-                {% if me is invalid %}
-                    <a class="c-button c-button--green" href="{{ loginUrl }}">Register</a>
-                {% endif %}
             </article>
         </section>
 
         <section class="o-container">
-            <section class="o-row c-icon-bullet-points">
-                <article class="c-icon-bullet-points__bullet">
-                    <section class="c-circular-fa u-gamepad-fix c-icon-bullet-points__bullet__icon">
-                        <i class="fa fa-gamepad"></i>
+            <section class="o-row o-section c-ibullets">
+                <article class="c-ibullets__bullet">
+                    <section class="c-ibullets__bullet__icon">
+                        <img src="http://placehold.it/450x255" alt="">
                     </section>
-                    <div class="c-icon-bullet-points__bullet__content">
-                        <h3><a href="{{ path("server_list") }}">Servers</a></h3>
-                        <p>Where can I play official matches?</p>
+
+                    <div class="c-ibullets__bullet__content">
+                        <h3>
+                            <a href="{{ path("server_list") }}">Servers</a>
+                        </h3>
+
+                        <p>Our servers are located close to home to provide the least latency to players from all around the world.</p>
                     </div>
                 </article>
-                <article class="c-icon-bullet-points__bullet">
-                    <section class="c-circular-fa c-icon-bullet-points__bullet__icon">
-                        <i class="fa fa-trophy"></i>
+
+                <article class="c-ibullets__bullet">
+                    <section class="c-ibullets__bullet__icon">
+                        <img src="http://placehold.it/450x255" alt="">
                     </section>
-                    <div class="c-icon-bullet-points__bullet__content">
-                        <h3><a href="{{ path("match_list") }}">Matches</a></h3>
-                        <p>Match against the best of the best</p>
+                    <div class="c-ibullets__bullet__content">
+                        <h3>
+                            <a href="{{ path("match_list") }}">Matches</a>
+                        </h3>
+
+                        <p>Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.</p>
                     </div>
                 </article>
-                <article class="c-icon-bullet-points__bullet">
-                    <section class="c-circular-fa c-icon-bullet-points__bullet__icon">
-                        <i class="fa fa-info"></i>
+
+                <article class="c-ibullets__bullet">
+                    <section class="c-ibullets__bullet__icon">
+                        <img src="http://placehold.it/450x255" alt="">
                     </section>
-                    <div class="c-icon-bullet-points__bullet__content">
-                        <h3><a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">Getting Started</a></h3>
-                        <p>Need help getting started? Join the spawn list!</p>
+                    <div class="c-ibullets__bullet__content">
+                        <h3>
+                            <a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">Getting Started</a>
+                        </h3>
+
+                        <p>Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!</p>
                     </div>
                 </article>
             </section>
@@ -47,11 +57,11 @@
             <hr>
 
             <section class="c-latest-updates">
-                <aside class="c-news-container">
+                <aside class="c-latest-news">
                     <h2>Latest News</h2>
-                    <ul class="c-news-container__newsstand">
+                    <ul>
                         {% for post in news %}
-                            <li>
+                            <li class="c-latest-news__article">
                                 <h3>{{ link_to(post) }}</h3>
                                 <p>by {{ link_to(post.author) }}</p>
                             </li>
@@ -59,26 +69,14 @@
                     </ul>
                 </aside>
 
-                <section class="c-match-container">
+                <section class="c-latest-matches">
                     <h2>Recent Matches</h2>
-                    <section class="o-row o-row--no-margin c-match-container__matches">
-                        {% for match in matches %}
-                            <article class="c-match-container__matches__match">
-                                <div class="c-match-container__matches__match__team-container">
-                                    <div class="c-match-container__matches__match__team-container__team" title="{{ match.winner.name }}">
-                                        <img src="{{ match.winner.avatar | imagine_filter('medium_thumb') }}" class="team_avatar">
-                                        <strong>{{ match.score(match.winner.id) }}</strong>
-                                    </div>
-                                </div>
-                                <div class="c-match-container__matches__match__team-container">
-                                    <div class="c-match-container__matches__match__team-container__team" title="{{ match.loser.name }}">
-                                        <img src="{{ match.loser.avatar | imagine_filter('medium_thumb') }}" class="team_avatar">
-                                        <strong>{{ match.score(match.loser.id) }}</strong>
-                                    </div>
-                                </div>
 
-                                <a class="c-match-container__matches__match__stats" href="#">Match Stats &raquo;</a>
-                            </article>
+                    <section class="o-row">
+                        {% for match in matches %}
+                            <div class="c-latest-matches__match">
+                                {{ matchUi.widget(match) }}
+                            </div>
                         {% endfor %}
                     </section>
                 </section>

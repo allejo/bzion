@@ -54,11 +54,7 @@ hr {
     border: 0;
     height: 1px;
     margin: 50px auto;
-    width: $Settings-Global_Width;
-
-    @include respond-up(md) {
-        width: 100%;
-    }
+    width: 100%;
 
     @include respond-up(sm) {
         margin: 30px auto;

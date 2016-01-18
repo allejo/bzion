@@ -1,6 +1,6 @@
 // This is a convenience class that defines a horizontal section of a page. This is typically used in conjunction with
 // `.o-row` but these styles should NOT be applied to `.o-row` because a grid system does not imply that it is an
-// actually page section
+// actual page section
 .o-section {
     margin-bottom: $Settings-Page_Section-Margin;
 
@@ -23,4 +23,13 @@
             }
         }
     }
+}
+
+.c-page {
+
+}
+
+.c-page__header {
+    border-bottom: $Border-Default;
+    margin-bottom: $Settings-Page_Section-Margin;
 }

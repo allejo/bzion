@@ -1,0 +1,17 @@
+.c-latest-updates {
+    @include view-container();
+
+    .c-latest-news {
+        @include view-columns(xs, 12);
+        @include view-columns(md, 6);
+        @include view-columns(lg, 4);
+        @include view-columns(xl, 3);
+    }
+
+    .c-latest-matches {
+        @include view-columns(xs, 12);
+        @include view-columns(md, 6);
+        @include view-columns(lg, 8);
+        @include view-columns(xl, 9);
+    }
+}

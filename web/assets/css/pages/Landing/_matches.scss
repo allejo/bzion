@@ -1,0 +1,11 @@
+.c-latest-matches {
+}
+
+.c-latest-matches__match {
+    @include view-columns(xs, 12);
+    @include view-columns(xxl, 6);
+
+    border-bottom: $Border-Default;
+    margin-top: $Settings-Page_Section-Small_Margin;
+    padding-bottom: $Settings-Page_Section-Small_Margin;
+}

@@ -83,7 +83,6 @@
 @import 'partials/flashbag';
 @import 'partials/font-awesome';
 @import 'partials/footer';
-@import 'partials/icon-bullet-points';
 @import 'partials/jumbotron';
 @import 'partials/markdown';
 @import 'partials/pagination';
@@ -96,6 +95,14 @@
 //    (CSS for specific pages on the website)
 //
 
+@import 'pages/Landing/base';
+@import 'pages/Landing/jumbotron';
+@import 'pages/Landing/bullet-points';
+@import 'pages/Landing/news';
+@import 'pages/Landing/matches';
+
+@import 'pages/Match/widget';
+
 @import 'pages/Messaging/inbox';
 @import 'pages/Messaging/compose';
 @import 'pages/Messaging/messenger';
@@ -106,7 +113,7 @@
 @import 'pages/matches';
 @import 'pages/news';
 @import 'pages/notifications';
-@import 'pages/pages';
+//@import 'pages/pages';
 @import 'pages/players';
 @import 'pages/teams';
 @import 'pages/servers';

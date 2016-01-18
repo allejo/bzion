@@ -1,28 +1,4 @@
-@include scope('landing') {
-    @include component('jumbotron') {
-        background-attachment: scroll;
-        background-image: url('../imgs/cover_photo.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        @include respond-up(md) {
-            background-position: center center;
-        }
-
-        @include component('button') {
-            margin-top: 40px;
-        }
-    }
-
-    @include component('icon-bullet-points') {
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        @include element("bullet") {
-            @include view-columns(xxl, 4);
-            @include view-columns(sm, 12);
-        }
-    }
+@include scope('landing-deprecated') {
 
     @include component('latest-updates') {
         @extend %container;

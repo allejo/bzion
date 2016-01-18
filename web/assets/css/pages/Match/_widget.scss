@@ -1,0 +1,41 @@
+@mixin loserOrder() {
+    .c-matchwidget__team__image {
+        order: 3;
+    }
+
+    .c-matchwidget__team__name {
+        text-align: right;
+        order: 2;
+    }
+
+    .c-matchwidget__team__score {
+        order: 1;
+    }
+}
+
+.c-matchwidget {
+    @include view-container();
+}
+
+.c-matchwidget--forcemobile {
+
+}
+
+.c-matchwidget__team {
+    @include view-columns(xs, 12);
+    @include view-columns(xxl, 6);
+
+    align-items: center;
+    display: flex;
+}
+
+.c-matchwidget__team__name {
+    flex: 1;
+    padding-left: $Settings-Page_Section-Small_Margin;
+}
+
+.c-matchwidget__loser {
+    //@include respond-up(md) {
+    //    @include loserOrder();
+    //}
+}
