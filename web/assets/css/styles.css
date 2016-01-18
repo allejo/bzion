@@ -67,9 +67,9 @@ table {
   margin-left: auto;
   margin-right: auto; }
 
-.s-landing-deprecated .c-latest-updates .c-news-container__newsstand, .s-newsstand .c-categories, .s-team-profile .c-team__match-stats__visual__legend {
+.c-categories, .s-landing-deprecated .c-latest-updates .c-news-container__newsstand, .s-team-profile .c-team__match-stats__visual__legend {
   padding-left: 0; }
-  .s-landing-deprecated .c-latest-updates .c-news-container__newsstand li, .s-newsstand .c-categories li, .s-team-profile .c-team__match-stats__visual__legend li {
+  .c-categories li, .s-landing-deprecated .c-latest-updates .c-news-container__newsstand li, .s-team-profile .c-team__match-stats__visual__legend li {
     list-style-type: none; }
 
 .c-footer, .c-jumbotron article, .s-landing-deprecated .c-latest-updates, .o-container {
@@ -1888,6 +1888,86 @@ select {
     border-bottom: none;
     padding-bottom: 0; }
 
+.c-article {
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 15px;
+  padding-bottom: 15px; }
+  .c-article:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0; }
+
+.c-article__title {
+  font-size: 25px;
+  margin-bottom: 5px;
+  text-align: left; }
+  .t-light .c-article__title {
+    color: #258EC9; }
+  .t-dark .c-article__title {
+    color: #B8B8B8; }
+
+.c-article__date {
+  font-size: 13px; }
+  .t-light .c-article__date {
+    color: #656565; }
+  .t-dark .c-article__date {
+    color: #FFFFFF; }
+
+.c-article__content {
+  padding: 15px 0; }
+  .c-article__content > p {
+    margin: 5px 0 10px; }
+
+.c-article__meta {
+  font-size: 14px;
+  padding: 5px 0 0; }
+  .c-article__meta li {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 15px; }
+    .t-light .c-article__meta li {
+      color: #656565; }
+    .t-dark .c-article__meta li {
+      color: #FFFFFF; }
+    .c-article__meta li i {
+      margin-right: 3px; }
+
+.c-categories {
+  border: 1px solid #E9E9E9;
+  border-radius: 3px;
+  display: none; }
+  @media (min-width: 768px) {
+    .c-categories {
+      display: block; } }
+  .c-categories a {
+    display: block;
+    padding: 10px; }
+    .c-categories a i {
+      margin-right: 10px; }
+      .t-light .c-categories a i {
+        color: #656565; }
+      .t-dark .c-categories a i {
+        color: #FFFFFF; }
+  .c-categories li {
+    border-bottom: 1px solid #E9E9E9;
+    font-size: 14px; }
+    .c-categories li.active, .c-categories li:hover {
+      border-right: 2px solid #FF6700; }
+      .c-categories li.active:first-child, .c-categories li:hover:first-child {
+        border-top-right-radius: 3px; }
+      .c-categories li.active:last-child, .c-categories li:hover:last-child {
+        border-bottom-right-radius: 3px; }
+    .t-light .c-categories li.active {
+      background-color: #F7F7F7; }
+    .t-dark .c-categories li.active {
+      background-color: #70777f; }
+    .t-light .c-categories li:hover {
+      background-color: white; }
+    .t-dark .c-categories li:hover {
+      background-color: #979ea4; }
+    .c-categories li:last-child {
+      border-bottom: 0; }
+
 .c-matchwidget {
   display: flex;
   flex: 1 1 auto;
@@ -2473,87 +2553,6 @@ select {
       order: initial; }
   .c-match-summary:last-child {
     margin-bottom: 0; }
-
-.s-newsstand .o-layout {
-  margin-bottom: 30px; }
-
-.s-newsstand .c-article {
-  border-bottom: 1px solid #E9E9E9;
-  margin-bottom: 15px;
-  padding-bottom: 15px; }
-  .s-newsstand .c-article__title {
-    font-size: 25px;
-    margin-bottom: 5px; }
-    .t-light .s-newsstand .c-article__title {
-      color: #258EC9; }
-    .t-dark .s-newsstand .c-article__title {
-      color: #B8B8B8; }
-    @media (min-width: 768px) {
-      .s-newsstand .c-article__title {
-        text-align: left; } }
-  .s-newsstand .c-article__date {
-    font-size: 13px; }
-    .t-light .s-newsstand .c-article__date {
-      color: #656565; }
-    .t-dark .s-newsstand .c-article__date {
-      color: #FFFFFF; }
-  .s-newsstand .c-article__content {
-    padding: 15px 0; }
-    .s-newsstand .c-article__content > p {
-      margin: 5px 0 10px; }
-  .s-newsstand .c-article__meta {
-    font-size: 14px;
-    padding: 5px 0 0; }
-    .s-newsstand .c-article__meta li {
-      display: inline-block;
-      margin-left: 0;
-      margin-right: 15px; }
-      .t-light .s-newsstand .c-article__meta li {
-        color: #656565; }
-      .t-dark .s-newsstand .c-article__meta li {
-        color: #FFFFFF; }
-      .s-newsstand .c-article__meta li i {
-        margin-right: 3px; }
-  .s-newsstand .c-article:last-child {
-    border-bottom: 0;
-    margin-bottom: 0;
-    padding-bottom: 0; }
-
-.s-newsstand .c-categories {
-  border: 1px solid #E9E9E9;
-  border-radius: 3px; }
-  @media (min-width: 480px) {
-    .s-newsstand .c-categories {
-      display: none; } }
-  .s-newsstand .c-categories li {
-    border-bottom: 1px solid #E9E9E9;
-    font-size: 14px;
-    list-style: none; }
-    .s-newsstand .c-categories li a {
-      display: block;
-      padding: 10px; }
-      .s-newsstand .c-categories li a i {
-        margin-right: 10px; }
-        .t-light .s-newsstand .c-categories li a i {
-          color: #656565; }
-        .t-dark .s-newsstand .c-categories li a i {
-          color: #FFFFFF; }
-    .s-newsstand .c-categories li.active, .s-newsstand .c-categories li:hover {
-      border-right: 2px solid #FF6700; }
-      .s-newsstand .c-categories li.active:first-child, .s-newsstand .c-categories li:hover:first-child {
-        border-top-right-radius: 3px; }
-      .s-newsstand .c-categories li.active:last-child, .s-newsstand .c-categories li:hover:last-child {
-        border-bottom-right-radius: 3px; }
-    .t-light .s-newsstand .c-categories li.active {
-      background-color: #F7F7F7; }
-    .t-dark .s-newsstand .c-categories li.active {
-      background-color: #70777f; }
-    .t-light .s-newsstand .c-categories li:hover {
-      background-color: white; }
-    .t-dark .s-newsstand .c-categories li:hover {
-      background-color: #979ea4; }
-    .s-newsstand .c-categories li:last-child {
-      border-bottom: 0; }
 
 .s-notifications .c-notifications {
   padding-bottom: 10px;

@@ -1,6 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% set scopeClass = "s-newsstand" %}
 {% set pageButtons = [
     {
         'color': 'grey',
@@ -30,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
+    <section class="o-container o-section">
         <section class="o-row">
             {% include "News/categories.html.twig" %}
 
