@@ -42,21 +42,24 @@
 }
 
 @mixin profile-picture() {
+    margin-bottom: 30px;
+    text-align: center;
+
     img {
-        width: 100%;
+        width: 50%;
 
         @include respond-up(sm) {
-            width: 30%;
+            width: 40%;
         }
 
-        @include respond-up(xs) {
-            width: 40%;
+        @include respond-up(md) {
+            width: 100%;
         }
     }
 
-    @include respond-up(sm) {
-        margin-bottom: 30px;
-        text-align: center;
+    @include respond-up(lg) {
+        margin-bottom: 0;
+        text-align: right;
     }
 }
 
@@ -80,4 +83,10 @@
     $size: if($n < length($key-names), nth($key-names, $n + 1), null);
 
     @return $size;
+}
+
+
+@mixin size($value) {
+    height: $value;
+    width: $value;
 }

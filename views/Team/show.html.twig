@@ -1,62 +1,65 @@
 {% extends 'layout.html.twig' %}
 
-{% set scopeClass = "s-team-profile" %}
 {% set pageButtons = [
-{
-    'color': 'grey',
-    'url': team.url('edit'),
-    'icon': 'pencil',
-    'text': 'Edit',
-    'condition': me.canEdit(team)
-},
-{
-    color: 'blue',
-    url: path('message_compose', { recipients: 'team:' ~ team.id }),
-    icon: 'send',
-    text: 'Send Message',
-    condition: me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
-},
-{
-    'color': 'grey',
-    'url': team.url('join'),
-    'icon': 'plus',
-    'text': 'Join',
-    'condition': me is valid and me.team ~/~ team and me.isTeamless and team.status == 'open'
-},
-{
-    'color': 'grey',
-    'url': team.url('abandon'),
-    'icon': 'sign-out',
-    'text': 'Abandon',
-    'condition': me is valid and me.team ~~ team
-},
-{
-    'color': 'red',
-    'url': team.url('delete'),
-    'icon': 'trash-o',
-    'text': 'Delete',
-    'condition': me.canDelete(team)
-}
+    {
+        'color': 'grey',
+        'url': team.url('edit'),
+        'icon': 'pencil',
+        'text': 'Edit',
+        'condition': me.canEdit(team)
+    },
+    {
+        color: 'blue',
+        url: path('message_compose', { recipients: 'team:' ~ team.id }),
+        icon: 'send',
+        text: 'Send Message',
+        condition: me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+    },
+    {
+        'color': 'grey',
+        'url': team.url('join'),
+        'icon': 'plus',
+        'text': 'Join',
+        'condition': me is valid and me.team ~/~ team and me.isTeamless and team.status == 'open'
+    },
+    {
+        'color': 'grey',
+        'url': team.url('abandon'),
+        'icon': 'sign-out',
+        'text': 'Abandon',
+        'condition': me is valid and me.team ~~ team
+    },
+    {
+        'color': 'red',
+        'url': team.url('delete'),
+        'icon': 'trash-o',
+        'text': 'Delete',
+        'condition': me.canDelete(team)
+    }
 ] %}
 
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('includes/tipsy/src/stylesheets/tipsy.css') }}" />
+    <link rel="stylesheet" href="{{ asset('includes/tipsy/src/stylesheets/tipsy.css') }}" />
 {% endblock %}
 
 {% block pageTitle %}
-{{ team.rankImageLiteral | raw }}
+    {{ team.rankImageLiteral | raw }}
 
-<div>
-    <h1>{{ team.name }}</h1>
-    <small>{{ team.elo }}</small>
-</div>
+    <div class="c-team-title">
+        <h1>{{ team.name }}</h1>
+        <small>{{ team.elo }}</small>
+    </div>
 {% endblock %}
 
 {% block content %}
     <section class="o-container c-team">
         <section class="o-row o-section">
+            <section class="o-col--aside c-team__profile-picture">
+                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
+            </section>
+
             <section class="o-col--main c-team__information">
                 <p><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
                 {% spaceless %}
@@ -64,10 +67,6 @@
                         {{ team.description | markdown }}
                     </article>
                 {% endspaceless %}
-            </section>
-
-            <section class="o-col--aside c-team__profile-picture">
-                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
             </section>
         </section>
 
@@ -79,9 +78,9 @@
                         [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
                     </small>
                 </h4>
-                <section class="c-team__match-stats__visual">
-                    <canvas id="teamMatchStats" class="c-team__match-stats__visual__graph"></canvas>
-                    <ul class="c-team__match-stats__visual__legend">
+                <section class="c-team__match-stats__container">
+                    <canvas id="teamMatchStats" class="c-team__match-stats__graph"></canvas>
+                    <ul class="c-team__match-stats__legend">
                         <li>
                             <div id="winsColor" class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
                         </li>
@@ -133,18 +132,18 @@
 
             <section class="o-col--half c-team__matches">
                 <h4>Recent Matches</h4>
-                <article class="c-table">
+                <article class="c-table c-table--no-border c-table--no-hover">
                     {% for match in team.matches %}
-                        <a class="c-table__row" href="#">
-                        <span class="c-table__row__column u-date">
-                            {{ match.timestamp | humanTime('D, M d') }}
-                        </span>
-                        <span class="c-table__row__column u-opponent">
-                            <strong>vs.</strong> {{ match.opponent(team.id).name }}
-                        </span>
-                        <span class="c-table__row__column u-score">
-                            <strong class="u-match-outcome">{{ match.matchLetter(team.id) }}</strong> {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
-                        </span>
+                        <a class="c-table__row c-team__match" href="#">
+                            <span class="c-table__row__column c-team__match__date">
+                                {{ match.timestamp | humanTime('D, M d') }}
+                            </span>
+                            <span class="c-table__row__column c-team__match__opponent">
+                                <strong>vs.</strong> {{ match.opponent(team.id).name }}
+                            </span>
+                            <span class="c-table__row__column c-team__match__score">
+                                <strong class="u-match-outcome">{{ match.matchLetter(team.id) }}</strong> {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
+                            </span>
                         </a>
                     {% endfor %}
                 </article>

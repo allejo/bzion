@@ -12,16 +12,16 @@
         }
     }
 
-    .o-row__column--half,
-    .o-row__column--third,
-    .o-row__column--quarter {
+    .o-col--half,
+    .o-col--third,
+    .o-col--quarter {
         margin-bottom: $Settings-Page_Section-Small_Margin;
 
         &:last-child {
             margin-bottom: 0;
         }
 
-        @include respond-up(sm) {
+        @include respond-up(md) {
             margin-bottom: 0;
         }
     }
