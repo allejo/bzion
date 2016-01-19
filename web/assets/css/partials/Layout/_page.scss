@@ -2,10 +2,10 @@
 // `.o-row` but these styles should NOT be applied to `.o-row` because a grid system does not imply that it is an
 // actual page section
 .o-section {
-    margin-bottom: $Settings-Page_Section-Margin;
+    margin-bottom: $Settings-Page_Section-Small_Margin;
 
-    @include respond-up(sm) {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
+    @include respond-up(md) {
+        margin-bottom: $Settings-Page_Section-Margin;
 
         &:last-child {
             margin-bottom: $Settings-Page_Section-Margin;
@@ -15,12 +15,14 @@
     .o-row__column--half,
     .o-row__column--third,
     .o-row__column--quarter {
-        @include respond-up(sm) {
-            margin-bottom: $Settings-Page_Section-Small_Margin;
+        margin-bottom: $Settings-Page_Section-Small_Margin;
 
-            &:last-child {
-                margin-bottom: 0;
-            }
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        @include respond-up(sm) {
+            margin-bottom: 0;
         }
     }
 }
