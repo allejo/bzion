@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% set scopeClass = "s-player-list" %}
-
 {% block title %}Players{% endblock %}
 
 {% block pageTitle %}
@@ -9,13 +7,11 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container c-roll-call">
+    <section class="o-container c-rollcall">
         <section class="o-row">
             {% for player in players %}
-                {% include "player-badge.html.twig" with {
-                    css: 'o-col--third',
+                {% include "Player/widget.html.twig" with {
                     player: player,
-                    showTeam: true,
                     data: {
                         callsign: "username",
                         teamid: "team.id",

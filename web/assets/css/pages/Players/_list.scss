@@ -1,0 +1,11 @@
+.c-rollcall {
+    .c-player-badge {
+        @include view-columns(xs, 12);
+        @include view-columns(sm, 6);
+        @include view-columns(lg, 4);
+        @include view-columns(xl, 3);
+        @include view-columns(xxl, 2);
+
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+    }
+}

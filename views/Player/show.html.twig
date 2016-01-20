@@ -1,6 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% set scopeClass = "s-player-profile" %}
 {% set pageButtons = [
     {
         color: 'grey',
@@ -58,13 +57,13 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container c-public-profile">
+    <section class="o-container c-player">
         <section class="o-row">
-            <section class="o-col--aside c-public-profile__profile-picture">
+            <section class="o-col--aside c-player__picture">
                 <img src="{{ player.avatar|imagine_filter('huge_thumb') }}">
             </section>
 
-            <section class="o-col--main c-public-profile__details">
+            <section class="o-col--main c-player__details">
                 <p>
                     {% if player ~~ player.team.leader %}
                         <strong>Leader of</strong> {{ link_to(player.team) }}
@@ -81,7 +80,7 @@
                 <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
 
                 {% if player.description is not empty %}
-                    <section class="c-public-profile__details__bio s-markdown">
+                    <section class="c-player__bio s-markdown">
                         {{ player.description | markdown }}
                     </section>
                 {% endif %}
@@ -91,8 +90,8 @@
         {% if me.hasPermission("view_visitor_log") %}
             <hr>
 
-            <section class="o-row c-private-profile">
-                <section class="o-col--half c-private-profile__callsigns">
+            <section class="o-row">
+                <section class="o-col--half c-player__callsigns">
                     <h4>
                         Previous Callsigns
                         <small>
@@ -107,7 +106,7 @@
                     </ul>
                 </section>
 
-                <section class="o-col--half c-private-profile__ips">
+                <section class="o-col--half c-player__ips">
                     <h4>
                         Known IP Addresses
                         <small>
@@ -115,17 +114,17 @@
                         </small>
                     </h4>
                     <ul>
-                        {% for address in player.knownIPs %}
+                        {% for address in player.knownIPs | slice(0, 10) %}
                             <li>{{ address.ip }} - {{ address.host }}</li>
                         {% endfor %}
                     </ul>
                 </section>
             </section>
 
-            <section class="c-private-profile">
-                <section class="c-private-profile__notes">
-                    <h4>Admin Notes</h4>
-                    {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
+            <section class="c-account__notes">
+                <h4>Admin Notes</h4>
+
+                {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
                     {{ form_errors(adminNotesForm) }}
 
                     <section class="c-form__editor">
@@ -135,8 +134,7 @@
                     <section class="c-form__buttons">
                         {{ form_rest(adminNotesForm) }}
                     </section>
-                    {{ form_end(adminNotesForm) }}
-                </section>
+                {{ form_end(adminNotesForm) }}
             </section>
         {% endif %}
     </section>

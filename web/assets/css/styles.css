@@ -2186,6 +2186,77 @@ select {
     .c-team__match__score {
       order: 3; } }
 
+.c-player-badge {
+  align-items: center;
+  display: flex; }
+
+.c-player-badge__avatar {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px; }
+
+.c-player-badge__callsign {
+  display: inline-block;
+  font-size: 18px; }
+
+.c-player-badge__team {
+  font-size: 14px;
+  width: 100%; }
+  .c-player-badge__team a {
+    color: #656565; }
+    .c-player-badge__team a:hover {
+      color: #8b8b8b; }
+
+.c-rollcall .c-player-badge {
+  flex-basis: 100%;
+  max-width: 100%;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin-bottom: 15px; }
+  @media (min-width: 480px) {
+    .c-rollcall .c-player-badge {
+      flex-basis: 50%;
+      max-width: 50%;
+      padding-left: 1%;
+      padding-right: 1%; } }
+  @media (min-width: 992px) {
+    .c-rollcall .c-player-badge {
+      flex-basis: 33.3333333333%;
+      max-width: 33.3333333333%;
+      padding-left: 1%;
+      padding-right: 1%; } }
+  @media (min-width: 1200px) {
+    .c-rollcall .c-player-badge {
+      flex-basis: 25%;
+      max-width: 25%;
+      padding-left: 1%;
+      padding-right: 1%; } }
+  @media (min-width: 1600px) {
+    .c-rollcall .c-player-badge {
+      flex-basis: 16.6666666667%;
+      max-width: 16.6666666667%;
+      padding-left: 1%;
+      padding-right: 1%; } }
+
+.c-player__picture {
+  margin-bottom: 30px;
+  text-align: center; }
+  .c-player__picture img {
+    width: 50%; }
+    @media (min-width: 480px) {
+      .c-player__picture img {
+        width: 40%; } }
+    @media (min-width: 768px) {
+      .c-player__picture img {
+        width: 100%; } }
+  @media (min-width: 992px) {
+    .c-player__picture {
+      margin-bottom: 0;
+      text-align: right; } }
+
+.c-player__bio {
+  margin-top: 15px; }
+
 .c-matchwidget {
   display: flex;
   flex: 1 1 auto;
@@ -2787,72 +2858,6 @@ select {
       margin-left: 5px; }
     .s-notifications .c-notifications__notification__action {
       margin-left: 20px; }
-
-.s-player-profile .c-public-profile__profile-picture {
-  margin-bottom: 30px;
-  text-align: center; }
-  .s-player-profile .c-public-profile__profile-picture img {
-    width: 50%; }
-    @media (min-width: 480px) {
-      .s-player-profile .c-public-profile__profile-picture img {
-        width: 40%; } }
-    @media (min-width: 768px) {
-      .s-player-profile .c-public-profile__profile-picture img {
-        width: 100%; } }
-  @media (min-width: 992px) {
-    .s-player-profile .c-public-profile__profile-picture {
-      margin-bottom: 0;
-      text-align: right; } }
-
-.s-player-profile .c-public-profile__details__bio {
-  margin-top: 15px; }
-
-.s-player-profile .c-page__header__container__title .c-flag {
-  margin-right: 10px;
-  margin-top: 6px; }
-
-.s-player-profile .c-page__header__container__title h1 {
-  display: inline; }
-
-.c-roll-call {
-  margin-bottom: 15px; }
-  .c-roll-call .c-player-badge {
-    margin-bottom: 15px; }
-
-.c-player-badge {
-  display: flex; }
-  .c-player-badge__avatar {
-    height: 50px;
-    width: 50px; }
-  .c-player-badge__info {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 10px; }
-    .c-player-badge__info__callsign {
-      display: inline-block;
-      font-size: 18px; }
-    .c-player-badge__info__team {
-      font-size: 14px;
-      width: 100%; }
-      .c-player-badge__info__team a {
-        color: #656565; }
-        .c-player-badge__info__team a:hover {
-          color: #8b8b8b; }
-
-@media (min-width: 1200px) and (max-width: 1599px) and (min-width: 1600px) {
-  .c-player-badge.o-row__column--third {
-    flex-basis: 25%;
-    max-width: 25%;
-    padding-left: 1%;
-    padding-right: 1%; } }
-
-@media (min-width: 1600px) and (max-width: 1919px) and (min-width: 1600px) {
-  .c-player-badge.o-row__column--third {
-    flex-basis: 25%;
-    max-width: 25%;
-    padding-left: 1%;
-    padding-right: 1%; } }
 
 .c-servers__server__info__status {
   color: #656565;
