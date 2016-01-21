@@ -11,7 +11,7 @@ We choose to use Sass because of the freedom it gave us to control every aspect 
     - This folder contains partial Sass files for styling HTML tags
 - **modules/**
     - This folder contains all of the partial Sass files that don't have actual CSS classes but instead only provide mixins or placeholders.
-    - Documentation for all of custom mixins used throughout the project is provided through SassDoc [hosted by alezakos](http://helit.org/bziondoc/sassdoc/)
+    - Documentation for all of custom mixins used throughout the project is provided through SassDoc [hosted by alezakos](http://bziondoc.helit.tech/sassdoc/)
 - **pages/**
     - This folder contains all of the partial Sass files that contain all of the CSS classes for specific pages
 - **partials/**
