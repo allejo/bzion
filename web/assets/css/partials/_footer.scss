@@ -1,52 +1,55 @@
-@include component('footer') {
-    @extend %container;
-
+.c-footer {
     border-top: 1px solid $Border-Color;
-    display: flex;
     margin-top: $Settings-Page_Section-Margin;
     padding: {
         bottom: 20px;
         top: 20px;
     }
 
-    @include respond-up(xs) {
-        margin-top: $Settings-Page_Section-Small_Margin;
+    @include respond-up(md) {
+        flex-direction: row;
     }
+}
 
-    @include element('copyright') {
-        @include element('development') {
-            font-size: 0.9em;
-            margin-left: 10px;
-            text-transform: lowercase;
-        }
+.c-footer__container {
+    display: flex;
+    flex-direction: column-reverse;
+
+    @include respond-up(lg) {
+        flex-direction: row;
     }
+}
 
-    @include element('pages') {
-        flex: 1;
+.c-footer__copyright {
+
+}
+
+.c-footer__informational {
+    font-size: 0.9em;
+    margin-left: 10px;
+    text-transform: lowercase;
+}
+
+.c-footer__pages {
+    flex: 1;
+    text-align: left;
+
+    @include respond-up(lg) {
         text-align: right;
+    }
+
+    li {
+        margin: {
+            bottom: 10px;
+            right: 10px;
+        }
 
         @include respond-up(sm) {
-            text-align: left;
+            margin-right: 20px;
         }
 
-        li {
-            margin-left: 20px;
-
-            @include respond-up(sm) {
-                margin: {
-                    bottom: 10px;
-                    left: 0;
-                    right: 20px;
-                }
-            }
-
-            @include respond-up(xs) {
-                margin-right: 10px;
-            }
+        @include respond-up(lg) {
+            margin-bottom: 0;
         }
-    }
-
-    @include respond-up(sm) {
-        flex-direction: column-reverse;
     }
 }
