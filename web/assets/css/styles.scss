@@ -23,6 +23,7 @@
 @import 'modules/media-query-setup';
 @import 'modules/font-awesome-utilities';
 @import 'modules/placeholders';
+@import 'modules/siblings';
 @import 'modules/theming';
 
 
@@ -112,6 +113,7 @@
 @import 'pages/Players/list';
 @import 'pages/Players/show';
 
+@import 'pages/Match/history';
 @import 'pages/Match/widget';
 
 @import 'pages/Messaging/inbox';
@@ -121,7 +123,6 @@
 @import 'pages/bans';
 @import 'pages/landingPage';
 @import 'pages/maps';
-@import 'pages/matches';
 @import 'pages/notifications';
 @import 'pages/servers';
 

@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% import _self as this %}
+{% import 'Match/widget.html.twig' as utils %}
 
 {% set scopeClass = "s-matches" %}
 {% set pageButtons = [
@@ -24,18 +24,6 @@
 {% block pageTitle %}
     <h1>{{ block('title') }}</h1>
 {% endblock %}
-
-{% macro team_summary(match, team) %}
-    <div class="c-match-summary__team__image">
-        <img src="{{ team.avatar | imagine_filter('small_thumb') }}" />
-    </div>
-    <div class="c-match-summary__team__name">
-        <p>{{ link_to(team) }}</p>
-    </div>
-    <div class="c-match-summary__team__score">
-        <p>{{ match.score(team.id) }}</p>
-    </div>
-{% endmacro %}
 
 {% block content %}
     <section class="o-container">
@@ -65,17 +53,12 @@
                         </h4>
                     </section>
 
-                    <section>
+                    <section class="c-match-history__matches">
                 {% endif %}
 
-                <article class="c-match-summary">
-                    <div class="c-match-summary__team c-match-summary__team--winner">
-                        {{ this.team_summary(match, match.winner) }}
-                    </div>
-                    <div class="c-match-summary__team c-match-summary__team--loser">
-                        {{ this.team_summary(match, match.loser) }}
-                    </div>
-                </article>
+                <section class="c-match-history__match">
+                    {{ utils.widget(match) }}
+                </section>
 
                 {% set lastMatchDate = match.timestamp.format(dateFormat) %}
 
