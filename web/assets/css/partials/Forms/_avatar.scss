@@ -1,43 +1,54 @@
-@include component('avatar-manager') {
-    @include element('preview') {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
-        position: relative;
-        text-align: center;
+// This container holds the preview of the avatar, the delete button, and the upload button for a new avatar
+.c-avatar-manager {
 
-        img {
-            display: block;
-            width: 100%;
-        }
+}
 
-        @include element('delete') {
-            bottom: 0;
-            position: absolute;
-            width: 100%;
+// The container which holds the avatar preview and the delete button to ensure both elements have the same width
+.c-avatar-manager__preview {
+    margin: {
+        bottom: $Settings-Page_Section-Small_Margin;
+        left: auto;
+        right: auto;
+    }
+    position: relative;
+    text-align: center;
+    width: 65%;
 
-            button {
-                background: rgba($Color-Black, 0.5);
-                border: 0;
-                display: block;
-                margin: auto;
-                padding: 10px 0;
-                width: 100%;
-
-                &:hover {
-                    background: rgba($Color-Red, 0.75);
-                }
-            }
-        }
-
-        @include respond-up(sm) {
-            margin: {
-                left: auto;
-                right: auto;
-            }
-            width: 65%;
-        }
+    img {
+        display: block;
+        width: 100%;
     }
 
-    @include element('uploader') {
-
+    @include respond-up(sm) {
+        width: 50%;
     }
+
+    @include respond-up(md) {
+        width: 100%;
+    }
+}
+
+// The absolutely positioned container that will hold the delete button
+.c-avatar-manager__preview__delete {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+
+    button {
+        background: rgba($Color-Black, 0.5);
+        border: 0;
+        display: block;
+        margin: auto;
+        padding: 10px 0;
+        width: 100%;
+
+        &:hover {
+            background: rgba($Color-Red, 0.75);
+        }
+    }
+}
+
+// The file upload elements for new avatars
+.c-avatar-manager__preview__uploader {
+
 }

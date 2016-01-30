@@ -35,6 +35,22 @@
     {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
         {{ form_errors(form) }}
         <section class="o-row c-form__section c-form__section--sidebar">
+            <aside class="o-col--aside c-avatar-manager c-form__section__aside">
+                <div class="c-avatar-manager__preview">
+                    <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
+
+                    {% if player.avatar is not null %}
+                        <div class="c-avatar-manager__preview__delete">
+                            {{ form_widget(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="c-avatar-manager__uploader">
+                    {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
+                </div>
+            </aside>
+
             <article class="o-col--main c-form__section__main">
                 <div class="c-form__group">
                     <label for="{{ form.email.vars.id }}">
@@ -61,22 +77,6 @@
                     {{ form_widget(form.description) }}
                 </div>
             </article>
-
-            <aside class="o-col--aside c-avatar-manager c-form__section__aside">
-                <div class="c-avatar-manager__preview">
-                    <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
-
-                    {% if player.avatar is not null %}
-                        <div class="c-avatar-manager__preview__delete">
-                            {{ form_widget(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="c-avatar-manager__uploader">
-                    {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
-                </div>
-            </aside>
         </section>
 
         <section class="c-form__section c-form__section--inline">
