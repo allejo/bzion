@@ -1,11 +1,6 @@
 {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
     {{ form_errors(form) }}
     <section class="o-row c-form__section c-form__section--sidebar">
-        <article class="o-col--main c-form__section__main">
-            {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
-        </article>
-
         <aside class="o-col--aside c-avatar-manager c-form__section__aside">
             <div class="c-avatar-manager__preview">
                 {# Only show an avatar if we're editing an existing team #}
@@ -25,6 +20,11 @@
                 {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
             </div>
         </aside>
+
+        <article class="o-col--main c-form__section__main">
+            {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
+            {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
+        </article>
     </section>
 
     <section class="c-form__section c-form__section--inline">
