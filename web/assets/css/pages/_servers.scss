@@ -1,44 +1,75 @@
-@include component('servers') {
-    @include element('server') {
-        @include element('info') {
-            @include element('status') {
-                color: $Color-Medium_Grey;
-                margin-right: 5px;
+// Take advantage of adjacent flex boxes always having the same height so calculate the last 2 or 3 elements to have no
+// margin bottom
 
-                @include modifier('online') {
-                    color: $Color-Green;
-                }
+.c-server {
+    @include view-columns(xs, 12);
+    @include view-columns(md, 6);
+    @include view-columns(xxl, 4);
 
-                @include modifier('offline') {
-                    color: $Color-Red;
-                }
-            }
+    margin-bottom: $Settings-Page_Section-Small_Margin;
 
-            @include element('address', 'playerCount', 'updated') {
-                padding-left: 15px;
-            }
+    &:last-child {
+        margin-bottom: 0;
+    }
 
-            @include element('name') {
-                font-weight: bold;
-            }
-
-            @include element('updated') {
-                font-style: italic;
-            }
-
-            header {
-                align-items: center;
-                display: flex;
-            }
-        }
-
-        @include element('options') {
-            flex: 1;
-            text-align: right;
-
-            li {
-                margin-left: 5px;
-            }
+    @include respond-up(md) {
+        &:nth-last-child(-n+2) {
+            margin-bottom: 0;
         }
     }
+
+    @include respond-up(xxl) {
+        &:nth-last-child(-n+3) {
+            margin-bottom: 0;
+        }
+    }
+
+    header {
+        align-items: center;
+        display: flex;
+    }
+}
+
+.c-server__status {
+    color: $Color-Medium_Grey;
+    margin-right: 5px;
+}
+
+.c-server__status--online {
+    color: $Color-Green;
+}
+
+.c-server__status--offline {
+    color: $Color-Red;
+}
+
+.c-server__name {
+    font-weight: bold;
+}
+
+.c-server__options {
+    flex: 1;
+    text-align: right;
+
+    li {
+        margin-left: $Settings-Page_Section-Tiny_Margin;
+    }
+}
+
+.c-server__address,
+.c-server__players,
+.c-server__updated {
+    padding-left: 15px; // Hard coded 15px because this isn't a vertical spacing issue
+}
+
+.c-server__address {
+
+}
+
+.c-server__players {
+
+}
+
+.c-server__updated {
+    font-style: italic;
 }

@@ -1,9 +1,13 @@
 .c-footer {
     border-top: 1px solid $Border-Color;
-    margin-top: $Settings-Page_Section-Margin;
+    margin-top: $Settings-Page_Section-Small_Margin;
     padding: {
         bottom: 20px;
         top: 20px;
+    }
+
+    @include respond-up(sm) {
+        margin-top: $Settings-Page_Section-Margin;
     }
 
     @include respond-up(md) {
