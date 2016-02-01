@@ -31,11 +31,12 @@
 }
 
 // Since we are inheriting OnTheRocks' grid system, we need to clear the padding that is automatically added
+// @todo Get rid of these !importants
 .c-messenger__sidebar,
 .c-messenger__conversation {
     padding: {
-        left: 0;
-        right: 0;
+        left: 0 !important;
+        right: 0 !important;
     }
 }
 
@@ -106,7 +107,7 @@
 // The height of this element will be limited and its overflow will be hidden. This is intended to have its child be
 // scrollable
 .c-messenger__conversation__scrolling {
-    flex: 1;
+    //flex: 1;
     overflow: scroll;
 }
 

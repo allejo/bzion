@@ -7,7 +7,9 @@
 
     // Our messaging system will be "full screen" so it'll take up all the extra spacing on the edges
     > .o-container {
-        padding: 0;
+        @include respond-from(xs, md) {
+            padding: 0;
+        }
     }
 }
 
