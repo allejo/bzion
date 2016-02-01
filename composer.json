@@ -26,7 +26,9 @@
         "symfony/swiftmailer-bundle" : ">=2.3.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "~1.18",
-        "yzalis/identicon"           : "1.1.*@dev"
+        "yzalis/identicon"           : "1.1.*@dev",
+        "components/jquery": "^2.2",
+        "components/font-awesome": "^4.5"
     },
     "require-dev": {
         "php": ">=5.5.0",

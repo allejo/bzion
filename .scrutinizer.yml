@@ -15,4 +15,4 @@ tools:
         config: { level: all }
 
 filter:
-    excluded_paths: [includes/*, vendor/*, tests/*, app/cache/*, bin/*, library/*, hooks/*, web/assets/js/min/*]
+    excluded_paths: [includes/*, vendor/*, tests/*, app/cache/*, bin/*, library/*, hooks/*, web/assets/js/min/*, web/includes/*]
