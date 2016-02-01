@@ -1,0 +1,45 @@
+.c-ibullets {
+}
+
+.c-ibullets__bullet {
+    @include view-columns(xs, 12);
+    @include view-columns(md, 4);
+
+    margin-bottom: 15px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    @include respond-up(md) {
+        margin-bottom: 0;
+    }
+}
+
+.c-ibullets__bullet__icon {
+    @include view-columns(xs, 2);
+    @include view-columns(md, 12);
+
+    text-align: center;
+
+    img {
+        max-width: 100%;
+    }
+}
+
+.c-ibullets__bullet__content {
+    @include view-columns(xs, 10);
+    @include view-columns(md, 12);
+
+    text-align: left;
+
+    h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin: 10px 0;
+    }
+
+    @include respond-up(md) {
+        text-align: center;
+    }
+}

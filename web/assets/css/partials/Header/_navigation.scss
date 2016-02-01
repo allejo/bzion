@@ -26,8 +26,23 @@
 
 // The container of the links to public pages; e.g. News, Matches, etc. This element will have icon + text links
 .c-menulinks {
-    flex: 1;
-    padding-left: $Settings-Page_Section-Small_Margin;
+    @include respond-from(xs, md) {
+        @include theme-specific("background-color", "nav-bg");
+
+        border-bottom: 1px solid $Color-Header_Border;
+        display: none;
+        padding-left: 0;
+        left: 0;
+        position: absolute;
+        top: 57px;
+        width: 100%;
+        z-index: 100;
+    }
+
+    @include respond-up(lg) {
+        flex: 1;
+        padding-left: $Settings-Page_Section-Small_Margin;
+    }
 
     a {
         padding: {
@@ -35,11 +50,15 @@
             right: 15px;
         }
 
-        @include respond-to(md) {
+        @include respond-up(sm) {
             padding: {
-                bottom: 10px;
-                top: 10px;
+                left: 20px;
+                right: 20px;
             }
+        }
+
+        @include respond-up(lg) {
+            padding: 15px;
         }
     }
 
@@ -51,15 +70,11 @@
     }
 
     li {
-        @include respond-to(md) {
-            display: block;
-        }
+        display: block;
     }
 
     // These are icon-only links in the menu that need special treatment based on the screen size
     .c-useroptions {
-        display: none;
-
         &:hover,
         &.active {
             box-shadow: none;
@@ -78,28 +93,18 @@
             padding: 0;
         }
 
-        @include respond-to(xs) {
-            display: block;
+        @include respond-up(sm) {
+            display: none;
         }
-    }
-
-    @include respond-to(md) {
-        @include theme-specific("background-color", "nav-bg");
-
-        border-bottom: 1px solid $Color-Header_Border;
-        display: none;
-        padding-left: 0;
-        left: 0;
-        position: absolute;
-        top: 57px;
-        width: 100%;
-        z-index: 100;
     }
 }
 
 // The container of the links to pages that typically require you to be logged in; e.g. Messages, Notifications, etc.
 // This element will have icon-only links
 .c-menuoptions {
+    flex: 1;
+    justify-content: flex-end;
+
     a {
         padding: {
             left: 10px;
@@ -107,14 +112,15 @@
         }
     }
 
-    @include respond-to(md) {
-        flex: 1;
-        justify-content: flex-end;
+    @include respond-up(lg) {
+        flex: none;
     }
 
     .c-useroptions {
-        @include respond-to(xs) {
-            display: none;
+        display: none;
+
+        @include respond-up(sm) {
+            display: block;
         }
     }
 }

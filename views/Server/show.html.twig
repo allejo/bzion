@@ -1,12 +1,12 @@
 <header>
     {% set status = (server.online) ? "online" : "offline" %}
 
-    <span class="c-servers__server__info__status c-servers__server__info__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
-    <span class="c-servers__server__info__name">{{ server.name }}</span>
+    <span class="c-server__status c-server__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
+    <span class="c-server__name">{{ server.name }}</span>
     {{ server.country.flagLiteral | raw }}
 
     {% if me.canEdit(server) or me.canDelete(server) %}
-        <ul class="c-servers__server__options is-horizontal has-no-padding">
+        <ul class="c-server__options is-horizontal has-no-padding">
             {% if me.canEdit(server) %}
                 <li>
                     <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
@@ -23,6 +23,11 @@
     {% endif %}
 </header>
 
-<p class="c-servers__server__info__address">{{ server.address }}</p>
-<p class="c-servers__server__info__playerCount">Player count: {{ server.numPlayers }}</p>
-<small class="c-servers__server__info__updated">Updated {{ server.lastUpdate | humanTime }}</small>
+<section>
+    <p class="c-server__address">{{ server.address }}</p>
+    <p class="c-server__players">Player count: {{ server.numPlayers }}</p>
+</section>
+
+<footer>
+    <small class="c-server__updated">Updated {{ server.lastUpdate | humanTime }}</small>
+</footer>

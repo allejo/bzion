@@ -1,57 +1,47 @@
-<main class="c-page">
-    <section class="c-page__header">
-        <div class="c-page__header__container">
-            <section class="c-page__header__container__title">
-                <h1>{{ pageTitle }}</h1>
-            </section>
+{{ form_start(form, {'attr': {'class': 'c-form o-container'}}) }}
+    {{ form_errors(form) }}
+    <section class="o-row c-form__section">
+        <div class="o-col--third">
+            {{ form_row(form.player, { 'attr': { 'class': 'c-form__group' } }) }}
+        </div>
+
+        <div class="o-col--third">
+            {{ form_row(form.expiration, {
+                'attr': { 'class': 'c-form__timestamp' },
+                'container_attr': { 'class': 'c-form__group' }
+            }) }}
         </div>
     </section>
 
-    {{ form_start(form, {'attr': {'class': 'c-form o-container'}}) }}
-        {{ form_errors(form) }}
-        <section class="o-row c-form__section">
-            <div class="o-col--third">
-                {{ form_row(form.player, { 'attr': { 'class': 'c-form__group' } }) }}
+    <section class="c-form__section">
+        {{ form_row(form.server_message, { 'container_attr': { 'class': 'c-form__group' } }) }}
+    </section>
+
+    <section class="c-form__section">
+        {{ form_row(form.reason, { 'container_attr': { 'class': 'c-form__group' } }) }}
+    </section>
+
+    <section class="c-form__section">
+        <p class="c-form__section__heading">Ban Settings</p>
+
+        <div class="c-form__options">
+            <div>
+                {{ form_widget(form.automatic_expiration) }}
+                {{ form_label(form.automatic_expiration) }}
             </div>
 
-            <div class="o-col--third">
-                {{ form_row(form.expiration, {
-                    'attr': { 'class': 'c-form__timestamp' },
-                    'container_attr': { 'class': 'c-form__group' }
-                }) }}
+            <div>
+                {{ form_widget(form.server_join_allowed) }}
+                {{ form_label(form.server_join_allowed) }}
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="c-form__section">
-            {{ form_row(form.server_message, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </section>
+    <section class="c-form__section">
+        {{ form_row(form.ip_addresses, { 'container_attr': { 'class': 'c-form__group' } }) }}
+    </section>
 
-        <section class="c-form__section">
-            {{ form_row(form.reason, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </section>
-
-        <section class="c-form__section">
-            <p class="c-form__section__heading">Ban Settings</p>
-
-            <div class="c-form__options">
-                <div>
-                    {{ form_widget(form.automatic_expiration) }}
-                    {{ form_label(form.automatic_expiration) }}
-                </div>
-
-                <div>
-                    {{ form_widget(form.server_join_allowed) }}
-                    {{ form_label(form.server_join_allowed) }}
-                </div>
-            </div>
-        </section>
-
-        <section class="c-form__section">
-            {{ form_row(form.ip_addresses, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </section>
-
-        <section class="c-form__section">
-            {{ form_rest(form) }}
-        </section>
-    {{ form_end(form) }}
-</main>
+    <section class="c-form__section">
+        {{ form_rest(form) }}
+    </section>
+{{ form_end(form) }}

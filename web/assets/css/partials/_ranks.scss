@@ -1,54 +1,54 @@
-@include component('rank') {
+.c-rank {
     background: url('../imgs/ranks.png') no-repeat top left;
     display: inline-block;
     height: 40px;
     width: 35px;
+}
 
-    @include modifier('900') {
-        background-position: 0 0;
-    }
+.c-rank--900 {
+    background-position: 0 0;
+}
 
-    @include modifier('1000') {
-        background-position: -35px 0;
-    }
+.c-rank--1000 {
+    background-position: -35px 0;
+}
 
-    @include modifier('1100') {
-        background-position: -70px 0;
-    }
+.c-rank--1100 {
+    background-position: -70px 0;
+}
 
-    @include modifier('1200') {
-        background-position: -105px 0;
-    }
+.c-rank--1200 {
+    background-position: -105px 0;
+}
 
-    @include modifier('1300') {
-        background-position: -140px 0;
-    }
+.c-rank--1300 {
+    background-position: -140px 0;
+}
 
-    @include modifier('1400') {
-        background-position: -175px 0;
-    }
+.c-rank--1400 {
+    background-position: -175px 0;
+}
 
-    @include modifier('1500') {
-        background-position: -210px 0;
-    }
+.c-rank--1500 {
+    background-position: -210px 0;
+}
 
-    @include modifier('1600') {
-        background-position: -245px 0;
-    }
+.c-rank--1600 {
+    background-position: -245px 0;
+}
 
-    @include modifier('1700') {
-        background-position: -280px 0;
-    }
+.c-rank--1700 {
+    background-position: -280px 0;
+}
 
-    @include modifier('1800') {
-        background-position: -315px 0;
-    }
+.c-rank--1800 {
+    background-position: -315px 0;
+}
 
-    @include modifier('1900') {
-        background-position: -350px 0;
-    }
+.c-rank--1900 {
+    background-position: -350px 0;
+}
 
-    @include modifier('2000') {
-        background-position: -385px 0;
-    }
+.c-rank--2000 {
+    background-position: -385px 0;
 }

@@ -17,7 +17,7 @@
 /// child to have no margin bottom on the specified views
 
 @mixin make-margin($viewSize) {
-    @include respond-to($viewSize) {
+    @include respond-up($viewSize) {
         @include autoMarginBottom();
     }
 }
@@ -42,20 +42,55 @@
 }
 
 @mixin profile-picture() {
+    margin-bottom: 30px;
+    text-align: center;
+
     img {
-        width: 100%;
+        width: 50%;
 
-        @include respond-to(sm) {
-            width: 30%;
-        }
-
-        @include respond-to(xs) {
+        @include respond-up(sm) {
             width: 40%;
         }
+
+        @include respond-up(md) {
+            width: 100%;
+        }
     }
 
-    @include respond-to(sm) {
-        margin-bottom: 30px;
-        text-align: center;
+    @include respond-up(lg) {
+        margin-bottom: 0;
+        text-align: right;
     }
+}
+
+/// Get the next key in a map. This function will return null if the key provided is the last key in the map.
+///
+/// @param {Map}    $map - The target map we will be looking through
+/// @param {String} $key - The key where it's following key needs to be found
+///
+/// @example scss - Usage
+///   $map: (
+///     foo: 1,
+///     bar: 2,
+///     qux: 3
+///   );
+///
+///   $next-key: get-next-key($map, bar); // "qux"
+
+@function get-next-key($map, $key) {
+    $key-names: map-keys($map);
+    $n: index($key-names, $key);
+    $size: if($n < length($key-names), nth($key-names, $n + 1), null);
+
+    @return $size;
+}
+
+
+@mixin size($value) {
+    height: $value;
+    width: $value;
+}
+
+@function emToPx($px, $em) {
+    @return ($px * ($em / 1em));
 }

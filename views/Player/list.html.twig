@@ -2,33 +2,26 @@
 
 {% block title %}Players{% endblock %}
 
-{% block content %}
-    <main class="s-player-list">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>Player List</h1>
-                </section>
-            </div>
-        </section>
+{% block pageTitle %}
+    <h1>Player List</h1>
+{% endblock %}
 
-        <section class="o-container c-roll-call">
-            <section class="o-row">
-                {% for player in players %}
-                    {% include "player-badge.html.twig" with {
-                        css: 'o-col--third',
-                        player: player,
-                        showTeam: true,
-                        data: {
-                            callsign: "username",
-                            teamid: "team.id",
-                            team: "team.name",
-                            iso: "country.iso",
-                            country: "country.name"
-                        }}
-                    %}
-                {% endfor %}
-            </section>
+{% block content %}
+    <section class="o-container c-rollcall">
+        <section class="o-row">
+            {% for player in players %}
+                {% include "Player/widget.html.twig" with {
+                    player: player,
+                    showTeam: true,
+                    data: {
+                        callsign: "username",
+                        teamid: "team.id",
+                        team: "team.name",
+                        iso: "country.iso",
+                        country: "country.name"
+                    }}
+                %}
+            {% endfor %}
         </section>
-    </main>
+    </section>
 {% endblock %}

@@ -1,50 +1,53 @@
-<main class="c-page">
-    <section class="c-page__header">
-        <div class="c-page__header__container">
-            <section class="c-page__header__container__title">
-                <h1>{{ pageTitle }}</h1>
-            </section>
-        </div>
+{% import _self as self %}
+
+{% macro team_score(_title, _team) %}
+    <h4>{{ _title }}</h4>
+
+    <div class="o-row">
+        {{ form_row(_team.team, { 'container_attr':  { 'class': 'c-team-selector c-form__group' } }) }}
+        {{ form_row(_team.score, { 'container_attr': { 'class': 'c-team-score c-form__group' } }) }}
+    </div>
+
+    {{ form_row(_team.participants) }}
+{% endmacro %}
+
+{{ form_start(form, { 'attr': { 'class': 'c-form o-container s-match-editor' } }) }}
+    {{ form_errors(form) }}
+    <section class="o-row c-form__section">
+        <article class="o-col--half c-team-match">
+            {{ self.team_score("First Team", form.first_team) }}
+        </article>
+
+        <article class="o-col--half c-team-match">
+            {{ self.team_score("Second Team", form.second_team) }}
+        </article>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-        {{ form_errors(form) }}
-        <section class="o-row c-form__section">
-            <article class="o-col--half">
-                {{ form_row(form.first_team, { 'container_attr': { 'class': 'c-form__group' } }) }}
-            </article>
+    <section class="c-form__section">
+        {{ form_row(form.server_address, { 'container_attr': { 'class': 'c-form__group' } }) }}
+    </section>
 
-            <aside class="o-col--half">
-                {{ form_row(form.second_team, { 'container_attr': { 'class': 'c-form__group' } }) }}
-            </aside>
-        </section>
+    <section class="c-form__section c-form__section--inline">
+        {{ form_row(form.duration, {
+            'attr': { 'class': 'c-form__choices' },
+            'container_attr': { 'class': 'c-form__group' }
+        }) }}
 
-        <section class="c-form__section">
-            {{ form_row(form.server_address, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </section>
+        {{ form_row(form.time.time, {
+            'attr': { 'class': 'c-form__timestamp' },
+            'container_attr': { 'class': 'c-form__group' }
+        }) }}
 
-        <section class="c-form__section c-form__section--inline">
-            {{ form_row(form.duration, {
-                'attr': { 'class': 'c-form__choices' },
-                'container_attr': { 'class': 'c-form__group' }
-            }) }}
+        {{ form_row(form.time.timezone, {
+            'container_attr': { 'class': 'c-form__group' }
+        }) }}
 
-            {{ form_row(form.time.time, {
-                'attr': { 'class': 'c-form__timestamp' },
-                'container_attr': { 'class': 'c-form__group' }
-            }) }}
+        {{ form_row(form.map, {
+            'container_attr': { 'class': 'c-form__group' }
+        }) }}
+    </section>
 
-            {{ form_row(form.time.timezone, {
-                'container_attr': { 'class': 'c-form__group' }
-            }) }}
-
-            {{ form_row(form.map, {
-                'container_attr': { 'class': 'c-form__group' }
-            }) }}
-        </section>
-
-        <section class="c-form__section">
-            {{ form_rest(form) }}
-        </section>
-    {{ form_end(form) }}
-</main>
+    <section class="c-form__section">
+        {{ form_rest(form) }}
+    </section>
+{{ form_end(form) }}

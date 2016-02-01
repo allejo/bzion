@@ -2,9 +2,10 @@
 
 {% block title %}Teams :: New Team{% endblock %}
 
+{% block pageTitle %}
+    <h1>Create a New Team</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Team/form.html.twig" with {
-        'pageTitle': 'Create a New Team',
-        'form': form }
-    %}
+    {% include "Team/form.html.twig" with { 'form': form } %}
 {% endblock %}

@@ -2,18 +2,12 @@
 
 {% block title %}Generic Error{% endblock %}
 
-{% block content %}
-    <main class="c-page">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>{{ block('title') }}</h1>
-                </section>
-            </div>
-        </section>
+{% block pageTitle %}
+    <h1>{{ block('title') }}</h1>
+{% endblock %}
 
-        <section class="o-container">
-            {{ message }}
-        </section>
-    </main>
+{% block content %}
+    <section class="o-container">
+        {{ message }}
+    </section>
 {% endblock %}

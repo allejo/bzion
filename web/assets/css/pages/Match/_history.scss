@@ -1,0 +1,24 @@
+.c-match-history__matches {
+    @include view-container();
+
+    .c-match-history__match {
+        @include view-columns(xs, 12);
+        @include view-columns(xl, 6);
+        @include view-columns(xxxl, 4);
+    }
+}
+
+.c-match-history__date {
+    &:first-child {
+        h4 {
+            margin-top: 0;
+        }
+    }
+
+    h4 {
+        margin: {
+            bottom: $Settings-Page_Section-Small_Margin;
+            top: $Settings-Page_Section-Small_Margin;
+        }
+    }
+}

@@ -2,6 +2,7 @@
 
 {% form_theme form _self %}
 
+{% set scopeClass = "s-profile" %}
 {% set pageButtons = [
     {
         'color': 'grey',
@@ -16,8 +17,12 @@
     {%- if editingSelf -%}
         Edit Profile
     {%- else -%}
-        {{ player.name }} :: Edit
+        Editing :: {{ player.name }}
     {%- endif -%}
+{% endblock %}
+
+{% block pageTitle %}
+    <h1>{{ block('title') }}</h1>
 {% endblock %}
 
 {% block _form_email_label %}
@@ -27,98 +32,82 @@
 {% endblock %}
 
 {% block content %}
-    <main class="c-page s-profile">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>{%- if editingSelf -%}
-                        Edit Profile
-                    {%- else -%}
-                        Editing :: {{ player.name }}
-                    {%- endif -%}</h1>
-                </section>
+    {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
+        {{ form_errors(form) }}
+        <section class="o-row c-form__section c-form__section--sidebar">
+            <aside class="o-col--aside c-avatar-manager c-form__section__aside">
+                <div class="c-avatar-manager__preview">
+                    <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
 
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
+                    {% if player.avatar is not null %}
+                        <div class="c-avatar-manager__preview__delete">
+                            {{ form_widget(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="c-avatar-manager__uploader">
+                    {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
+                </div>
+            </aside>
+
+            <article class="o-col--main c-form__section__main">
+                <div class="c-form__group">
+                    <label for="{{ form.email.vars.id }}">
+                        {{ form.email.vars.label }}
+                        {% if not editingSelf and player.emailAddress is not empty %}
+                                {% if player.verified %}
+                                    <div class="c-form__editor__body__extra c-form__editor__body__extra--success">
+                                        <i class="fa fa-check-circle"></i> Verified
+                                    </div>
+                                {% else %}
+                                    <div class="c-form__editor__body__extra c-form__editor__body__extra--error">
+                                        <i class="fa fa-times-circle"></i> Not verified
+                                    </div>
+                                {% endif %}
+                        {% endif %}
+                    </label>
+                    {{ form_errors(form.email) }}
+                    {{ form_widget(form.email) }}
+                </div>
+
+                <div class="c-form__group c-form__group--flex">
+                    {{ form_label(form.description) }}
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description) }}
+                </div>
+            </article>
+        </section>
+
+        <section class="c-form__section c-form__section--inline">
+            {{ form_row(form.country , { 'container_attr': { 'class': 'c-form__group' } }) }}
+            {{ form_row(form.timezone, { 'container_attr': { 'class': 'c-form__group' } }) }}
+        </section>
+
+        <section class="c-form__section">
+            <div class="c-form__group">
+                {{ form_label(form.receive) }}
+                {{ form_errors(form.receive) }}
+                {{ form_widget(form.receive, { 'attr': { 'class': 'c-form__choices' } }) }}
             </div>
         </section>
 
-        {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-            {{ form_errors(form) }}
-            <section class="o-row c-form__section c-form__section--sidebar">
-                <article class="o-col--main c-form__section__main">
-                    <div class="c-form__group">
-                        <label for="{{ form.email.vars.id }}">
-                            {{ form.email.vars.label }}
-                            {% if not editingSelf and player.emailAddress is not empty %}
-                                    {% if player.verified %}
-                                        <div class="c-form__editor__body__extra c-form__editor__body__extra--success">
-                                            <i class="fa fa-check-circle"></i> Verified
-                                        </div>
-                                    {% else %}
-                                        <div class="c-form__editor__body__extra c-form__editor__body__extra--error">
-                                            <i class="fa fa-times-circle"></i> Not verified
-                                        </div>
-                                    {% endif %}
-                            {% endif %}
-                        </label>
-                        {{ form_errors(form.email) }}
-                        {{ form_widget(form.email) }}
-                    </div>
-
-                    <div class="c-form__group c-form__group--flex">
-                        {{ form_label(form.description) }}
-                        {{ form_errors(form.description) }}
-                        {{ form_widget(form.description) }}
-                    </div>
-                </article>
-
-                <aside class="o-col--aside c-avatar-manager c-form__section__aside">
-                    <div class="c-avatar-manager__preview">
-                        <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
-
-                        {% if player.avatar is not null %}
-                            <div class="c-avatar-manager__preview__delete">
-                                {{ form_widget(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="c-avatar-manager__uploader">
-                        {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
-                    </div>
-                </aside>
-            </section>
-
-            <section class="c-form__section c-form__section--inline">
-                {{ form_row(form.country , { 'container_attr': { 'class': 'c-form__group' } }) }}
-                {{ form_row(form.timezone, { 'container_attr': { 'class': 'c-form__group' } }) }}
-            </section>
-
+        {% if form.roles is defined %}
             <section class="c-form__section">
                 <div class="c-form__group">
-                    {{ form_label(form.receive) }}
-                    {{ form_errors(form.receive) }}
-                    {{ form_widget(form.receive, { 'attr': { 'class': 'c-form__choices' } }) }}
+                    {{ form_label(form.roles) }}
+                    {{ form_errors(form.roles) }}
+                    {{ form_widget(form.roles) }}
                 </div>
             </section>
+        {% endif %}
 
-            {% if form.roles is defined %}
-                <section class="c-form__section">
-                    <div class="c-form__group">
-                        {{ form_label(form.roles) }}
-                        {{ form_errors(form.roles) }}
-                        {{ form_widget(form.roles) }}
-                    </div>
-                </section>
-            {% endif %}
-
-            <section class="c-form__section">
-                <div class="c-form__buttons">
-                    {{ form_rest(form) }}
-                </div>
-            </section>
-        {{ form_end(form) }}
-    </main>
+        <section class="c-form__section">
+            <div class="c-form__buttons">
+                {{ form_rest(form) }}
+            </div>
+        </section>
+    {{ form_end(form) }}
 {% endblock %}
 
 {% block javascripts %}

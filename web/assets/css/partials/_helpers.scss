@@ -32,50 +32,6 @@
     }
 }
 
-@include component('table') {
-    @include element('row') {
-        border-bottom: $Table-Border;
-        border-top: $Table-Border;
-        display: flex;
-
-        @include modifier('header') {
-            .c-table__row__column {
-                font-weight: bold;
-            }
-        }
-
-        @include element('column') {
-            border-left: $Table-Border;
-            border-right: $Table-Border;
-            box-sizing: border-box;
-            flex: 1;
-            padding: $Table-Cell_Padding;
-        }
-
-        &:hover {
-            background-color: $Table-Background-Hover;
-        }
-    }
-
-    @include modifier('no-border') {
-        .c-table__row {
-            border: none;
-
-            .c-table__row__column {
-                border: none;
-            }
-        }
-    }
-
-    @include modifier('no-hover') {
-        .c-table__row {
-            &:hover {
-                background-color: transparent;
-            }
-        }
-    }
-}
-
 .fuck-ie {
     background-color: #FF7D87;
     color: $Color-White;
@@ -102,10 +58,10 @@
 }
 
 .u-mobile-only {
-    display: none;
+    display: block;
 
-    @include respond-to(md) {
-        display: block;
+    @include respond-up(lg) {
+        display: none !important;
     }
 }
 

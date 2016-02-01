@@ -6,8 +6,10 @@
     }
 
     // Our messaging system will be "full screen" so it'll take up all the extra spacing on the edges
-    .o-container {
-        padding: 0;
+    > .o-container {
+        @include respond-from(xs, md) {
+            padding: 0;
+        }
     }
 }
 
@@ -93,16 +95,18 @@
     font-size: 14px;
 
     .human-date {
-        @include respond-to(sm) {
-            display: none;
+        display: none;
+
+        @include respond-up(md) {
+            display: inline-block;
         }
     }
 
     .short-date {
-        display: none;
+        display: inline-block;
 
-        @include respond-to(sm) {
-            display: inline-block;
+        @include respond-up(md) {
+            display: none;
         }
     }
 }
@@ -121,22 +125,22 @@
         border-radius: 3px;
         border-style: solid;
         border-width: 1px;
+        display: inline-block;
         font-size: 12px;
         font-style: normal;
         margin-top: 5px;
         padding: 0 3px;
-        display: none;
 
-        @include respond-to(sm) {
-            display: inline-block;
+        @include respond-up(md) {
+            display: none;
         }
     }
 
     .extend-view {
-        display: inline-block;
+        display: none;
 
-        @include respond-to(sm) {
-            display: none;
+        @include respond-up(md) {
+            display: inline-block;
         }
     }
 }

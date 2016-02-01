@@ -2,9 +2,12 @@
 
 {% block title %}Map :: {{ map.name }} :: Edit{% endblock %}
 
+{% block pageTitle %}
+    <h1>Editing :: {{ map.name }}</h1>
+{% endblock %}
+
 {% block content %}
     {% include "Map/form.html.twig" with {
-        'pageTitle': 'Editing :: ' ~ map.name,
         'avatar': map.avatar,
         'form': form }
     %}

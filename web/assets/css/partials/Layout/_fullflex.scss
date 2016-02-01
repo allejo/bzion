@@ -3,27 +3,33 @@
 
     body {
         display: flex;
-        flex-direction: column;
         height: 100%;
+    }
 
-        main {
+    .app-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
+
+    main {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        overflow: hidden;
+
+        > .o-container {
             display: flex;
             flex: 1;
-            flex-direction: column;
-
-            .o-container {
-                display: flex;
-                flex: 1;
-                overflow: hidden;
-            }
-        }
-
-        .c-footer {
-            margin-top: 0;
+            overflow: hidden;
         }
     }
 
+    .c-footer {
+        margin-top: 0;
+    }
+
     .c-fullflex--scrollable {
-        overflow-x: scroll;
+        overflow: auto;
     }
 }

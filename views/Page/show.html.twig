@@ -19,20 +19,12 @@
 
 {% block title %}{{ page.name }}{% endblock %}
 
+{% block pageTitle %}
+    <h1>{{ page.name }}</h1>
+{% endblock %}
+
 {% block content %}
-    <main class="c-page">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>{{ page.name }}</h1>
-                </section>
-
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-            </div>
-        </section>
-
-        <section class="s-user-html s-markdown o-container o-section">
-            {{ page.content | markdown(false) }}
-        </section>
-    </main>
+    <section class="s-user-html s-markdown o-container o-section">
+        {{ page.content | markdown(false) }}
+    </section>
 {% endblock %}

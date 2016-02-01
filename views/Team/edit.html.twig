@@ -2,9 +2,12 @@
 
 {% block title %}Teams :: {{ team.name }} :: Edit{% endblock %}
 
+{% block pageTitle %}
+    <h1>Editing :: {{ team.name }}</h1>
+{% endblock %}
+
 {% block content %}
     {% include "Team/form.html.twig" with {
-        'pageTitle': 'Editing :: ' ~ team.name,
         'avatar': team.avatar,
         'form': form }
     %}

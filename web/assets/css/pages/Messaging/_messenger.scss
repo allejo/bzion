@@ -7,22 +7,23 @@
 
 // The sidebar in this view contains the search bar and the list of conversations
 .c-messenger__sidebar {
+    @include view-columns(md, 4);
     @include view-columns(xxl, 3);
-    @include view-columns(lg, 4);
 
     border-left: $Border-Default;
     border-right: $Border-Default;
+    display: none;
 
-    @include respond-to(sm) {
-        display: none;
+    @include respond-up(md) {
+        display: block;
     }
 }
 
 // This container has the current conversation and all of the chat messages
 .c-messenger__conversation {
+    @include view-columns(xs, 12);
+    @include view-columns(md, 8);
     @include view-columns(xxl, 9);
-    @include view-columns(lg, 8);
-    @include view-columns(sm, 12);
 
     border-right: $Border-Default;
     display: flex;
@@ -30,11 +31,12 @@
 }
 
 // Since we are inheriting OnTheRocks' grid system, we need to clear the padding that is automatically added
+// @todo Get rid of these !importants
 .c-messenger__sidebar,
 .c-messenger__conversation {
     padding: {
-        left: 0;
-        right: 0;
+        left: 0 !important;
+        right: 0 !important;
     }
 }
 
@@ -54,15 +56,15 @@
 }
 
 .c-messenger__options__header {
-    @include view-container();
+
 }
 
 .c-messenger__options__header__meta {
-    @include view-columns(xxl, 9);
+    @include view-columns(xs, 9);
 }
 
 .c-messenger__options__header__actions {
-    @include view-columns(xxl, 3);
+    @include view-columns(xs, 3);
 
     text-align: right;
 
@@ -105,7 +107,7 @@
 // The height of this element will be limited and its overflow will be hidden. This is intended to have its child be
 // scrollable
 .c-messenger__conversation__scrolling {
-    flex: 1;
+    //flex: 1;
     overflow: scroll;
 }
 
@@ -152,7 +154,7 @@
 
                 .author,
                 .date {
-                    @include view-columns(xxl, 6);
+                    @include view-columns(xs, 6);
                 }
 
                 .author {

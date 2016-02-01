@@ -10,10 +10,9 @@
 [submodule "web/includes/favicojs"]
 	path = web/includes/favicojs
 	url = https://github.com/ejci/favico.js.git
-[submodule "web/assets/css/vendor/bourbon"]
-	path = web/assets/css/vendor/bourbon
-	url = https://github.com/Sujevo/lib-bourbon
-	branch = v4_0
 [submodule "web/assets/css/vendor/OnTheRocks"]
 	path = web/assets/css/vendor/OnTheRocks
 	url = https://github.com/allejo/OnTheRocks.git
+[submodule "web/assets/css/vendor/include-media"]
+	path = web/assets/css/vendor/include-media
+	url = https://github.com/eduardoboucas/include-media.git

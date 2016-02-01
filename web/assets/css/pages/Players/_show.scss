@@ -1,0 +1,23 @@
+.c-player {
+
+}
+
+.c-player__picture {
+    @include profile-picture();
+}
+
+.c-player__details {
+
+}
+
+.c-player__bio {
+    margin-top: $Settings-Page_Section-Small_Margin;
+}
+
+.c-player__callsigns {
+
+}
+
+.c-player__ips {
+
+}

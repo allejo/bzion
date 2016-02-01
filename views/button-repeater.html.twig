@@ -1,7 +1,0 @@
-<section class="c-page__header__container__options">
-    {% for button in buttons %}
-        {% if button.condition %}
-            <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}"><i class="fa fa-{{ button.icon }}"></i> {{ button.text }}</a>
-        {% endif %}
-    {% endfor %}
-</section>

@@ -58,41 +58,39 @@
             {% include "Message/conversations.html.twig" with { customClass: 'c-conversation--compressed' } %}
         </aside>
 
-        <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
-            <div class="c-messenger__conversation__container dimmable">
-                <section class="c-messenger__conversation__options">
-                    <div class="c-messenger__options__header o-row">
-                        <p class="c-messenger__options__header__meta">
-                            Conversation with {{ msgutils.listMembers(conversation.members, true) }}
-                        </p>
-                        <p class="c-messenger__options__header__actions">
-                            {% if me.canEdit(conversation) %}
-                                <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
-                                <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
-                            {% endif %}
-                        </p>
-                    </div>
+        <section class="c-messenger__conversation dimmable" data-id="{{ conversation.id }}" id="conversationMessages">
+            <section class="c-messenger__conversation__options">
+                <div class="c-messenger__options__header o-row">
+                    <p class="c-messenger__options__header__meta">
+                        Conversation with {{ msgutils.listMembers(conversation.members, true) }}
+                    </p>
+                    <p class="c-messenger__options__header__actions">
+                        {% if me.canEdit(conversation) %}
+                            <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
+                            <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
+                        {% endif %}
+                    </p>
+                </div>
 
-                    {% if me.canEdit(conversation) %}
-                        {{ self.conversation_action("SubjectRenameForm", renameForm, renameForm.subject, renameForm.Rename) }}
-                        {{ self.conversation_action("InviteForm", inviteForm, inviteForm.players, inviteForm.Invite) }}
-                    {% endif %}
-                </section>
+                {% if me.canEdit(conversation) %}
+                    {{ self.conversation_action("SubjectRenameForm", renameForm, renameForm.subject, renameForm.Rename) }}
+                    {{ self.conversation_action("InviteForm", inviteForm, inviteForm.players, inviteForm.Invite) }}
+                {% endif %}
+            </section>
 
-                <section class="c-messenger__conversation__scrolling">
-                    {% include 'Message/messages.html.twig' %}
-                </section>
+            <section class="c-messenger__conversation__scrolling">
+                {% include 'Message/messages.html.twig' %}
+            </section>
 
-                {{ form_start(form, {'attr': {'class': 'c-messenger__conversation__response', 'autocomplete': 'off'} }) }}
-                    {{ form_errors(form) }}
-                    <div class="quick_reply">
-                        {{ form_errors(form.message) }}
-                        {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
+            {{ form_start(form, {'attr': {'class': 'c-messenger__conversation__response', 'autocomplete': 'off'} }) }}
+                {{ form_errors(form) }}
+                <div class="quick_reply">
+                    {{ form_errors(form.message) }}
+                    {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
 
-                        {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
-                    </div>
-                {{ form_end(form) }}
-            </div>
+                    {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
+                </div>
+            {{ form_end(form) }}
         </section>
     </section>
 {% endblock %}

@@ -1,0 +1,28 @@
+.c-player-badge {
+    align-items: center;
+    display: flex;
+}
+
+.c-player-badge__avatar {
+    @include size(50px);
+
+    margin-right: 10px;
+}
+
+.c-player-badge__callsign {
+    display: inline-block;
+    font-size: 18px;
+}
+
+.c-player-badge__team {
+    font-size: 14px;
+    width: 100%;
+
+    a {
+        color: $Color-Medium_Grey;
+
+        &:hover {
+            color: lighten($Color-Medium_Grey, 15%);
+        }
+    }
+}

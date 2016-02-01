@@ -1,19 +1,8 @@
-* {
-    &,
-    &:before,
-    &:after {
-        box-sizing: inherit;
-    }
-}
-
 body {
     @include theme-specific("background-color", "body-bg");
     @include theme-specific("color", "font-color");
 
     font-family: $Font-Sans_Serif;
-    line-height: 1.4em;
-}
-
-html {
-    box-sizing: border-box;
+    font-size: $Settings-Base_Font_Size;
+    line-height: $Settings-Line_Height;
 }

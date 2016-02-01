@@ -1,28 +1,4 @@
-@include scope('landing') {
-    @include component('jumbotron') {
-        background-attachment: scroll;
-        background-image: url('../imgs/cover_photo.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        @include respond-to(md) {
-            background-position: center center;
-        }
-
-        @include component('button') {
-            margin-top: 40px;
-        }
-    }
-
-    @include component('icon-bullet-points') {
-        margin-bottom: $Settings-Page_Section-Margin;
-
-        @include element("bullet") {
-            @include view-columns(xxl, 4);
-            @include view-columns(sm, 12);
-        }
-    }
+@include scope('landing-deprecated') {
 
     @include component('latest-updates') {
         @extend %container;
@@ -34,7 +10,7 @@
             @include view-columns(xxl, 5);
             @include view-columns(sm, 12);
 
-            @include respond-to(sm) {
+            @include respond-up(sm) {
                 margin-bottom: $Settings-Page_Section-Margin;
             }
 
@@ -74,7 +50,7 @@
             @include view-columns(sm, 12);
 
             @include element('matches') {
-                @include view-container(lg);
+                @include view-container();
 
                 margin-top: 15px;
 
@@ -86,7 +62,7 @@
 
                     margin-bottom: $Settings-Page_Section-Small_Margin;
 
-                    @include respond-to(xs) {
+                    @include respond-up(xs) {
                         &:nth-child(n+3) {
                             margin-top: 15px;
                         }
@@ -104,7 +80,7 @@
 
                                 display: block;
 
-                                @include respond-to(xs) {
+                                @include respond-up(xs) {
                                     height: 55px;
                                     width: 55px;
                                 }

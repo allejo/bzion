@@ -2,37 +2,35 @@
 
 {% block title %}League Administration{% endblock %}
 
+{% block pageTitle %}
+    <h1>League Administration</h1>
+{% endblock %}
+
 {% block content %}
-    <main class="c-page">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>League Administration</h1>
-                </section>
-            </div>
-        </section>
+    <section class="o-container">
+        {% for section in role_sections %}
+            <section class="o-section">
+                <p class="c-button c-button--{{ section.role.displayColor }} c-button--skinny c-button--no-click c-button--no-hover">
+                    {% if section.role.displayIcon is not null %}
+                        <i class="fa {{ section.role.displayIcon }}"></i>
+                    {% endif %}
 
-        <section class="o-container">
-            {% for section in role_sections %}
-                <section class="o-section">
-                    <p class="c-button c-button--{{ section.role.displayColor }} c-button--skinny c-button--no-click c-button--no-hover">
-                        {% if section.role.displayIcon is not null %}
-                            <i class="fa {{ section.role.displayIcon }}"></i>
-                        {% endif %}
+                    <span>{{ section.role.displayName }}</span>
+                </p>
+            </section>
 
-                        <span>{{ section.role.displayName }}</span>
-                    </p>
-                </section>
-
-                <section class="o-row o-section c-roll-call">
-                    {% for player in section.members %}
-                        {% include "player-badge.html.twig" with {
-                            css: 'o-col--quarter',
-                            player: player }
-                        %}
-                    {% endfor %}
-                </section>
-            {% endfor %}
-        </section>
-    </main>
+            <section class="o-row o-section c-rollcall">
+                {% for player in section.members %}
+                    {% include "Player/widget.html.twig" with {
+                        player: player,
+                        data: {
+                            callsign: "username",
+                            iso: "country.iso",
+                            country: "country.name"
+                        }}
+                    %}
+                {% endfor %}
+            </section>
+        {% endfor %}
+    </section>
 {% endblock %}

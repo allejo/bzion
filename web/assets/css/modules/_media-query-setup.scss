@@ -5,11 +5,8 @@
 // For more information: https://github.com/aaronjensen/sass-media_query_combiner/issues/10
 
 .media-query-setup {
-    // These media query definitions should range from largest to smallest in a desktop-first website.
-    $breakpoints-reversed: map-reverse($breakpoints);
-
-    @each $viewSize in map-keys($breakpoints-reversed) {
-        @include respond-to($viewSize) {
+    @each $viewSize in map-keys($breakpoints) {
+        @include respond-up($viewSize) {
             html:before {
                 font-size: inherit;
             }

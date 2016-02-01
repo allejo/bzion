@@ -11,12 +11,14 @@
     {% set dataAttributes = '%s data-%s="%s"' | format(dataAttributes, key, initialObject) %}
 {% endfor %}
 
-<article class="c-player-badge {{ css }}" {{ dataAttributes | raw }}>
+<article class="c-player-badge" {{ dataAttributes | raw }}>
     <img class="c-player-badge__avatar" src="{{ player.avatar | imagine_filter('small_thumb') }}">
-    <section class="c-player-badge__info">
-        <p class="c-player-badge__info__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+
+    <section>
+        <p class="c-player-badge__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+
         {% if showTeam %}
-            <p class="c-player-badge__info__team">{{ link_to(player.team) }}</p>
+            <p class="c-player-badge__team">{{ link_to(player.team) }}</p>
         {% endif %}
     </section>
 </article>

@@ -1,27 +1,17 @@
-<main class="c-page news">
-    <section class="c-page__header">
-        <div class="c-page__header__container">
-            <section class="c-page__header__container__title">
-                <h1>{{ pageTitle }}</h1>
-            </section>
-        </div>
+{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
+    {{ form_errors(form) }}
+    <section class="o-row c-form__section c-form__section--sidebar">
+        <article class="o-col--main c-form__section__main">
+            {{ form_row(form.name,    { 'container_attr': { 'class': 'c-form__group' } }) }}
+            {{ form_row(form.content, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
+        </article>
+
+        <aside class="o-col--aside c-form__section__aside">
+            {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
+        </aside>
     </section>
 
-    {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-        {{ form_errors(form) }}
-        <section class="o-row c-form__section c-form__section--sidebar">
-            <article class="o-col--main c-form__section__main">
-                {{ form_row(form.name,    { 'container_attr': { 'class': 'c-form__group' } }) }}
-                {{ form_row(form.content, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
-            </article>
-
-            <aside class="o-col--aside c-form__section__aside">
-                {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
-            </aside>
-        </section>
-
-        <section class="c-form__section">
-            {{ form_rest(form) }}
-        </section>
-    {{ form_end(form) }}
-</main>
+    <section class="c-form__section">
+        {{ form_rest(form) }}
+    </section>
+{{ form_end(form) }}

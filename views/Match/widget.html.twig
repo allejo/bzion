@@ -1,0 +1,24 @@
+{% macro team_summary(match, team) %}
+    <div class="c-matchwidget__team__image">
+        <img src="{{ team.avatar | imagine_filter('small_thumb') }}" />
+    </div>
+    <div class="c-matchwidget__team__name">
+        <p>{{ link_to(team) }}</p>
+    </div>
+    <div class="c-matchwidget__team__score">
+        <p>{{ match.score(team.id) }}</p>
+    </div>
+{% endmacro %}
+
+{% macro widget(match) %}
+    {% import _self as self %}
+
+    <section class="c-matchwidget">
+        <div class="c-matchwidget__team c-matchwidget__winner">
+            {{ self.team_summary(match, match.winner) }}
+        </div>
+        <div class="c-matchwidget__team c-matchwidget__loser">
+            {{ self.team_summary(match, match.loser) }}
+        </div>
+    </section>
+{% endmacro %}

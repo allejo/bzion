@@ -1,0 +1,23 @@
+.c-latest-news {
+    ul {
+        padding-left: 0;
+    }
+}
+
+.c-latest-news__article {
+    border-bottom: $Border-Default;
+    margin-top: $Settings-Page_Section-Small_Margin;
+    padding-bottom: $Settings-Page_Section-Small_Margin;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    h3 {
+
+    }
+
+    p {
+        font-size: 14px;
+    }
+}

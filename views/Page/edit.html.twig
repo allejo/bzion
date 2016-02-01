@@ -2,9 +2,10 @@
 
 {% block title %}{{ page.name }} :: Edit{% endblock %}
 
+{% block pageTitle %}
+    <h1>Editing :: {{ page.name }}</h1>
+{% endblock %}
+
 {% block content %}
-    {% include "Page/form.html.twig" with {
-        'pageTitle': 'Editing :: ' ~ page.name,
-        'form': form
-    } %}
+    {% include "Page/form.html.twig" with { 'form': form } %}
 {% endblock %}

@@ -1,0 +1,27 @@
+.s-match-editor {
+    h4 {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+    }
+
+    .c-team-match {
+        @include autoMarginBottom();
+
+        @include respond-up(md) {
+            margin-bottom: 0;
+        }
+    }
+
+    .c-team-selector {
+        @include view-columns(xs, 12);
+        @include view-columns(sm, 9);
+
+        select {
+            width: 100%;
+        }
+    }
+
+    .c-team-score {
+        @include view-columns(xs, 12);
+        @include view-columns(sm, 3);
+    }
+}

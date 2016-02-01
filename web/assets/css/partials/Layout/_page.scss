@@ -1,26 +1,86 @@
 // This is a convenience class that defines a horizontal section of a page. This is typically used in conjunction with
 // `.o-row` but these styles should NOT be applied to `.o-row` because a grid system does not imply that it is an
-// actually page section
+// actual page section
 .o-section {
-    margin-bottom: $Settings-Page_Section-Margin;
+    margin-bottom: $Settings-Page_Section-Small_Margin;
 
-    @include respond-to(sm) {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
+    @include respond-up(md) {
+        margin-bottom: $Settings-Page_Section-Margin;
 
         &:last-child {
             margin-bottom: $Settings-Page_Section-Margin;
         }
     }
 
-    .o-row__column--half,
-    .o-row__column--third,
-    .o-row__column--quarter {
-        @include respond-to(sm) {
-            margin-bottom: $Settings-Page_Section-Small_Margin;
+    .o-col--half,
+    .o-col--third,
+    .o-col--quarter {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
 
-            &:last-child {
-                margin-bottom: 0;
-            }
+        &:last-child {
+            margin-bottom: 0;
         }
+
+        @include respond-up(md) {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.c-page {
+
+}
+
+// The page header is where the title of the page and the respective buttons for that page go (e.g. edit, delete buttons)
+.c-page__header {
+    border-bottom: $Border-Default;
+    margin-bottom: $Settings-Page_Section-Small_Margin;
+
+    // We have a container class to keep the elements inside, so we'll apply these rules specifically
+    .o-container {
+        display: flex;
+        padding: {
+            bottom: 15px;
+            top: 15px;
+        }
+    }
+
+    @include respond-up(sm) {
+        margin-bottom: $Settings-Page_Section-Margin;
+    }
+}
+
+// The actual title of the page
+.c-page__header__title {
+    align-items: center;
+    display: flex;
+
+    h1 {
+        font-size: 20px;
+        margin: auto;
+
+        @include respond-up(md) {
+            font-size: 26px;
+        }
+    }
+}
+
+// The container that will house all of the buttons belonging to this page
+.c-page__header__options {
+    align-items: center;
+    display: none;
+    flex: 1;
+    justify-content: flex-end;
+
+    .c-button {
+        margin-left: 5px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    @include respond-up(md) {
+        display: flex;
     }
 }

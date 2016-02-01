@@ -21,6 +21,8 @@
     </head>
 
     <body>
+        {# Elements that are positioned absolutely or fixed w/CSS should be placed here BEFORE the app-body container #}
+
         <!--[if lte IE 9]>
             <div class="fuck-ie">
                 <h1>You're using an unsupported browser</h1>
@@ -28,24 +30,7 @@
             </div>
         <![endif]-->
 
-        <header class="c-header">
-            <section class="o-container">
-                <div id="mobile-menu" class="u-mobile-only c-mobilemenu">
-                    <i class="fa fa-bars"></i>
-                </div>
-
-                <h1 class="c-branding">
-                    <a href="{{ path('index') }}">
-                        <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
-                        {{ app.siteTitle }}
-                    </a>
-                </h1>
-
-                {% include "navbar.html.twig" %}
-            </section>
-        </header>
-
-        {# @TODO Uncomment or remove this, once I remember what this is for #}
+        {# @todo Update this element to share same CSS as the flashbag #}
         {#<div class="notification">#}
             {#<i class="fa fa-check"></i><span></span>#}
         {#</div>#}
@@ -56,43 +41,9 @@
             {% endfor %}
         </section>
 
-        {% block content %}
-
-        {% endblock %}
-
-        <footer class="c-footer">
-            <section class="c-footer__copyright">
-                <span>{{ app.siteTitle }} &copy; {{ "now" | date("Y") }}</span>
-
-                {% if app.debug %}
-                    <span class="c-footer__copyright__development"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
-                {% endif %}
-
-                {% if app.maintenance and app.controller.name != "Maintenance" %}
-                    <span class="c-footer__copyright__development"><i class="fa fa-plug "></i> Maintenance mode</span>
-                {% endif %}
-            </section>
-
-            <ul class="c-footer__pages is-horizontal">
-                {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
-                    <li><a href="{{ path('custom_page_create') }}">+</a></li>
-                {% endif %}
-
-                {% for page in app.pages %}
-                    {% if not page.isHomePage %}
-                        <li>{{ link_to(page) }}</li>
-                    {% endif %}
-                {% endfor %}
-
-                <li><a href="{{ path('server_list') }}">Servers</a></li>
-                <li><a href="{{ path('admin_list') }}">Admins</a></li>
-                <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
-                <li><a href="{{ path('map_list') }}">Maps</a></li>
-            </ul>
-        </footer>
-
         {% if app.debug %}
             <section class="css-dev">
+                <div class="xxxl">xxxl</div>
                 <div class="xxl">xxl</div>
                 <div class="xl">xl</div>
                 <div class="lg">lg</div>
@@ -102,6 +53,86 @@
             </section>
         {% endif %}
 
+
+        {#  The container for all of the parts of this website. Anything that is absolutely positioned should be placed
+            OUTSIDE of this container. #}
+
+        <div class="app-body">
+            <header class="c-header">
+                <section class="o-container">
+                    <div id="mobile-menu" class="u-mobile-only c-mobilemenu">
+                        <i class="fa fa-bars"></i>
+                    </div>
+
+                    <h1 class="c-branding">
+                        <a href="{{ path('index') }}">
+                            <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
+                            {{ app.siteTitle }}
+                        </a>
+                    </h1>
+
+                    {% include "navbar.html.twig" %}
+                </section>
+            </header>
+
+            <main class="c-page {{ scopeClass | default('') }}">
+                {% block pageHeader %}
+                    <section class="c-page__header">
+                        <div class="o-container">
+                            <section class="c-page__header__title">
+                                {% block pageTitle %}{% endblock %}
+                            </section>
+
+                            <section class="c-page__header__options">
+                                {% for button in pageButtons %}
+                                    {% if button.condition %}
+                                        <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}"><i class="fa fa-{{ button.icon }}"></i> {{ button.text }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </section>
+                        </div>
+                    </section>
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+            </main>
+
+            <footer class="c-footer">
+                <div class="c-footer__container o-container">
+                    <section class="c-footer__copyright">
+                        <span>{{ app.siteTitle }} &copy; {{ "now" | date("Y") }}</span>
+
+                        {% if app.debug %}
+                            <span class="c-footer__informational"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
+                        {% endif %}
+
+                        {% if app.maintenance and app.controller.name != "Maintenance" %}
+                            <span class="c-footer__informational"><i class="fa fa-plug "></i> Maintenance mode</span>
+                        {% endif %}
+                    </section>
+
+                    <ul class="c-footer__pages is-horizontal">
+                        {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
+                            <li><a href="{{ path('custom_page_create') }}">+</a></li>
+                        {% endif %}
+
+                        {% for page in app.pages %}
+                            {% if not page.isHomePage %}
+                                <li>{{ link_to(page) }}</li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <li><a href="{{ path('server_list') }}">Servers</a></li>
+                        <li><a href="{{ path('admin_list') }}">Admins</a></li>
+                        <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
+                        <li><a href="{{ path('map_list') }}">Maps</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+
+
+        {# Everything relating to Javascript should be placed down here #}
         <script>
             var baseURLNoHost = "{{ request.baseURL|e('js')  }}";
             var baseURL = "{{ request.schemeAndHTTPHost|e('js') }}";
@@ -127,7 +158,7 @@
 
         {% if app.debug %}
             <script src="{{ asset('assets/js/debug.js') }}"></script>
-            <script src="//localhost:35729/livereload.js"></script>
+            <script src="{{ request.schemeAndHTTPHost }}:35729/livereload.js"></script>
         {% endif %}
 
         {{ configuration.count }}

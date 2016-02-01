@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% set scopeClass = "s-messaging" %}
+
 {% block title %}{{ viewTitle }}{% endblock %}
 
 {% block button_row %}
@@ -11,24 +13,16 @@
     {% endspaceless %}
 {% endblock button_row %}
 
+{% block pageTitle %}
+    <h1>{{ viewTitle }}</h1>
+{% endblock %}
+
 {% block content %}
-    <main class="c-page s-messaging">
-        <section class="c-page__header">
-            <div class="c-page__header__container">
-                <section class="c-page__header__container__title">
-                    <h1>{{ viewTitle }}</h1>
-                </section>
+    <div class="o-container">
+        {% block messages_body %}
 
-                {% include "button-repeater.html.twig" with { 'buttons': pageButtons } %}
-            </div>
-        </section>
-
-        <div class="o-container">
-            {% block messages_body %}
-
-            {% endblock %}
-        </div>
-    </main>
+        {% endblock %}
+    </div>
 {% endblock %}
 
 {% block javascripts %}

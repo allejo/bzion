@@ -31,29 +31,42 @@
     .c-form__section__main {
         display: flex;
         flex-direction: column;
-
-        @include respond-to(sm) {
-            order: 2;
-        }
     }
 
     // In the two column layout, this column will take up the lesser of the two columns; also dubbed as a sidebar.
     .c-form__section__aside {
-        @include respond-to(sm) {
+        @include respond-up(md) {
             margin-bottom: $Settings-Page_Section-Small_Margin;
-            order: 1;
+            order: 2;
         }
     }
 }
 
 
 // A modified form section which will declare all form groups inside to be inline blocks which will allow them to live
-// happily next to each other
+// happily next to each other. These elements will be display block on small screens.
 .c-form__section--inline {
+    // The last c-form__group will have 0 margin bottom so we'll be overriding that
     .c-form__group {
-        display: inline-block;
+        &,
+        &:last-child {
+            margin-bottom: $Settings-Page_Section-Small_Margin;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        @include respond-up(md) {
+            display: inline-block;
+            margin-right: $Settings_Page_Section-Small_Margin;
+        }
+    }
+
+    // Since our c-form__group elements will have margin, cancel out the margin of this section so we don't get double
+    // margin
+    @include respond-up(md) {
         margin-bottom: 0;
-        margin-right: $Settings_Page_Section-Small_Margin;
     }
 }
 
