@@ -19,11 +19,15 @@
                 </p>
             </section>
 
-            <section class="o-row o-section c-roll-call">
+            <section class="o-row o-section c-rollcall">
                 {% for player in section.members %}
-                    {% include "player-badge.html.twig" with {
-                        css: 'o-col--quarter',
-                        player: player }
+                    {% include "Player/widget.html.twig" with {
+                        player: player,
+                        data: {
+                            callsign: "username",
+                            iso: "country.iso",
+                            country: "country.name"
+                        }}
                     %}
                 {% endfor %}
             </section>

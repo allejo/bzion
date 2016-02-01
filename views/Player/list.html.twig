@@ -12,6 +12,7 @@
             {% for player in players %}
                 {% include "Player/widget.html.twig" with {
                     player: player,
+                    showTeam: true,
                     data: {
                         callsign: "username",
                         teamid: "team.id",

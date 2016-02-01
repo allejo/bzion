@@ -17,7 +17,7 @@
     <section>
         <p class="c-player-badge__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
 
-        {% if showTeam | default(true) %}
+        {% if showTeam %}
             <p class="c-player-badge__team">{{ link_to(player.team) }}</p>
         {% endif %}
     </section>
