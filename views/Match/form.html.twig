@@ -1,28 +1,26 @@
 {% import _self as self %}
 
 {% macro team_score(_title, _team) %}
-    <div class="c-form__group">
-        <h4>{{ _title }}</h4>
+    <h4>{{ _title }}</h4>
 
-        <div class="o-row">
-            {{ form_row(_team.team, { 'container_attr':  { 'class': 'o-col--main' } }) }}
-            {{ form_row(_team.score, { 'container_attr': { 'class': 'o-col--aside' } }) }}
-        </div>
-
-        {{ form_row(_team.participants) }}
+    <div class="o-row">
+        {{ form_row(_team.team, { 'container_attr':  { 'class': 'c-team-selector c-form__group' } }) }}
+        {{ form_row(_team.score, { 'container_attr': { 'class': 'c-team-score c-form__group' } }) }}
     </div>
+
+    {{ form_row(_team.participants) }}
 {% endmacro %}
 
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
+{{ form_start(form, { 'attr': { 'class': 'c-form o-container s-match-editor' } }) }}
     {{ form_errors(form) }}
     <section class="o-row c-form__section">
-        <article class="o-col--half">
+        <article class="o-col--half c-team-match">
             {{ self.team_score("First Team", form.first_team) }}
         </article>
 
-        <aside class="o-col--half">
+        <article class="o-col--half c-team-match">
             {{ self.team_score("Second Team", form.second_team) }}
-        </aside>
+        </article>
     </section>
 
     <section class="c-form__section">

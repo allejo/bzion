@@ -53,6 +53,10 @@
             margin-bottom: $Settings-Page_Section-Small_Margin;
         }
 
+        &:last-child {
+            margin-right: 0;
+        }
+
         @include respond-up(md) {
             display: inline-block;
             margin-right: $Settings_Page_Section-Small_Margin;
