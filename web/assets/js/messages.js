@@ -104,19 +104,6 @@ reactor.addEventListener("push-event", function(data) {
 var messageView, messageList, conversationMessages;
 
 function initPage() {
-    // Hide any dimmers that might have been left
-    $(".dimmer, .spinner").fadeOut('fast');
-
-    var dimmer  = $("<div/>").hide().addClass("dimmer");
-    var spinner = $("<div/>").hide().addClass("spinner").text("Loading...");
-
-    // Add an invisible dimmer to elements that don't have one yet
-    $(".dimmable").each(function() {
-        if (!$(this).find('.dimmer').length) {
-            $(this).prepend(dimmer).prepend(spinner);
-        }
-    });
-
     var noMoreScrolling = false;
     conversationMessages   = $("#conversationMessages");
 
@@ -167,16 +154,6 @@ $(document).ready(function() {
 
 var pageSelector = $(".c-page");
 
-$.fn.startSpinners = function() {
-    this.children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
-    return this;
-};
-
-$.fn.stopSpinners = function() {
-    this.children(".dimmable").children(".dimmer, .spinner").fadeOut('fast');
-    return this;
-};
-
 // Hide the "load new messages" div for non-JS users
 $.fn.hideOlder = function() {
     var elem = this.find(".c-messenger__conversation__archiver");
@@ -212,7 +189,6 @@ function updateSelectors(selectors) {
 }
 
 function updatePage() {
-    $("#conversationMessages").startSpinners();
     return updateSelectors([".c-page", "nav"]);
 }
 
@@ -221,7 +197,6 @@ function updateLastMessage(html) {
 
     loadedView = html.find(".c-messenger__conversation__messages li");
     loadedView.appendTo(messageList);
-    conversationMessages.stopSpinners();
 
     // Scroll message list to the bottom
     messageView.animate({ scrollTop: messageView.prop("scrollHeight") });
@@ -253,7 +228,7 @@ pageSelector.on("submit", ".c-messenger__conversation__response", function(event
             deferred.resolve();
         }, function() {
             deferred.reject();
-        }, false);
+        });
     });
 });
 
@@ -293,14 +268,10 @@ function getLastID() {
 /**
  * Perform an AJAX request to send a message
  */
-function sendMessage(form, onSuccess, onError, spinners) {
+function sendMessage(form, onSuccess, onError) {
     if (typeof(Ladda) !== "undefined") {
         var l = Ladda.create( form.find('button').get()[0] );
         l.start();
-    }
-
-    if (spinners !== undefined && spinners) {
-        conversationMessages.startSpinners();
     }
 
     $.ajax({
@@ -315,8 +286,6 @@ function sendMessage(form, onSuccess, onError, spinners) {
         notify(msg.message, type);
         if (msg.success) {
             onSuccess(msg, form);
-        } else {
-            conversationMessages.stopSpinners();
         }
     }).error(function( jqXHR, textStatus, errorThrown ) {
         // TODO: Catch bad JSON
@@ -329,8 +298,6 @@ function sendMessage(form, onSuccess, onError, spinners) {
     }).complete(function() {
         if (l)
             l.stop();
-        // Don't stop the spinners - wait until the AJAX call to reload the page
-        // is complete
     });
 }
 
