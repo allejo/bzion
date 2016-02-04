@@ -57,8 +57,10 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     public function setAvatarFile($file)
     {
         if ($file) {
-            $openFile = $file->openFile('r');
-            $content = $openFile->fread($openFile->getSize());
+            // We don't use File's fread() because it's unavailable in less
+            // recent PHP versions
+            $path = $file->getPath() . '/' . $file->getFilename();
+            $content = file_get_contents($path);
 
             $path = $this->getAvatarPath(null, false, false);
             $filename = $this->getAvatarFileName($content);
