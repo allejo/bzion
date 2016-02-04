@@ -6,9 +6,9 @@ function initPage() {
     var spinner = $("<div/>").hide().addClass("spinner").text("Loading...");
 
     // Add an invisible dimmer to elements that don't have one yet
-    $(".dimmable").prepend(dimmer).prepend(spinner);
+    $(".js-dimmable").prepend(dimmer).prepend(spinner);
 
-    $(".c-servers__server").each(function() {
+    $(".c-server").each(function() {
         var url = baseURLNoHost + "/servers/" + $(this).attr("data-id");
         $(this).updateServer(url);
     });
@@ -18,26 +18,26 @@ $(document).ready(function() {
     initPage();
 });
 
-$(".c-servers").on("click", ".server-refresh", function(event) {
+$(".app-body").on("click", ".js-refresh", function(event) {
     event.preventDefault();
 
-    $(this).parents(".c-servers__server").updateServer($(this).attr("href"));
+    $(this).parents(".c-server").updateServer($(this).attr("href"));
 });
 
 $.fn.updateServer = function(url) {
     var server = $(this);
 
-    server.startSpinners().find(".c-servers__server__info").load(url, function() {
+    server.startSpinners().find(".js-server__info").load(url, function() {
         server.stopSpinners();
     });
 };
 
 $.fn.startSpinners = function() {
-    $(this).children(".dimmable").children(".dimmer, .spinner").fadeIn('fast');
+    $(this).children(".js-dimmable").children(".dimmer, .spinner").fadeIn('fast');
     return this;
 };
 
 $.fn.stopSpinners = function() {
-    this.children(".dimmable").children(".dimmer, .spinner").fadeOut('fast');
+    this.children(".js-dimmable").children(".dimmer, .spinner").fadeOut('fast');
     return this;
 };

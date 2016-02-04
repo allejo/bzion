@@ -1,33 +1,35 @@
-<header>
-    {% set status = (server.online) ? "online" : "offline" %}
+<div class="js-server__info">
+    <header>
+        {% set status = (server.online) ? "online" : "offline" %}
 
-    <span class="c-server__status c-server__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
-    <span class="c-server__name">{{ server.name }}</span>
-    {{ server.country.flagLiteral | raw }}
+        <span class="c-server__status c-server__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
+        <span class="c-server__name">{{ server.name }}</span>
+        {{ server.country.flagLiteral | raw }}
 
-    {% if me.canEdit(server) or me.canDelete(server) %}
-        <ul class="c-server__options is-horizontal has-no-padding">
-            {% if me.canEdit(server) %}
-                <li>
-                    <a class="server-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
-                        <i class="fa fa-refresh"></i>
-                    </a>
-                </li>
-                <li>{{ link_to(server, 'pencil', 'edit') }}</li>
-            {% endif %}
+        {% if me.canEdit(server) or me.canDelete(server) %}
+            <ul class="c-server__options is-horizontal has-no-padding">
+                {% if me.canEdit(server) %}
+                    <li>
+                        <a class="js-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </li>
+                    <li>{{ link_to(server, 'pencil', 'edit') }}</li>
+                {% endif %}
 
-            {% if me.canDelete(server) %}
-                <li>{{ link_to(server, 'minus', 'delete') }}</li>
-            {% endif %}
-        </ul>
-    {% endif %}
-</header>
+                {% if me.canDelete(server) %}
+                    <li>{{ link_to(server, 'minus', 'delete') }}</li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </header>
 
-<section>
-    <p class="c-server__address">{{ server.address }}</p>
-    <p class="c-server__players">Player count: {{ server.numPlayers }}</p>
-</section>
+    <section>
+        <p class="c-server__address">{{ server.address }}</p>
+        <p class="c-server__players">Player count: {{ server.numPlayers }}</p>
+    </section>
 
-<footer>
-    <small class="c-server__updated">Updated {{ server.lastUpdate | humanTime }}</small>
-</footer>
+    <footer>
+        <small class="c-server__updated">Updated {{ server.lastUpdate | humanTime }}</small>
+    </footer>
+</div>
