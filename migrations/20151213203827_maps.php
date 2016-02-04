@@ -54,9 +54,8 @@ class Maps extends AbstractMigration
 
         $this->updateMatches();
 
-        // TODO: Uncomment this (commented to prevent loss of data in case of error)
-        // $matches->removeColumn('map_played')
-        //     ->save();
+        $matches->removeColumn('map_played')
+            ->save();
     }
 
     /**
