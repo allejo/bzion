@@ -2,14 +2,14 @@
 
 {% macro badge(number, type) %}
     <span class="c-badge {{ type }}">
-        {% if number %}
-            {{ number }}
-        {% endif %}
+        {%- if number -%}
+            {{- number -}}
+        {%- endif -%}
     </span>
 {% endmacro %}
 
-{% macro page(text, controller_name, path, icon, class) %}
-    <li class="{{ class | default('') }} {{ app.controller.name == controller_name ? 'active' }}" >
+{% macro page(text, controller_name, path, icon, class, title) %}
+    <li class="{{ class | default('') }} {{ app.controller.name == controller_name ? 'active' }}" {% if title is not null %}title="{{ title }}"{% endif %}>
         <a href="{{ path(path) }}">
             <i class="fa fa-{{ icon }} fa-fw"></i> {{ text }}
         </a>
@@ -20,16 +20,16 @@
     {% import _self as navbar %}
 
     {{ navbar.page(
-        navbar.badge(me.countUnreadNotifications, "unreadNotificationCount"),
-        'Notification', 'notification_list', 'bell', 'c-useroptions'
+        navbar.badge(me.countUnreadNotifications, "js-counter__notifications"),
+        'Notification', 'notification_list', 'bell', 'c-useroptions', 'Notifications'
     )}}
     {{ navbar.page(
-        navbar.badge(me.countUnreadMessages, "unreadMessageCount"),
-        'Message', 'message_list', 'comments-o', 'c-useroptions'
+        navbar.badge(me.countUnreadMessages, "js-counter__messages"),
+        'Message', 'message_list', 'comments-o', 'c-useroptions', 'Messages'
     )}}
     {{ navbar.page(
         null,
-        'Profile', 'profile_edit', 'gear', 'c-useroptions'
+        'Profile', 'profile_edit', 'gear', 'c-useroptions', 'My Profile'
     )}}
 {% endmacro %}
 
