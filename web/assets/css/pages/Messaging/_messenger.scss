@@ -85,6 +85,9 @@
 .c-messenger__option__action {
     display: flex;
     position: relative;
+
+    // Workaround for an issue with firefox hiding the border of the action input
+    margin-bottom: 1px;
 }
 
 .c-messenger__option__action__close {
@@ -108,12 +111,11 @@
 // scrollable
 .c-messenger__conversation__scrolling {
     //flex: 1;
-    overflow: scroll;
+    overflow: auto;
 }
 
 // The container for the "Load older messages" button in a conversation
 .c-messenger__conversation__archiver {
-    display: none;
     padding: {
         bottom: $Settings-Page_Section-Small_Margin;
         top: $Settings-Page_Section-Small_Margin;

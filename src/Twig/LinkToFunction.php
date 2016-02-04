@@ -34,7 +34,7 @@ class LinkToFunction
             $content = "<i class=\"fa fa-$icon\"></i> " . $content;
         }
 
-        if ($model instanceof \UrlModel && ($linkAll || !isset($context['app']) || $context['app']->getController()->canSee($model))) {
+        if ($this->isLinkable($model, $linkAll, $context)) {
             $params = array();
             if ($linkAll) {
                 $params['showDeleted'] = true;
@@ -96,7 +96,8 @@ class LinkToFunction
     /**
      * Create a CSS class string
      *
-     * @param string The CSS class(es), without `class=".."`
+     * @param  $class string The CSS class(es), without `class=".."`
+     * @return string
      */
     private function getClass($class)
     {
@@ -105,6 +106,34 @@ class LinkToFunction
         }
 
         return ' class="' . $class . '"';
+    }
+
+    /**
+     * Find out if a link should be provided to an object, instead of just a
+     * reference to its name
+     *
+     * @param  \Model $model   The model to test
+     * @param  bool   $linkAll Whether to link deleted and inactive models
+     * @param  array  $context Twig's context
+     * @return bool
+     */
+    private function isLinkable(\Model $model, $linkAll, &$context)
+    {
+        // Models that don't have a URL can't be linked
+        if (!$model instanceof \UrlModel) {
+            return false;
+        }
+
+        if ($linkAll) {
+            return true;
+        }
+
+        if (!$context['app']) {
+            // Only link active models by default
+            return $model->isActive();
+        }
+
+        return $context['app']->getController()->canSee($model);
     }
 
     public static function get()

@@ -7,10 +7,10 @@
     </div>
 {% endif %}
 
-<ul id="messageView" class="c-messenger__conversation__messages">
+<ul class="c-messenger__conversation__messages">
     {% for message in messages|reverse %}
         {% if message.isMessage %}
-            <li data-id="{{ message.id }}" class="message">
+            <li class="message" data-id="{{ message.id }}">
                 {%- if message.author.id != previousAuthor or not previousMessage.isSameDay(message.timestamp) %}
                     <div class="details">
                         <div class="author">{{ link_to(message.author) }}</div>
@@ -24,7 +24,7 @@
             {% set type = message.category %}
             {% set event = message.event %}
 
-            <li class="action">
+            <li class="action" data-id="{{ message.id }}">
                 {% if type == 'conversation.rename' %}
                     <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
                 {% elseif type == 'conversation.abandon' %}

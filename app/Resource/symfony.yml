@@ -20,6 +20,8 @@ twig:
         "%kernel.root_dir%/../views": ~
     form_themes:
         - form_layout.html.twig
+    globals:
+        app: null # override Symfony's default app variable
 
 monolog:
     channels: ["app", "api", "mysql"]

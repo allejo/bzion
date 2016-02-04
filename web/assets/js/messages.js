@@ -101,37 +101,7 @@ reactor.addEventListener("push-event", function(data) {
     }
 });
 
-function format(item) { return item.username; }
-
-function initializeSelect() {
-    $(".player-select").attr('placeholder','Add a recipient').select2({
-        allowClear: true,
-        multiple: true,
-        minimumInputLength: 1,
-        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-            url: baseURLNoHost + "/players",
-            dataType: 'json',
-            data: function (term, page) {
-                return {
-                    format: 'json',
-                    exceptMe: null,
-                    startsWith: term, // search term
-                };
-            },
-            results: function (data, page) { // parse the results into the format expected by Select2.
-                // since we are using custom formatting functions we do not need to alter remote JSON data
-                return {results: data.players};
-            }
-        },
-        formatSelection: format,
-        formatResult: format,
-    });
-
-    // Make sure that PHP knows we are sending player IDs, not usernames
-    $("#form_Recipients_ListUsernames").attr('value', '0');
-}
-
-var messageView, conversationMessages;
+var messageView, messageList, conversationMessages;
 
 function initPage() {
     // Hide any dimmers that might have been left
@@ -152,33 +122,40 @@ function initPage() {
 
     if (conversationMessages.attr("data-id")) {
         messageView = $("#messageView");
+        messageList = messageView.children("ul");
         var olderMessageLink = messageView.hideOlder();
 
         // Scroll message list to the bottom
         messageView.scrollTop(messageView.prop("scrollHeight"));
 
-        // Load older messages when the user scrolls to the top
-        messageView.scroll(function() {
-            if($(this).scrollTop() < 20 && !noMoreScrolling && olderMessageLink !== undefined) {
+        var infiniteScroll = function() {
+            if(messageView.scrollTop() < 20 && !noMoreScrolling && olderMessageLink !== undefined) {
                 noMoreScrolling = true;
 
                 // TODO: Let the user know that more messages are being loaded
 
                 $.get(olderMessageLink + "&nolayout", function(data) {
                     // Properly scroll the message view
-                    var firstMessage = messageView.find("li.message").eq(0);
+                    var firstMessage = messageView.find("li").eq(0);
                     var curOffset = firstMessage.offset().top - messageView.scrollTop();
 
                     html = $($.parseHTML(data));
                     olderMessageLink = html.hideOlder();
-                    messageView.prepend(html);
+                    messageList.prepend(html.children("li"));
                     messageView.scrollTop(firstMessage.offset().top - curOffset);
                     noMoreScrolling = false;
+
+                    // Scroll up more if we're not there yet
+                    infiniteScroll();
                 }, "html");
             }
-        });
-    } else {
-        initializeSelect();
+        };
+
+        // Load older messages when the user scrolls to the top
+        messageView.scroll(infiniteScroll);
+
+        // Load older messages automatically if there's enough space
+        infiniteScroll();
     }
 
     updateFavicon();
@@ -202,12 +179,13 @@ $.fn.stopSpinners = function() {
 
 // Hide the "load new messages" div for non-JS users
 $.fn.hideOlder = function() {
-    var elem = this.find(".older_messages");
+    var elem = this.find(".c-messenger__conversation__archiver");
+
     if (elem.length === 0) {
-        elem = this.closest(".older_messages");
+        elem = this.closest(".c-messenger__conversation__archiver");
     }
 
-    return elem.hide().attr("href");
+    return elem.css('display', 'none').find("a").attr("href");
 };
 
 function updateSelector(selector) {
@@ -239,10 +217,10 @@ function updatePage() {
 }
 
 function updateLastMessage(html) {
-    setSelectors([".conversations", "nav"], html);
+    setSelectors([".c-conversations", "nav"], html);
 
-    loadedView = html.find("#messageView > *").not(".older_messages");
-    loadedView.appendTo(messageView);
+    loadedView = html.find(".c-messenger__conversation__messages li");
+    loadedView.appendTo(messageList);
     conversationMessages.stopSpinners();
 
     // Scroll message list to the bottom
@@ -255,7 +233,7 @@ function updateLastMessage(html) {
 // to the page using $.load() also respond to events
 
 // Response submit event
-pageSelector.on("submit", ".reply_form", function(event) {
+pageSelector.on("submit", ".c-messenger__conversation__response", function(event) {
     // Don't let the link change the web page,
     // AJAX will handle the click
     event.preventDefault();
@@ -309,7 +287,7 @@ pageSelector.on("keydown", ".input_compose_area", function(event) {
  * Get the ID of the last sent message
  */
 function getLastID() {
-    return conversationMessages.find("li.message").last().attr('data-id');
+    return conversationMessages.find("li").last().attr('data-id');
 }
 
 /**

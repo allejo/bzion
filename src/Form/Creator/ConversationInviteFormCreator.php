@@ -21,7 +21,7 @@ class ConversationInviteFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('players', new AdvancedModelType('player'), array(
+            ->add('players', new AdvancedModelType(array('player', 'team')), array(
                 'constraints' => new NotBlank(),
                 'multiple'    => true,
             ))

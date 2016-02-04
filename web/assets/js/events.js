@@ -39,8 +39,8 @@ var oldCount = 0;
 function updateFavicon() {
     var totalCount = 0;
 
-    [".unreadNotificationCount", ".unreadMessageCount"].forEach(function(elem) {
-        count = parseInt($(elem).text());
+    [".js-counter__notifications", ".js-counter__messages"].forEach(function(elem) {
+        count = parseInt($(elem).first().text());
 
         if (!isNaN(count)) {
             totalCount += count;
@@ -75,8 +75,8 @@ $(document).ready(function() {
             var notifications = (data.notification_count > 0) ? data.notification_count : '';
             var messages      = (data.message_count > 0) ? data.message_count : '';
 
-            $(".unreadNotificationCount").text(notifications);
-            $(".unreadMessageCount").text(messages);
+            $(".js-counter__notifications").text(notifications);
+            $(".js-counter__messages").text(messages);
 
             // Notify all the loaded subsystems about the event (e.g. to update messages)
             reactor.dispatchEvent("push-event", data);

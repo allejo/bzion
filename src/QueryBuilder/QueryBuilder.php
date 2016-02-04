@@ -730,8 +730,12 @@ class QueryBuilder implements Countable
     {
         if ($this->sortBy) {
             $order = 'ORDER BY ' . $this->sortBy;
+
+            // Sort by ID if the sorting columns are equal
             if ($this->reverseSort) {
-                $order .= ' DESC';
+                $order .= ' DESC, id DESC';
+            } else {
+                $order .= ', id';
             }
         } else {
             $order = '';

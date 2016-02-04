@@ -26,14 +26,9 @@
                 </div>
 
                 <div class="buttons">
-                    {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out'} }) }}
+                    {{ form_row(form.Send, {id: 'composeButton', attr: {'data-style': 'expand-right'} }) }}
                 </div>
             {{ form_end(form) }}
         </div>
     </section>
-{% endblock %}
-
-{% block javascripts %}
-    <script src="{{ asset('assets/js/autocomplete.js') }}"></script>
-    <script src="{{ asset('components/select2/dist/js/select2.js') }}"></script>
 {% endblock %}

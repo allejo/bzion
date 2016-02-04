@@ -78,7 +78,7 @@
                 {% endif %}
             </section>
 
-            <section class="c-messenger__conversation__scrolling">
+            <section id="messageView" class="c-messenger__conversation__scrolling">
                 {% include 'Message/messages.html.twig' %}
             </section>
 
@@ -88,7 +88,7 @@
                     {{ form_errors(form.message) }}
                     {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
 
-                    {{ form_row(form.Send, {id: 'composeButton', attr: {class: 'ladda-button', 'data-style': 'zoom-out', 'data-size': 'xs'} }) }}
+                    {{ form_row(form.Send, {id: 'composeButton', attr: {'data-style': 'expand-right'} }) }}
                 </div>
             {{ form_end(form) }}
         </section>
