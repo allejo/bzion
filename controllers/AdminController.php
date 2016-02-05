@@ -6,8 +6,6 @@ class AdminController extends HTMLController
 {
     public function listAction()
     {
-        $toast = new ConversationFormCreator();
-
         $rolesToDisplay = Role::getLeaderRoles();
         $roles = array();
 

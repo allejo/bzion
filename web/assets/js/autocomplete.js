@@ -97,8 +97,6 @@ $(document).ready(function() {
                     var results = [];
                     var i = 0;
 
-                    toast = data;
-
                     for (var key in data.results) {
                         var item = data.results[key];
 
