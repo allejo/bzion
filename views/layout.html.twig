@@ -10,7 +10,7 @@
 
         <title>{% spaceless %}{% block title %}{{ app.siteTitle }}{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="{{ asset('components/select2/dist/css/select2.css') }}">
-        <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda-themeless.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
@@ -127,7 +127,9 @@
 
                     <ul class="c-footer__pages is-horizontal">
                         {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
-                            <li><a href="{{ path('custom_page_create') }}">+</a></li>
+                            <li>
+                                <a href="{{ path('custom_page_create') }}" title="Create new page">+</a>
+                            </li>
                         {% endif %}
 
                         {% for page in app.pages %}
