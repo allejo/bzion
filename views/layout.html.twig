@@ -10,7 +10,7 @@
 
         <title>{% spaceless %}{% block title %}{{ app.siteTitle }}{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="{{ asset('components/select2/dist/css/select2.css') }}">
-        <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda-themeless.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
@@ -24,11 +24,25 @@
         {# Elements that are positioned absolutely or fixed w/CSS should be placed here BEFORE the app-body container #}
 
         <!--[if lte IE 9]>
-            <div class="fuck-ie">
+            <div class="c-system-alert">
                 <h1>You're using an unsupported browser</h1>
                 <p>You are browsing this website with an unsupported browser both by BZiON and its vendor. Please consider using a real browser such as <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>, <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>, <a href="http://ultronbrowser.info/">Google Ultron</a>, or Safari.</p>
             </div>
         <![endif]-->
+
+        <noscript>
+            <div class="c-system-alert">
+                <h1>Javascript is not enabled</h1>
+                <p>This website works better with Javascript, please enable it to take full advantage of these features.</p>
+            </div>
+        </noscript>
+
+        {% if app.alertEnabled %}
+            <div class="c-system-alert">
+                <h1>{{ app.alertHeader }}</h1>
+                <p>{{ app.alertMessage }}</p>
+            </div>
+        {% endif %}
 
         {# @todo Update this element to share same CSS as the flashbag #}
         {#<div class="notification">#}
@@ -113,9 +127,7 @@
 
                     <ul class="c-footer__pages is-horizontal">
                         {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
-                            <li title="Create new page">
-                                <a href="{{ path('custom_page_create') }}">+</a>
-                            </li>
+                            <li><a href="{{ path('custom_page_create') }}">+</a></li>
                         {% endif %}
 
                         {% for page in app.pages %}

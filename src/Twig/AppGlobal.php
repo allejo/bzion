@@ -104,6 +104,36 @@ class AppGlobal
     }
 
     /**
+     * Whether or not the website wide alert is enabled
+     *
+     * @return bool
+     */
+    public function isAlertEnabled()
+    {
+        return $this->container->getParameter('bzion.site.alert.enabled');
+    }
+
+    /**
+     * The title of the alert
+     *
+     * @return string
+     */
+    public function getAlertHeader()
+    {
+        return $this->container->getParameter('bzion.site.alert.header');
+    }
+
+    /**
+     * The message of the alert
+     *
+     * @return string
+     */
+    public function getAlertMessage()
+    {
+        return$this->container->getParameter('bzion.site.alert.message');
+    }
+
+    /**
      * Get information about sockets
      *
      * @return array

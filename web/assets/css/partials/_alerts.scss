@@ -33,24 +33,42 @@
     @include make-alert($Alert-Neutral-Background, $Alert-Neutral-Border, $Alert-Neutral-Text);
 }
 
-@include component('alert') {
-    @include modifier('success') {
-        @extend %alert-success;
+.c-alert {
+
+}
+
+.c-alert--success {
+    @extend %alert-success;
+}
+
+.c-alert--info {
+    @extend %alert-informational;
+}
+
+.c-alert--warning {
+    @extend %alert-warning;
+}
+
+.c-alert--danger {
+    @extend %alert-danger;
+}
+
+.c-alert--neutral {
+    @extend %alert-neutral;
+}
+
+.c-system-alert {
+    background-color: #FF4756;
+    color: $Color-White;
+    padding: 20px;
+    text-align: center;
+
+    a {
+        color: #AD1625;
+        font-weight: bold;
     }
 
-    @include modifier('info') {
-        @extend %alert-informational;
-    }
-
-    @include modifier('warning') {
-        @extend %alert-warning;
-    }
-
-    @include modifier('danger') {
-        @extend %alert-danger;
-    }
-
-    @include modifier('neutral') {
-        @extend %alert-neutral;
+    h1 {
+        margin-bottom: 10px;
     }
 }

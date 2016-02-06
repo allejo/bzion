@@ -8,6 +8,11 @@ bzion:
         name: "BZiON"
         welcome: "Welcome to BZiON"
         slug: "A good clean League Management System ...sorta"
+        alert:
+          enabled: false
+          collapsible: true
+          header: Alert Title
+          message: Sample alert message with information
     league:
         duration:
             30: 3/3 # 30 minute match gets full ELO

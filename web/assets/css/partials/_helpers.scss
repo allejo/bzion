@@ -32,21 +32,6 @@
     }
 }
 
-.fuck-ie {
-    background-color: #FF7D87;
-    color: $Color-White;
-    padding: 20px;
-
-    a {
-        color: #AD1625;
-        font-weight: bold;
-    }
-
-    h1 {
-        margin-bottom: 10px;
-    }
-}
-
 .o-container {
     @extend %container;
 }
