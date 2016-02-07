@@ -57,6 +57,39 @@
     @extend %alert-neutral;
 }
 
+.c-flashbag {
+    $width: 50%;
+
+    height: 0;
+    left: 50%;
+    margin: 0 0 0 (-1 * ($width / 2));
+    position: fixed;
+    top: 0;
+    width: $width;
+    z-index: 100;
+}
+
+.c-flashbag__item {
+    animation: slide linear 1s forwards;
+    animation-delay: 3s;
+    border: 1px solid;
+    border-bottom-left-radius: $Border-Radius;
+    border-bottom-right-radius: $Border-Radius;
+    border-top: 0;
+    padding: 10px 0;
+    text-align: center;
+    transform-origin: 50% 50%;
+}
+
+@keyframes slide {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    100% {
+        transform: translate(0px, -45px);
+    }
+}
+
 .c-system-alert {
     background-color: #FF4756;
     color: $Color-White;
