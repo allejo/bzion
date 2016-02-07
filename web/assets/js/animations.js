@@ -37,5 +37,8 @@ $(function () {
     });
 
     var $collapsibleOpen = $(".collapsible-entity--open");
+
+    if ($collapsibleOpen.length !== 0) {
         $collapsibleOpen.css("height", $collapsibleOpen[0].scrollHeight);
+    }
 });
