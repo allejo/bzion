@@ -7,6 +7,11 @@
     </div>
 {% endif %}
 
+{% if previousMessage %}
+    {% set previousAuthor = previousMessage.author.id %}
+    {% set previousMessage = previousMessage.timestamp %}
+{% endif %}
+
 <ul class="c-messenger__conversation__messages">
     {% for message in messages|reverse %}
         {% if message.isMessage %}

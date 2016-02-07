@@ -7,6 +7,8 @@
     "require": {
         "php"                        : ">=5.4.0",
         "cboden/ratchet"             : "0.2.*",
+        "components/font-awesome"    : "^4.5",
+        "components/jquery"          : "^2.2",
         "doctrine/inflector"         : "~1.0",
         "erusev/parsedown"           : "~1.5",
         "ext-gd"                     : "*",
@@ -26,9 +28,7 @@
         "symfony/swiftmailer-bundle" : ">=2.3.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "~1.18",
-        "yzalis/identicon"           : "1.1.*@dev",
-        "components/jquery": "^2.2",
-        "components/font-awesome": "^4.5"
+        "yzalis/identicon"           : "1.1.*@dev"
     },
     "require-dev": {
         "php": ">=5.5.0",

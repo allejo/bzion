@@ -102,15 +102,45 @@ class MessageController extends JSONController
                   ->endAt($request->query->get('start'))
                   ->getModels();
 
+        // Hide the details (author, timestamp) of the first message if they're
+        // already shown in the previous message (useful for AJAX calls)
+        if($request->query->getBoolean('hideFirstDetails')) {
+            $previousMessage = Message::get($request->query->get('end'));
+        } else {
+            $previousMessage = null;
+        }
+
         $params = array(
             "form"         => $form->createView(),
             "inviteForm"   => $inviteForm->createView(),
             "renameForm"   => $renameForm->createView(),
             "conversation" => $conversation,
-            "messages"     => $messages
+            "messages"     => $messages,
+            "previousMessage" => $previousMessage
         );
 
         if ($request->query->has('nolayout')) {
+            if ($request->query->getBoolean('reviewLastDetails')) {
+                // An AJAX call has asked us to check if details (author,
+                // timestamp) will need to be shown for the next message
+
+                $nextMessage = Message::get($request->query->get('start'));
+                $lastMessage = reset($messages);
+
+                if ($lastMessage !== false
+                    && $lastMessage->isMessage()
+                    && $lastMessage->getTimestamp()->isSameDay($nextMessage->getTimestamp())
+                    && $lastMessage->getAuthor()->isSameAs($nextMessage->getAuthor())
+                ) {
+                    $hideLastDetails = true;
+                } else {
+                    $hideLastDetails = false;
+                }
+
+                // Add $hideLastDetails to the list of JSON parameters
+                $this->attributes->set('hideLastDetails', $hideLastDetails);
+            }
+
             // Don't show the layout so that ajax can just load the messages
             return $this->render('Message/messages.html.twig', $params);
         } else {

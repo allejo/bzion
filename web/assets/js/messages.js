@@ -1,90 +1,38 @@
 var sentMessage = null;
 
 /**
- * A Queue for AJAX requests related to messages
+ * Schedule a refresh
+ * @param {int} id The ID of the new message about which we were notified by the event server
  */
-var Queue = function() {
-    var lastPromise = null;
-    var count = 0;
+Queue.prototype.addRefresh = function(id) {
+    var queue = this;
 
-    var setCount = function(d) {
-        count = count + d;
-    };
+    this.add(function() {
+        var deferred = this;
 
-    var setup = function() {
-        var queueDeferred = $.Deferred();
+        // The refresh is going to take place later in the queue, there is
+        // no need to refresh if there are items waiting in the queue
+        if (!queue.isLast()) {
+            return true;
+        }
 
-        // when the previous method returns, resolve this one
-        $.when(lastPromise).always(function() {
-            queueDeferred.resolve();
+        // If the server informs us about a message we've already sent, don't refresh again
+        if (sentMessage === id) {
+            return true;
+        }
+
+        $.get(document.URL, { end: getLastID() }, function(data) {
+            html = $($.parseHTML(data));
+            updateLastMessage(html);
+
+            deferred.resolve();
+        }, "html").error(function() {
+            deferred.reject();
         });
-
-        return queueDeferred.promise();
-    };
-
-    this.add = function(callback) {
-        // Increase count when a callback is added to the queue and decrease it
-        // when it's over
-        setCount(1);
-
-        var methodDeferred = $.Deferred();
-        var queueDeferred = setup();
-
-        methodDeferred.always(function() {
-            setCount(-1);
-        });
-
-        // execute next queue method
-        queueDeferred.done(function() {
-            if (callback.apply(methodDeferred)) {
-                methodDeferred.resolve();
-            }
-        });
-
-        lastPromise = methodDeferred.promise();
-    };
-
-    /**
-     * Whether the currently running callback is the last in the queue
-     * @return boolean
-     */
-    this.isLast = function() {
-        return count <= 1;
-    };
-
-    /**
-     * Schedule a refresh
-     * @param {int} id The ID of the new message about which we were notified by the event server
-     */
-    this.addRefresh = function(id) {
-        var queue = this;
-
-        this.add(function() {
-            var deferred = this;
-
-            // The refresh is going to take place later in the queue, there is
-            // no need to refresh if there are items waiting in the queue
-            if (!queue.isLast()) {
-                return true;
-            }
-
-            // If the server informs us about a message we've already sent, don't refresh again
-            if (sentMessage === id) {
-                return true;
-            }
-
-            $.get(document.URL, { end: getLastID() }, function(data) {
-                html = $($.parseHTML(data));
-                updateLastMessage(html);
-
-                deferred.resolve();
-            }, "html").error(function() {
-                deferred.reject();
-            });
-        });
-    };
+    });
 };
 
+// A queue for AJAX calls for new messages
 var q = new Queue();
 
 reactor.addEventListener("push-event", function(data) {
@@ -105,7 +53,7 @@ var messageView, messageList, conversationMessages;
 
 function initPage() {
     var noMoreScrolling = false;
-    conversationMessages   = $("#conversationMessages");
+    conversationMessages = $("#conversationMessages");
 
     if (conversationMessages.attr("data-id")) {
         messageView = $("#messageView");
@@ -116,17 +64,23 @@ function initPage() {
         messageView.scrollTop(messageView.prop("scrollHeight"));
 
         var infiniteScroll = function() {
-            if(messageView.scrollTop() < 20 && !noMoreScrolling && olderMessageLink !== undefined) {
+            if(messageView.scrollTop() < 40 && !noMoreScrolling && olderMessageLink !== undefined) {
                 noMoreScrolling = true;
 
-                // TODO: Let the user know that more messages are being loaded
+                // TODO: Use a loading indicator to let the user know that more
+                // messages are being loaded
 
-                $.get(olderMessageLink + "&nolayout", function(data) {
+                $.get(olderMessageLink + "&nolayout&reviewLastDetails=1&format=json", function(data) {
                     // Properly scroll the message view
                     var firstMessage = messageView.find("li").eq(0);
                     var curOffset = firstMessage.offset().top - messageView.scrollTop();
 
-                    html = $($.parseHTML(data));
+                    html = $($.parseHTML(data.content));
+
+                    if (data.hideLastDetails) {
+                        messageList.find(".details").first().remove();
+                    }
+
                     olderMessageLink = html.hideOlder();
                     messageList.prepend(html.children("li"));
                     messageView.scrollTop(firstMessage.offset().top - curOffset);
@@ -134,7 +88,7 @@ function initPage() {
 
                     // Scroll up more if we're not there yet
                     infiniteScroll();
-                }, "html");
+                }, "json");
             }
         };
 
@@ -218,6 +172,8 @@ pageSelector.on("submit", ".c-messenger__conversation__response", function(event
     q.add(function() {
         var deferred = this;
 
+        // TODO: Fix issue when a lot of messages are added to the conversation
+        // before the user presses Submit
         sendMessage(selector, function(msg, form) {
             sentMessage = msg.id;
 
@@ -276,7 +232,7 @@ function sendMessage(form, onSuccess, onError) {
 
     $.ajax({
         type: form.attr('method'),
-        url: form.attr('action') + "?end=" + getLastID(),
+        url: form.attr('action') + "?end=" + getLastID() + '&hideFirstDetails=1',
         data: form.serialize() + "&format=json",
         dataType: "json"
     }).done(function( msg ) {

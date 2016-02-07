@@ -80,6 +80,15 @@
 
             <section id="messageView" class="c-messenger__conversation__scrolling">
                 {% include 'Message/messages.html.twig' %}
+
+                <noscript>
+                    <div class="c-messenger__conversation__archiver">
+                        <a href="{{ path('message_conversation_show', {conversation: conversation.id, end: (messages|first).id }) }}">
+                            <i class="fa fa-refresh"></i>
+                            <span>Load more recent messages</span>
+                        </a>
+                    </div>
+                </noscript>
             </section>
 
             {{ form_start(form, {'attr': {'class': 'c-messenger__conversation__response', 'autocomplete': 'off'} }) }}
