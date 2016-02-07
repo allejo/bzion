@@ -114,6 +114,16 @@ class AppGlobal
     }
 
     /**
+     * Should the alert be collapsible
+     *
+     * @return bool
+     */
+    public function isAlertCollapsible()
+    {
+        return $this->container->getParameter('bzion.site.alert.collapsible');
+    }
+
+    /**
      * The title of the alert
      *
      * @return string

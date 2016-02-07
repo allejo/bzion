@@ -66,13 +66,15 @@
 
             <li>
                 <a href="{{ path('logout') }}">
-                    <i class="fa fa-sign-out"></i> Logout
+                    <i class="fa fa-sign-out"></i>
+                    <span class="u-desktop-only">Logout</span>
                 </a>
             </li>
         {% else %}
             <li>
                 <a href="{{ loginUrl }}">
-                    <i class="fa fa-sign-in"></i> Login/Register
+                    <i class="fa fa-sign-in"></i>
+                    <span class="u-desktop-only">Login/Register</span>
                 </a>
             </li>
         {% endif %}

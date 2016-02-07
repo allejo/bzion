@@ -38,9 +38,17 @@
         </noscript>
 
         {% if app.alertEnabled %}
-            <div class="c-system-alert">
-                <h1>{{ app.alertHeader }}</h1>
-                <p>{{ app.alertMessage }}</p>
+            <div id="SystemAlert" class="collapsible-entity collapsible-entity--open" data-savestatus="true">
+                <div class="c-system-alert">
+                    {% if app.alertCollapsible %}
+                        <p class="collapsible-close" data-close="#SystemAlert" title="Close this alert">
+                            <i class="fa fa-close"></i>
+                        </p>
+                    {% endif %}
+
+                    <h1>{{ app.alertHeader }}</h1>
+                    <p>{{ app.alertMessage }}</p>
+                </div>
             </div>
         {% endif %}
 
@@ -167,14 +175,18 @@
         <script src="{{ asset('components/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('includes/prefixfree.min.js') }}"></script>
         <script src="{{ asset('includes/favicojs/favico-0.3.5.min.js') }}"></script>
-        <script src="{{ asset('assets/js/min/animations.js') }}"></script>
-        <script src="{{ asset('assets/js/min/main.js') }}"></script>
         <script src="{{ asset('assets/js/min/utilities.js') }}"></script>
         <script src="{{ asset('assets/js/events.js') }}"></script>
 
         {% if app.debug %}
+            <script src="{{ asset('assets/js/animations.js') }}"></script>
+            <script src="{{ asset('assets/js/main.js') }}"></script>
+
             <script src="{{ asset('assets/js/debug.js') }}"></script>
             <script src="{{ request.schemeAndHTTPHost }}:35729/livereload.js"></script>
+        {% else %}
+            <script src="{{ asset('assets/js/min/animations.js') }}"></script>
+            <script src="{{ asset('assets/js/min/main.js') }}"></script>
         {% endif %}
 
         {{ configuration.count }}

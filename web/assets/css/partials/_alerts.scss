@@ -104,4 +104,10 @@
     h1 {
         margin-bottom: 10px;
     }
+
+    .collapsible-close {
+        position: absolute;
+        right: $Settings-Page_Section-Small_Margin;
+        top: $Settings-Page_Section-Small_Margin;
+    }
 }

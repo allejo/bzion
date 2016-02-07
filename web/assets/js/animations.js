@@ -18,7 +18,24 @@ $(function () {
     $(".collapsible-close").click(function () {
         var $this = $(this);
         var $target = $($this.data("close"));
+        var saveStatus = $target.data("savestatus");
+
+        if (saveStatus) {
+            createCookie("collapsible:" + $this.data("close"), true, 30);
+        }
 
         $target.css("height", 0);
     });
+
+    $(".collapsible-entity").each(function() {
+        var $this = $(this);
+        var entityID = $this.attr('id');
+
+        if ($this.data("savestatus") && readCookie("collapsible:#" + entityID)) {
+            $this.hide();
+        }
+    });
+
+    var $collapsibleOpen = $(".collapsible-entity--open");
+        $collapsibleOpen.css("height", $collapsibleOpen[0].scrollHeight);
 });

@@ -50,6 +50,12 @@
     }
 }
 
+.u-desktop-only {
+    @include respond-from(xs, md) {
+        display: none;
+    }
+}
+
 .u-no-margin--bottom {
     margin-bottom: 0 !important;
 }

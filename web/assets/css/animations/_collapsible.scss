@@ -9,5 +9,10 @@ $Collapsing-Duration: 0.25s;
 .collapsible-entity {
     height: 0;
     overflow: hidden;
+    position: relative;
     transition: height $Collapsing-Duration ease-out;
+}
+
+.collapsible-entity--open {
+    height: auto;
 }
