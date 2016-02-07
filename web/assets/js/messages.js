@@ -236,24 +236,27 @@ function sendMessage(form, onSuccess, onError) {
         data: form.serialize() + "&format=json",
         dataType: "json"
     }).done(function( msg ) {
-        // Find the notification type
-        var type = msg.success ? "success" : "error";
-
-        notify(msg.message, type);
         if (msg.success) {
             onSuccess(msg, form);
+        } else {
+            notify(msg.message, "danger");
+
+            if (onError !== undefined) {
+                onError.apply();
+            }
         }
     }).error(function( jqXHR, textStatus, errorThrown ) {
         // TODO: Catch bad JSON
         var message = (errorThrown === "") ? textStatus : errorThrown;
-        notify(message, "error");
+        notify(message, "danger");
 
         if (onError !== undefined) {
             onError.apply();
         }
     }).complete(function() {
-        if (l)
+        if (l) {
             l.stop();
+        }
     });
 }
 

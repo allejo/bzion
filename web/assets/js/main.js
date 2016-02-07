@@ -8,36 +8,34 @@ function notify(message, type) {
     // Default to "success" if the caller hasn't specified a type
     type = typeof type !== 'undefined' ? type : 'success';
 
-    var not = $(".notification");
-
-    not.show();
-    not.css("top", "-" + not.outerHeight( true ) + "px");
-    not.attr("class", "notification " + type);
-    // Position element in the center
-    not.css("left", Math.max(0, (($(window).width() - not.outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    var $not = $('<p><i/> <span/></p>')
+        .addClass('c-flashbag__item')
+        .addClass("c-alert")
+        .addClass("c-alert--" + type)
+        .hide();
 
     // Determine which icon should be used
     switch(type) {
         case "success":
             icon = "check";
             break;
-        case "error":
-            icon = "exclamation";
+        case "danger":
+            icon = "exclamation-triangle";
             break;
         default:
             icon = "question";
             break;
     }
 
-    $(".notification").find("i").attr("class", "fa fa-"+icon);
+    $not.find("i").attr("class", "fa fa-"+icon);
+    $not.find("span").html(message);
 
-    $(".notification").find("span").html(message);
-
-    not.animate({
-        top: "0"
-    }, 500);
-
-    not.delay(2000).fadeOut(1000);
+    $not.prependTo(".c-flashbag")
+        .fadeIn(400, function() {
+            $(this).delay(3000).fadeOut(1000,function() {
+                $(this).remove();
+            });
+        });
 }
 
 $(function () {
