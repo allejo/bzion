@@ -301,22 +301,6 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
-     * Get all the conversations in the database a player belongs to that are not disabled or deleted
-     * @todo Move this to the Player class
-     * @param  int     $id The id of the player whose conversations are being retrieved
-     * @return Conversation[] An array of conversation objects
-     */
-    public static function getConversations($id)
-    {
-        $additional_query = "LEFT JOIN conversations ON player_conversations.conversation=conversations.id
-                             WHERE player_conversations.player = ? AND conversations.status
-                             NOT IN (?, ?) ORDER BY last_activity DESC";
-        $params = array($id, "disabled", "deleted");
-
-        return self::arrayIdToModel(self::fetchIds($additional_query, "iss", $params, "player_conversations", "conversations.id"));
-    }
-
-    /**
      * Checks if a player or team belongs in the conversation
      * @param  Player|Team $member The player or team to check
      * @return bool True if the given object belongs in the conversation, false if they don't
@@ -404,12 +388,13 @@ class Conversation extends UrlModel implements NamedModel
 
     /**
      * Get a query builder for conversations
-     * @return QueryBuilder
+     * @return ConversationQueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Conversation', array(
+        return new ConversationQueryBuilder('Conversation', array(
             'columns' => array(
+                'last_activity' => 'last_activity',
                 'status' => 'status'
             ),
             'name' => 'subject',

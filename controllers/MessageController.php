@@ -26,12 +26,23 @@ class MessageController extends JSONController
 
     protected function prepareTwig()
     {
-        $conversations = Conversation::getConversations($this->getMe()->getId());
-        $this->container->get('twig')->addGlobal("conversations", $conversations);
+        $currentPage = $this->getRequest()->query->get('page', 1);
+
+        $query = $this->getQueryBuilder('Conversation')
+            ->forPlayer($this->getMe())
+            ->sortBy('last_activity')->reverse()
+            ->limit(5)->fromPage($currentPage);
 
         $creator = new MessageSearchFormCreator();
         $searchForm = $creator->create();
-        $this->container->get('twig')->addGlobal("searchForm", $searchForm->createView());
+
+        $twig = $this->container->get('twig');
+        $twig->addGlobal("conversations", $query->getModels());
+        $twig->addGlobal("currentPage", $currentPage);
+        $twig->addGlobal("totalPages", $query->countPages());
+        $twig->addGlobal("searchForm", $searchForm->createView());
+
+        return $twig;
     }
 
     public function listAction()

@@ -732,10 +732,11 @@ class QueryBuilder implements Countable
             $order = 'ORDER BY ' . $this->sortBy;
 
             // Sort by ID if the sorting columns are equal
+            $id = '`' . $this->getTable() . '`.`id`';
             if ($this->reverseSort) {
-                $order .= ' DESC, id DESC';
+                $order .= " DESC, $id DESC";
             } else {
-                $order .= ', id';
+                $order .= ", $id";
             }
         } else {
             $order = '';

@@ -17,7 +17,7 @@ class NewsController extends CRUDController
 
         $news = $qb->sortBy('created')->reverse()
             ->where('category')->is($category)
-            ->limit(5)->fromPage($request->query->get('page', 1))
+            ->limit(5)->fromPage($currentPage)
             ->getModels();
 
         return array(

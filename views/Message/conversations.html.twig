@@ -33,4 +33,6 @@
             </article>
         </a>
     {% endfor %}
+
+    {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
 </section>
