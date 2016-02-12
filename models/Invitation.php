@@ -66,16 +66,23 @@ class Invitation extends UrlModel
      * @param  int        $from    The ID of the player who sent it
      * @param  int        $teamid  The team ID to which a player has been invited to
      * @param  string     $message (Optional) The message that will be displayed to the person receiving the invitation
+     * @param  string|TimeDate|null $expiration The expiration time of the invitation (defaults to 1 week from now)
      * @return Invitation The object of the invitation just sent
      */
-    public static function sendInvite($to, $from, $teamid, $message = "")
+    public static function sendInvite($to, $from, $teamid, $message = "", $expiration = null)
     {
+        if ($expiration === null) {
+            $expiration = TimeDate::now()->addWeek();
+        } else {
+            $expiration = Timedate::from($expiration);
+        }
+
         $invitation = self::create(array(
             "invited_player" => $to,
             "sent_by"        => $from,
             "team"           => $teamid,
             "text"           => $message,
-            "expiration"     => TimeDate::now()->addWeek()->toMysql(),
+            "expiration"     => $expiration->toMysql(),
         ), 'iiiss');
 
         return $invitation;
