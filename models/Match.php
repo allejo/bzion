@@ -205,7 +205,7 @@ class Match extends PermissionModel implements NamedModel
     /**
      * Get the score of a specific team
      *
-     * @param int $teamID The team we want the score for
+     * @param int|Team $teamID The team we want the score for
      *
      * @return int The score that team received
      */
@@ -556,7 +556,7 @@ class Match extends PermissionModel implements NamedModel
             'replay_file'    => $replayFile,
             'map'            => $map,
             'status'         => 'entered'
-        ), 'iiiissiiisiisisss', 'updated');
+        ), 'iiiissiiisiisisis', 'updated');
 
         $match->updateMatchCount();
 

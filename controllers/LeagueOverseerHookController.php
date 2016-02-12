@@ -188,6 +188,8 @@ class LeagueOverseerHookController extends PlainTextController
             throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
         }
 
+        $map = Map::fetchFromAlias($this->params->get('mapPlayed'));
+
         $match = Match::enterMatch(
             $teamOne->getId(),
             $teamTwo->getId(),
@@ -201,7 +203,7 @@ class LeagueOverseerHookController extends PlainTextController
             $this->params->get('server'),
             $this->params->get('port'),
             $this->params->get('replayFile'),
-            $this->params->get('mapPlayed')
+            $map->getId()
         );
 
         $log->addNotice("Match reported automatically", array(
@@ -213,7 +215,8 @@ class LeagueOverseerHookController extends PlainTextController
                 'name'  => $match->getLoser()->getName(),
                 'score' => $match->getScore($match->getLoser())
             ),
-            'eloDiff' => $match->getEloDiff()
+            'eloDiff' => $match->getEloDiff(),
+            'map' => $map->getName()
         ));
 
         // Output the match stats that will be sent back to BZFS
