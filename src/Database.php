@@ -265,6 +265,33 @@ class Database
     }
 
     /**
+     * Start a MySQL transaction
+     */
+    public function startTransaction()
+    {
+        $this->dbc->autocommit(false);
+    }
+
+    /**
+     * Commit the stored queries (usable only if a transaction has been started)
+     *
+     * This does not show an error if there are no queries to commit
+     */
+    public function commit()
+    {
+        $this->dbc->commit();
+    }
+
+    /**
+     * Commit all pending queries and finalise the transaction
+     */
+    public function finishTransaction()
+    {
+        $this->dbc->commit();
+        $this->dbc->autocommit(true);
+    }
+
+    /**
      * Uses monolog to log an error message
      *
      * @param string $error The error string
