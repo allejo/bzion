@@ -176,9 +176,9 @@ class Configuration implements ConfigurationInterface
                                 'Setting this to anything other than false WILL introduce significant security risks and should NOT be done in a production environment'
                             )
                         ->end()
-                        ->booleanNode('maintenance')
+                        ->scalarNode('maintenance')
                             ->defaultFalse()
-                            ->info('Whether the website is in maintenance mode')
+                            ->info('Whether the website is in maintenance mode (you can set this to a markdown string to display it in the maintenance page)')
                         ->end()
                     ->end()
                 ->end()
