@@ -30,10 +30,12 @@
             <p>{{ link_to(ban.victim) }}</p>
         </section>
 
-        <section class="o-section">
-            <strong>Banned by</strong>
-            <p>{{ link_to(ban.author) }}</p>
-        </section>
+        {% if me.canEdit(ban) %}
+            <section class="o-section">
+                <strong>Banned by</strong>
+                <p>{{ link_to(ban.author) }}</p>
+            </section>
+        {% endif %}
 
         <section class="o-section">
             <strong>Date</strong>
