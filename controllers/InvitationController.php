@@ -45,7 +45,7 @@ class InvitationController extends CRUDController
         }
 
         return $this->showConfirmationForm(function () use ($team, $player, $me) {
-            $invite = Invitation::sendInvite($player->getId(), $me->getId(), $team->getId());
+            $invite = Invitation::sendInvite($player->getId(), $team->getId(), $me->getId());
             Service::getDispatcher()->dispatch(Events::TEAM_INVITE, new TeamInviteEvent($invite));
 
             return new RedirectResponse($team->getUrl());
