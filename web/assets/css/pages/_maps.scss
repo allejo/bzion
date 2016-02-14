@@ -1,5 +1,56 @@
+.c-map-widget {
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+        border-bottom: $Border-Default;
+    }
+
+    @include respond-up(md) {
+        flex-direction: row;
+
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+        padding-bottom: $Settings-Page_Section-Small_Margin;
+    }
+}
+
+.c-map-widget__info {
+    flex-grow: 1;
+}
+
+.c-map-widget__info__header {
+    margin-top: 10px;
+}
+
+.c-map-widget__info__name {
+    display: inline-block;
+}
+
+.c-map-widget__info__meta {
+    float: right;
+
+    span {
+        margin-left: 10px;
+    }
+}
+
+.c-map-widget__info__details {
+    clear: right;
+    margin-top: 10px;
+}
+
 .c-map__icon {
-    margin-right: 14px;
+    align-self: center;
+    flex-shrink: 0;
+    margin: 10px;
+
+    @include respond-up(md) {
+        margin: 0 14px 0 0;
+    }
+
     max-height: 200px;
 
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);

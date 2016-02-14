@@ -20,39 +20,35 @@
     {# TODO: Style this page #}
     <section class="o-container">
         {% for map in maps %}
-            <article class="o-section c-team-widget">
+            <article class="o-section c-map-widget">
                 {% if map.avatar is not null %}
                     <img class="c-map__icon" src="{{ map.avatar | imagine_filter('large_thumb') }}">
                 {% endif %}
 
-                <section class="c-team-widget__info">
-                    <article class="c-team-widget__info__header">
-                        <section class="c-team-widget__info__header__summary">
-                            <span class="c-team-widget__info__header__summary__name">{{ map.name }}</span>
-                        </section>
+                <section class="c-map-widget__info">
+                    <article class="c-map-widget__info__header">
+                        <h1 class="c-map-widget__info__name">
+                            {{ map.name }}
+                        </h1>
+
+                        <article class="c-map-widget__info__meta">
+                            {% if me.canEdit(map) %}
+                                <span><i title="Alias" class="fa fa-wrench"></i> {{ map.alias }}</span>
+                                <span>{{ link_to(map, content='Edit', icon='pencil', action='edit') }}</span>
+                            {% endif %}
+                            {% if me.canDelete(map) %}
+                                <span>{{ link_to(map, content='Delete', icon='trash-o', action='delete') }}</span>
+                            {% endif %}
+                        </article>
                     </article>
 
-                    <article class="c-team-widget__info__meta">
+                    <article class="c-map-widget__info__details">
                         {{ map.description|markdown }}
                     </article>
-
-
                 </section>
 
-                <article class="c-team-widget__info__meta">
-                    {% if me.canEdit(map) %}
-                        <span><i title="Alias" class="fa fa-wrench"></i> {{ map.alias }}</span>
-                        <span>{{ link_to(map, content='Edit', icon='pencil', action='edit') }}</span>
-                    {% endif %}
-                    {% if me.canDelete(map) %}
-                        <span>{{ link_to(map, content='Delete', icon='trash-o', action='delete') }}</span>
-                    {% endif %}
-                </article>
-            </article>
 
-            {% if not loop.last %}
-                <hr>
-            {% endif %}
+            </article>
         {% endfor %}
     </section>
 {% endblock %}
