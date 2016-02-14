@@ -13,7 +13,7 @@ class NotificationController extends HTMLController
             ->limit(15)->fromPage($request->query->get('page', 1))
             ->sortBy('timestamp')->reverse();
 
-        $notifications = $query->getModels();
+        $notifications = $query->getModels($fast = true);
 
         // Mark the notifications as read after fetching them, so we can show
         // to the user which notifications he hadn't seen

@@ -207,6 +207,32 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Request that a column is greater than a quantity
+     *
+     * @param  string $quantity The quantity to test against
+     * @return self
+     */
+    public function greaterThan($quantity)
+    {
+        $this->addColumnCondition("> ?", $quantity, 's');
+
+        return $this;
+    }
+
+    /**
+     * Request that a column is less than a quantity
+     *
+     * @param  string $quantity The quantity to test against
+     * @return self
+     */
+    public function lessThan($quantity)
+    {
+        $this->addColumnCondition("< ?", $quantity, 's');
+
+        return $this;
+    }
+
+    /**
      * Request that a timestamp is before the specified time
      *
      * @param string|TimeDate $time      The timestamp to compare to
@@ -483,6 +509,7 @@ class QueryBuilder implements Countable
     /**
      * Perform the query and get back the results in a list of arrays
      *
+     * @todo  Play with partial models?
      * @param string|string[] The column(s) that should be returned
      * @param  string  $columns
      * @return array[]
@@ -499,18 +526,42 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * An alias for QueryBuilder::getModels(), with fast fetching on by default
+     * and no return of results
+     *
+     * @param  boolean $fastFetch Whether to perform one query to load all
+     *                            the model data instead of fetching them
+     *                            one by one
+     * @return void
+     */
+    public function addToCache($fastFetch = true)
+    {
+        $this->getModels($fastFetch);
+    }
+
+    /**
      * Perform the query and get the results as Models
      *
+     * @todo Fix fast fetch for queries with multiple tables
+     * @param  boolean $fastFetch Whether to perform one query to load all
+     *                            the model data instead of fetching them
+     *                            one by one (ignores cache)
      * @return array
      */
-    public function getModels()
+    public function getModels($fastFetch = false)
     {
         $db   = Database::getInstance();
         $type = $this->type;
 
-        $results = $db->query($this->createQuery(), $this->getTypes(), $this->getParameters());
+        $columns = ($fastFetch) ? $type::getEagerColumns() : array();
 
-        return $type::arrayIdToModel(array_column($results, 'id'));
+        $results = $db->query($this->createQuery($columns), $this->getTypes(), $this->getParameters());
+
+        if ($fastFetch) {
+            return $type::createFromDatabaseResults($results);
+        } else {
+            return $type::arrayIdToModel(array_column($results, 'id'));
+        }
     }
 
     /**
@@ -668,15 +719,19 @@ class QueryBuilder implements Countable
 
     /**
      * Get a MySQL query string in the requested format
-     * @param  string[] $columns The columns that should be included (without the ID)
-     * @return string   The query
+     * @param  string|string[] $columns The columns that should be included
+     *                                  (without the ID, if an array is provided)
+     * @return string The query
      */
     protected function createQuery($columns = array())
     {
         $type     = $this->type;
         $table    = $type::TABLE;
-        $columns  = $this->createQueryColumns($columns);
         $params   = $this->createQueryParams();
+
+        if (is_array($columns) || empty($columns)) {
+            $columns = $this->createQueryColumns($columns);
+        }
 
         return "SELECT $columns FROM $table $params";
     }

@@ -20,7 +20,13 @@ class TeamController extends CRUDController
 
     public function listAction()
     {
-        return array("teams" => Team::getTeams());
+        $teams = $this->getQueryBuilder()
+            ->sortBy('elo')->reverse()
+            ->getModels($fast = true);
+
+        return array(
+            "teams" => $teams
+        );
     }
 
     public function createAction(Player $me)

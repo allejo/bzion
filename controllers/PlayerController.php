@@ -48,8 +48,16 @@ class PlayerController extends JSONController
     {
         $query = $this->getQueryBuilder();
 
+        // Load all countries into the cache so they are ready for later
+        $this->getQueryBuilder('Country')->addToCache();
+
         if ($team) {
             $query->where('team')->is($team);
+        } else {
+            // Add all teams to the cache
+            $this->getQueryBuilder('Team')
+                ->where('members')->greaterThan(0)
+                ->addToCache();
         }
 
         if ($request->query->has('exceptMe')) {
@@ -58,7 +66,9 @@ class PlayerController extends JSONController
 
         $query->sortBy('name');
 
-        return array('players' => $query->getModels());
+        return array(
+            'players' => $query->getModels($fast = true)
+        );
     }
 
     /**

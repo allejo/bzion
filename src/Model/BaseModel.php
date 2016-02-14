@@ -331,9 +331,10 @@ abstract class BaseModel implements ModelInterface
     /**
      * Get the MySQL columns that will be loaded as soon as the model is created
      *
+     * @todo Make this protected
      * @return string The columns in a format readable by MySQL
      */
-    protected static function getEagerColumns()
+    public static function getEagerColumns()
     {
         return '*';
     }

@@ -598,7 +598,9 @@ class Team extends AvatarModel
     {
         return new QueryBuilder('Team', array(
             'columns' => array(
-                'name'   => 'name',
+                'name' => 'name',
+                'elo' => 'elo',
+                'members' => 'members',
                 'status' => 'status'
             ),
             'name' => 'name',

@@ -17,7 +17,7 @@ class MatchController extends CRUDController
 
 
         return array(
-            "matches"     => $query->getModels(),
+            "matches"     => $query->getModels($fast = true),
             "team"        => $team,
             "currentPage" => $currentPage,
             "totalPages"  => $qb->countPages()

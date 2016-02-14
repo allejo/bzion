@@ -199,4 +199,24 @@ abstract class Model extends CachedModel
     {
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }
+
+    /**
+     * Create model objects, given their MySQL entries
+     *
+     * @param  array $results The MySQL rows of the model
+     * @return static[]
+     */
+    public static function createFromDatabaseResults(&$results)
+    {
+        $models = array();
+
+        foreach ($results as $result) {
+            $model = new static($result['id'], $result);
+            $model->storeInCache();
+
+            $models[] = $model;
+        }
+
+        return $models;
+    }
 }
