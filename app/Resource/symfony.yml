@@ -52,18 +52,22 @@ liip_imagine:
     filter_sets:
         cache: ~
         huge_thumb:
+            png_compression_level: 9
             filters:
                 background: ~
                 thumbnail: { size: [500, 500], mode: inset }
         large_thumb:
+            png_compression_level: 9
             filters:
                 background: ~
                 thumbnail: { size: [200, 200], mode: inset }
         medium_thumb:
+            png_compression_level: 9
             filters:
                 background: ~
                 thumbnail: { size: [60, 60], mode: outbound }
         small_thumb:
+            png_compression_level: 9
             filters:
                 background: ~
                 thumbnail: { size: [50, 50], mode: outbound }
