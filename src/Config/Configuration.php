@@ -60,6 +60,7 @@ class Configuration implements ConfigurationInterface
                             ->isRequired()
                             ->requiresAtLeastOneElement()
                             ->defaultValue(array(
+                                15 => '1/2',
                                 20 => '2/3',
                                 30 => '3/3'
                             ))

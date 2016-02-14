@@ -17,6 +17,7 @@ bzion:
         duration:
             30: 3/3 # 30 minute match gets full ELO
             20: 2/3 # 20 minute match is 2/3rds of a normal match's ELO
+            15: 1/2 # 15 minute match gets 1/2nd
     email:
         # The e-mail address that will be shown in the 'From:' field when sending messages
         from: noreply@local.host
