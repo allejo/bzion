@@ -62,6 +62,7 @@ class ConversationEvent extends AbstractMessage
      *
      * @param  int        $conversation     The ID of the conversation
      * @param  Event      $event     The event
+     * @param  string     $type      The type of the event
      * @param  mixed      $timestamp The timestamp when the event took place
      * @param  string     $status    The status of the event, can be 'visible', 'hidden', 'deleted' or 'reported'
      * @return ConversationEvent

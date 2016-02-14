@@ -32,4 +32,21 @@ class ConversationQueryBuilder extends QueryBuilder
         return $this;
     }
 
+    /**
+     * Only return messages that are sent from/to a specific team
+     *
+     * @param  Team $team The team related to the messages
+     * @return self
+     */
+    public function forTeam($team)
+    {
+        $this->extras .= '
+            LEFT JOIN team_conversations ON team_conversations.conversation=conversations.id
+        ';
+
+        $this->column('team_conversations.team')->is($team);
+        $this->column('conversations.status')->notEquals('deleted');
+
+        return $this;
+    }
 }

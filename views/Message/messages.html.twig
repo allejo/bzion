@@ -50,6 +50,12 @@
                         Nobody
                     {%- endfor %}
                     joined the discussion
+                {% elseif type == 'team.join' %}
+                    <i class="fa fa-plus-circle"></i> {{ link_to(event.player) }} joined {{ link_to(event.team) }}
+                {% elseif type == 'team.abandon' %}
+                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.player) }} left {{ link_to(event.team) }}
+                {% elseif type == 'team.kick' %}
+                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left {{ link_to(event.team) }}
                 {% endif %}
             </li>
         {% endif %}

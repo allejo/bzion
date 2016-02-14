@@ -83,7 +83,7 @@ function initPage() {
 
                     olderMessageLink = html.hideOlder();
                     messageList.prepend(html.children("li"));
-                    messageView.scrollTop(firstMessage.offset().top - curOffset);
+                    messageView.scrollTop(messageView.prop("scrollHeight"));
                     noMoreScrolling = false;
 
                     // Scroll up more if we're not there yet

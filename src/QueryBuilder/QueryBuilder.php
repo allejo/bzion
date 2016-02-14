@@ -729,8 +729,10 @@ class QueryBuilder implements Countable
         $table    = $type::TABLE;
         $params   = $this->createQueryParams();
 
-        if (is_array($columns) || empty($columns)) {
+        if (is_array($columns)) {
             $columns = $this->createQueryColumns($columns);
+        } elseif (empty($columns)) {
+            $columns = $this->createQueryColumns();
         }
 
         return "SELECT $columns FROM $table $params";

@@ -77,5 +77,6 @@ class TeamKickEvent extends Event
     public function notify($type)
     {
         $this->doNotify($this->kicked, $type);
+        $this->notifyTeamConversations($this->team, $type);
     }
 }

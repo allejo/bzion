@@ -64,6 +64,8 @@ abstract class Event extends SymfonyEvent implements \Serializable
 
     /**
      * Call the event's constructor using serialized data
+     *
+     * @param string $data
      */
     public function unserialize($data)
     {
@@ -85,8 +87,8 @@ abstract class Event extends SymfonyEvent implements \Serializable
                 if ($this->isModel($param)) {
                     if (!$param->getClass()->isAbstract()) {
                         $value = $param->getClass()
-                                       ->getMethod('get')
-                                       ->invoke(null, $value);
+                            ->getMethod('get')
+                            ->invoke(null, $value);
                     } else {
                         $id = $value['id'];
                         $type = $value['type'];
@@ -104,7 +106,8 @@ abstract class Event extends SymfonyEvent implements \Serializable
     }
 
     /**
-     * Find out if the specified parameter of the Event's constructor needs a Model
+     * Find out if the specified parameter of the Event's constructor needs a
+     * Model
      *
      * @param  \ReflectionParameter $param The constructor's parameter
      * @return bool
@@ -173,6 +176,21 @@ abstract class Event extends SymfonyEvent implements \Serializable
                     new NewNotificationEvent($notification)
                 );
             }
+        }
+    }
+
+    /**
+     * Store the event in conversations where a team participates
+     *
+     * @param \Team $team
+     * @param string $type The type of the event
+     */
+    protected function notifyTeamConversations($team, $type)
+    {
+        $query = \Conversation::getQueryBuilder()->forTeam($team);
+
+        foreach ($query->getModels() as $conversation) {
+            \ConversationEvent::storeEvent($conversation->getId(), $this, $type);
         }
     }
 }
