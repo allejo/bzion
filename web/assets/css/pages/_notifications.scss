@@ -7,17 +7,33 @@
 
         @include element('notification') {
             padding: 10px;
+            display: flex;
 
             @include modifier('unread') {
                 background-color: $Color-Blue_Grey;
             }
 
             @include element('message') {
+                display: flex;
+
+                // Make sure the text is aligned with the icons
+                align-items: baseline;
+
                 .fa {
                     @extend %fa-fw;
 
                     margin-right: 10px;
                 }
+            }
+
+            @include element('text') {
+
+            }
+
+            @include element('info') {
+                color: $Font-Color-Muted;
+                display: block;
+                font-size: 14px;
             }
 
             @include element('timestamp') {
@@ -26,8 +42,12 @@
                 margin-left: 5px;
             }
 
-            @include element('action') {
-                margin-left: 20px;
+            @include element('actions') {
+                margin-left: 15px;
+
+                a {
+                    margin-left: 5px;
+                }
             }
         }
     }
