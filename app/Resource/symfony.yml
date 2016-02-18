@@ -108,6 +108,10 @@ services:
         arguments: [@mailer, @twig, %bzion.email.from%, %bzion.site.name%]
         tags:
             - { name: kernel.event_subscriber }
+    bzion.subscriber.conversation_subscriber:
+            class: BZIon\Event\ConversationSubscriber
+            tags:
+                - { name: kernel.event_subscriber }
     bzion.twig_extension:
         class: BZIon\Twig\TwigExtension
         public: false

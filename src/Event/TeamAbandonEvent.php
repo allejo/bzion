@@ -60,6 +60,5 @@ class TeamAbandonEvent extends Event
     public function notify($type)
     {
         $this->doNotify($this->team->getLeader(), $type);
-        $this->notifyTeamConversations($this->team, $type);
     }
 }

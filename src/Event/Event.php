@@ -178,19 +178,4 @@ abstract class Event extends SymfonyEvent implements \Serializable
             }
         }
     }
-
-    /**
-     * Store the event in conversations where a team participates
-     *
-     * @param \Team $team
-     * @param string $type The type of the event
-     */
-    protected function notifyTeamConversations($team, $type)
-    {
-        $query = \Conversation::getQueryBuilder()->forTeam($team);
-
-        foreach ($query->getModels() as $conversation) {
-            \ConversationEvent::storeEvent($conversation->getId(), $this, $type);
-        }
-    }
 }
