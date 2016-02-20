@@ -64,7 +64,8 @@ module.exports = function(grunt) {
             rankings: {
                 src: 'assets/ranks/sprites/*.png',
                 dest: 'web/assets/imgs/ranks.png',
-                destCss: 'web/assets/css/vendor/_ranks.scss'
+                destCss: 'web/assets/css/vendor/_ranks.scss',
+                cssTemplate: 'assets/ranks/ranks.scss.handlebars'
             }
         },
         jshint: {

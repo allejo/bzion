@@ -1,0 +1,21 @@
+@function str-split($string, $delimiter) {
+    $list: ();
+    $sum: str-length($string);
+
+    @for $i from 1 through $sum {
+        $str: str-index($string,$delimiter);
+
+        @if str-length($string) >= 1 and $str == null {
+            $list: append($list, $string);
+            $string: '';
+        }
+
+        @if type-of($str) == number {
+            $each: str-slice($string, 0, ($str - 1));
+            $list: append($list, $each);
+            $string: str-slice($string, ($str + 1), $sum);
+        }
+    }
+
+    @return $list;
+}

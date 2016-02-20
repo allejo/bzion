@@ -14,6 +14,7 @@
 @import 'partials/themes';
 @import 'vendor/insert-nth';
 @import 'vendor/map-reverse';
+@import 'modules/strings-utils';
 @import 'modules/utilities';
 @import 'vendor/include-media/dist/include-media';
 @import 'modules/bem-utilities';
@@ -74,6 +75,13 @@
 @import 'partials/Header/header';
 @import 'partials/Header/navigation';
 
+//
+// Sprites
+//
+
+@import 'vendor/ranks';
+@import 'partials/ranks';
+
 
 //
 // Partials
@@ -88,7 +96,6 @@
 @import 'partials/jumbotron';
 @import 'partials/markdown';
 @import 'partials/pagination';
-@import 'partials/ranks';
 @import 'partials/typography';
 
 

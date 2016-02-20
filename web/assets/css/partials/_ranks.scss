@@ -1,54 +1,20 @@
 .c-rank {
     background: url('../imgs/ranks.png') no-repeat top left;
     display: inline-block;
-    height: 40px;
-    width: 35px;
+    height: 42px;
+    width: 37px;
 }
 
-.c-rank--900 {
-    background-position: 0 0;
-}
+@each $name, $position in $ranks-sprite {
+    @at-root {
+        $split: str-split($name, "-");
+        $rank: nth($split, 2);
+        $theme: to-lower-case(nth($split, 1));
 
-.c-rank--1000 {
-    background-position: -35px 0;
-}
-
-.c-rank--1100 {
-    background-position: -70px 0;
-}
-
-.c-rank--1200 {
-    background-position: -105px 0;
-}
-
-.c-rank--1300 {
-    background-position: -140px 0;
-}
-
-.c-rank--1400 {
-    background-position: -175px 0;
-}
-
-.c-rank--1500 {
-    background-position: -210px 0;
-}
-
-.c-rank--1600 {
-    background-position: -245px 0;
-}
-
-.c-rank--1700 {
-    background-position: -280px 0;
-}
-
-.c-rank--1800 {
-    background-position: -315px 0;
-}
-
-.c-rank--1900 {
-    background-position: -350px 0;
-}
-
-.c-rank--2000 {
-    background-position: -385px 0;
+        .t-#{$theme} {
+            .c-rank--#{$rank} {
+                background-position: $position;
+            }
+        }
+    }
 }
