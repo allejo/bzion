@@ -60,6 +60,13 @@ module.exports = function(grunt) {
                 config: '.scss-lint.yml'
             }
         },
+        sprite: {
+            rankings: {
+                src: 'assets/ranks/sprites/*.png',
+                dest: 'web/assets/imgs/ranks.png',
+                destCss: 'web/assets/css/vendor/_ranks.scss'
+            }
+        },
         jshint: {
             options: {
                 eqnull: true,

@@ -18,6 +18,7 @@
     "grunt-sass": "^1.0.0",
     "grunt-sassdoc": "^2.0.0",
     "grunt-scss-lint": "^0.3.4",
+    "grunt-spritesmith": "^6.3.0",
     "jshint-stylish": "^0.4.0"
   }
 }
