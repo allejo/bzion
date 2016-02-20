@@ -1,10 +1,23 @@
 <?php
 
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MatchController extends CRUDController
 {
+    /**
+     * Whether the last edited match has had its ELO changed, requiring an ELO
+     * recalculation
+     *
+     * This is useful so that a confirmation form is shown, asking the user if
+     * they want to recalculate ELOs
+     *
+     * @var bool
+     */
+    public $recalculateNeeded = false;
+
     public function listAction(Request $request, Team $team = null, $type = null)
     {
         $qb = $this->getQueryBuilder();
@@ -26,17 +39,156 @@ class MatchController extends CRUDController
 
     public function createAction(Player $me)
     {
-        return $this->create($me);
+        return $this->create($me, function(Match $match) use ($me) {
+            if ($me->canEdit($match)
+                && (!$match->getTeamA()->isLastMatch($match)
+                || !$match->getTeamB()->isLastMatch($match))
+            ) {
+                $url = Service::getGenerator()->generate('match_recalculate', array(
+                    'match' => $match->getId(),
+                ));
+
+                return new RedirectResponse($url);
+            }
+        });
     }
 
     public function deleteAction(Player $me, Match $match)
     {
-        if (!$match->getTeamA()->isLastMatch($match)
-         || !$match->getTeamB()->isLastMatch($match)) {
-            throw new BadRequestException("You can only delete the last match of a team");
+        return $this->delete($match, $me, function() use ($match, $me) {
+            if ($match->getTeamA()->isLastMatch($match)
+                && $match->getTeamB()->isLastMatch($match)) {
+                $match->resetELOs();
+            } elseif ($me->canEdit($match)) {
+                $url = Service::getGenerator()->generate('match_recalculate', array(
+                    'match' => $match->getId(),
+                ));
+
+                return new RedirectResponse($url);
+            }
+        });
+    }
+
+    public function editAction(Player $me, Match $match)
+    {
+        // TODO: Generating this response is unnecessary
+        $response = $this->edit($match, $me, "match");
+
+        if ($this->recalculateNeeded) {
+            // Redirect to a confirmation form if we are assigning a new leader
+            $url = Service::getGenerator()->generate('match_recalculate', array(
+                'match' => $match->getId(),
+            ));
+
+            return new RedirectResponse($url);
         }
 
-        return $this->delete($match, $me);
+        return $response;
+    }
+
+    public function recalculateAction(Player $me, $match) {
+        $match = Match::get($match); // get a match even if it's deleted
+
+        if (!$me->canEdit($match)) {
+            throw new ForbiddenException("You are not allowed to edit that match.");
+        }
+
+        return $this->showConfirmationForm(function () use ($match) {
+            $response = new StreamedResponse();
+            $response->headers->set('Content-Type', 'text/plain');
+            $response->setCallback(function() use ($match) {
+                $this->recalculate($match);
+            });
+            $response->send();
+        }, "Do you want to recalculate ELO history for all teams and matches after the specified match?",
+            "ELO history recalculated",
+            "Recalculate ELOs",
+            null,
+            "Match/recalculate.html.twig");
+    }
+
+    /**
+     * Recalculates match history for all teams and matches
+     *
+     * Recalculation is done as follows:
+     * 1. A match is chosen as a starting point - it's stored old team ELOs are
+     *    considered correct
+     * 2. Team ELOs are reset to their values at the starting point
+     * 3. Each match that occurred since the first specified match has its ELO
+     *    recalculated based on the current team values, and the new match data
+     *    and team ELOs are stored in the database
+     *
+     * @param Match $match The first match
+     */
+    private function recalculate(Match $match) {
+        try {
+            // Commented out to prevent ridiculously large recalculations
+            //set_time_limit(0);
+
+            $query = Match::getQueryBuilder()
+                ->where('status')->notEquals('deleted')
+                ->where('time')->isAfter($match->getTimestamp(), $inclusive = true)
+                ->sortBy('time');
+
+            /** @var Match[] $matches */
+            $matches = $query->getModels($fast = true);
+
+            // Send the total count to client-side javascript
+            $this->log(count($matches) . "\n");
+
+            // Start a transaction so tables are locked and we don't stay with
+            // messed up data if something goes wrong
+            Database::getInstance()->startTransaction();
+
+            $teamsReset = [];
+
+            // Reset match teams, in case the selected match is deleted and does
+            // not show up in the list of matches to recalculate
+            $match->getTeamA()->setElo($match->getTeamAEloOld());
+            $match->getTeamB()->setElo($match->getTeamBEloOld());
+            $teamsReset[ $match->getTeamA()->getId() ] = true;
+            $teamsReset[ $match->getTeamB()->getId() ] = true;
+
+            foreach ($matches as $i => $match) {
+                // Reset teams' ELOs if they haven't been reset already
+                if (!isset($teamsReset[ $match->getTeamA()->getId() ])) {
+                    $teamsReset[ $match->getTeamA()->getId() ] = true;
+                    $match->getTeamA()->setElo($match->getTeamAEloOld());
+                }
+                if (!isset($teamsReset[ $match->getTeamB()->getId() ])) {
+                    $teamsReset[ $match->getTeamB()->getId() ] = true;
+                    $match->getTeamB()->setElo($match->getTeamBEloOld());
+                }
+
+                $match->recalculateElo();
+
+                // Send an update to the client-side javascript, so that a
+                // progress bar can be updated
+                $this->log("m");
+            }
+        } catch (Exception $e) {
+            Database::getInstance()->rollback();
+            Database::getInstance()->finishTransaction();
+            throw $e;
+        }
+
+        Database::getInstance()->finishTransaction();
+
+        $this->log("\n\nCalculation successful\n");
+    }
+
+    /**
+     * Echo a string and flush the buffers
+     *
+     * Useful for streamed AJAX responses
+     *
+     * @param string $string The string to echo
+     */
+    private function log($string)
+    {
+        echo $string;
+        ob_flush();
+        flush();
     }
 
     /**

@@ -1,6 +1,7 @@
 /**
  * Show a notification
- * @todo Convert this to a class
+ * @todo Convert this to a class?
+ * @todo Make danger notifications stay on screen longer
  * @param message string The message to display
  * @param type string Can be "success" or "error"
  */

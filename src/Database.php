@@ -283,6 +283,14 @@ class Database
     }
 
     /**
+     * Cancel all pending queries (does not finish the transaction
+     */
+    public function rollback()
+    {
+        $this->dbc->rollback();
+    }
+
+    /**
      * Commit all pending queries and finalise the transaction
      */
     public function finishTransaction()

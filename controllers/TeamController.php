@@ -36,6 +36,7 @@ class TeamController extends CRUDController
 
     public function editAction(Player $me, Team $team)
     {
+        // TODO: Generating this response is unnecessary
         $response = $this->edit($team, $me, "team");
 
         if ($this->newLeader) {

@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Matches :: {{ match.teamA.name }} vs {{ match.teamB.name }} :: Edit{% endblock %}
+
+{% block pageTitle %}
+    <h1>Edit Match</h1>
+{% endblock %}
+
+{% block content %}
+    {% include "Match/form.html.twig" with { 'form': form } %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/matches.js') }}"></script>
+    <script src="{{ asset('components/select2/dist/js/select2.js') }}"></script>
+{% endblock %}

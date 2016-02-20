@@ -157,6 +157,16 @@ class Team extends AvatarModel
     }
 
     /**
+     * Change the ELO of the team
+     *
+     * @param int $elo The new team ELO
+     */
+    public function setElo($elo)
+    {
+        $this->updateProperty($this->elo, "elo", $elo, "i");
+    }
+
+    /**
      * Increment the team's match count
      *
      * @param int    $adjust The number to add to the current matches number (negative to substract)
@@ -486,9 +496,8 @@ class Team extends AvatarModel
         // Find if this team participated in any matches after the current match
         return !Match::getQueryBuilder()
             ->with($this)
-            ->active()
-            ->sortBy('id')->reverse()
-            ->startAt($matchID)
+            ->where('status')->notEquals('deleted')
+            ->where('time')->isAfter(Match::get($matchID)->getTimestamp())
             ->any();
     }
 

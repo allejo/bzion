@@ -43,7 +43,9 @@ class ConfirmationFormCreator implements FormCreatorInterface
         $builder = \Service::getFormFactory()->createNamedBuilder('confirm_form');
 
         return $builder
-            ->add($this->action, 'submit')
+            ->add('confirm', 'submit', array(
+                'label' => $this->action
+            ))
             ->add(($this->action == 'Yes') ? 'No' : 'Cancel', 'submit')
             ->add('original_url', 'hidden', array(
                 'data' => $this->originalUrl

@@ -94,9 +94,17 @@ match_enter:
     path:     /matches/enter
     defaults: { _controller: 'Match', _action: 'create' }
 
+match_edit:
+    path:     /matches/{match}/edit
+    defaults: { _controller: 'Match', _action: 'edit' }
+
 match_delete:
     path:     /matches/{match}/delete
     defaults: { _controller: 'Match', _action: 'delete' }
+
+match_recalculate:
+    path:     /matches/{match}/recalculate
+    defaults: { _controller: 'Match', _action: 'recalculate' }
 
 message_list:
     path:     /messages

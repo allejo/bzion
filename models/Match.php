@@ -270,6 +270,20 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
+     * Set the timestamp of the match
+     *
+     * @param  mixed The match's new timestamp
+     * @return $this
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = TimeDate::from($timestamp);
+        $this->update("timestamp", $this->timestamp->toMysql(), "s");
+
+        return $this;
+    }
+
+    /**
      * Get the first team involved in the match
      * @return Team Team A's id
      */
@@ -293,7 +307,7 @@ class Match extends PermissionModel implements NamedModel
      */
     public function getTeamAPlayers()
     {
-        return $this->parsePlayers($this->team_b_players);
+        return $this->parsePlayers($this->team_a_players);
     }
 
     /**
@@ -302,7 +316,22 @@ class Match extends PermissionModel implements NamedModel
      */
     public function getTeamBPlayers()
     {
-        return $this->parsePlayers($this->team_a_players);
+        return $this->parsePlayers($this->team_b_players);
+    }
+
+    /**
+     * Set the players of the match's teams
+     *
+     * @param int[] $teamAPlayers An array of player IDs
+     * @param int[] $teamBPlayers An array of player IDs
+     * @return self
+     */
+    public function setTeamPlayers($teamAPlayers = array(), $teamBPlayers = array())
+    {
+        $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers), "s");
+        $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers), "s");
+
+        return $this;
     }
 
     /**
@@ -312,19 +341,11 @@ class Match extends PermissionModel implements NamedModel
      */
     private static function parsePlayers($playerString)
     {
-        $players = array();
-
         if ($playerString == null) {
             return null;
         }
 
-        $BZIDs = explode(",", $playerString);
-
-        foreach ($BZIDs as $bzid) {
-            $players[] = Player::getFromBZID($bzid);
-        }
-
-        return $players;
+        return Player::arrayIdToModel(explode(",", $playerString));
     }
 
     /**
@@ -343,6 +364,21 @@ class Match extends PermissionModel implements NamedModel
     public function getTeamBPoints()
     {
         return $this->team_b_points;
+    }
+
+    /**
+     * Set the match team points
+     *
+     * @param  int $teamAPoints Team A's points
+     * @param  int $teamBPoints Team B's points
+     * @return self
+     */
+    public function setTeamPoints($teamAPoints, $teamBPoints)
+    {
+        $this->updateProperty($this->team_a_points, "team_a_points", $teamAPoints, "i");
+        $this->updateProperty($this->team_b_points, "team_b_points", $teamBPoints, "i");
+
+        return $this;
     }
 
     /**
@@ -400,6 +436,16 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
+     * Set the map where the match was played
+     * @param  int $map The ID of the map
+     * @return self
+     */
+    public function setMap($map)
+    {
+        $this->updateProperty($this->map, "map", $map, "s");
+    }
+
+    /**
      * Get a JSON decoded array of events that occurred during the match
      * @return mixed|null Returns null if there were no events recorded for the match
      */
@@ -422,6 +468,21 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
+     * Set the server address of the server where this match took place
+     *
+     * @param  string|null $server The server hostname
+     * @param  int|null    $port   The server port
+     * @return self
+     */
+    public function setServerAddress($server = null, $port = 5154)
+    {
+        $this->updateProperty($this->server, "server", $server, "s");
+        $this->updateProperty($this->port, "port", $port, "i");
+
+        return $this;
+    }
+
+    /**
      * Get the name of the replay file for this specific map
      * @param  int    $length The length of the replay file name; it will be truncated
      * @return string Returns null if there was no replay file name recorded
@@ -437,11 +498,22 @@ class Match extends PermissionModel implements NamedModel
 
     /**
      * Get the match duration
-     * @return int The duration
+     * @return int The duration of the match in minutes
      */
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set the match duration
+     *
+     * @param  int  $duration The new duration of the match in minutes
+     * @return self
+     */
+    public function setDuration($duration)
+    {
+        return $this->updateProperty($this->duration, "duration", $duration, "i");
     }
 
     /**
@@ -601,6 +673,45 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
+     * Find if a match's stored ELO is correct
+     */
+    public function isEloCorrect()
+    {
+        return $this->elo_diff === $this->calculateEloDiff(
+            $this->getTeamAEloOld(),
+            $this->getTeamBEloOld(),
+            $this->getTeamAPoints(),
+            $this->getTeamBPoints(),
+            $this->getDuration()
+        );
+    }
+
+    /**
+     * Recalculate the match's elo and adjust the team ELO values
+     */
+    public function recalculateElo()
+    {
+        $a = $this->getTeamA();
+        $b = $this->getTeamB();
+
+        $elo = $this->calculateEloDiff(
+            $a->getElo(),
+            $b->getElo(),
+            $this->getTeamAPoints(),
+            $this->getTeamBPoints(),
+            $this->getDuration()
+        );
+
+        $this->updateProperty($this->elo_diff, "elo_diff", $elo, "i");
+
+        $a->changeElo($elo);
+        $b->changeElo(-$elo);
+
+        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo(), "i");
+        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo(), "i");
+    }
+
+    /**
      * Get all the matches in the database
      */
     public static function getMatches()
@@ -632,7 +743,6 @@ class Match extends PermissionModel implements NamedModel
     public function delete()
     {
         $this->updateMatchCount(true);
-        $this->resetELOs();
 
         return parent::delete();
     }

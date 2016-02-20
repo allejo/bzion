@@ -12,7 +12,9 @@ class DatetimeWithTimezoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('time', 'datetime')
+            ->add('time', 'datetime', array(
+                'with_seconds' => $options['with_seconds']
+            ))
             ->add(
                 $builder->create('timezone', new TimezoneType())
                         ->setDataLocked(false)
@@ -25,6 +27,7 @@ class DatetimeWithTimezoneType extends AbstractType
         $resolver->setDefaults(array(
             'compound'   => true,
             'data_class' => null,
+            'with_seconds' => false
         ));
     }
 

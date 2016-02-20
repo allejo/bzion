@@ -10,6 +10,7 @@ namespace BZIon\Form\Creator;
 use BZIon\Form\Type\DatetimeWithTimezoneType;
 use BZIon\Form\Type\MatchTeamType;
 use BZIon\Form\Type\ModelType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -29,8 +30,12 @@ class MatchFormCreator extends ModelFormCreator
         }
 
         return $builder
-            ->add('first_team', new MatchTeamType())
-            ->add('second_team', new MatchTeamType())
+            ->add('first_team', new MatchTeamType(), array(
+                'disableTeam' => $this->isEdit()
+            ))
+            ->add('second_team', new MatchTeamType(), array(
+                'disableTeam' => $this->isEdit()
+            ))
             ->add('duration', 'choice', array(
                 'choices'     => $durations,
                 'constraints' => new NotBlank(),
@@ -48,12 +53,78 @@ class MatchFormCreator extends ModelFormCreator
                         'message' => 'The timestamp of the match must not be in the future'
                     ))
                 ),
-                'data' => \TimeDate::now(\Controller::getMe()->getTimezone())
+                'data' => ($this->isEdit())
+                    ? $this->editing->getTimestamp()->setTimezone(\Controller::getMe()->getTimezone())
+                    : \TimeDate::now(\Controller::getMe()->getTimezone()),
+                'with_seconds' => $this->isEdit()
             ))
             ->add('map', new ModelType('Map'), array(
                 'required' => false
             ))
             ->add('enter', 'submit');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param \Match $match
+     */
+    public function fill($form, $match)
+    {
+        $form->get('first_team')->setData(array(
+            'team' => $match->getTeamA(),
+            'participants' => $match->getTeamAPlayers(),
+            'score' => $match->getTeamAPoints()
+        ));
+        $form->get('second_team')->setData(array(
+            'team' => $match->getTeamB(),
+            'participants' => $match->getTeamBPlayers(),
+            'score' => $match->getTeamBPoints()
+        ));
+
+        $form->get('duration')->setData($match->getDuration());
+        $form->get('server_address')->setData($match->getServerAddress());
+        $form->get('time')->setData($match->getTimestamp());
+        $form->get('map')->setData($match->getMap());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param \Match $match
+     */
+    public function update($form, $match)
+    {
+        if (($match->getDuration() != $form->get('duration')->getData())
+            || $match->getTimestamp()->ne($form->get('time')->getData())) {
+            // The timestamp of the match was changed, we might need to
+            // recalculate its ELO
+            $this->controller->recalculateNeeded = true;
+        }
+
+        $firstTeam  = $form->get('first_team');
+        $secondTeam = $form->get('second_team');
+
+        $serverInfo = $this->getServerInfo($form->get('server_address'));
+
+        $match->setTeamPlayers(
+            $this->getPlayerList($firstTeam),
+            $this->getPlayerList($secondTeam)
+        );
+
+        $match->setTeamPoints(
+            $firstTeam->get('score')->getData(),
+            $secondTeam->get('score')->getData()
+        );
+
+        $match->setDuration($form->get('duration')->getData())
+            ->setServerAddress($serverInfo[0], $serverInfo[1])
+            ->setTimestamp($form->get('time')->getData())
+            ->setMap($form->get('map')->getData()->getId());
+
+        if (!$match->isEloCorrect()) {
+            $this->controller->recalculateNeeded = true;
+        }
     }
 
     /**
@@ -64,13 +135,7 @@ class MatchFormCreator extends ModelFormCreator
         $firstTeam  = $form->get('first_team');
         $secondTeam = $form->get('second_team');
 
-        $firstPlayers  = array_map($this->getModelToID(),  $firstTeam->get('participants')->getData());
-        $secondPlayers = array_map($this->getModelToID(), $secondTeam->get('participants')->getData());
-
-        $serverInfo = explode(':', $form->get('server_address')->getData());
-        if (!isset($serverInfo[1])) {
-            $serverInfo[1] = 5154;
-        }
+        $serverInfo = $this->getServerInfo($form->get('server_address'));
 
         $match = \Match::enterMatch(
             $firstTeam->get('team')->getData()->getId(),
@@ -80,8 +145,8 @@ class MatchFormCreator extends ModelFormCreator
             $form->get('duration')->getData(),
             $this->me->getId(),
             $form->get('time')->getData(),
-            $firstPlayers,
-            $secondPlayers,
+            $this->getPlayerList($firstTeam),
+            $this->getPlayerList($secondTeam),
             $serverInfo[0],
             $serverInfo[1],
             null,
@@ -89,6 +154,33 @@ class MatchFormCreator extends ModelFormCreator
         );
 
         return $match;
+    }
+
+    /**
+     * Get the player list of a team
+     *
+     * @param FormInterface $team A MatchTeamType form
+     * @return array
+     */
+    private function getPlayerList(FormInterface $team)
+    {
+        return array_map($this->getModelToID(),  $team->get('participants')->getData());
+    }
+
+    /**
+     * Get the server address and port of a match
+     *
+     * @param FormInterface $server A text form representing the server
+     * @return array
+     */
+    private function getServerInfo(FormInterface $server)
+    {
+        $serverInfo = explode(':', $server->getData());
+        if (!isset($serverInfo[1])) {
+            $serverInfo[1] = 5154;
+        }
+
+        return $serverInfo;
     }
 
     /**

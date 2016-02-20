@@ -225,13 +225,14 @@ abstract class HTMLController extends Controller
         $message = "Are you sure you want to do this?",
         $successMessage = "Operation completed successfully",
         $action = "Yes",
-        $onNo = null
+        $onNo = null,
+        $view = 'confirmation.html.twig'
     ) {
         $creator = new ConfirmationFormCreator($action, $this->getPreviousURL());
         $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
-            if ($form->get($action)->isClicked()) {
+            if ($form->get('confirm')->isClicked()) {
                 $return = $onYes();
 
                 // If no exceptions are thrown, show a success message
@@ -247,7 +248,7 @@ abstract class HTMLController extends Controller
             }
         }
 
-        return $this->render('confirmation.html.twig', array(
+        return $this->render($view, array(
             'form'    => $form->createView(),
             'message' => $message
         ));

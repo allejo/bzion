@@ -3,6 +3,7 @@
 use BZIon\Form\Creator\ModelFormCreator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * A controller with actions for creating, reading, updating and deleting models
@@ -65,7 +66,10 @@ abstract class CRUDController extends JSONController
             }
 
             if ($onSuccess) {
-                $onSuccess();
+                $response = $onSuccess();
+                if ($response instanceof Response) {
+                    return $response;
+                }
             }
 
             return $redirection;
@@ -79,10 +83,11 @@ abstract class CRUDController extends JSONController
      * for the model
      *
      * @param  Player             $me The user who wants to create the model
+     * @param  Closure|null       $onSuccess The function to call on success
      * @throws ForbiddenException
      * @return mixed              The response to show to the user
      */
-    protected function create(Player $me)
+    protected function create(Player $me, $onSuccess = null)
     {
         if (!$this->canCreate($me)) {
             throw new ForbiddenException($this->getMessage($this->getName(), 'create', 'forbidden'));
@@ -98,6 +103,13 @@ abstract class CRUDController extends JSONController
                 $model = $creator->enter($form);
                 $this->getFlashBag()->add("success",
                      $this->getMessage($model, 'create', 'success'));
+
+                if ($onSuccess) {
+                    $response = $onSuccess($model);
+                    if ($response instanceof Response) {
+                        return $response;
+                    }
+                }
 
                 return $this->redirectTo($model);
             }
@@ -300,8 +312,8 @@ WARNING
                     'unnamed' => "Are you sure you want to delete this $type?",
                 ),
                 'forbidden' => array(
-                    'named'   => "You cannot delete the $type $name",
-                    'unnamed' => "You can't delete this $type",
+                    'named'   => "You are not allowed to delete the $type $name",
+                    'unnamed' => "You aren't allowed to delete this $type",
                 ),
                 'success' => array(
                     'named'   => "The $type $name was deleted successfully",
