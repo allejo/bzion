@@ -200,7 +200,7 @@ class MessageController extends JSONController
             "Your team is no longer participating in that conversation.", "Remove team");
     }
 
-    public function kickAction(Conversation $conversation, Player $me, $type, $member, Player $me)
+    public function kickAction(Conversation $conversation, Player $me, $type, $member)
     {
         $this->assertCanEdit($me, $conversation, "You are not allowed to kick a member off that discussion!");
 
