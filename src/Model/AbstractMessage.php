@@ -80,10 +80,7 @@ abstract class AbstractMessage extends Model
      *
      * @return bool
      */
-    public function isMessage()
-    {
-        return $this->type === null;
-    }
+    abstract function isMessage();
 
     /**
      * {@inheritdoc}

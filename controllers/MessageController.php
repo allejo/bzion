@@ -140,6 +140,7 @@ class MessageController extends JSONController
 
                 if ($lastMessage !== false
                     && $lastMessage->isMessage()
+                    && $nextMessage->isMessage()
                     && $lastMessage->getTimestamp()->isSameDay($nextMessage->getTimestamp())
                     && $lastMessage->getAuthor()->isSameAs($nextMessage->getAuthor())
                 ) {
@@ -161,13 +162,12 @@ class MessageController extends JSONController
 
     public function leaveAction(Player $me, Conversation $conversation)
     {
-        if (!$conversation->isMember($me)) {
+        if (!$conversation->isMember($me, $distinct = true)) {
             throw new ForbiddenException("You are not a member of this discussion.");
         } elseif ($conversation->getCreator()->isSameAs($me)) {
             throw new ForbiddenException("You can't abandon the conversation you started!");
         }
 
-        // TODO: Fix that later
         return $this->showConfirmationForm(function () use ($conversation, $me) {
             $conversation->removeMember($me);
 
@@ -179,27 +179,56 @@ class MessageController extends JSONController
             "You will no longer receive messages from this conversation", "Leave");
     }
 
-    public function kickAction(Conversation $conversation, Player $player, Player $me)
+    public function teamLeaveAction(Player $me, Conversation $conversation)
     {
-        $this->assertCanEdit($me, $conversation, "You are not allowed to kick a player off that discussion!");
+        $team = $me->getTeam();
 
-        if ($conversation->isCreator($player->getId())) {
+        if (!$me->canEdit($team)) {
+            throw new ForbiddenException("You are not allowed to remove your team from this conversation.");
+        } elseif (!$conversation->isMember($team)) {
+            throw new ForbiddenException("That team is not participating in this conversation.");
+        }
+
+        return $this->showConfirmationForm(function () use ($conversation, $team) {
+            $conversation->removeMember($team);
+
+            $event = new ConversationAbandonEvent($conversation, $team);
+            Service::getDispatcher()->dispatch(Events::CONVERSATION_ABANDON, $event);
+
+            return new RedirectResponse($conversation->getURL());
+        },  "Are you sure you want to remove {$team->getEscapedName()} from this conversation?",
+            "Your team is no longer participating in that conversation.", "Remove team");
+    }
+
+    public function kickAction(Conversation $conversation, Player $me, $type, $member, Player $me)
+    {
+        $this->assertCanEdit($me, $conversation, "You are not allowed to kick a member off that discussion!");
+
+        if (strtolower($type) === 'player') {
+            $member = Player::fetchFromSlug($member);
+        } elseif (strtolower($type) === 'team') {
+            $member = Team::fetchFromSlug($member);
+        } else {
+            throw new BadRequestException("Unrecognized member type.");
+        }
+
+        if ($conversation->isCreator($member->getId())) {
             throw new ForbiddenException("You can't leave your own conversation.");
         }
 
-        if (!$conversation->isMember($player)) {
+        if (!$conversation->isMember($member)) {
             throw new ForbiddenException("The specified player is not a member of this conversation.");
         }
 
-        return $this->showConfirmationForm(function () use ($conversation, $player, $me) {
-            $conversation->removeMember($player);
+        return $this->showConfirmationForm(function () use ($conversation, $member, $me) {
+            $conversation->removeMember($member);
 
-            $event = new ConversationKickEvent($conversation, $player, $me);
+            $event = new ConversationKickEvent($conversation, $member, $me);
             Service::getDispatcher()->dispatch(Events::CONVERSATION_KICK, $event);
 
             return new RedirectResponse($conversation->getUrl());
-        },  "Are you sure you want to kick {$player->getEscapedUsername()} from the discussion?",
-            "Player {$player->getUsername()} has been kicked from the conversation", "Kick");
+        },  "Are you sure you want to kick {$member->getEscapedName()} from the discussion?",
+            "{$member->getName()} has been kicked from the conversation", "Kick");
     }
 
     public function searchAction(Player $me, Request $request)
@@ -235,7 +264,7 @@ class MessageController extends JSONController
             $invitees = array();
 
             foreach ($form->get('players')->getData() as $player) {
-                if (!$conversation->isMember($player)) {
+                if (!$conversation->isMember($player, $distinct = true)) {
                     $conversation->addMember($player);
                     $invitees[] = $player;
                 }

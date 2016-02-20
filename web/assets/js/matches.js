@@ -27,7 +27,7 @@ $(document).ready(function() {
         // Simulate clicking the "confirm" button
         formData.append('confirm_form[confirm]', 'confirm');
 
-        var count = undefined;
+        var count;
 
         // Perform a streamed HTTP request
         httpRequest = new XMLHttpRequest();

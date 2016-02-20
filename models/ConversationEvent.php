@@ -28,11 +28,11 @@ class ConversationEvent extends AbstractMessage
     {
         parent::assignResult($event);
 
-        $this->event = unserialize($event['message']);
-
-        if ($this->isMessage()) {
+        if ($this->type === null) {
             throw new Exception("A message cannot be represented by the ConversationEvent class.");
         }
+
+        $this->event = unserialize($event['message']);
     }
 
     /**
@@ -55,6 +55,14 @@ class ConversationEvent extends AbstractMessage
     public function getCategory()
     {
         return $this->type;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isMessage()
+    {
+        return false;
     }
 
     /**

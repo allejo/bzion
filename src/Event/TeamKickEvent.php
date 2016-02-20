@@ -72,6 +72,18 @@ class TeamKickEvent extends Event
     }
 
     /**
+     * Get the player who was kicked
+     *
+     * Alias for TeamKickEvent::getKicked()
+     *
+     * @return \Player $player
+     */
+    public function getPlayer()
+    {
+        return $this->kicked;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function notify($type)

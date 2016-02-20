@@ -24,8 +24,14 @@ class ConversationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'team.abandon' => 'onTeamMembershipChange',
-            'team.kick'    => 'onTeamMembershipChange',
+            'team.abandon' => array(
+                array('onTeamMembershipChange'),
+                array('onTeamLeave')
+            ),
+            'team.kick'    => array(
+                array('onTeamMembershipChange'),
+                array('onTeamLeave')
+            ),
             'team.join'    => 'onTeamMembershipChange',
         );
     }
@@ -42,6 +48,29 @@ class ConversationSubscriber implements EventSubscriberInterface
 
         foreach ($query->getModels() as $conversation) {
             \ConversationEvent::storeEvent($conversation->getId(), $event, $type);
+
+            if ($type === 'team.join') {
+                $conversation->addMember($event->getPlayer(), $distinct = false);
+            }
         }
+    }
+
+    /**
+     * When a player leaves a team, remove them from every conversation that
+     * includes that team
+     *
+     * @param TeamAbandonEvent|TeamKickEvent $event The event
+     */
+    public function onTeamLeave(Event $event)
+    {
+        // We don't need to check which conversations include the player; a
+        // player_conversations entry will have `distinct` set to 0 only if the
+        // player belongs to a conversation because they are a member of this
+        // team
+        \Database::getInstance()->query(
+            "DELETE FROM `player_conversations`
+                WHERE player = ?
+                AND `distinct` = 0", "i", array($event->getPlayer()->getId())
+        );
     }
 }

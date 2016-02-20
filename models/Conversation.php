@@ -303,14 +303,25 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Checks if a player or team belongs in the conversation
      * @param  Player|Team $member The player or team to check
+     * @param  bool Whether to only return true if a player is specifically a
+     *              member of the conversation, not just a member of one of the
+     *              conversation's teams (ignored if $member is a Team)
      * @return bool True if the given object belongs in the conversation, false if they don't
      */
-    public function isMember($member)
+    public function isMember($member, $distinct = false)
     {
         $type = ($member instanceof Player) ? 'player' : 'team';
 
-        $result = $this->db->query("SELECT 1 FROM `{$type}_conversations` WHERE `conversation` = ?
-                                    AND `$type` = ?", "ii", array($this->id, $member->getId()));
+        if ($type === 'player' and $distinct) {
+            $distinctQuery = 'AND `distinct` = 1';
+        } else {
+            $distinctQuery = '';
+        }
+
+        $result = $this->db->query(
+            "SELECT 1 FROM `{$type}_conversations` WHERE `conversation` = ?
+              AND `$type` = ? $distinctQuery",
+            "ii", array($this->id, $member->getId()));
 
         return count($result) > 0;
     }
@@ -318,20 +329,24 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Add a member to the discussion
      *
-     * @param  Player|Team $member The member  to add
+     * @param  Player|Team $member   The member to add
+     * @param  bool        $distinct Whether to add the member as a distinct
+     *                               player (ignored for teams)
      * @return void
      */
-    public function addMember($member)
+    public function addMember($member, $distinct = true)
     {
         if ($member instanceof Player) {
             // Mark individual players as distinct by creating or updating the
             // entry on the table
-            $this->db->query(
-                "INSERT INTO `player_conversations` (`conversation`, `player`, `distinct`) VALUES (?, ?, 1)
-                    ON DUPLICATE KEY UPDATE `distinct` = 1",
-                "ii",
-                array($this->getId(), $member->getId())
-            );
+            if ($distinct) {
+                $query = "INSERT INTO `player_conversations` (`conversation`, `player`, `distinct`) VALUES (?, ?, 1)
+                  ON DUPLICATE KEY UPDATE `distinct` = 1";
+            } else {
+                $query = "INSERT IGNORE INTO `player_conversations` (`conversation`, `player`, `distinct`, `read`) VALUES (?, ?, 0, 1)";
+            }
+
+            $this->db->query($query, "ii", array($this->getId(), $member->getId()));
         } elseif ($member instanceof Team) {
             // Add the team to the team_conversations table...
             $this->db->query(
@@ -353,9 +368,32 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
+     * Find out if a player belongs to any of the conversation's teams
+     *
+     * This does not take into account whether the player is a distinct member
+     * of the conversation (i.e. they have been invited separately)
+     *
+     * @param  Player $member The player to check
+     * @return bool
+     */
+    public function isTeamMember($member)
+    {
+        $query = $this->db->query(
+            "SELECT COUNT(*) as c FROM players
+                INNER JOIN teams ON teams.id = players.team
+                INNER JOIN team_conversations ON team_conversations.team = teams.id
+                WHERE team_conversations.conversation = ?
+                AND players.id = ?
+                LIMIT 1", "ii", array($this->getId(), $member->getId())
+        );
+
+        return $query[0]['c'] > 0;
+    }
+
+    /**
      * Remove a member from the discussion
      *
-     * @todo
+     * @todo Properly leave the conversation even when belonging to a team?
      *
      * @param  Player|Team $member The member to remove
      * @return void
@@ -363,9 +401,31 @@ class Conversation extends UrlModel implements NamedModel
     public function removeMember($member)
     {
         if ($member instanceof Player) {
-            $this->db->query("DELETE FROM `player_conversations` WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId()));
+            if ($this->isTeamMember($member)) {
+                // The player is already member of a team in the conversation,
+                // don't remove them entirely
+                $this->db->query(
+                    "UPDATE `player_conversations` SET `distinct` = 0 WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId())
+                );
+            } else {
+                $this->db->query(
+                    "DELETE FROM `player_conversations` WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId())
+                );
+            }
         } else {
-            throw new Exception("Not implemented yet");
+            $this->db->query(
+                "DELETE `player_conversations` FROM `player_conversations`
+                LEFT JOIN `players` ON players.id = player_conversations.player
+                WHERE player_conversations.conversation = ?
+                AND players.team = ?
+                AND player_conversations.distinct = 0", "ii", array($this->getId(), $member->getId())
+            );
+
+            $this->db->query(
+                "DELETE FROM `team_conversations`
+                WHERE conversation = ?
+                AND team = ?", "ii", array($this->getId(), $member->getId())
+            );
         }
     }
 

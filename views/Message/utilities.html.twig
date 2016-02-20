@@ -11,8 +11,12 @@
         {%- set after = members[loop.index0 + 2] -%} {# The next next item in the loop #}
 
         {# We don't want to output or own names #}
-        {%- if member.name != me.name -%}
-            {{- links ? link_to(member) : member.name | raw -}}
+        {%- if member ~/~ me -%}
+            {%- if links -%}
+                {{- link_to(member, class = "asdasd") -}}
+            {%- else -%}
+                {{- member.name -}}
+            {%- endif -%}
 
             {%- if not loop.last and (next.name != me.name or after is not null) -%}
                 {{- ', ' -}}

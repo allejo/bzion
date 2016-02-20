@@ -230,7 +230,7 @@ abstract class Controller extends ContainerAware
             } elseif ($p->isOptional()) {
                 $params[] = $p->getDefaultValue();
             } else {
-                throw new MissingArgumentException("Missing parameter $p->name");
+                throw new MissingArgumentException("Missing parameter '$p->name'");
             }
         }
 

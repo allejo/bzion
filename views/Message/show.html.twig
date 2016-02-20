@@ -66,8 +66,20 @@
                     </p>
                     <p class="c-messenger__options__header__actions">
                         {% if me.canEdit(conversation) %}
-                            <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm"></i>
-                            <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm"></i>
+                            <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm" title="Invite players to the conversation"></i>
+                            <i class="fa fa-user-times"></i>
+                            <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm" title="Rename conversation"></i>
+                        {% endif %}
+                        {% if me.canEdit(me.team) and conversation.isMember(me.team) %}
+                            <a href="{{ conversation.url('team_leave') }}" title="Remove {{ me.team.name }} from conversation">
+                                {# TODO: Find a better icon #}
+                                <i class="fa fa-bolt"></i>
+                            </a>
+                        {% endif %}
+                        {% if me ~/~ conversation.creator and not conversation.isTeamMember(me) %}
+                            <a href="{{ conversation.url('leave') }}" title="Leave conversation">
+                                <i class="fa fa-sign-out"></i>
+                            </a>
                         {% endif %}
                     </p>
                 </div>

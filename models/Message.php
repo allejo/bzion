@@ -31,12 +31,12 @@ class Message extends AbstractMessage
     {
         parent::assignResult($message);
 
-        $this->player_from = $message['player_from'];
-        $this->message = $message['message'];
-
-        if (!$this->isMessage()) {
+        if ($this->type !== null) {
             throw new Exception("A conversation event cannot be represented by the Message class.");
         }
+
+        $this->player_from = $message['player_from'];
+        $this->message = $message['message'];
     }
 
     /**
@@ -55,6 +55,14 @@ class Message extends AbstractMessage
     public function getAuthor()
     {
         return Player::get($this->player_from);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isMessage()
+    {
+        return true;
     }
 
     /**

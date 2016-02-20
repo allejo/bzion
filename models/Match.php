@@ -638,8 +638,8 @@ class Match extends PermissionModel implements NamedModel
     /**
      * Calculate the ELO score difference
      *
-     * Computes the absolute value of the ELO score difference on each team
-     * after a match, based on GU League's rules.
+     * Computes the ELO score difference on each team after a match, based on
+     * GU League's rules.
      *
      * @param  int $a_elo    Team A's current ELO score
      * @param  int $b_elo    Team B's current ELO score

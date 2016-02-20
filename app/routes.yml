@@ -126,8 +126,12 @@ message_conversation_leave:
     path:     /messages/{conversation}/leave
     defaults: { _controller: 'Message', _action: 'leave' }
 
+message_conversation_team_leave:
+    path:     /messages/{conversation}/team-leave
+    defaults: { _controller: 'Message', _action: 'teamLeave' }
+
 message_conversation_kick:
-    path:     /messages/{conversation}/kick/{player}
+    path:     /messages/{conversation}/kick/{type}/{member}
     defaults: { _controller: 'Message', _action: 'kick' }
 
 news_list:

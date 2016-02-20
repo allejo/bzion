@@ -62,6 +62,19 @@ class ConversationKickEvent extends Event
     }
 
     /**
+     * Get the member who was kicked
+     *
+     * Alias for ConversationKickEvent::getKicked()
+     *
+     * @return \Player|\Team
+     */
+    public function getMember()
+    {
+        return $this->kicked;
+    }
+
+
+    /**
      * Get the player who issued the kick
      *
      * @return \Player
