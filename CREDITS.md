@@ -16,4 +16,4 @@ BZiON makes use of custom assets as well as assets created by talented artists.
 **Landing Page Artwork**
 
 - **Author:** orbit
-- **License:** Unspecified
+- **License:** CC-BY
