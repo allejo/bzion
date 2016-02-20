@@ -578,6 +578,25 @@ class Match extends PermissionModel implements NamedModel
     }
 
     /**
+     * Calculate the match's contribution to the team activity
+     *
+     * @return float
+     */
+    public function getActivity()
+    {
+        $daysPassed = $this->getTimestamp()->diffInSeconds();
+        $daysPassed = $daysPassed / TimeDate::SECONDS_PER_MINUTE / TimeDate::MINUTES_PER_HOUR / TimeDate::HOURS_PER_DAY;
+
+        $activity = 0.000259304576750249 * pow(45-$daysPassed, (1/6)) + atan(31.0-$daysPassed)/2.0;
+
+        if ($activity < 0.0) {
+            return 0.0;
+        }
+
+        return $activity;
+    }
+
+    /**
      * Enter a new match to the database
      * @param  int             $a          Team A's ID
      * @param  int             $b          Team B's ID

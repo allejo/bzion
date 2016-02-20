@@ -18,7 +18,7 @@ class MatchController extends CRUDController
      */
     public $recalculateNeeded = false;
 
-    public function listAction(Request $request, Team $team = null, $type = null)
+    public function listAction(Request $request, Player $me, Team $team = null, $type = null)
     {
         $qb = $this->getQueryBuilder();
 
@@ -28,13 +28,19 @@ class MatchController extends CRUDController
                ->with($team, $type)
                ->limit(50)->fromPage($currentPage);
 
+        $matches = $query->getModels($fast = true);
+
+        foreach ($matches as $match) {
+            // Don't show wrong labels for matches
+            $match->getTimestamp()->setTimezone($me->getTimezone());
+        }
 
         return array(
-            "matches"     => $query->getModels($fast = true),
+            "matches"     => $matches,
             "team"        => $team,
             "currentPage" => $currentPage,
             "totalPages"  => $qb->countPages()
-    );
+        );
     }
 
     public function createAction(Player $me)

@@ -20,6 +20,11 @@ class TeamController extends CRUDController
 
     public function listAction()
     {
+        Team::$cachedMatches = $this->getQueryBuilder('Match')
+            ->where('time')->isAfter(TimeDate::from('45 days ago'))
+            ->active()
+            ->getModels($fast = true);
+
         $teams = $this->getQueryBuilder()
             ->sortBy('elo')->reverse()
             ->getModels($fast = true);

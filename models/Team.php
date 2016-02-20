@@ -90,6 +90,13 @@ class Team extends AvatarModel
     protected $status;
 
     /**
+     * A list of cached matches to calculate team activity
+     *
+     * @var Match[]|null
+     */
+    public static $cachedMatches = null;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "teams";
@@ -211,6 +218,21 @@ class Team extends AvatarModel
      */
     public function getActivity()
     {
+        if (self::$cachedMatches === null) {
+            self::$cachedMatches = Match::getQueryBuilder()
+                ->active()
+                ->with($this)
+                ->where('time')->isAfter(TimeDate::from('45 days ago'))
+                ->getModels($fast = true);
+        }
+
+        $this->activity = 0;
+        foreach (self::$cachedMatches as $match) {
+            if ($match->getTeamA()->isSameAs($this) || $match->getTeamB()->isSameAs($this)) {
+                $this->activity += $match->getActivity();
+            }
+        }
+
         return sprintf("%.2f", $this->activity);
     }
 
