@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% import _self as self %}
+
 {% set scopeClass = "s-teams" %}
 {% set pageButtons = [
     {
@@ -11,44 +13,66 @@
     }
 ] %}
 
+{% macro teamWidget(team) %}
+    <article class="c-team-widget">
+        {{ team.rankImageLiteral | raw }}
+        <section class="c-team-widget__body">
+            <article class="c-team-widget__header">
+                <section class="c-team-widget__summary">
+                    <span class="c-team-widget__summary__name">{{ link_to(team) }}</span>
+                    <span class="c-team-widget__summary__elo">{{ team.elo }}</span>
+                </section>
+
+                <section class="c-team-widget__matches">
+                    <p>
+                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}" title="Wins">{{ team.matchesWon }}</a> -
+                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}" title="Losses">{{ team.matchesLost }}</a> -
+                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}" title="Draws">{{ team.matchesDraw }}</a>
+                    </p>
+                </section>
+            </article>
+
+            <article class="c-team-widget__details">
+                <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
+                <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
+                <span><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</span>
+
+                {% if me.teamless and team.status == "open" %}
+                    <span>
+                        <a href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join Team</a>
+                    </span>
+                {% endif %}
+            </article>
+        </section>
+    </article>
+{% endmacro %}
+
 {% block title %}Teams{% endblock %}
 
 {% block pageTitle %}
-    <h1>Active Teams</h1>
+    <h1>Teams</h1>
 {% endblock %}
 
 {% block content %}
     <section class="o-container o-section">
-        {% for team in teams %}
-            <article class="c-team-widget">
-                {{ team.rankImageLiteral | raw }}
-                <section class="c-team-widget__body">
-                    <article class="c-team-widget__header">
-                        <section class="c-team-widget__summary">
-                            <span class="c-team-widget__summary__name">{{ link_to(team) }}</span>
-                            <span class="c-team-widget__summary__elo">{{ team.elo }}</span>
-                        </section>
+        <section class="c-team-list__header">
+            <h2>Active Teams</h2>
+            <p>Wins - Losses - Draws</p>
+        </section>
 
-                        <section class="c-team-widget__matches">
-                            <p>
-                                <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}">{{ team.matchesWon }}</a> -
-                                <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}">{{ team.matchesLost }}</a> -
-                                <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}">{{ team.matchesDraw }}</a>
-                            </p>
-                        </section>
-                    </article>
+        {% for team in teams if team.activity > 0 %}
+            {{ self.teamWidget(team) }}
+        {% endfor %}
+    </section>
 
-                    <article class="c-team-widget__details">
-                        <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
-                        <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
-                        <span><i class="fa fa-bar-chart-o"></i> {{ team.activity }}</span>
+    <section class="o-container o-section">
+        <section class="c-team-list__header">
+            <h2>Inactive Teams</h2>
+            <p>Wins - Losses - Draws</p>
+        </section>
 
-                        {% if me.teamless and team.status == "open" %}
-                            <span><i class="fa fa-plus"></i> Join Team</span>
-                        {% endif %}
-                    </article>
-                </section>
-            </article>
+        {% for team in teams if team.activity == 0 %}
+            {{ self.teamWidget(team) }}
         {% endfor %}
     </section>
 {% endblock %}

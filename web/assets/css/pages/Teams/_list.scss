@@ -1,3 +1,20 @@
+.c-team-list__header {
+    display: flex;
+    margin-bottom: $Settings-Page_Section-Small_Margin;
+
+    h2 {
+        flex: 1;
+    }
+
+    p {
+        display: none;
+
+        @include respond-up(md) {
+            display: block;
+        }
+    }
+}
+
 .c-team-widget {
     border-bottom: $Border-Default;
     display: flex;
@@ -6,6 +23,12 @@
 
     .c-rank {
         margin-right: 10px;
+    }
+
+    &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
     @include respond-up(md) {
