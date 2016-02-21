@@ -140,7 +140,17 @@ class AppGlobal
      */
     public function getAlertMessage()
     {
-        return$this->container->getParameter('bzion.site.alert.message');
+        return $this->container->getParameter('bzion.site.alert.message');
+    }
+
+    /**
+     * A unique enough identifier of the alert
+     *
+     * @return string
+     */
+    public function getAlertID()
+    {
+        return substr(md5($this->getAlertHeader() . $this->getAlertMessage()), 0, 7);
     }
 
     /**

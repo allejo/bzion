@@ -36,9 +36,11 @@ class Team extends AvatarModel
     /**
      * The team's activity
      *
-     * @var float
+     * null if we haven't calculated it yet
+     *
+     * @var float|null
      */
-    protected $activity;
+    protected $activity = null;
 
     /**
      * The id of the team leader
@@ -122,7 +124,7 @@ class Team extends AvatarModel
         $this->avatar = $team['avatar'];
         $this->created = TimeDate::fromMysql($team['created']);
         $this->elo = $team['elo'];
-        $this->activity = $team['activity'];
+        $this->activity = null;
         $this->leader = $team['leader'];
         $this->matches_won = $team['matches_won'];
         $this->matches_lost = $team['matches_lost'];
@@ -218,6 +220,11 @@ class Team extends AvatarModel
      */
     public function getActivity()
     {
+        if ($this->activity !== null) {
+            // We have a cached activity value
+            return $this->activity;
+        }
+
         if (self::$cachedMatches === null) {
             self::$cachedMatches = Match::getQueryBuilder()
                 ->active()
@@ -226,7 +233,7 @@ class Team extends AvatarModel
                 ->getModels($fast = true);
         }
 
-        $this->activity = 0;
+        $this->activity = 0.0;
         foreach (self::$cachedMatches as $match) {
             if ($match->getTeamA()->isSameAs($this) || $match->getTeamB()->isSameAs($this)) {
                 $this->activity += $match->getActivity();

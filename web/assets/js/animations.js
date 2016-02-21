@@ -21,7 +21,7 @@ $(function () {
         var saveStatus = $target.data("savestatus");
 
         if (saveStatus) {
-            createCookie("collapsible:" + $this.data("close"), true, 30);
+            createCookie("collapsible:" + $this.data("id"), true, 30);
         }
 
         $target.css("height", 0);
@@ -29,9 +29,9 @@ $(function () {
 
     $(".collapsible-entity").each(function() {
         var $this = $(this);
-        var entityID = $this.attr('id');
+        var entityID = $this.data('id');
 
-        if ($this.data("savestatus") && readCookie("collapsible:#" + entityID)) {
+        if ($this.data("savestatus") && readCookie("collapsible:" + entityID)) {
             $this.hide();
         }
     });

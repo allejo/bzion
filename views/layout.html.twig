@@ -38,10 +38,10 @@
         </noscript>
 
         {% if app.alertEnabled %}
-            <div id="SystemAlert" class="collapsible-entity collapsible-entity--open" data-savestatus="true">
+            <div id="SystemAlert" class="collapsible-entity collapsible-entity--open" data-id="{{ app.alertId }}" data-savestatus="true">
                 <div class="c-system-alert">
                     {% if app.alertCollapsible %}
-                        <p class="collapsible-close" data-close="#SystemAlert" title="Close this alert">
+                        <p class="collapsible-close" data-close="#SystemAlert" data-id="{{ app.alertId }}" title="Close this alert">
                             <i class="fa fa-close"></i>
                         </p>
                     {% endif %}
