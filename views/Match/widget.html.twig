@@ -13,7 +13,7 @@
 {% macro widget(match) %}
     {% import _self as self %}
 
-    <section class="c-matchwidget" data-id="{{ match.id }}">
+    <section class="c-matchwidget">
         <div class="c-matchwidget__team c-matchwidget__winner">
             {{ self.team_summary(match, match.winner) }}
         </div>

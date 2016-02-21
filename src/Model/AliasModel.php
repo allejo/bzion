@@ -103,7 +103,15 @@ abstract class AliasModel extends UrlModel implements NamedModel
             return "";
         }
 
-        return $this->getLink($this->getAlias(), $action, $absolute, $params);
+        if (in_array(strtolower($action), array('edit', 'delete', 'kick', 'invite', 'change-leader'))) {
+            // Make sure we provide the correct link for dangerous actions, even
+            // if the model changes its name
+            $alias = $this->getId();
+        } else {
+            $alias = $this->getAlias();
+        }
+
+        return $this->getLink($alias, $action, $absolute, $params);
     }
 
     /**
