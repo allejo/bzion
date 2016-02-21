@@ -21,6 +21,12 @@ class InvitationController extends CRUDController
             throw new ForbiddenException("This invitation has expired");
         }
 
+        if ($invitation->getTeam()->isDeleted()) {
+            $invitation->updateExpiration();
+
+            throw new ForbiddenException("This invitation is for a team which has been deleted.");
+        }
+
         $inviter = $invitation->getSentBy()->getEscapedUsername();
         $team    = $invitation->getTeam();
 
