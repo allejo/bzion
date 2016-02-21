@@ -20,11 +20,13 @@
 }
 
 // This container has the current conversation and all of the chat messages
+// @TODO Reenable the columns and remove the left border when the sidebar is added back
 .c-messenger__conversation {
     @include view-columns(xs, 12);
-    @include view-columns(md, 8);
-    @include view-columns(xxl, 9);
+    //@include view-columns(md, 8);
+    //@include view-columns(xxl, 9);
 
+    border-left: $Border-Default;
     border-right: $Border-Default;
     display: flex;
     flex-direction: column;

@@ -53,10 +53,11 @@
 
 {% block messages_body %}
     <section class="c-messenger">
-        <aside class="c-messenger__sidebar c-fullflex--scrollable">
-            {% include "Message/searchbar.html.twig" %}
-            {% include "Message/conversations.html.twig" with { customClass: 'c-conversation--compressed' } %}
-        </aside>
+        {# @TODO Include this once we have AJAX fetching for messages #}
+        {#<aside class="c-messenger__sidebar c-fullflex--scrollable">#}
+            {#{% include "Message/searchbar.html.twig" %}#}
+            {#{% include "Message/conversations.html.twig" with { customClass: 'c-conversation--compressed' } %}#}
+        {#</aside>#}
 
         <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
             <section class="c-messenger__conversation__options">
