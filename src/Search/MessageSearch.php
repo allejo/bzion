@@ -8,10 +8,6 @@
 namespace BZIon\Search;
 
 use BZIon\Debug\Debug;
-use Elastica\Query\BoolQuery;
-use Elastica\Query\HasParent;
-use Elastica\Query\Match;
-use Elastica\Query\Term;
 
 /**
  * Performs a search on messages
@@ -52,45 +48,11 @@ class MessageSearch
     {
         Debug::startStopwatch('search.messages');
 
-        if (\Service::getParameter('bzion.features.elasticsearch.enabled')) {
-            $results = $this->elasticSearch($query);
-        } else {
-            $results = $this->mysqlSearch($query);
-        }
+        $results = $this->mysqlSearch($query);
 
         Debug::finishStopwatch('search.messages');
 
         return $results;
-    }
-
-    /**
-     * Perform a search on messages using Elasticsearch
-     *
-     * @param  string    $query The query string
-     * @return Message[] The results of the search
-     */
-    private function elasticSearch($query)
-    {
-        $finder = \Service::getContainer()->get('fos_elastica.finder.search');
-        $boolQuery = new BoolQuery();
-
-        // We have only stored "active" messages and conversations on Elasticsearch's
-        // database, so there is no check for that again
-        if ($this->player) {
-            // Make sure that the parent of the message (i.e. the conversation that the
-            // message belongs into) has the current player as its member
-            $recipientQuery = new Term();
-            $recipientQuery->setTerm('members', $this->player->getId());
-            $parentQuery = new HasParent($recipientQuery, 'conversation');
-            $boolQuery->addMust($parentQuery);
-        }
-
-        $fieldQuery = new Match();
-        $fieldQuery->setFieldQuery('content', $query)
-                   ->setFieldFuzziness('content', 'auto');
-        $boolQuery->addMust($fieldQuery);
-
-        return $finder->find($boolQuery);
     }
 
     /**

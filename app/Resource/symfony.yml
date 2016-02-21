@@ -72,24 +72,6 @@ liip_imagine:
                 background: ~
                 thumbnail: { size: [50, 50], mode: outbound }
 
-fos_elastica:
-    clients:
-        default:
-            host: %bzion.features.elasticsearch.host%
-            port: %bzion.features.elasticsearch.port%
-    indexes:
-        search:
-            finder: ~
-            types:
-                conversation:
-                    mappings:
-                        members: ~
-                message:
-                    mappings:
-                        content: ~
-                    _parent:
-                        type: conversation
-
 nelmio_api_doc: ~
 
 parameters:
@@ -129,29 +111,6 @@ services:
         class: BZIon\Command\SuccessCommand
         tags:
             - { name: console.command }
-    bzion.search_listener:
-        class: BZIon\Search\ElasticaEventSubscriber
-        arguments:
-            - @fos_elastica.index.search.conversation
-            - @fos_elastica.index.search.message
-        tags:
-            - { name: kernel.event_subscriber }
-    bzion.search_provider.message:
-        class: BZIon\Search\MessageProvider
-        arguments:
-            - @fos_elastica.index.search.message
-        tags:
-            - { name: fos_elastica.provider, index: search, type: message }
-    bzion.search_provider.conversation:
-        class: BZIon\Search\ConversationProvider
-        arguments:
-            - @fos_elastica.index.search.conversation
-        tags:
-            - { name: fos_elastica.provider, index: search, type: conversation }
-    bzion.search_transformer.elastica_to_message:
-        class: BZIon\Search\ElasticaToMessageTransformer
-        tags:
-            - { name: fos_elastica.elastica_to_model_transformer, index: search, type: message }
     bzion.listener.maintenance:
         class: BZIon\Event\MaintenanceListener
         arguments: [%bzion.miscellaneous.maintenance%]
