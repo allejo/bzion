@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 gem 'sass'
 gem 'sass-media_query_combiner'
+gem 'sass-css-importer'
 gem 'scss_lint'

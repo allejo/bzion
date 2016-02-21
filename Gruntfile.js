@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             },
             debug: {
                 files: {
-                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
+                    'web/assets/css/styles.css': 'web/assets/css/libsass.scss'
                 }
             }
         },
@@ -67,10 +67,13 @@ module.exports = function(grunt) {
                 options: {
                     style: 'compressed',
                     sourcemap: 'none',
-                    require: 'sass-media_query_combiner'
+                    require: [
+                        'sass-media_query_combiner',
+                        'sass-css-importer'
+                    ]
                 },
                 files: {
-                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
+                    'web/assets/css/styles.css': 'web/assets/css/rubysass.scss'
                 }
             }
         },
