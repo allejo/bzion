@@ -139,6 +139,7 @@
             bottom: 10px;
             top: 10px;
         }
+        overflow: hidden; // @FIXME this shouldn't be needed since view-container() shouldn't escape our parent
 
         &.action {
             color: $Color-Medium_Grey;
