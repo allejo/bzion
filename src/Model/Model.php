@@ -69,7 +69,9 @@ abstract class Model extends CachedModel
             return false;
         }
 
-        return $this->getType() === $model->getType() && $this->getId() === $model->getId();
+        $sameType = $this instanceof $model || $model instanceof $this;
+
+        return $sameType && $this->getId() === $model->getId();
     }
 
     /**

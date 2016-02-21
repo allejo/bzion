@@ -81,6 +81,14 @@
             <p>{{ match.elodiff }}</p>
         </section>
 
+        {% if app.isDebug %}
+            <section class="o-section">
+                <strong>Contribution to team activity</strong>
+                <p>{{ match.activity }}</p>
+            </section>
+        {% endif %}
+
+
         <section class="o-section">
             <strong>Time</strong>
             <p>

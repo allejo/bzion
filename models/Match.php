@@ -597,6 +597,16 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Find out whether the match involves a team
+     *
+     * @param  Team $team The team to check
+     * @return bool
+     */
+    public function involvesTeam($team) {
+        return $team->getId() == $this->team_a || $team->getId() == $this->team_b;
+    }
+
+    /**
      * Reset the ELOs of the teams participating in the match
      *
      * @return self
@@ -617,9 +627,9 @@ class Match extends UrlModel implements NamedModel
         $daysPassed = $this->getTimestamp()->diffInSeconds();
         $daysPassed = $daysPassed / TimeDate::SECONDS_PER_MINUTE / TimeDate::MINUTES_PER_HOUR / TimeDate::HOURS_PER_DAY;
 
-        $activity = 0.000259304576750249 * pow(45-$daysPassed, (1/6)) + atan(31.0-$daysPassed)/2.0;
+        $activity = 0.0116687059537612 * (pow(45-$daysPassed, (1/6)) + atan(31.0-$daysPassed)/2.0);
 
-        if ($activity < 0.0) {
+        if (is_nan($activity) || $activity < 0.0) {
             return 0.0;
         }
 

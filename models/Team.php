@@ -216,11 +216,11 @@ class Team extends AvatarModel
     /**
      * Get the activity of the team
      *
-     * @return string The team's activity formatted to two decimal places
+     * @return float The team's activity
      */
     public function getActivity()
     {
-        if ($this->activity == null) {
+        if ($this->activity === null) {
             // We don't have a cached activity value
             if (self::$cachedMatches === null) {
                 self::$cachedMatches = Match::getQueryBuilder()
@@ -230,15 +230,16 @@ class Team extends AvatarModel
                     ->getModels($fast = true);
             }
 
+
             $this->activity = 0.0;
             foreach (self::$cachedMatches as $match) {
-                if ($match->getTeamA()->isSameAs($this) || $match->getTeamB()->isSameAs($this)) {
+                if ($match->involvesTeam($this)) {
                     $this->activity += $match->getActivity();
                 }
             }
         }
 
-        return sprintf("%.2f", $this->activity);
+        return $this->activity;
     }
 
     /**

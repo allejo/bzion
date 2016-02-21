@@ -145,7 +145,7 @@
                 <h4>Recent Matches</h4>
                 <article class="c-table c-table--no-border c-table--no-hover">
                     {% for match in team.matches %}
-                        <a class="c-table__row c-team__match" href="#">
+                        <a class="c-table__row c-team__match" href="{{ match.url }}">
                             <span class="c-table__row__column c-team__match__date">
                                 {{ match.timestamp | humanTime('D, M d') }}
                             </span>
@@ -171,7 +171,7 @@
         var teamLosses = {{ team.matchesLost }};
         var teamDraws  = {{ team.matchesDraw }};
 
-        {%- set labelPeriod = ((matches|length) / 12)|round %}
+        {%- set labelPeriod = ((matches|length) / 12)|round ?: 1 %}
         var matchDates = [
             {%- for date in matches|keys -%}
                 {%- set farEnoughFromEdge = loop.revindex > (matches|length)/20 -%}
