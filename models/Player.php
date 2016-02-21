@@ -355,7 +355,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getKnownIPs()
     {
-        return $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player = ?", "i", array($this->getId()));
+        return $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player = ? LIMIT 10", "i", array($this->getId()));
     }
 
     /**

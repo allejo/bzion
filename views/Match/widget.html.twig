@@ -6,14 +6,14 @@
         <p>{{ link_to(team) }}</p>
     </div>
     <div class="c-matchwidget__team__score">
-        <p>{{ match.score(team.id) }}</p>
+        <p>{{ link_to(match, content = match.score(team.id)) }}</p>
     </div>
 {% endmacro %}
 
 {% macro widget(match) %}
     {% import _self as self %}
 
-    <section class="c-matchwidget" data-map="{{ match.map.name }}">
+    <section class="c-matchwidget" data-id="{{ match.id }}">
         <div class="c-matchwidget__team c-matchwidget__winner">
             {{ self.team_summary(match, match.winner) }}
         </div>

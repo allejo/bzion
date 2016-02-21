@@ -220,23 +220,21 @@ class Team extends AvatarModel
      */
     public function getActivity()
     {
-        if ($this->activity !== null) {
-            // We have a cached activity value
-            return $this->activity;
-        }
+        if ($this->activity == null) {
+            // We don't have a cached activity value
+            if (self::$cachedMatches === null) {
+                self::$cachedMatches = Match::getQueryBuilder()
+                    ->active()
+                    ->with($this)
+                    ->where('time')->isAfter(TimeDate::from('45 days ago'))
+                    ->getModels($fast = true);
+            }
 
-        if (self::$cachedMatches === null) {
-            self::$cachedMatches = Match::getQueryBuilder()
-                ->active()
-                ->with($this)
-                ->where('time')->isAfter(TimeDate::from('45 days ago'))
-                ->getModels($fast = true);
-        }
-
-        $this->activity = 0.0;
-        foreach (self::$cachedMatches as $match) {
-            if ($match->getTeamA()->isSameAs($this) || $match->getTeamB()->isSameAs($this)) {
-                $this->activity += $match->getActivity();
+            $this->activity = 0.0;
+            foreach (self::$cachedMatches as $match) {
+                if ($match->getTeamA()->isSameAs($this) || $match->getTeamB()->isSameAs($this)) {
+                    $this->activity += $match->getActivity();
+                }
             }
         }
 

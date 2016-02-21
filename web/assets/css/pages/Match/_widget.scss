@@ -45,6 +45,16 @@
     padding-left: $Settings-Page_Section-Small_Margin;
 }
 
+.c-matchwidget__team__score {
+    a {
+        color: $Color-Black;
+
+        &:hover {
+            color: lighten($Color-Black, 15%);
+        }
+    }
+}
+
 .c-matchwidget__loser {
     @include respond-up(md) {
         @include loserOrder();

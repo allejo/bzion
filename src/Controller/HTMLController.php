@@ -218,6 +218,9 @@ abstract class HTMLController extends Controller
      *                                  automatically escape text)
      * @param  callable $onNo           What to do if the user presses "No" -
      *                                  defaults to redirecting them back
+     * @param  string   $view           The view to redirect to
+     * @param  boolean  $noButton       Whether to show a "No" instead of a
+     *                                  "Cancel" button
      * @return mixed    The response
      */
     protected function showConfirmationForm(
@@ -226,9 +229,10 @@ abstract class HTMLController extends Controller
         $successMessage = "Operation completed successfully",
         $action = "Yes",
         $onNo = null,
-        $view = 'confirmation.html.twig'
+        $view = 'confirmation.html.twig',
+        $noButton = false
     ) {
-        $creator = new ConfirmationFormCreator($action, $this->getPreviousURL());
+        $creator = new ConfirmationFormCreator($action, $this->getPreviousURL(), $noButton);
         $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
@@ -244,7 +248,7 @@ abstract class HTMLController extends Controller
                 // just get them back where they were
                 return new RedirectResponse($form->get('original_url')->getData());
             } else {
-                return $onNo();
+                return $onNo($form->get('original_url')->getData());
             }
         }
 

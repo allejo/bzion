@@ -10,7 +10,7 @@
  * A match played between two teams
  * @package    BZiON\Models
  */
-class Match extends PermissionModel implements NamedModel
+class Match extends UrlModel implements NamedModel
 {
     /**
      * The ID of the first team of the match
@@ -167,7 +167,7 @@ class Match extends PermissionModel implements NamedModel
      * @param  string $action The route's suffix
      * @return string
      */
-    public static function getRouteName($action = 'list')
+    public static function getRouteName($action = 'show')
     {
         return "match_$action";
     }
@@ -261,12 +261,22 @@ class Match extends PermissionModel implements NamedModel
 
     /**
      * Get the timestamp of the match
-     **
+     *
      * @return TimeDate The match's timestamp
      */
     public function getTimestamp()
     {
         return $this->timestamp;
+    }
+
+    /**
+     * Get the timestamp of the last update of the match
+     *
+     * @return TimeDate The match's update timestamp
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**
@@ -317,6 +327,26 @@ class Match extends PermissionModel implements NamedModel
     public function getTeamBPlayers()
     {
         return $this->parsePlayers($this->team_b_players);
+    }
+
+    /**
+     * Get the list of players for a team in a match
+     * @param  Team|int The team or team ID
+     * @return Player[]|null Returns null if there were no players recorded for this match
+     */
+    public function getPlayers($team)
+    {
+        if ($team instanceof Team) {
+            $team = $team->getId();
+        }
+
+        if ($team == $this->team_a) {
+            return $this->getTeamAPlayers();
+        } elseif ($team == $this->team_b) {
+            return $this->getTeamBPlayers();
+        }
+
+        return null;
     }
 
     /**

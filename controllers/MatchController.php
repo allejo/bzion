@@ -43,6 +43,11 @@ class MatchController extends CRUDController
         );
     }
 
+    public function showAction(Match $match)
+    {
+        return array("match" => $match);
+    }
+
     public function createAction(Player $me)
     {
         return $this->create($me, function(Match $match) use ($me) {
@@ -109,8 +114,16 @@ class MatchController extends CRUDController
         }, "Do you want to recalculate ELO history for all teams and matches after the specified match?",
             "ELO history recalculated",
             "Recalculate ELOs",
-            null,
-            "Match/recalculate.html.twig");
+            function() use ($match) {
+                if ($match->isDeleted()) {
+                    return new RedirectResponse($match->getURL('list'));
+                }
+
+                return new RedirectResponse($match->getURL('show'));
+            },
+            "Match/recalculate.html.twig",
+            $noButton = true
+        );
     }
 
     /**

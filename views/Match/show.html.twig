@@ -1,0 +1,106 @@
+{% extends 'layout.html.twig' %}
+
+{% import 'Match/widget.html.twig' as utils %}
+
+{% set scopeClass = "s-matches" %}
+{% set pageButtons = [
+    {
+        'color': 'grey',
+        'url': match.url('edit'),
+        'icon': 'pencil',
+        'text': 'Edit',
+        'condition': me.canEdit(match)
+    },
+    {
+        'color': 'orange',
+        'url': match.url('recalculate'),
+        'icon': 'calculator',
+        'text': 'Recalculate ELOs',
+        'condition': me.canEdit(match)
+    },
+    {
+        'color': 'red',
+        'url': match.url('delete'),
+        'icon': 'trash-o',
+        'text': 'Delete',
+        'condition': me.canDelete(match)
+    }
+] %}
+
+{% block title %}
+    Matches :: {{ match.winner.name }} vs {{ match.loser.name }}
+    {%- if match.map is valid %} on {{ match.map.name }}{%- endif -%}
+{% endblock %}
+
+{% block pageTitle %}
+    <h1>{{ match.winner.name }} vs {{ match.loser.name }}</h1>
+{% endblock %}
+
+{% block content %}
+    <section class="o-container">
+        {{ utils.widget(match) }}
+
+        <section class="o-section">
+            <strong>Winner</strong>
+            <p>{{ link_to(match.winner) }} - {{ match.score(match.winner) }}</p>
+            <small>
+                {% for player in match.players(match.winner) %}
+                    {{ link_to(player) -}}
+                    {%- if not loop.last %}, {% endif %}
+                {% endfor %}
+            </small>
+        </section>
+
+        <section class="o-section">
+            <strong>Loser</strong>
+            <p>{{ link_to(match.loser) }} - {{ match.score(match.loser) }}</p>
+            <small>
+                {% for player in match.players(match.loser) %}
+                    {{ link_to(player) -}}
+                    {%- if not loop.last %}, {% endif %}
+                {% endfor %}
+            </small>
+        </section>
+
+        <section class="o-section">
+            <strong>Map</strong>
+            {% if match.map is valid %}
+                <p>{{ link_to(match.map) }}</p>
+            {% else %}
+                <p><em>None</em></p>
+            {% endif %}
+        </section>
+
+        <section class="o-section">
+            <strong>Duration</strong>
+            <p>{{ match.duration }} minutes</p>
+        </section>
+
+        <section class="o-section">
+            <strong>ELO Difference</strong>
+            <p>{{ match.elodiff }}</p>
+        </section>
+
+        <section class="o-section">
+            <strong>Time</strong>
+            <p>
+                {{ match.timestamp|humanTime(constant('TimeDate::FULL')) }}
+                ({{ match.timestamp.diffForHumans }})
+            </p>
+        </section>
+
+        {% if match.timestamp.ne(match.updated) %}
+            <section class="o-section">
+                <strong>Updated</strong>
+                <p>{{ match.updated|humanTime }}</p>
+            </section>
+        {% endif %}
+
+        {% if match.enteredBy is valid %}
+            <section class="o-section">
+                <strong>Reported by</strong>
+                <p>{{ link_to(match.enteredBy) }}</p>
+            </section>
+        {% endif %}
+    </section>
+{% endblock %}

@@ -114,7 +114,7 @@
                         </small>
                     </h4>
                     <ul>
-                        {% for address in player.knownIPs | slice(0, 10) %}
+                        {% for address in player.knownIPs %}
                             <li>{{ address.ip }} - {{ address.host }}</li>
                         {% endfor %}
                     </ul>

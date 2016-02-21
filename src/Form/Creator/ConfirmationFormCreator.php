@@ -25,14 +25,22 @@ class ConfirmationFormCreator implements FormCreatorInterface
     private $originalUrl;
 
     /**
+     * Whether to show "No" instead of cancel
+     * @var boolean
+     */
+    private $no;
+
+    /**
      * Create a new confirmation form
      * @param string $action      The text to show on the "Yes" button
      * @param string $originalUrl The URL which the user is coming from
+     * @param bool   $no          Whether to show "No" instead of cancel
      */
-    public function __construct($action, $originalUrl)
+    public function __construct($action, $originalUrl, $no = false)
     {
         $this->action = $action;
         $this->originalUrl = $originalUrl;
+        $this->no = $no;
     }
 
     /**
@@ -46,7 +54,7 @@ class ConfirmationFormCreator implements FormCreatorInterface
             ->add('confirm', 'submit', array(
                 'label' => $this->action
             ))
-            ->add(($this->action == 'Yes') ? 'No' : 'Cancel', 'submit')
+            ->add(($this->action == 'Yes' || $this->no) ? 'No' : 'Cancel', 'submit')
             ->add('original_url', 'hidden', array(
                 'data' => $this->originalUrl
             ))
