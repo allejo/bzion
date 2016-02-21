@@ -78,9 +78,9 @@
                         [<a id="match_stats" href="#" original-title="Like match stats? There's more!">?</a>]
                     </small>
                 </h4>
-                <section class="c-team__match-stats__container">
-                    <canvas id="teamMatchStats" class="c-team__match-stats__graph"></canvas>
-                    <ul class="c-team__match-stats__legend">
+                <section class="c-team__stats__container">
+                    <canvas id="teamMatchStats" class="c-team__stats__graph"></canvas>
+                    <ul class="c-team__stats__legend">
                         <li>
                             <div id="winsColor" class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
                         </li>
@@ -101,6 +101,17 @@
                         [<a id="activity_stats" href="#" original-title="Like activity stats? There's more!">?</a>]
                     </small>
                 </h4>
+                <section class="c-team__stats__container">
+                    <canvas id="teamActivityStats" class="c-team__stats__graph"></canvas>
+                    <ul class="c-team__stats__legend">
+                        <li>
+                            <div id="drawColor" class="draws"></div> {{ 'match'|plural(team.numTotalMatches) }}
+                        </li>
+                        <li>
+                            <div id="winsColor" class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
+                        </li>
+                    </ul>
+                </section>
             </section>
         </section>
 
@@ -159,6 +170,27 @@
         var teamWins   = {{ team.matchesWon }};
         var teamLosses = {{ team.matchesLost }};
         var teamDraws  = {{ team.matchesDraw }};
+
+        {%- set labelPeriod = ((matches|length) / 12)|round %}
+        var matchDates = [
+            {%- for date in matches|keys -%}
+                {%- set farEnoughFromEdge = loop.revindex > (matches|length)/20 -%}
+                {%- if loop.last or (loop.index % labelPeriod == 0 and farEnoughFromEdge) -%}
+                    "{{ date }}",
+                {%- else -%}
+                    "",
+                {%- endif -%}
+            {%- endfor -%}
+        ];
+
+        var matchCounts = [
+            {% for count in matches %}{{ count }},{% endfor %}
+        ];
+
+        var winCounts = [
+            {# Don't show bad data if keys are screwed up #}
+            {% for date in matches|keys %}{{ wins[date]|default(0) }},{% endfor %}
+        ];
 
         $("#match_stats").tipsy({gravity: 's'});
         $("#activity_stats").tipsy({gravity: 's'});

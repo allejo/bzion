@@ -293,7 +293,7 @@ class Team extends AvatarModel
              ->with($this, $matchType)
              ->sortBy('time')->reverse()
              ->limit($count)->fromPage($page)
-             ->getModels();
+             ->getModels($fast = true);
     }
 
     /**

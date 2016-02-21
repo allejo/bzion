@@ -58,4 +58,50 @@ class MatchQueryBuilder extends QueryBuilder
 
         return $this;
     }
+
+    /**
+     * Group results by day
+     *
+     * @return $this
+     */
+    public function groupByMonth()
+    {
+        $this->groupQuery .= "GROUP BY YEAR(timestamp), MONTH(timestamp)";
+
+        return $this;
+    }
+
+    /**
+     * Get a count for each month's matches
+     *
+     * @param Team $team The team in question
+     * @return array
+     */
+    public function getSummary(Team $team)
+    {
+        $this->groupByMonth();
+
+        $query = $this->createQuery("YEAR(timestamp) as y, MONTH(timestamp) as m, COUNT(*) as count");
+
+        $matches = array();
+        $results = Database::getInstance()->query($query, $this->types, $this->parameters);
+
+        foreach ($results as $match) {
+            $matches[$match['y'] . '-' . sprintf('%02d', $match['m'])] = $match['count'];
+        }
+
+        // Add entries for dates with 0 matches
+        $timestamp = $team->getCreationDate()->setTimezone('UTC')->startOfMonth();
+        while ($timestamp->lte(TimeDate::now())) {
+            $key = $timestamp->format('Y-m');
+            if (!isset($matches[$key])) {
+                $matches[$key] = 0;
+            }
+
+            $timestamp->addMonth();
+        }
+        ksort($matches);
+
+        return $matches;
+    }
 }

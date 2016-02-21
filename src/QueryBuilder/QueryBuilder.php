@@ -74,6 +74,12 @@ class QueryBuilder implements Countable
     protected $extras = '';
 
     /**
+     * Extra MySQL query groupby string to pass
+     * @var string
+     */
+    protected $groupQuery = '';
+
+    /**
      * A column based on which we should sort the results
      * @var string|null
      */
@@ -509,9 +515,8 @@ class QueryBuilder implements Countable
     /**
      * Perform the query and get back the results in a list of arrays
      *
-     * @todo  Play with partial models?
-     * @param string|string[] The column(s) that should be returned
-     * @param  string  $columns
+     * @todo   Play with partial models?
+     * @param  string|string[] $columns The column(s) that should be returned
      * @return array[]
      */
     public function getArray($columns)
@@ -675,6 +680,7 @@ class QueryBuilder implements Countable
     {
         $extras     = $this->extras;
         $conditions = $this->createQueryConditions();
+        $groupQuery = $this->groupQuery;
         $order      = $this->createQueryOrder();
         $pagination = "";
 
@@ -682,7 +688,7 @@ class QueryBuilder implements Countable
             $pagination = $this->createQueryPagination();
         }
 
-        return "$extras $conditions $order $pagination";
+        return "$extras $conditions $groupQuery $order $pagination";
     }
 
     /**

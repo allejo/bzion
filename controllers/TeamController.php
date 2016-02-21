@@ -15,7 +15,19 @@ class TeamController extends CRUDController
 
     public function showAction(Team $team)
     {
-        return array("team" => $team);
+        $matches = $this->getQueryBuilder('Match')
+            ->with($team)
+            ->getSummary($team);
+
+        $wins = $this->getQueryBuilder('Match')
+            ->with($team, "win")
+            ->getSummary($team);
+
+        return array(
+            "matches" => $matches,
+            "wins" => $wins,
+            "team" => $team
+        );
     }
 
     public function listAction()

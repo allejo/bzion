@@ -28,13 +28,13 @@
     }
 }
 
-.c-team__match-stats__container {
+.c-team__stats__container {
     @include respond-up(lg) {
         display: flex;
     }
 }
 
-.c-team__match-stats__graph {
+.c-team__stats__graph {
     @include size(150px);
 
     display: block;
@@ -46,7 +46,7 @@
     }
 }
 
-.c-team__match-stats__legend {
+.c-team__stats__legend {
     @extend %no-padding-ul;
 
     text-align: center;
