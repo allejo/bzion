@@ -17,42 +17,48 @@
         <section class="o-container">
             <section class="o-row o-section c-ibullets">
                 <article class="c-ibullets__bullet">
-                    <section class="c-ibullets__bullet__icon">
-                        <img src="{{ asset("assets/imgs/landing-servers.png") }}" alt="Match servers">
-                    </section>
+                    <div class="c-ibullets__bullet__container">
+                        <section class="c-ibullets__bullet__icon">
+                            <img src="{{ asset("assets/imgs/landing-servers.png") }}" alt="Match servers">
+                        </section>
 
-                    <div class="c-ibullets__bullet__content">
-                        <h3>
-                            <a href="{{ path("server_list") }}">Servers</a>
-                        </h3>
+                        <div class="c-ibullets__bullet__content">
+                            <h3>
+                                <a href="{{ path("server_list") }}">Servers</a>
+                            </h3>
 
-                        <p>Our servers are located close to home to provide the least latency to players from all around the world.</p>
+                            <p>Our servers are located close to home to provide the least latency to players from all around the world.</p>
+                        </div>
                     </div>
                 </article>
 
                 <article class="c-ibullets__bullet">
-                    <section class="c-ibullets__bullet__icon">
-                        <img src="{{ asset("assets/imgs/landing-matches.png") }}" alt="Competitive matches">
-                    </section>
-                    <div class="c-ibullets__bullet__content">
-                        <h3>
-                            <a href="{{ path("match_list") }}">Matches</a>
-                        </h3>
+                    <div class="c-ibullets__bullet__container">
+                        <section class="c-ibullets__bullet__icon">
+                            <img src="{{ asset("assets/imgs/landing-matches.png") }}" alt="Competitive matches">
+                        </section>
+                        <div class="c-ibullets__bullet__content">
+                            <h3>
+                                <a href="{{ path("match_list") }}">Matches</a>
+                            </h3>
 
-                        <p>Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.</p>
+                            <p>Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.</p>
+                        </div>
                     </div>
                 </article>
 
                 <article class="c-ibullets__bullet">
-                    <section class="c-ibullets__bullet__icon">
-                        <img src="{{ asset("assets/imgs/landing-gettingstarted.png") }}" alt="Getting started with {{ app.title }}">
-                    </section>
-                    <div class="c-ibullets__bullet__content">
-                        <h3>
-                            <a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">Getting Started</a>
-                        </h3>
+                    <div class="c-ibullets__bullet__container">
+                        <section class="c-ibullets__bullet__icon">
+                            <img src="{{ asset("assets/imgs/landing-gettingstarted.png") }}" alt="Getting started with {{ app.title }}">
+                        </section>
+                        <div class="c-ibullets__bullet__content">
+                            <h3>
+                                <a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">Getting Started</a>
+                            </h3>
 
-                        <p>Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!</p>
+                            <p>Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!</p>
+                        </div>
                     </div>
                 </article>
             </section>

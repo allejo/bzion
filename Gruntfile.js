@@ -35,6 +35,33 @@ module.exports = function(grunt) {
                 colors: true
             }
         },
+        responsive_images: {
+            landing: {
+                options: {
+                    engine: 'im',
+                    sizes: [
+                        {
+                            name: 'phone',
+                            width: 500
+                        },
+                        {
+                            name: 'phablet',
+                            width: 790
+                        },
+                        {
+                            name: 'tablet',
+                            width: 1024
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: [ 'web/assets/imgs/cover_photo.jpg' ]
+                    }
+                ]
+            }
+        },
         sass: {
             dist: {
                 options: {
@@ -145,7 +172,7 @@ module.exports = function(grunt) {
     grunt.registerTask('css', [ 'sass:dist' ]);
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
     grunt.registerTask('check', [ 'check-gems' ]);
-    grunt.registerTask('default', [ 'css', 'js' ]);
+
     grunt.registerTask('install-hook', function () {
         var fs = require('fs');
 
@@ -156,4 +183,6 @@ module.exports = function(grunt) {
         // chmod the file to readable and executable by all
         fs.chmodSync('.git/hooks/pre-commit', '755');
     });
+
+    grunt.registerTask('default', [ 'css', 'js', 'responsive_images' ]);
 };

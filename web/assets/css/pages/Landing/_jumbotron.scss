@@ -1,6 +1,18 @@
 .c-jumbotron--landing {
-    background: url('../imgs/cover_photo.png') no-repeat scroll center center;
+    background: url('../imgs/cover_photo-phone.jpg') no-repeat scroll center center;
     margin-bottom: $Settings-Page_Section-Margin;
+
+    @include respond-up(sm) {
+        background-image: url('../imgs/cover_photo-phablet.jpg');
+    }
+
+    @include respond-up(md) {
+        background-image: url('../imgs/cover_photo-tablet.jpg');
+    }
+
+    @include respond-up(lg) {
+        background-image: url('../imgs/cover_photo.jpg');
+    }
 
     .c-button {
         margin-top: 40px;
