@@ -37,7 +37,7 @@ Feature: Matches
        And I fill in "2" for "form_second_team_score"
        And I select "30" from "form_duration_0"
        And I press "Enter"
-       Then I should be on "/matches"
+       Then I should be on "/matches/1"
        And I should see "The match was created successfully"
        And I should see "Preeminent Cannoneers 16"
        And I should see "Subpar Fusillade 2"
