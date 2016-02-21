@@ -62,6 +62,14 @@
         @include respond-up(md) {
             font-size: 26px;
         }
+
+        a {
+            color: $Color-Black;
+
+            &:hover {
+                color: $Color-Black;
+            }
+        }
     }
 }
 
