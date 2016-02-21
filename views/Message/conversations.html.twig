@@ -2,7 +2,10 @@
 
 <section class="c-conversations {{ customClass }}">
     {% for conversation in conversations %}
-        <a class="c-conversation" data-id="{{ conversation.id }}" href="{{ conversation.url }}">
+        <a class="c-conversation
+        {%- if not conversation.readBy(me.id) %} c-conversation--unread
+        {%- endif -%}
+            " data-id="{{ conversation.id }}" href="{{ conversation.url }}">
             <section class="c-conversation__meta">
                 <p class="c-conversation__subject">{{ conversation.subject }}</p>
                 <p class="c-conversation__timestamp">

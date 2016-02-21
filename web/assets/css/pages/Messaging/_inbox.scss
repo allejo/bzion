@@ -55,6 +55,14 @@
     }
 }
 
+.c-conversation--unread {
+    background-color: darken($Color-Blue_Grey, 5%);
+
+    &:hover {
+        background-color: darken($Color-Blue_Grey, 10%);
+    }
+}
+
 // A modifier class that can be used to force the mobile view to be used when displaying conversations. This class is
 // intended to be used when the conversation list is only displayed as a sidebar, i.e. not the browser's full width.
 .c-conversation--compressed {
