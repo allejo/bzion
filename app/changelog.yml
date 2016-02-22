@@ -1,12 +1,5 @@
-13 August 2015:
-    Notes:
-        - Since my.bzflag.org can now be accessed over HTTPS, you can update the miscellaneous.list_server option in your configuration
-17 August 2014:
+22 February 2016:
     Features:
-        - Finalized support for the LeagueOverseer plugin
-16 August 2014:
+        - BZiON has been released!
     Notes:
-        - New logging-related options have been added to the config, please update your bzion-config.php file
-15 August 2014:
-    Bugfixes:
-        - Matches are now ordered properly on team pages
+        - BZiON hasn't yet been thoroughly tested on large-scale installations. Make sure to take regular database backups!
