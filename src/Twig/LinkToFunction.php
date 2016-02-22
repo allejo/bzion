@@ -28,7 +28,7 @@ class LinkToFunction
         $forceText = false,
         $content = ''
     ) {
-        if (empty($content)) {
+        if ($content === '' || $content === null) {
             $content = $this->getContent($model, $icon, $forceText);
         } elseif ($icon) {
             $content = "<i class=\"fa fa-$icon\"></i> " . $content;
