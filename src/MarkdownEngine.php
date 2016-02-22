@@ -18,12 +18,14 @@ class MarkdownEngine extends \Parsedown
      */
     function __construct()
     {
-        $this->camo = Array(
-            'enabled' => \Service::getParameter('bzion.features.camo.enabled'),
-            'key' => \Service::getParameter('bzion.features.camo.key'),
-            'base_url' => \Service::getParameter('bzion.features.camo.base_url'),
-            'whitelisted_domains' => \Service::getParameter('bzion.features.camo.whitelisted_domains')
-         );
+        $this->camo = Array();
+        $this->camo['enabled'] = \Service::getParameter('bzion.features.camo.enabled');
+        
+        if ($this->camo['enabled']) {
+            $this->camo['key'] = \Service::getParameter('bzion.features.camo.key');
+            $this->camo['base_url'] = \Service::getParameter('bzion.features.camo.base_url');
+            $this->camo['whitelisted_domains'] = \Service::getParameter('bzion.features.camo.whitelisted_domains');
+        }
     }
     
     /**
