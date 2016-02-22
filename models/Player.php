@@ -999,6 +999,17 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
+     * {@inheritdoc}
+     * @todo Add a constraint that does this automatically
+     */
+    public function wipe()
+    {
+        $this->db->query("DELETE FROM visits WHERE player = ?", "i", $this->id);
+
+        parent::wipe();
+    }
+
+    /**
      * Find whether the player can delete a model
      *
      * @param  PermissionModel $model       The model that will be seen
