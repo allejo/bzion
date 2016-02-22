@@ -50,7 +50,7 @@ Before you send us a pull request, here are a few things we look for:
 - Your pull request is actually functional and works as intended
 - Your pull request does not break functionality of the master branch nor the unit tests
 - Your new feature will benefit the league community or will improve the experience for league members
-- Your pull request is not an update to the "TODO.md" file giving the developers more things to do
+- Your pull request is not adding TODOs in the code, giving the developers more things to do
 - If submitting a bug fix, specify what the bug is, when it occurs, and how your pull request has fixed the bug
 
 To increase the probability of your pull request being accepted, ensure you consider the things we look for when evaluating pull requests. We're not actually mean, we absolutely love pull requests! We simply would like the pull request process to go smoothly and quickly.

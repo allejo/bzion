@@ -11,9 +11,6 @@ class ServerController extends CRUDController
         return array("servers" => $servers);
     }
 
-    /**
-     * @todo An unstyled page might not be great
-     */
     public function showAction(Server $server, Player $me, Request $request)
     {
         if ($server->staleInfo()) {

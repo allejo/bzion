@@ -138,8 +138,6 @@ class NewsCategory extends AliasModel
      */
     public static function addCategory($name)
     {
-        // @TODO Check for permissions
-
         return self::create(array(
             'alias'     => self::generateAlias($name),
             'name'      => $name,

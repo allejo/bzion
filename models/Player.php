@@ -933,6 +933,7 @@ class Player extends AvatarModel implements NamedModel
 
         $player->addRole($role_id);
         $player->getIdenticon($player->getId());
+        $player->setUsername($username);
 
         return $player;
     }
@@ -951,7 +952,6 @@ class Player extends AvatarModel implements NamedModel
      * Change a player's callsign and add it to the database if it does not
      * exist as a past callsign
      *
-     * @todo   Also call this when creating a new user
      * @param  string $username The new username of the player
      * @return self
      */

@@ -393,8 +393,6 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Remove a member from the discussion
      *
-     * @todo Properly leave the conversation even when belonging to a team?
-     *
      * @param  Player|Team $member The member to remove
      * @return void
      */
