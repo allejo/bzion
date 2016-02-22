@@ -652,6 +652,15 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
+     * Set the player's status
+     * @param string $status The new status
+     */
+    public function setStatus($status)
+    {
+        $this->updateProperty($this->status, 'status', $status, 's');
+    }
+
+    /**
      * Set the player's admin notes
      * @param  string $admin_notes The new admin notes
      * @return self

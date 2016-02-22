@@ -45,6 +45,10 @@ class LoginController extends HTMLController
             $redirectToProfile = true;
         } else {
             $player = Player::getFromBZID($info['bzid']);
+
+            if ($player->isDeleted()) {
+                $player->setStatus('active');
+            }
         }
 
         $session->set("playerId", $player->getId());
