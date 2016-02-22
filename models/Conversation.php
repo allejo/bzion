@@ -82,13 +82,13 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function isCreator($id)
     {
-        return ($this->creator == $id);
+        return $this->creator == $id;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isEditor ($player)
+    public function isEditor($player)
     {
         return $this->isCreator($player->getId());
     }
@@ -152,7 +152,7 @@ class Conversation extends UrlModel implements NamedModel
         $query = $this->db->query("SELECT `read` FROM `player_conversations` WHERE `player` = ? AND `conversation` = ?",
             'ii', array($playerId, $this->id));
 
-        return ($query[0]['read'] == 1);
+        return $query[0]['read'] == 1;
     }
 
     /**
@@ -230,7 +230,7 @@ class Conversation extends UrlModel implements NamedModel
      * @param  bool   $distinct Whether to only return players who were
      *                             specifically invited to the conversation, and
      *                             are not participating only as members of a team
-     * @return integer[] An array of player IDs
+     * @return int[] An array of player IDs
      */
     public function getPlayerIds($hide = null, $distinct = false)
     {
@@ -254,7 +254,7 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Get a list containing the IDs of each member team of the conversation
      *
-     * @return integer[] An array of team IDs
+     * @return int[] An array of team IDs
      */
     public function getTeamIds()
     {
@@ -453,7 +453,7 @@ class Conversation extends UrlModel implements NamedModel
         return new ConversationQueryBuilder('Conversation', array(
             'columns' => array(
                 'last_activity' => 'last_activity',
-                'status' => 'status'
+                'status'        => 'status'
             ),
             'name' => 'subject',
         ));

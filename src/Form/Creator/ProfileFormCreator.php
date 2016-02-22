@@ -68,7 +68,7 @@ class ProfileFormCreator extends ModelFormCreator
             ->add('delete_avatar', 'submit')
             ->add('country', new ModelType('Country'), array(
                 'constraints' => new NotBlank(),
-                'data' => $this->editing->getCountry()
+                'data'        => $this->editing->getCountry()
             ))
             ->add('email', 'email', array(
                 'constraints' => $emailConstraints,

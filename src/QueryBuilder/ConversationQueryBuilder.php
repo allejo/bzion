@@ -14,7 +14,7 @@
  */
 class ConversationQueryBuilder extends QueryBuilder
 {
-     /**
+    /**
      * Only return messages that are sent from/to a specific player
      *
      * @param  Player $player The player related to the messages

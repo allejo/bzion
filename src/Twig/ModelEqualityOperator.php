@@ -26,8 +26,7 @@ class ModelEqualityOperator extends \Twig_Node_Expression
             ->subcompile($this->getNode('left'))
             ->raw('),(')
             ->subcompile($this->getNode('right'))
-            ->raw(')) )')
-        ;
+            ->raw(')) )');
     }
 
     /**
@@ -41,7 +40,8 @@ class ModelEqualityOperator extends \Twig_Node_Expression
      *
      * @return bool
      */
-    public static function equalModels(\Model $a, \Model $b) {
+    public static function equalModels(\Model $a, \Model $b)
+    {
         return $a->isSameAs($b);
     }
 }

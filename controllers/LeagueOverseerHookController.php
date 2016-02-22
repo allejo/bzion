@@ -216,7 +216,7 @@ class LeagueOverseerHookController extends PlainTextController
                 'score' => $match->getScore($match->getLoser())
             ),
             'eloDiff' => $match->getEloDiff(),
-            'map' => $map->getName()
+            'map'     => $map->getName()
         ));
 
         // Output the match stats that will be sent back to BZFS

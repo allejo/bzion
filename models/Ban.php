@@ -280,7 +280,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function willExpire()
     {
-        return ($this->expiration !== null);
+        return $this->expiration !== null;
     }
 
     /**

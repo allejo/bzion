@@ -18,7 +18,7 @@ class MatchTeamType extends AbstractType
         $builder
             ->add('team', new ModelType('Team'), array(
                 'constraints' => new NotBlank(),
-                'disabled' => $options['disableTeam']
+                'disabled'    => $options['disableTeam']
             ))
             ->add('score', 'integer', array(
                 'constraints' => array(
@@ -62,7 +62,7 @@ class MatchTeamType extends AbstractType
             'attr' => array(
                 'class' => 'match-team',
             ),
-            'compound' => true,
+            'compound'    => true,
             'disableTeam' => false
         ));
     }

@@ -73,7 +73,6 @@ class ConversationKickEvent extends Event
         return $this->kicked;
     }
 
-
     /**
      * Get the player who issued the kick
      *

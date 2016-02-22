@@ -39,7 +39,6 @@ class ServerController extends CRUDController
         return $this->edit($server, $me, "server");
     }
 
-
     protected function redirectTo($model)
     {
         // Redirect to the server list after creating/editing a server

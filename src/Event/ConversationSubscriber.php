@@ -7,7 +7,6 @@
 
 namespace BZIon\Event;
 
-use BZIon\NotificationAdapter\WebSocketAdapter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -28,11 +27,11 @@ class ConversationSubscriber implements EventSubscriberInterface
                 array('onTeamMembershipChange'),
                 array('onTeamLeave')
             ),
-            'team.kick'    => array(
+            'team.kick' => array(
                 array('onTeamMembershipChange'),
                 array('onTeamLeave')
             ),
-            'team.join'    => 'onTeamMembershipChange',
+            'team.join' => 'onTeamMembershipChange',
         );
     }
 

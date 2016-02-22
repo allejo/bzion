@@ -14,7 +14,6 @@ class GroupRename extends AbstractMigration
         $this->execute("alter table team_groups drop foreign key team_groups_ibfk_2");
         $this->execute("alter table messages drop foreign key messages_ibfk_1");
 
-
         $this->table('player_groups')
             ->rename('player_conversations')
             ->renameColumn('group', 'conversation')

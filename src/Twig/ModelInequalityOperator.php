@@ -18,4 +18,3 @@ class ModelInequalityOperator extends ModelEqualityOperator
         $compiler->raw(')');
     }
 }
-

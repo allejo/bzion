@@ -534,7 +534,7 @@ class QueryBuilder implements Countable
      * An alias for QueryBuilder::getModels(), with fast fetching on by default
      * and no return of results
      *
-     * @param  boolean $fastFetch Whether to perform one query to load all
+     * @param  bool $fastFetch Whether to perform one query to load all
      *                            the model data instead of fetching them
      *                            one by one
      * @return void
@@ -548,7 +548,7 @@ class QueryBuilder implements Countable
      * Perform the query and get the results as Models
      *
      * @todo Fix fast fetch for queries with multiple tables
-     * @param  boolean $fastFetch Whether to perform one query to load all
+     * @param  bool $fastFetch Whether to perform one query to load all
      *                            the model data instead of fetching them
      *                            one by one (ignores cache)
      * @return array

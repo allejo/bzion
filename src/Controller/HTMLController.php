@@ -219,7 +219,7 @@ abstract class HTMLController extends Controller
      * @param  callable $onNo           What to do if the user presses "No" -
      *                                  defaults to redirecting them back
      * @param  string   $view           The view to redirect to
-     * @param  boolean  $noButton       Whether to show a "No" instead of a
+     * @param  bool  $noButton       Whether to show a "No" instead of a
      *                                  "Cancel" button
      * @return mixed    The response
      */
@@ -268,7 +268,8 @@ abstract class HTMLController extends Controller
      *
      * @throws BadRequestException
      */
-    protected function decompose($query, array $types, $models = true, $max = null) {
+    protected function decompose($query, array $types, $models = true, $max = null)
+    {
         $query = explode(',', $query);
 
         if ($max !== null && count($query) > $max) {
@@ -284,7 +285,6 @@ abstract class HTMLController extends Controller
                 $result[$type] = array();
             }
         }
-
 
         foreach ($query as $object) {
             if ($object === '') {
@@ -316,7 +316,7 @@ abstract class HTMLController extends Controller
                 if ($models) {
                     $this->assertVisibility($result[] = $firstType::get($id));
                 } else {
-                    $result[$firstType][] = (int)$object[0];
+                    $result[$firstType][] = (int) $object[0];
                 }
             } else {
                 throw new \BadRequestException("Malformed object");

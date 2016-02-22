@@ -141,20 +141,20 @@ class Server extends UrlModel implements NamedModel
         $this->online = !isset($this->info['error']);
 
         $this->db->query(
-	    "UPDATE servers SET info = ?, online = ?, updated = UTC_TIMESTAMP() WHERE id = ?",
-	    "sii",
-	    array(serialize($this->info), $this->online, $this->id)
-	);
+        "UPDATE servers SET info = ?, online = ?, updated = UTC_TIMESTAMP() WHERE id = ?",
+        "sii",
+        array(serialize($this->info), $this->online, $this->id)
+    );
 
-	// If a server is offline, log it
+    // If a server is offline, log it
         if (!$this->online) {
-	    if ($logger = \Service::getContainer()->get('logger')) {
-		$id = $this->getId();
-		$address = $this->getAddress();
-		$reason = $this->info['error'];
+            if ($logger = \Service::getContainer()->get('logger')) {
+                $id = $this->getId();
+                $address = $this->getAddress();
+                $reason = $this->info['error'];
 
-		$logger->notice("Connection to server #$id ($address) failed: $reason");
-	    }
+                $logger->notice("Connection to server #$id ($address) failed: $reason");
+            }
         }
 
         return $this;

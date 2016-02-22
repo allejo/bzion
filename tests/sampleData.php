@@ -34,8 +34,6 @@ $constitution = Player::newPlayer(9972, "Constitution", null, "active", Player::
 $oldSnake = Player::newPlayer(54498, "Snake12534");
 $oldSnake->setOutdated(true);
 
-
-
 $allPlayers = array(
     $alezakos,
     $allejo,
@@ -124,7 +122,7 @@ echo " done!";
 echo "\nAdding messages...";
 $conversation = Conversation::createConversation("New blog", $snake->getId(), $allPlayers);
 
-for ($i = 0; $i <= 10; $i++) {
+for ($i = 0; $i <= 10; ++$i) {
     Conversation::createConversation("Extra test $i", $alezakos->getId(), $allPlayers)->sendMessage($allejo, "This is a test conversation");
 }
 
@@ -198,7 +196,6 @@ $conversation->sendMessage($autoreport, "This is a message");
 $conversation->sendMessage($autoreport, "This is another message");
 $conversation->sendMessage($autoreport, "This is yet another message");
 
-
 $conversation = Conversation::createConversation("Test", $alezakos->getId(), array($olfm, $reptitles, $fflood, $fradis, $lweak, $gsepar, $constitution));
 $conversation->sendMessage($allejo, "then I can type at 12,000 wpm?");
 $conversation->sendMessage($blast, "like:");
@@ -223,7 +220,6 @@ ConversationEvent::storeEvent($conversation->getId(), $event, Events::CONVERSATI
 $conversation->sendMessage($autoreport, "she also going to essential command and to https://github Releases?\"  \"No!\"  \"STOP! IT!\"  \"*pbbbttt*\"  \"That's interesting I want help");
 $conversation->sendMessage($autoreport, "I wonder 600KB) screenshot here. but how much I know all I was doing to debug, visual studio");
 $conversation->sendMessage($autoreport, "and night night!");
-
 
 echo " done!";
 

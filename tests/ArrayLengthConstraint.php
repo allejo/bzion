@@ -38,7 +38,7 @@ class ArrayLengthConstraint extends PHPUnit_Framework_Constraint
      */
     public function matches($other)
     {
-        return (count($other) == $this->expectedValue);
+        return count($other) == $this->expectedValue;
     }
 
     /**

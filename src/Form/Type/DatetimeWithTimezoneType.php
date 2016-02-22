@@ -25,8 +25,8 @@ class DatetimeWithTimezoneType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'compound'   => true,
-            'data_class' => null,
+            'compound'     => true,
+            'data_class'   => null,
             'with_seconds' => false
         ));
     }

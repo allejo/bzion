@@ -4,7 +4,6 @@ namespace BZIon\Form\Type;
 
 use BZIon\Form\Constraint\NotBlankModel;
 use BZIon\Form\Transformer\MultipleModelTransformer;
-use BZIon\Form\Transformer\NullModelTransformer;
 use BZIon\Form\Transformer\SingleModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
@@ -101,7 +100,7 @@ class ModelType extends AbstractType
             'choices' => $names,
         ));
 
-        $resolver->setNormalizer('constraints', function($options, $value) {
+        $resolver->setNormalizer('constraints', function ($options, $value) {
             // One constraint should always be converted to an array
             $value = is_object($value) ? array($value) : (array) $value;
 

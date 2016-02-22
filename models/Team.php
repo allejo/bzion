@@ -230,7 +230,6 @@ class Team extends AvatarModel
                     ->getModels($fast = true);
             }
 
-
             $this->activity = 0.0;
             foreach (self::$cachedMatches as $match) {
                 if ($match->involvesTeam($this)) {
@@ -459,7 +458,7 @@ class Team extends AvatarModel
     {
         $player = Player::get($playerID);
 
-        return ($player->getTeam()->isSameAs($this));
+        return $player->getTeam()->isSameAs($this);
     }
 
     /**
@@ -635,10 +634,10 @@ class Team extends AvatarModel
     {
         return new QueryBuilder('Team', array(
             'columns' => array(
-                'name' => 'name',
-                'elo' => 'elo',
+                'name'    => 'name',
+                'elo'     => 'elo',
                 'members' => 'members',
-                'status' => 'status'
+                'status'  => 'status'
             ),
             'name' => 'name',
         ));

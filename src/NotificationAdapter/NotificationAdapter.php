@@ -22,7 +22,7 @@ abstract class NotificationAdapter
     public static function isEnabled()
     {
         // Don't push notifications when testing
-        return (\Service::getEnvironment() != "test");
+        return \Service::getEnvironment() != "test";
     }
 
     /**

@@ -50,7 +50,7 @@ class MatchController extends CRUDController
 
     public function createAction(Player $me)
     {
-        return $this->create($me, function(Match $match) use ($me) {
+        return $this->create($me, function (Match $match) use ($me) {
             if ($me->canEdit($match)
                 && (!$match->getTeamA()->isLastMatch($match)
                 || !$match->getTeamB()->isLastMatch($match))
@@ -66,7 +66,7 @@ class MatchController extends CRUDController
 
     public function deleteAction(Player $me, Match $match)
     {
-        return $this->delete($match, $me, function() use ($match, $me) {
+        return $this->delete($match, $me, function () use ($match, $me) {
             if ($match->getTeamA()->isLastMatch($match)
                 && $match->getTeamB()->isLastMatch($match)) {
                 $match->resetELOs();
@@ -97,7 +97,8 @@ class MatchController extends CRUDController
         return $response;
     }
 
-    public function recalculateAction(Player $me, $match) {
+    public function recalculateAction(Player $me, $match)
+    {
         $match = Match::get($match); // get a match even if it's deleted
 
         if (!$me->canEdit($match)) {
@@ -107,14 +108,14 @@ class MatchController extends CRUDController
         return $this->showConfirmationForm(function () use ($match) {
             $response = new StreamedResponse();
             $response->headers->set('Content-Type', 'text/plain');
-            $response->setCallback(function() use ($match) {
+            $response->setCallback(function () use ($match) {
                 $this->recalculate($match);
             });
             $response->send();
         }, "Do you want to recalculate ELO history for all teams and matches after the specified match?",
             "ELO history recalculated",
             "Recalculate ELOs",
-            function() use ($match) {
+            function () use ($match) {
                 if ($match->isDeleted()) {
                     return new RedirectResponse($match->getURL('list'));
                 }
@@ -139,7 +140,8 @@ class MatchController extends CRUDController
      *
      * @param Match $match The first match
      */
-    private function recalculate(Match $match) {
+    private function recalculate(Match $match)
+    {
         try {
             // Commented out to prevent ridiculously large recalculations
             //set_time_limit(0);

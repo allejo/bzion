@@ -171,7 +171,7 @@ class Notification extends Model
      */
     public function isRead()
     {
-        return ($this->status != "unread");
+        return $this->status != "unread";
     }
 
     /**

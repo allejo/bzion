@@ -72,14 +72,14 @@ class MatchFormCreator extends ModelFormCreator
     public function fill($form, $match)
     {
         $form->get('first_team')->setData(array(
-            'team' => $match->getTeamA(),
+            'team'         => $match->getTeamA(),
             'participants' => $match->getTeamAPlayers(),
-            'score' => $match->getTeamAPoints()
+            'score'        => $match->getTeamAPoints()
         ));
         $form->get('second_team')->setData(array(
-            'team' => $match->getTeamB(),
+            'team'         => $match->getTeamB(),
             'participants' => $match->getTeamBPlayers(),
-            'score' => $match->getTeamBPoints()
+            'score'        => $match->getTeamBPoints()
         ));
 
         $form->get('duration')->setData($match->getDuration());

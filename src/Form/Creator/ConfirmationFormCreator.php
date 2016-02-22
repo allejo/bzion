@@ -26,7 +26,7 @@ class ConfirmationFormCreator implements FormCreatorInterface
 
     /**
      * Whether to show "No" instead of cancel
-     * @var boolean
+     * @var bool
      */
     private $no;
 

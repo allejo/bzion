@@ -8,7 +8,7 @@ namespace BZIon\Twig;
 class TwigExtension extends \Twig_Extension
 {
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function getFilters()
     {
@@ -22,7 +22,7 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -32,7 +32,7 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function getTests()
     {
@@ -43,7 +43,7 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

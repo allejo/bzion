@@ -19,9 +19,9 @@ class BanController extends CRUDController
             ->limit(15)->fromPage($currentPage);
 
         return array(
-            "bans" => $qb->getModels(),
+            "bans"        => $qb->getModels(),
             "currentPage" => $currentPage,
-            "totalPages" => $qb->countPages()
+            "totalPages"  => $qb->countPages()
         );
     }
 

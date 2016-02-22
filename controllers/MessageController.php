@@ -115,18 +115,18 @@ class MessageController extends JSONController
 
         // Hide the details (author, timestamp) of the first message if they're
         // already shown in the previous message (useful for AJAX calls)
-        if($request->query->getBoolean('hideFirstDetails')) {
+        if ($request->query->getBoolean('hideFirstDetails')) {
             $previousMessage = Message::get($request->query->get('end'));
         } else {
             $previousMessage = null;
         }
 
         $params = array(
-            "form"         => $form->createView(),
-            "inviteForm"   => $inviteForm->createView(),
-            "renameForm"   => $renameForm->createView(),
-            "conversation" => $conversation,
-            "messages"     => $messages,
+            "form"            => $form->createView(),
+            "inviteForm"      => $inviteForm->createView(),
+            "renameForm"      => $renameForm->createView(),
+            "conversation"    => $conversation,
+            "messages"        => $messages,
             "previousMessage" => $previousMessage
         );
 

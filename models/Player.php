@@ -305,7 +305,7 @@ class Player extends AvatarModel implements NamedModel
             return true;
         }
 
-        return ($this->receives == $type);
+        return $this->receives == $type;
     }
 
     /**
@@ -451,7 +451,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function isDisabled()
     {
-        return ($this->status == "disabled");
+        return $this->status == "disabled";
     }
 
     /**
@@ -461,7 +461,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function isTestUser()
     {
-        return ($this->status == "test");
+        return $this->status == "test";
     }
 
     /**
@@ -471,7 +471,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function isTeamless()
     {
-        return (empty($this->team));
+        return empty($this->team);
     }
 
     /**
@@ -505,7 +505,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function isBanned()
     {
-        return (Ban::getBan($this->id) !== null);
+        return Ban::getBan($this->id) !== null;
     }
 
     /**

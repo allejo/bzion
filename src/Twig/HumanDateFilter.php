@@ -42,7 +42,7 @@ class HumanDateFilter
             'humanTime',
             new self(),
             array(
-                'is_safe' => array('html'),
+                'is_safe'       => array('html'),
                 'needs_context' => true
             )
         );

@@ -1,6 +1,5 @@
 <?php
 
-use BZIon\Form\Creator\ConversationFormCreator;
 
 class AdminController extends HTMLController
 {

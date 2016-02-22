@@ -8,7 +8,6 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Constraint\UniqueAlias;
-use BZIon\Form\Type\ModelType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;

@@ -143,8 +143,8 @@ abstract class AliasModel extends UrlModel implements NamedModel
      * Generate a URL-friendly unique alias for an object name
      *
      * @param  string      $name The original object name
-     * @param  int|Null    $id   The ID of the object, if it's being edited and not created
-     * @return string|Null The generated alias, or Null if we couldn't make one
+     * @param  int|null    $id   The ID of the object, if it's being edited and not created
+     * @return string|null The generated alias, or Null if we couldn't make one
      */
     public static function generateAlias($name, $id = null)
     {

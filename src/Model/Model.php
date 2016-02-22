@@ -62,9 +62,10 @@ abstract class Model extends CachedModel
      * Find if two objects represent the same model
      *
      * @param  Model   $model The model to compare
-     * @return boolean
+     * @return bool
      */
-    public function isSameAs(Model $model) {
+    public function isSameAs(Model $model)
+    {
         if (!$this->isValid() || !$model->isValid()) {
             return false;
         }

@@ -129,7 +129,6 @@ class Map extends AvatarModel implements NamedModel
         return array('active');
     }
 
-
     /**
      * Get a query builder for news
      * @return QueryBuilder
@@ -138,7 +137,7 @@ class Map extends AvatarModel implements NamedModel
     {
         return new QueryBuilder('Map', array(
             'columns' => array(
-                'name' => 'name',
+                'name'   => 'name',
                 'status' => 'status'
             ),
             'name' => 'name'

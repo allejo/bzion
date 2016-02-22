@@ -25,8 +25,8 @@ class TeamController extends CRUDController
 
         return array(
             "matches" => $matches,
-            "wins" => $wins,
-            "team" => $team
+            "wins"    => $wins,
+            "team"    => $team
         );
     }
 
