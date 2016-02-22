@@ -14,6 +14,21 @@ namespace BZIon;
 class MarkdownEngine extends \Parsedown
 {
     /**
+     * Constructor for our extension of Parsedown
+     */
+    function __construct()
+    {
+        $this->camo = Array();
+        $this->camo['enabled'] = \Service::getParameter('bzion.features.camo.enabled');
+        
+        if ($this->camo['enabled']) {
+            $this->camo['key'] = \Service::getParameter('bzion.features.camo.key');
+            $this->camo['base_url'] = \Service::getParameter('bzion.features.camo.base_url');
+            $this->camo['whitelisted_domains'] = \Service::getParameter('bzion.features.camo.whitelisted_domains');
+        }
+    }
+    
+    /**
      * Whether or not to allow images to be rendered. If set to false, it'll be rendered as a hyperlink
      * @var bool
      */
@@ -30,7 +45,21 @@ class MarkdownEngine extends \Parsedown
     protected function inlineImage($Excerpt)
     {
         if ($this->allowImages) {
-            return parent::inlineImage($Excerpt);
+            $Image = parent::inlineImage($Excerpt);
+            
+            if ($this->camo['enabled']) {
+                $parts = parse_url($Image['element']['attributes']['src']);
+                
+                if (!isset($parts['host']) || strlen($parts['host']) === 0) {
+                    return null;
+                }
+                
+                if (!in_array($parts['host'], $this->camo['whitelisted_domains'])) {
+                    $Image['element']['attributes']['src'] = $this->camo['base_url'].hash_hmac('sha1', $Image['element']['attributes']['src'], $this->camo['key']).'/'.bin2hex($Image['element']['attributes']['src']);
+                }
+            }
+            
+            return $Image;
         }
 
         return null;
