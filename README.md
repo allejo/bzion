@@ -24,7 +24,9 @@ These individuals have assisted significantly with guiding the project in its cu
 
 The installation process is documented on the [BZiON wiki](https://github.com/allejo/bzion/wiki/Installation) and the [requirements](https://github.com/allejo/bzion/wiki/Installation-Requirements) for installation are documented as well. If you're having issues during your installation, common issues are also documented on the [wiki](https://github.com/allejo/bzion/wiki/Installation-Troubleshooting) as well.
 
-A demo BZiON installation can be found at [BZPro](http://bzion.bzpro.net/dev.php) with the latest version of the master branch and sample data.
+Do note that BZiON has not been thoroughly tested in production environments. As such, you are recommended to take regular backups of your database.
+
+A demo BZiON installation can be found at [demo.leaguesunited.org](http://demo.leaguesunited.org/) with a recent version of the master branch and sample data.
 
 ## Contributing
 
