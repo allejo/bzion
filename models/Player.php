@@ -1004,7 +1004,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function wipe()
     {
-        $this->db->query("DELETE FROM visits WHERE player = ?", "i", $this->id);
+        $this->db->query("DELETE FROM past_callsigns WHERE player = ?", "i", $this->id);
 
         parent::wipe();
     }
