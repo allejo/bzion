@@ -1,3 +1,7 @@
+23 February 2016:
+    Bugfixes:
+        - Fixed issue with scores of '0' not displaying properly in matches
+        - Fixed issue with broken News and Team timestamps
 22 February 2016:
     Features:
         - BZiON has been released!
