@@ -44,7 +44,7 @@ class Notification extends Model
 
     /**
      * When the notification was sent
-     * @var DateTime
+     * @var TimeDate
      */
     protected $timestamp;
 
@@ -160,7 +160,7 @@ class Notification extends Model
      */
     public function getTimestamp()
     {
-        return $this->timestamp;
+        return $this->timestamp->copy();
     }
 
     /**

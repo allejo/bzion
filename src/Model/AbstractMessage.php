@@ -71,7 +71,7 @@ abstract class AbstractMessage extends Model
      */
     public function getTimestamp()
     {
-        return $this->timestamp;
+        return $this->timestamp->copy();
     }
 
     /**

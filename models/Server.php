@@ -275,7 +275,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function getUpdated()
     {
-        return $this->updated;
+        return $this->updated->copy();
     }
 
     /**

@@ -125,7 +125,7 @@ class Invitation extends UrlModel
      */
     public function getExpiration()
     {
-        return $this->expiration;
+        return $this->expiration->copy();
     }
 
     /**

@@ -187,7 +187,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getCreated()
     {
-        return $this->created;
+        return $this->created->copy();
     }
 
     /**
@@ -196,7 +196,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getExpiration()
     {
-        return $this->expiration;
+        return $this->expiration->copy();
     }
 
     /**
@@ -238,7 +238,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getUpdated()
     {
-        return $this->updated;
+        return $this->updated->copy();
     }
 
     /**

@@ -266,7 +266,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTimestamp()
     {
-        return $this->timestamp;
+        return $this->timestamp->copy();
     }
 
     /**
@@ -276,7 +276,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getUpdated()
     {
-        return $this->updated;
+        return $this->updated->copy();
     }
 
     /**

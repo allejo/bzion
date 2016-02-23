@@ -137,7 +137,7 @@ class News extends UrlModel implements NamedModel
      */
     public function getCreated()
     {
-        return $this->created;
+        return $this->created->copy();
     }
 
     /**
@@ -147,7 +147,7 @@ class News extends UrlModel implements NamedModel
      */
     public function getLastEdit()
     {
-        return $this->updated;
+        return $this->updated->copy();
     }
 
     /**

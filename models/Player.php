@@ -345,7 +345,7 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        return $this->joined;
+        return $this->joined->copy();
     }
 
     /**
@@ -366,7 +366,7 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        return $this->last_login;
+        return $this->last_login->copy();
     }
 
     /**

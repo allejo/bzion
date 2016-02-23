@@ -248,7 +248,7 @@ class Team extends AvatarModel
      */
     public function getCreationDate()
     {
-        return $this->created;
+        return $this->created->copy();
     }
 
     /**

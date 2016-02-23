@@ -99,7 +99,7 @@ class Page extends AliasModel
     {
         $this->lazyLoad();
 
-        return $this->created;
+        return $this->created->copy();
     }
 
     /**
@@ -110,7 +110,7 @@ class Page extends AliasModel
     {
         $this->lazyLoad();
 
-        return $this->updated;
+        return $this->updated->copy();
     }
 
     /**

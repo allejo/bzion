@@ -100,7 +100,7 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function getLastActivity()
     {
-        return $this->last_activity;
+        return $this->last_activity->copy();
     }
 
     /**
