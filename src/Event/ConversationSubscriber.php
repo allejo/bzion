@@ -30,8 +30,7 @@ class ConversationSubscriber implements EventSubscriberInterface
             'team.kick' => array(
                 array('onTeamMembershipChange'),
                 array('onTeamLeave')
-            ),
-            'team.join' => 'onTeamMembershipChange',
+            )
         );
     }
 
@@ -47,10 +46,6 @@ class ConversationSubscriber implements EventSubscriberInterface
 
         foreach ($query->getModels() as $conversation) {
             \ConversationEvent::storeEvent($conversation->getId(), $event, $type);
-
-            if ($type === 'team.join') {
-                $conversation->addMember($event->getPlayer(), $distinct = false);
-            }
         }
     }
 

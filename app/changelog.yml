@@ -1,3 +1,6 @@
+26 February 2016:
+    Features:
+        - New team members are no longer added to old team conversations
 23 February 2016:
     Bugfixes:
         - Fixed issue with scores of '0' not displaying properly in matches
