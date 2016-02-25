@@ -179,6 +179,31 @@ class MessageController extends JSONController
             "You will no longer receive messages from this conversation", "Leave");
     }
 
+    public function teamRefreshAction(Player $me, Conversation $conversation)
+    {
+        $team = $me->getTeam();
+        $missing = $conversation->getMissingTeamMembers($team);
+
+        if (empty($missing)) {
+            throw new ForbiddenException("All members of the specified team are already part of that conversation.");
+        }
+
+        $names = array();
+        foreach ($missing as $player) {
+            $names[] = $player->getEscapedUsername();
+        }
+        $names = implode(', ', $names);
+
+        return $this->showConfirmationForm(function() use ($conversation, $missing, $team) {
+            $conversation->addMember($team); // does all the hard work
+
+            $event = new ConversationJoinEvent($conversation, $missing);
+            Service::getDispatcher()->dispatch(Events::CONVERSATION_JOIN, $event);
+
+            return new RedirectResponse($conversation->getURL());
+        }, "Are you sure you want to invite $names from {$team->getEscapedName()} to that conversation?");
+    }
+
     public function teamLeaveAction(Player $me, Conversation $conversation)
     {
         $team = $me->getTeam();

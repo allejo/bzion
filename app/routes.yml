@@ -130,6 +130,10 @@ message_conversation_leave:
     path:     /messages/{conversation}/leave
     defaults: { _controller: 'Message', _action: 'leave' }
 
+message_conversation_team_refresh:
+    path:     /messages/{conversation}/team-refresh
+    defaults: { _controller: 'Message', _action: 'teamRefresh' }
+
 message_conversation_team_leave:
     path:     /messages/{conversation}/team-leave
     defaults: { _controller: 'Message', _action: 'teamLeave' }

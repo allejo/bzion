@@ -72,12 +72,15 @@
                             <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm" title="Rename conversation"></i>
                         {% endif %}
                         {% if me.canEdit(me.team) and conversation.isMember(me.team) %}
+                            <a href="{{ conversation.url('team_refresh') }}" title="Add new team members to conversation">
+                                <i class="fa fa-plus-square-o"></i>
+                            </a>
                             <a href="{{ conversation.url('team_leave') }}" title="Remove {{ me.team.name }} from conversation">
                                 {# TODO: Find a better icon #}
                                 <i class="fa fa-bolt"></i>
                             </a>
                         {% endif %}
-                        {% if me ~/~ conversation.creator and not conversation.isTeamMember(me) %}
+                        {% if me ~/~ conversation.creator and (not conversation.isTeamMember(me) or me.team.leader ~~ me) %}
                             <a href="{{ conversation.url('leave') }}" title="Leave conversation">
                                 <i class="fa fa-sign-out"></i>
                             </a>

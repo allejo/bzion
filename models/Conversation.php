@@ -225,6 +225,27 @@ class Conversation extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the members of one of the conversation's teams that don't belong in
+     * the conversation
+     *
+     * @todo   Use Model::createFromDatabaseResults()
+     * @param  Team $team The team to check
+     * @return Player[]
+     */
+    public function getMissingTeamMembers(Team $team) {
+        $query = "SELECT players.id AS id FROM players
+            WHERE players.team = ?
+            AND players.id NOT IN (
+              SELECT player_conversations.player FROM player_conversations
+              WHERE player_conversations.conversation = ?
+            )";
+
+        $results = $this->db->query($query, "ii", array($team->getId(), $this->id));
+
+        return Player::arrayIdToModel(array_column($results, 'id'));
+    }
+
+    /**
      * Get a list containing the IDs of each member player of the conversation
      * @param  int|null  $hide     The ID of a player to ignore
      * @param  bool   $distinct Whether to only return players who were
@@ -350,7 +371,7 @@ class Conversation extends UrlModel implements NamedModel
         } elseif ($member instanceof Team) {
             // Add the team to the team_conversations table...
             $this->db->query(
-                "INSERT INTO `team_conversations` (`conversation`, `team`) VALUES (?, ?)",
+                "INSERT IGNORE INTO `team_conversations` (`conversation`, `team`) VALUES (?, ?)",
                 "ii",
                 array($this->getId(), $member->getId())
             );
@@ -399,9 +420,9 @@ class Conversation extends UrlModel implements NamedModel
     public function removeMember($member)
     {
         if ($member instanceof Player) {
-            if ($this->isTeamMember($member)) {
-                // The player is already member of a team in the conversation,
-                // don't remove them entirely
+            if ($this->isTeamMember($member) && $member->getTeam()->getLeader()->isSameAs($member)) {
+                // The player is the leader of a team in the conversation, don't
+                // remove them entirely
                 $this->db->query(
                     "UPDATE `player_conversations` SET `distinct` = 0 WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId())
                 );
