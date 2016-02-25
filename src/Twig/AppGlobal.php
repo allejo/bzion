@@ -170,9 +170,13 @@ class AppGlobal
 
     /**
      * Get a list of visible pages
+     *
+     * @return \Page[]
      */
     public function getPages()
     {
-        return \Page::getPages();
+        return \Page::getQueryBuilder()
+            ->where('status')->equals('live')
+            ->getModels($fast = true);
     }
 }

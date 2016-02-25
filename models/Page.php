@@ -202,17 +202,6 @@ class Page extends AliasModel
     }
 
     /**
-     * Get a list of enabled pages
-     * @return Page[] A list of Page IDs
-     */
-    public static function getPages()
-    {
-        return self::arrayIdToModel(
-            parent::fetchIdsFrom("status", array("live"), "s")
-        );
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected static function getDisallowedAliases()

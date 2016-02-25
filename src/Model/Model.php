@@ -66,13 +66,13 @@ abstract class Model extends CachedModel
      */
     public function isSameAs(Model $model)
     {
-        if (!$this->isValid() || !$model->isValid()) {
+        if (!$this->valid || !$model->valid) {
             return false;
         }
 
         $sameType = $this instanceof $model || $model instanceof $this;
 
-        return $sameType && $this->getId() === $model->getId();
+        return $sameType && $this->id === $model->id;
     }
 
     /**
