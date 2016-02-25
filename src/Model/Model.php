@@ -126,8 +126,12 @@ abstract class Model extends CachedModel
      */
     protected function updateProperty(&$property, $dbColumn, $value, $type = 'i')
     {
+        // We might need to have all the parameters loaded to perform the
+        // $property !== $value check
+        $this->lazyLoad();
+
         // Don't waste time with mysql if there aren't any changes
-        if ($property != $value) {
+        if ($property !== $value) {
             $property = $value;
 
             if ($value instanceof TimeDate) {
