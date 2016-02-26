@@ -596,6 +596,8 @@ class Player extends AvatarModel implements NamedModel
      */
     private function setConfirmCode($code)
     {
+        $this->lazyLoad();
+
         return $this->updateProperty($this->confirmCode, 'confirm_code', $code, 's');
     }
 
@@ -607,6 +609,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setReceives($receives)
     {
+        $this->lazyLoad();
+
         return $this->updateProperty($this->receives, 'receives', $receives, 's');
     }
 
@@ -618,6 +622,8 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setOutdated($outdated)
     {
+        $this->lazyLoad();
+
         return $this->updateProperty($this->outdated, 'outdated', $outdated, 'i');
     }
 
