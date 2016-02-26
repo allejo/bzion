@@ -5,6 +5,7 @@
  * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
+use BZIon\Model\Column\Timestamp;
 
 /**
  * A player's visit on the website
@@ -12,6 +13,8 @@
  */
 class Visit extends Model
 {
+    use Timestamp;
+
     /**
      * The id of the visiting user
      * @var int
@@ -41,12 +44,6 @@ class Visit extends Model
      * @var string
      */
     protected $referer;
-
-    /**
-     * The timestamp of the visit
-     * @var DateTime
-     */
-    protected $timestamp;
 
     /**
      * The name of the database table used for queries

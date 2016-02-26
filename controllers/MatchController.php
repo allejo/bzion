@@ -32,7 +32,7 @@ class MatchController extends CRUDController
 
         foreach ($matches as $match) {
             // Don't show wrong labels for matches
-            $match->getTimestamp()->setTimezone($me->getTimezone());
+            $match->getOriginalTimestamp()->setTimezone($me->getTimezone());
         }
 
         return array(

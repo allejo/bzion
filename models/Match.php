@@ -5,6 +5,7 @@
  * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
+use BZIon\Model\Column\Timestamp;
 
 /**
  * A match played between two teams
@@ -12,6 +13,8 @@
  */
 class Match extends UrlModel implements NamedModel
 {
+    use Timestamp;
+
     /**
      * The ID of the first team of the match
      * @var int
@@ -95,12 +98,6 @@ class Match extends UrlModel implements NamedModel
      * @var int
      */
     protected $elo_diff;
-
-    /**
-     * The timestamp representing when the match was played
-     * @var TimeDate
-     */
-    protected $timestamp;
 
     /**
      * The timestamp representing when the match information was last updated
@@ -257,16 +254,6 @@ class Match extends UrlModel implements NamedModel
         }
 
         return $this->getTeamA();
-    }
-
-    /**
-     * Get the timestamp of the match
-     *
-     * @return TimeDate The match's timestamp
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp->copy();
     }
 
     /**

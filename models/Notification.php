@@ -8,6 +8,7 @@
 
 use BZIon\Event\Event;
 use BZIon\Event\Events;
+use BZIon\Model\Column\Timestamp;
 
 /**
  * A notification to a player
@@ -15,6 +16,8 @@ use BZIon\Event\Events;
  */
 class Notification extends Model
 {
+    use Timestamp;
+
     /**
      * The id of the notified player
      * @var int
@@ -44,9 +47,8 @@ class Notification extends Model
 
     /**
      * When the notification was sent
-     * @var TimeDate
+     * @var TimeDate $timestamp
      */
-    protected $timestamp;
 
     /**
      * Services that will be notified when a new notification is created
@@ -152,15 +154,6 @@ class Notification extends Model
     public function getEvent()
     {
         return $this->event;
-    }
-
-    /**
-     * Get the time when the notification was sent
-     * @return TimeDate
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp->copy();
     }
 
     /**

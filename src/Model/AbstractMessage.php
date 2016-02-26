@@ -6,6 +6,7 @@
  * @package    BZiON\Models
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
+use BZIon\Model\Column\Timestamp;
 
 /**
  * An abstraction for conversation events
@@ -13,17 +14,13 @@
  */
 abstract class AbstractMessage extends Model
 {
+    use Timestamp;
+
     /**
      * The ID of the conversation where the event took place
      * @var int
      */
     protected $conversation;
-
-    /**
-     * The timestamp of when the event took place
-     * @var TimeDate
-     */
-    protected $timestamp;
 
     /**
      * The type of the event, or null if it's a message
@@ -63,15 +60,6 @@ abstract class AbstractMessage extends Model
     public function getConversation()
     {
         return Conversation::get($this->conversation);
-    }
-
-    /**
-     * Get the time when the event occurred
-     * @return TimeDate
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp->copy();
     }
 
     /**
