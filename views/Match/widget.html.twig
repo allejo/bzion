@@ -1,7 +1,7 @@
 {% macro team_summary(match, team) %}
-    <div class="c-matchwidget__team__image">
+    <a class="c-matchwidget__team__image" href="{{ team.url }}">
         <img src="{{ team.avatar | imagine_filter('small_thumb') }}" />
-    </div>
+    </a>
     <div class="c-matchwidget__team__name">
         <p>{{ link_to(team) }}</p>
     </div>
