@@ -94,9 +94,6 @@
                 <section class="o-col--half c-player__callsigns">
                     <h4>
                         Previous Callsigns
-                        <small>
-                            [<a id="prev_callsigns" href="#" original-title="This is may not be the complete list. View more or add more.">?</a>]
-                        </small>
                     </h4>
 
                     <ul>
@@ -109,9 +106,7 @@
                 <section class="o-col--half c-player__ips">
                     <h4>
                         Known IP Addresses
-                        <small>
-                            [<a id="known_ips" href="#" original-title="This is may not be all of the IPs. View the complete list.">?</a>]
-                        </small>
+                        {# TODO: Add some kind of pagination #}
                     </h4>
                     <ul>
                         {% for address in player.knownIPs %}
