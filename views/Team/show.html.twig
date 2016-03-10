@@ -151,6 +151,9 @@
                             </span>
                         </a>
                     {% endfor %}
+                    <a class="c-table__row c-team__matches__more" href="{{ path('match_by_team_list', { team: team.alias }) }}">
+                        View more matches...
+                    </a>
                 </article>
             </section>
         </section>
