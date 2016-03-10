@@ -9,3 +9,7 @@
 {% block content %}
     {% include "News/form.html.twig" with { 'form': form } %}
 {% endblock %}
+
+{% block jsLibraries %}
+    <script src="{{ asset('includes/markdown-it/dist/markdown-it.min.js') }}"></script>
+{% endblock %}

@@ -3,7 +3,27 @@
     <section class="o-row c-form__section c-form__section--sidebar">
         <article class="o-col--main c-form__section__main">
             {{ form_row(form.subject, { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.content, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
+
+            <div class="c-form__group c-form__group--flex">
+                {{ form_label(form.content) }}
+                {{ form_errors(form.content) }}
+
+                <div class="c-md-editor">
+                    <ul class="c-md-editor__toolbar">
+                        <li>
+                            <span class="active js-mdEditor"><i class="fa fa-pencil"></i> Edit</span>
+                        </li>
+                        <li>
+                            <span class="js-mdPreview"><i class="fa fa-eye"></i> Preview</span>
+                        </li>
+                    </ul>
+                    <div id="c-md-editor__canvas" class="c-md-editor__canvas c-md-editor__canvas--editor">
+                        <div id="c-md-editor__preview" class="c-md-editor__preview s-markdown"></div>
+
+                        {{ form_widget(form.content, { 'attr': { 'class': 'c-md-editor__editor' }}) }}
+                    </div>
+                </div>
+            </div>
         </article>
 
         <aside class="o-col--aside c-form__section__aside">

@@ -175,6 +175,10 @@
         <script src="{{ asset('components/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('includes/prefixfree.min.js') }}"></script>
         <script src="{{ asset('includes/favicojs/favico-0.3.10.min.js') }}"></script>
+
+        {# JavaScript libraries that should be included BEFORE custom javascript #}
+        {% block jsLibraries %}{% endblock %}
+
         <script src="{{ asset('assets/js/min/utilities.js') }}"></script>
         <script src="{{ asset('assets/js/events.js') }}"></script>
 
@@ -191,8 +195,7 @@
 
         {{ configuration.count }}
 
-        {% block javascripts %}
-
-        {% endblock %}
+        {# Javascript files we have written to target specific pages #}
+        {% block jsCustom %}{% endblock %}
     </body>
 </html>
