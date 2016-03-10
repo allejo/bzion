@@ -19,7 +19,9 @@
                 <article class="c-ibullets__bullet">
                     <div class="c-ibullets__bullet__container">
                         <section class="c-ibullets__bullet__icon">
-                            <img src="{{ asset("assets/imgs/landing-servers.png") }}" alt="Match servers">
+                            <a href="{{ path("server_list") }}">
+                                <img src="{{ asset("assets/imgs/landing-servers.png") }}" alt="Match servers">
+                            </a>
                         </section>
 
                         <div class="c-ibullets__bullet__content">
@@ -35,7 +37,9 @@
                 <article class="c-ibullets__bullet">
                     <div class="c-ibullets__bullet__container">
                         <section class="c-ibullets__bullet__icon">
-                            <img src="{{ asset("assets/imgs/landing-matches.png") }}" alt="Competitive matches">
+                            <a href="{{ path("match_list") }}">
+                                <img src="{{ asset("assets/imgs/landing-matches.png") }}" alt="Competitive matches">
+                            </a>
                         </section>
                         <div class="c-ibullets__bullet__content">
                             <h3>
@@ -50,7 +54,9 @@
                 <article class="c-ibullets__bullet">
                     <div class="c-ibullets__bullet__container">
                         <section class="c-ibullets__bullet__icon">
-                            <img src="{{ asset("assets/imgs/landing-gettingstarted.png") }}" alt="Getting started with {{ app.title }}">
+                            <a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">
+                                <img src="{{ asset("assets/imgs/landing-gettingstarted.png") }}" alt="Getting started with {{ app.title }}">
+                            </a>
                         </section>
                         <div class="c-ibullets__bullet__content">
                             <h3>
