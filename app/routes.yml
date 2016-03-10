@@ -18,6 +18,18 @@ api_leagueoverseer:
     path:     /api/leagueOverseer
     defaults: { _controller: 'LeagueOverseerHook', _action: 'query' }
 
+api_player_list:
+    path:    /api/players
+    defaults: { _controller: 'PublicAPI', _action: 'playerList' }
+
+api_team_list:
+    path:    /api/teams
+    defaults: { _controller: 'PublicAPI', _action: 'teamList' }
+
+api_server_list:
+    path:    /api/servers
+    defaults: { _controller: 'PublicAPI', _action: 'serverList' }
+
 ban_list:
     path:     /bans
     defaults: { _controller: 'Ban', _action: 'list' }
