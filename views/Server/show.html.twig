@@ -2,7 +2,13 @@
     <header>
         {% set status = (server.online) ? "online" : "offline" %}
 
-        <span class="c-server__status c-server__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
+        {%- if server.numPlayers > 0 -%}
+            <span class="c-server__status c-server__status--{{ status }}" title="{{ server.numPlayers }} players are playing on the server">
+                <i class="fa fa-user"></i>
+            </span>
+        {%- else -%}
+            <span class="c-server__status c-server__status--{{ status }}" title="Server is currently {{ status }}">&bull;</span>
+        {%- endif -%}
         <span class="c-server__name">{{ server.name }}</span>
         {{ server.country.flagLiteral | raw }}
 
