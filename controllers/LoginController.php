@@ -84,6 +84,10 @@ class LoginController extends HTMLController
 
     public function loginAsTestUserAction(Session $session, Player $user)
     {
+        if (!$this->isDebug()) {
+            throw new Exception("You are not allowed to login as a test user.");
+        }
+
         if (!$user->isTestUser()) {
             throw new Exception("The player you specified is not a test user!");
         }
