@@ -91,7 +91,7 @@ class EventSubscriber implements EventSubscriberInterface
         // the sender of the message is excluded
         $conversation = $event->getMessage()->getConversation();
         $author = $event->getMessage()->getAuthor()->getId();
-        $recipients = $conversation->getWaitingForEmailIDs($author);
+        $recipients = $conversation->getWaitingForEmailIDs($author, !$event->isFirst());
 
         // The websocket will handle emails if it is enabled
         if (!WebSocketAdapter::isEnabled()) {

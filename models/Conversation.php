@@ -298,9 +298,11 @@ class Conversation extends UrlModel implements NamedModel
             'status'  => "active",
         ), 'sis', 'last_activity');
 
-        foreach ($members as $member) {
-            $conversation->addMember($member);
-        }
+        Database::getInstance()->startTransaction();
+            foreach ($members as $member) {
+                $conversation->addMember($member);
+            }
+        Database::getInstance()->finishTransaction();
 
         return $conversation;
     }
@@ -452,13 +454,23 @@ class Conversation extends UrlModel implements NamedModel
      * Find out which members of the conversation should receive an e-mail after a new
      * message has been sent
      *
-     * @param  int   $except The ID of a player who won't receive an e-mail (e.g. message author)
+     * @param  int   $except The ID of a player who won't receive an e-mail
+     *                       (e.g. message author)
+     * @param  bool  $read   Whether to only send e-mails to players who have
+     *                       read all the previous messages in the conversation
      * @return int[] A player ID list
      */
-    public function getWaitingForEmailIDs($except)
+    public function getWaitingForEmailIDs($except, $read = true)
     {
+        $readQuery = ($read) ? 'AND pg.read = 1' : '';
+
         return $this->fetchIds(
-            'LEFT JOIN players ON pg.player = players.id WHERE pg.conversation = ? AND pg.read = 1 AND pg.player != ?  AND players.verified = 1 AND players.receives != "nothing"',
+            "LEFT JOIN players ON pg.player = players.id
+                WHERE pg.conversation = ?
+                $readQuery
+                AND pg.player != ?
+                AND players.verified = 1
+                AND players.receives != \"nothing\"",
             'ii',
             array($this->id, $except),
             'player_conversations AS pg',
