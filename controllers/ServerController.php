@@ -6,7 +6,9 @@ class ServerController extends CRUDController
 {
     public function listAction()
     {
-        $servers = $this->getQueryBuilder()->getModels();
+        $servers = $this->getQueryBuilder()
+            ->sortBy('name')
+            ->getModels();
 
         return array("servers" => $servers);
     }
