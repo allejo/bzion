@@ -1,6 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% import 'Match/widget.html.twig' as utils %}
+{% import _self as showUtils %}
 
 {% set scopeClass = "s-matches" %}
 {% set pageButtons = [
@@ -40,27 +41,8 @@
     <section class="o-container">
         {{ utils.widget(match) }}
 
-        <section class="o-section">
-            <strong>Winner</strong>
-            <p>{{ link_to(match.winner) }} - {{ match.score(match.winner) }}</p>
-            <small>
-                {% for player in match.players(match.winner) %}
-                    {{ link_to(player) -}}
-                    {%- if not loop.last %}, {% endif %}
-                {% endfor %}
-            </small>
-        </section>
-
-        <section class="o-section">
-            <strong>Loser</strong>
-            <p>{{ link_to(match.loser) }} - {{ match.score(match.loser) }}</p>
-            <small>
-                {% for player in match.players(match.loser) %}
-                    {{ link_to(player) -}}
-                    {%- if not loop.last %}, {% endif %}
-                {% endfor %}
-            </small>
-        </section>
+        {{ showUtils.matchTeam(match, "Winner") }}
+        {{ showUtils.matchTeam(match, "Loser") }}
 
         <section class="o-section">
             <strong>Map</strong>
@@ -112,3 +94,22 @@
         {% endif %}
     </section>
 {% endblock %}
+
+{% macro matchTeam(match, description) %}
+    {%- set team = (description == "Loser") ? match.loser : match.winner -%}
+    <section class="o-section">
+        <strong>{{ description }}</strong>
+        <p>{{ link_to(team) }} - {{ match.score(team) }}</p>
+        <small>
+            {% for player in match.players(team) %}
+                {{ link_to(player) -}}
+                {%- if not loop.last %}, {% endif %}
+            {% endfor %}
+        </small>
+        <p>
+            {{ match.teamEloOld(team) }}
+            &rarr;
+            {{ match.teamEloNew(team) }}
+        </p>
+    </section>
+{% endmacro %}

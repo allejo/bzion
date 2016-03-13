@@ -444,6 +444,40 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the team's new ELO
+     * @param  Team $team The team whose new ELO to return
+     * @return int|null   The new ELO, or null if the team provided has not
+     *                    participated in the match
+     */
+    public function getTeamEloNew(Team $team)
+    {
+        if ($team->getId() === $this->team_a) {
+            return $this->getTeamAEloNew();
+        } elseif ($team->getId() === $this->team_b) {
+            return $this->getTeamBEloNew();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the team's old ELO
+     * @param  Team $team The team whose old ELO to return
+     * @return int|null   The old ELO, or null if the team provided has not
+     *                    participated in the match
+     */
+    public function getTeamEloOld(Team $team)
+    {
+        if ($team->getId() === $this->team_a) {
+            return $this->getTeamAEloOld();
+        } elseif ($team->getId() === $this->team_b) {
+            return $this->getTeamBEloOld();
+        }
+
+        return null;
+    }
+
+    /**
      * Get the map where the match was played on
      * @return Map Returns an invalid map if no map was found
      */
