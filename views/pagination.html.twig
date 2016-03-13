@@ -3,6 +3,7 @@
 {% set showButtons = totalPages > 5 %}
 {% set prev = showButtons and currentPage > 1 %}
 {% set next = showButtons and currentPage < totalPages %}
+{% set displayPages = displayPages|default(5) %}
 
 <ul class="c-pagination">
     {% if showButtons %}
@@ -15,15 +16,15 @@
         </li>
     {% endif %}
 
-    {% if totalPages <= 5 %}
+    {% if totalPages <= displayPages %}
         {% set begin = 1 %}
         {% set end = totalPages %}
     {% else %}
-        {% if currentPage < 3 %}
+        {% if currentPage < displayPages - 2 %}
             {% set begin = 1 %}
-            {% set end = begin + 4 %}
+            {% set end = begin + displayPages - 1 %}
         {% elseif currentPage + 2 >= totalPages %}
-            {% set begin = totalPages - 4 %}
+            {% set begin = totalPages - displayPages + 1 %}
             {% set end = totalPages %}
         {% else %}
             {% set begin = currentPage - 2 %}

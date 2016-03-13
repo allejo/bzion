@@ -40,10 +40,6 @@
 
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('includes/tipsy/src/stylesheets/tipsy.css') }}" />
-{% endblock %}
-
 {% block pageTitle %}
     {{ team.rankImageLiteral | raw }}
 
@@ -168,7 +164,6 @@
 
 {% block jsCustom %}
     <script src="{{ asset('includes/chartjs/Chart.min.js') }}"></script>
-    <script src="{{ asset('includes/tipsy/src/javascripts/jquery.tipsy.js') }}"></script>
     <script>
         var teamWins   = {{ team.matchesWon }};
         var teamLosses = {{ team.matchesLost }};
@@ -194,9 +189,6 @@
             {# Don't show bad data if keys are screwed up #}
             {% for date in matches|keys %}{{ wins[date]|default(0) }},{% endfor %}
         ];
-
-        $("#match_stats").tipsy({gravity: 's'});
-        $("#activity_stats").tipsy({gravity: 's'});
     </script>
     <script src="{{ asset('assets/js/min/teams.js') }}"></script>
 {% endblock %}

@@ -9,3 +9,11 @@
 {% block content %}
     {% include "Page/form.html.twig" with { 'form': form } %}
 {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('includes/tipsy/src/stylesheets/tipsy.css') }}" />
+{% endblock %}
+
+{% block jsCustom %}
+    <script src="{{ asset('includes/tipsy/src/javascripts/jquery.tipsy.js') }}"></script>
+{% endblock %}

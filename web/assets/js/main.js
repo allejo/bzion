@@ -49,4 +49,8 @@ $(function () {
     $("#mobile-menu").click(function() {
         $("#menu-pages").slideToggle();
     });
+
+    if ($.fn.tipsy !== undefined) {
+        $(".js-tipsy").tipsy({ gravity: 's' });
+    }
 });

@@ -40,6 +40,9 @@ class PageFormCreator extends ModelFormCreator
                     'revision' => 'Revision',
                     'disabled' => 'Disabled',
                 ),
+                'description' =>
+                    "'Revision' pages are accessible by all users but not listed in the menu, ".
+                    "while 'Disabled' pages cannot be accessed by players."
             ))
             ->add('enter', 'submit');
     }

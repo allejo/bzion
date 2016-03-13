@@ -206,9 +206,11 @@ class Page extends AliasModel
      */
     protected static function getDisallowedAliases()
     {
-        return array("bans", "index", "login", "logout", "matches",
-                     "messages", "news", "notifications", "pages",
-                     "players", "servers", "teams");
+        return array(
+            "admin", "bans", "index", "login", "logout", "maps", "matches",
+            "messages", "news", "notifications", "pages", "players", "servers",
+            "teams"
+        );
     }
 
     /**
@@ -252,6 +254,7 @@ class Page extends AliasModel
 
     /**
      * Get the home page
+     * @deprecated
      * @return Page
      */
     public static function getHomePage()
