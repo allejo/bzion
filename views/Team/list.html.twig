@@ -35,7 +35,7 @@
             <article class="c-team-widget__details">
                 <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
                 <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
-                <span title="{{ team.activity|number_format(3) }}">
+                <span title="Team activity">
                     <i class="fa fa-bar-chart-o"></i> {{ team.activity|number_format(2) }}
                 </span>
 

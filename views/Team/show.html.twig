@@ -62,6 +62,12 @@
 
             <section class="o-col--main c-team__information">
                 <p><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
+                <p><strong>Activity:</strong>
+                    <span title="{{ team.activity|number_format(3) }}">
+                        {{ team.activity|number_format(2) }}
+                    </span>
+                    matches per day
+                </p>
                 {% spaceless %}
                     <article class="c-team__information__bio s-markdown u-hide-on-empty">
                         {{ team.description | markdown }}
