@@ -51,35 +51,33 @@ label {
 #{$all-text-inputs},
 select[multiple=multiple],
 textarea {
-    &:not(.select2-search__field) {
-        background-color: $Form-Base_Background_Color;
-        border: $Border-Default;
-        border-radius: $Border-Radius;
-        box-shadow: $Form-Box_Shadow;
-        box-sizing: border-box;
-        font-family: $Font-Sans_Serif;
-        padding: $Form-Spacing / 3;
-        transition: border-color;
-        width: 100%;
+    background-color: $Form-Base_Background_Color;
+    border: $Border-Default;
+    border-radius: $Border-Radius;
+    box-shadow: $Form-Box_Shadow;
+    box-sizing: border-box;
+    font-family: $Font-Sans_Serif;
+    padding: $Form-Spacing / 3;
+    transition: border-color;
+    width: 100%;
 
-        &:hover {
-            border-color: darken($Form-Border_Color, 10%);
-        }
+    &:hover {
+        border-color: darken($Form-Border_Color, 10%);
+    }
+
+    &:focus {
+        border-color: $Form-Action_Color;
+        box-shadow: $Form-Box_Shadow_Focus;
+        outline: none;
+    }
+
+    .c-form__group--error & {
+        background-color: transparentize($Form-Error_Color, 0.98);
+        border-color: $Form-Error_Color;
+        box-shadow: $Form-Box_Shadow_Error;
 
         &:focus {
-            border-color: $Form-Action_Color;
-            box-shadow: $Form-Box_Shadow_Focus;
-            outline: none;
-        }
-
-        .c-form__group--error & {
-            background-color: transparentize($Form-Error_Color, 0.98);
-            border-color: $Form-Error_Color;
-            box-shadow: $Form-Box_Shadow_Error;
-
-            &:focus {
-                box-shadow: $Form-Box_Shadow_Error_Focus;
-            }
+            box-shadow: $Form-Box_Shadow_Error_Focus;
         }
     }
 }
