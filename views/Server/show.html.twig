@@ -3,7 +3,10 @@
         {% set status = (server.online) ? "online" : "offline" %}
 
         {%- if server.numPlayers > 0 -%}
-            <span class="c-server__status c-server__status--{{ status }}" title="{{ server.numPlayers }} players are playing on the server">
+            <span
+                class="c-server__status c-server__status--{{ status }}"
+                title="{{ "player is"|plural(server.numPlayers, "players are") }} playing on the server"
+            >
                 <i class="fa fa-user"></i>
             </span>
         {%- else -%}
