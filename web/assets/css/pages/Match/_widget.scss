@@ -27,6 +27,10 @@
     align-items: center;
     display: flex;
     margin-bottom: $Settings-Page_Section-Tiny_Margin;
+
+    @include respond-up(md) {
+        margin-bottom: 0;
+    }
 }
 
 .c-matchwidget__team__image {
