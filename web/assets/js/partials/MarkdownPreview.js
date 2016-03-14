@@ -1,12 +1,12 @@
+function toggleToolbar() {
+    $(".js-mdEditor").toggleClass('active');
+    $(".js-mdPreview").toggleClass('active');
+
+    $("#c-md-editor__canvas").toggleClass("c-md-editor__canvas--editor c-md-editor__canvas--preview");
+}
+
 if (window.markdownit !== undefined) {
     var md = window.markdownit();
-
-    function toggleToolbar() {
-        $(".js-mdEditor").toggleClass('active');
-        $(".js-mdPreview").toggleClass('active');
-
-        $("#c-md-editor__canvas").toggleClass("c-md-editor__canvas--editor c-md-editor__canvas--preview");
-    }
 
     $(function () {
         $(".js-mdEditor").click(function () {

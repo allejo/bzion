@@ -67,12 +67,6 @@ class RoleTest extends TestCase
 
         $this->assertEquals("Sample Normal Role", $role->getName());
 
-        $this->assertNull($role->getDisplayIcon());
-        $this->assertNull($role->getDisplayColor());
-
-        $this->assertEquals("Sample Normal Role", $role->getDisplayName());
-        $this->assertEquals(-1, $role->getDisplayOrder());
-
         $this->assertArrayContainsModel($role, Role::getRoles($this->player_b->getId()));
 
         $this->wipe($role);

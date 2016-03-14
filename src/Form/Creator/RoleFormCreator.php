@@ -20,9 +20,6 @@ class RoleFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        /** @var \Role $role */
-        $role = $this->editing;
-
         return $builder
             ->add('name', 'text', array(
                 'constraints' => new NotBlank(),
