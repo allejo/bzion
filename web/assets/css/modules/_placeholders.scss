@@ -43,6 +43,10 @@
 %container {
     @extend %margin-center;
 
+    // An amount of pixels removed from the container width in order to make up for the
+    // horizontal space added by scrollbars
+    $Correction: 30px;
+
     padding: {
         left: 15px;
         right: 15px;
@@ -57,18 +61,18 @@
     }
 
     @include respond-up(lg) {
-        width: map-get($breakpoints, lg);
+        width: map-get($breakpoints, lg) - $Correction;
     }
 
     @include respond-up(xl) {
-        width: map-get($breakpoints, xl);
+        width: map-get($breakpoints, xl) - $Correction;
     }
 
     @include respond-up(xxl) {
-        width: map-get($breakpoints, xxl);
+        width: map-get($breakpoints, xxl) - $Correction;
     }
 
     @include respond-up(xxxl) {
-        width: map-get($breakpoints, xxxl);
+        width: map-get($breakpoints, xxxl) - $Correction;
     }
 }
