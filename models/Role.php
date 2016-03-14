@@ -10,7 +10,7 @@
  * A role a player is assigned
  * @package    BZiON\Models
  */
-class Role extends Model
+class Role extends UrlModel implements NamedModel
 {
     const DEVELOPER     = 1;
     const ADMINISTRATOR = 2;
@@ -82,6 +82,11 @@ class Role extends Model
      */
     const TABLE = "roles";
 
+    const CREATE_PERMISSION = Permission::CREATE_ROLE;
+    const EDIT_PERMISSION = Permission::EDIT_ROLE;
+    const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_ROLE;
+    const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_ROLE;
+
     /**
      * {@inheritdoc}
      */
@@ -124,7 +129,7 @@ class Role extends Model
      */
     public function getDisplayColor()
     {
-        return (!$this->displayAsLeader()) ? null : $this->displayColor;
+        return $this->displayColor;
     }
 
     /**
@@ -135,7 +140,7 @@ class Role extends Model
      */
     public function getDisplayName()
     {
-        return (empty($this->displayName)) ? $this->getName() : $this->displayName;
+        return $this->displayName;
     }
 
     /**
@@ -145,7 +150,7 @@ class Role extends Model
      */
     public function getDisplayOrder()
     {
-        return (!$this->displayAsLeader()) ? -1 : $this->displayOrder;
+        return $this->displayOrder;
     }
 
     /**
@@ -155,7 +160,7 @@ class Role extends Model
      */
     public function getDisplayIcon()
     {
-        return (!$this->displayAsLeader()) ? null : $this->displayIcon;
+        return $this->displayIcon;
     }
 
     /**
@@ -226,6 +231,26 @@ class Role extends Model
     }
 
     /**
+     * Return the permissions a role has as IDs
+     *
+     * @return int[]
+     */
+    protected function getPermIDs()
+    {
+        return parent::fetchIdsFrom("role_id", array($this->id), "i", false, "", "role_permission", "perm_id");
+    }
+
+    /**
+     * Return the permissions a role has as models
+     *
+     * @return Permission[]
+     */
+    public function getPermObjects()
+    {
+        return Permission::arrayIdToModel($this->getPermIDs());
+    }
+
+    /**
      * Check whether a role has a specified permission
      *
      * @param string $permission The permission to check for
@@ -259,8 +284,10 @@ class Role extends Model
      */
     private function modifyPerm($perm_name, $action)
     {
-        if (($action == "remove" && !$this->hasPerm($perm_name)) ||
-            ($action == "add" && $this->hasPerm($perm_name))) {
+        $name = ($perm_name instanceof Permission) ? $perm_name->getName() : $perm_name;
+
+        if (($action == "remove" && !$this->hasPerm($name)) ||
+            ($action == "add" && $this->hasPerm($name))) {
             return false;
         }
 
@@ -271,12 +298,12 @@ class Role extends Model
                 $this->db->query("INSERT INTO role_permission (role_id, perm_id) VALUES (?, ?)", "ii",
                     array($this->getId(), $permission->getId()));
 
-                $this->permissions[$perm_name] = true;
+                $this->permissions[$name] = true;
             } elseif ($action == "remove") {
                 $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
                     array($this->getId(), $permission->getId()));
 
-                unset($this->permissions[$perm_name]);
+                unset($this->permissions[$name]);
             }
 
             return true;
@@ -286,14 +313,99 @@ class Role extends Model
     }
 
     /**
-     * Set the content of the page
+     * Set the permissions of the role
      *
-     * @param  bool $display
+     * @todo   Consolidate this with Bans
+     * @param  Permission[] $perms The permissions to set
+     * @return self
+     */
+    public function setPerms($perms)
+    {
+        foreach ($perms as &$perm) {
+            $perm = $perm->getId();
+        }
+        unset($perm);
+
+        $oldPerms = $this->getPermIDs();
+
+        $newPerms     = array_diff($perms, $oldPerms);
+        $removedPerms = array_diff($oldPerms, $perms);
+
+        foreach ($newPerms as $perm) {
+            $this->addPerm(Permission::get($perm));
+        }
+
+        foreach ($removedPerms as $perm) {
+            $this->removePerm(Permission::get($perm));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set the name of the role
+     *
+     * @param  string $name The new name of the role
+     * @return self
+     */
+    public function setName($name)
+    {
+        return $this->updateProperty($this->name, 'name', $name, 's');
+    }
+
+    /**
+     * Set whether the Role is displayed as a leader role
+     *
+     * @param  boolean $display
      * @return self
      */
     public function setDisplayAsLeader($display)
     {
-        return $this->updateProperty($this->display, "display", $display, 'i');
+        return $this->updateProperty($this->display, 'display', (int) $display, 'i');
+    }
+
+    /**
+     * Set the icon class of the role
+     *
+     * @param  string $displayIcon
+     * @return self
+     */
+    public function setDisplayIcon($displayIcon)
+    {
+        return $this->updateProperty($this->displayIcon, 'display_icon', $displayIcon, 's');
+    }
+
+    /**
+     * Set the color of the role
+     *
+     * @param  string $displayColor
+     * @return self
+     */
+    public function setDisplayColor($displayColor)
+    {
+        return $this->updateProperty($this->displayColor, 'display_color', $displayColor, 's');
+    }
+
+    /**
+     * Set the display name of the role
+     *
+     * @param  string $displayName
+     * @return self
+     */
+    public function setDisplayName($displayName)
+    {
+        return $this->updateProperty($this->displayName, 'display_name', $displayName, 's');
+    }
+
+    /**
+     * Set the display order of the role
+     *
+     * @param  int $displayOrder
+     * @return self
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        return $this->updateProperty($this->displayOrder, 'display_order', $displayOrder, 'i');
     }
 
     /**
@@ -363,7 +475,8 @@ class Role extends Model
     {
         return new QueryBuilder('Role', array(
             'columns' => array(
-                'name' => 'name'
+                'name' => 'name',
+                'display_order' => 'display_order'
             ),
             'name' => 'name'
         ));

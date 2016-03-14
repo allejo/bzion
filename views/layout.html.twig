@@ -150,6 +150,10 @@
                         <li><a href="{{ path('admin_list') }}">Admins</a></li>
                         <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
                         <li><a href="{{ path('map_list') }}">Maps</a></li>
+
+                        {%- if me.hasPermission(constant('Permission::EDIT_PAGE')) or me.hasPermission(constant('Permission::EDIT_ROLE')) -%}
+                            <li><a href="{{ path('admin_landing') }}">Administration</a>
+                        {%- endif -%}
                     </ul>
                 </div>
             </footer>

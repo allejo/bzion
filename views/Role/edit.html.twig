@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Roles :: {{ role.name }} :: Edit{% endblock %}
+
+{% block pageTitle %}
+    <h1>Editing :: {{ role.name }}</h1>
+{% endblock %}
+
+{% block content %}
+    {{ form(form, { attr: { class: 'c-form o-container' } }) }}
+{% endblock %}
+
+{% block jsLibraries %}
+    <script src="{{ asset('components/select2/dist/js/select2.js') }}"></script>
+{% endblock %}

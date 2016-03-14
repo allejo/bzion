@@ -10,6 +10,10 @@ admin_list:
     path:     /admins
     defaults: { _controller: 'Admin', _action: 'list' }
 
+admin_landing:
+    path:     /admin
+    defaults: { _controller: 'Admin', _action: 'landing' }
+
 admin_wipe:
     path:     /admin/deleted
     defaults: { _controller: 'Admin', _action: 'wipe' }
@@ -205,6 +209,14 @@ profile_edit:
 profile_confirm:
     path:     /profile/confirm/{token}
     defaults: { _controller: 'Profile', _action: 'confirm' }
+
+role_create:
+    path:    /admin/role/new
+    defaults: { _controller: 'Role', _action: 'create' }
+
+role_edit:
+    path:    /admin/role/{role}
+    defaults: { _controller: 'Role', _action: 'edit' }
 
 search:
     path:    /search

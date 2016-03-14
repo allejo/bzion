@@ -111,12 +111,27 @@ class Permission extends Model
     }
 
     /**
-     * @param string $perm_name
+     * @param string|Permission $perm_name
+     * @return Permission
      */
     public static function getPermissionFromName($perm_name)
     {
+        if ($perm_name instanceof Permission) {
+            return $perm_name;
+        }
+
         return self::get(
             parent::fetchIdFrom($perm_name, "name")
         );
+    }
+
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder("Permission", array(
+            'columns' => array(
+                'name' => 'name'
+            ),
+            'name' => 'name'
+        ));
     }
 }

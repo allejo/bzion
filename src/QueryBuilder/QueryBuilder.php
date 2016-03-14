@@ -486,14 +486,16 @@ class QueryBuilder implements Countable
         if (is_subclass_of($type, "PermissionModel")
          && $player->hasPermission($type::EDIT_PERMISSION)) {
             // The player is an admin who can see hidden models
-            if ($showDeleted) {
-                return $this;
-            } else {
-                return $this->where('status')->notEquals('deleted');
+            if (!$showDeleted) {
+                if (isset($this->columns['status'])) {
+                    return $this->where('status')->notEquals('deleted');
+                }
             }
         } else {
             return $this->active();
         }
+
+        return $this;
     }
 
     /**
