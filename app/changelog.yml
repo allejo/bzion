@@ -1,3 +1,10 @@
+14 March 2016:
+    Features:
+        - Added markdown previews when editing News articles
+        - Added a public API
+        - Support for adding and editing Roles
+    Bugfixes:
+        - A bunch of other community-reported bug fixes
 26 February 2016:
     Features:
         - New team members are no longer added to old team conversations
