@@ -22,7 +22,8 @@ class AdminController extends HTMLController
         return array("role_sections" => $roles);
     }
 
-    public function landingAction(Player $me) {
+    public function landingAction(Player $me)
+    {
         $pages = $roles = null;
 
         if (

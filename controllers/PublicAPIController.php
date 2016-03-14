@@ -18,11 +18,11 @@ class PublicAPIController extends JSONController
 
         foreach ($players as $player) {
             $response['players'][] = array(
-                'id' => $player->getId(),
-                'alias' => $player->getAlias(),
+                'id'       => $player->getId(),
+                'alias'    => $player->getAlias(),
                 'username' => $player->getUsername(),
-                'team' => $player->getTeam()->getId(),
-                'url' => $player->getPermaLink('show', $absolute = true)
+                'team'     => $player->getTeam()->getId(),
+                'url'      => $player->getPermaLink('show', $absolute = true)
             );
         }
 
@@ -36,17 +36,17 @@ class PublicAPIController extends JSONController
             ->getModels($fast = true);
 
         $response = array(
-            'teams' => array(),
+            'teams'   => array(),
             'success' => true,
             'version' => 0
         );
 
         foreach ($teams as $team) {
             $response['teams'][] = array(
-                'id' => $team->getId(),
-                'alias' => $team->getAlias(),
-                'name' => $team->getName(),
-                'url' => $team->getPermaLink('show', $absolute = true),
+                'id'     => $team->getId(),
+                'alias'  => $team->getAlias(),
+                'name'   => $team->getName(),
+                'url'    => $team->getPermaLink('show', $absolute = true),
                 'status' => $team->getStatus()
             );
         }
@@ -68,8 +68,8 @@ class PublicAPIController extends JSONController
 
         foreach ($servers as $server) {
             $response['servers'][] = array(
-                'id' => $server->getId(),
-                'name' => $server->getName(),
+                'id'      => $server->getId(),
+                'name'    => $server->getName(),
                 'address' => $server->getAddress(),
             );
         }

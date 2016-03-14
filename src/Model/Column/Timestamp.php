@@ -14,7 +14,8 @@ namespace BZIon\Model\Column;
  * @todo Is there something we can do so that we don't have to assign the
  *       timestamp column for every model in Model::assignResult()?
  */
-trait Timestamp {
+trait Timestamp
+{
     /**
      * A timestamp
      *

@@ -47,7 +47,7 @@ class Notification extends Model
 
     /**
      * When the notification was sent
-     * @var TimeDate $timestamp
+     * @var TimeDate
      */
 
     /**

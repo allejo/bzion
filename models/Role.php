@@ -356,7 +356,7 @@ class Role extends UrlModel implements NamedModel
     /**
      * Set whether the Role is displayed as a leader role
      *
-     * @param  boolean $display
+     * @param  bool $display
      * @return self
      */
     public function setDisplayAsLeader($display)
@@ -475,7 +475,7 @@ class Role extends UrlModel implements NamedModel
     {
         return new QueryBuilder('Role', array(
             'columns' => array(
-                'name' => 'name',
+                'name'          => 'name',
                 'display_order' => 'display_order'
             ),
             'name' => 'name'

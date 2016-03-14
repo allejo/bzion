@@ -232,7 +232,8 @@ class Conversation extends UrlModel implements NamedModel
      * @param  Team $team The team to check
      * @return Player[]
      */
-    public function getMissingTeamMembers(Team $team) {
+    public function getMissingTeamMembers(Team $team)
+    {
         $query = "SELECT players.id AS id FROM players
             WHERE players.team = ?
             AND players.id NOT IN (
@@ -299,9 +300,9 @@ class Conversation extends UrlModel implements NamedModel
         ), 'sis', 'last_activity');
 
         Database::getInstance()->startTransaction();
-            foreach ($members as $member) {
-                $conversation->addMember($member);
-            }
+        foreach ($members as $member) {
+            $conversation->addMember($member);
+        }
         Database::getInstance()->finishTransaction();
 
         return $conversation;

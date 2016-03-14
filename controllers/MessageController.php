@@ -194,7 +194,7 @@ class MessageController extends JSONController
         }
         $names = implode(', ', $names);
 
-        return $this->showConfirmationForm(function() use ($conversation, $missing, $team) {
+        return $this->showConfirmationForm(function () use ($conversation, $missing, $team) {
             $conversation->addMember($team); // does all the hard work
 
             $event = new ConversationJoinEvent($conversation, $missing);

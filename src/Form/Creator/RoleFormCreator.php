@@ -7,10 +7,7 @@
 
 namespace BZIon\Form\Creator;
 
-use BZIon\Form\Type\AdvancedModelType;
-use BZIon\Form\Type\IpType;
 use BZIon\Form\Type\ModelType;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -38,7 +35,7 @@ class RoleFormCreator extends ModelFormCreator
             ))
             ->add('display_color', 'text', array(
                 'constraints' => new NotBlank(),
-                'empty_data' => 'green'
+                'empty_data'  => 'green'
             ))
             ->add('display_name', 'text', array(
                 'required' => false

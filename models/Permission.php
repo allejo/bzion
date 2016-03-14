@@ -116,7 +116,7 @@ class Permission extends Model
      */
     public static function getPermissionFromName($perm_name)
     {
-        if ($perm_name instanceof Permission) {
+        if ($perm_name instanceof self) {
             return $perm_name;
         }
 

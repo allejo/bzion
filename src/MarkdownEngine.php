@@ -22,9 +22,9 @@ class MarkdownEngine extends \Parsedown
     /**
      * Constructor for our extension of Parsedown
      */
-    function __construct()
+    public function __construct()
     {
-        $this->camo = Array();
+        $this->camo = array();
         $this->camo['enabled'] = \Service::getParameter('bzion.features.camo.enabled');
 
         if ($this->camo['enabled']) {
@@ -61,7 +61,7 @@ class MarkdownEngine extends \Parsedown
                 }
 
                 if (!in_array($parts['host'], $this->camo['whitelisted_domains'])) {
-                    $Image['element']['attributes']['src'] = $this->camo['base_url'].hash_hmac('sha1', $Image['element']['attributes']['src'], $this->camo['key']).'/'.bin2hex($Image['element']['attributes']['src']);
+                    $Image['element']['attributes']['src'] = $this->camo['base_url'] . hash_hmac('sha1', $Image['element']['attributes']['src'], $this->camo['key']) . '/' . bin2hex($Image['element']['attributes']['src']);
                 }
             }
 
