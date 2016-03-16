@@ -84,7 +84,7 @@ class ProfileFormCreator extends ModelFormCreator
                     'everything' => 'Everything'
                 ),
                 'data'        => $this->editing->getReceives(),
-                'label'       => 'Receive notifications about',
+                'label'       => 'Receive e-mails about',
                 'expanded'    => true,
                 'placeholder' => false,
                 'required'    => false
