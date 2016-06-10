@@ -13,6 +13,10 @@ use BZIon\Model\Column\Timestamp;
  */
 class Match extends UrlModel implements NamedModel
 {
+    const OFFICIAL = "official";
+    const SPECIAL  = "special";
+    const FUN      = "fm";
+
     use Timestamp;
 
     /**
@@ -673,34 +677,19 @@ class Match extends UrlModel implements NamedModel
      * @param  int|null        $port       The port of the server where the match was played
      * @param  string          $replayFile The name of the replay file of the match
      * @param  int             $map        The ID of the map where the match was played, only for rotational leagues
+     * @param  string          $matchType  The type of match (e.g. official, fm, special)
      * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch(
         $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now",
         $a_players = array(), $b_players = array(), $server = null, $port = null,
-        $replayFile = null, $map = null
+        $replayFile = null, $map = null, $matchType = "official"
     ) {
-        $team_a = Team::get($a);
-        $team_b = Team::get($b);
-        $a_elo = $team_a->getElo();
-        $b_elo = $team_b->getElo();
-
-        $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
-
-        // Update team ELOs
-        $team_a->changeElo($diff);
-        $team_b->changeElo(-$diff);
-
-        $match = self::create(array(
-            'team_a'         => $a,
-            'team_b'         => $b,
+        $matchData = array(
             'team_a_points'  => $a_points,
             'team_b_points'  => $b_points,
             'team_a_players' => implode(',', $a_players),
             'team_b_players' => implode(',', $b_players),
-            'team_a_elo_new' => $team_a->getElo(),
-            'team_b_elo_new' => $team_b->getElo(),
-            'elo_diff'       => $diff,
             'timestamp'      => TimeDate::from($timestamp)->toMysql(),
             'duration'       => $duration,
             'entered_by'     => $entered_by,
@@ -708,10 +697,38 @@ class Match extends UrlModel implements NamedModel
             'port'           => $port,
             'replay_file'    => $replayFile,
             'map'            => $map,
-            'status'         => 'entered'
-        ), 'iiiissiiisiisisis', 'updated');
+            'status'         => 'entered',
+            'match_type'     => $matchType
+        );
+        $matchDataTypes = 'iisssiisisiss';
 
-        $match->updateMatchCount();
+        if ($matchType === Match::OFFICIAL) {
+            $team_a = Team::get($a);
+            $team_b = Team::get($b);
+            $a_elo = $team_a->getElo();
+            $b_elo = $team_b->getElo();
+
+            $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
+
+            // Update team ELOs
+            $team_a->changeElo($diff);
+            $team_b->changeElo(-$diff);
+
+            $matchData = array_merge($matchData, array(
+                'team_a'         => $a,
+                'team_b'         => $b,
+                'team_a_elo_new' => $team_a->getElo(),
+                'team_b_elo_new' => $team_b->getElo(),
+                'elo_diff'       => $diff
+            ));
+            $matchDataTypes .= 'iiiii';
+        }
+
+        $match = self::create($matchData, $matchDataTypes, 'updated');
+
+        if ($matchType === Match::OFFICIAL) {
+            $match->updateMatchCount();
+        }
 
         return $match;
     }

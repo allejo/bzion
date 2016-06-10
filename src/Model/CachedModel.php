@@ -14,6 +14,8 @@ abstract class CachedModel extends BaseModel
 {
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public static function get($id)
     {
