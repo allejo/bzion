@@ -26,15 +26,13 @@ The installation process is documented on the [BZiON wiki](https://github.com/al
 
 Do note that BZiON has not been thoroughly tested in production environments. As such, you are recommended to take regular backups of your database.
 
-A demo BZiON installation can be found at [demo.leaguesunited.org](http://demo.leaguesunited.org/) with a recent version of the master branch and sample data.
-
 ## Contributing
 
 This is an open source project and everyone is welcome to hack on the project. Don't see a feature you want? Write it and submit a pull request! Can't write code? Request it as a feature!
 
 ### Bugs and Issues
 
-If you're not comfortable with hacking on BZiON or you're not a coder, we are always looking for assistance in finding bugs and weird issues. As developers, we only imagine our code to be used the way it's intended but that's never the case! If you found a way to break our code, please [let us know](https://github.com/allejo/bzion/issues)!
+If you're not comfortable with hacking on BZiON or you're not a coder, we are always looking for assistance in finding bugs and weird issues. As developers, we only imagine our code to be used the way it's intended but that's never the case. If you found a way to break our code, please [let us know](https://github.com/allejo/bzion/issues).
 
 ### Documentation
 
@@ -59,9 +57,7 @@ To increase the probability of your pull request being accepted, ensure you cons
 
 ### Feature Requests
 
-While BZiON is still in development, there are a lot of features that are planned but aren't thoroughly documented or specified anywhere and a lot of functionality still needs to be written so feature requests are not a high priority for developers.
-
-While feature requests may not be a high priority, we would still love to hear your ideas and look forward to implementing the best ideas so [submit an issue](https://github.com/allejo/bzion/issues) and label it as "enhancement" and we'll be able to discuss the feature thoroughly.
+We would love to hear your ideas and look forward to implementing the best ideas so [submit an issue](https://github.com/allejo/bzion/issues) and we'll be able to discuss the feature further.
 
 ### Questions?
 
