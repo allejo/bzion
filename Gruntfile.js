@@ -1,28 +1,22 @@
 module.exports = function(grunt) {
-    grunt.task.loadNpmTasks("grunt-sass");
-    grunt.renameTask("sass", "libsass");
-
-    require('load-grunt-tasks')(grunt, {
-        pattern: [ 'grunt-*', '!grunt-sass' ]
-    });
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
-        'check-gems': {
+        combine_mq: {
             dist: {
-                files: [{
-                    src: '.'
-                }]
+                expand: true,
+                cwd: 'web/assets/css',
+                src: '*.css',
+                dest: 'web/assets/css/'
             }
         },
-        libsass: {
+        cssmin: {
             options: {
-                style: 'expanded',
-                sourceMap: true,
-                lineNumbers: true
+                processImport: false
             },
-            debug: {
+            dist: {
                 files: {
-                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
+                    'web/assets/css/styles.css': [ 'web/assets/css/styles.css' ]
                 }
             }
         },
@@ -63,11 +57,19 @@ module.exports = function(grunt) {
             }
         },
         sass: {
+            debug: {
+                options: {
+                    outputStyle: 'expanded',
+                    sourceMap: true,
+                    lineNumbers: true
+                },
+                files: {
+                    'web/assets/css/styles.css': 'web/assets/css/styles.scss'
+                }
+            },
             dist: {
                 options: {
-                    style: 'compressed',
-                    sourcemap: 'none',
-                    require: 'sass-media_query_combiner'
+                    outputStyle: 'compressed'
                 },
                 files: {
                     'web/assets/css/styles.css': 'web/assets/css/styles.scss'
@@ -150,7 +152,7 @@ module.exports = function(grunt) {
                     'web/assets/css/**/*.scss',
                     '!web/assets/css/vendor/**/*.scss'
                 ],
-                tasks: [ 'libsass' ],
+                tasks: [ 'sass' ],
                 options: {
                     livereload: false,
                     spawn: true
@@ -169,9 +171,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('css', [ 'sass:dist' ]);
+    grunt.registerTask('css', [ 'sass:dist', 'combine_mq', 'cssmin' ]);
     grunt.registerTask('js', [ 'jshint', 'uglify' ]);
-    grunt.registerTask('check', [ 'check-gems' ]);
 
     grunt.registerTask('install-hook', function () {
         var fs = require('fs');
