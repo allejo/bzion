@@ -74,6 +74,13 @@ class Match extends UrlModel implements NamedModel
     protected $map;
 
     /**
+     * The type of match that occurred. Valid options: official, fm, special
+     *
+     * @var string
+     */
+    protected $match_type;
+
+    /**
      * A JSON string of events that happened during a match, such as captures and substitutions
      * @var string
      */
@@ -151,6 +158,7 @@ class Match extends UrlModel implements NamedModel
         $this->team_a_elo_new = $match['team_a_elo_new'];
         $this->team_b_elo_new = $match['team_b_elo_new'];
         $this->map = $match['map'];
+        $this->match_type = $match['match_type'];
         $this->match_details = $match['match_details'];
         $this->port = $match['port'];
         $this->server = $match['server'];
@@ -498,6 +506,28 @@ class Match extends UrlModel implements NamedModel
     public function setMap($map)
     {
         $this->updateProperty($this->map, "map", $map, "s");
+    }
+
+    /**
+     * Get the match type
+     *
+     * @return string 'official', 'fm', or 'special'
+     */
+    public function getMatchType()
+    {
+        return $this->match_type;
+    }
+
+    /**
+     * Set the match type
+     *
+     * @param  string $matchType A valid match type; official, fm, special
+     *
+     * @return static
+     */
+    public function setMatchType($matchType)
+    {
+        return $this->updateProperty($this->match_type, "match_type", $matchType, 's');
     }
 
     /**

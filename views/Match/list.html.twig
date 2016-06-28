@@ -56,7 +56,7 @@
                     <section class="c-match-history__matches">
                 {% endif %}
 
-                <section class="c-match-history__match">
+                <section class="c-match-history__match" data-matchtype="{{ match.matchType }}">
                     {{ utils.widget(match) }}
                 </section>
 
