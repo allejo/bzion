@@ -203,7 +203,8 @@ class LeagueOverseerHookController extends PlainTextController
             $this->params->get('server'),
             $this->params->get('port'),
             $this->params->get('replayFile'),
-            $map->getId()
+            $map->getId(),
+            $this->params->get('matchType')
         );
 
         $log->addNotice("Match reported automatically", array(
