@@ -1,6 +1,6 @@
 # Rank Sprites
 
-Do **not** modify our ranks sprite image, it is automatically generated through a Grunt task (`grunt sprites:ranks`).
+Do **not** modify our ranks sprite image, it is automatically generated through a Grunt task (`grunt sprite:rankings`).
 
 ![Current Ranks Sprite](https://raw.githubusercontent.com/allejo/bzion/master/web/assets/imgs/ranks.png)
 
@@ -27,4 +27,4 @@ If you would like to contribute your own set of rank images, you are going to ne
 6. The symbols should be a size of 35px width and 40px height.
 7. Do **not** make a mess of the layers and symbols.
 
-Export all of your symbols into the `sprites` folder in this directory and then run `grunt sprites:ranks` and `grunt sass:dist` to generate a new ranks images with your icons and update the CSS.
+Export all of your symbols into the `sprites` folder in this directory and then run `grunt sprite:rankings` and `grunt css` to generate a new ranks images with your icons and update the CSS.
