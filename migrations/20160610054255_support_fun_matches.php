@@ -35,6 +35,13 @@ class SupportFunMatches extends AbstractMigration
 
         $matches->addForeignKey('team_a', 'teams');
         $matches->addForeignKey('team_b', 'teams');
+
+        $teamColorAssets = array('values'  => array('red', 'green', 'blue', 'purple'),
+                                 'null'    => true,
+                                 'comment' => 'The color of the team');
+
+        $matches->addColumn('team_a_color', 'set', $teamColorAssets);
+        $matches->addColumn('team_b_color', 'set', $teamColorAssets);
         $matches->addColumn('match_type', 'set', array('values' => array('official', 'fm', 'special'),
                                                        'null' => false,
                                                        'default' => 'official',

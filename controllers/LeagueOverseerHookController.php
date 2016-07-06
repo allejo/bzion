@@ -204,7 +204,9 @@ class LeagueOverseerHookController extends PlainTextController
             $this->params->get('port'),
             $this->params->get('replayFile'),
             $map->getId(),
-            $this->params->get('matchType')
+            $this->params->get('matchType'),
+            $this->params->get('teamOneColor'),
+            $this->params->get('teamTwoColor')
         );
 
         $log->addNotice("Match reported automatically", array(

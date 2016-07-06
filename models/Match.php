@@ -32,6 +32,18 @@ class Match extends UrlModel implements NamedModel
     protected $team_b;
 
     /**
+     * The color of the first team
+     * @var string
+     */
+    protected $team_a_color;
+
+    /**
+     * The color of the second team
+     * @var string
+     */
+    protected $team_b_color;
+
+    /**
      * The match points (usually the number of flag captures) Team A scored
      * @var int
      */
@@ -151,6 +163,8 @@ class Match extends UrlModel implements NamedModel
     {
         $this->team_a = $match['team_a'];
         $this->team_b = $match['team_b'];
+        $this->team_a_color = $match['team_a_color'];
+        $this->team_b_color = $match['team_b_color'];
         $this->team_a_points = $match['team_a_points'];
         $this->team_b_points = $match['team_b_points'];
         $this->team_a_players = $match['team_a_players'];
@@ -308,6 +322,24 @@ class Match extends UrlModel implements NamedModel
     public function getTeamB()
     {
         return Team::get($this->team_b);
+    }
+
+    /**
+     * Get the color of Team A
+     * @return string
+     */
+    public function getTeamAColor()
+    {
+        return $this->team_a_color;
+    }
+
+    /**
+     * Get the color of Team B
+     * @return string
+     */
+    public function getTeamBColor()
+    {
+        return $this->team_b_color;
     }
 
     /**
@@ -708,14 +740,19 @@ class Match extends UrlModel implements NamedModel
      * @param  string          $replayFile The name of the replay file of the match
      * @param  int             $map        The ID of the map where the match was played, only for rotational leagues
      * @param  string          $matchType  The type of match (e.g. official, fm, special)
+     * @param  string          $a_color    Team A's color
+     * @param  string          $b_color    Team b's color
      * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch(
         $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now",
         $a_players = array(), $b_players = array(), $server = null, $port = null,
-        $replayFile = null, $map = null, $matchType = "official"
+        $replayFile = null, $map = null, $matchType = "official", $a_color = null,
+        $b_color = null
     ) {
         $matchData = array(
+            'team_a_color'   => strtolower($a_color),
+            'team_b_color'   => strtolower($b_color),
             'team_a_points'  => $a_points,
             'team_b_points'  => $b_points,
             'team_a_players' => implode(',', $a_players),
