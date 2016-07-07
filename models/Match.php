@@ -767,7 +767,7 @@ class Match extends UrlModel implements NamedModel
             'status'         => 'entered',
             'match_type'     => $matchType
         );
-        $matchDataTypes = 'iisssiisisiss';
+        $matchDataTypes = 'ssiisssiisisiss';
 
         if ($matchType === Match::OFFICIAL) {
             $team_a = Team::get($a);
