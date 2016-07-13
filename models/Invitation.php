@@ -83,7 +83,7 @@ class Invitation extends UrlModel
             "team"           => $teamid,
             "text"           => $message,
             "expiration"     => $expiration->toMysql(),
-        ), 'iiiss');
+        ));
 
         return $invitation;
     }
@@ -135,7 +135,7 @@ class Invitation extends UrlModel
      */
     public function updateExpiration()
     {
-        return $this->updateProperty($this->expiration, 'expiration', TimeDate::now(), 's');
+        return $this->updateProperty($this->expiration, 'expiration', TimeDate::now());
     }
 
     /**
@@ -159,7 +159,7 @@ class Invitation extends UrlModel
     {
         return self::fetchCount(
             "WHERE invited_player = ? AND team = ? AND expiration > UTC_TIMESTAMP()",
-            'ii', array($player, $team)
+            array($player, $team)
         );
     }
 }

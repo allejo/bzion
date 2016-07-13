@@ -279,9 +279,9 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
                             $db->query('SHOW TABLES'));
 
         if (count($tables) > 0) {
-            $db->query('SET foreign_key_checks = 0');
-            $db->query('DROP TABLES ' . implode($tables, ','));
-            $db->query('SET foreign_key_checks = 1');
+            $db->execute('SET foreign_key_checks = 0');
+            $db->execute('DROP TABLES ' . implode($tables, ','));
+            $db->execute('SET foreign_key_checks = 1');
         }
 
         ScriptHandler::migrateDatabase(null, true);

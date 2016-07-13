@@ -50,22 +50,10 @@ class QueryBuilder implements Countable
     protected $parameters = array();
 
     /**
-     * The MySQL parameter types
-     * @var string
-     */
-    protected $types = '';
-
-    /**
      * The MySQL value parameters for pagination
      * @var array
      */
     protected $paginationParameters = array();
-
-    /**
-     * The MySQL parameter types for pagination
-     * @var string
-     */
-    protected $paginationTypes = '';
 
     /**
      * Extra MySQL query string to pass
@@ -194,7 +182,7 @@ class QueryBuilder implements Countable
      */
     public function equals($string)
     {
-        $this->addColumnCondition("= ?", $string, 's');
+        $this->addColumnCondition("= ?", $string);
 
         return $this;
     }
@@ -207,7 +195,7 @@ class QueryBuilder implements Countable
      */
     public function notEquals($string)
     {
-        $this->addColumnCondition("!= ?", $string, 's');
+        $this->addColumnCondition("!= ?", $string);
 
         return $this;
     }
@@ -220,7 +208,7 @@ class QueryBuilder implements Countable
      */
     public function greaterThan($quantity)
     {
-        $this->addColumnCondition("> ?", $quantity, 's');
+        $this->addColumnCondition("> ?", $quantity);
 
         return $this;
     }
@@ -233,7 +221,7 @@ class QueryBuilder implements Countable
      */
     public function lessThan($quantity)
     {
-        $this->addColumnCondition("< ?", $quantity, 's');
+        $this->addColumnCondition("< ?", $quantity);
 
         return $this;
     }
@@ -266,7 +254,7 @@ class QueryBuilder implements Countable
         $comparison  = ($reverse)   ? '<' : '>';
         $comparison .= ($inclusive) ? '=' : '';
 
-        $this->addColumnCondition("$comparison ?",  $time, 's');
+        $this->addColumnCondition("$comparison ?",  $time);
 
         return $this;
     }
@@ -289,7 +277,7 @@ class QueryBuilder implements Countable
             $number = $number->getId();
         }
 
-        $this->addColumnCondition("= ?", $number, 'i');
+        $this->addColumnCondition("= ?", $number);
 
         return $this;
     }
@@ -297,19 +285,19 @@ class QueryBuilder implements Countable
     /**
      * Request that a column equals one of some strings
      *
+     * @todo   Improve for PDO
      * @param  string[] $strings The list of accepted values for the column
      * @return self
      */
     public function isOneOf($strings)
     {
         $count = count($strings);
-        $types = str_repeat('s', $count);
         $questionMarks = str_repeat(',?', $count);
 
         // Remove first comma from questionMarks so that MySQL can read our query
         $questionMarks = ltrim($questionMarks, ',');
 
-        $this->addColumnCondition("IN ($questionMarks)", $strings, $types);
+        $this->addColumnCondition("IN ($questionMarks)", $strings);
 
         return $this;
     }
@@ -322,7 +310,7 @@ class QueryBuilder implements Countable
      */
     public function startsWith($string)
     {
-        $this->addColumnCondition("LIKE CONCAT(?, '%')", $string, 's');
+        $this->addColumnCondition("LIKE CONCAT(?, '%')", $string);
 
         return $this;
     }
@@ -340,7 +328,7 @@ class QueryBuilder implements Countable
         }
 
         $this->where('id');
-        $this->addColumnCondition("!= ?", $model, 'i');
+        $this->addColumnCondition("!= ?", $model);
 
         return $this;
     }
@@ -445,8 +433,7 @@ class QueryBuilder implements Countable
         // same, perform the comparison using IDs
         $this->addColumnCondition(
             "$comparison (SELECT $column FROM $table WHERE id = ?) OR ($column = (SELECT $column FROM $table WHERE id = ?) AND id $comparison ?)",
-            array($id, $id, $id),
-            'iii'
+            array($id, $id, $id)
         );
 
         return $this;
@@ -529,7 +516,7 @@ class QueryBuilder implements Countable
 
         $db = Database::getInstance();
 
-        return $db->query($this->createQuery($columns), $this->getTypes(), $this->getParameters());
+        return $db->query($this->createQuery($columns), $this->getParameters());
     }
 
     /**
@@ -562,7 +549,7 @@ class QueryBuilder implements Countable
 
         $columns = ($fastFetch) ? $type::getEagerColumns() : array();
 
-        $results = $db->query($this->createQuery($columns), $this->getTypes(), $this->getParameters());
+        $results = $db->query($this->createQuery($columns), $this->getParameters());
 
         if ($fastFetch) {
             return $type::createFromDatabaseResults($results);
@@ -585,7 +572,7 @@ class QueryBuilder implements Countable
 
         // We don't want pagination to affect our results so don't use the functions that combine
         // pagination results
-        $results = $db->query($query, $this->types, $this->parameters);
+        $results = $db->query($query, $this->parameters);
 
         return $results[0]['COUNT(*)'];
     }
@@ -651,10 +638,9 @@ class QueryBuilder implements Countable
      * Add a condition for the column
      * @param  string $condition The MySQL condition
      * @param  mixed  $value     Value(s) to pass to MySQL
-     * @param  string $type      The type of the values
      * @return void
      */
-    protected function addColumnCondition($condition, $value, $type)
+    protected function addColumnCondition($condition, $value)
     {
         if (!$this->currentColumn) {
             throw new Exception("You haven't selected a column!");
@@ -666,7 +652,6 @@ class QueryBuilder implements Countable
 
         $this->conditions[] = "{$this->currentColumn} $condition";
         $this->parameters   = array_merge($this->parameters, $value);
-        $this->types       .= $type;
 
         $this->currentColumn = null;
         $this->currentColumnRaw = null;
@@ -701,16 +686,6 @@ class QueryBuilder implements Countable
     protected function getParameters()
     {
         return array_merge($this->parameters, $this->paginationParameters);
-    }
-
-    /**
-     * Get the query types
-     *
-     * @return string
-     */
-    protected function getTypes()
-    {
-        return $this->types . $this->paginationTypes;
     }
 
     /**
@@ -816,10 +791,9 @@ class QueryBuilder implements Countable
      */
     private function createQueryPagination()
     {
-        // Reset mysqli params and types just in case createQueryParagination()
+        // Reset mysqli params just in case createQueryParagination()
         // had been called earlier
         $this->paginationParameters = array();
-        $this->paginationTypes = "";
 
         if (!$this->page && !$this->limited) {
             return '';
@@ -829,13 +803,11 @@ class QueryBuilder implements Countable
         if ($this->page) {
             $firstElement = ($this->page - 1) * $this->resultsPerPage;
             $this->paginationParameters[] = $firstElement;
-            $this->paginationTypes       .= 'i';
 
             $offset = '?,';
         }
 
         $this->paginationParameters[] = $this->resultsPerPage;
-        $this->paginationTypes       .= 'i';
 
         return "LIMIT $offset ?";
     }

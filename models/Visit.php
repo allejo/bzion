@@ -84,6 +84,6 @@ class Visit extends Model
             'user_agent' => $user_agent,
             'referer'    => $referrer,
             'timestamp'  => $timestamp->toMysql(),
-        ), 'isssss');
+        ));
     }
 }

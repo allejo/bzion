@@ -50,7 +50,7 @@ class NewsCategory extends AliasModel
     public function delete()
     {
         // Get any articles using this category
-        $articles = News::fetchIdsFrom("category", $this->getId(), 'i');
+        $articles = News::fetchIdsFrom("category", $this->getId());
 
         // Only delete a category if it is not protected and is not being used
         if (!$this->isProtected() && count($articles) == 0) {
@@ -67,7 +67,7 @@ class NewsCategory extends AliasModel
     {
         if ($this->getStatus() != "disabled") {
             $this->status = "disabled";
-            $this->update("status", "disabled", 's');
+            $this->update("status", "disabled");
         }
     }
 
@@ -80,7 +80,7 @@ class NewsCategory extends AliasModel
     {
         if ($this->getStatus() != "enabled") {
             $this->status = "enabled";
-            $this->update("status", "enabled", 's');
+            $this->update("status", "enabled");
         }
     }
 
@@ -116,7 +116,7 @@ class NewsCategory extends AliasModel
         $query  = "WHERE status NOT IN ($ignoredStatuses) AND category = ? ";
         $query .= "ORDER BY created DESC LIMIT $limit OFFSET $start";
 
-        return News::arrayIdToModel(News::fetchIds($query, 'i', array($this->getId())));
+        return News::arrayIdToModel(News::fetchIds($query, array($this->getId())));
     }
 
     /**
@@ -143,7 +143,7 @@ class NewsCategory extends AliasModel
             'name'      => $name,
             'protected' => 0,
             'status'    => 'enabled'
-        ), 'ssis');
+        ));
     }
 
     /**
@@ -155,7 +155,7 @@ class NewsCategory extends AliasModel
     {
         return self::arrayIdToModel(
             self::fetchIdsFrom(
-                "status", array("deleted"), "s", true,
+                "status", array("deleted"), true,
                 "ORDER BY name ASC"
             )
         );

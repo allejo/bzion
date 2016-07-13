@@ -109,7 +109,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
         $imagine = Service::getContainer()->get('liip_imagine.cache.manager');
         $imagine->remove($this->avatar);
 
-        return $this->updateProperty($this->avatar, 'avatar', $avatar, 's');
+        return $this->updateProperty($this->avatar, 'avatar', $avatar);
     }
 
     /**

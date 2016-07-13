@@ -105,7 +105,7 @@ class Ban extends UrlModel implements NamedModel
      */
     protected function assignLazyResult($result)
     {
-        $this->ipAddresses = parent::fetchIds("WHERE ban_id = ?", 'i', array($this->getId()), "banned_ips", "ip_address");
+        $this->ipAddresses = parent::fetchIds("WHERE ban_id = ?", array($this->getId()), "banned_ips", "ip_address");
     }
 
     /**
@@ -118,7 +118,7 @@ class Ban extends UrlModel implements NamedModel
         $this->lazyLoad();
 
         $this->ipAddresses[] = $ipAddress;
-        $this->db->query("INSERT IGNORE INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", "is", array($this->getId(), $ipAddress));
+        $this->db->execute("INSERT IGNORE INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", array($this->getId(), $ipAddress));
     }
 
     /**
@@ -132,7 +132,7 @@ class Ban extends UrlModel implements NamedModel
 
         // Remove $ipAddress from $this->ipAddresses
         $this->ipAddresses = array_diff($this->ipAddresses, array($ipAddress));
-        $this->db->query("DELETE FROM banned_ips WHERE ban_id = ? AND ip_address = ?", "is", array($this->getId(), $ipAddress));
+        $this->db->execute("DELETE FROM banned_ips WHERE ban_id = ? AND ip_address = ?", array($this->getId(), $ipAddress));
     }
 
     /**
@@ -307,7 +307,7 @@ class Ban extends UrlModel implements NamedModel
             $expiration = TimeDate::from($expiration);
         }
 
-        return $this->updateProperty($this->expiration, 'expiration', $expiration, 's');
+        return $this->updateProperty($this->expiration, 'expiration', $expiration);
     }
 
     /**
@@ -317,7 +317,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function setServerMessage($message)
     {
-        return $this->updateProperty($this->srvmsg, 'server_message', $message, 's');
+        return $this->updateProperty($this->srvmsg, 'server_message', $message);
     }
 
     /**
@@ -327,7 +327,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function setReason($reason)
     {
-        return $this->updateProperty($this->reason, 'reason', $reason, 's');
+        return $this->updateProperty($this->reason, 'reason', $reason);
     }
 
     /**
@@ -336,7 +336,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function updateEditTimestamp()
     {
-        return $this->updateProperty($this->updated, "updated", TimeDate::now(), 's');
+        return $this->updateProperty($this->updated, "updated", TimeDate::now());
     }
 
     /**
@@ -384,7 +384,7 @@ class Ban extends UrlModel implements NamedModel
             'reason'            => $reason,
             'allow_server_join' => $allowServerJoin,
             'author'            => $authorID,
-        ), 'isssii', array('created', 'updated'));
+        ), array('created', 'updated'));
 
         if (is_array($ipAddresses)) {
             foreach ($ipAddresses as $ip) {
@@ -460,7 +460,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public static function getBan($playerId)
     {
-        $bans = self::fetchIdsFrom('player', array($playerId), 'i', false, "AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())");
+        $bans = self::fetchIdsFrom('player', array($playerId), false, "AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())");
 
         if (empty($bans)) {
             return null;

@@ -85,7 +85,7 @@ class Message extends AbstractMessage
             'player_from'     => $from,
             'message'         => $message,
             'status'          => $status,
-        ), 'iiss', 'timestamp');
+        ), 'timestamp');
     }
 
     /**

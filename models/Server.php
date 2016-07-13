@@ -124,7 +124,7 @@ class Server extends UrlModel implements NamedModel
             'owner'   => $owner,
             'api_key' => $key->getId(),
             'status'  => 'active',
-        ), 'ssiiiis', 'updated');
+        ), 'updated');
         $server->forceUpdate();
 
         return $server;
@@ -140,9 +140,8 @@ class Server extends UrlModel implements NamedModel
         $this->updated = TimeDate::now();
         $this->online = !isset($this->info['error']);
 
-        $this->db->query(
+        $this->db->execute(
         "UPDATE servers SET info = ?, online = ?, updated = UTC_TIMESTAMP() WHERE id = ?",
-        "sii",
         array(serialize($this->info), $this->online, $this->id)
     );
 
@@ -314,7 +313,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function setName($name)
     {
-        return $this->updateProperty($this->name, 'name', $name, 's');
+        return $this->updateProperty($this->name, 'name', $name);
     }
 
     /**
@@ -345,7 +344,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function setDomain($domain)
     {
-        return $this->updateProperty($this->domain, 'domain', $domain, 's');
+        return $this->updateProperty($this->domain, 'domain', $domain);
     }
 
     /**
@@ -357,7 +356,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function setPort($port)
     {
-        return $this->updateProperty($this->port, 'port', $port, 'i');
+        return $this->updateProperty($this->port, 'port', $port);
     }
 
     /**
@@ -369,7 +368,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function setOwner($ownerId)
     {
-        return $this->updateProperty($this->owner, 'owner', $ownerId, 'i');
+        return $this->updateProperty($this->owner, 'owner', $ownerId);
     }
 
     /**
@@ -381,7 +380,7 @@ class Server extends UrlModel implements NamedModel
      */
     public function setCountry($countryId)
     {
-        return $this->updateProperty($this->country, 'country', $countryId, 'i');
+        return $this->updateProperty($this->country, 'country', $countryId);
     }
 
     /**
@@ -390,7 +389,7 @@ class Server extends UrlModel implements NamedModel
      */
     public static function getServers()
     {
-        return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), "s", false, "ORDER BY name"));
+        return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), false, "ORDER BY name"));
     }
 
     /**

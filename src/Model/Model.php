@@ -134,7 +134,7 @@ abstract class Model extends CachedModel
                 $value = $value->toMysql();
             }
 
-            $this->update($dbColumn, $value, $type);
+            $this->update($dbColumn, $value);
         }
 
         return $this;

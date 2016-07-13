@@ -126,13 +126,12 @@ abstract class BaseModel implements ModelInterface
      *
      * @param string $name  The name of the column
      * @param mixed  $value The value to set the column to
-     * @param string $type  The type of the value, can be 's' (string) , 'i' (integer) , 'd' (double) or 'b' (blob)
      *
      * @return void
      */
-    public function update($name, $value, $type = 'i')
+    public function update($name, $value)
     {
-        $this->db->query("UPDATE " . static::TABLE . " SET `$name` = ? WHERE id = ?", $type . "i", array($value, $this->id));
+        $this->db->execute("UPDATE " . static::TABLE . " SET `$name` = ? WHERE id = ?", array($value, $this->id));
     }
 
     /**
@@ -145,7 +144,7 @@ abstract class BaseModel implements ModelInterface
     public function delete()
     {
         $this->status = 'deleted';
-        $this->update('status', 'deleted', 's');
+        $this->update('status', 'deleted');
     }
 
     /**
@@ -153,7 +152,7 @@ abstract class BaseModel implements ModelInterface
      */
     public function wipe()
     {
-        $this->db->query("DELETE FROM " . static::TABLE . " WHERE id = ?", "i", array($this->id));
+        $this->db->execute("DELETE FROM " . static::TABLE . " WHERE id = ?", array($this->id));
     }
 
     /**
@@ -197,7 +196,7 @@ abstract class BaseModel implements ModelInterface
         $columns = static::getEagerColumns();
 
         $results = Database::getInstance()
-            ->query("SELECT $columns FROM $table WHERE id = ? LIMIT 1", "i", array($id));
+            ->query("SELECT $columns FROM $table WHERE id = ? LIMIT 1", array($id));
 
         if (count($results) < 1) {
             return null;
@@ -210,19 +209,18 @@ abstract class BaseModel implements ModelInterface
      * Counts the elements of the database that match a specific query
      *
      * @param  string $additional_query The MySQL query string (e.g. `WHERE id = ?`)
-     * @param  string $types            The types of values that will be passed to Database::query()
-     * @param  array  $params           The parameter values that will be passed to Database::query() corresponding to $types
+     * @param  array  $params           The parameter values that will be passed to Database::query()
      * @param  string $table            The database table that will be searched, defaults to the model's table
      * @param  string $column           Only count the entries where `$column` is not `NULL` (or all if `$column` is `*`)
      * @return int
      */
-    protected static function fetchCount($additional_query = '', $types = '', $params = array(), $table = '', $column = '*')
+    protected static function fetchCount($additional_query = '', $params = array(), $table = '', $column = '*')
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
 
         $result = $db->query("SELECT COUNT($column) AS count FROM $table $additional_query",
-            $types, $params
+            $params
         );
 
         return $result[0]['count'];
@@ -232,12 +230,11 @@ abstract class BaseModel implements ModelInterface
      * Gets the id of a database row which has a specific value on a column
      * @param  string $value  The value which the column should be equal to
      * @param  string $column The name of the database column
-     * @param  string $type   The type of the value, can be 's' (string) , 'i' (integer) , 'd' (double) or 'b' (blob)
      * @return int    The ID of the object
      */
-    protected static function fetchIdFrom($value, $column, $type = "s")
+    protected static function fetchIdFrom($value, $column)
     {
-        $results = self::fetchIdsFrom($column, $value, $type, false, "LIMIT 1");
+        $results = self::fetchIdsFrom($column, $value, false, "LIMIT 1");
 
         // Return the id or 0 if nothing was found
         return (isset($results[0])) ? $results[0] : 0;
@@ -247,14 +244,13 @@ abstract class BaseModel implements ModelInterface
      * Gets an array of object IDs from the database
      *
      * @param string          $additional_query Additional query snippet passed to the MySQL query after the SELECT statement (e.g. `WHERE id = ?`)
-     * @param string          $types            The types of values that will be passed to Database::query()
-     * @param array           $params           The parameter values that will be passed to Database::query() corresponding to $types
+     * @param array           $params           The parameter values that will be passed to Database::query()
      * @param string          $table            The database table that will be searched
      * @param string|string[] $select           The column that will be returned
      *
      * @return mixed[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function fetchIds($additional_query = '', $types = '', $params = array(), $table = "", $select = 'id')
+    protected static function fetchIds($additional_query = '', $params = array(), $table = "", $select = 'id')
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
@@ -264,25 +260,13 @@ abstract class BaseModel implements ModelInterface
             $select = implode(",", $select);
         }
 
-        $results = $db->query("SELECT $select FROM $table $additional_query", $types, $params);
-
-        // If $select specifies multiple columns, just return the $results array
-        if (isset($results[0]) && count($results[0]) != 1) {
-            return $results;
-        }
-
-        // Find the correct value if the user specified a table.
-        // For example, if $select is "conversations.id", we should convert it to
-        // "id", because that's how MySQLi stores column names in the $results
-        // array.
-        $selectArray = explode(".", $select);
-        $select = end($selectArray);
+        $results = $db->query("SELECT $select FROM $table $additional_query", $params);
 
         if (!$results) {
             return array();
         }
 
-        return array_column($results, $select);
+        return array_column($results, 0);
     }
 
     /**
@@ -290,7 +274,6 @@ abstract class BaseModel implements ModelInterface
      *
      * @param string          $column           The name of the column that should be tested
      * @param array|mixed     $possible_values  List of acceptable values
-     * @param string          $type             The type of the values in $possible_values (can be `s`, `i`, `d` or `b`)
      * @param bool            $negate           Whether to search if the value of $column does NOT belong to the $possible_values array
      * @param string|string[] $select           The name of the column(s) that the returned array should contain
      * @param string          $additional_query Additional parameters to be passed to the MySQL query (e.g. `WHERE id = 5`)
@@ -298,10 +281,9 @@ abstract class BaseModel implements ModelInterface
      *
      * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
-    protected static function fetchIdsFrom($column, $possible_values, $type, $negate = false, $additional_query = "", $table = "", $select = 'id')
+    protected static function fetchIdsFrom($column, $possible_values, $negate = false, $additional_query = "", $table = "", $select = 'id')
     {
         $question_marks = array();
-        $types = "";
         $negation = ($negate) ? "NOT" : "";
 
         if (!is_array($possible_values)) {
@@ -310,7 +292,6 @@ abstract class BaseModel implements ModelInterface
 
         foreach ($possible_values as $p) {
             $question_marks[] = '?';
-            $types .= $type;
         }
 
         if (empty($possible_values)) {
@@ -325,7 +306,7 @@ abstract class BaseModel implements ModelInterface
             $conditionString = "WHERE $column $negation IN (" . implode(",", $question_marks) . ") $additional_query";
         }
 
-        return self::fetchIds($conditionString, $types, $possible_values, $table, $select);
+        return self::fetchIds($conditionString, $possible_values, $table, $select);
     }
 
     /**
@@ -380,7 +361,7 @@ abstract class BaseModel implements ModelInterface
             $columns = $this->getLazyColumns();
 
             if ($columns !== null) {
-                $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", "i", array($this->id));
+                $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", array($this->id));
 
                 if (count($results) < 1) {
                     throw new Exception("The model has mysteriously disappeared");
@@ -414,13 +395,12 @@ abstract class BaseModel implements ModelInterface
      *
      * @param  array        $params An associative array, with the keys (columns) pointing to the
      *                              values you want to put on each
-     * @param  string       $types  The type of the values in $params (can be `s`, `i`, `d` or `b`)
      * @param  array|string $now    Column(s) to update with the current timestamp
      * @param  string       $table  The table to perform the query on, defaults to the Model's
      *                              table
      * @return static       The new entry
      */
-    protected static function create($params, $types, $now = null, $table = '')
+    protected static function create($params, $now = null, $table = '')
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
@@ -444,7 +424,7 @@ abstract class BaseModel implements ModelInterface
         }
 
         $query = "INSERT into $table ($columns) VALUES ($question_marks)";
-        $db->query($query, $types, array_values($params));
+        $db->execute($query, array_values($params));
 
         return static::get($db->getInsertId());
     }

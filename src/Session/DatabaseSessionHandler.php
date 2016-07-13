@@ -52,7 +52,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
         // We need to make sure we do not return session data that is already considered garbage according
         // to the session.gc_maxlifetime setting because gc() is called after read() and only sometimes
         $results = $this->database->query("SELECT data FROM sessions WHERE id = ? AND timestamp > ? LIMIT 1",
-            'ss', array($sessionId, $this->getOldestTimestamp()));
+            array($sessionId, $this->getOldestTimestamp()));
 
         if (isset($results[0]) && isset($results[0]['data'])) {
             return base64_decode($results[0]['data']);
@@ -79,7 +79,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
     public function destroy($sessionId)
     {
         // delete the record associated with this id
-        $this->database->query("DELETE FROM sessions WHERE id = ?", 's', $sessionId);
+        $this->database->execute("DELETE FROM sessions WHERE id = ?", $sessionId);
 
         return true;
     }
@@ -91,10 +91,10 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
     {
         $encoded = base64_encode($data);
 
-        $this->database->query(
+        $this->database->execute(
             "INSERT INTO sessions (id, data, timestamp) VALUES (?, ?, UTC_TIMESTAMP())
              ON DUPLICATE KEY UPDATE data = ?, timestamp = UTC_TIMESTAMP();",
-            'sss', array($sessionId, $encoded, $encoded));
+            array($sessionId, $encoded, $encoded));
 
         return true;
     }
@@ -106,8 +106,8 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
     {
         if ($this->gcCalled) {
             // Delete the session records that have expired
-            $this->database->query("DELETE FROM session WHERE timestamp <= ?",
-                's', $this->getOldestTimestamp());
+            $this->database->execute("DELETE FROM session WHERE timestamp <= ?",
+                $this->getOldestTimestamp());
         }
 
         return true;

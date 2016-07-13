@@ -25,9 +25,8 @@ class NotificationQueryBuilder extends QueryBuilder
         $table  = $this->getTable();
         $params = $cloned->createQueryParams();
 
-        Database::getInstance()->query(
+        Database::getInstance()->execute(
             "UPDATE `$table` SET `status`='read' WHERE `status`='unread' AND id IN ( SELECT id FROM ( SELECT id FROM `$table` $params) tmp)",
-            $cloned->getTypes(),
             $cloned->getParameters()
         );
 

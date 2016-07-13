@@ -83,7 +83,7 @@ class ConversationEvent extends AbstractMessage
             "event_type"      => $type,
             "timestamp"       => TimeDate::from($timestamp)->toMysql(),
             "status"          => $status
-        ), 'issss');
+        ));
     }
 
     /**

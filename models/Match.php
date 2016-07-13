@@ -275,7 +275,7 @@ class Match extends UrlModel implements NamedModel
     public function setTimestamp($timestamp)
     {
         $this->timestamp = TimeDate::from($timestamp);
-        $this->update("timestamp", $this->timestamp->toMysql(), "s");
+        $this->update("timestamp", $this->timestamp->toMysql());
 
         return $this;
     }
@@ -345,8 +345,8 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTeamPlayers($teamAPlayers = array(), $teamBPlayers = array())
     {
-        $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers), "s");
-        $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers), "s");
+        $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers));
+        $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers));
 
         return $this;
     }
@@ -392,8 +392,8 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTeamPoints($teamAPoints, $teamBPoints)
     {
-        $this->updateProperty($this->team_a_points, "team_a_points", $teamAPoints, "i");
-        $this->updateProperty($this->team_b_points, "team_b_points", $teamBPoints, "i");
+        $this->updateProperty($this->team_a_points, "team_a_points", $teamAPoints);
+        $this->updateProperty($this->team_b_points, "team_b_points", $teamBPoints);
 
         return $this;
     }
@@ -493,7 +493,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function setMap($map)
     {
-        $this->updateProperty($this->map, "map", $map, "s");
+        $this->updateProperty($this->map, "map", $map);
     }
 
     /**
@@ -527,8 +527,8 @@ class Match extends UrlModel implements NamedModel
      */
     public function setServerAddress($server = null, $port = 5154)
     {
-        $this->updateProperty($this->server, "server", $server, "s");
-        $this->updateProperty($this->port, "port", $port, "i");
+        $this->updateProperty($this->server, "server", $server);
+        $this->updateProperty($this->port, "port", $port);
 
         return $this;
     }
@@ -564,7 +564,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function setDuration($duration)
     {
-        return $this->updateProperty($this->duration, "duration", $duration, "i");
+        return $this->updateProperty($this->duration, "duration", $duration);
     }
 
     /**
@@ -709,7 +709,7 @@ class Match extends UrlModel implements NamedModel
             'replay_file'    => $replayFile,
             'map'            => $map,
             'status'         => 'entered'
-        ), 'iiiissiiisiisisis', 'updated');
+        ), 'updated');
 
         $match->updateMatchCount();
 
@@ -783,13 +783,13 @@ class Match extends UrlModel implements NamedModel
             $this->getDuration()
         );
 
-        $this->updateProperty($this->elo_diff, "elo_diff", $elo, "i");
+        $this->updateProperty($this->elo_diff, "elo_diff", $elo);
 
         $a->changeElo($elo);
         $b->changeElo(-$elo);
 
-        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo(), "i");
-        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo(), "i");
+        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo());
+        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo());
     }
 
     /**

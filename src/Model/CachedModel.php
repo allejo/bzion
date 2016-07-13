@@ -112,9 +112,9 @@ abstract class CachedModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    protected static function create($params, $types, $now = null, $table = '')
+    protected static function create($params, $now = null, $table = '')
     {
-        $model = parent::create($params, $types, $now, $table);
+        $model = parent::create($params, $now, $table);
         $model->storeInCache();
 
         return $model;

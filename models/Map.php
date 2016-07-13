@@ -76,7 +76,7 @@ class Map extends AvatarModel implements NamedModel
             'description' => $description,
             'avatar'      => $avatar,
             'status'      => $status
-        ), 'sssss');
+        ));
     }
 
     /**
@@ -107,7 +107,7 @@ class Map extends AvatarModel implements NamedModel
      */
     public function setName($name)
     {
-        return $this->updateProperty($this->name, 'name', $name, 's');
+        return $this->updateProperty($this->name, 'name', $name);
     }
 
     /**
@@ -118,7 +118,7 @@ class Map extends AvatarModel implements NamedModel
      */
     public function setDescription($description)
     {
-        return $this->updateProperty($this->description, 'description', $description, 's');
+        return $this->updateProperty($this->description, 'description', $description);
     }
 
     /**

@@ -210,7 +210,7 @@ class News extends UrlModel implements NamedModel
      */
     public function updateContent($content)
     {
-        return $this->updateProperty($this->content, 'content', $content, 's');
+        return $this->updateProperty($this->content, 'content', $content);
     }
 
     /**
@@ -219,7 +219,7 @@ class News extends UrlModel implements NamedModel
      */
     public function updateEditTimestamp()
     {
-        return $this->updateProperty($this->updated, 'updated', TimeDate::now(), 's');
+        return $this->updateProperty($this->updated, 'updated', TimeDate::now());
     }
 
     /**
@@ -252,7 +252,7 @@ class News extends UrlModel implements NamedModel
      */
     public function updateStatus($status = 'published')
     {
-        return $this->updateProperty($this->status, 'status', $status, 's');
+        return $this->updateProperty($this->status, 'status', $status);
     }
 
     /**
@@ -263,7 +263,7 @@ class News extends UrlModel implements NamedModel
      */
     public function updateSubject($subject)
     {
-        return $this->updateProperty($this->subject, 'subject', $subject, 's');
+        return $this->updateProperty($this->subject, 'subject', $subject);
     }
 
     /**
@@ -295,7 +295,7 @@ class News extends UrlModel implements NamedModel
             'author'   => $authorID,
             'editor'   => $authorID,
             'status'   => $status,
-        ), 'issiis', array('created', 'updated'));
+        ), array('created', 'updated'));
     }
 
     /**
@@ -317,7 +317,7 @@ class News extends UrlModel implements NamedModel
 
         return self::arrayIdToModel(
             self::fetchIdsFrom(
-                "status", $ignoredStatuses, "s", true,
+                "status", $ignoredStatuses, true,
                 "ORDER BY created DESC LIMIT $limit OFFSET $start"
             )
         );

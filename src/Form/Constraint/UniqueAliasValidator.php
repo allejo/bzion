@@ -34,13 +34,11 @@ class UniqueAliasValidator extends ConstraintValidator
             // its alias is found in the database
             $results = $database->query(
                 "SELECT EXISTS(SELECT 1 FROM $table WHERE alias = ? AND id != ?) AS 'exists'",
-                'si',
                 array($value, $constraint->model->getId())
             );
         } else {
             $results = $database->query(
                 "SELECT EXISTS(SELECT 1 FROM $table WHERE alias = ?) AS 'exists'",
-                's',
                 $value);
         }
 
