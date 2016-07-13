@@ -4,7 +4,7 @@ BZiON makes use of custom assets as well as assets created by talented artists.
 
 **BZFlag Icon**
 
-- **Artist:** McSpatula
+- **Artist:** McSpider
 - **Source:** http://mctarantula.deviantart.com/art/BZFlag-Icon-173747503
 - **License:** GNU "Lesser General Public License"
 
