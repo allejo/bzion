@@ -5,7 +5,7 @@
         <img src="{%- if isTeam -%}
                 {{ team.avatar | imagine_filter('small_thumb') }}
             {%- else -%}
-                {{ team.avatar }}
+                {{ asset(team.avatar) }}
             {%- endif -%}" />
     </a>
     <div class="c-matchwidget__team__name">
@@ -13,51 +13,24 @@
             {% if isTeam %}
                 {{ link_to(team) }}
             {% else %}
-                {{ team.color | capitalize }} Team
+                {{ team.name }}
             {% endif %}
         </p>
     </div>
     <div class="c-matchwidget__team__score">
-        <p>{{ link_to(match, content = (isTeam ? match.score(team.id) : team.score)) }}</p>
+        <p>{{ link_to(match, content = match.score(team)) }}</p>
     </div>
 {% endmacro %}
 
 {% macro widget(match) %}
     {% import _self as self %}
 
-    {% set isOfficial = (match.matchType == constant("Match::OFFICIAL")) %}
-
-    {% if not isOfficial %}
-        {% set teamA = "assets/imgs/team_" ~ match.teamAColor ~ ".png" %}
-        {% set teamB = "assets/imgs/team_" ~ match.teamBColor ~ ".png" %}
-
-        {% set teamAWinner = (match.teamAPoints >= match.teamBPoints) %}
-
-        {% set matchTeams = {
-            "winner": {
-                "avatar": (teamAWinner) ? asset(teamA) : asset(teamB),
-                "color": (teamAWinner) ? match.teamAColor : match.teamBColor,
-                "score": (teamAWinner) ? match.teamAPoints : match.teamBPoints
-            },
-            "loser": {
-                "avatar": (teamAWinner) ? asset(teamB) : asset(teamA),
-                "color": (teamAWinner) ? match.teamBColor : match.teamAColor,
-                "score": (teamAWinner) ? match.teamBPoints : match.teamAPoints
-            }
-        } %}
-    {% else %}
-        {% set matchTeams = {
-            'winner': match.winner,
-            'loser': match.loser
-        } %}
-    {% endif %}
-
     <section class="c-matchwidget" data-matchtype="{{ match.matchType }}">
         <div class="c-matchwidget__team c-matchwidget__winner">
-            {{ self.team_block(match, matchTeams.winner) }}
+            {{ self.team_block(match, match.winner) }}
         </div>
         <div class="c-matchwidget__team c-matchwidget__loser">
-            {{ self.team_block(match, matchTeams.loser) }}
+            {{ self.team_block(match, match.loser) }}
         </div>
     </section>
 {% endmacro %}

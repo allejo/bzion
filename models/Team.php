@@ -10,7 +10,7 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends AvatarModel
+class Team extends AvatarModel implements TeamInterface
 {
     /**
      * The description of the team written in markdown
@@ -254,7 +254,6 @@ class Team extends AvatarModel
     /**
      * Get the description of the team
      *
-     * @param  bool $md false for HTML format, true for the original markdown
      * @return string  The description of the team
      */
     public function getDescription()

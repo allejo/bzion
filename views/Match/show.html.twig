@@ -35,13 +35,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {% if isOfficial %}
-        <h1>{{ match.winner.name }} vs {{ match.loser.name }}</h1>
-    {% else %}
-        {% set winnerTeam = (match.teamAPoints >= match.teamBPoints) ? match.teamAColor : match.teamBColor %}
-        {% set loserTeam  = (match.teamBPoints >  match.teamAPoints) ? match.teamAColor : match.teamBColor %}
-        <h1>{{ winnerTeam | title }} Team vs {{ loserTeam | title }} Team</h1>
-    {% endif %}
+    <h1>{{ match.winner.name }} vs {{ match.loser.name }}</h1>
 {% endblock %}
 
 {% block content %}
@@ -113,10 +107,13 @@
                 {%- if not loop.last %}, {% endif %}
             {% endfor %}
         </small>
-        <p>
-            {{ match.teamEloOld(team) }}
-            &rarr;
-            {{ match.teamEloNew(team) }}
-        </p>
+
+        {% if team is instanceof('Team') %}
+            <p>
+                {{ match.teamEloOld(team) }}
+                &rarr;
+                {{ match.teamEloNew(team) }}
+            </p>
+        {% endif %}
     </section>
 {% endmacro %}

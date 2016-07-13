@@ -198,7 +198,7 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get a one word description of a match relative to a team (i.e. win, loss, or draw)
      *
-     * @param int $teamID The team ID we want the noun for
+     * @param int|string|TeamInterface $teamID The team ID we want the noun for
      *
      * @return string Either "win", "loss", or "draw" relative to the team
      */
@@ -216,7 +216,7 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get a one letter description of a match relative to a team (i.e. W, L, or T)
      *
-     * @param int $teamID The team ID we want the noun for
+     * @param int|string|TeamInterface $teamID The team ID we want the noun for
      *
      * @return string Either "W", "L", or "T" relative to the team
      */
@@ -228,16 +228,20 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get the score of a specific team
      *
-     * @param int|Team $teamID The team we want the score for
+     * @param int|string|TeamInterface $teamID The team we want the score for
      *
      * @return int The score that team received
      */
     public function getScore($teamID)
     {
-        if ($teamID instanceof Team) {
+        if ($teamID instanceof TeamInterface) {
             // Oh no! The caller gave us a Team model instead of an ID!
             $teamID = $teamID->getId();
+        } elseif (is_string($teamID)) {
+            // Make sure we're comparing lowercase strings
+            $teamID = strtolower($teamID);
         }
+
 
         if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamAPoints();
@@ -249,32 +253,30 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get the score of the opponent relative to a team
      *
-     * @param int $teamID The opponent of the team we want the score for
+     * @param int|string|TeamInterface $teamID The opponent of the team we want the score for
      *
      * @return int The score of the opponent
      */
     public function getOpponentScore($teamID)
     {
-        if ($teamID instanceof Team) {
-            $teamID = $teamID->getId();
-        }
-
-        if ($this->getTeamA()->getId() != $teamID) {
-            return $this->getTeamAPoints();
-        }
-
-        return $this->getTeamBPoints();
+        return $this->getScore($this->getOpponent($teamID));
     }
 
     /**
      * Get the opponent of a match relative to a team ID
      *
-     * @param int $teamID The team who is known in a match
+     * @param int|string|TeamInterface $teamID The team who is known in a match
      *
-     * @return Team The opponent team
+     * @return TeamInterface The opponent team
      */
     public function getOpponent($teamID)
     {
+        if ($teamID instanceof TeamInterface) {
+            $teamID = $teamID->getId();
+        } elseif (is_string($teamID)) {
+            $teamID = strtolower($teamID);
+        }
+
         if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamB();
         }
@@ -308,20 +310,28 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the first team involved in the match
-     * @return Team Team A's id
+     * @return TeamInterface Team A
      */
     public function getTeamA()
     {
-        return Team::get($this->team_a);
+        if ($this->match_type === Match::OFFICIAL) {
+            return Team::get($this->team_a);
+        }
+
+        return new ColorTeam($this->team_a_color);
     }
 
     /**
      * Get the second team involved in the match
-     * @return Team Team B's id
+     * @return TeamInterface Team B
      */
     public function getTeamB()
     {
-        return Team::get($this->team_b);
+        if ($this->match_type === Match::OFFICIAL) {
+            return Team::get($this->team_b);
+        }
+
+        return new ColorTeam($this->team_b_color);
     }
 
     /**
@@ -645,7 +655,7 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get the loser of the match
      *
-     * @return Team The team that was the loser or the team with the lower elo if the match was a draw
+     * @return TeamInterface The team that was the loser or the team with the lower elo if the match was a draw
      */
     public function getLoser()
     {
@@ -653,13 +663,13 @@ class Match extends UrlModel implements NamedModel
         $winner = $this->getWinner();
 
         // Get the team that wasn't the winner... Duh
-        return $this->getOpponent($winner->getId());
+        return $this->getOpponent($winner);
     }
 
     /**
      * Get the winner of a match
      *
-     * @return Team The team that was the victor or the team with the lower elo if the match was a draw
+     * @return TeamInterface The team that was the victor or the team with the lower elo if the match was a draw
      */
     public function getWinner()
     {
@@ -668,9 +678,14 @@ class Match extends UrlModel implements NamedModel
             return $this->getTeamA();
         } elseif ($this->elo_diff < 0) {
             return $this->getTeamB();
+        } elseif ($this->team_a_points > $this->team_b_points) {
+            // In case we're dealing with a match such an FM that doesn't have an ELO difference
+            return $this->getTeamA();
+        } elseif ($this->team_a_points < $this->team_b_points) {
+            return $this->getTeamB();
         }
 
-        // If the ELOs are the same, return Team A because well, fuck you that's why
+        // If the scores are the same, return Team A because well, fuck you that's why
         return $this->getTeamA();
     }
 
@@ -686,12 +701,12 @@ class Match extends UrlModel implements NamedModel
     /**
      * Find out whether the match involves a team
      *
-     * @param  Team $team The team to check
+     * @param  TeamInterface $team The team to check
      * @return bool
      */
     public function involvesTeam($team)
     {
-        return $team->getId() == $this->team_a || $team->getId() == $this->team_b;
+        return $team->getId() == $this->getTeamA()->getId() || $team->getId() == $this->getTeamB()->getId();
     }
 
     /**
@@ -701,8 +716,12 @@ class Match extends UrlModel implements NamedModel
      */
     public function resetELOs()
     {
-        $this->getTeamA()->changeELO(-$this->elo_diff);
-        $this->getTeamB()->changeELO(+$this->elo_diff);
+        if ($this->match_type === Match::OFFICIAL) {
+            $this->getTeamA()->changeELO(-$this->elo_diff);
+            $this->getTeamB()->changeELO(+$this->elo_diff);
+        }
+
+        return $this;
     }
 
     /**
@@ -856,6 +875,10 @@ class Match extends UrlModel implements NamedModel
      */
     public function recalculateElo()
     {
+        if ($this->match_type !== Match::OFFICIAL) {
+            return;
+        }
+
         $a = $this->getTeamA();
         $b = $this->getTeamB();
 
@@ -941,6 +964,10 @@ class Match extends UrlModel implements NamedModel
      */
     private function updateMatchCount($decrement = false)
     {
+        if ($this->match_type !== Match::OFFICIAL) {
+            return;
+        }
+
         $diff = ($decrement) ? -1 : 1;
 
         if ($this->isDraw()) {
