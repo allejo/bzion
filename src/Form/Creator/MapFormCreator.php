@@ -8,6 +8,10 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Constraint\UniqueAlias;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,14 +26,14 @@ class MapFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'constraints' => array(
                 new NotBlank(), new Length(array(
                     'min' => 2,
                     'max' => 40,
                 ))
             )
-        ))->add('alias', 'text', array(
+        ))->add('alias', TextType::class, array(
             'constraints' => array(
                new Length(array(
                     'max' => 40,
@@ -37,9 +41,9 @@ class MapFormCreator extends ModelFormCreator
                 new UniqueAlias('Map', $this->editing)
             ),
             'required' => false
-        ))->add('description', 'textarea', array(
+        ))->add('description', TextareaType::class, array(
             'required' => false
-        ))->add('avatar', 'file', array(
+        ))->add('avatar', FileType::class, array(
             'constraints' => new Image(array(
                 'minWidth'  => 60,
                 'minHeight' => 60,
@@ -50,10 +54,10 @@ class MapFormCreator extends ModelFormCreator
 
         if ($this->editing && $this->editing->getAvatar() !== null) {
             // We are editing the map, not creating it
-            $builder->add('delete_image', 'submit');
+            $builder->add('delete_image', SubmitType::class);
         }
 
-        return $builder->add('submit', 'submit');
+        return $builder->add('submit', SubmitType::class);
     }
 
     /**

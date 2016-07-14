@@ -7,6 +7,8 @@
 
 namespace BZIon\Form\Creator;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,13 +23,13 @@ class ConversationRenameFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('subject', 'text', array(
+            ->add('subject', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(), new Length(array('max' => 50))
                 ),
                 'data' => $this->editing->getSubject(),
             ))
-            ->add('Rename', 'submit')
+            ->add('Rename', SubmitType::class)
             ->setAction($this->editing->getUrl());
     }
 

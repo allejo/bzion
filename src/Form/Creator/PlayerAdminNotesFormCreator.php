@@ -6,6 +6,8 @@
  */
 
 namespace BZIon\Form\Creator;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * Form creator for a player's admin notes
@@ -18,13 +20,13 @@ class PlayerAdminNotesFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('notes', 'textarea', array(
+            ->add('notes', TextareaType::class, array(
                 'data'     => $this->editing->getAdminNotes(),
                 'required' => false,
             ))
-            ->add('save_and_sign', 'submit', array(
+            ->add('save_and_sign', SubmitType::class, array(
                 'label' => 'Save & Sign',
             ))
-            ->add('save', 'submit');
+            ->add('save', SubmitType::class);
     }
 }

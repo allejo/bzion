@@ -8,6 +8,11 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,16 +27,16 @@ class TeamFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'constraints' => array(
                 new NotBlank(), new Length(array(
                     'min' => 2,
                     'max' => 32, // default BZFlag motto length
                 ))
             )
-        ))->add('description', 'textarea', array(
+        ))->add('description', TextareaType::class, array(
             'required' => false
-        ))->add('avatar', 'file', array(
+        ))->add('avatar', FileType::class, array(
             'constraints' => new Image(array(
                 'minWidth'  => 60,
                 'minHeight' => 60,
@@ -44,7 +49,7 @@ class TeamFormCreator extends ModelFormCreator
             // We are editing the team, not creating it
             $team = $this->editing;
 
-            $builder->add('delete_avatar', 'submit');
+            $builder->add('delete_avatar', SubmitType::class);
 
             // Let the user appoint a different leader
             $builder->add('leader', new ModelType('Player', false, function ($query) use ($team) {
@@ -55,13 +60,13 @@ class TeamFormCreator extends ModelFormCreator
             ));
         }
 
-        return $builder->add('status', 'choice', array(
+        return $builder->add('status', ChoiceType::class, array(
                 'choices' => array(
                     'open'   => 'Open',
                     'closed' => 'Closed',
                 ),
             ))
-            ->add('submit', 'submit');
+            ->add('submit', SubmitType::class);
     }
 
     /**

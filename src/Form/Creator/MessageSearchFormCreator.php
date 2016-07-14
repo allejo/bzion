@@ -6,6 +6,7 @@
  */
 
 namespace BZIon\Form\Creator;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 
 /**
  * Form creator for searching messages
@@ -18,7 +19,7 @@ class MessageSearchFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('q', 'search')
+            ->add('q', SearchType::class)
             ->setAction(\Service::getGenerator()->generate('message_search'))
             ->setMethod('GET');
     }

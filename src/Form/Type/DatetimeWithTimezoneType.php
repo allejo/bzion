@@ -4,6 +4,7 @@ namespace BZIon\Form\Type;
 
 use BZIon\Form\Transformer\DatetimeWithTimezoneTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,11 +13,11 @@ class DatetimeWithTimezoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('time', 'datetime', array(
+            ->add('time', DateTimeType::class, array(
                 'with_seconds' => $options['with_seconds']
             ))
             ->add(
-                $builder->create('timezone', new TimezoneType())
+                $builder->create('timezone', TimezoneType::class)
                         ->setDataLocked(false)
             )
             ->addViewTransformer(new DatetimeWithTimezoneTransformer());

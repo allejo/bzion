@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * A Model type for use in Symphony's forms
+ * A Model type for use in Symfony's forms
  */
 class ModelType extends AbstractType
 {

@@ -7,6 +7,7 @@
 
 namespace BZIon\Form\Creator;
 
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
 
@@ -62,7 +63,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
     {
         $builder = \Service::getFormFactory()->createNamedBuilder(
             $this->getName(),
-            'form',
+            FormType::class,
             null,
             $this->getFormOptions()
         );
@@ -100,7 +101,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
      */
     public function update($form, $model)
     {
-        throw new BadMethodCallException("Please override the update() method in the FormCreator class for the model");
+        throw new \BadMethodCallException("Please override the update() method in the FormCreator class for the model");
     }
 
     /**
@@ -110,7 +111,7 @@ abstract class ModelFormCreator implements FormCreatorInterface
      */
     public function enter($form)
     {
-        throw new BadMethodCallException("Please override the enter() method in the FormCreator class for the model");
+        throw new \BadMethodCallException("Please override the enter() method in the FormCreator class for the model");
     }
 
     /**

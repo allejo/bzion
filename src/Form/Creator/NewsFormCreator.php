@@ -8,6 +8,10 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,24 +29,24 @@ class NewsFormCreator extends ModelFormCreator
             ->add('category', new ModelType('NewsCategory'), array(
                 'constraints' => new NotBlank()
             ))
-            ->add('subject', 'text', array(
+            ->add('subject', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
                         'max' => 100,
                     )),
                 ),
             ))
-            ->add('content', 'textarea', array(
+            ->add('content', TextareaType::class, array(
                 'constraints' => new NotBlank()
             ))
-            ->add('status', 'choice', array(
+            ->add('status', ChoiceType::class, array(
                 'choices' => array(
                     'published' => 'Public',
                     'revision'  => 'Revision',
                     'draft'     => 'Draft',
                 ),
             ))
-            ->add('enter', 'submit');
+            ->add('enter', SubmitType::class);
     }
 
     /**

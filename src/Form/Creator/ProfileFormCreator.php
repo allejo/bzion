@@ -9,6 +9,11 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
 use BZIon\Form\Type\TimezoneType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
@@ -52,12 +57,12 @@ class ProfileFormCreator extends ModelFormCreator
         }
 
         $builder
-            ->add('description', 'textarea', array(
+            ->add('description', TextareaType::class, array(
                 'constraints' => new Length(array('max' => 8000)),
                 'data'        => $this->editing->getDescription(),
                 'required'    => false
             ))
-            ->add('avatar', 'file', array(
+            ->add('avatar', FileType::class, array(
                 'constraints' => new Image(array(
                     'minWidth'  => 50,
                     'minHeight' => 50,
@@ -65,19 +70,19 @@ class ProfileFormCreator extends ModelFormCreator
                 )),
                 'required' => false
             ))
-            ->add('delete_avatar', 'submit')
+            ->add('delete_avatar', SubmitType::class)
             ->add('country', new ModelType('Country'), array(
                 'constraints' => new NotBlank(),
                 'data'        => $this->editing->getCountry()
             ))
-            ->add('email', 'email', array(
+            ->add('email', EmailType::class, array(
                 'constraints' => $emailConstraints,
                 'data'        => $this->editing->getEmailAddress(),
                 'label'       => 'E-Mail Address',
                 'required'    => false
             ))
             // TODO: Disable this with JS when no e-mail has been specified
-            ->add('receive', 'choice', array(
+            ->add('receive', ChoiceType::class, array(
                 'choices' => array(
                     'nothing'    => 'Nothing',
                     'messages'   => 'Messages only',
@@ -102,7 +107,7 @@ class ProfileFormCreator extends ModelFormCreator
             ));
         }
 
-        $builder->add('enter', 'submit');
+        $builder->add('enter', SubmitType::class);
 
         $address = $this->editing->getEmailAddress();
         if (!$this->editingSelf && !empty($address) && !$this->editing->isVerified()) {
