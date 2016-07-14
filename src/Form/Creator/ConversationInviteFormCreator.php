@@ -8,7 +8,6 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -26,7 +25,7 @@ class ConversationInviteFormCreator extends ModelFormCreator
                 'constraints' => new NotBlank(),
                 'multiple'    => true,
             ))
-            ->add('Invite', SubmitType::class)
+            ->add('Invite', 'submit')
             ->setAction($this->editing->getUrl());
     }
 

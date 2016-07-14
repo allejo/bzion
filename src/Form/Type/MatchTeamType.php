@@ -3,7 +3,6 @@
 namespace BZIon\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
@@ -21,7 +20,7 @@ class MatchTeamType extends AbstractType
                 'constraints' => new NotBlank(),
                 'disabled'    => $options['disableTeam']
             ))
-            ->add('score', IntegerType::class, array(
+            ->add('score', 'integer', array(
                 'constraints' => array(
                     new NotBlank(),
                     new GreaterThanOrEqual(0)

@@ -6,8 +6,6 @@
  */
 
 namespace BZIon\Form\Creator;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Form creator for confirmation dialogs
@@ -53,11 +51,11 @@ class ConfirmationFormCreator implements FormCreatorInterface
         $builder = \Service::getFormFactory()->createNamedBuilder('confirm_form');
 
         return $builder
-            ->add('confirm', SubmitType::class, array(
+            ->add('confirm', 'submit', array(
                 'label' => $this->action
             ))
             ->add(($this->action == 'Yes' || $this->no) ? 'No' : 'Cancel', 'submit')
-            ->add('original_url', HiddenType::class, array(
+            ->add('original_url', 'hidden', array(
                 'data' => $this->originalUrl
             ))
             ->getForm();

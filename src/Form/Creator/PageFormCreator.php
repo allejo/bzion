@@ -7,10 +7,6 @@
 
 namespace BZIon\Form\Creator;
 
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -26,7 +22,7 @@ class PageFormCreator extends ModelFormCreator
     {
         return $builder
             ->add(
-                $builder->create('name', TextType::class, array(
+                $builder->create('name', 'text', array(
                     'constraints' => array(
                         new NotBlank(), new Length(array(
                             'max' => 32,
@@ -35,10 +31,10 @@ class PageFormCreator extends ModelFormCreator
                     'data' => $this->controller->data->get('name')
                 ))->setDataLocked(false)
             )
-            ->add('content', TextareaType::class, array(
+            ->add('content', 'textarea', array(
                 'constraints' => new NotBlank()
             ))
-            ->add('status', ChoiceType::class, array(
+            ->add('status', 'choice', array(
                 'choices' => array(
                     'live'     => 'Public',
                     'revision' => 'Revision',
@@ -47,7 +43,7 @@ class PageFormCreator extends ModelFormCreator
                 'description' => "'Revision' pages are accessible by all users but not listed in the menu, " .
                     "while 'Disabled' pages cannot be accessed by players."
             ))
-            ->add('enter', SubmitType::class);
+            ->add('enter', 'submit');
     }
 
     /**

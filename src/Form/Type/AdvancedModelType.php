@@ -7,8 +7,6 @@ use BZIon\Form\Transformer\MultipleAdvancedModelTransformer;
 use BZIon\Form\Transformer\SingleAdvancedModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -16,17 +14,18 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Count;
 
-/**
- * A form type that accepts multiple and different types of models
- *
- * @todo Make this and other types work without the constructor, to prevent calling deprecated Symfony functions
- */
 class AdvancedModelType extends AbstractType
 {
     /**
      * The types of the model
      */
     private $types = array();
+
+    /**
+     * Whether the user gave us names instead of IDs
+     * @var bool
+     */
+    private $listNames = false;
 
     /**
      * An object to always include
@@ -81,7 +80,7 @@ class AdvancedModelType extends AbstractType
         }
 
         // Model IDs that will be manipulated by javascript
-        $builder->add('ids', HiddenType::class, array(
+        $builder->add('ids', 'hidden', array(
             'attr' => array(
                 'class'         => 'select2-compatible',
                 'data-exclude'  => $exclude,
@@ -98,7 +97,7 @@ class AdvancedModelType extends AbstractType
             $label = (count($this->types) > 1) ? "$builderName $pluralType" : $builderName;
 
             $builder->add(
-                $builder->create($type, TextType::class, array(
+                $builder->create($type, 'text', array(
                     'attr' => array(
                         'class'       => 'model-select',
                         'data-type'   => $type,

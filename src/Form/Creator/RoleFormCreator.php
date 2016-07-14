@@ -8,10 +8,6 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -25,30 +21,30 @@ class RoleFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('name', TextType::class, array(
+            ->add('name', 'text', array(
                 'constraints' => new NotBlank(),
             ))
-            ->add('display_as_leader', CheckboxType::class, array(
+            ->add('display_as_leader', 'checkbox', array(
                 'required' => false
             ))
-            ->add('display_icon', TextType::class, array(
+            ->add('display_icon', 'text', array(
                 'required' => false
             ))
-            ->add('display_color', TextType::class, array(
+            ->add('display_color', 'text', array(
                 'constraints' => new NotBlank(),
                 'empty_data'  => 'green'
             ))
-            ->add('display_name', TextType::class, array(
+            ->add('display_name', 'text', array(
                 'required' => false
             ))
-            ->add('display_order', NumberType::class, array(
+            ->add('display_order', 'number', array(
                 'empty_data' => 0
             ))
             ->add('permissions', new ModelType('Permission', false), array(
                 'multiple' => true,
                 'required' => false
             ))
-            ->add('enter', SubmitType::class);
+            ->add('enter', 'submit');
     }
 
     /**

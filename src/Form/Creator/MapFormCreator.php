@@ -8,10 +8,6 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Constraint\UniqueAlias;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -26,14 +22,14 @@ class MapFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', 'text', array(
             'constraints' => array(
                 new NotBlank(), new Length(array(
                     'min' => 2,
                     'max' => 40,
                 ))
             )
-        ))->add('alias', TextType::class, array(
+        ))->add('alias', 'text', array(
             'constraints' => array(
                new Length(array(
                     'max' => 40,
@@ -41,9 +37,9 @@ class MapFormCreator extends ModelFormCreator
                 new UniqueAlias('Map', $this->editing)
             ),
             'required' => false
-        ))->add('description', TextareaType::class, array(
+        ))->add('description', 'textarea', array(
             'required' => false
-        ))->add('avatar', FileType::class, array(
+        ))->add('avatar', 'file', array(
             'constraints' => new Image(array(
                 'minWidth'  => 60,
                 'minHeight' => 60,
@@ -54,10 +50,10 @@ class MapFormCreator extends ModelFormCreator
 
         if ($this->editing && $this->editing->getAvatar() !== null) {
             // We are editing the map, not creating it
-            $builder->add('delete_image', SubmitType::class);
+            $builder->add('delete_image', 'submit');
         }
 
-        return $builder->add('submit', SubmitType::class);
+        return $builder->add('submit', 'submit');
     }
 
     /**

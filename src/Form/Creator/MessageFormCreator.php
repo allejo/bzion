@@ -7,7 +7,6 @@
 
 namespace BZIon\Form\Creator;
 
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -21,7 +20,7 @@ class MessageFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('message', TextareaType::class, array(
+            ->add('message', 'textarea', array(
                 'constraints' => new NotBlank(
                     array("message" => "You can't send an empty message!"
                 ))

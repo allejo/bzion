@@ -9,9 +9,6 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
 use BZIon\Form\Type\ModelType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -26,7 +23,7 @@ class ServerFormCreator extends ModelFormCreator
     protected function build($builder)
     {
         return $builder
-            ->add('domain', TextType::class, array(
+            ->add('domain', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
                         'max' => 50,
@@ -34,13 +31,13 @@ class ServerFormCreator extends ModelFormCreator
                 ),
             ))
             ->add(
-                $builder->create('port', IntegerType::class, array(
+                $builder->create('port', 'integer', array(
                     'constraints' => new NotBlank(),
                     'data'        => 5154
                 ))->setDataLocked(false) // Don't lock the data so we can change
                                          // the default value later if needed
             )
-            ->add('name', TextType::class, array(
+            ->add('name', 'text', array(
                 'constraints' => array(
                     new NotBlank(), new Length(array(
                         'max' => 100,
@@ -53,7 +50,7 @@ class ServerFormCreator extends ModelFormCreator
             ->add('owner', new AdvancedModelType('Player'), array(
                 'constraints' => new NotBlank()
             ))
-            ->add('enter', SubmitType::class);
+            ->add('enter', 'submit');
     }
 
     /**

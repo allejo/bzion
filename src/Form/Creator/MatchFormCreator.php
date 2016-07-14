@@ -10,9 +10,6 @@ namespace BZIon\Form\Creator;
 use BZIon\Form\Type\DatetimeWithTimezoneType;
 use BZIon\Form\Type\MatchTeamType;
 use BZIon\Form\Type\ModelType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -33,22 +30,22 @@ class MatchFormCreator extends ModelFormCreator
         }
 
         return $builder
-            ->add('first_team', MatchTeamType::class, array(
+            ->add('first_team', new MatchTeamType(), array(
                 'disableTeam' => $this->isEdit()
             ))
-            ->add('second_team', MatchTeamType::class, array(
+            ->add('second_team', new MatchTeamType(), array(
                 'disableTeam' => $this->isEdit()
             ))
-            ->add('duration', ChoiceType::class, array(
+            ->add('duration', 'choice', array(
                 'choices'     => $durations,
                 'constraints' => new NotBlank(),
                 'expanded'    => true
             ))
-            ->add('server_address', TextType::class, array(
+            ->add('server_address', 'text', array(
                 'required' => false,
                 'attr'     => array('placeholder' => 'brad.guleague.org:5100'),
             ))
-            ->add('time', DatetimeWithTimezoneType::class, array(
+            ->add('time', new DatetimeWithTimezoneType(), array(
                 'constraints' => array(
                     new NotBlank(),
                     new LessThan(array(
@@ -64,7 +61,7 @@ class MatchFormCreator extends ModelFormCreator
             ->add('map', new ModelType('Map'), array(
                 'required' => false
             ))
-            ->add('enter', SubmitType::class);
+            ->add('enter', 'submit');
     }
 
     /**

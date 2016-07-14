@@ -8,9 +8,6 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -35,9 +32,9 @@ class ConversationFormCreator extends ModelFormCreator
                 'multiple' => true,
                 'include'  => $this->editing,
             ))
-            ->add('Subject', TextType::class, $notBlank)
-            ->add('Message', TextareaType::class, $notBlank)
-            ->add('Send', SubmitType::class)
+            ->add('Subject', 'text', $notBlank)
+            ->add('Message', 'textarea', $notBlank)
+            ->add('Send', 'submit')
 
             // Prevents JS from going crazy if we load a page with AJAX
             ->setAction(\Service::getGenerator()->generate('message_compose'));

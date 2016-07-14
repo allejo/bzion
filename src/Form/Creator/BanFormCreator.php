@@ -9,11 +9,6 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
 use BZIon\Form\Type\IpType;
-use Ladybug\Plugin\Extra\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -34,35 +29,35 @@ class BanFormCreator extends ModelFormCreator
                 'data'        => $this->controller->data->get('player')
             ))
             ->add(
-                $builder->create('automatic_expiration', CheckboxType::class, array(
+                $builder->create('automatic_expiration', 'checkbox', array(
                     'data'     => true,
                     'required' => false,
                 ))->setDataLocked(false) // Don't lock the data so we can change
                                          // the default value later if needed
             )
             ->add(
-                $builder->create('expiration', DateTimeType::class, array(
+                $builder->create('expiration', 'datetime', array(
                     'data' => \TimeDate::now(),
                 ))->setDataLocked(false)
             )
-            ->add('reason', TextareaType::class, array(
+            ->add('reason', 'textarea', array(
                 'constraints' => new NotBlank(),
                 'required'    => true
             ))
-            ->add('server_join_allowed', CheckboxType::class, array(
+            ->add('server_join_allowed', 'checkbox', array(
                 'data'     => true,
                 'required' => false,
             ))
-            ->add('server_message', TextType::class, array(
+            ->add('server_message', 'text', array(
                 'required'    => false,
                 'constraints' => new Length(array(
                     'max' => 150,
                 ))
             ))
-            ->add('ip_addresses', IpType::class, array(
+            ->add('ip_addresses', new IpType(), array(
                 'required' => false,
             ))
-            ->add('enter', SubmitType::class)
+            ->add('enter', 'submit')
             ->setDataLocked(false);
     }
 
