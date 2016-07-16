@@ -102,9 +102,10 @@ module.exports = function(grunt) {
                 globals: {
                     jQuery: true
                 },
-                reporter: require('jshint-stylish')
+                reporter: require('jshint-stylish'),
+                reporterOutput: ''
             },
-            all: ['Gruntfile.js', 'web/assets/js/*.js']
+            all: ['Gruntfile.js', 'web/assets/js/*.js', 'web/assets/js/partials/*.js']
         },
         uglify: {
             options: {
