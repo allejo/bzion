@@ -27,6 +27,14 @@
 
 {% block content %}
     <section class="o-container">
+        <div class="o-section u-text-center">
+            <div class="c-pill-group">
+                <p class="c-pill-group__pill c-pill-group__pill--active">All</p>
+                <p class="c-pill-group__pill">Official</p>
+                <p class="c-pill-group__pill">FM</p>
+            </div>
+        </div>
+
         <section class="c-match-history">
             {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
             {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
