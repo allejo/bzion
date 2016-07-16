@@ -1,58 +1,37 @@
-$(document).ready(function() {
-    if (typeof(Ladda) === "undefined") {
-        return;
-    }
+$(function () {
+    var $nuclideFilters = $('*[data-role="nuclide"]');
 
-    var $button = $("#confirm_form_confirm");
-    if ($button[0] === undefined) {
-        return;
-    }
-    var $form = $("form");
+    $nuclideFilters.each(function () {
+        var $this    = $(this);
+        var $filters = $this.find('*[data-filter]');
+        var target   = $this.data('target');
 
-    $button.attr('data-style', 'expand-left');
-    var l = Ladda.create($button[0]);
+        $filters.each(function () {
+            var $this  = $(this);
+            var filter = $this.data('filter');
 
-    $button.click(function(e) {
-        e.preventDefault();
+            $this.nuclide(target, {
+                filter: function ($el) {
+                    return ($el.data('matchtype') === filter || filter === '*');
+                },
+                postFilter: function () {
+                    var $elements = $('.c-match-history__matches');
 
-        var formData = new FormData( $form[0] );
+                    $elements.each(function () {
+                        var $this = $(this);
+                        $this.parent().show();
 
-        // Simulate clicking the "confirm" button
-        formData.append('confirm_form[confirm]', 'confirm');
+                        if ($this.height() === 0) {
+                            $this.parent().hide();
+                        }
+                    });
+                },
+                itemSelector: '.c-match-history__match'
+            });
 
-        var count;
-
-        // Perform a streamed HTTP request
-        httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = function() {
-            var text = httpRequest.responseText.split("\n");
-
-            if (count === undefined) {
-                lines = parseInt(text[0]);
-                if (!isNaN(lines)) {
-                    count = lines;
-                }
-            }
-
-            if (text[1] !== undefined) {
-                // Count the number of "m"s
-                var done = text[1].length;
-                l.setProgress(done / count);
-            }
-
-            if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                l.stop();
-
-                if (text.length !== 5 || text[3] !== "Calculation successful") {
-                    notify("An error occurred.", "danger");
-                } else {
-                    window.location.replace(baseURLNoHost + "/matches");
-                }
-            }
-        };
-
-        l.start();
-        httpRequest.open($form.attr('method'), "", true);
-        httpRequest.send(formData);
+            $this.click(function () {
+                $this.nuclide('refresh');
+            });
+        });
     });
 });

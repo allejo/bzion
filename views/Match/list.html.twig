@@ -27,15 +27,17 @@
 
 {% block content %}
     <section class="o-container">
-        <div class="o-section u-text-center">
-            <div class="c-pill-group">
-                <p class="c-pill-group__pill c-pill-group__pill--active">All</p>
-                <p class="c-pill-group__pill">Official</p>
-                <p class="c-pill-group__pill">FM</p>
+        {% if not team %}
+            <div class="o-section u-text-center">
+                <div class="c-pill-group" data-role="nuclide" data-target="#match-list">
+                    <p class="c-pill-group__pill c-pill-group__pill--active" data-filter="*">All</p>
+                    <p class="c-pill-group__pill" data-filter="official">Official</p>
+                    <p class="c-pill-group__pill" data-filter="fm">FM</p>
+                </div>
             </div>
-        </div>
+        {% endif %}
 
-        <section class="c-match-history">
+        <section id="match-list" class="c-match-history">
             {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
             {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
             {% set lastMatchDate = "" %}
@@ -45,23 +47,25 @@
 
                 {% if lastMatchDate != currentMatchDate %}
                     {% if not loop.first %} {# Close previous date's container #}
-                        </section>
+                            </section>
+                        </div>
                     {% endif %}
 
-                    <section class="c-match-history__date">
-                        {% set currentYear = "now" | date("Y") %}
+                    <div class="c-match-history__container">
+                        <section class="c-match-history__date">
+                            {% set currentYear = "now" | date("Y") %}
 
-                        <h4>
-                            {%- if match.timestamp.year != currentYear -%}
-                                {%- set format = dateFormatArchive -%}
-                            {%- else -%}
-                                {%- set format = dateFormat -%}
-                            {%- endif -%}
-                            {{ match.timestamp | humanTime(format, tooltip = false) }}
-                        </h4>
-                    </section>
+                            <h4>
+                                {%- if match.timestamp.year != currentYear -%}
+                                    {%- set format = dateFormatArchive -%}
+                                {%- else -%}
+                                    {%- set format = dateFormat -%}
+                                {%- endif -%}
+                                {{ match.timestamp | humanTime(format, tooltip = false) }}
+                            </h4>
+                        </section>
 
-                    <section class="c-match-history__matches">
+                        <section class="c-match-history__matches">
                 {% endif %}
 
                 <section class="c-match-history__match" data-matchtype="{{ match.matchType }}">
