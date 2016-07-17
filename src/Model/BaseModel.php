@@ -390,7 +390,7 @@ abstract class BaseModel implements ModelInterface
      * Creates a new entry in the database
      *
      * <code>
-     * Model::create(array( 'author'=>15, 'content'=>"Lorem ipsum..."  ), 'is');
+     * Model::create(array( 'author'=>15, 'content'=>"Lorem ipsum..."  ));
      * </code>
      *
      * @param  array        $params An associative array, with the keys (columns) pointing to the
