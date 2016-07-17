@@ -17,6 +17,7 @@ class Database
     /**
      * The global database connection object
      *
+     * @todo Move this to the Service class
      * @var Database
      */
     private static $Database;
@@ -122,7 +123,7 @@ class Database
      */
     public function closeConnection()
     {
-        @mysqli_close($this->dbc);
+        $this->dbc = null;
     }
 
     /**
@@ -145,7 +146,7 @@ class Database
     }
 
     /**
-     * Prepares and executes a MySQL prepared INSERT/DELETE/UPDATE statement. <em>Second two parameter is optional when using this function to execute a query with no placeholders.</em>
+     * Prepares and executes a MySQL prepared INSERT/DELETE/UPDATE statement. <em>The second parameter is optional when using this function to execute a query with no placeholders.</em>
      *
      * @param  string      $queryText The prepared SQL statement that will be executed
      * @param  mixed|array $params    (Optional) The array of values that will be binded to the prepared statement
@@ -168,7 +169,7 @@ class Database
     }
 
     /**
-     * Prepares and executes a MySQL prepared SELECT statement. <em>Second two parameter is optional when using this function to execute a query with no placeholders.</em>
+     * Prepares and executes a MySQL prepared SELECT statement. <em>The second parameter is optional when using this function to execute a query with no placeholders.</em>
      *
      * @param  string      $queryText The prepared SQL statement that will be executed
      * @param  mixed|array $params    (Optional) The array of values that will be binded to the prepared statement
@@ -209,6 +210,8 @@ class Database
                         $type = PDO::PARAM_BOOL;
                     } elseif (is_int($param)) {
                         $type = PDO::PARAM_INT;
+                    } elseif (is_null($param)) {
+                        $type = PDO::PARAM_NULL;
                     } else {
                         $type = PDO::PARAM_STR;
                     }
@@ -283,8 +286,6 @@ class Database
         if ($id !== null) {
             $context['id'] = $id;
         }
-
-        $id = 5;
 
         $this->logger->addError($error, $context);
         throw new Exception($error, $id, $previous);
