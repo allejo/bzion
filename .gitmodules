@@ -19,6 +19,3 @@
 [submodule "web/includes/markdown-it"]
 	path = web/includes/markdown-it
 	url = https://github.com/markdown-it/markdown-it.git
-[submodule "web/includes/isotope"]
-	path = web/includes/isotope
-	url = https://github.com/metafizzy/isotope.git
