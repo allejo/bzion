@@ -1,38 +1,21 @@
 $(function () {
-    var $nuclideFilters = $('*[data-role="nuclide"]');
+    $("#match-type-filter").nuclide({
+        filter: 'matchtype',
+        postFilter: function () {
+            var $elements = $('.c-match-history__matches');
 
-    $nuclideFilters.each(function () {
-        var $this    = $(this);
-        var $filters = $this.find('*[data-filter]');
-        var target   = $this.data('target');
+            $elements.each(function () {
+                var $this   = $(this);
+                var $parent = $this.parent();
 
-        $filters.each(function () {
-            var $this  = $(this);
-            var filter = $this.data('filter');
+                $parent.show();
 
-            $this.nuclide(target, {
-                filter: function ($el) {
-                    return ($el.data('matchtype') === filter || filter === '*');
-                },
-                postFilter: function () {
-                    var $elements = $('.c-match-history__matches');
-
-                    $elements.each(function () {
-                        var $this = $(this);
-                        $this.parent().show();
-
-                        if ($this.height() === 0) {
-                            $this.parent().hide();
-                        }
-                    });
-                },
-                itemSelector: '.c-match-history__match'
+                if ($this.height() === 0) {
+                    $parent.hide();
+                }
             });
-
-            $this.click(function () {
-                $this.nuclide('refresh');
-            });
-        });
+        },
+        itemSelector: '.c-match-history__match'
     });
 
     //
