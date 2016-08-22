@@ -52,6 +52,7 @@ class MatchController extends CRUDController
     {
         return $this->create($me, function (Match $match) use ($me) {
             if ($me->canEdit($match)
+                && $match->isOfficial()
                 && (!$match->getTeamA()->isLastMatch($match)
                 || !$match->getTeamB()->isLastMatch($match))
             ) {
@@ -105,6 +106,10 @@ class MatchController extends CRUDController
             throw new ForbiddenException("You are not allowed to edit that match.");
         }
 
+        if (!$match->isOfficial()) {
+            throw new BadRequestException("You can't recalculate ELO history for a special match.");
+        }
+
         return $this->showConfirmationForm(function () use ($match) {
             $response = new StreamedResponse();
             $response->headers->set('Content-Type', 'text/plain');
@@ -148,6 +153,7 @@ class MatchController extends CRUDController
 
             $query = Match::getQueryBuilder()
                 ->where('status')->notEquals('deleted')
+                ->where('type')->equals(Match::OFFICIAL)
                 ->where('time')->isAfter($match->getTimestamp(), $inclusive = true)
                 ->sortBy('time');
 
@@ -245,6 +251,33 @@ class MatchController extends CRUDController
         if ($firstTeam->isSameAs($secondTeam)) {
             $message = "You can't report a match where a team played against itself!";
             $form->addError(new FormError($message));
+        }
+
+        foreach (array('first_team', 'second_team') as $team) {
+            $input = $form->get($team)->get('team');
+
+            if ($form->get('type')->getData() == Match::OFFICIAL) {
+                if ($input->getData() instanceof ColorTeam) {
+                    $message = "Please enter a valid team for an official match.";
+                    $input->addError(new FormError($message));
+                }
+            } else {
+                if (!$input->getData() instanceof ColorTeam) {
+                    $message = "Please enter a team color for fun and special matches.";
+                    $input->addError(new FormError($message));
+                }
+            }
+        }
+    }
+
+    protected function validateEdit($form, $match)
+    {
+        if ($match->isOfficial() && $form->get('type')->getData() !== Match::OFFICIAL) {
+            $message = "You cannot change this match's type.";
+            $form->get('type')->addError(new FormError($message));
+        } elseif (!$match->isOfficial() && $form->get('type')->getData() === Match::OFFICIAL) {
+            $message = "You can't make this an official match.";
+            $form->get('type')->addError(new FormError($message));
         }
     }
 }

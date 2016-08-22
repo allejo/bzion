@@ -46,8 +46,34 @@ class ColorTeam implements TeamInterface
         return ucwords($this->color) . " Team";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getAvatar()
     {
         return "assets/imgs/team_" . $this->color . ".png";
+    }
+
+    /**
+     * Return whether a team color is valid
+     *
+     * @param string $color The color to check
+     */
+    public static function isValidTeamColor($color)
+    {
+        return in_array($color, array('red', 'green', 'blue', 'purple'));
+    }
+
+    /**
+     * Find out if a team is the same as another team
+     *
+     * @param mixed $team The team to compare
+     * @param bool
+     */
+    public function isSameAs($team)
+    {
+        $sameType = $this instanceof $team || $team instanceof $this;
+
+        return $sameType && $this->color === $team->color;
     }
 }

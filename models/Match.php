@@ -381,9 +381,9 @@ class Match extends UrlModel implements NamedModel
             $team = $team->getId();
         }
 
-        if ($team == $this->team_a) {
+        if ($team == $this->getTeamA()->getId()) {
             return $this->getTeamAPlayers();
-        } elseif ($team == $this->team_b) {
+        } elseif ($team == $this->getTeamB()->getId()) {
             return $this->getTeamBPlayers();
         }
 
@@ -450,6 +450,30 @@ class Match extends UrlModel implements NamedModel
         $this->updateProperty($this->team_b_points, "team_b_points", $teamBPoints, "i");
 
         return $this;
+    }
+
+    /**
+     * Set the match team colors
+     *
+     * @param  ColorTeam|string $teamAColor The color of team A
+     * @param  ColorTeam|string $teamBColor The color of team B
+     * @return self
+     */
+    public function setTeamColors($teamAColor, $teamBColor)
+    {
+        if ($this->isOfficial()) {
+            throw new \Exception("Cannot change team colors in an official match");
+        }
+
+        if ($teamAColor instanceof ColorTeam) {
+            $teamAColor = $teamAColor->getId();
+        }
+        if ($teamBColor instanceof ColorTeam) {
+            $teamBColor = $teamBColor->getId();
+        }
+
+        $this->updateProperty($this->team_a_color, "team_a_color", $teamAColor, "s");
+        $this->updateProperty($this->team_b_color, "team_b_color", $teamBColor, "s");
     }
 
     /**
@@ -710,6 +734,14 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Find out if the match is played between official teams
+     */
+    public function isOfficial()
+    {
+        return Match::OFFICIAL === $this->getMatchType();
+    }
+
+    /**
      * Reset the ELOs of the teams participating in the match
      *
      * @return self
@@ -920,6 +952,7 @@ class Match extends UrlModel implements NamedModel
                 'firstTeamPoints'  => 'team_a_points',
                 'secondTeamPoints' => 'team_b_points',
                 'time'             => 'timestamp',
+                'type'             => 'match_type',
                 'status'           => 'status'
             ),
         ));

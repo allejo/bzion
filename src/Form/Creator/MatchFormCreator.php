@@ -31,10 +31,10 @@ class MatchFormCreator extends ModelFormCreator
 
         return $builder
             ->add('first_team', new MatchTeamType(), array(
-                'disableTeam' => $this->isEdit()
+                'disableTeam' => $this->isEdit() && $this->editing->isOfficial()
             ))
             ->add('second_team', new MatchTeamType(), array(
-                'disableTeam' => $this->isEdit()
+                'disableTeam' => $this->isEdit() && $this->editing->isOfficial()
             ))
             ->add('duration', 'choice', array(
                 'choices'     => $durations,
@@ -61,6 +61,14 @@ class MatchFormCreator extends ModelFormCreator
             ->add('map', new ModelType('Map'), array(
                 'required' => false
             ))
+            ->add('type', 'choice', array(
+                'choices'  => array(
+                    \Match::OFFICIAL => 'Official',
+                    \Match::FUN => 'Fun match',
+                    \Match::SPECIAL => 'Special event match',
+                ),
+                'label' => 'Match Type'
+            ))
             ->add('enter', 'submit');
     }
 
@@ -86,6 +94,7 @@ class MatchFormCreator extends ModelFormCreator
         $form->get('server_address')->setData($match->getServerAddress());
         $form->get('time')->setData($match->getTimestamp());
         $form->get('map')->setData($match->getMap());
+        $form->get('type')->setData($match->getMatchType());
     }
 
     /**
@@ -106,6 +115,13 @@ class MatchFormCreator extends ModelFormCreator
         $secondTeam = $form->get('second_team');
 
         $serverInfo = $this->getServerInfo($form->get('server_address'));
+
+        if (!$match->isOfficial()) {
+            $match->setTeamColors(
+                $firstTeam->get('team')->getData(),
+                $secondTeam->get('team')->getData()
+            );
+        }
 
         $match->setTeamPlayers(
             $this->getPlayerList($firstTeam),
@@ -135,11 +151,15 @@ class MatchFormCreator extends ModelFormCreator
         $firstTeam  = $form->get('first_team');
         $secondTeam = $form->get('second_team');
 
+        $firstId = $firstTeam->get('team')->getData()->getId();
+        $secondId = $secondTeam->get('team')->getData()->getId();
+
+        $official = ($form->get('type')->getData() === \Match::OFFICIAL);
         $serverInfo = $this->getServerInfo($form->get('server_address'));
 
         $match = \Match::enterMatch(
-            $firstTeam->get('team')->getData()->getId(),
-            $secondTeam->get('team')->getData()->getId(),
+            $official ? $firstId : null,
+            $official ? $secondId : null,
             $firstTeam->get('score')->getData(),
             $secondTeam->get('score')->getData(),
             $form->get('duration')->getData(),
@@ -150,7 +170,10 @@ class MatchFormCreator extends ModelFormCreator
             $serverInfo[0],
             $serverInfo[1],
             null,
-            $form->get('map')->getData()->getId()
+            $form->get('map')->getData()->getId(),
+            $form->get('type')->getData(),
+            $official ? null : $firstId,
+            $official ? null : $secondId
         );
 
         return $match;

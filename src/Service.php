@@ -99,7 +99,7 @@ abstract class Service
      * Gets a parameter
      *
      * @param  string $name The parameter name
-     * @return string The parameter value
+     * @return mixed The parameter value
      */
     public static function getParameter($name)
     {
