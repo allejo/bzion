@@ -55,7 +55,7 @@ class MatchTeamType extends AbstractType
         $players = $event->getForm()->get('participants');
         $team = $event->getForm()->get('team')->getData();
 
-        if (!$team || !$team->isValid()) {
+        if (!$team || !$team instanceof \Model || !$team->isValid()) {
             return;
         }
 

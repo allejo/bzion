@@ -67,6 +67,7 @@ class MatchFormCreator extends ModelFormCreator
                     \Match::FUN => 'Fun match',
                     \Match::SPECIAL => 'Special event match',
                 ),
+                'disabled' => $this->editing && $this->editing->isOfficial(),
                 'label' => 'Match Type'
             ))
             ->add('enter', 'submit');
