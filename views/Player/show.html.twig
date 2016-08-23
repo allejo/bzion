@@ -79,6 +79,15 @@
                 <p><strong>Joined on</strong> {{ player.joinedDate | humanTime(constant("TimeDate::DATE_FULL"), tooltip = false) }}</p>
                 <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
 
+                <section class="c-player__stats">
+                    <p><strong>Matches played</strong> {{ player.matchCount }}</p>
+                    <p>
+                        <strong>Win ratio</strong>
+                        {% set ratio = 100 * player.matchWinRatio -%}
+                        <span title="{{ ratio|number_format(1) }}%">{{ ratio|round }}%</span>
+                    </p>
+                </section>
+
                 {% if player.description is not empty %}
                     <section class="c-player__bio s-markdown">
                         {{ player.description | markdown }}

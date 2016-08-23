@@ -132,6 +132,13 @@ class Player extends AvatarModel implements NamedModel
     protected $player;
 
     /**
+     * The cached match count for a player
+     *
+     * @var int
+     */
+    private $cachedMatchCount = null;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "players";
@@ -836,6 +843,41 @@ class Player extends AvatarModel implements NamedModel
     public function countUnreadNotifications()
     {
         return Notification::countUnreadNotifications($this->id);
+    }
+
+    /**
+     * Count the number of matches a player has participated in
+     * @return int
+     */
+    public function getMatchCount()
+    {
+        if ($this->cachedMatchCount === null) {
+            $this->cachedMatchCount = Match::getQueryBuilder()
+                ->active()
+                ->with($this)
+                ->count();
+        }
+
+        return $this->cachedMatchCount;
+    }
+
+    /**
+     * Get the (victory/total matches) ratio of the player
+     * @return float
+     */
+    public function getMatchWinRatio()
+    {
+        $count = $this->getMatchCount();
+        $wins = Match::getQueryBuilder()
+            ->active()
+            ->with($this, 'win')
+            ->count();
+
+        if ($wins == 0) {
+            return 0;
+        }
+
+        return $wins/$count;
     }
 
     /**
