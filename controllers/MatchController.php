@@ -86,7 +86,7 @@ class MatchController extends CRUDController
         // TODO: Generating this response is unnecessary
         $response = $this->edit($match, $me, "match");
 
-        if ($this->recalculateNeeded) {
+        if ($this->recalculateNeeded && $match->isOfficial()) {
             // Redirect to a confirmation form if we are assigning a new leader
             $url = Service::getGenerator()->generate('match_recalculate', array(
                 'match' => $match->getId(),

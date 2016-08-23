@@ -186,16 +186,6 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
-     * Get the name of the route that shows the object
-     * @param  string $action The route's suffix
-     * @return string
-     */
-    public static function getRouteName($action = 'show')
-    {
-        return "match_$action";
-    }
-
-    /**
      * Get a one word description of a match relative to a team (i.e. win, loss, or draw)
      *
      * @param int|string|TeamInterface $teamID The team ID we want the noun for
@@ -297,7 +287,7 @@ class Match extends UrlModel implements NamedModel
     /**
      * Set the timestamp of the match
      *
-     * @param  mixed The match's new timestamp
+     * @param  mixed $timestamp The match's new timestamp
      * @return $this
      */
     public function setTimestamp($timestamp)
@@ -377,7 +367,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getPlayers($team)
     {
-        if ($team instanceof Team) {
+        if ($team instanceof TeamInterface) {
             $team = $team->getId();
         }
 
