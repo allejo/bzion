@@ -286,6 +286,10 @@ team_abandon:
     path:     /teams/{team}/abandon
     defaults: { _controller: 'Team', _action: 'abandon' }
 
+visit_log_list:
+    path:     /visits
+    defaults: { _controller: 'VisitLog', _action: 'list' }
+
 custom_page_create:
     path:     /pages/new
     defaults: { _controller: 'Page', _action: 'create' }

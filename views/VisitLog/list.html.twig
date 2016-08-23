@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Visit Log{% endblock %}
+
+{% block pageTitle %}
+    <h1>Visit Log</h1>
+{% endblock %}
+
+{% block content %}
+    <section class="o-container">
+        <section class="c-table c-table--no-border">
+            <div class="c-table__row c-table__row--header">
+                <div class="c-table__row__column c-visit__ip">IP Address</div>
+                <div class="c-table__row__column c-visit__player">
+                    Player
+                    <span class="c-visit__player__bzid">BZID</span>
+                </div>
+                <div class="c-table__row__column c-visit__timestamp">Timestamp</div>
+                <div class="c-table__row__column c-visit__host">Host</div>
+                <div class="c-table__row__column c-visit__useragent">User agent</div>
+            </div>
+
+            {% for visit in visits %}
+                <div class="c-table__row c-visit">
+                    <div class="c-table__row__column c-visit__ip">{{ visit.ipAddress }}</div>
+                    <div class="c-table__row__column c-visit__player">
+                        {{ link_to(visit.player) }}
+                        <span class="c-visit__player__bzid">{{ visit.player.bzid }}</span>
+                    </div>
+                    <div class="c-table__row__column c-visit__timestamp">{{ visit.timestamp|humanTime }}</div>
+                    <div class="c-table__row__column c-visit__host">{{ visit.host }}</div>
+                    <div class="c-table__row__column c-visit__useragent">{{ visit.userAgent }}</div>
+                </div>
+            {% endfor %}
+        </section>
+
+        {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+    </section>
+{% endblock %}

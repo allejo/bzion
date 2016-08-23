@@ -209,7 +209,7 @@ class Page extends AliasModel
         return array(
             "admin", "bans", "index", "login", "logout", "maps", "matches",
             "messages", "news", "notifications", "pages", "players", "servers",
-            "teams"
+            "teams", "visits"
         );
     }
 

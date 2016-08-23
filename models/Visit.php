@@ -60,7 +60,7 @@ class Visit extends Model
         $this->host = $visit['host'];
         $this->user_agent = $visit['user_agent'];
         $this->referer = $visit['referer'];
-        $this->timestamp = new DateTime($visit['timestamp']);
+        $this->timestamp = new TimeDate($visit['timestamp']);
     }
 
     /**
@@ -86,4 +86,65 @@ class Visit extends Model
             'timestamp'  => $timestamp->toMysql(),
         ));
     }
+
+    /**
+     * Get a query builder for players
+     * @return QueryBuilder
+     */
+    public static function getQueryBuilder()
+    {
+        return new QueryBuilder('Visit', array(
+            'columns' => array(
+                'ip' => 'ip',
+                'timestamp' => 'timestamp'
+            ),
+            'name' => 'name',
+        ));
+    }
+
+    /**
+     * Get the visiting player
+     * @return Player
+     */
+    public function getPlayer()
+    {
+        return Player::get($this->player);
+    }
+
+    /**
+     * Get the IP address of the player
+     * @return string
+     */
+    public function getIpAddress()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Get the visiting host
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * Get the visitor's user agent
+     * @return string
+     */
+    public function getUserAgent()
+    {
+        return $this->user_agent;
+    }
+
+    /**
+     * Get the visitor's referer or referrer
+     * @return string
+     */
+    public function getReferrer()
+    {
+        return $this->referer;
+    }
+
 }

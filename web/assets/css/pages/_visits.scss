@@ -1,0 +1,36 @@
+.c-visit {
+
+}
+
+.c-visit__ip {
+
+}
+
+.c-visit__player {
+    flex-grow: 0.9;
+}
+
+.c-visit__player__bzid {
+    float: left;
+    margin-right: 5px;
+    min-width: 50px;
+
+    color: $Font-Color-Muted;
+    font-size: 12px;
+}
+
+.c-visit__timestamp {
+    flex-grow: 0.5;
+}
+
+.c-visit__host {
+
+}
+
+.c-visit__useragent {
+    flex-grow: 1.5;
+
+    .c-visit & {
+        font-size: 13px;
+    }
+}
