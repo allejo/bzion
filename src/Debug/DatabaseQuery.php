@@ -209,8 +209,8 @@ class DatabaseQuery
 
             if (array_key_exists($i, $this->params)) {
                 // We are not going to execute the query, so there is no need
-                // to use anything safer than mysql_escape_string()
-                $param = mysql_escape_string($this->params[$i]);
+                // to use anything safe
+                $param = addslashes($this->params[$i]);
 
                 if ($param === null) {
                     $query .= 'null';
