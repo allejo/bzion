@@ -9,3 +9,37 @@
         margin-bottom: $Settings-Page_Section-Small_Margin;
     }
 }
+
+.c-players__search {
+    display: flex;
+
+    border-bottom: $Border-Default;
+    margin: 15px;
+    margin-bottom: 30px;
+
+    .c-page__header__options & {
+        @extend input[type="text"];
+
+        padding-top: 0;
+        padding-bottom: 0;
+        width: unset;
+
+        margin-bottom: 0;
+    }
+
+}
+
+.c-players__search__input {
+    @extend %remove-input-style;
+
+    flex: 1;
+}
+
+.c-players__search__icon {
+    display: flex;
+    padding-right: $Settings-Page_Section-Tiny_Margin;
+
+    i {
+        margin: auto;
+    }
+}

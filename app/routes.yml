@@ -222,6 +222,10 @@ search:
     path:    /search
     defaults: { _controller: 'Search', _action: 'search' }
 
+search_player_by_bzid:
+    path:    /search/players/bzid/{bzid}
+    defaults: { _controller: 'Search', _action: 'playerByBzid', bzid: ~ }
+
 server_list:
     path:     /servers
     defaults: { _controller: 'Server', _action: 'list' }

@@ -1,13 +1,36 @@
 {% extends 'layout.html.twig' %}
 
+{% import _self as listUtils %}
+
 {% block title %}Players{% endblock %}
 
 {% block pageTitle %}
     <h1>Player List</h1>
 {% endblock %}
 
+{% block pageHeader %}
+    <section class="c-page__header">
+        <div class="o-container">
+            <section class="c-page__header__title">
+                <h1>Player List</h1>
+            </section>
+
+            {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                <section class="c-page__header__options">
+                    {{ listUtils.searchForm() }}
+                </section>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
 {% block content %}
     <section class="o-container c-rollcall">
+        {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+            <section class="u-mobile-only o-row">
+                {{ listUtils.searchForm() }}
+            </section>
+        {% endif %}
         <section class="o-row">
             {% for player in players %}
                 {% include "Player/widget.html.twig" with {
@@ -25,3 +48,18 @@
         </section>
     </section>
 {% endblock %}
+
+{% macro searchForm() %}
+        <form class="c-players__search" action="{{ path('search_player_by_bzid') }}" method="GET">
+            <div class="c-players__search__icon">
+                <i class="fa fa-search"></i>
+            </div>
+            <input
+                    class="c-players__search__input"
+                    title="Search by player BZID"
+                    placeholder="Search by BZID..."
+                    type="search"
+                    name="bzid"
+            >
+        </form>
+{% endmacro %}

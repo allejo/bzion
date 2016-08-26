@@ -1,7 +1,9 @@
 <?php
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 class SearchController extends JSONController
 {
@@ -76,5 +78,30 @@ class SearchController extends JSONController
         }
 
         return $query->getArray(array('name', 'outdated'));
+    }
+
+    public function playerByBzidAction(Player $me, Request $request, FlashBag $flashBag, $bzid = null)
+    {
+        if (!$me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
+            throw new ForbiddenException();
+        }
+
+        if ($bzid === null) {
+            if (!$request->query->has('bzid')) {
+                throw new BadRequestException("Please provide the BZID to search for");
+            }
+
+            $bzid = $request->query->get('bzid');
+        }
+
+        $player = Player::getFromBZID($bzid);
+
+        if (!$player->isValid()) {
+            $flashBag->add('error', "Player with BZID $bzid not found");
+
+            return $this->goBack();
+        }
+
+        return new RedirectResponse($player->getURL());
     }
 }
