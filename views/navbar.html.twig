@@ -50,12 +50,9 @@
         {% endif %}
 
         {% if pageButtons is not null %}
-            {% set divisionRendered = false %}
-
             {% for button in pageButtons if button.condition %}
-                {% if not divisionRendered %}
+                {% if loop.first %}
                     <li class="u-mobile-only"><hr></li>
-                    {% set divisionRendered = true %}
                 {% endif %}
 
                 <li class="u-mobile-only">

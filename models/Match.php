@@ -451,9 +451,9 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamEloNew(Team $team)
     {
-        if ($team->getId() === $this->team_a) {
+        if ($team->getId() == $this->team_a) {
             return $this->getTeamAEloNew();
-        } elseif ($team->getId() === $this->team_b) {
+        } elseif ($team->getId() == $this->team_b) {
             return $this->getTeamBEloNew();
         }
 
@@ -468,9 +468,9 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamEloOld(Team $team)
     {
-        if ($team->getId() === $this->team_a) {
+        if ($team->getId() == $this->team_a) {
             return $this->getTeamAEloOld();
-        } elseif ($team->getId() === $this->team_b) {
+        } elseif ($team->getId() == $this->team_b) {
             return $this->getTeamBEloOld();
         }
 
