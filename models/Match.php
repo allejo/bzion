@@ -971,8 +971,22 @@ class Match extends UrlModel implements NamedModel
      */
     public function getName()
     {
-        return sprintf("(+/- %d) %s [%d] vs [%d] %s",
-            $this->getEloDiff(),
+        switch ($this->getMatchType()) {
+            case self::OFFICIAL:
+                $description = "(+/- " . $this->getEloDiff() . ") ";
+                break;
+            case self::FUN:
+                $description = "Fun Match:";
+                break;
+            case self::SPECIAL:
+                $description = "Special Match: ";
+                break;
+            default:
+                $description = "";
+        }
+
+        return sprintf("%s %s [%d] vs [%d] %s",
+            $description,
             $this->getWinner()->getName(),
             $this->getScore($this->getWinner()),
             $this->getScore($this->getLoser()),
