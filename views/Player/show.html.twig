@@ -86,6 +86,10 @@
                         {% set ratio = 100 * player.matchWinRatio -%}
                         <span title="{{ ratio|number_format(1) }}%">{{ ratio|round }}%</span>
                     </p>
+                    <p>
+                        <strong title="Number of captures made by the player's team per match">Team caps per match</strong>
+                        <span>{{ player.matchAverageCaps|number_format(2) }}</span>
+                    </p>
                 </section>
 
                 {% if player.description is not empty %}
