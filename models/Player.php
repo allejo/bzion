@@ -912,10 +912,27 @@ class Player extends AvatarModel implements NamedModel
                     IF(FIND_IN_SET(?, team_a_players), team_a_points, team_b_points)
                 )
             ) AS sum FROM matches WHERE status='entered' AND (FIND_IN_SET(?, team_a_players) OR FIND_IN_SET(?, team_b_players))",
-            "iiiii", array_fill(0, 5, $this->id)
+            array_fill(0, 5, $this->id)
         );
 
         return $query[0]['sum']/$count;
+    }
+
+    public function getMatchActivity()
+    {
+        $activity = 0;
+
+        $matches = Match::getQueryBuilder()
+            ->active()
+            ->with($this)
+            ->where('time')->isAfter(TimeDate::from('45 days ago'))
+            ->getModels($fast = true);
+
+        foreach ($matches as $match) {
+            $activity += $match->getActivity();
+        }
+
+        return $activity;
     }
 
     /**
