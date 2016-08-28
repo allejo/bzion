@@ -153,7 +153,7 @@ module.exports = function(grunt) {
                     'web/assets/css/**/*.scss',
                     '!web/assets/css/vendor/**/*.scss'
                 ],
-                tasks: [ 'sass' ],
+                tasks: [ 'sass:debug' ],
                 options: {
                     livereload: false,
                     spawn: true
