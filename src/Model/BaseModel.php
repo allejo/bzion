@@ -248,7 +248,7 @@ abstract class BaseModel implements ModelInterface
      * @param string          $table            The database table that will be searched
      * @param string|string[] $select           The column that will be returned
      *
-     * @return mixed[] A list of values, if $select was only one column, or the return array of $db->query if it was more
+     * @return int[] A list of values, if $select was only one column, or the return array of $db->query if it was more
      */
     protected static function fetchIds($additional_query = '', $params = array(), $table = "", $select = 'id')
     {

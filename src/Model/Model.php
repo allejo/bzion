@@ -88,7 +88,7 @@ abstract class Model extends CachedModel
     /**
      * Converts an array of IDs to an array of Models
      * @param  int[] $idArray The list of IDs
-     * @return array An array of models
+     * @return static[] An array of models
      */
     public static function arrayIdToModel($idArray)
     {

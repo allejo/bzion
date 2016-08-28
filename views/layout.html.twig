@@ -152,7 +152,7 @@
                         <li><a href="{{ path('map_list') }}">Maps</a></li>
 
                         {%- if me.hasPermission(constant('Permission::EDIT_PAGE')) or me.hasPermission(constant('Permission::EDIT_ROLE')) -%}
-                            <li><a href="{{ path('admin_landing') }}">Administration</a>
+                            <li><a href="{{ path('admin_landing') }}">Administration Panel</a>
                         {%- endif -%}
                         {%- if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
                             <li><a href="{{ path('visit_log_list') }}">Visit Log</a></li>

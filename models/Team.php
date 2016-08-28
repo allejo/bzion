@@ -515,16 +515,16 @@ class Team extends AvatarModel
     /**
      * Find if a specific match is the team's last one
      *
-     * @param  int  $matchID The ID of the match
+     * @param  int|Match $match The match
      * @return bool
      */
-    public function isLastMatch($matchID)
+    public function isLastMatch($match)
     {
         // Find if this team participated in any matches after the current match
         return !Match::getQueryBuilder()
             ->with($this)
             ->where('status')->notEquals('deleted')
-            ->where('time')->isAfter(Match::get($matchID)->getTimestamp())
+            ->where('time')->isAfter(Match::get($match)->getTimestamp())
             ->any();
     }
 
