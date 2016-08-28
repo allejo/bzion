@@ -155,6 +155,7 @@ class LeagueOverseerHookController extends PlainTextController
     public function matchReportAction(Logger $log, Request $request)
     {
         $log->addNotice("Match data received from " . $request->getClientIp());
+        $log->addDebug("Debug match data query: " . http_build_query($this->params->all()));
 
         $matchType = $this->params->get('matchType', Match::OFFICIAL);
 
@@ -190,6 +191,10 @@ class LeagueOverseerHookController extends PlainTextController
                 $log->addNotice("The '" . $teamOne->getName() . "' team played against each other in an official match. Match invalidated.");
                 throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
             }
+        } elseif (Match::FUN === $matchType) {
+            if (count($teamOnePlayers)  < 2 || count($teamTwoPlayers) < 2) {
+                throw new ForbiddenException("You are not allowed to report a match with less than 2 players per team.");
+            }
         }
 
         $map = Map::fetchFromAlias($this->params->get('mapPlayed'));
@@ -223,6 +228,7 @@ class LeagueOverseerHookController extends PlainTextController
                 'score' => $match->getScore($match->getLoser())
             ),
             'eloDiff' => $match->getEloDiff(),
+            'type'    => $matchType,
             'map'     => $map->getName()
         ));
 
