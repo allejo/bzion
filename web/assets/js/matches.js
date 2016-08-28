@@ -1,5 +1,7 @@
 $(function () {
-    $("#match-type-filter").nuclide({
+    var matchTypeFilter = $("#match-type-filter");
+
+    matchTypeFilter.nuclide({
         filter: 'matchtype',
         postFilter: function () {
             var $elements = $('.c-match-history__matches');
@@ -16,6 +18,11 @@ $(function () {
             });
         },
         itemSelector: '.c-match-history__match'
+    });
+
+    matchTypeFilter.TabSelector({
+        itemSelector: '.c-pill-group__pill',
+        activeClass: 'c-pill-group__pill--active'
     });
 
     //
