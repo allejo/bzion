@@ -110,7 +110,10 @@
                                     {% if button.condition %}
                                         <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}"><i class="fa fa-{{ button.icon }}"></i> {{ button.text }}</a>
                                     {% endif %}
-                                {% endfor %}
+                                {% endfor -%}
+
+                                {%- block headerOptions %}
+                                {% endblock %}
                             </section>
                         </div>
                     </section>

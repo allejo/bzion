@@ -92,3 +92,38 @@
         display: flex;
     }
 }
+
+.c-page__search {
+    display: flex;
+
+    border-bottom: $Border-Default;
+    margin: 15px;
+    margin-bottom: 30px;
+
+    .c-page__header__options & {
+        @extend input[type="text"];
+
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        width: unset !important;
+
+        margin-bottom: 0;
+    }
+
+}
+
+.c-page__search__input {
+    @extend %remove-input-style;
+
+    flex: 1;
+}
+
+.c-page__search__icon {
+    display: flex;
+    padding-right: $Settings-Page_Section-Tiny_Margin;
+    margin-bottom: 0.2em;
+
+    i {
+        margin: auto;
+    }
+}
