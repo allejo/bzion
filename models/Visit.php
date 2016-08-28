@@ -60,7 +60,7 @@ class Visit extends Model
         $this->host = $visit['host'];
         $this->user_agent = $visit['user_agent'];
         $this->referer = $visit['referer'];
-        $this->timestamp = new TimeDate($visit['timestamp']);
+        $this->timestamp = TimeDate::fromMysql($visit['timestamp']);
     }
 
     /**
