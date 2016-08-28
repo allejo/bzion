@@ -28,8 +28,12 @@
                 <section class="c-map-widget__info">
                     <article class="c-map-widget__info__header">
                         <h1 class="c-map-widget__info__name">
-                            {{ map.name }}
+                            {{ map.name -}}
                         </h1>
+
+                        <div class="c-map-widget__info__stats">
+                            {{ 'match'|plural(map.countMatches) }} played
+                        </div>
 
                         <article class="c-map-widget__info__meta">
                             {% if me.canEdit(map) %}

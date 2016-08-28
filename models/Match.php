@@ -949,6 +949,7 @@ class Match extends UrlModel implements NamedModel
                 'firstTeamPoints'  => 'team_a_points',
                 'secondTeamPoints' => 'team_b_points',
                 'time'             => 'timestamp',
+                'map'              => 'map',
                 'type'             => 'match_type',
                 'status'           => 'status'
             ),

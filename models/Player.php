@@ -918,9 +918,14 @@ class Player extends AvatarModel implements NamedModel
         return $query[0]['sum']/$count;
     }
 
+    /**
+     * Get the match activity in matches per day for a player
+     *
+     * @return float
+     */
     public function getMatchActivity()
     {
-        $activity = 0;
+        $activity = 0.0;
 
         $matches = Match::getQueryBuilder()
             ->active()
