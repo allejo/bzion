@@ -158,7 +158,7 @@
                             <li><a href="{{ path('admin_landing') }}">Administration Panel</a>
                         {%- endif -%}
                         {%- if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-                            <li><a href="{{ path('visit_log_list') }}">Visit Log</a></li>
+                            <li><a href="{{ path('visit_list') }}">Visit Log</a></li>
                         {%- endif -%}
                     </ul>
                 </div>

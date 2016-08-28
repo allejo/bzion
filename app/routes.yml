@@ -290,7 +290,7 @@ team_abandon:
     path:     /teams/{team}/abandon
     defaults: { _controller: 'Team', _action: 'abandon' }
 
-visit_log_list:
+visit_list:
     path:     /visits
     defaults: { _controller: 'VisitLog', _action: 'list' }
 

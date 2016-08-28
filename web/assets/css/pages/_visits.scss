@@ -1,34 +1,101 @@
-.c-visit {
+.c-visit, .c-visit__header {
+    border-top: 0;
+    border-bottom: $Border-Default;
+    display: block;
 
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    @include respond-up(md) {
+        display: flex;
+
+        border: 0;
+        padding: 0;
+    }
+
+    .c-table__row__column {
+        border: 0;
+        flex-shrink: 0;
+
+        padding-top: 2px;
+        padding-bottom: 2px;
+
+        @include respond-up(md) {
+            padding: 6px;
+        }
+    }
+}
+
+.c-visit__header {
+    display: none;
+
+    @include respond-up(md) {
+        display: flex;
+    }
+}
+
+.c-visit__label {
+    color: $Font-Color-Default;
+    font-weight: bold;
+    font-size: $Settings-Base_Font_Size;
+
+    @include respond-up(md) {
+        display: none;
+    }
 }
 
 .c-visit__ip {
-
+    flex-grow: 0.9;
+    order: 1;
 }
 
 .c-visit__player {
     flex-grow: 0.9;
+    order: 3;
 }
 
 .c-visit__player__bzid {
-    float: left;
-    margin-right: 5px;
-    min-width: 50px;
-
     color: $Font-Color-Muted;
     font-size: 12px;
+
+    margin-left: 5px;
+
+    @include respond-up(md) {
+        float: left;
+
+        margin-left: 0;
+        margin-right: 5px;
+
+        min-width: 50px;
+    }
+}
+
+.c-visit__roles {
+    flex-grow: 0.2;
+    order: 2;
+
+    @include respond-up(md) {
+        text-align: right;
+    }
+
+    .c-visit & {
+        color: $Font-Color-Muted;
+        font-size: 14px;
+    }
 }
 
 .c-visit__timestamp {
     flex-grow: 0.5;
+    order: 4;
 }
 
 .c-visit__host {
-
+    order: 5;
 }
 
 .c-visit__useragent {
     flex-grow: 1.5;
+    order: 6;
 
     .c-visit & {
         font-size: 13px;

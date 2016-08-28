@@ -8,28 +8,52 @@
 
 {% block content %}
     <section class="o-container">
-        <section class="c-table c-table--no-border">
-            <div class="c-table__row c-table__row--header">
+        <section class="c-table c-visitlog">
+            <div class="c-table__row c-table__row--header c-visit__header">
                 <div class="c-table__row__column c-visit__ip">IP Address</div>
+                <div class="c-table__row__column c-visit__host">Host</div>
                 <div class="c-table__row__column c-visit__player">
                     Player
                     <span class="c-visit__player__bzid">BZID</span>
                 </div>
+                <div class="c-table__row__column c-visit__roles">Roles</div>
                 <div class="c-table__row__column c-visit__timestamp">Timestamp</div>
-                <div class="c-table__row__column c-visit__host">Host</div>
                 <div class="c-table__row__column c-visit__useragent">User agent</div>
             </div>
 
             {% for visit in visits %}
                 <div class="c-table__row c-visit">
-                    <div class="c-table__row__column c-visit__ip">{{ visit.ipAddress }}</div>
+                    <div class="c-table__row__column c-visit__ip">
+                        <span class="c-visit__label">IP Address:</span>
+                        {{ visit.ipAddress }}
+                    </div>
+                    <div class="c-table__row__column c-visit__host">
+                        <span class="c-visit__label">Host:</span>
+                        {{ visit.host }}
+                    </div>
                     <div class="c-table__row__column c-visit__player">
+                        <span class="c-visit__label">Player:</span>
                         {{ link_to(visit.player) }}
                         <span class="c-visit__player__bzid">{{ visit.player.bzid }}</span>
                     </div>
-                    <div class="c-table__row__column c-visit__timestamp">{{ visit.timestamp|humanTime }}</div>
-                    <div class="c-table__row__column c-visit__host">{{ visit.host }}</div>
-                    <div class="c-table__row__column c-visit__useragent">{{ visit.userAgent }}</div>
+                    <div class="c-table__row__column c-visit__roles">
+                    {% for role in visit.player.roles if role.displayIcon %}
+                        {% if loop.first %}
+                            <span class="c-visit__label">Player Roles:</span>
+                        {% endif %}
+
+
+                        <i title="{{ role.name }}" class="fa {{ role.displayIcon }}"></i>
+                    {% endfor %}
+                        </div>
+                    <div class="c-table__row__column c-visit__timestamp">
+                        <span class="c-visit__label">Timestamp:</span>
+                        {{ visit.timestamp|humanTime }}
+                    </div>
+                    <div class="c-table__row__column c-visit__useragent">
+                        <span class="c-visit__label">User Agent:</span>
+                        {{ visit.userAgent }}
+                    </div>
                 </div>
             {% endfor %}
         </section>

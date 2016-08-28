@@ -399,6 +399,17 @@ class Player extends AvatarModel implements NamedModel
     }
 
     /**
+     * Get the roles of the player
+     * @return Role[]
+     */
+    public function getRoles()
+    {
+        $this->lazyLoad();
+
+        return $this->roles;
+    }
+
+    /**
      * Rebuild the list of permissions a user has been granted
      */
     private function updateUserPermissions()
