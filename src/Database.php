@@ -63,7 +63,14 @@ class Database
                 $user,
                 $password,
                 array(
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+
+                    // We are using MySQL, so there is no need to emulate
+                    // prepared statements for databases that don't support
+                    // them. This line makes sure all values are returned to PHP
+                    // from MySQL in the correct type, and they are not all
+                    // strings.
+                    PDO::ATTR_EMULATE_PREPARES => false
                 )
             );
         } catch (PDOException $e) {

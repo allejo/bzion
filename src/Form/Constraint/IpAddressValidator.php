@@ -25,7 +25,7 @@ class IpAddressValidator extends ConstraintValidator
             return;
         }
 
-        foreach ($ip as $value) {
+        foreach ($value as $ip) {
             if (strlen($ip) > 255) {
                 $this->context->buildViolation($constraint->lengthMessage)
                     ->setParameter('%address%', $ip)
