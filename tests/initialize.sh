@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
 COMPOSER_ARGS="--no-interaction"
-if [[ $BZION_HHVM -eq 1 ]]; then
-   COMPOSER_ARGS="-v"
-fi
 
 php composer.phar install $COMPOSER_ARGS --prefer-source --ignore-platform-reqs
 
