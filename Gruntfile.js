@@ -104,7 +104,8 @@ module.exports = function(grunt) {
                 globals: {
                     jQuery: true
                 },
-                reporter: require('jshint-stylish')
+                reporter: require('jshint-stylish'),
+                reporterOutput: ''
             },
             all: ['Gruntfile.js', 'web/assets/js/*.js']
         },
@@ -171,19 +172,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('css', [ 'sass:dist', 'combine_mq', 'cssmin' ]);
-    grunt.registerTask('js', [ 'jshint', 'uglify' ]);
+    grunt.registerTask('css',  [ 'sass:dist', 'combine_mq', 'cssmin' ]);
+    grunt.registerTask('js',   [ 'jshint', 'uglify' ]);
+    grunt.registerTask('dist', [ 'css', 'js', 'responsive_images' ]);
 
-    grunt.registerTask('install-hook', function () {
-        var fs = require('fs');
-
-        // my precommit hook is inside the repo as /hooks/pre-commit
-        // copy the hook file to the correct place in the .git directory
-        grunt.file.copy('hooks/pre-commit', '.git/hooks/pre-commit');
-
-        // chmod the file to readable and executable by all
-        fs.chmodSync('.git/hooks/pre-commit', '755');
-    });
-
-    grunt.registerTask('default', [ 'css', 'js', 'responsive_images' ]);
+    grunt.registerTask('default', ['dist']);
 };
