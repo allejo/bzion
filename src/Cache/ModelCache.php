@@ -8,6 +8,7 @@
 namespace BZIon\Cache;
 
 use BZIon\Debug\Debug;
+use Model;
 
 /**
  * A Model cache that can speed up data retrieval from the database
@@ -79,11 +80,11 @@ class ModelCache
             return $this->models;
         }
 
-        if (!isset($models[$type])) {
+        if (!isset($this->models[$type])) {
             return array();
         }
 
-        return $models[$type];
+        return $this->models[$type];
     }
 
     /**

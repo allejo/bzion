@@ -102,8 +102,8 @@ class Role extends UrlModel implements NamedModel
         $this->displayOrder = $role['display_order'];
         $this->permissions  = array();
 
-        $permissions = parent::fetchIds(
-            "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?", "i",
+        $permissions = self::fetchIds(
+            "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?",
             array($this->id), "permissions", "name");
 
         foreach ($permissions as $permission) {
@@ -171,8 +171,8 @@ class Role extends UrlModel implements NamedModel
     public function getUsers()
     {
         return Player::arrayIdToModel(
-            parent::fetchIds(
-                "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.role_id = ?", "i",
+            self::fetchIds(
+                "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.role_id = ?",
                 array($this->getId()), "roles", "player_roles.user_id"
             )
         );
@@ -211,7 +211,7 @@ class Role extends UrlModel implements NamedModel
     /**
      * Add a permission to a role
      *
-     * @param string $perm_name The name of the permission to add
+     * @param string|Permission $perm_name The name of the permission to add
      *
      * @return bool Whether or not the operation was successful
      */
@@ -237,7 +237,7 @@ class Role extends UrlModel implements NamedModel
      */
     protected function getPermIDs()
     {
-        return parent::fetchIdsFrom("role_id", array($this->id), "i", false, "", "role_permission", "perm_id");
+        return self::fetchIdsFrom("role_id", array($this->id), false, "", "role_permission", "perm_id");
     }
 
     /**
@@ -265,7 +265,7 @@ class Role extends UrlModel implements NamedModel
     /**
      * Revoke a permission from a role
      *
-     * @param string $perm_name The permission to remove
+     * @param string|Permission $perm_name The permission to remove
      *
      * @return bool Whether or not the operation was successful
      */
@@ -277,8 +277,8 @@ class Role extends UrlModel implements NamedModel
     /**
      * Modify a permission a role has by either adding a new one or removing an old one
      *
-     * @param string $perm_name The permission to add or remove
-     * @param string $action    Whether to "add" or "remove" a permission
+     * @param string|Permission $perm_name The permission to add or remove
+     * @param string            $action    Whether to "add" or "remove" a permission
      *
      * @return bool
      */
@@ -295,12 +295,12 @@ class Role extends UrlModel implements NamedModel
 
         if ($permission->isValid()) {
             if ($action == "add") {
-                $this->db->query("INSERT INTO role_permission (role_id, perm_id) VALUES (?, ?)", "ii",
+                $this->db->execute("INSERT INTO role_permission (role_id, perm_id) VALUES (?, ?)",
                     array($this->getId(), $permission->getId()));
 
                 $this->permissions[$name] = true;
             } elseif ($action == "remove") {
-                $this->db->query("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1", "ii",
+                $this->db->execute("DELETE FROM role_permission WHERE role_id = ? AND perm_id = ? LIMIT 1",
                     array($this->getId(), $permission->getId()));
 
                 unset($this->permissions[$name]);
@@ -350,7 +350,7 @@ class Role extends UrlModel implements NamedModel
      */
     public function setName($name)
     {
-        return $this->updateProperty($this->name, 'name', $name, 's');
+        return $this->updateProperty($this->name, 'name', $name);
     }
 
     /**
@@ -361,7 +361,7 @@ class Role extends UrlModel implements NamedModel
      */
     public function setDisplayAsLeader($display)
     {
-        return $this->updateProperty($this->display, 'display', (int) $display, 'i');
+        return $this->updateProperty($this->display, 'display', (int) $display);
     }
 
     /**
@@ -372,7 +372,7 @@ class Role extends UrlModel implements NamedModel
      */
     public function setDisplayIcon($displayIcon)
     {
-        return $this->updateProperty($this->displayIcon, 'display_icon', $displayIcon, 's');
+        return $this->updateProperty($this->displayIcon, 'display_icon', $displayIcon);
     }
 
     /**
@@ -383,7 +383,7 @@ class Role extends UrlModel implements NamedModel
      */
     public function setDisplayColor($displayColor)
     {
-        return $this->updateProperty($this->displayColor, 'display_color', $displayColor, 's');
+        return $this->updateProperty($this->displayColor, 'display_color', $displayColor);
     }
 
     /**
@@ -394,7 +394,7 @@ class Role extends UrlModel implements NamedModel
      */
     public function setDisplayName($displayName)
     {
-        return $this->updateProperty($this->displayName, 'display_name', $displayName, 's');
+        return $this->updateProperty($this->displayName, 'display_name', $displayName);
     }
 
     /**
@@ -405,7 +405,7 @@ class Role extends UrlModel implements NamedModel
      */
     public function setDisplayOrder($displayOrder)
     {
-        return $this->updateProperty($this->displayOrder, 'display_order', $displayOrder, 'i');
+        return $this->updateProperty($this->displayOrder, 'display_order', $displayOrder);
     }
 
     /**
@@ -432,7 +432,7 @@ class Role extends UrlModel implements NamedModel
             'display_color' => $displayColor,
             'display_name'  => $displayName,
             'display_order' => $displayOrder
-        ), 'siiisssi');
+        ));
     }
 
     /**
@@ -445,8 +445,8 @@ class Role extends UrlModel implements NamedModel
     public static function getRoles($user_id)
     {
         return parent::arrayIdToModel(
-            parent::fetchIds(
-                "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.user_id = ?", "i",
+            self::fetchIds(
+                "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.user_id = ?",
                 array($user_id), "roles", "roles.id"
             )
         );
@@ -460,7 +460,7 @@ class Role extends UrlModel implements NamedModel
     public static function getLeaderRoles()
     {
         return parent::arrayIdToModel(
-            parent::fetchIds(
+            self::fetchIds(
                 "WHERE display = 1 ORDER BY display_order ASC"
             )
         );

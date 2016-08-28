@@ -26,12 +26,6 @@ class DatabaseQuery
     private $queryType;
 
     /**
-     * The types of the query
-     * @var string|null
-     */
-    private $types;
-
-    /**
      * The parameters of the query
      * @var array|null
      */
@@ -76,13 +70,11 @@ class DatabaseQuery
      * Debug a database query
      *
      * @param string     $query  The MySQL query
-     * @param string     $types  The query types
      * @param array|null $params The query parameters
      */
-    public function __construct(&$query, &$types, &$params)
+    public function __construct(&$query, &$params)
     {
         $this->query  = $query;
-        $this->types  = ($types !== false) ? $types : null;
         $this->params = ($params !== false) ? array_values($params) : null;
 
         $this->queryType = strtok($query, ' ');
@@ -146,16 +138,6 @@ class DatabaseQuery
     public function getQueryType()
     {
         return $this->queryType;
-    }
-
-    /**
-     * Get the value types of the query
-     *
-     * @return string|null
-     */
-    public function getTypes()
-    {
-        return $this->types;
     }
 
     /**
@@ -232,7 +214,7 @@ class DatabaseQuery
 
                 if ($param === null) {
                     $query .= 'null';
-                } elseif ($this->types[$i] == 's' || $this->types[$i] == 'b') {
+                } elseif (is_string($param)) {
                     // Strings will be quoted
                     $query .= '"' . $param . '"';
                 } else {

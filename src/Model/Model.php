@@ -92,7 +92,7 @@ abstract class Model extends CachedModel
     /**
      * Converts an array of IDs to an array of Models
      * @param  int[] $idArray The list of IDs
-     * @return array An array of models
+     * @return static[] An array of models
      */
     public static function arrayIdToModel($idArray)
     {
@@ -138,7 +138,7 @@ abstract class Model extends CachedModel
                 $value = $value->toMysql();
             }
 
-            $this->update($dbColumn, $value, $type);
+            $this->update($dbColumn, $value);
         }
 
         return $this;
@@ -200,7 +200,7 @@ abstract class Model extends CachedModel
     /**
      * Escape special HTML characters from a string
      * @param  string  $string
-     * @return $string
+     * @return string
      */
     public static function escape($string)
     {

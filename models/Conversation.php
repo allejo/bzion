@@ -111,7 +111,7 @@ class Conversation extends UrlModel implements NamedModel
     public function updateLastActivity()
     {
         $this->last_activity = TimeDate::now();
-        $this->update('last_activity', $this->last_activity->toMysql(), 's');
+        $this->update('last_activity', $this->last_activity->toMysql());
     }
 
     /**
@@ -122,7 +122,7 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function setSubject($subject)
     {
-        return $this->updateProperty($this->subject, 'subject', $subject, 's');
+        return $this->updateProperty($this->subject, 'subject', $subject);
     }
 
     /**
@@ -132,7 +132,7 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function getLastMessage()
     {
-        $ids = self::fetchIdsFrom('conversation_to', array($this->id), 'i', false, 'AND event_type IS null ORDER BY id DESC LIMIT 0,1', 'messages');
+        $ids = self::fetchIdsFrom('conversation_to', array($this->id), false, 'AND event_type IS null ORDER BY id DESC LIMIT 0,1', 'messages');
 
         if (!isset($ids[0])) {
             return Message::invalid();
@@ -150,7 +150,7 @@ class Conversation extends UrlModel implements NamedModel
     public function isReadBy($playerId)
     {
         $query = $this->db->query("SELECT `read` FROM `player_conversations` WHERE `player` = ? AND `conversation` = ?",
-            'ii', array($playerId, $this->id));
+            array($playerId, $this->id));
 
         return $query[0]['read'] == 1;
     }
@@ -163,9 +163,9 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function markReadBy($playerId)
     {
-        $this->db->query(
+        $this->db->execute(
             "UPDATE `player_conversations` SET `read` = 1 WHERE `player` = ? AND `conversation` = ? AND `read` = 0",
-            'ii', array($playerId, $this->id)
+            array($playerId, $this->id)
         );
     }
 
@@ -177,9 +177,8 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function markUnread($except)
     {
-        $this->db->query(
+        $this->db->execute(
             "UPDATE `player_conversations` SET `read` = 0 WHERE `conversation` = ? AND `player` != ?",
-            'ii',
             array($this->id, $except)
         );
     }
@@ -241,7 +240,7 @@ class Conversation extends UrlModel implements NamedModel
               WHERE player_conversations.conversation = ?
             )";
 
-        $results = $this->db->query($query, "ii", array($team->getId(), $this->id));
+        $results = $this->db->query($query, array($team->getId(), $this->id));
 
         return Player::arrayIdToModel(array_column($results, 'id'));
     }
@@ -257,12 +256,10 @@ class Conversation extends UrlModel implements NamedModel
     public function getPlayerIds($hide = null, $distinct = false)
     {
         $additional_query = "WHERE `conversation` = ?";
-        $types = "i";
         $params = array($this->id);
 
         if ($hide) {
             $additional_query .= " AND `player` != ?";
-            $types .= "i";
             $params[] = $hide;
         }
 
@@ -270,7 +267,7 @@ class Conversation extends UrlModel implements NamedModel
             $additional_query .= " AND `distinct` = 1";
         }
 
-        return parent::fetchIds($additional_query, $types, $params, "player_conversations", "player");
+        return self::fetchIds($additional_query, $params, "player_conversations", "player");
     }
 
     /**
@@ -280,7 +277,7 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function getTeamIds()
     {
-        return parent::fetchIds("WHERE `conversation` = ?", "i", $this->id, "team_conversations", "team");
+        return self::fetchIds("WHERE `conversation` = ?", $this->id, "team_conversations", "team");
     }
 
     /**
@@ -297,7 +294,7 @@ class Conversation extends UrlModel implements NamedModel
             'subject' => $subject,
             'creator' => $creatorId,
             'status'  => "active",
-        ), 'sis', 'last_activity');
+        ), 'last_activity');
 
         Database::getInstance()->startTransaction();
         foreach ($members as $member) {
@@ -327,9 +324,9 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Checks if a player or team belongs in the conversation
      * @param  Player|Team $member The player or team to check
-     * @param  bool Whether to only return true if a player is specifically a
-     *              member of the conversation, not just a member of one of the
-     *              conversation's teams (ignored if $member is a Team)
+     * @param  bool $distinct Whether to only return true if a player is
+     *                        specifically a member of the conversation, not
+     *                        just a member of one of the conversation's teams (ignored if $member is a Team)
      * @return bool True if the given object belongs in the conversation, false if they don't
      */
     public function isMember($member, $distinct = false)
@@ -345,7 +342,7 @@ class Conversation extends UrlModel implements NamedModel
         $result = $this->db->query(
             "SELECT 1 FROM `{$type}_conversations` WHERE `conversation` = ?
               AND `$type` = ? $distinctQuery",
-            "ii", array($this->id, $member->getId()));
+            array($this->id, $member->getId()));
 
         return count($result) > 0;
     }
@@ -370,21 +367,19 @@ class Conversation extends UrlModel implements NamedModel
                 $query = "INSERT IGNORE INTO `player_conversations` (`conversation`, `player`, `distinct`, `read`) VALUES (?, ?, 0, 1)";
             }
 
-            $this->db->query($query, "ii", array($this->getId(), $member->getId()));
+            $this->db->execute($query, array($this->getId(), $member->getId()));
         } elseif ($member instanceof Team) {
             // Add the team to the team_conversations table...
-            $this->db->query(
+            $this->db->execute(
                 "INSERT IGNORE INTO `team_conversations` (`conversation`, `team`) VALUES (?, ?)",
-                "ii",
                 array($this->getId(), $member->getId())
             );
 
             // ...and each of its members in the player_conversations table as
             // non-distinct (unless they were already there)
             foreach ($member->getMembers() as $player) {
-                $this->db->query(
+                $this->db->execute(
                     "INSERT IGNORE INTO `player_conversations` (`conversation`, `player`, `distinct`) VALUES (?, ?, 0)",
-                    "ii",
                     array($this->getId(), $player->getId())
                 );
             }
@@ -408,7 +403,7 @@ class Conversation extends UrlModel implements NamedModel
                 INNER JOIN team_conversations ON team_conversations.team = teams.id
                 WHERE team_conversations.conversation = ?
                 AND players.id = ?
-                LIMIT 1", "ii", array($this->getId(), $member->getId())
+                LIMIT 1", array($this->getId(), $member->getId())
         );
 
         return $query[0]['c'] > 0;
@@ -426,27 +421,27 @@ class Conversation extends UrlModel implements NamedModel
             if ($this->isTeamMember($member) && $member->getTeam()->getLeader()->isSameAs($member)) {
                 // The player is the leader of a team in the conversation, don't
                 // remove them entirely
-                $this->db->query(
-                    "UPDATE `player_conversations` SET `distinct` = 0 WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId())
+                $this->db->execute(
+                    "UPDATE `player_conversations` SET `distinct` = 0 WHERE `conversation` = ? AND `player` = ?", array($this->getId(), $member->getId())
                 );
             } else {
-                $this->db->query(
-                    "DELETE FROM `player_conversations` WHERE `conversation` = ? AND `player` = ?", "ii", array($this->getId(), $member->getId())
+                $this->db->execute(
+                    "DELETE FROM `player_conversations` WHERE `conversation` = ? AND `player` = ?", array($this->getId(), $member->getId())
                 );
             }
         } else {
-            $this->db->query(
+            $this->db->execute(
                 "DELETE `player_conversations` FROM `player_conversations`
                 LEFT JOIN `players` ON players.id = player_conversations.player
                 WHERE player_conversations.conversation = ?
                 AND players.team = ?
-                AND player_conversations.distinct = 0", "ii", array($this->getId(), $member->getId())
+                AND player_conversations.distinct = 0", array($this->getId(), $member->getId())
             );
 
-            $this->db->query(
+            $this->db->execute(
                 "DELETE FROM `team_conversations`
                 WHERE conversation = ?
-                AND team = ?", "ii", array($this->getId(), $member->getId())
+                AND team = ?", array($this->getId(), $member->getId())
             );
         }
     }
@@ -472,7 +467,6 @@ class Conversation extends UrlModel implements NamedModel
                 AND pg.player != ?
                 AND players.verified = 1
                 AND players.receives != \"nothing\"",
-            'ii',
             array($this->id, $except),
             'player_conversations AS pg',
             'pg.player');

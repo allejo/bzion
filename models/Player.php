@@ -129,7 +129,7 @@ class Player extends AvatarModel implements NamedModel
      * The ban of the player, or null if the player is not banned
      * @var Ban|null
      */
-    protected $player;
+    protected $ban;
 
     /**
      * The cached match count for a player
@@ -320,6 +320,7 @@ class Player extends AvatarModel implements NamedModel
      *
      * This method protects against timing attacks
      *
+     * @param  string $code The confirmation code to check
      * @return bool `true` for a correct e-mail verification code
      */
     public function isCorrectConfirmCode($code)
@@ -362,7 +363,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getKnownIPs()
     {
-        return $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player = ? LIMIT 10", "i", array($this->getId()));
+        return $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player = ? LIMIT 10", array($this->getId()));
     }
 
     /**
@@ -382,7 +383,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getPastCallsigns()
     {
-        return parent::fetchIds("WHERE player = ?", "i", array($this->id), "past_callsigns", "username");
+        return self::fetchIds("WHERE player = ?", array($this->id), "past_callsigns", "username");
     }
 
     /**
@@ -403,6 +404,17 @@ class Player extends AvatarModel implements NamedModel
         $this->lazyLoad();
 
         return ($this->timezone) ?: date_default_timezone_get();
+    }
+
+    /**
+     * Get the roles of the player
+     * @return Role[]
+     */
+    public function getRoles()
+    {
+        $this->lazyLoad();
+
+        return $this->roles;
     }
 
     /**
@@ -490,7 +502,7 @@ class Player extends AvatarModel implements NamedModel
             return $this;
         }
 
-        return $this->updateProperty($this->status, "status", "banned", 's');
+        return $this->updateProperty($this->status, "status", "banned");
     }
 
     /**
@@ -502,7 +514,7 @@ class Player extends AvatarModel implements NamedModel
             return $this;
         }
 
-        return $this->updateProperty($this->status, "status", "active", 's');
+        return $this->updateProperty($this->status, "status", "active");
     }
 
     /**
@@ -561,8 +573,7 @@ class Player extends AvatarModel implements NamedModel
         $this->setVerified(false);
         $this->generateNewConfirmCode();
 
-        $this->email = $email;
-        $this->update("email", $email, 's');
+        $this->updateProperty($this->email, 'email', $email);
     }
 
     /**
@@ -579,7 +590,7 @@ class Player extends AvatarModel implements NamedModel
             $this->setConfirmCode(null);
         }
 
-        return $this->updateProperty($this->verified, 'verified', $verified, 'i');
+        return $this->updateProperty($this->verified, 'verified', $verified);
     }
 
     /**
@@ -605,7 +616,7 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        return $this->updateProperty($this->confirmCode, 'confirm_code', $code, 's');
+        return $this->updateProperty($this->confirmCode, 'confirm_code', $code);
     }
 
     /**
@@ -618,7 +629,7 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        return $this->updateProperty($this->receives, 'receives', $receives, 's');
+        return $this->updateProperty($this->receives, 'receives', $receives);
     }
 
     /**
@@ -631,7 +642,7 @@ class Player extends AvatarModel implements NamedModel
     {
         $this->lazyLoad();
 
-        return $this->updateProperty($this->outdated, 'outdated', $outdated, 'i');
+        return $this->updateProperty($this->outdated, 'outdated', $outdated);
     }
 
     /**
@@ -640,8 +651,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setDescription($description)
     {
-        $this->description = $description;
-        $this->update("description", $description, 's');
+        $this->updateProperty($this->description, "description", $description);
     }
 
     /**
@@ -650,8 +660,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setTimezone($timezone)
     {
-        $this->timezone = $timezone;
-        $this->update("timezone", $timezone, 's');
+        $this->updateProperty($this->timezone, "timezone", $timezone);
     }
 
     /**
@@ -660,8 +669,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setTeam($team)
     {
-        $this->team = $team;
-        $this->update("team", $team, 'i');
+        $this->updateProperty($this->team, "team", $team);
     }
 
     /**
@@ -670,7 +678,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setStatus($status)
     {
-        $this->updateProperty($this->status, 'status', $status, 's');
+        $this->updateProperty($this->status, 'status', $status);
     }
 
     /**
@@ -680,7 +688,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setAdminNotes($admin_notes)
     {
-        return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes, 's');
+        return $this->updateProperty($this->admin_notes, 'admin_notes', $admin_notes);
     }
 
     /**
@@ -690,7 +698,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setCountry($country)
     {
-        return $this->updateProperty($this->country, 'country', $country, 'i');
+        return $this->updateProperty($this->country, 'country', $country);
     }
 
     /**
@@ -698,7 +706,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function updateLastLogin()
     {
-        $this->update("last_login", TimeDate::now()->toMysql(), 's');
+        $this->update("last_login", TimeDate::now()->toMysql());
     }
 
     /**
@@ -737,9 +745,9 @@ class Player extends AvatarModel implements NamedModel
      */
     public function markMessagesAsRead()
     {
-        $this->db->query(
+        $this->db->execute(
             "UPDATE `player_conversations` SET `read` = 1 WHERE `player` = ? AND `read` = 0",
-            'i', array($this->id)
+            array($this->id)
         );
     }
 
@@ -788,9 +796,9 @@ class Player extends AvatarModel implements NamedModel
 
         if ($role->isValid()) {
             if ($action == "add") {
-                $this->db->query("INSERT INTO player_roles (user_id, role_id) VALUES (?, ?)", "ii", array($this->getId(), $role_id));
+                $this->db->execute("INSERT INTO player_roles (user_id, role_id) VALUES (?, ?)", array($this->getId(), $role_id));
             } elseif ($action == "remove") {
-                $this->db->query("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", "ii", array($this->getId(), $role_id));
+                $this->db->execute("DELETE FROM player_roles WHERE user_id = ? AND role_id = ?", array($this->getId(), $role_id));
             } else {
                 throw new Exception("Unrecognized role action");
             }
@@ -809,7 +817,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getFromBZID($bzid)
     {
-        return self::get(self::fetchIdFrom($bzid, "bzid", "s"));
+        return self::get(self::fetchIdFrom($bzid, "bzid"));
     }
 
     /**
@@ -820,7 +828,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public static function getFromUsername($username)
     {
-        $player = static::get(self::fetchIdFrom($username, 'username', 's'));
+        $player = static::get(self::fetchIdFrom($username, 'username'));
 
         return $player->inject('name', $username);
     }
@@ -832,7 +840,7 @@ class Player extends AvatarModel implements NamedModel
     public static function getPlayers()
     {
         return self::arrayIdToModel(
-            parent::fetchIdsFrom("status", array("active", "test"), "s", false)
+            self::fetchIdsFrom("status", array("active", "test"), false)
         );
     }
 
@@ -917,7 +925,7 @@ class Player extends AvatarModel implements NamedModel
     public function countUnreadMessages()
     {
         return $this->fetchCount("WHERE `player` = ? AND `read` = 0",
-            'i', $this->id, 'player_conversations'
+            $this->id, 'player_conversations'
         );
     }
 
@@ -929,7 +937,7 @@ class Player extends AvatarModel implements NamedModel
     public static function getTeamMembers($teamID)
     {
         return self::arrayIdToModel(
-            parent::fetchIds("WHERE team = ?", "i", array($teamID))
+            self::fetchIds("WHERE team = ?", array($teamID))
         );
     }
 
@@ -1007,7 +1015,7 @@ class Player extends AvatarModel implements NamedModel
             'timezone'    => $timezone,
             'joined'      => $joined->toMysql(),
             'last_login'  => $last_login->toMysql(),
-        ), 'iisssssisss');
+        ));
 
         $player->addRole($role_id);
         $player->getIdenticon($player->getId());
@@ -1040,7 +1048,7 @@ class Player extends AvatarModel implements NamedModel
         $this->setOutdated(false);
 
         // Players who have this player's username are considered outdated
-        $this->db->query("UPDATE {$this->table} SET outdated = 1 WHERE username = ? AND id != ?", "si", array($username, $this->id));
+        $this->db->execute("UPDATE {$this->table} SET outdated = 1 WHERE username = ? AND id != ?", array($username, $this->id));
 
         if ($username === $this->name) {
             // The player's username hasn't changed, no need to do anything
@@ -1052,14 +1060,14 @@ class Player extends AvatarModel implements NamedModel
         // Even though we are sure that the old and new usernames are not equal,
         // MySQL makes a different type of string equality tests, which is why we
         // also check IDs to make sure not to affect our own player's outdatedness.
-        $this->db->query("
+        $this->db->execute("
             UPDATE {$this->table} SET outdated =
                 (SELECT (COUNT(*)>1) FROM (SELECT 1 FROM {$this->table} WHERE username = ? AND id != ?) t)
             WHERE username = ? AND id != ?",
-            "sisi", array($this->name, $this->id, $this->name, $this->id));
+            array($this->name, $this->id, $this->name, $this->id));
 
-        $this->updateProperty($this->name, 'username', $username, 's');
-        $this->db->query("INSERT IGNORE INTO past_callsigns (player, username) VALUES (?, ?)", "is", array($this->id, $username));
+        $this->updateProperty($this->name, 'username', $username);
+        $this->db->execute("INSERT IGNORE INTO past_callsigns (player, username) VALUES (?, ?)", array($this->id, $username));
         $this->resetAlias();
 
         return $this;
@@ -1082,7 +1090,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function wipe()
     {
-        $this->db->query("DELETE FROM past_callsigns WHERE player = ?", "i", $this->id);
+        $this->db->execute("DELETE FROM past_callsigns WHERE player = ?", $this->id);
 
         parent::wipe();
     }

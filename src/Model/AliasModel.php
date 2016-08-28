@@ -26,7 +26,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
 
     /**
      * Get the name of the object
-     * @var string
+     * @return string
      */
     public function getName()
     {
@@ -54,7 +54,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      */
     public function setName($name)
     {
-        $this->updateProperty($this->name, 'name', $name, 's');
+        $this->updateProperty($this->name, 'name', $name);
         $this->resetAlias();
 
         return $this;
@@ -80,7 +80,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
      */
     public function setAlias($alias)
     {
-        $this->updateProperty($this->alias, 'alias', $alias, 's');
+        $this->updateProperty($this->alias, 'alias', $alias);
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     {
         $alias = static::generateAlias($this->name, $this->id);
 
-        return $this->updateProperty($this->alias, 'alias', $alias, 's');
+        return $this->updateProperty($this->alias, 'alias', $alias);
     }
 
     /**
@@ -186,7 +186,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     {
         // Try to find duplicates
         $db = Database::getInstance();
-        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE id != ? AND alias REGEXP ?", 'is', array($id, "^" . $alias . "[0-9]*$"));
+        $result = $db->query("SELECT alias FROM " . static::TABLE . " WHERE id != ? AND alias REGEXP ?", array($id, "^" . $alias . "[0-9]*$"));
 
         // Convert the multi-dimensional array that $db->query() gave us into
         // a single-dimensional one.

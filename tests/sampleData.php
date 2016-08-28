@@ -109,9 +109,9 @@ Match::enterMatch($fradis->getId(), $gsepar->getId(), 1, 2, 20, $kierra->getId()
 echo " done!";
 
 echo "\nUpdating teams...";
-$reptitles->update("activity", 9000, "i");
-$fflood->update("activity", -18, "i");
-$fradis->update("activity", 3.14159265358979323846, "d");
+$reptitles->update("activity", 9000);
+$fflood->update("activity", -18);
+$fradis->update("activity", 3.14159265358979323846);
 echo " done!";
 
 echo "\nAdding servers...";

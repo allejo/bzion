@@ -78,6 +78,13 @@
                 </p>
                 <p><strong>Joined on</strong> {{ player.joinedDate | humanTime(constant("TimeDate::DATE_FULL"), tooltip = false) }}</p>
                 <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
+                {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                    <p><strong>BZID</strong>
+                        <a href="https://forums.bzflag.org/memberlist.php?mode=viewprofile&amp;u={{ player.bzid }}">
+                            {{- player.bzid -}}
+                        </a>
+                    </p>
+                {% endif %}
 
                 <section class="c-player__stats">
                     <p><strong>Matches played</strong> {{ player.matchCount }}</p>

@@ -102,7 +102,7 @@ class TeamTest extends TestCase
 
         $team = Team::get($this->team->getId());
 
-        $members = $team->getMembers('id');
+        $members = $team->getMembers();
         $expectedMembers = array($this->player, $extraMember);
 
         $this->assertEquals(2, $team->getNumMembers());

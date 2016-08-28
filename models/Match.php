@@ -186,6 +186,16 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the name of the route that shows the object
+     * @param  string $action The route's suffix
+     * @return string
+     */
+    public static function getRouteName($action = 'show')
+    {
+        return "match_$action";
+    }
+
+    /**
      * Get a one word description of a match relative to a team (i.e. win, loss, or draw)
      *
      * @param int|string|TeamInterface $teamID The team ID we want the noun for
@@ -292,8 +302,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTimestamp($timestamp)
     {
-        $this->timestamp = TimeDate::from($timestamp);
-        $this->update("timestamp", $this->timestamp->toMysql(), "s");
+	$this->updateProperty($this->timestamp, "timestamp", TimeDate::from($timestamp));
 
         return $this;
     }
@@ -389,8 +398,8 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTeamPlayers($teamAPlayers = array(), $teamBPlayers = array())
     {
-        $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers), "s");
-        $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers), "s");
+        $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers));
+        $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers));
 
         return $this;
     }
@@ -436,8 +445,8 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTeamPoints($teamAPoints, $teamBPoints)
     {
-        $this->updateProperty($this->team_a_points, "team_a_points", $teamAPoints, "i");
-        $this->updateProperty($this->team_b_points, "team_b_points", $teamBPoints, "i");
+        $this->updateProperty($this->team_a_points, "team_a_points", $teamAPoints);
+        $this->updateProperty($this->team_b_points, "team_b_points", $teamBPoints);
 
         return $this;
     }
@@ -462,8 +471,8 @@ class Match extends UrlModel implements NamedModel
             $teamBColor = $teamBColor->getId();
         }
 
-        $this->updateProperty($this->team_a_color, "team_a_color", $teamAColor, "s");
-        $this->updateProperty($this->team_b_color, "team_b_color", $teamBColor, "s");
+        $this->updateProperty($this->team_a_color, "team_a_color", $teamAColor);
+        $this->updateProperty($this->team_b_color, "team_b_color", $teamBColor);
     }
 
     /**
@@ -519,9 +528,9 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamEloNew(Team $team)
     {
-        if ($team->getId() === $this->team_a) {
+        if ($team->getId() == $this->team_a) {
             return $this->getTeamAEloNew();
-        } elseif ($team->getId() === $this->team_b) {
+        } elseif ($team->getId() == $this->team_b) {
             return $this->getTeamBEloNew();
         }
 
@@ -536,9 +545,9 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamEloOld(Team $team)
     {
-        if ($team->getId() === $this->team_a) {
+        if ($team->getId() == $this->team_a) {
             return $this->getTeamAEloOld();
-        } elseif ($team->getId() === $this->team_b) {
+        } elseif ($team->getId() == $this->team_b) {
             return $this->getTeamBEloOld();
         }
 
@@ -617,8 +626,8 @@ class Match extends UrlModel implements NamedModel
      */
     public function setServerAddress($server = null, $port = 5154)
     {
-        $this->updateProperty($this->server, "server", $server, "s");
-        $this->updateProperty($this->port, "port", $port, "i");
+        $this->updateProperty($this->server, "server", $server);
+        $this->updateProperty($this->port, "port", $port);
 
         return $this;
     }
@@ -654,7 +663,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function setDuration($duration)
     {
-        return $this->updateProperty($this->duration, "duration", $duration, "i");
+        return $this->updateProperty($this->duration, "duration", $duration);
     }
 
     /**
@@ -798,6 +807,9 @@ class Match extends UrlModel implements NamedModel
             'team_b_points'  => $b_points,
             'team_a_players' => implode(',', $a_players),
             'team_b_players' => implode(',', $b_players),
+            'team_a_elo_new' => $team_a->getElo(),
+            'team_b_elo_new' => $team_b->getElo(),
+            'elo_diff'       => $diff,
             'timestamp'      => TimeDate::from($timestamp)->toMysql(),
             'duration'       => $duration,
             'entered_by'     => $entered_by,
@@ -808,7 +820,6 @@ class Match extends UrlModel implements NamedModel
             'status'         => 'entered',
             'match_type'     => $matchType
         );
-        $matchDataTypes = 'ssiisssiisisiss';
 
         if ($matchType === Match::OFFICIAL) {
             $team_a = Team::get($a);
@@ -829,10 +840,9 @@ class Match extends UrlModel implements NamedModel
                 'team_b_elo_new' => $team_b->getElo(),
                 'elo_diff'       => $diff
             ));
-            $matchDataTypes .= 'iiiii';
         }
 
-        $match = self::create($matchData, $matchDataTypes, 'updated');
+        $match = self::create($matchData, 'updated');
 
         if ($matchType === Match::OFFICIAL) {
             $match->updateMatchCount();
@@ -912,13 +922,13 @@ class Match extends UrlModel implements NamedModel
             $this->getDuration()
         );
 
-        $this->updateProperty($this->elo_diff, "elo_diff", $elo, "i");
+        $this->updateProperty($this->elo_diff, "elo_diff", $elo);
 
         $a->changeElo($elo);
         $b->changeElo(-$elo);
 
-        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo(), "i");
-        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo(), "i");
+        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo());
+        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo());
     }
 
     /**

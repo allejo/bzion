@@ -151,7 +151,7 @@ class Team extends AvatarModel implements TeamInterface
         }
 
         $player->setTeam($this->getId());
-        $this->update('members', ++$this->members, "i");
+        $this->update('members', ++$this->members);
     }
 
     /**
@@ -162,7 +162,7 @@ class Team extends AvatarModel implements TeamInterface
     public function changeElo($adjust)
     {
         $this->elo += $adjust;
-        $this->update("elo", $this->elo, "i");
+        $this->update("elo", $this->elo);
     }
 
     /**
@@ -172,7 +172,7 @@ class Team extends AvatarModel implements TeamInterface
      */
     public function setElo($elo)
     {
-        $this->updateProperty($this->elo, "elo", $elo, "i");
+        $this->updateProperty($this->elo, "elo", $elo);
     }
 
     /**
@@ -188,16 +188,16 @@ class Team extends AvatarModel implements TeamInterface
         switch ($type) {
             case "win":
             case "won":
-                $this->update("matches_won", $this->matches_won += $adjust, "i");
+                $this->update("matches_won", $this->matches_won += $adjust);
 
                 return;
             case "loss":
             case "lost":
-                $this->update("matches_lost", $this->matches_lost += $adjust, "i");
+                $this->update("matches_lost", $this->matches_lost += $adjust);
 
                 return;
             default:
-                $this->update("matches_draw", $this->matches_draw += $adjust, "i");
+                $this->update("matches_draw", $this->matches_draw += $adjust);
 
                 return;
         }
@@ -474,8 +474,8 @@ class Team extends AvatarModel implements TeamInterface
 
         $player = Player::get($id);
 
-        $player->update("team", null, "s");
-        $this->update('members', --$this->members, "i");
+        $player->update("team", null);
+        $this->update('members', --$this->members);
     }
 
     /**
@@ -486,7 +486,7 @@ class Team extends AvatarModel implements TeamInterface
      */
     public function setDescription($description)
     {
-        $this->update("description", $description, "s");
+        $this->update("description", $description);
     }
 
     /**
@@ -497,7 +497,7 @@ class Team extends AvatarModel implements TeamInterface
      */
     public function setStatus($newStatus)
     {
-        return $this->updateProperty($this->status, 'status', $newStatus, 's');
+        return $this->updateProperty($this->status, 'status', $newStatus);
     }
 
     /**
@@ -508,22 +508,22 @@ class Team extends AvatarModel implements TeamInterface
      */
     public function setLeader($leader)
     {
-        return $this->updateProperty($this->leader, 'leader', $leader, 'i');
+        return $this->updateProperty($this->leader, 'leader', $leader);
     }
 
     /**
      * Find if a specific match is the team's last one
      *
-     * @param  int  $matchID The ID of the match
+     * @param  int|Match $match The match
      * @return bool
      */
-    public function isLastMatch($matchID)
+    public function isLastMatch($match)
     {
         // Find if this team participated in any matches after the current match
         return !Match::getQueryBuilder()
             ->with($this)
             ->where('status')->notEquals('deleted')
-            ->where('time')->isAfter(Match::get($matchID)->getTimestamp())
+            ->where('time')->isAfter(Match::get($match)->getTimestamp())
             ->any();
     }
 
@@ -535,9 +535,9 @@ class Team extends AvatarModel implements TeamInterface
         parent::delete();
 
         // Remove all the members of a deleted team
-        $this->updateProperty($this->members, 'members', 0, 'i');
-        $this->db->query("UPDATE `players` SET `team` = NULL WHERE `team` = ?",
-            'i', $this->id);
+        $this->updateProperty($this->members, 'members', 0);
+        $this->db->execute("UPDATE `players` SET `team` = NULL WHERE `team` = ?",
+            $this->id);
     }
 
     /**
@@ -570,7 +570,7 @@ class Team extends AvatarModel implements TeamInterface
             'leader'       => $leader,
             'status'       => $status,
             'created'      => $created->toMysql(),
-        ), 'sssidiiiissss');
+        ));
 
         $team->addMember($leader);
         $team->getIdenticon($team->getId());
@@ -586,9 +586,9 @@ class Team extends AvatarModel implements TeamInterface
     public static function getTeams()
     {
         return self::arrayIdToModel(
-            parent::fetchIdsFrom(
+            self::fetchIdsFrom(
                 "status", array("disabled", "deleted"),
-                "s", true, "ORDER BY elo DESC"
+                true, "ORDER BY elo DESC"
             )
         );
     }
@@ -601,7 +601,7 @@ class Team extends AvatarModel implements TeamInterface
      */
     public static function getFromName($name)
     {
-        $team = static::get(self::fetchIdFrom($name, 'name', 's'));
+        $team = static::get(self::fetchIdFrom($name, 'name'));
 
         return $team->inject('name', $name);
     }

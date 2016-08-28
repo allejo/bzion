@@ -23,7 +23,7 @@ class SingleModelTransformer implements DataTransformerInterface
     /**
      * Transforms an object (model) to an integer (int).
      *
-     * @param  Model|null $model
+     * @param  \Model|null $model
      * @return int
      */
     public function transform($model)
@@ -40,7 +40,7 @@ class SingleModelTransformer implements DataTransformerInterface
      *
      * @param  int                           $id
      * @throws TransformationFailedException if the team is not found.
-     * @return Model
+     * @return \Model
      */
     public function reverseTransform($id)
     {

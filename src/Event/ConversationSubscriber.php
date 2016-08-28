@@ -61,10 +61,10 @@ class ConversationSubscriber implements EventSubscriberInterface
         // player_conversations entry will have `distinct` set to 0 only if the
         // player belongs to a conversation because they are a member of this
         // team
-        \Database::getInstance()->query(
+        \Database::getInstance()->execute(
             "DELETE FROM `player_conversations`
                 WHERE player = ?
-                AND `distinct` = 0", "i", array($event->getPlayer()->getId())
+                AND `distinct` = 0", array($event->getPlayer()->getId())
         );
     }
 }

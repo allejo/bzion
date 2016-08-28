@@ -79,7 +79,7 @@ abstract class CachedModel extends BaseModel
     protected function storeInCache()
     {
         if (!Service::getModelCache()) {
-            return;
+            return $this;
         }
 
         Service::getModelCache()->save($this);
@@ -103,7 +103,7 @@ abstract class CachedModel extends BaseModel
      */
     private function getFromDatabase()
     {
-        parent::__construct($this->id);
+        self::__construct($this->id);
 
         if ($this->loaded) {
             // Reload the lazy parameters of the model if they're loaded already
@@ -114,9 +114,9 @@ abstract class CachedModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    protected static function create($params, $types, $now = null, $table = '')
+    protected static function create($params, $now = null, $table = '')
     {
-        $model = parent::create($params, $types, $now, $table);
+        $model = parent::create($params, $now, $table);
         $model->storeInCache();
 
         return $model;

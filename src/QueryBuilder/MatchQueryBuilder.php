@@ -64,7 +64,6 @@ class MatchQueryBuilder extends QueryBuilder
         $this->conditions[] = $query;
         $this->parameters[] = $participant->getId();
         $this->parameters[] = $participant->getId();
-        $this->types       .= 'ii';
 
         return $this;
     }
@@ -94,7 +93,7 @@ class MatchQueryBuilder extends QueryBuilder
         $query = $this->createQuery("YEAR(timestamp) as y, MONTH(timestamp) as m, COUNT(*) as count");
 
         $matches = array();
-        $results = Database::getInstance()->query($query, $this->types, $this->parameters);
+        $results = Database::getInstance()->query($query, $this->parameters);
 
         foreach ($results as $match) {
             $matches[$match['y'] . '-' . sprintf('%02d', $match['m'])] = $match['count'];

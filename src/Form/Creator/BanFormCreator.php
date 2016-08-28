@@ -9,6 +9,7 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
 use BZIon\Form\Type\IpType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -111,7 +112,7 @@ class BanFormCreator extends ModelFormCreator
      * Get the expiration time of the ban based on the fields of the form
      *
      * @param  Form          $form The form
-     * @return TimeDate|null
+     * @return \TimeDate|null
      */
     private function getExpiration($form)
     {

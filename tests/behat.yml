@@ -2,6 +2,7 @@ default:
     extensions:
         Behat\Symfony2Extension\ServiceContainer\Symfony2Extension:
             kernel:
+                bootstrap: ../bzion-load.php
                 debug: no
         Behat\MinkExtension:
             default_session: 'symfony2'

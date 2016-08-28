@@ -68,6 +68,9 @@ class Command extends ContainerAwareCommand
     /**
      * Return a function that can be used by Symfony's process to show the output
      * of a process live on our screen
+     *
+     * @param  Output $output The console output
+     *
      * @return null|\Closure
      */
     protected function getBufferFunction($output)

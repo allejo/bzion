@@ -14,6 +14,8 @@ class PluralFilter
      * @param string $singular The noun in its singular form
      * @param string|null $plural The noun in its plural form (calculated
      *                            automatically by default)
+     *
+     * @return string
      */
     public function __invoke($singular, $number = null, $plural = null)
     {

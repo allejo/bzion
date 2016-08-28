@@ -5,7 +5,7 @@ namespace BZIon\Twig;
 class HumanDateFilter
 {
     /**
-     * @param           $context Twig's context
+     * @param array     $context Twig's context
      * @param \TimeDate $time    The TimeDate object we'll be representing as text
      * @param string    $format  The format that will be shown. If a format isn't set, it'll return the difference in human readable time
      * @param bool      $tooltip Whether to show a tooltip with the absolute timestamp when a user hovers over it, defaults to false if

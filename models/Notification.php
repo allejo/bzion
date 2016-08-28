@@ -9,6 +9,7 @@
 use BZIon\Event\Event;
 use BZIon\Event\Events;
 use BZIon\Model\Column\Timestamp;
+use BZIon\NotificationAdapter\NotificationAdapter;
 
 /**
  * A notification to a player
@@ -90,7 +91,7 @@ class Notification extends Model
             "event"     => serialize($event),
             "timestamp" => TimeDate::from($timestamp)->toMysql(),
             "status"    => $status
-        ), 'issss');
+        ));
 
         return $notification;
     }
@@ -122,7 +123,7 @@ class Notification extends Model
     public static function countUnreadNotifications($receiver)
     {
         return self::fetchCount("WHERE receiver = ? AND status = 'unread'",
-            'i', $receiver
+            $receiver
         );
     }
 
@@ -177,7 +178,7 @@ class Notification extends Model
             return;
         }
 
-        $this->update('status', $this->status = "read", 's');
+        $this->update('status', $this->status = "read");
     }
 
     /**
@@ -192,6 +193,7 @@ class Notification extends Model
     /**
      * Get the available actions for the notification
      *
+     * @param  boolean $email Whether actions should be formatted for e-mails
      * @return array
      */
     public function getActions($email = false)

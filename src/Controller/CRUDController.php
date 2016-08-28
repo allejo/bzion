@@ -254,6 +254,7 @@ abstract class CRUDController extends JSONController
 
     /**
      * Get a message to show to the user
+     * @todo   Use the $escape parameter
      * @param  \ModelInterface|string $model  The model (or type) to show a message for
      * @param  string                 $action The action that will be performed (softDelete, hardDelete, create or edit)
      * @param  string                 $status The message's status (confirm, error or success)

@@ -79,7 +79,6 @@ class MessageQueryBuilder extends QueryBuilder
 
             $query .= "(message LIKE CONCAT('%', ?, '%'))";
             $this->parameters[] = $keyword;
-            $this->types .= 's';
         }
 
         $this->conditions[] = $query;

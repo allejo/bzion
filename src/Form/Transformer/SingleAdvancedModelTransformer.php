@@ -11,12 +11,12 @@ class SingleAdvancedModelTransformer extends AdvancedModelTransformer
      *
      * @param  string $data
      * @throws TransformationFailedException if the team is not found.
-     * @return Model|null
+     * @return \Model|null
      */
     public function reverseTransform($data)
     {
         // Handle the data provided by Javascript, if any
-        $transformed = parent::transformJSON($data);
+        $transformed = self::transformJSON($data);
 
         if ($transformed !== false) {
             if (count($transformed) > 1) {

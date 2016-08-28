@@ -148,7 +148,7 @@ class Page extends AliasModel
      */
     public function setContent($content)
     {
-        return $this->updateProperty($this->content, "content", $content, 's');
+        return $this->updateProperty($this->content, "content", $content);
     }
 
     /**
@@ -159,7 +159,7 @@ class Page extends AliasModel
      */
     public function setStatus($status)
     {
-        return $this->updateProperty($this->status, "status", $status, 's');
+        return $this->updateProperty($this->status, "status", $status);
     }
 
     /**
@@ -168,7 +168,7 @@ class Page extends AliasModel
      */
     public function updateEditTimestamp()
     {
-        return $this->updateProperty($this->updated, "updated", TimeDate::now(), 's');
+        return $this->updateProperty($this->updated, "updated", TimeDate::now());
     }
 
     /**
@@ -190,7 +190,7 @@ class Page extends AliasModel
             'author'  => $authorID,
             'home'    => 0,
             'status'  => $status,
-        ), 'sssiis', array('created', 'updated'));
+        ), array('created', 'updated'));
     }
 
     /**
@@ -209,7 +209,7 @@ class Page extends AliasModel
         return array(
             "admin", "bans", "index", "login", "logout", "maps", "matches",
             "messages", "news", "notifications", "pages", "players", "servers",
-            "teams"
+            "teams", "visits"
         );
     }
 
@@ -259,6 +259,6 @@ class Page extends AliasModel
      */
     public static function getHomePage()
     {
-        return self::get(parent::fetchIdFrom(1, "home"));
+        return self::get(self::fetchIdFrom(1, "home"));
     }
 }

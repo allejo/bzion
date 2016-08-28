@@ -222,6 +222,10 @@ search:
     path:    /search
     defaults: { _controller: 'Search', _action: 'search' }
 
+search_player_by_bzid:
+    path:    /search/players/bzid/{bzid}
+    defaults: { _controller: 'Search', _action: 'playerByBzid', bzid: ~ }
+
 server_list:
     path:     /servers
     defaults: { _controller: 'Server', _action: 'list' }
@@ -285,6 +289,10 @@ team_assign_leader:
 team_abandon:
     path:     /teams/{team}/abandon
     defaults: { _controller: 'Team', _action: 'abandon' }
+
+visit_list:
+    path:     /visits
+    defaults: { _controller: 'VisitLog', _action: 'list' }
 
 custom_page_create:
     path:     /pages/new

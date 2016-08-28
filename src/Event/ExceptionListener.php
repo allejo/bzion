@@ -10,6 +10,7 @@ namespace BZIon\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener as BaseListener;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 /**
  * Handles exceptions

@@ -8,7 +8,7 @@
  */
 
 use BZIon\Debug\Debug;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,8 +65,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package BZiON\Controllers
  */
-abstract class Controller extends ContainerAware
+abstract class Controller
 {
+    use ContainerAwareTrait;
+
     /**
      * Parameters specified by the route
      * @var ParameterBag
@@ -230,7 +232,10 @@ abstract class Controller extends ContainerAware
             } elseif ($p->isOptional()) {
                 $params[] = $p->getDefaultValue();
             } else {
-                throw new MissingArgumentException("Missing parameter '$p->name'");
+                throw new MissingArgumentException(
+                    "Missing parameter '$p->name' for " . $this->getName() . "::"
+                    . $method->getName() . "()"
+                );
             }
         }
 
@@ -242,6 +247,8 @@ abstract class Controller extends ContainerAware
      *
      * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
      * @param ParameterBag        $routeParameters The route's parameters
+     *
+     * @return object|null
      */
     protected function getObjectFromParameters($modelParameter, $routeParameters)
     {
@@ -269,15 +276,15 @@ abstract class Controller extends ContainerAware
         }
 
         switch ($refClass->getName()) {
-            case "Symfony\Component\HttpFoundation\Request":
+            case 'Symfony\Component\HttpFoundation\Request':
                 return $this->getRequest();
-            case "Symfony\Component\HttpFoundation\Session\Session":
+            case 'Symfony\Component\HttpFoundation\Session\Session':
                 return $this->getRequest()->getSession();
-            case "Symfony\Component\HttpFoundation\Session\Flash\FlashBag":
+            case 'Symfony\Component\HttpFoundation\Session\Flash\FlashBag':
                 return $this->getRequest()->getSession()->getFlashBag();
-            case "Monolog\Logger":
+            case 'Monolog\Logger':
                 return $this->getLogger();
-            case "Symfony\Component\Form\FormFactory":
+            case 'Symfony\Component\Form\FormFactory':
                 return Service::getFormFactory();
         }
 
@@ -310,6 +317,8 @@ abstract class Controller extends ContainerAware
             return $refClass->getMethod('get')
                             ->invoke(null, $routeParameters->get($paramName . 'Id'));
         }
+
+        return null;
     }
 
     /**

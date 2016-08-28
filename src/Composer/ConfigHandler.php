@@ -42,8 +42,6 @@ class ConfigHandler
 
     /**
      * Migrate the config.yml file
-     *
-     * @param $event Event Composer's event
      */
     public function build()
     {

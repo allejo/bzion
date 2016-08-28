@@ -40,10 +40,6 @@
                             <li>
                                 <i class="fa fa-fw {{ role.displayIcon }}"></i>
                                 {{ link_to(role, action='edit') }}
-                                {#{{ link_to(page) }}#}
-                                {#{%- if page.status != 'active' %}#}
-                                    {#<small>({{ page.status }})</small>#}
-                                {#{%- endif -%}#}
                             </li>
                         {% endfor %}
                     </ul>

@@ -6,6 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use BZIon\Cache\ModelCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormFactory;
@@ -99,7 +100,7 @@ abstract class Service
      * Gets a parameter
      *
      * @param  string $name The parameter name
-     * @return mixed The parameter value
+     * @return mixed  The parameter value
      */
     public static function getParameter($name)
     {
@@ -175,7 +176,7 @@ abstract class Service
     }
 
     /**
-     * @param BZIon\Cache\ModelCache $modelCache
+     * @param ModelCache $modelCache
      */
     public static function setModelCache($modelCache)
     {

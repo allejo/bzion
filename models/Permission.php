@@ -106,7 +106,7 @@ class Permission extends Model
     public static function getPerms()
     {
         return parent::arrayIdToModel(
-            parent::fetchIds()
+            self::fetchIds()
         );
     }
 
@@ -121,7 +121,7 @@ class Permission extends Model
         }
 
         return self::get(
-            parent::fetchIdFrom($perm_name, "name")
+            self::fetchIdFrom($perm_name, "name")
         );
     }
 
