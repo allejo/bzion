@@ -1,13 +1,28 @@
 {% extends 'layout.html.twig' %}
 
+{% import _self as listUtils %}
+
 {% block title %}Visit Log{% endblock %}
 
 {% block pageTitle %}
-    <h1>Visit Log</h1>
+    <h1>
+        Visit Log
+        {%- if search %}
+            :: Searching for '{{ search }}'
+        {%- endif -%}
+    </h1>
+{% endblock %}
+
+{% block headerOptions %}
+    {{ listUtils.searchForm(search) }}
 {% endblock %}
 
 {% block content %}
     <section class="o-container">
+        <section class="u-mobile-only o-row">
+            {{ listUtils.searchForm(search) }}
+        </section>
+
         <section class="c-table c-visitlog">
             <div class="c-table__row c-table__row--header c-visit__header">
                 <div class="c-table__row__column c-visit__ip">IP Address</div>
@@ -61,3 +76,20 @@
         {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
     </section>
 {% endblock %}
+
+{% macro searchForm(search) %}
+    <form class="c-page__search" action="{{ path('visit_list') }}" method="GET">
+        <label class="c-page__search__icon" for="c-page__search__input" title="search">
+            <i class="fa fa-search"></i>
+        </label>
+        <input
+                id="c-page__search__input"
+                class="c-page__search__input"
+                title="Search by player IP address or host"
+                placeholder="Search by IP..."
+                type="search"
+                name="search"
+                value="{{ search }}"
+        >
+    </form>
+{% endmacro %}

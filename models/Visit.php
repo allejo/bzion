@@ -93,7 +93,7 @@ class Visit extends Model
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Visit', array(
+        return new VisitQueryBuilder('Visit', array(
             'columns' => array(
                 'ip' => 'ip',
                 'timestamp' => 'timestamp'
