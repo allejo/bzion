@@ -1,12 +1,24 @@
-{% macro team_summary(match, team) %}
-    <a class="c-matchwidget__team__image" href="{{ team.url }}">
-        <img src="{{ team.avatar | imagine_filter('small_thumb') }}" />
+{% macro team_block(match, team) %}
+    {% set isTeam = team is instanceof('Team') %}
+
+    <a class="c-matchwidget__team__image" href="{{ isTeam ? team.url : '' }}">
+        <img src="{%- if isTeam -%}
+                {{ team.avatar | imagine_filter('small_thumb') }}
+            {%- else -%}
+                {{ asset(team.avatar) }}
+            {%- endif -%}" />
     </a>
     <div class="c-matchwidget__team__name">
-        <p>{{ link_to(team) }}</p>
+        <p>
+            {% if isTeam %}
+                {{ link_to(team) }}
+            {% else %}
+                {{ team.name }}
+            {% endif %}
+        </p>
     </div>
     <div class="c-matchwidget__team__score">
-        <p>{{ link_to(match, content = match.score(team.id)) }}</p>
+        <p>{{ link_to(match, content = match.score(team)) }}</p>
     </div>
 {% endmacro %}
 
@@ -15,10 +27,10 @@
 
     <section class="c-matchwidget">
         <div class="c-matchwidget__team c-matchwidget__winner">
-            {{ self.team_summary(match, match.winner) }}
+            {{ self.team_block(match, match.winner) }}
         </div>
         <div class="c-matchwidget__team c-matchwidget__loser">
-            {{ self.team_summary(match, match.loser) }}
+            {{ self.team_block(match, match.loser) }}
         </div>
     </section>
 {% endmacro %}

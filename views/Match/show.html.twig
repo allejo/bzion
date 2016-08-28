@@ -17,7 +17,7 @@
         'url': match.url('recalculate'),
         'icon': 'calculator',
         'text': 'Recalculate ELOs',
-        'condition': me.canEdit(match)
+        'condition': match.official and me.canEdit(match)
     },
     {
         'color': 'red',
@@ -58,9 +58,26 @@
             <p>{{ match.duration }} minutes</p>
         </section>
 
+        {% if match.matchType == constant('Match::OFFICIAL') %}
+            <section class="o-section">
+                <strong>ELO Difference</strong>
+                <p>&plusmn; {{ match.elodiff }}</p>
+            </section>
+        {% endif %}
+
         <section class="o-section">
-            <strong>ELO Difference</strong>
-            <p>&plusmn; {{ match.elodiff }}</p>
+            <strong>Match Type</strong>
+            <p>
+                {%- if match.matchType == constant('Match::OFFICIAL') -%}
+                    Official
+                {%- elseif match.matchType == constant('Match::SPECIAL') %}
+                    Special
+                {%- elseif match.matchType == constant('Match::FUN') -%}
+                    Fun Match
+                {%- else -%}
+                    Unknown
+                {%- endif -%}
+            </p>
         </section>
 
         {% if app.isDebug %}
@@ -106,10 +123,13 @@
                 {%- if not loop.last %}, {% endif %}
             {% endfor %}
         </small>
-        <p>
-            {{ match.teamEloOld(team) }}
-            &rarr;
-            {{ match.teamEloNew(team) }}
-        </p>
+
+        {% if team is instanceof('Team') %}
+            <p>
+                {{ match.teamEloOld(team) }}
+                &rarr;
+                {{ match.teamEloNew(team) }}
+            </p>
+        {% endif %}
     </section>
 {% endmacro %}

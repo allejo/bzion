@@ -20,7 +20,7 @@ class LinkToFunction
      */
     public function __invoke(
         $context,
-        \Model $model,
+        $model,
         $icon = null,
         $action = 'show',
         $linkAll = false,
@@ -81,7 +81,7 @@ class LinkToFunction
      * @param  \Model $model
      * @return string The name of the model
      */
-    private function getModelName(\Model $model)
+    private function getModelName($model)
     {
         if ($model instanceof \NamedModel) {
             return $model->getName();
@@ -117,7 +117,7 @@ class LinkToFunction
      * @param  array  $context Twig's context
      * @return bool
      */
-    private function isLinkable(\Model $model, $linkAll, &$context)
+    private function isLinkable($model, $linkAll, &$context)
     {
         // Models that don't have a URL can't be linked
         if (!$model instanceof \UrlModel) {

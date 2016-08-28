@@ -132,6 +132,13 @@ class Player extends AvatarModel implements NamedModel
     protected $ban;
 
     /**
+     * The cached match count for a player
+     *
+     * @var int
+     */
+    private $cachedMatchCount = null;
+
+    /**
      * The name of the database table used for queries
      */
     const TABLE = "players";
@@ -844,6 +851,93 @@ class Player extends AvatarModel implements NamedModel
     public function countUnreadNotifications()
     {
         return Notification::countUnreadNotifications($this->id);
+    }
+
+    /**
+     * Count the number of matches a player has participated in
+     * @return int
+     */
+    public function getMatchCount()
+    {
+        if ($this->cachedMatchCount === null) {
+            $this->cachedMatchCount = Match::getQueryBuilder()
+                ->active()
+                ->with($this)
+                ->count();
+        }
+
+        return $this->cachedMatchCount;
+    }
+
+    /**
+     * Get the (victory/total matches) ratio of the player
+     * @return float
+     */
+    public function getMatchWinRatio()
+    {
+        $count = $this->getMatchCount();
+
+        if ($count == 0) {
+            return 0;
+        }
+
+        $wins = Match::getQueryBuilder()
+            ->active()
+            ->with($this, 'win')
+            ->count();
+
+        return $wins/$count;
+    }
+
+    /**
+     * Get the (total caps made by team/total matches) ratio of the player
+     * @return float
+     */
+    public function getMatchAverageCaps()
+    {
+        $count = $this->getMatchCount();
+
+        if ($count == 0) {
+            return 0;
+        }
+
+        // Get the sum of team A points if the player was in team A, team B
+        // points if the player was in team B, and their average if the player
+        // was on both teams for some reason
+        $query = $this->db->query(
+            "SELECT SUM(
+                IF(
+                    FIND_IN_SET(?, team_a_players) AND FIND_IN_SET(?, team_b_players),
+                    (team_a_points+team_b_points)/2,
+                    IF(FIND_IN_SET(?, team_a_players), team_a_points, team_b_points)
+                )
+            ) AS sum FROM matches WHERE status='entered' AND (FIND_IN_SET(?, team_a_players) OR FIND_IN_SET(?, team_b_players))",
+            array_fill(0, 5, $this->id)
+        );
+
+        return $query[0]['sum']/$count;
+    }
+
+    /**
+     * Get the match activity in matches per day for a player
+     *
+     * @return float
+     */
+    public function getMatchActivity()
+    {
+        $activity = 0.0;
+
+        $matches = Match::getQueryBuilder()
+            ->active()
+            ->with($this)
+            ->where('time')->isAfter(TimeDate::from('45 days ago'))
+            ->getModels($fast = true);
+
+        foreach ($matches as $match) {
+            $activity += $match->getActivity();
+        }
+
+        return $activity;
     }
 
     /**

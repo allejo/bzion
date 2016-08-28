@@ -15,16 +15,26 @@
 class MatchQueryBuilder extends QueryBuilder
 {
     /**
-     * Only include matches where a specific team played
+     * Only include matches where a specific team/player played
      *
-     * @param  Team   $team   Team        The team which played the matches
-     * @param  string $result string|null The outcome of the matches (win, draw or loss)
+     * @param  Team|Player $participant The team/player which played the matches
+     * @param  string      $result      The outcome of the matches (win, draw or loss)
      * @return self
      */
-    public function with($team, $result = null)
+    public function with($participant, $result = null)
     {
-        if (!$team || !$team->isValid()) {
+        if (!$participant || !$participant->isValid()) {
             return $this;
+        }
+
+        if ($participant instanceof Team) {
+            $team_a_query = "team_a = ?";
+            $team_b_query = "team_b = ?";
+        } elseif ($participant instanceof Player) {
+            $team_a_query = "FIND_IN_SET(?, team_a_players)";
+            $team_b_query = "FIND_IN_SET(?, team_b_players)";
+        } else {
+            throw new InvalidArgumentException("Invalid model provided");
         }
 
         switch ($result) {
@@ -32,28 +42,28 @@ class MatchQueryBuilder extends QueryBuilder
             case "win":
             case "victory":
             case "victories":
-                $query = "(team_a = ? AND team_a_points > team_b_points) OR (team_b = ? AND team_b_points > team_a_points)";
+                $query = "($team_a_query AND team_a_points > team_b_points) OR ($team_b_query AND team_b_points > team_a_points)";
                 break;
             case "loss":
             case "lose":
             case "losses":
             case "defeat":
             case "defeats":
-                $query = "(team_a = ? AND team_b_points > team_a_points) OR (team_b = ? AND team_a_points > team_b_points)";
+                $query = "($team_a_query AND team_b_points > team_a_points) OR ($team_b_query AND team_a_points > team_b_points)";
                 break;
             case "draw":
             case "draws":
             case "tie":
             case "ties":
-                $query = "(team_a = ? OR team_b = ?) AND team_a_points = team_b_points";
+                $query = "($team_a_query OR $team_b_query) AND team_a_points = team_b_points";
                 break;
             default:
-                $query = "team_a = ? OR team_b = ?";
+                $query = "$team_a_query OR $team_b_query";
         }
 
         $this->conditions[] = $query;
-        $this->parameters[] = $team->getId();
-        $this->parameters[] = $team->getId();
+        $this->parameters[] = $participant->getId();
+        $this->parameters[] = $participant->getId();
 
         return $this;
     }

@@ -155,6 +155,9 @@ class LeagueOverseerHookController extends PlainTextController
     public function matchReportAction(Logger $log, Request $request)
     {
         $log->addNotice("Match data received from " . $request->getClientIp());
+        $log->addDebug("Debug match data query: " . http_build_query($this->params->all()));
+
+        $matchType = $this->params->get('matchType', Match::OFFICIAL);
 
         $teamOneBZIDs = $this->params->get('teamOnePlayers');
         $teamTwoBZIDs = $this->params->get('teamTwoPlayers');
@@ -162,37 +165,43 @@ class LeagueOverseerHookController extends PlainTextController
         $teamOnePlayers = $this->bzidsToIdArray($teamOneBZIDs);
         $teamTwoPlayers = $this->bzidsToIdArray($teamTwoBZIDs);
 
-        $teamOne = $this->getTeam($teamOnePlayers);
-        $teamTwo = $this->getTeam($teamTwoPlayers);
+        if (Match::OFFICIAL === $matchType) {
+            $teamOne = $this->getTeam($teamOnePlayers);
+            $teamTwo = $this->getTeam($teamTwoPlayers);
 
-        // If we fail to get the the team ID for either the teams or both reported teams are the same team, we cannot
-        // report the match due to it being illegal.
+            // If we fail to get the the team ID for either the teams or both reported teams are the same team, we cannot
+            // report the match due to it being illegal.
 
-        // An invalid team could be found in either or both teams, so we need to check both teams and log the match
-        // failure respectively.
-        $error = true;
-        if (!$teamOne->isValid()) {
-            $log->addNotice("The BZIDs ($teamOneBZIDs) were not found on the same team. Match invalidated.");
-        } elseif (!$teamTwo->isValid()) {
-            $log->addNotice("The BZIDs ($teamTwoBZIDs) were not found on the same team. Match invalidated.");
-        } else {
-            $error = false;
-        }
+            // An invalid team could be found in either or both teams, so we need to check both teams and log the match
+            // failure respectively.
+            $error = true;
+            if (!$teamOne->isValid()) {
+                $log->addNotice("The BZIDs ($teamOneBZIDs) were not found on the same team. Match invalidated.");
+            } elseif (!$teamTwo->isValid()) {
+                $log->addNotice("The BZIDs ($teamTwoBZIDs) were not found on the same team. Match invalidated.");
+            } else {
+                $error = false;
+            }
 
-        if ($error) {
-            throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match.");
-        }
+            if ($error) {
+                throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match.");
+            }
 
-        if ($teamOne->isSameAs($teamTwo)) {
-            $log->addNotice("The '" . $teamOne->getName() . "' team played against each other in an official match. Match invalidated.");
-            throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
+            if ($teamOne->isSameAs($teamTwo)) {
+                $log->addNotice("The '" . $teamOne->getName() . "' team played against each other in an official match. Match invalidated.");
+                throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
+            }
+        } elseif (Match::FUN === $matchType) {
+            if (count($teamOnePlayers)  < 2 || count($teamTwoPlayers) < 2) {
+                throw new ForbiddenException("You are not allowed to report a match with less than 2 players per team.");
+            }
         }
 
         $map = Map::fetchFromAlias($this->params->get('mapPlayed'));
 
         $match = Match::enterMatch(
-            $teamOne->getId(),
-            $teamTwo->getId(),
+            (isset($teamOne)) ? $teamOne->getId() : null,
+            (isset($teamTwo)) ? $teamTwo->getId() : null,
             $this->params->get('teamOneWins'),
             $this->params->get('teamTwoWins'),
             $this->params->get('duration'),
@@ -203,7 +212,10 @@ class LeagueOverseerHookController extends PlainTextController
             $this->params->get('server'),
             $this->params->get('port'),
             $this->params->get('replayFile'),
-            $map->getId()
+            $map->getId(),
+            $this->params->get('matchType'),
+            $this->params->get('teamOneColor'),
+            $this->params->get('teamTwoColor')
         );
 
         $log->addNotice("Match reported automatically", array(
@@ -216,6 +228,7 @@ class LeagueOverseerHookController extends PlainTextController
                 'score' => $match->getScore($match->getLoser())
             ),
             'eloDiff' => $match->getEloDiff(),
+            'type'    => $matchType,
             'map'     => $map->getName()
         ));
 

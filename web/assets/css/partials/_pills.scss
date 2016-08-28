@@ -1,0 +1,29 @@
+.c-pill-group {
+    display: inline-flex;
+}
+
+.c-pill-group__pill {
+    border-bottom: $Border-Default;
+    border-left: $Border-Default;
+    border-top: $Border-Default;
+    cursor: pointer;
+    padding: 5px 10px;
+
+    &:first-child {
+        @include border-left-radius($Border-Radius);
+    }
+
+    &:last-child {
+        @include border-right-radius($Border-Radius);
+
+        border-right: $Border-Default;
+    }
+}
+
+.c-pill-group__pill:active,
+.c-pill-group__pill:focus,
+.c-pill-group__pill:hover,
+.c-pill-group__pill--active {
+    background-color: $Color-Blue;
+    color: $Color-White;
+}

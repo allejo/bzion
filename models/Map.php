@@ -122,6 +122,19 @@ class Map extends AvatarModel implements NamedModel
     }
 
     /**
+     * Get the number of matches played on this map
+     *
+     * @return int
+     */
+    public function countMatches()
+    {
+        return Match::getQueryBuilder()
+            ->active()
+            ->where('map')->is($this)
+            ->count();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function getActiveStatuses()

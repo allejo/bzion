@@ -22,6 +22,17 @@ abstract class CRUDController extends JSONController
     }
 
     /**
+     * Make sure that the data of a form is valid, only called when editing an
+     * existing object
+     * @param  Form $form The submitted form
+     * @param  PermissionModel $model The model being edited
+     * @return void
+     */
+    protected function validateEdit($form, $model)
+    {
+    }
+
+    /**
      * Make sure that the data of a form is valid
      * @param  Form $form The submitted form
      * @return void
@@ -141,6 +152,7 @@ abstract class CRUDController extends JSONController
 
         if ($form->isSubmitted()) {
             $this->validate($form);
+            $this->validateEdit($form, $model);
             if ($form->isValid()) {
                 $creator->update($form, $model);
                 $this->getFlashBag()->add("success",

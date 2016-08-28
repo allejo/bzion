@@ -39,7 +39,8 @@ class TwigExtension extends \Twig_Extension
     {
         return array(
             ValidTest::get(),
-            InvalidTest::get()
+            InvalidTest::get(),
+            InstanceOfTest::get()
         );
     }
 

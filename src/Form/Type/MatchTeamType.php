@@ -2,6 +2,7 @@
 
 namespace BZIon\Form\Type;
 
+use BZIon\Form\Transformer\MatchTeamTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -16,10 +17,20 @@ class MatchTeamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('team', new ModelType('Team'), array(
-                'constraints' => new NotBlank(),
-                'disabled'    => $options['disableTeam']
-            ))
+            ->add(
+                $builder->create(
+                    'team', 'choice', array(
+                    'choices' => array(
+                        'red' => 'Red Team',
+                        'green' => 'Green Team',
+                        'blue' => 'Blue Team',
+                        'purple' => 'Purple Team',
+                         null => '',
+                    ) + \Controller::getQueryBuilder('Team')->getNames(),
+                    'constraints' => new NotBlank(),
+                    'disabled'    => $options['disableTeam']
+                ))->addModelTransformer(new MatchTeamTransformer())
+            )
             ->add('score', 'integer', array(
                 'constraints' => array(
                     new NotBlank(),
@@ -44,7 +55,7 @@ class MatchTeamType extends AbstractType
         $players = $event->getForm()->get('participants');
         $team = $event->getForm()->get('team')->getData();
 
-        if (!$team || !$team->isValid()) {
+        if (!$team || !$team instanceof \Model || !$team->isValid()) {
             return;
         }
 

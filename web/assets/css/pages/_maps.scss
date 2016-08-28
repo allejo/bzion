@@ -29,6 +29,11 @@
     display: inline-block;
 }
 
+.c-map-widget__info__stats {
+    color: $Font-Color-Muted;
+    font-size: 13px;
+}
+
 .c-map-widget__info__meta {
     float: right;
 

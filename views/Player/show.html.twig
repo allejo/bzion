@@ -78,7 +78,6 @@
                 </p>
                 <p><strong>Joined on</strong> {{ player.joinedDate | humanTime(constant("TimeDate::DATE_FULL"), tooltip = false) }}</p>
                 <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
-
                 {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
                     <p><strong>BZID</strong>
                         <a href="https://forums.bzflag.org/memberlist.php?mode=viewprofile&amp;u={{ player.bzid }}">
@@ -86,6 +85,23 @@
                         </a>
                     </p>
                 {% endif %}
+
+                <section class="c-player__stats">
+                    <p><strong>Matches played:</strong> {{ player.matchCount }}</p>
+                    <p>
+                        <strong>Win ratio:</strong>
+                        {% set ratio = 100 * player.matchWinRatio -%}
+                        <span title="{{ ratio|number_format(1) }}%">{{ ratio|round }}%</span>
+                    </p>
+                    <p>
+                        <strong title="Number of captures made by the player's team per match">Team caps per match:</strong>
+                        <span>{{ player.matchAverageCaps|number_format(2) }}</span>
+                    </p>
+                    <p>
+                        <strong>Activity:</strong>
+                        <span>{{ player.matchActivity|number_format(2) }} matches per day</span>
+                    </p>
+                </section>
 
                 {% if player.description is not empty %}
                     <section class="c-player__bio s-markdown">
