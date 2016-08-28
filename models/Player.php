@@ -566,8 +566,7 @@ class Player extends AvatarModel implements NamedModel
         $this->setVerified(false);
         $this->generateNewConfirmCode();
 
-        $this->email = $email;
-        $this->update("email", $email);
+        $this->updateProperty($this->email, 'email', $email);
     }
 
     /**
@@ -645,8 +644,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setDescription($description)
     {
-        $this->description = $description;
-        $this->update("description", $description);
+        $this->updateProperty($this->description, "description", $description);
     }
 
     /**
@@ -655,8 +653,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setTimezone($timezone)
     {
-        $this->timezone = $timezone;
-        $this->update("timezone", $timezone);
+        $this->updateProperty($this->timezone, "timezone", $timezone);
     }
 
     /**
@@ -665,8 +662,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function setTeam($team)
     {
-        $this->team = $team;
-        $this->update("team", $team);
+        $this->updateProperty($this->team, "team", $team);
     }
 
     /**
