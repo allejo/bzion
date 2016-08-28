@@ -30,6 +30,7 @@ $snake      = Player::newPlayer(54497, "Snake12534");
 $tw1sted    = Player::newPlayer(9736, "tw1sted", null, "active", Player::DEVELOPER);
 $brad       = Player::newPlayer(3030, "brad", null, "active", Player::S_ADMIN, "", "I keep nagging about when this project will be done");
 $constitution = Player::newPlayer(9972, "Constitution", null, "active", Player::S_ADMIN);
+$themap     = Player::newPlayer(57422, "the map", null, "active", Player::COP);
 
 $oldSnake = Player::newPlayer(54498, "Snake12534");
 $oldSnake->setOutdated(true);
@@ -45,7 +46,9 @@ $allPlayers = array(
     $snake,
     $tw1sted,
     $brad,
-    $constitution);
+    $constitution,
+    $themap
+);
 echo " done!";
 
 echo "\nSending notifications...";
@@ -78,6 +81,7 @@ $lweak->addMember($autoreport->getId());
 $fflood->addMember($blast->getId());
 $fradis->addMember($alezakos->getId());
 $reptitles->addMember($brad->getId());
+$fradis->addMember($themap->getId());
 echo " done!";
 
 echo "\nAdding maps...";
