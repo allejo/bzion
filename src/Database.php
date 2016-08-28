@@ -212,11 +212,15 @@ class Database
                 foreach ($params as $name => $param) {
                     // Guess parameter type
                     if (is_bool($param)) {
-                        $type = PDO::PARAM_BOOL;
+                        $param = (int) $param;
+                        $type = PDO::PARAM_INT;
                     } elseif (is_int($param)) {
                         $type = PDO::PARAM_INT;
                     } elseif (is_null($param)) {
                         $type = PDO::PARAM_NULL;
+                    } elseif ($param instanceof ModelInterface) {
+                        $param = (int) $param->getId();
+                        $type = PDO::PARAM_INT;
                     } else {
                         $type = PDO::PARAM_STR;
                     }
@@ -229,7 +233,11 @@ class Database
                 }
             }
 
-            $query->execute();
+            $result = $query->execute();
+            if ($result === false) {
+                $this->error("Unknown error");
+            }
+
             $this->last_id = $this->dbc->lastInsertId();
 
             return $query;
