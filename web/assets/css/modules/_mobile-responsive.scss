@@ -116,3 +116,14 @@
         }
     }
 }
+
+@mixin respond-down($viewSize) {
+    @if map-get($breakpoints, $viewSize) == 1920px {
+        @content;
+    }
+    @else {
+        @include media("<" + $viewSize) {
+            @content;
+        }
+    }
+}

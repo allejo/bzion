@@ -1,115 +1,111 @@
 // This component will work alongside a CSS table (.c-table) and will be used to display a list
 // of bans
-@include component('banlist') {
-    // An individual row in the '.c-banlist' CSS table. A single row per ban will be used
-    @include component('ban') {
-        @include make-margin(sm);
-
-        // For phablets and phones, we'll be making the columns into full rows
-        @include respond-up(sm) {
-            flex-wrap: wrap;
-        }
-
-        // "Display" the column headers next the columns that become rows in phablet view
-        @include element('label') {
-            display: none;
-
-            @include respond-up(sm) {
-                display: inline-block;
-                font-weight: bold;
-                width: 120px;
-            }
-        }
-
-        @include element('creation') {
-
-        }
-
-        @include element('victim') {
-
-        }
-
-        @include element('expiration') {
-
-        }
-
-        @include element('info') {
-            min-width: 30px; // Magic number; it's the width of the fa-info-circle
-            text-align: center;
-
-            // On desktops, all columns are equal size. On tablets, the info column will adjust to the fa-info-circle size
-            @include respond-up(md) {
-                flex: 0 1 auto;
-            }
-
-            @include respond-up(sm) {
-                text-align: left;
-            }
-
-            // This will be the links to individual ban pages
-            @include element('details') {
-                // On desktops and tablets, we'll display an 'info circle' but we'll have a text version for phablets/phones so hide it at that point
-                @include modifier('desktop') {
-                    @include respond-up(sm) {
-                        display: none;
-                    }
-                }
-
-                // On phablets and phones only, we'll display a text description so hide it until we reach that breakpoint
-                @include modifier('mobile') {
-                    display: none;
-
-                    @include respond-up(sm) {
-                        display: inline-block;
-                    }
-                }
-            }
-        }
-
-        // Convert columns into rows for phablets and smaller
-        .c-table__row__column {
-            @include respond-up(sm) {
-                flex-basis: 100%;
-                padding: 2px 0;
-            }
+.c-banlist {
+    // Convert columns into rows for phablets and smaller
+    .c-table__row__column {
+        @include respond-down(md) {
+            flex-basis: 100%;
+            padding: 2px 0;
         }
     }
 
     // Hide the header row for phablets and smaller since we'll be displaying the spans
     .c-table__row--header {
-        @include respond-up(sm) {
+        @include respond-down(md) {
             display: none;
         }
     }
 }
 
-@include component('ban-form') {
-    @include element('settings') {
-        @include element('expiration') {
-            text-align: center;
-        }
+.c-ban {
+    margin-bottom: $Settings-Page_Section-Small_Margin;
 
-        > div {
-            display: inline-block;
-            margin-right: 30px;
+    @include respond-down(md) {
+        flex-wrap: wrap;
+    }
+}
 
-            &:last-child {
-                margin-right: 0;
-            }
-        }
+.c-ban__label {
+    display: none;
+
+    @include respond-down(md) {
+        display: inline-block;
+        font-weight: bold;
+        width: 120px;
+    }
+}
+
+.c-ban__creation {
+
+}
+
+.c-ban__victim {
+
+}
+
+.c-ban__expiration {
+
+}
+
+.c-ban__info {
+    min-width: 30px; // Magic number; it's the width of the fa-info-circle
+    text-align: left;
+
+    // On desktops, all columns are equal size. On tablets, the info column will adjust to the fa-info-circle size
+    @include respond-up(lg) {
+        flex: 0 1 auto;
     }
 
-    @include element('server-settings') {
-        display: flex;
+    @include respond-up(md) {
+        text-align: center;
+    }
+}
 
-        @include element('message') {
-            @include view-columns(lg, 10);
-        }
+.c-ban__info__details--desktop {
+    display: none;
 
-        @include element('allow-join') {
-            @include view-columns(lg, 2);
+    @include respond-up(md) {
+        display: inline;
+    }
+}
 
-            text-align: center;
+.c-ban__info__details--mobile {
+    display: inline;
+
+    @include respond-up(md) {
+        display: none;
+    }
+}
+
+.c-ban-form {
+
+}
+
+.c-ban-form__settings {
+    > div {
+        display: inline-block;
+        margin-right: $Settings-Page_Section-Margin;
+
+        &:last-child {
+            margin-right: 0;
         }
     }
+}
+
+.c-ban-form__settings__expiration {
+    text-align: center;
+}
+
+.c-ban-form__server-settings {
+    display: flex;
+}
+
+.c-ban-form__server-settings__message {
+    @include view-columns(lg, 10);
+}
+
+.c-ban-form__server-settings__allow-join {
+    @include view-columns(lg, 2);
+
+    text-align: center;
 }
