@@ -1,4 +1,3 @@
-{% set url = app.request.baseUrl %}
 {% set disabledCSS = "c-pagination--disabled" %}
 {% set showButtons = totalPages > 5 %}
 {% set prev = showButtons and currentPage > 1 %}
@@ -9,7 +8,7 @@
     {% if showButtons %}
         <li class="{{ prev ?: disabledCSS }}">
             {% if prev %}
-                <a href="{{ url }}?page={{ currentPage - 1 }}"><i class="fa fa-angle-left"></i></a>
+                <a href="{{ url_modify({ page: currentPage - 1 }) }}"><i class="fa fa-angle-left"></i></a>
             {% else %}
                 <i class="fa fa-angle-left"></i>
             {% endif %}
@@ -36,14 +35,14 @@
         {% if i == currentPage %}
             <li class="c-pagination--current">{{ i }}</li>
         {% else %}
-            <li><a href="{{ url }}?page={{ i }}">{{ i }}</a></li>
+            <li><a href="{{ url_modify({ page: i }) }}">{{ i }}</a></li>
         {% endif %}
     {% endfor %}
 
     {% if showButtons %}
         <li class="{{ next ?: disabledCSS }}">
             {% if next %}
-                <a href="{{ url }}?page={{ currentPage + 1 }}"><i class="fa fa-angle-right"></i></a>
+                <a href="{{ url_modify({ page: currentPage + 1 }) }}"><i class="fa fa-angle-right"></i></a>
             {% else %}
                 <i class="fa fa-angle-right"></i>
             {% endif %}

@@ -27,7 +27,8 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            LinkToFunction::get()
+            LinkToFunction::get(),
+            UrlModifyFunction::get()
         );
     }
 
