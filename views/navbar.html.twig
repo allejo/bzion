@@ -18,6 +18,7 @@
 
 {% macro userOptions() %}
     {% import _self as navbar %}
+    {# TODO: Don't count notifications and messages twice #}
 
     {{ navbar.page(
         navbar.badge(me.countUnreadNotifications, "js-counter__notifications"),

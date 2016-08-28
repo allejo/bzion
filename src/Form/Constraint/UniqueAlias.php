@@ -29,7 +29,7 @@ class UniqueAlias extends Constraint
     /**
      * The model being edited
      *
-     * @var AliasModel|null
+     * @var \AliasModel|null
      */
     public $model;
 
@@ -37,7 +37,7 @@ class UniqueAlias extends Constraint
      * UniqueAlias
      *
      * @param string           $type The type of the model
-     * @param AliasModel|null $model The model itself
+     * @param \AliasModel|null $model The model itself
      */
     public function __construct($type, $model)
     {

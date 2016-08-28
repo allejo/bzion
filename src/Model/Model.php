@@ -196,7 +196,7 @@ abstract class Model extends CachedModel
     /**
      * Escape special HTML characters from a string
      * @param  string  $string
-     * @return $string
+     * @return string
      */
     public static function escape($string)
     {

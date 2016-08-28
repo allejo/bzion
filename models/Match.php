@@ -269,7 +269,7 @@ class Match extends UrlModel implements NamedModel
     /**
      * Set the timestamp of the match
      *
-     * @param  mixed The match's new timestamp
+     * @param  mixed $timestamp The match's new timestamp
      * @return $this
      */
     public function setTimestamp($timestamp)

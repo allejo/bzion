@@ -254,7 +254,6 @@ class Team extends AvatarModel
     /**
      * Get the description of the team
      *
-     * @param  bool $md false for HTML format, true for the original markdown
      * @return string  The description of the team
      */
     public function getDescription()
@@ -475,7 +474,7 @@ class Team extends AvatarModel
 
         $player = Player::get($id);
 
-        $player->update("team", null, "s");
+        $player->update("team", null);
         $this->update('members', --$this->members);
     }
 
@@ -587,7 +586,7 @@ class Team extends AvatarModel
     public static function getTeams()
     {
         return self::arrayIdToModel(
-            parent::fetchIdsFrom(
+            self::fetchIdsFrom(
                 "status", array("disabled", "deleted"),
                 true, "ORDER BY elo DESC"
             )

@@ -8,7 +8,7 @@
  */
 
 use BZIon\Debug\Debug;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,8 +65,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package BZiON\Controllers
  */
-abstract class Controller extends ContainerAware
+abstract class Controller
 {
+    use ContainerAwareTrait;
+
     /**
      * Parameters specified by the route
      * @var ParameterBag
@@ -245,6 +247,8 @@ abstract class Controller extends ContainerAware
      *
      * @param ReflectionParameter $modelParameter  The model's parameter we want to investigate
      * @param ParameterBag        $routeParameters The route's parameters
+     *
+     * @return object|null
      */
     protected function getObjectFromParameters($modelParameter, $routeParameters)
     {
@@ -313,6 +317,8 @@ abstract class Controller extends ContainerAware
             return $refClass->getMethod('get')
                             ->invoke(null, $routeParameters->get($paramName . 'Id'));
         }
+
+        return null;
     }
 
     /**

@@ -107,7 +107,7 @@ class ChangesCommand extends ContainerAwareCommand
      * Parse the command line options concerning the date of the last update
      *
      * @param  string          $lastUpdatePath The path to the last update file
-     * @param  string          $date|null      The date command line argument
+     * @param  string|null     $date           The date command line argument
      * @param  OutputInterface $output         The command's output
      * @return void
      */
@@ -283,5 +283,7 @@ class ChangesCommand extends ContainerAwareCommand
 
             return self::isEmpty($child);
         }
+
+        return null;
     }
 }

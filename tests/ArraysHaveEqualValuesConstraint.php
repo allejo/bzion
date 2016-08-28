@@ -13,6 +13,8 @@ class ArraysHaveEqualValuesConstraint extends PHPUnit_Framework_Constraint
      */
     public function __construct($value)
     {
+        parent::__construct();
+
         if (!(is_array($value) || $value instanceof ArrayAccess)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'array or ArrayAccess');
         }

@@ -283,7 +283,6 @@ class News extends UrlModel implements NamedModel
      * @param int    $categoryId The ID of the category this article will be published under
      * @param string $status     The status of the article: 'published', 'disabled', or 'deleted'
      *
-     * @internal param int $categoryID The ID of the category
      * @return News An object representing the article that was just created or false if the article was not created
      */
     public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'published')

@@ -16,12 +16,12 @@ class MultipleAdvancedModelTransformer extends AdvancedModelTransformer
      * Transforms data to an object
      *
      * @param  string $data
-     * @return Model[]
+     * @return \Model[]
      */
     public function reverseTransform($data)
     {
         // Handle the data provided by Javascript, if any
-        $transformed = parent::transformJSON($data, $this->included);
+        $transformed = self::transformJSON($data, $this->included);
 
         if ($transformed !== false) {
             return $transformed;

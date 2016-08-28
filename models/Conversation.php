@@ -267,7 +267,7 @@ class Conversation extends UrlModel implements NamedModel
             $additional_query .= " AND `distinct` = 1";
         }
 
-        return parent::fetchIds($additional_query, $params, "player_conversations", "player");
+        return self::fetchIds($additional_query, $params, "player_conversations", "player");
     }
 
     /**
@@ -277,7 +277,7 @@ class Conversation extends UrlModel implements NamedModel
      */
     public function getTeamIds()
     {
-        return parent::fetchIds("WHERE `conversation` = ?", $this->id, "team_conversations", "team");
+        return self::fetchIds("WHERE `conversation` = ?", $this->id, "team_conversations", "team");
     }
 
     /**
@@ -324,9 +324,9 @@ class Conversation extends UrlModel implements NamedModel
     /**
      * Checks if a player or team belongs in the conversation
      * @param  Player|Team $member The player or team to check
-     * @param  bool Whether to only return true if a player is specifically a
-     *              member of the conversation, not just a member of one of the
-     *              conversation's teams (ignored if $member is a Team)
+     * @param  bool $distinct Whether to only return true if a player is
+     *                        specifically a member of the conversation, not
+     *                        just a member of one of the conversation's teams (ignored if $member is a Team)
      * @return bool True if the given object belongs in the conversation, false if they don't
      */
     public function isMember($member, $distinct = false)

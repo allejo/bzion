@@ -52,15 +52,14 @@
                         <span class="c-visit__player__bzid">{{ visit.player.bzid }}</span>
                     </div>
                     <div class="c-table__row__column c-visit__roles">
-                    {% for role in visit.player.roles if role.displayIcon %}
-                        {% if loop.first %}
-                            <span class="c-visit__label">Player Roles:</span>
-                        {% endif %}
+                        {% for role in visit.player.roles if role.displayIcon %}
+                            {% if loop.first %}
+                                <span class="c-visit__label">Player Roles:</span>
+                            {% endif %}
 
-
-                        <i title="{{ role.name }}" class="fa {{ role.displayIcon }}"></i>
-                    {% endfor %}
-                        </div>
+                            <i title="{{ role.name }}" class="fa {{ role.displayIcon }}"></i>
+                        {% endfor %}
+                    </div>
                     <div class="c-table__row__column c-visit__timestamp">
                         <span class="c-visit__label">Timestamp:</span>
                         {{ visit.timestamp|humanTime }}

@@ -21,7 +21,7 @@ class SearchController extends JSONController
      */
     private static $acceptableTypes = array('player', 'team');
 
-    public function searchAction(Request $request, Player $me)
+    public function searchAction(Request $request)
     {
         if (!$request->query->has('types')) {
             throw new \BadRequestException();

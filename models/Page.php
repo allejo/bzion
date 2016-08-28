@@ -259,6 +259,6 @@ class Page extends AliasModel
      */
     public static function getHomePage()
     {
-        return self::get(parent::fetchIdFrom(1, "home"));
+        return self::get(self::fetchIdFrom(1, "home"));
     }
 }

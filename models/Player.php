@@ -129,7 +129,7 @@ class Player extends AvatarModel implements NamedModel
      * The ban of the player, or null if the player is not banned
      * @var Ban|null
      */
-    protected $player;
+    protected $ban;
 
     /**
      * The name of the database table used for queries
@@ -313,6 +313,7 @@ class Player extends AvatarModel implements NamedModel
      *
      * This method protects against timing attacks
      *
+     * @param  string $code The confirmation code to check
      * @return bool `true` for a correct e-mail verification code
      */
     public function isCorrectConfirmCode($code)
@@ -375,7 +376,7 @@ class Player extends AvatarModel implements NamedModel
      */
     public function getPastCallsigns()
     {
-        return parent::fetchIds("WHERE player = ?", array($this->id), "past_callsigns", "username");
+        return self::fetchIds("WHERE player = ?", array($this->id), "past_callsigns", "username");
     }
 
     /**
@@ -836,7 +837,7 @@ class Player extends AvatarModel implements NamedModel
     public static function getPlayers()
     {
         return self::arrayIdToModel(
-            parent::fetchIdsFrom("status", array("active", "test"), false)
+            self::fetchIdsFrom("status", array("active", "test"), false)
         );
     }
 
@@ -868,7 +869,7 @@ class Player extends AvatarModel implements NamedModel
     public static function getTeamMembers($teamID)
     {
         return self::arrayIdToModel(
-            parent::fetchIds("WHERE team = ?", array($teamID))
+            self::fetchIds("WHERE team = ?", array($teamID))
         );
     }
 

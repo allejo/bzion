@@ -435,7 +435,7 @@ abstract class BaseModel implements ModelInterface
      */
     public function refresh()
     {
-        parent::__construct($this->id);
+        self::__construct($this->id);
 
         if ($this->loaded) {
             // Load the lazy parameters of the model if they're loaded already

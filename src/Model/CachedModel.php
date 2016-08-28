@@ -77,7 +77,7 @@ abstract class CachedModel extends BaseModel
     protected function storeInCache()
     {
         if (!Service::getModelCache()) {
-            return;
+            return $this;
         }
 
         Service::getModelCache()->save($this);
@@ -101,7 +101,7 @@ abstract class CachedModel extends BaseModel
      */
     private function getFromDatabase()
     {
-        parent::__construct($this->id);
+        self::__construct($this->id);
 
         if ($this->loaded) {
             // Reload the lazy parameters of the model if they're loaded already

@@ -25,6 +25,7 @@ class NotificationController extends HTMLController
     /**
      * Separates notifications based on their timestamp
      *
+     * @param  Notification[] $notifications The list of notifications
      * @return array[]
      */
     private function chunk($notifications)

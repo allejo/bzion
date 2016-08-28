@@ -123,7 +123,6 @@ class ModelType extends AbstractType
 
     private function getAll()
     {
-        $type     = $this->type;
         $query    = \Controller::getQueryBuilder($this->type);
         $modifier = $this->modifier;
 

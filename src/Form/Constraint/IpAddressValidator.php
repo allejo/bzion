@@ -25,18 +25,18 @@ class IpAddressValidator extends ConstraintValidator
             return;
         }
 
-        foreach ($value as $value) {
-            if (strlen($value) > 255) {
+        foreach ($ip as $value) {
+            if (strlen($ip) > 255) {
                 $this->context->buildViolation($constraint->lengthMessage)
-                    ->setParameter('%address%', $value)
+                    ->setParameter('%address%', $ip)
                     ->addViolation();
             }
 
             // Valid hostnames will get caught as valid hostnames, so there is
             // no need to check if $this->isValidIP
-            if (!$this->isValidHostname($value)) {
+            if (!$this->isValidHostname($ip)) {
                 $this->context->buildViolation($constraint->message)
-                    ->setParameter('%address%', $value)
+                    ->setParameter('%address%', $ip)
                     ->addViolation();
             }
         }
@@ -44,7 +44,7 @@ class IpAddressValidator extends ConstraintValidator
 
     /**
      * Finds out whether a string is a valid IP address
-     * @param  $string The IP address to check
+     * @param string $string The IP address to check
      *
      * @return bool
      */
@@ -57,7 +57,7 @@ class IpAddressValidator extends ConstraintValidator
 
     /**
      * Finds out whether a string is a valid hostname
-     * @param  $string The hostname to check
+     * @param string $string The hostname to check
      *
      * @return bool
      */

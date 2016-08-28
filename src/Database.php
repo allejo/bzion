@@ -47,8 +47,6 @@ class Database
      * @param string $user     The MySQL user
      * @param string $password The MySQL password for the user
      * @param string $dbName   The MySQL database name
-     *
-     * @return Database A database object to interact with the database
      */
     public function __construct($host, $user, $password, $dbName)
     {
@@ -270,8 +268,9 @@ class Database
     /**
      * Uses monolog to log an error message
      *
-     * @param string $error The error string
-     * @param int    $id    The error ID
+     * @param string         $error    The error string
+     * @param int            $id       The error ID
+     * @param Throwable|null $previous The exception that caused the error (if any)
      *
      * @throws Exception
      */

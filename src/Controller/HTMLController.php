@@ -4,7 +4,6 @@ use BZIon\Form\Creator\ConfirmationFormCreator;
 use BZIon\Twig\AppGlobal;
 use BZIon\Twig\ModelFetcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @package BZiON\Controllers
@@ -267,6 +266,7 @@ abstract class HTMLController extends Controller
      * @param int|null $max  The largest number of models to accept, or null for infinite models
      *
      * @throws BadRequestException
+     * @return int[]|Model[] An array of models or IDs (depending on the $models parameter)
      */
     protected function decompose($query, array $types, $models = true, $max = null)
     {
@@ -314,7 +314,7 @@ abstract class HTMLController extends Controller
                 }
 
                 if ($models) {
-                    $this->assertVisibility($result[] = $firstType::get($id));
+                    $this->assertVisibility($result[] = $firstType::get($object[0]));
                 } else {
                     $result[$firstType][] = (int) $object[0];
                 }
@@ -330,7 +330,7 @@ abstract class HTMLController extends Controller
      * Throw an innocent exception if a player can't see a Model or if it
      * doesn't exist
      *
-     * @param $model The model to test
+     * @param PermissionModel $model The model to test
      *
      * @throws BadRequestException
      */

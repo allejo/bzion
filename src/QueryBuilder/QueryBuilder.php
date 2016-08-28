@@ -99,12 +99,6 @@ class QueryBuilder implements Countable
     private $nameColumn = null;
 
     /**
-     * Whether to return the results as arrays instead of models
-     * @var bool
-     */
-    private $returnArray = false;
-
-    /**
      * The page to return
      * @var int|null
      */
@@ -232,6 +226,8 @@ class QueryBuilder implements Countable
      * @param string|TimeDate $time      The timestamp to compare to
      * @param bool            $inclusive Whether to include the given timestamp
      * @param bool            $reverse   Whether to reverse the results
+     *
+     * @return self
      */
     public function isBefore($time, $inclusive = false, $reverse = false)
     {
@@ -244,6 +240,8 @@ class QueryBuilder implements Countable
      * @param string|TimeDate $time      The timestamp to compare to
      * @param bool            $inclusive Whether to include the given timestamp
      * @param bool            $reverse   Whether to reverse the results
+     *
+     * @return self
      */
     public function isAfter($time, $inclusive = false, $reverse = false)
     {

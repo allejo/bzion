@@ -40,7 +40,7 @@ class ApiKey extends Model
 
     public static function getKeyByOwner($owner)
     {
-        $key = parent::fetchIdFrom($owner, "owner");
+        $key = self::fetchIdFrom($owner, "owner");
 
         if ($key == null) {
             return self::createKey("Automatically generated key", $owner);

@@ -102,7 +102,7 @@ class Role extends UrlModel implements NamedModel
         $this->displayOrder = $role['display_order'];
         $this->permissions  = array();
 
-        $permissions = parent::fetchIds(
+        $permissions = self::fetchIds(
             "JOIN role_permission ON role_permission.perm_id = permissions.id WHERE role_permission.role_id = ?",
             array($this->id), "permissions", "name");
 
@@ -171,7 +171,7 @@ class Role extends UrlModel implements NamedModel
     public function getUsers()
     {
         return Player::arrayIdToModel(
-            parent::fetchIds(
+            self::fetchIds(
                 "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.role_id = ?",
                 array($this->getId()), "roles", "player_roles.user_id"
             )
@@ -211,7 +211,7 @@ class Role extends UrlModel implements NamedModel
     /**
      * Add a permission to a role
      *
-     * @param string $perm_name The name of the permission to add
+     * @param string|Permission $perm_name The name of the permission to add
      *
      * @return bool Whether or not the operation was successful
      */
@@ -237,7 +237,7 @@ class Role extends UrlModel implements NamedModel
      */
     protected function getPermIDs()
     {
-        return parent::fetchIdsFrom("role_id", array($this->id), false, "", "role_permission", "perm_id");
+        return self::fetchIdsFrom("role_id", array($this->id), false, "", "role_permission", "perm_id");
     }
 
     /**
@@ -265,7 +265,7 @@ class Role extends UrlModel implements NamedModel
     /**
      * Revoke a permission from a role
      *
-     * @param string $perm_name The permission to remove
+     * @param string|Permission $perm_name The permission to remove
      *
      * @return bool Whether or not the operation was successful
      */
@@ -277,8 +277,8 @@ class Role extends UrlModel implements NamedModel
     /**
      * Modify a permission a role has by either adding a new one or removing an old one
      *
-     * @param string $perm_name The permission to add or remove
-     * @param string $action    Whether to "add" or "remove" a permission
+     * @param string|Permission $perm_name The permission to add or remove
+     * @param string            $action    Whether to "add" or "remove" a permission
      *
      * @return bool
      */
@@ -445,7 +445,7 @@ class Role extends UrlModel implements NamedModel
     public static function getRoles($user_id)
     {
         return parent::arrayIdToModel(
-            parent::fetchIds(
+            self::fetchIds(
                 "JOIN player_roles ON player_roles.role_id = roles.id WHERE player_roles.user_id = ?",
                 array($user_id), "roles", "roles.id"
             )
@@ -460,7 +460,7 @@ class Role extends UrlModel implements NamedModel
     public static function getLeaderRoles()
     {
         return parent::arrayIdToModel(
-            parent::fetchIds(
+            self::fetchIds(
                 "WHERE display = 1 ORDER BY display_order ASC"
             )
         );

@@ -26,7 +26,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
 
     /**
      * Get the name of the object
-     * @var string
+     * @return string
      */
     public function getName()
     {

@@ -24,7 +24,7 @@ class AppGlobal
     /**
      * Create new AppGlobal
      *
-     * @param Controller         $controller The controller handling the request
+     * @param \Controller        $controller The controller handling the request
      * @param ContainerInterface $container  Symfony's service container
      */
     public function __construct(\Controller $controller, ContainerInterface $container)

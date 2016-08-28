@@ -193,6 +193,8 @@ class ScriptHandler
      * @param string      $username The username for the MySQL user
      * @param string      $password The password for the MySQL user
      * @param string      $database The name of the database
+     *
+     * @return boolean Whether the database was created
      */
     private static function createDatabase(IOInterface $io, $host, $username, $password, $database)
     {
@@ -243,7 +245,7 @@ class ScriptHandler
     /**
      * Execute a symfony console command
      *
-     * @param  Event Composer's event
+     * @param  Event  $event   Composer's event
      * @param  string $command The command to execute
      * @param  int    $timeout The timeout of the command in seconds
      * @return void

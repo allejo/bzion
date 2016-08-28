@@ -38,7 +38,7 @@ abstract class HTTPException extends Exception implements HttpExceptionInterface
             $message = $this->message;
         }
 
-        return parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $previous);
     }
 
     /**

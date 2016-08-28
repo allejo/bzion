@@ -7,12 +7,12 @@ use BZIon\Form\Transformer\MultipleAdvancedModelTransformer;
 use BZIon\Form\Transformer\SingleAdvancedModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Form;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Count;
+
 
 class AdvancedModelType extends AbstractType
 {
@@ -22,14 +22,8 @@ class AdvancedModelType extends AbstractType
     private $types = array();
 
     /**
-     * Whether the user gave us names instead of IDs
-     * @var bool
-     */
-    private $listNames = false;
-
-    /**
      * An object to always include
-     * @var Model|null
+     * @var \Model|null
      */
     private $include = null;
 

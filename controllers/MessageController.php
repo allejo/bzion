@@ -182,8 +182,11 @@ class MessageController extends JSONController
     public function teamRefreshAction(Player $me, Conversation $conversation)
     {
         $team = $me->getTeam();
-        $missing = $conversation->getMissingTeamMembers($team);
+        if (!$team->isValid()) {
+            throw new ForbiddenException("You are not a member of a team.");
+        }
 
+        $missing = $conversation->getMissingTeamMembers($team);
         if (empty($missing)) {
             throw new ForbiddenException("All members of the specified team are already part of that conversation.");
         }
@@ -412,7 +415,11 @@ class MessageController extends JSONController
     }
 
     /**
-     * @return string|null
+     * Get an error message from a form
+     *
+     * @param Form $form The form to check
+     *
+     * @return string Will return "Unknown error" if an error is not found
      */
     private function getErrorMessage(Form $form)
     {

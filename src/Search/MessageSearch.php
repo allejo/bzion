@@ -29,8 +29,8 @@ class MessageSearch
     /**
      * Create a new message search
      *
-     * @param MessageQueryBuilder $queryBuilder The MySQL query builder for messages
-     * @param Player|null         $player       The player to make the search for
+     * @param \MessageQueryBuilder $queryBuilder The MySQL query builder for messages
+     * @param \Player|null         $player       The player to make the search for
      */
     public function __construct(\MessageQueryBuilder $queryBuilder, \Player $player = null)
     {
@@ -41,8 +41,8 @@ class MessageSearch
     /**
      * Perform a search on messages and get the results
      *
-     * @param  string    $query The query string
-     * @return Message[] The results of the search
+     * @param  string     $query The query string
+     * @return \Message[] The results of the search
      */
     public function search($query)
     {
@@ -58,13 +58,13 @@ class MessageSearch
     /**
      * Perform a search on messages using the data stored in the MySQL database
      *
-     * @param  string    $query The query string
-     * @return Message[] The results of the search
+     * @param  string     $query The query string
+     * @return \Message[] The results of the search
      */
-    private function mysqlSearch($search)
+    private function mysqlSearch($query)
     {
         return $this->queryBuilder
-            ->search($search)
+            ->search($query)
             ->forPlayer($this->player)
             ->getModels();
     }

@@ -13,7 +13,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
     protected $types;
 
     /**
-     * @param string[] $type     The types of the models
+     * @param string[] $types The types of the models
      */
     public function __construct(array $types)
     {
@@ -27,7 +27,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
     /**
      * Transforms an object (model) to the form representation
      *
-     * @param  Model|null $model
+     * @param  \Model|\Model[]|null $models
      * @return array
      */
     public function transform($models)
@@ -81,7 +81,7 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
      * Get a model from its name
      * @param  string     $name The name of the model
      * @param  string     $type The type of the model in lower case
-     * @return NamedModel|null  The model or null if no name was specified
+     * @return \NamedModel|null  The model or null if no name was specified
      */
     protected function getModelFromName($name, $type)
     {
@@ -101,11 +101,11 @@ abstract class AdvancedModelTransformer implements DataTransformerInterface
     /**
      * Transform JSON data provided by javascript to a list of Models
      *
-     * @param  string $json The JSON provided to us by javascript, containing
+     * @param  string $data The JSON provided to us by javascript, containing
      *                      a list of Model IDs and types
      * @param  array  $include An array of Models of each type that will be
      *                         included in the final result
-     * @return bool|Model[] A list of models, or false if the data was not
+     * @return bool|\Model[] A list of models, or false if the data was not
      *                         provided by javascript as JSON
      */
     protected function transformJSON(&$data, $include = array())
