@@ -60,6 +60,16 @@
         <section class="o-row o-section">
             <section class="o-col--aside c-team__profile-picture">
                 <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
+
+                <div class="c-team__profile-picture__link">
+                    {%- if app.urlType == 'vanity' -%}
+                        <p><strong>Permalink</strong></p>
+                        <input type="text" value="{{ request.schemeAndHTTPHost }}{{ team.permaLink }}" disabled />
+                    {%- else -%}
+                        <p><strong>Vanity URL</strong></p>
+                        <input type="text" value="{{ request.schemeAndHTTPHost }}{{ team.url('show', false, [], true) }}" disabled />
+                    {%- endif -%}
+                </div>
             </section>
 
             <section class="o-col--main c-team__information">

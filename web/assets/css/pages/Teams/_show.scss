@@ -15,9 +15,18 @@
 .c-team__profile-picture {
     @include profile-picture();
 
+    img,
+    p {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+    }
+
     @include respond-up(md) {
         order: 2;
     }
+}
+
+.c-team__profile-picture__link {
+    text-align: left;
 }
 
 .c-team__roster,

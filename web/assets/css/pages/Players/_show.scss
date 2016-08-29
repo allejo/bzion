@@ -4,6 +4,15 @@
 
 .c-player__picture {
     @include profile-picture();
+
+    img,
+    p {
+        margin-bottom: $Settings-Page_Section-Small_Margin;
+    }
+}
+
+.c-player__picture__link {
+    text-align: left;
 }
 
 .c-player__details {
