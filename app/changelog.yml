@@ -1,3 +1,10 @@
+28 August 2016:
+    Features:
+        - Added support for reporting fun matches
+        - Added more player match statistics
+        - Added a visit log and more player searching tools for admins
+    Notes:
+        - Check out the new configuration value site.url_type that can be used to generate permanent URLs
 24 August 2016:
     Features:
         - Added a visit log
