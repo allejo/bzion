@@ -98,7 +98,7 @@ SUCCESS
                 $config[$node->getName()] = $this->writeNodeQuestion($node, $name);
             }
         } else {
-            if (!isset($config[$node->getName()])) {
+            if (!isset($config[$node->getName()]) || !is_array($config[$node->getName()])) {
                 $config[$node->getName()] = array();
             }
 

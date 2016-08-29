@@ -190,6 +190,14 @@ class Configuration implements ConfigurationInterface
                             ->defaultFalse()
                             ->info('Whether the website is in maintenance mode (you can set this to a markdown string to display it in the maintenance page)')
                         ->end()
+                        ->scalarNode('secret')
+                            ->attribute('asked', true)
+                            ->info('A secret value, unique to your installation, that is used to generate CSRF tokens')
+                            ->attribute(
+                                'warning',
+                                "This is a string that should be unique to your installation and it's commonly used to add more entropy to security related operations. Its value should be a series of characters, numbers and symbols chosen randomly and the recommended length is around 32 characters."
+                            )
+                        ->end()
                     ->end()
                 ->end()
             ->end();

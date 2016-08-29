@@ -3,7 +3,7 @@ imports:
     - {  resource: "../config.yml" }
 
 framework:
-    secret: "toast"
+    secret: %bzion.miscellaneous.secret%
     form: ~
     csrf_protection: ~
     validation: ~
