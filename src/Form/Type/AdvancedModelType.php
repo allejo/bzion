@@ -7,12 +7,10 @@ use BZIon\Form\Transformer\MultipleAdvancedModelTransformer;
 use BZIon\Form\Transformer\SingleAdvancedModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 
 class AdvancedModelType extends AbstractType
 {

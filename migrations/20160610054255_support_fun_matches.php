@@ -19,10 +19,8 @@ class SupportFunMatches extends AbstractMigration
 
         $matches->dropForeignKey(array('team_a', 'team_b'));
 
-        foreach ($columns as $column)
-        {
-            if (in_array($column->getName(), array_keys($columnsToUpdate)))
-            {
+        foreach ($columns as $column) {
+            if (in_array($column->getName(), array_keys($columnsToUpdate))) {
                 $column->setOptions(array(
                     'null'    => true,
                     'signed'  => ($column->getName() == 'elo_diff'),
@@ -42,8 +40,8 @@ class SupportFunMatches extends AbstractMigration
 
         $matches->addColumn('team_a_color', 'set', $teamColorAssets);
         $matches->addColumn('team_b_color', 'set', $teamColorAssets);
-        $matches->addColumn('match_type', 'set', array('values' => array('official', 'fm', 'special'),
-                                                       'null' => false,
+        $matches->addColumn('match_type', 'set', array('values'  => array('official', 'fm', 'special'),
+                                                       'null'    => false,
                                                        'default' => 'official',
                                                        'comment' => 'The type of match that was played'));
         $matches->save();

@@ -34,7 +34,8 @@ class VisitLogController extends HTMLController
         );
     }
 
-    public static function getQueryBuilder($type = "Visit") {
+    public static function getQueryBuilder($type = "Visit")
+    {
         return $type::getQueryBuilder();
     }
 }

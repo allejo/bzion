@@ -146,5 +146,4 @@ class Visit extends Model
     {
         return $this->referer;
     }
-
 }

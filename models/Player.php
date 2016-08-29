@@ -886,7 +886,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
             ->with($this, 'win')
             ->count();
 
-        return $wins/$count;
+        return $wins / $count;
     }
 
     /**
@@ -915,7 +915,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
             array_fill(0, 5, $this->id)
         );
 
-        return $query[0]['sum']/$count;
+        return $query[0]['sum'] / $count;
     }
 
     /**

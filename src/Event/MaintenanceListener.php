@@ -7,7 +7,6 @@
 
 namespace BZIon\Event;
 
-
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**

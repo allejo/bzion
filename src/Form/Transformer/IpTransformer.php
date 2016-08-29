@@ -3,7 +3,6 @@
 namespace BZIon\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class IpTransformer implements DataTransformerInterface
 {

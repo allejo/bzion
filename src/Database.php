@@ -225,7 +225,7 @@ class Database
                         $type = PDO::PARAM_STR;
                     }
 
-                    if (is_string($name)&&0) {
+                    if (is_string($name)) {
                         $query->bindValue($name, $param, $type);
                     } else {
                         $query->bindValue($i++, $param, $type);

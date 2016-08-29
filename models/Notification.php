@@ -193,7 +193,7 @@ class Notification extends Model
     /**
      * Get the available actions for the notification
      *
-     * @param  boolean $email Whether actions should be formatted for e-mails
+     * @param  bool $email Whether actions should be formatted for e-mails
      * @return array
      */
     public function getActions($email = false)

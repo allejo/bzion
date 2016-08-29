@@ -10,7 +10,8 @@ class UrlModifyFunction
      * @param  array  $parameters An array of parameters to add/modify in the request
      * @return string The HTML link
      */
-    public function __invoke(array $parameters) {
+    public function __invoke(array $parameters)
+    {
         $attributes = \Service::getRequest()->attributes;
         $query = \Service::getRequest()->query;
 

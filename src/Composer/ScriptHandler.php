@@ -194,7 +194,7 @@ class ScriptHandler
      * @param string      $password The password for the MySQL user
      * @param string      $database The name of the database
      *
-     * @return boolean Whether the database was created
+     * @return bool Whether the database was created
      */
     private static function createDatabase(IOInterface $io, $host, $username, $password, $database)
     {

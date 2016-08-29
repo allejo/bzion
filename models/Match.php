@@ -242,7 +242,6 @@ class Match extends UrlModel implements NamedModel
             $teamID = strtolower($teamID);
         }
 
-
         if ($this->getTeamA()->getId() == $teamID) {
             return $this->getTeamAPoints();
         }
@@ -302,7 +301,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTimestamp($timestamp)
     {
-	$this->updateProperty($this->timestamp, "timestamp", TimeDate::from($timestamp));
+        $this->updateProperty($this->timestamp, "timestamp", TimeDate::from($timestamp));
 
         return $this;
     }
@@ -313,7 +312,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamA()
     {
-        if ($this->match_type === Match::OFFICIAL) {
+        if ($this->match_type === self::OFFICIAL) {
             return Team::get($this->team_a);
         }
 
@@ -326,7 +325,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamB()
     {
-        if ($this->match_type === Match::OFFICIAL) {
+        if ($this->match_type === self::OFFICIAL) {
             return Team::get($this->team_b);
         }
 
@@ -737,7 +736,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function isOfficial()
     {
-        return Match::OFFICIAL === $this->getMatchType();
+        return self::OFFICIAL === $this->getMatchType();
     }
 
     /**
@@ -747,7 +746,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function resetELOs()
     {
-        if ($this->match_type === Match::OFFICIAL) {
+        if ($this->match_type === self::OFFICIAL) {
             $this->getTeamA()->changeELO(-$this->elo_diff);
             $this->getTeamB()->changeELO(+$this->elo_diff);
         }
@@ -818,7 +817,7 @@ class Match extends UrlModel implements NamedModel
             'match_type'     => $matchType
         );
 
-        if ($matchType === Match::OFFICIAL) {
+        if ($matchType === self::OFFICIAL) {
             $team_a = Team::get($a);
             $team_b = Team::get($b);
             $a_elo = $team_a->getElo();
@@ -841,7 +840,7 @@ class Match extends UrlModel implements NamedModel
 
         $match = self::create($matchData, 'updated');
 
-        if ($matchType === Match::OFFICIAL) {
+        if ($matchType === self::OFFICIAL) {
             $match->updateMatchCount();
         }
 
@@ -904,7 +903,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function recalculateElo()
     {
-        if ($this->match_type !== Match::OFFICIAL) {
+        if ($this->match_type !== self::OFFICIAL) {
             return;
         }
 
@@ -1009,7 +1008,7 @@ class Match extends UrlModel implements NamedModel
      */
     private function updateMatchCount($decrement = false)
     {
-        if ($this->match_type !== Match::OFFICIAL) {
+        if ($this->match_type !== self::OFFICIAL) {
             return;
         }
 
