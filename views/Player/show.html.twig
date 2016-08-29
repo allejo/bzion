@@ -53,7 +53,13 @@
 
 {% block pageTitle %}
     {{ player.country.flagLiteral | raw }}
-    <h1><a href="{{ player.permaLink }}">{{ player.username }}</a></h1>
+    <h1>
+        {%- if app.urlType == 'vanity' -%}
+            <a href="{{ player.permaLink }}">{{ player.username }}</a>
+        {%- else -%}
+            <a href="{{ player.url('show', false, [], true) }}">{{ player.username }}</a>
+        {%- endif -%}
+    </h1>
 {% endblock %}
 
 {% block content %}

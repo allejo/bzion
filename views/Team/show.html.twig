@@ -44,7 +44,13 @@
     {{ team.rankImageLiteral | raw }}
 
     <div class="c-team-title">
-        <h1><a href="{{ team.permaLink }}">{{ team.name }}</a></h1>
+        <h1>
+            {%- if app.urlType == 'vanity' -%}
+                <a href="{{ team.permaLink }}">{{ team.name }}</a>
+            {%- else -%}
+                <a href="{{ team.url('show', false, [], true) }}">{{ team.name }}</a>
+            {%- endif -%}
+        </h1>
         <small>{{ team.elo }}</small>
     </div>
 {% endblock %}

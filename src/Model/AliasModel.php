@@ -96,19 +96,36 @@ abstract class AliasModel extends UrlModel implements NamedModel
 
     /**
      * {@inheritdoc}
+     *
+     * @todo Redirect models with wrong alias when bzion.site.url_type === 'permalink'
      */
-    public function getURL($action = 'show', $absolute = false, $params = array())
+    public function getURL($action = 'show', $absolute = false, $params = array(), $vanity = false)
     {
         if (!$this->isValid()) {
             return "";
         }
 
-        if (in_array(strtolower($action), array('edit', 'delete', 'kick', 'invite', 'change-leader'))) {
-            // Make sure we provide the correct link for dangerous actions, even
-            // if the model changes its name
+        $forbiddenAliases = array('edit', 'delete', 'kick', 'invite', 'change-leader', 'matches', 'members');
+
+        if (Service::getParameter('bzion.site.url_type') === 'permalink' && $this instanceof DuplexUrlInterface && !$vanity) {
+            // Add both the alias and the ID to the URL if the model supports them
+
+            // Make sure the alias is not forbidden
+            if (in_array(strtolower($action), $forbiddenAliases)) {
+                $alias = $this->getId();
+            } else {
+                $alias = $this->alias;
+            }
+
+            // Add the alias to the query parameters
+            $params = $params + array('alias' => $alias);
             $alias = $this->getId();
         } else {
-            $alias = $this->getAlias();
+            if (in_array(strtolower($action), $forbiddenAliases)) {
+                $alias = $this->getId();
+            } else {
+                $alias = $this->getAlias();
+            }
         }
 
         return $this->getLink($alias, $action, $absolute, $params);

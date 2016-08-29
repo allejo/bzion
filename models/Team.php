@@ -10,7 +10,7 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends AvatarModel implements TeamInterface
+class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface
 {
     /**
      * The description of the team written in markdown

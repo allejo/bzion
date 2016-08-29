@@ -44,12 +44,13 @@ abstract class UrlModel extends PermissionModel
      * Get an object's url
      *
      * @param string  $action   The action to perform (e.g `show`, `list` or `delete`)
-     * @param bool $absolute Whether to return an absolute URL
+     * @param bool    $absolute Whether to return an absolute URL
      * @param array   $params   Extra parameters to pass to the URL generator
+     * @param boolean $vanity   Whether to force the URL to contain just the alias
      *
      * @return string A link
      */
-    public function getURL($action = 'show', $absolute = false, $params = array())
+    public function getURL($action = 'show', $absolute = false, $params = array(), $vanity = false)
     {
         return static::getPermaLink($action, $absolute, $params);
     }

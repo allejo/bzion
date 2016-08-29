@@ -50,6 +50,11 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('message')->defaultValue('Sample alert message with information')->info('The message of the alert')->end()
                             ->end()
                         ->end()
+                        ->enumNode('url_type')
+                            ->values(array('permalink', 'vanity'))
+                            ->defaultValue('vanity')
+                            ->info("`permalink` to make links for players and teams include the object's ID, `vanity` so they only include its alias")
+                        ->end()
                     ->end()
                 ->end()
 

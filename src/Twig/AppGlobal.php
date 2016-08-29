@@ -144,6 +144,16 @@ class AppGlobal
     }
 
     /**
+     * The type of URLs for Models
+     *
+     * @return string `vanity` or `permalink`
+     */
+    public function getUrlType()
+    {
+        return $this->container->getParameter('bzion.site.url_type');
+    }
+
+    /**
      * A unique enough identifier of the alert
      *
      * @return string

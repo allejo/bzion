@@ -18,11 +18,15 @@ class MatchController extends CRUDController
      */
     public $recalculateNeeded = false;
 
-    public function listAction(Request $request, Player $me, Team $team = null, $type = null)
+    public function listAction(Request $request, Player $me, Team $team = null, Player $player = null, $type = null)
     {
         $qb = $this->getQueryBuilder();
 
         $currentPage = $request->query->get('page', 1);
+
+        if ($player) {
+            $team = $player;
+        }
 
         $query = $qb->sortBy('time')->reverse()
                ->with($team, $type)

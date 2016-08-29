@@ -114,6 +114,14 @@ match_by_team_list_sort:
     path:     /teams/{team}/matches/{type}
     defaults: { _controller: 'Match', _action: 'list' }
 
+match_by_player_list:
+    path:     /players/{player}/matches
+    defaults: { _controller: 'Match', _action: 'list' }
+
+match_by_player_list_sort:
+    path:     /players/{player}/matches/{type}
+    defaults: { _controller: 'Match', _action: 'list' }
+
 match_edit:
     path:     /matches/{match}/edit
     defaults: { _controller: 'Match', _action: 'edit' }
@@ -190,13 +198,13 @@ player_list:
     path:     /players
     defaults: { _controller: 'Player', _action: 'list' }
 
-player_show:
-    path:     /players/{player}
-    defaults: { _controller: 'Player', _action: 'show' }
-
 player_edit:
     path:     /players/{player}/edit
     defaults: { _controller: 'Player', _action: 'edit' }
+
+player_show:
+    path:     /players/{player}/{alias}
+    defaults: { _controller: 'Player', _action: 'show', alias: ~ }
 
 profile_show:
     path:     /profile
@@ -254,10 +262,6 @@ team_new:
     path:     /teams/new
     defaults: { _controller: 'Team', _action: 'create' }
 
-team_show:
-    path:     /teams/{team}
-    defaults: { _controller: 'Team', _action: 'show' }
-
 team_members:
     path:     /teams/{team}/members
     defaults: { _controller: 'Player', _action: 'list' }
@@ -289,6 +293,10 @@ team_assign_leader:
 team_abandon:
     path:     /teams/{team}/abandon
     defaults: { _controller: 'Team', _action: 'abandon' }
+
+team_show:
+    path:     /teams/{team}/{alias}
+    defaults: { _controller: 'Team', _action: 'show', alias: ~ }
 
 visit_list:
     path:     /visits

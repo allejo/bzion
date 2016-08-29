@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Util\StringUtils;
  * A league player
  * @package    BZiON\Models
  */
-class Player extends AvatarModel implements NamedModel
+class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
 {
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
