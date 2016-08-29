@@ -53,6 +53,27 @@
             {% endif %}
         </section>
 
+        {# TODO: This should be handled with spawn permissions once bzion takes over the spawn group #}
+        {% if me.hasPermission("add_match") %}
+            <section class="o-section">
+                <strong>Server Address</strong>
+                {% if match.serverAddress %}
+                    <p>{{ match.serverAddress }}</p>
+                {% else %}
+                    <p>Server address not available</p>
+                {% endif %}
+            </section>
+        {% endif %}
+
+        <section class="o-section">
+            <strong>Replay File</strong>
+            {% if match.replayFileName %}
+                <p>{{ match.replayFileName }}</p>
+            {% else %}
+                <p>File name not available</p>
+            {% endif %}
+        </section>
+
         <section class="o-section">
             <strong>Duration</strong>
             <p>{{ match.duration }} minutes</p>
