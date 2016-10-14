@@ -199,7 +199,8 @@ gulp.task('sass:dist', function (cb) {
             beautify: false
         }),
         cssmin({
-            processImport: false
+            processImport: false,
+            mediaMerging: false
         }),
         gulp.dest('web/assets/css')
     ], cb);
