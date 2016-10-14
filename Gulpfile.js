@@ -1,5 +1,6 @@
 var gulp   = require('gulp');
 var pump   = require('pump');
+var util   = require('gulp-util');
 var uglify = require('gulp-uglify');
 
 
@@ -54,7 +55,9 @@ gulp.task('assets:sprites', function (cb) {
 gulp.task('dev:watch', function() {
     var livereload = require('gulp-livereload');
 
-    livereload.listen();
+    livereload.listen({
+        quiet: true
+    });
 
     gulp.watch([
         'web/assets/css/**/*.scss',
@@ -62,18 +65,26 @@ gulp.task('dev:watch', function() {
     ], ['sass:dev']);
 
     gulp.watch([
-        'web/assets/css/modules/**/*.scss'
-    ], ['sass:docs']);
+        'web/assets/js/partials/*.js'
+    ], ['js:concat']);
 
     gulp.watch([
         'web/assets/js/**/*.js',
         'web/assets/css/styles.css',
-        'views/**/*.html.twig'
+        'views/**/*.html.twig',
+        'controllers/*.php',
+        'models/*.php'
     ]).on('change', function (file) {
-        livereload.changed('*');
+        livereload.changed(file);
 
         util.log(util.colors.yellow('File changed: ' + file.path));
     });
+});
+
+gulp.task('dev:watch:sassdocs', function () {
+    gulp.watch([
+        'web/assets/css/modules/**/*.scss'
+    ], ['sass:docs']);
 });
 
 
