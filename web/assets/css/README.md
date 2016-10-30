@@ -28,41 +28,48 @@ We choose to use Sass because of the freedom it gave us to control every aspect 
 
 Even though we use Sass, the generated CSS can still be a pain or nightmare especially when you need to debug. To make life easier, we follow the [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) syntax for our CSS classes. Not only are we using BEM, we have decided to expand on it by using "[namespaces](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/)" in our CSS classes (no, I do not mean LESS namespaces).
 
-### Libsass + Ruby Sass
+### Libsass
 
-In order to speed up development, Libsass is used to compile the Sass quickly but due its limitations and lack of plug-in support, it is only used for development. For the production ready stylesheet, Ruby Sass is used with plug-ins to compile everything and reorganize things. Because Libsass is used, all of the Sass written must be supported by the latest official Libsass release meaning some of the latest Sass features may not be supported and should not be used in BZiON.
+We use [libsass](http://libsass.org/) bindings to compile our Sass through our Gulp tasks (`sass:dev` or `sass:dist`). The production-ready stylesheet (`styles.css`) provided with BZiON should **not** be committed until a BZiON release is being prepared; it is to be expected that developers will compile the Sass locally.
 
-For more information about Libsass, visit their [homepage](http://libsass.org/).
+It is sometimes the case where Ruby Sass has some features that are not yet supported by LibSass. Should this be the case, these features cannot be used until LibSass officially implements them; we have no intention of re-introducing Ruby as a dependency.
+
+### Documentation
+
+All of our Sass functions and mixins are documented with [SassDoc](http://sassdoc.com/) and may be built with our `sass:docs` Gulp task. All code located in **modules/** should be documented and be available in our SassDoc.
+
+### Linting
+
+Our Sass code should always pass our `sass:lint` Gulp task. Our unit tests will test for Sass formatting and will fail when violations are found.
 
 ## Themes
 
-BZiON will allow anyone to make their own themes or expand on the default theme by writing their own partial Sass files, which can then be compiled to make your own theme and will be automatically loaded by BZiON if it exists.
+BZiON provides an easy way of creating new themes by defining a color scheme in a Yaml file which is loaded by our Gulp process when building our stylesheet.
 
-Support for theming is planned to be supported by version 1.1.0.
+This feature is currently in development.
 
 ## Questions
 
-### Why not LESS or Stylus?
+### Why not Less or Stylus?
 
-We chose to use Sass over LESS and Stylus for several reasons. Our main reason for choosing Sass was the simplicity of its syntax and the capabilities Sass has that LESS and Stylus don't; e.g. loops, lack of namespaces, proper mixins, etc.
+We chose to use Sass over Less and Stylus for several reasons. Our main reason for choosing Sass was the simplicity of its syntax and the capabilities Sass has that Less and Stylus don't.
 
-- We're not looking to write python-like CSS by using Stylus.
-- We're not looking to write JS-like CSS by using LESS.
-
-We have no intention of abandoning Sass.
+We have no intention of moving away from Sass.
 
 ### Why not Bootstrap?
 
-While Bootstrap definitely has its uses, we choose not to use Bootstrap because it didn't suit our needs. Since we use our own flex-box based grid system, we have convenience mixins to perform similar functionality to Bootstrap's mixins so other than that, it's just a lot of bloat.
+Bootstrap 3 would introduce a lot of limitations such as missing breakpoints and a float based grid-system. This led us to building our own flexbox based grid system, which can easily accept any number of breakpoints. We needed to build several components than Bootstrap did not provide and we had no use for some that it did provide, this would lead to a lot of unused CSS and bloat. Lastly, because Bootstrap doesn't follow our naming scheme, there would be a lot of inconsistency in our CSS classes and we were not looking for more work by maintaining two separate codebases.
 
-Bootstrap's grid system is also a limiting factor when styling for specific mobile devices in landspace mode so our own grid system gives us full control of handling that. Lastly, Bootstrap is a "mobile-first" library while BZiON is "desktop-first" so that's another limiting factor.
+While Bootstrap 4 no longer has some of the limitations of its predecessor, we already have a system that works for us and will continue to use it.
 
 ### Why not &lt;insert framework here&gt;?
 
-Similarly to our reasons for not using Bootstrap, by building our own framework we are able to have full control of our Sass. We do however use Bourbon in certain parts of our code but it is due to be phased out; we will no longer be using Bourbon 5.
+Similarly to our reasons for not using Bootstrap, by building our own framework we are able to have full control of our Sass.
 
 ### How do you handle vendor prefixes?
 
-We don't. We no longer rely on Bourbon for vendor prefixes, instead we use [-prefix-free](http://leaverou.github.io/prefixfree/) to automatically handle the vendor prefixes per client/browser.
+We don't. We use [-prefix-free](http://leaverou.github.io/prefixfree/) to automatically handle the majority of vendor prefixes per client/browser. There are some rare occasions where we must specify the vendor prefix because of technical limitations of -prefix-free.
 
-By doing this, we reduce the size of the main stylesheet and do not add another Grunt task to our build process
+### Why don't you use CSS variables?
+
+CSS variables do not fit or work with the way our themes work. In addition, IE 11 and Edge do not support them so we do not want to have a JavaScript fallback to change the behavior of something that should work without JavaScript.

@@ -6,7 +6,7 @@ BZiON is a modern league management system (LMS) written for BZFlag leagues to m
 
 ### Developers
 
-These individuals have made multiple significant contributions to the project on a sustained basis. They become actively involved on improving and adding new features to the project.
+These individuals have made multiple significant contributions to the project on a sustained basis; they become actively involved with improving and adding new features to the project.
 
 - Vladimir Jimenez ([allejo](https://github.com/allejo))
 - Konstantinos Kanavouras ([kongr45gpen/alezakos](https://github.com/kongr45gpen))
@@ -24,7 +24,7 @@ These individuals have assisted significantly with guiding the project in its cu
 
 The installation process is documented on the [BZiON wiki](https://github.com/allejo/bzion/wiki/Installation) and the [requirements](https://github.com/allejo/bzion/wiki/Installation-Requirements) for installation are documented as well. If you're having issues during your installation, common issues are also documented on the [wiki](https://github.com/allejo/bzion/wiki/Installation-Troubleshooting) as well.
 
-Do note that BZiON has not been thoroughly tested in production environments. As such, you are recommended to take regular backups of your database.
+As with any system, you are recommended to take regular backups of your database.
 
 ## Contributing
 
@@ -42,7 +42,9 @@ Most modern IDEs will easily be able to read BZiON's phpDoc and provide you with
 
 ### Pull Requests
 
-Wrote a feature you'd like to see available in BZiON or fixed a bug? Send us a [pull request](https://github.com/allejo/bzion/pulls) and we'll gladly take a look.
+If you intend on writing a large feature, create an issue first and discuss your vision with us. We would hate for you to waste your time on writing something we don't think would be best for the project.
+
+Wrote a neat little feature you'd like to see available in BZiON or fixed a bug? Send us a [pull request](https://github.com/allejo/bzion/pulls) and we'll gladly take a look.
 
 Before you send us a pull request, here are a few things we look for:
 
@@ -50,18 +52,17 @@ Before you send us a pull request, here are a few things we look for:
 - Your pull request is actually functional and works as intended
 - Your pull request does not break functionality of the master branch nor the unit tests
 - Your new feature will benefit the league community or will improve the experience for league members
-- Your pull request is not adding TODOs in the code, giving the developers more things to do
 - If submitting a bug fix, specify what the bug is, when it occurs, and how your pull request has fixed the bug
 
-To increase the probability of your pull request being accepted, ensure you consider the things we look for when evaluating pull requests. We're not actually mean, we absolutely love pull requests! We simply would like the pull request process to go smoothly and quickly.
+To increase the probability of your pull request being accepted, ensure you consider the things we look for when evaluating pull requests. We're not actually mean, we love pull requests. We simply would like the pull request process to go smoothly and quickly, all the while keeping things organized.
 
 ### Feature Requests
 
-We would love to hear your ideas and look forward to implementing the best ideas so [submit an issue](https://github.com/allejo/bzion/issues) and we'll be able to discuss the feature further.
+We would love to hear your ideas and look forward to implementing the best of them, so [submit an issue](https://github.com/allejo/bzion/issues) and we'll be able to discuss the feature further.
 
 ### Questions?
 
-All of the development discussions for this project occur on #sujevo on irc.freenode.net, feel free to stop by and talk with a developer! We love the company.
+All of the development discussions for this project occur on #sujevo on irc.freenode.net, feel free to stop by and talk with a developer. We love the company.
 
 ## License
 
