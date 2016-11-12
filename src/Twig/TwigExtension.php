@@ -16,6 +16,7 @@ class TwigExtension extends \Twig_Extension
             HumanDateFilter::get(),
             TruncateFilter::get(),
             MarkdownFilter::get(),
+            CanonicalUrl::get(),
             PluralFilter::get(),
             YesNoFilter::get()
         );

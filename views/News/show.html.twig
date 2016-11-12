@@ -1,5 +1,13 @@
 {% extends 'layout.html.twig' %}
 
+{% set opengraph = {
+    url: article.url | canonical,
+    type: 'article',
+    title: article.name,
+    description: article.content | replace('\n', ' ') | truncate(100),
+    image: asset('assets/imgs/open-graph.jpg') | canonical
+} %}
+
 {% set pageButtons = [
     {
         'color': 'grey',
