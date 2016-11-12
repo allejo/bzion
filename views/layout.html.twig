@@ -5,16 +5,34 @@
 <!DOCTYPE html>
 <html class="t-light {{ pageWideCSS }}">
     <head>
+        {# ========================================================================================================== #}
+        {#  Open Graph Markup  #}
+        {# ========================================================================================================== #}
+
+        {# If no Open Graph data is defined, let's define some default information #}
+        {%- if opengraph is not defined -%}
+            {% set opengraph = {
+                url: request.uri,
+                type: 'article',
+                title: block('title') | trim,
+                description: '',
+                image: asset('assets/imgs/open-graph.jpg') | canonical
+            } %}
+        {%- endif -%}
+
+        {# Required attributes: url, type, title, description, image #}
+        {%- for attr in opengraph | keys -%}
+            <meta property="og:{{ attr }}" content="{{ opengraph[attr] }}">
+        {% endfor -%}
+
+
+
+        {# ========================================================================================================== #}
+        {#  Generic information for this page  #}
+        {# ========================================================================================================== #}
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-
-        {# Open Graph Markup #}
-        {% if opengraph is defined %}
-            {# Required attributes: url, type, title, description, image #}
-            {% for attr in opengraph | keys %}
-                <meta property="og:{{ attr }}" content="{{ opengraph[attr] }}">
-            {% endfor %}
-        {% endif %}
 
         <title>{% spaceless %}{% block title %}{{ app.siteTitle }}{% endblock %}{% endspaceless %}</title>
         <link rel="stylesheet" href="{{ asset('components/select2/dist/css/select2.css') }}">
@@ -23,9 +41,7 @@
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
-        {% block stylesheets %}
-
-        {% endblock %}
+        {% block stylesheets %}{% endblock %}
     </head>
 
     <body>
