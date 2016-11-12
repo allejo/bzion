@@ -3,6 +3,14 @@
 {% import 'Match/widget.html.twig' as utils %}
 {% import _self as showUtils %}
 
+{% set ogTitle = '%s %s %s' | format(match.winner.name, (match.draw ? 'ties' : 'defeats'), match.loser.name) %}
+{% set opengraph = {
+    url: match.url | canonical,
+    type: 'article',
+    title: ogTitle,
+    description: '%s with a score of %d - %d' | format(ogTitle, match.score(match.winner), match.score(match.loser)),
+    image: asset('assets/imgs/open-graph.jpg') | canonical
+} %}
 {% set scopeClass = "s-matches" %}
 {% set pageButtons = [
     {

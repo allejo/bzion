@@ -1,5 +1,13 @@
 {% extends 'layout.html.twig' %}
 
+{% set opengraph = {
+    url: team.url | canonical,
+    type: 'article',
+    title: app.siteTitle ~ ' :: ' ~ team.name,
+    description: team.description | truncate(100),
+    image: team.avatar | imagine_filter('open_graph')
+} %}
+
 {% set pageButtons = [
     {
         'color': 'grey',

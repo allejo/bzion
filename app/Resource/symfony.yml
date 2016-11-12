@@ -51,6 +51,11 @@ liip_imagine:
                 cache_prefix: assets/imgs/avatars/cache
     filter_sets:
         cache: ~
+        open_graph:
+            png_compression_level: 9
+            filters:
+                background: ~
+                thumbnail: { size: [600, 600], mode: inset }
         huge_thumb:
             png_compression_level: 9
             filters:
