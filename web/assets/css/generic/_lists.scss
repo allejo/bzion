@@ -1,15 +1,10 @@
 ol,
 ul {
+    list-style: none;
     padding-left: 30px;
 
     li {
         padding-left: 0;
-    }
-}
-
-ol {
-    li {
-        list-style-type: decimal;
     }
 }
 
@@ -19,22 +14,10 @@ ul {
 
         li {
             display: inline-block;
-            list-style: none;
         }
     }
 
     @include has('no-padding') {
         padding-left: 0;
-
-        li {
-            list-style-type: none;
-        }
-    }
-
-    li {
-        &:not(.select2-search--inline)
-         :not(.select2-selection__choice) {
-            list-style-type: circle;
-        }
     }
 }

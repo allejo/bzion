@@ -67,4 +67,16 @@
     p {
         @extend %markdown-spacing;
     }
+
+    ol {
+        li {
+            list-style: decimal;
+        }
+    }
+
+    ul {
+        li {
+            list-style: circle;
+        }
+    }
 }
