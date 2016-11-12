@@ -100,9 +100,11 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     public function setAvatar($avatar)
     {
-        if (!empty($this->avatar) && $avatar != $this->avatar) {
+        $currentAvatar = DOC_ROOT . $this->avatar;
+
+        if (!empty($this->avatar) && $avatar != $this->avatar && file_exists($currentAvatar)) {
             // Remove the old avatar
-            unlink(DOC_ROOT . $this->avatar);
+            unlink($currentAvatar);
         }
 
         // Clear the thumbnail cache
