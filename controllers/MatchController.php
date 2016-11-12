@@ -32,6 +32,12 @@ class MatchController extends CRUDController
                ->with($team, $type)
                ->limit(50)->fromPage($currentPage);
 
+        $matchType = $request->query->get('type', 'all');
+
+        if (in_array($matchType, array(Match::FUN, Match::OFFICIAL, Match::SPECIAL))) {
+            $query->where('type')->is($matchType);
+        }
+
         $matches = $query->getModels($fast = true);
 
         foreach ($matches as $match) {

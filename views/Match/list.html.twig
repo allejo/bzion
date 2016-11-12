@@ -29,10 +29,19 @@
     <section class="o-container">
         {% if not team %}
             <div class="o-section u-text-center">
-                <div class="c-pill-group" id="match-type-filter" data-target="#match-list">
-                    <p class="c-pill-group__pill c-pill-group__pill--active" data-filter="*">All</p>
-                    <p class="c-pill-group__pill" data-filter="official">Official</p>
-                    <p class="c-pill-group__pill" data-filter="fm">FM</p>
+                <div class="c-pill-group">
+                    {% set matchTypeFilter = request.get('type') %}
+                    {% set isOfficialFilter = matchTypeFilter == constant('Match::OFFICIAL') %}
+                    {% set isFunFilter = matchTypeFilter == constant('Match::FUN') %}
+
+                    <a href="{{ url('match_list') }}"
+                       class="c-pill-group__pill {{ not isOfficialFilter and not isFunFilter ? 'c-pill-group__pill--active' : '' }}">All</a>
+
+                    <a href="{{ url('match_list', { type: constant('Match::OFFICIAL') }) }}"
+                       class="c-pill-group__pill {{ isOfficialFilter ? 'c-pill-group__pill--active' : '' }}">Official</a>
+
+                    <a href="{{ url('match_list', { type: constant('Match::FUN') }) }}"
+                       class="c-pill-group__pill {{ isFunFilter ? 'c-pill-group__pill--active' : '' }}">FM</a>
                 </div>
             </div>
         {% endif %}
