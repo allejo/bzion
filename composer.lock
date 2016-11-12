@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f5453276094729626eed4a7af59bc22d",
-    "content-hash": "f4b148ddf8e3cb5c548178edaf123dce",
+    "hash": "1bdbc2e79e39d6d1c0731105beed0c24",
+    "content-hash": "837955cb20634c7811e63afdaadc278c",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -652,6 +652,7 @@
                 "event",
                 "exception"
             ],
+            "abandoned": "guzzle/guzzle",
             "time": "2013-10-02 20:47:00"
         },
         {
@@ -709,6 +710,7 @@
                 "http",
                 "http client"
             ],
+            "abandoned": "guzzle/guzzle",
             "time": "2013-09-20 22:05:53"
         },
         {
@@ -753,6 +755,7 @@
                 "message",
                 "url"
             ],
+            "abandoned": "guzzle/guzzle",
             "time": "2013-07-11 22:46:03"
         },
         {
@@ -806,6 +809,7 @@
                 "component",
                 "stream"
             ],
+            "abandoned": "guzzle/guzzle",
             "time": "2013-07-30 22:07:23"
         },
         {
@@ -1955,27 +1959,26 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "dev-0.4.x-dev",
+            "version": "v0.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "3c7eec47f75114c0aac6d180a69811189868fc5b"
+                "reference": "6943cb4bb78bf9d3964967a032220b7c793b97b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/3c7eec47f75114c0aac6d180a69811189868fc5b",
-                "reference": "3c7eec47f75114c0aac6d180a69811189868fc5b",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/6943cb4bb78bf9d3964967a032220b7c793b97b7",
+                "reference": "6943cb4bb78bf9d3964967a032220b7c793b97b7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "symfony/config": "~2.7|~3.0",
-                "symfony/console": "~2.7|~3.0",
-                "symfony/yaml": "~2.7|~3.0"
+                "php": ">=5.4",
+                "symfony/config": "~2.8|~3.0",
+                "symfony/console": "~2.8|~3.0",
+                "symfony/yaml": "~2.8|~3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "squizlabs/php_codesniffer": "dev-phpcs-fixer"
+                "phpunit/phpunit": "^4.8.26|^5.0"
             },
             "bin": [
                 "bin/phinx"
@@ -1992,15 +1995,20 @@
             ],
             "authors": [
                 {
-                    "name": "Rob Morgan",
-                    "email": "robbym@gmail.com",
-                    "homepage": "http://robmorgan.id.au",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Woody Gilk",
                     "email": "woody.gilk@gmail.com",
                     "homepage": "http://shadowhand.me",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Rob Morgan",
+                    "email": "robbym@gmail.com",
+                    "homepage": "https://robmorgan.id.au",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com",
                     "role": "Developer"
                 }
             ],
@@ -2013,7 +2021,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2016-04-17 15:03:48"
+            "time": "2016-10-27 10:16:12"
         },
         {
             "name": "select2/select2",
@@ -2216,6 +2224,7 @@
                 "icu",
                 "intl"
             ],
+            "abandoned": "symfony/intl",
             "time": "2013-10-04 09:12:07"
         },
         {
@@ -6357,7 +6366,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "robmorgan/phinx": 20,
         "select2/select2": 20,
         "yzalis/identicon": 20,
         "behat/symfony2-extension": 20,

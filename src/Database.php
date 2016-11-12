@@ -155,7 +155,7 @@ class Database
      *
      * @param  string      $queryText The prepared SQL statement that will be executed
      * @param  mixed|array $params    (Optional) The array of values that will be binded to the prepared statement
-     * @return array       Returns an array of the values received from the query
+     * @return int         Returns the number of rows affected
      */
     public function execute($queryText, $params = false)
     {

@@ -17,7 +17,7 @@
         "nesbot/carbon"              : "~1.14",
         "nelmio/api-doc-bundle"      : "~2.7",
         "ramsey/array_column"        : "~1.1",
-        "robmorgan/phinx"            : "dev-0.4.x-dev",
+        "robmorgan/phinx"            : "~0.6",
         "select2/select2"            : "dev-master",
         "sensio/framework-extra-bundle": "~3.0",
         "symfony/icu"                : "1.0.*",

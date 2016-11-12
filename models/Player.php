@@ -108,6 +108,12 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     protected $last_login;
 
     /**
+     * The date of the player's last match
+     * @var Match
+     */
+    protected $last_match;
+
+    /**
      * The roles a player belongs to
      * @var Role[]
      */
@@ -180,6 +186,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         $this->timezone = $player['timezone'];
         $this->joined = TimeDate::fromMysql($player['joined']);
         $this->last_login = TimeDate::fromMysql($player['last_login']);
+        $this->last_match = Match::get($player['last_match']);
         $this->admin_notes = $player['admin_notes'];
         $this->ban = Ban::getBan($this->id);
 
@@ -375,6 +382,17 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         $this->lazyLoad();
 
         return $this->last_login->copy();
+    }
+
+    /**
+     * Get the last match
+     * @return Match
+     */
+    public function getLastMatch()
+    {
+        $this->lazyLoad();
+
+        return $this->last_match;
     }
 
     /**
@@ -984,7 +1002,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
      */
     public static function getLazyColumns()
     {
-        return 'email,verified,receives,confirm_code,outdated,description,timezone,joined,last_login,admin_notes';
+        return 'email,verified,receives,confirm_code,outdated,description,timezone,joined,last_login,last_match,admin_notes';
     }
 
     /**
