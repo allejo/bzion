@@ -244,7 +244,7 @@ gulp.task("sass:lint", function(cb) {
 // Gulp Tasks
 ///
 
-gulp.task('dev', ['sass:dev', 'dev:livereload', 'dev:watch']);
+gulp.task('dev', ['sass:dev', 'dev:watch']);
 gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:lint', 'sass:dist', 'js:hint', 'js:concat', 'js:uglify', 'js:modernizer']);
 
 gulp.task('default', ['dev']);
