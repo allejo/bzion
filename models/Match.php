@@ -99,12 +99,6 @@ class Match extends UrlModel implements NamedModel
     protected $match_details;
 
     /**
-     * The port of the server where the match took place
-     * @var int
-     */
-    protected $port;
-
-    /**
      * The server location of there the match took place
      * @var string
      */
@@ -174,7 +168,6 @@ class Match extends UrlModel implements NamedModel
         $this->map = $match['map'];
         $this->match_type = $match['match_type'];
         $this->match_details = $match['match_details'];
-        $this->port = $match['port'];
         $this->server = $match['server'];
         $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
@@ -609,11 +602,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getServerAddress()
     {
-        if ($this->port == null || $this->server == null) {
-            return null;
-        }
-
-        return $this->server . ":" . $this->port;
+        return $this->server;
     }
 
     /**
@@ -623,10 +612,9 @@ class Match extends UrlModel implements NamedModel
      * @param  int|null    $port   The server port
      * @return self
      */
-    public function setServerAddress($server = null, $port = 5154)
+    public function setServerAddress($server = null)
     {
         $this->updateProperty($this->server, "server", $server);
-        $this->updateProperty($this->port, "port", $port);
 
         return $this;
     }
@@ -795,9 +783,8 @@ class Match extends UrlModel implements NamedModel
      */
     public static function enterMatch(
         $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now",
-        $a_players = array(), $b_players = array(), $server = null, $port = null,
-        $replayFile = null, $map = null, $matchType = "official", $a_color = null,
-        $b_color = null
+        $a_players = array(), $b_players = array(), $server = null, $replayFile = null,
+        $map = null, $matchType = "official", $a_color = null, $b_color = null
     ) {
         $matchData = array(
             'team_a_color'   => strtolower($a_color),
@@ -810,7 +797,6 @@ class Match extends UrlModel implements NamedModel
             'duration'       => $duration,
             'entered_by'     => $entered_by,
             'server'         => $server,
-            'port'           => $port,
             'replay_file'    => $replayFile,
             'map'            => $map,
             'status'         => 'entered',

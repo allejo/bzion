@@ -115,8 +115,6 @@ class MatchFormCreator extends ModelFormCreator
         $firstTeam  = $form->get('first_team');
         $secondTeam = $form->get('second_team');
 
-        $serverInfo = $this->getServerInfo($form->get('server_address'));
-
         if (!$match->isOfficial()) {
             $match->setTeamColors(
                 $firstTeam->get('team')->getData(),
@@ -135,7 +133,7 @@ class MatchFormCreator extends ModelFormCreator
         );
 
         $match->setDuration($form->get('duration')->getData())
-            ->setServerAddress($serverInfo[0], $serverInfo[1])
+            ->setServerAddress($form->get('server_address')->getData())
             ->setTimestamp($form->get('time')->getData())
             ->setMap($form->get('map')->getData()->getId());
 
@@ -156,7 +154,6 @@ class MatchFormCreator extends ModelFormCreator
         $secondId = $secondTeam->get('team')->getData()->getId();
 
         $official = ($form->get('type')->getData() === \Match::OFFICIAL);
-        $serverInfo = $this->getServerInfo($form->get('server_address'));
 
         $match = \Match::enterMatch(
             $official ? $firstId : null,
@@ -168,8 +165,7 @@ class MatchFormCreator extends ModelFormCreator
             $form->get('time')->getData(),
             $this->getPlayerList($firstTeam),
             $this->getPlayerList($secondTeam),
-            $serverInfo[0],
-            $serverInfo[1],
+            $form->get('server_address')->getData(),
             null,
             $form->get('map')->getData()->getId(),
             $form->get('type')->getData(),
@@ -189,22 +185,6 @@ class MatchFormCreator extends ModelFormCreator
     private function getPlayerList(FormInterface $team)
     {
         return array_map($this->getModelToID(),  $team->get('participants')->getData());
-    }
-
-    /**
-     * Get the server address and port of a match
-     *
-     * @param FormInterface $server A text form representing the server
-     * @return array
-     */
-    private function getServerInfo(FormInterface $server)
-    {
-        $serverInfo = explode(':', $server->getData());
-        if (!isset($serverInfo[1])) {
-            $serverInfo[1] = 5154;
-        }
-
-        return $serverInfo;
     }
 
     /**

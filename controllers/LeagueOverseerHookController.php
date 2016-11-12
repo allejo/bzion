@@ -210,7 +210,6 @@ class LeagueOverseerHookController extends PlainTextController
             $teamOnePlayers,
             $teamTwoPlayers,
             $this->params->get('server'),
-            $this->params->get('port'),
             $this->params->get('replayFile'),
             $map->getId(),
             $this->params->get('matchType'),
