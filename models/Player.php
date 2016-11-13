@@ -691,6 +691,16 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     }
 
     /**
+     * Set the match the player last participated in
+     *
+     * @param int $match The match's ID
+     */
+    public function setLastMatch($match)
+    {
+        $this->updateProperty($this->last_match, 'last_match', $match);
+    }
+
+    /**
      * Set the player's status
      * @param string $status The new status
      */

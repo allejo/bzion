@@ -830,6 +830,13 @@ class Match extends UrlModel implements NamedModel
             $match->updateMatchCount();
         }
 
+        foreach (array($a_players, $b_players) as $team) {
+            foreach ($team as $player) {
+                $p = Player::get($player);
+                $p->setLastMatch($match->getId());
+            }
+        }
+
         return $match;
     }
 
