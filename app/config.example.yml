@@ -50,6 +50,8 @@ bzion:
         admin: brad
         # Server polling interval
         update_interval: 5 minutes
+        # Amount of time since a player's last match or login to be considered active
+        active_interval: 180 days
         # Whether to enable some functions which make debugging easier (false, true or force)
         # WARNING: Setting this to anything other than false WILL introduce significant
         # security risks and should NOT be used in a production environment

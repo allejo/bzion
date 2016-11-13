@@ -467,6 +467,29 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     }
 
     /**
+     * Check whether or not a player been in a match or has logged on in the specified amount of time to be considered
+     * active
+     *
+     * @return bool True if the player has been active
+     */
+    public function hasBeenActive()
+    {
+        $this->lazyLoad();
+
+        $interval  = Service::getParameter('bzion.miscellaneous.active_interval');
+        $lastLogin = $this->last_login->copy()->modify($interval);
+
+        $hasBeenActive = (TimeDate::now() <= $lastLogin);
+
+        if ($this->last_match->isValid()) {
+            $lastMatch = $this->last_match->getTimestamp()->copy()->modify($interval);
+            $hasBeenActive = ($hasBeenActive || TimeDate::now() <= $lastMatch);
+        }
+
+        return $hasBeenActive;
+    }
+
+    /**
      * Check whether the callsign of the player is outdated
      *
      * Returns true if this player has probably changed their callsign, making
