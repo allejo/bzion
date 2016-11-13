@@ -363,10 +363,10 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the list of players for a team in a match
-     * @param  Team|int The team or team ID
+     * @param  Team|int|null The team or team ID
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
-    public function getPlayers($team)
+    public function getPlayers($team = null)
     {
         if ($team instanceof TeamInterface) {
             $team = $team->getId();
@@ -378,7 +378,7 @@ class Match extends UrlModel implements NamedModel
             return $this->getTeamBPlayers();
         }
 
-        return null;
+        return $this->parsePlayers($this->team_a_players . "," . $this->team_b_players);
     }
 
     /**
@@ -401,7 +401,7 @@ class Match extends UrlModel implements NamedModel
      * @param string $playerString
      * @return Player[]|null Returns null if there were no players recorded for this match
      */
-    private static function parsePlayers($playerString)
+    private function parsePlayers($playerString)
     {
         if ($playerString == null) {
             return null;
@@ -830,12 +830,15 @@ class Match extends UrlModel implements NamedModel
             $match->updateMatchCount();
         }
 
-        foreach (array($a_players, $b_players) as $team) {
-            foreach ($team as $player) {
-                $p = Player::get($player);
-                $p->setLastMatch($match->getId());
-            }
+        $players = $match->getPlayers();
+
+        Database::getInstance()->startTransaction();
+
+        foreach ($players as $player) {
+            $player->setLastMatch($match->getId());
         }
+
+        Database::getInstance()->finishTransaction();
 
         return $match;
     }
