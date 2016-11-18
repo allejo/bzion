@@ -166,17 +166,19 @@ gulp.task('js:uglify', function (cb) {
 // Sass Functionality
 ///
 
+var sass = require('gulp-sass');
+var eyeglass = require('eyeglass');
+var combineMq = require('gulp-combine-mq');
+
 gulp.task('sass:dev', function (cb) {
-    var sass = require('gulp-sass');
-    var combineMq = require('gulp-combine-mq');
     var sourcemaps = require('gulp-sourcemaps');
 
     pump([
         gulp.src('web/assets/css/styles.scss'),
         sourcemaps.init(),
-        sass({
+        sass(eyeglass({
             outputStyle: 'expanded'
-        }),
+        })),
         combineMq({
             beautify: true
         }),
@@ -186,15 +188,13 @@ gulp.task('sass:dev', function (cb) {
 });
 
 gulp.task('sass:dist', function (cb) {
-    var sass = require('gulp-sass');
     var cssmin = require('gulp-cssmin');
-    var combineMq = require('gulp-combine-mq');
 
     pump([
         gulp.src('web/assets/css/styles.scss'),
-        sass({
+        sass(eyeglass({
             outputStyle: 'compressed'
-        }),
+        })),
         combineMq({
             beautify: false
         }),
