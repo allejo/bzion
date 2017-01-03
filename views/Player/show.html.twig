@@ -101,7 +101,9 @@
                     {% endif %}
                 </p>
                 <p><strong>Joined on</strong> {{ player.joinedDate | humanTime(constant("TimeDate::DATE_FULL"), tooltip = false) }}</p>
-                <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
+                {% if me is valid %}
+                    <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
+                {% endif %}
 
                 {% if player.lastMatch is valid %}
                     <p><strong>Last match</strong> {{ link_to(player.lastMatch, content=player.lastMatch.timestamp.diffForHumans) }}</p>
