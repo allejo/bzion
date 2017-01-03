@@ -38,7 +38,6 @@
         "composer/composer": "dev-master",
         "jdorn/sql-formatter": "~1.2",
         "phpunit/phpunit": "~4.6",
-        "phpdocumentor/phpdocumentor": "dev-master",
         "sensio/distribution-bundle": "~3.0"
     },
 
