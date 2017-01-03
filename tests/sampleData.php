@@ -119,7 +119,7 @@ $fradis->update("activity", 3.14159265358979323846);
 echo " done!";
 
 echo "\nAdding servers...";
-Server::addServer("Wingfights Fountains", "helit.tech", 5154, 151, $alezakos->getId());
+Server::addServer("Wingfights Fountains", "helit.org", 5154, 151, $alezakos->getId());
 Server::addServer("BZPro Public HiX Rabbit Chase", "bzpro.net", 5155, 227, $tw1sted->getId());
 echo " done!";
 
