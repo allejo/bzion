@@ -35,4 +35,4 @@ cache:
 notifications:
   email: false
   webhooks:
-    - http://helit.tech:8093/+sujevo-dev/showSuccessfulBuildMessages=always
+    - http://helit.org:8093/+sujevo-dev/showSuccessfulBuildMessages=always
