@@ -4,6 +4,7 @@
 //
 @import 'sassy-data';
 
+
 //
 // Reset all of the CSS
 //    (so we can have full control)
@@ -18,6 +19,45 @@
 
 @import 'partials/base';
 @import 'partials/themes';
+
+
+//
+// Vendor
+//    (everything that wasn't written by us)
+//
+
+@import 'vendor/OnTheRocks/scss/rocks';
+@import 'vendor/flags';
+@import 'vendor/loaders';
+@import 'vendor/text-inputs';
+
+
+//
+// Abstracts
+//
+@import 'abstracts/color-mixins';
+@import 'abstracts/axes-builder';
+
+@import 'utilities/axes';
+@import 'utilities/lists';
+
+
+//
+// Components
+//
+
+@import 'components/buttons';
+@import 'components/jumbotron';
+
+
+//
+// Layout
+//
+
+@import 'layout/page'
+;
+
+
 @import 'vendor/insert-nth';
 @import 'vendor/map-reverse';
 @import 'modules/strings-utils';
@@ -25,25 +65,12 @@
 @import 'vendor/include-media/dist/include-media';
 @import 'modules/bem-utilities';
 @import 'modules/borders';
-@import 'modules/mobile-responsive';
-@import 'modules/grid';
 @import 'modules/visibility';
 @import 'modules/media-query-setup';
 @import 'modules/font-awesome-utilities';
 @import 'modules/placeholders';
 @import 'modules/siblings';
 @import 'modules/theming';
-
-
-//
-// Vendor
-//    (everything that wasn't written by us)
-//m
-
-@import 'vendor/OnTheRocks/src/rocks';
-@import 'vendor/flags';
-@import 'vendor/loaders';
-@import 'vendor/text-inputs';
 
 
 //
@@ -67,7 +94,6 @@
 
 
 // Layout + Grid
-@import 'partials/Layout/columns';
 @import 'partials/Layout/page';
 @import 'partials/Layout/user-content';
 @import 'partials/Layout/fullflex';
@@ -97,11 +123,11 @@
 //
 
 @import 'partials/alerts';
-@import 'partials/buttons';
+@import 'components/buttons';
 @import 'partials/css-table';
 @import 'partials/font-awesome';
 @import 'partials/footer';
-@import 'partials/jumbotron';
+@import 'components/jumbotron';
 @import 'partials/markdown';
 @import 'partials/pagination';
 @import 'partials/pills';
@@ -113,11 +139,7 @@
 //    (CSS for specific pages on the website)
 //
 
-@import 'pages/Landing/base';
 @import 'pages/Landing/jumbotron';
-@import 'pages/Landing/bullet-points';
-@import 'pages/Landing/news';
-@import 'pages/Landing/matches';
 
 @import 'pages/News/article';
 @import 'pages/News/categories';
