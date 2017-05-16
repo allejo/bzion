@@ -1,0 +1,52 @@
+// -----------------------------------------------------------------------------
+// This file contains mixins for generating helper classes in all 4 directions
+// of an element.
+// -----------------------------------------------------------------------------
+
+@function axis-directions() {
+    @return (null, t, r, b, l, x, y);
+}
+
+@mixin build-axis($axis, $prop, $value) {
+    @if $axis == null {
+        #{$prop}:        $value;
+    }
+    @else if $axis == t {
+        #{$prop}-top:    $value;
+    }
+    @else if $axis == r {
+        #{$prop}-right:  $value;
+    }
+    @else if $axis == b {
+        #{$prop}-bottom: $value;
+    }
+    @else if $axis == l {
+        #{$prop}-left:   $value;
+    }
+    @else if $axis == x {
+        #{$prop}-right: $value;
+        #{$prop}-left:  $value;
+    }
+    @else if $axis == y {
+        #{$prop}-top:    $value;
+        #{$prop}-bottom: $value;
+    }
+}
+
+@mixin build-axes($abbrev, $size, $prop, $suffix, $value) {
+    .#{$abbrev}#{$size}#{$suffix}  { @include build-axis(null, $prop, $value); }
+    .#{$abbrev}t#{$size}#{$suffix} { @include build-axis(t, $prop, $value); }
+    .#{$abbrev}r#{$size}#{$suffix} { @include build-axis(r, $prop, $value); }
+    .#{$abbrev}b#{$size}#{$suffix} { @include build-axis(b, $prop, $value); }
+    .#{$abbrev}l#{$size}#{$suffix} { @include build-axis(l, $prop, $value); }
+    .#{$abbrev}x#{$size}#{$suffix} { @include build-axis(x, $prop, $value); }
+    .#{$abbrev}y#{$size}#{$suffix} { @include build-axis(y, $prop, $value); }
+}
+
+@mixin build-axes-last($abbrev, $prop, $value) {
+    @each $a in axis-directions() {
+        .#{$abbrev}#{$a}-last-reset .#{$abbrev}#{$a}:last-of-type {
+            @include build-axis($a, $prop, $value);
+        }
+    }
+}

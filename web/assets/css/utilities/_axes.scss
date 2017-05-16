@@ -1,0 +1,35 @@
+// -----------------------------------------------------------------------------
+// Generate helper classes for margin, padding, and borders
+// -----------------------------------------------------------------------------
+
+$spacers: (
+    0: 0,
+    1: 5px,
+    2: 15px,
+    3: 30px
+);
+
+@each $bp in map-keys($breakpoints) {
+    @include respond-up($bp) {
+        $infix: if($bp == 'xs', '', '-' + $bp);
+
+        // Build margin and padding helpers
+        @each $prop, $abbrev in (margin: m, padding: p) {
+            @each $size, $length in $spacers {
+                @include build-axes($abbrev, $size, $prop, $infix, $length);
+            }
+        }
+
+        // Some special margin utils
+        @include build-axes(m, $infix, margin, '-auto', auto);
+
+        // Build border helpers
+        @each $prop, $abbrev in (border: b) {
+            @include build-axes($abbrev, '', border, $infix, $Border-Default);
+        }
+
+        @include build-axes(b, $infix, border, '-none', none);
+    }
+}
+
+@include build-axes-last(b, border, none);
