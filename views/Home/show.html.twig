@@ -72,26 +72,32 @@
             </section>
 
             <section class="row">
-                <aside class="col-md-6 col-lg-4 col-xl-3">
-                    <h2>Latest News</h2>
-                    <ul class="u-list-plain bb-last-reset">
+                <aside class="col-md-6 col-lg-4">
+                    <h2 class="mb3">Latest News</h2>
+                    <div class="bb-last-reset">
                         {% for post in news %}
-                            <li class="bb mb2">
-                                <h3>{{ link_to(post) }}</h3>
-                                <p>by {{ link_to(post.author) }}</p>
-                            </li>
+                            <article class="row row--nowrap bb mb2">
+                                <div class="mr2">
+                                    <time datetime="{{ post.created | date(constant('TimeDate::FULL')) }}" class="c-calendar--day">
+                                        <span class="month">{{ post.created | date('M') }}</span>
+                                        <span class="date">{{ post.created | date('d') }}</span>
+                                    </time>
+                                </div>
+                                <div class="u-flex-respect-parent">
+                                    <h3 class="u-truncate-text mb0" title="{{ post.subject }}">{{ link_to(post) }}</h3>
+                                    <p>by {{ link_to(post.author) }}</p>
+                                </div>
+                            </article>
                         {% endfor %}
-                    </ul>
+                    </div>
                 </aside>
 
-                <section class="col-md-6 col-lg-8 col-xl-9">
-                    <h2>Recent Matches</h2>
+                <section class="col-md-6 col-lg-8">
+                    <h2 class="mb3">Recent Matches</h2>
 
                     <section class="o-row">
                         {% for match in matches %}
-                            <div class="col-xxl-6">
-                                {{ matchUi.widget(match) }}
-                            </div>
+                            {{ matchUi.widget(match) }}
                         {% endfor %}
                     </section>
                 </section>
