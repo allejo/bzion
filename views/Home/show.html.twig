@@ -15,68 +15,68 @@
         </section>
 
         <section class="o-container">
-            <section class="o-row o-section c-ibullets">
-                <article class="c-ibullets__bullet">
-                    <div class="c-ibullets__bullet__container">
-                        <section class="c-ibullets__bullet__icon">
-                            <a href="{{ path("server_list") }}">
-                                <img src="{{ asset("assets/imgs/landing-servers.png") }}" alt="Match servers">
-                            </a>
-                        </section>
+            {% set cards = [
+                {
+                    'path': 'server_list',
+                    'path_opts': {},
+                    'image': 'assets/imgs/landing-servers.png',
+                    'image_alt': 'Match servers',
+                    'title': 'Servers',
+                    'description': 'Our servers are located close to home to provide the least latency to players from all around the world.',
+                },
+                {
+                    'path': 'match_list',
+                    'path_opts': {},
+                    'image': 'assets/imgs/landing-matches.png',
+                    'image_alt': 'Competitive matches',
+                    'title': 'Matches',
+                    'description': 'Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.',
+                },
+                {
+                    'path': 'map_list',
+                    'path_opts': {},
+                    'image': 'assets/imgs/landing-matches.png',
+                    'image_alt': "Player on BZFlag's most popular maps",
+                    'title': 'Maps',
+                    'description': "Like playing on a map with a lot of interesting ricos and new game styles? We've got you covered with our wide selection.",
+                },
+                {
+                    'path': 'custom_page_show',
+                    'path_opts': { page: 'getting-started' },
+                    'image': 'assets/imgs/landing-gettingstarted.png',
+                    'image_alt': 'Getting started with ' ~ app.title,
+                    'title': 'Getting Started',
+                    'description': 'Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!',
+                },
+            ] %}
+            <section class="row o-section bb">
+                {% for card in cards %}
+                    <article class="col-lg-6 mb2-md mb3-lg">
+                        <div class="row">
+                            <section class="col-sm-4">
+                                <a href="{{ path(card.path, card.path_opts) }}">
+                                    <img src="{{ asset(card.image) }}" alt="card.image_alt" style="width: 100%">
+                                </a>
+                            </section>
 
-                        <div class="c-ibullets__bullet__content">
-                            <h3>
-                                <a href="{{ path("server_list") }}">Servers</a>
-                            </h3>
+                            <div class="col-sm-8">
+                                <h3>
+                                    <a href="{{ path(card.path, card.path_opts) }}">{{ card.title }}</a>
+                                </h3>
 
-                            <p>Our servers are located close to home to provide the least latency to players from all around the world.</p>
+                                <p>{{ card.description }}</p>
+                            </div>
                         </div>
-                    </div>
-                </article>
-
-                <article class="c-ibullets__bullet">
-                    <div class="c-ibullets__bullet__container">
-                        <section class="c-ibullets__bullet__icon">
-                            <a href="{{ path("match_list") }}">
-                                <img src="{{ asset("assets/imgs/landing-matches.png") }}" alt="Competitive matches">
-                            </a>
-                        </section>
-                        <div class="c-ibullets__bullet__content">
-                            <h3>
-                                <a href="{{ path("match_list") }}">Matches</a>
-                            </h3>
-
-                            <p>Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="c-ibullets__bullet">
-                    <div class="c-ibullets__bullet__container">
-                        <section class="c-ibullets__bullet__icon">
-                            <a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">
-                                <img src="{{ asset("assets/imgs/landing-gettingstarted.png") }}" alt="Getting started with {{ app.title }}">
-                            </a>
-                        </section>
-                        <div class="c-ibullets__bullet__content">
-                            <h3>
-                                <a href="{{ path("custom_page_show", {page: 'getting-started'}) }}">Getting Started</a>
-                            </h3>
-
-                            <p>Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!</p>
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                {% endfor %}
             </section>
 
-            <hr>
-
-            <section class="c-latest-updates">
-                <aside class="c-latest-news">
+            <section class="row">
+                <aside class="col-md-6 col-lg-4 col-xl-3">
                     <h2>Latest News</h2>
-                    <ul>
+                    <ul class="u-list-plain bb-last-reset">
                         {% for post in news %}
-                            <li class="c-latest-news__article">
+                            <li class="bb mb2">
                                 <h3>{{ link_to(post) }}</h3>
                                 <p>by {{ link_to(post.author) }}</p>
                             </li>
@@ -84,12 +84,12 @@
                     </ul>
                 </aside>
 
-                <section class="c-latest-matches">
+                <section class="col-md-6 col-lg-8 col-xl-9">
                     <h2>Recent Matches</h2>
 
                     <section class="o-row">
                         {% for match in matches %}
-                            <div class="c-latest-matches__match">
+                            <div class="col-xxl-6">
                                 {{ matchUi.widget(match) }}
                             </div>
                         {% endfor %}
