@@ -7,26 +7,32 @@ We choose to use Sass because of the freedom it gave us to control every aspect 
 
 ## Stylesheet Structure
 
-- **generic/**
-    - This folder contains partial Sass files for styling HTML tags
-- **modules/**
-    - This folder contains all of the partial Sass files that don't have actual CSS classes but instead only provide mixins or placeholders.
-    - Documentation for all of custom mixins used throughout the project is provided through SassDoc [hosted by alezakos](http://bziondoc.helit.org/sassdoc/)
+- **abstracts/**
+    - mixins, functions, and variables that are used across the Sass project. Nothing in this folder should output any CSS on its own
+- **base/**
+    - generic styles for base HTML elements can also be found here
+- **components/**
+    - individual components that are used to build the website; e.g. buttons, jumbotrons, etc.
+- **layout/**
+    - CSS related to the base structure of the website; e.g. footer, header, menu, etc.
 - **pages/**
-    - This folder contains all of the partial Sass files that contain all of the CSS classes for specific pages
-- **partials/**
-    - This folder contains all of the partial Sass files that contain reusable CSS classes or classes that handle a specific element of the website (e.g. header, footer, sidebar, menu, etc.)
-    - Partial files in this folder are typically named appropriately based on the page they style or the part of the website they style.
+    - any custom CSS needed for specific pages
+- **themes/**
+    - the color schemes for the different themes BZiON will support.
 - **vendor/**
-    - This folder contains all of the Sass libraries or helpers that were written by others and are not actively maintained by BZiON developers.
+    - all of the Sass libraries or helpers that are separate projects from BZiON.
+- **utilities/**
+    - misc CSS helpers
 - styles.scss
     - This file is the heart of the stylesheet which just includes all of the partial Sass files
+
+> The project is currently under heavy reorganization/maintenance so any folders that are not in the above list are being phased out as soon as the CSS can be moved/cleaned up.
 
 ## Sass Practices
 
 ### CSS Structure
 
-Even though we use Sass, the generated CSS can still be a pain or nightmare especially when you need to debug. To make life easier, we follow the [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) syntax for our CSS classes. Not only are we using BEM, we have decided to expand on it by using "[namespaces](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/)" in our CSS classes (no, I do not mean LESS namespaces).
+Even though we use Sass, the generated CSS can still be a pain or nightmare especially when you need to debug. To make life easier, we follow the [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) syntax for our CSS classes. Not only are we using BEM, we have decided to expand on it by using "[namespaces](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/)" in our CSS classes (no, I do not mean Less namespaces).
 
 ### Libsass
 
@@ -36,7 +42,7 @@ It is sometimes the case where Ruby Sass has some features that are not yet supp
 
 ### Documentation
 
-All of our Sass functions and mixins are documented with [SassDoc](http://sassdoc.com/) and may be built with our `sass:docs` Gulp task. All code located in **modules/** should be documented and be available in our SassDoc.
+All of our Sass functions and mixins are documented with [SassDoc](http://sassdoc.com/) and may be built with our `sass:docs` Gulp task. All code located in **abstracts/** should be documented and be available in our SassDoc.
 
 ### Linting
 
@@ -58,9 +64,7 @@ We have no intention of moving away from Sass.
 
 ### Why not Bootstrap?
 
-Bootstrap 3 would introduce a lot of limitations such as missing breakpoints and a float based grid-system. This led us to building our own flexbox based grid system, which can easily accept any number of breakpoints. We needed to build several components than Bootstrap did not provide and we had no use for some that it did provide, this would lead to a lot of unused CSS and bloat. Lastly, because Bootstrap doesn't follow our naming scheme, there would be a lot of inconsistency in our CSS classes and we were not looking for more work by maintaining two separate codebases.
-
-While Bootstrap 4 no longer has some of the limitations of its predecessor, we already have a system that works for us and will continue to use it.
+When this project started, Bootstrap 3 had missing breakpoints that we targeted and a float based grid-system. Bootstrap 4 has been improved and was a viable candidate for improving our Sass, however it is still bloated with a lot of unnecessary media queries and missing breakpoints (that are easy to add, but again; so much bloat).
 
 ### Why not &lt;insert framework here&gt;?
 
