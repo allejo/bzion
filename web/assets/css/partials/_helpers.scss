@@ -32,10 +32,6 @@
     }
 }
 
-.o-container {
-    @extend %container;
-}
-
 .u-hide-on-empty {
     &:empty {
         display: none;

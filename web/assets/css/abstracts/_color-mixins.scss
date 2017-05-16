@@ -1,0 +1,21 @@
+// -----------------------------------------------------------------------------
+// This file contains mixins related to color manipulation/handling.
+// -----------------------------------------------------------------------------
+
+/// Return a dark color or a light color based on the color given. This function can be used
+/// when wanting to dynamically set the font-color based on the background color.
+///
+/// @param {Color} $color
+///   The background color you want to get a font color for
+///
+/// @return {Hex} A light color for a dark background or a dark color for a light background
+
+@function set-text-from-color($color) {
+  // Not perfectly 50% because it's not perfectly split
+  @if (lightness($color) > 54) {
+    @return darken($color, 50%); // Lighter background, return dark color
+  }
+  @else {
+    @return $Color-White; // Darker background, return light color
+  }
+}
