@@ -1,4 +1,4 @@
-@include component('flag') {
+.c-flag {
     background: url(../imgs/flags.png) no-repeat;
     display: inline-block;
     height: 11px;
@@ -6,1008 +6,1008 @@
     vertical-align: middle;
     width: 16px;
 
-    @include modifier('ad') {
+    &--ad {
         background-position: -16px 0;
     }
 
-    @include modifier('ae') {
+    &--ae {
         background-position: -32px 0;
     }
 
-    @include modifier('af') {
+    &--af {
         background-position: -48px 0;
     }
 
-    @include modifier('ag') {
+    &--ag {
         background-position: -64px 0;
     }
 
-    @include modifier('ai') {
+    &--ai {
         background-position: -80px 0;
     }
 
-    @include modifier('al') {
+    &--al {
         background-position: -96px 0;
     }
 
-    @include modifier('am') {
+    &--am {
         background-position: -112px 0;
     }
 
-    @include modifier('an') {
+    &--an {
         background-position: -128px 0;
     }
 
-    @include modifier('ao') {
+    &--ao {
         background-position: -144px 0;
     }
 
-    @include modifier('ar') {
+    &--ar {
         background-position: -160px 0;
     }
 
-    @include modifier('as') {
+    &--as {
         background-position: -176px 0;
     }
 
-    @include modifier('at') {
+    &--at {
         background-position: -192px 0;
     }
 
-    @include modifier('au') {
+    &--au {
         background-position: -208px 0;
     }
 
-    @include modifier('aw') {
+    &--aw {
         background-position: -224px 0;
     }
 
-    @include modifier('az') {
+    &--az {
         background-position: -240px 0;
     }
 
-    @include modifier('ba') {
+    &--ba {
         background-position: 0 -11px;
     }
 
-    @include modifier('bb') {
+    &--bb {
         background-position: -16px -11px;
     }
 
-    @include modifier('bd') {
+    &--bd {
         background-position: -32px -11px;
     }
 
-    @include modifier('be') {
+    &--be {
         background-position: -48px -11px;
     }
 
-    @include modifier('bf') {
+    &--bf {
         background-position: -64px -11px;
     }
 
-    @include modifier('bg') {
+    &--bg {
         background-position: -80px -11px;
     }
 
-    @include modifier('bh') {
+    &--bh {
         background-position: -96px -11px;
     }
 
-    @include modifier('bi') {
+    &--bi {
         background-position: -112px -11px;
     }
 
-    @include modifier('bj') {
+    &--bj {
         background-position: -128px -11px;
     }
 
-    @include modifier('bm') {
+    &--bm {
         background-position: -144px -11px;
     }
 
-    @include modifier('bn') {
+    &--bn {
         background-position: -160px -11px;
     }
 
-    @include modifier('bo') {
+    &--bo {
         background-position: -176px -11px;
     }
 
-    @include modifier('br') {
+    &--br {
         background-position: -192px -11px;
     }
 
-    @include modifier('bs') {
+    &--bs {
         background-position: -208px -11px;
     }
 
-    @include modifier('bt') {
+    &--bt {
         background-position: -224px -11px;
     }
 
-    @include modifier('bv') {
+    &--bv {
         background-position: -240px -11px;
     }
 
-    @include modifier('bw') {
+    &--bw {
         background-position: 0 -22px;
     }
 
-    @include modifier('by') {
+    &--by {
         background-position: -16px -22px;
     }
 
-    @include modifier('bz') {
+    &--bz {
         background-position: -32px -22px;
     }
 
-    @include modifier('ca') {
+    &--ca {
         background-position: -48px -22px;
     }
 
-    @include modifier('catalonia') {
+    &--catalonia {
         background-position: -64px -22px;
     }
 
-    @include modifier('cd') {
+    &--cd {
         background-position: -80px -22px;
     }
 
-    @include modifier('cf') {
+    &--cf {
         background-position: -96px -22px;
     }
 
-    @include modifier('cg') {
+    &--cg {
         background-position: -112px -22px;
     }
 
-    @include modifier('ch') {
+    &--ch {
         background-position: -128px -22px;
     }
 
-    @include modifier('ci') {
+    &--ci {
         background-position: -144px -22px;
     }
 
-    @include modifier('ck') {
+    &--ck {
         background-position: -160px -22px;
     }
 
-    @include modifier('cl') {
+    &--cl {
         background-position: -176px -22px;
     }
 
-    @include modifier('cm') {
+    &--cm {
         background-position: -192px -22px;
     }
 
-    @include modifier('cn') {
+    &--cn {
         background-position: -208px -22px;
     }
 
-    @include modifier('co') {
+    &--co {
         background-position: -224px -22px;
     }
 
-    @include modifier('cr') {
+    &--cr {
         background-position: -240px -22px;
     }
 
-    @include modifier('cu') {
+    &--cu {
         background-position: 0 -33px;
     }
 
-    @include modifier('cv') {
+    &--cv {
         background-position: -16px -33px;
     }
 
-    @include modifier('cw') {
+    &--cw {
         background-position: -32px -33px;
     }
 
-    @include modifier('cy') {
+    &--cy {
         background-position: -48px -33px;
     }
 
-    @include modifier('cz') {
+    &--cz {
         background-position: -64px -33px;
     }
 
-    @include modifier('de') {
+    &--de {
         background-position: -80px -33px;
     }
 
-    @include modifier('dj') {
+    &--dj {
         background-position: -96px -33px;
     }
 
-    @include modifier('dk') {
+    &--dk {
         background-position: -112px -33px;
     }
 
-    @include modifier('dm') {
+    &--dm {
         background-position: -128px -33px;
     }
 
-    @include modifier('do') {
+    &--do {
         background-position: -144px -33px;
     }
 
-    @include modifier('dz') {
+    &--dz {
         background-position: -160px -33px;
     }
 
-    @include modifier('ec') {
+    &--ec {
         background-position: -176px -33px;
     }
 
-    @include modifier('ee') {
+    &--ee {
         background-position: -192px -33px;
     }
 
-    @include modifier('eg') {
+    &--eg {
         background-position: -208px -33px;
     }
 
-    @include modifier('eh') {
+    &--eh {
         background-position: -224px -33px;
     }
 
-    @include modifier('england') {
+    &--england {
         background-position: -240px -33px;
     }
 
-    @include modifier('er') {
+    &--er {
         background-position: 0 -44px;
     }
 
-    @include modifier('es') {
+    &--es {
         background-position: -16px -44px;
     }
 
-    @include modifier('et') {
+    &--et {
         background-position: -32px -44px;
     }
 
-    @include modifier('eu') {
+    &--eu {
         background-position: -48px -44px;
     }
 
-    @include modifier('fi') {
+    &--fi {
         background-position: -64px -44px;
     }
 
-    @include modifier('fj') {
+    &--fj {
         background-position: -80px -44px;
     }
 
-    @include modifier('fk') {
+    &--fk {
         background-position: -96px -44px;
     }
 
-    @include modifier('fm') {
+    &--fm {
         background-position: -112px -44px;
     }
 
-    @include modifier('fo') {
+    &--fo {
         background-position: -128px -44px;
     }
 
-    @include modifier('fr') {
+    &--fr {
         background-position: -144px -44px;
     }
 
-    @include modifier('ga') {
+    &--ga {
         background-position: -160px -44px;
     }
 
-    @include modifier('gb') {
+    &--gb {
         background-position: -176px -44px;
     }
 
-    @include modifier('gd') {
+    &--gd {
         background-position: -192px -44px;
     }
 
-    @include modifier('ge') {
+    &--ge {
         background-position: -208px -44px;
     }
 
-    @include modifier('gf') {
+    &--gf {
         background-position: -224px -44px;
     }
 
-    @include modifier('gg') {
+    &--gg {
         background-position: -240px -44px;
     }
 
-    @include modifier('gh') {
+    &--gh {
         background-position: 0 -55px;
     }
 
-    @include modifier('gi') {
+    &--gi {
         background-position: -16px -55px;
     }
 
-    @include modifier('gl') {
+    &--gl {
         background-position: -32px -55px;
     }
 
-    @include modifier('gm') {
+    &--gm {
         background-position: -48px -55px;
     }
 
-    @include modifier('gn') {
+    &--gn {
         background-position: -64px -55px;
     }
 
-    @include modifier('gp') {
+    &--gp {
         background-position: -80px -55px;
     }
 
-    @include modifier('gq') {
+    &--gq {
         background-position: -96px -55px;
     }
 
-    @include modifier('gr') {
+    &--gr {
         background-position: -112px -55px;
     }
 
-    @include modifier('gs') {
+    &--gs {
         background-position: -128px -55px;
     }
 
-    @include modifier('gt') {
+    &--gt {
         background-position: -144px -55px;
     }
 
-    @include modifier('gu') {
+    &--gu {
         background-position: -160px -55px;
     }
 
-    @include modifier('gw') {
+    &--gw {
         background-position: -176px -55px;
     }
 
-    @include modifier('gy') {
+    &--gy {
         background-position: -192px -55px;
     }
 
-    @include modifier('hk') {
+    &--hk {
         background-position: -208px -55px;
     }
 
-    @include modifier('hm') {
+    &--hm {
         background-position: -224px -55px;
     }
 
-    @include modifier('hn') {
+    &--hn {
         background-position: -240px -55px;
     }
 
-    @include modifier('hr') {
+    &--hr {
         background-position: 0 -66px;
     }
 
-    @include modifier('ht') {
+    &--ht {
         background-position: -16px -66px;
     }
 
-    @include modifier('hu') {
+    &--hu {
         background-position: -32px -66px;
     }
 
-    @include modifier('ic') {
+    &--ic {
         background-position: -48px -66px;
     }
 
-    @include modifier('id') {
+    &--id {
         background-position: -64px -66px;
     }
 
-    @include modifier('ie') {
+    &--ie {
         background-position: -80px -66px;
     }
 
-    @include modifier('il') {
+    &--il {
         background-position: -96px -66px;
     }
 
-    @include modifier('im') {
+    &--im {
         background-position: -112px -66px;
     }
 
-    @include modifier('in') {
+    &--in {
         background-position: -128px -66px;
     }
 
-    @include modifier('io') {
+    &--io {
         background-position: -144px -66px;
     }
 
-    @include modifier('iq') {
+    &--iq {
         background-position: -160px -66px;
     }
 
-    @include modifier('ir') {
+    &--ir {
         background-position: -176px -66px;
     }
 
-    @include modifier('is') {
+    &--is {
         background-position: -192px -66px;
     }
 
-    @include modifier('it') {
+    &--it {
         background-position: -208px -66px;
     }
 
-    @include modifier('je') {
+    &--je {
         background-position: -224px -66px;
     }
 
-    @include modifier('jm') {
+    &--jm {
         background-position: -240px -66px;
     }
 
-    @include modifier('jo') {
+    &--jo {
         background-position: 0 -77px;
     }
 
-    @include modifier('jp') {
+    &--jp {
         background-position: -16px -77px;
     }
 
-    @include modifier('ke') {
+    &--ke {
         background-position: -32px -77px;
     }
 
-    @include modifier('kg') {
+    &--kg {
         background-position: -48px -77px;
     }
 
-    @include modifier('kh') {
+    &--kh {
         background-position: -64px -77px;
     }
 
-    @include modifier('ki') {
+    &--ki {
         background-position: -80px -77px;
     }
 
-    @include modifier('km') {
+    &--km {
         background-position: -96px -77px;
     }
 
-    @include modifier('kn') {
+    &--kn {
         background-position: -112px -77px;
     }
 
-    @include modifier('kp') {
+    &--kp {
         background-position: -128px -77px;
     }
 
-    @include modifier('kr') {
+    &--kr {
         background-position: -144px -77px;
     }
 
-    @include modifier('kurdistan') {
+    &--kurdistan {
         background-position: -160px -77px;
     }
 
-    @include modifier('kw') {
+    &--kw {
         background-position: -176px -77px;
     }
 
-    @include modifier('ky') {
+    &--ky {
         background-position: -192px -77px;
     }
 
-    @include modifier('kz') {
+    &--kz {
         background-position: -208px -77px;
     }
 
-    @include modifier('la') {
+    &--la {
         background-position: -224px -77px;
     }
 
-    @include modifier('lb') {
+    &--lb {
         background-position: -240px -77px;
     }
 
-    @include modifier('lc') {
+    &--lc {
         background-position: 0 -88px;
     }
 
-    @include modifier('li') {
+    &--li {
         background-position: -16px -88px;
     }
 
-    @include modifier('lk') {
+    &--lk {
         background-position: -32px -88px;
     }
 
-    @include modifier('lr') {
+    &--lr {
         background-position: -48px -88px;
     }
 
-    @include modifier('ls') {
+    &--ls {
         background-position: -64px -88px;
     }
 
-    @include modifier('lt') {
+    &--lt {
         background-position: -80px -88px;
     }
 
-    @include modifier('lu') {
+    &--lu {
         background-position: -96px -88px;
     }
 
-    @include modifier('lv') {
+    &--lv {
         background-position: -112px -88px;
     }
 
-    @include modifier('ly') {
+    &--ly {
         background-position: -128px -88px;
     }
 
-    @include modifier('ma') {
+    &--ma {
         background-position: -144px -88px;
     }
 
-    @include modifier('mc') {
+    &--mc {
         background-position: -160px -88px;
     }
 
-    @include modifier('md') {
+    &--md {
         background-position: -176px -88px;
     }
 
-    @include modifier('me') {
+    &--me {
         background-position: -192px -88px;
     }
 
-    @include modifier('mg') {
+    &--mg {
         background-position: -208px -88px;
     }
 
-    @include modifier('mh') {
+    &--mh {
         background-position: -224px -88px;
     }
 
-    @include modifier('mk') {
+    &--mk {
         background-position: -240px -88px;
     }
 
-    @include modifier('ml') {
+    &--ml {
         background-position: 0 -99px;
     }
 
-    @include modifier('mm') {
+    &--mm {
         background-position: -16px -99px;
     }
 
-    @include modifier('mn') {
+    &--mn {
         background-position: -32px -99px;
     }
 
-    @include modifier('mo') {
+    &--mo {
         background-position: -48px -99px;
     }
 
-    @include modifier('mp') {
+    &--mp {
         background-position: -64px -99px;
     }
 
-    @include modifier('mq') {
+    &--mq {
         background-position: -80px -99px;
     }
 
-    @include modifier('mr') {
+    &--mr {
         background-position: -96px -99px;
     }
 
-    @include modifier('ms') {
+    &--ms {
         background-position: -112px -99px;
     }
 
-    @include modifier('mt') {
+    &--mt {
         background-position: -128px -99px;
     }
 
-    @include modifier('mu') {
+    &--mu {
         background-position: -144px -99px;
     }
 
-    @include modifier('mv') {
+    &--mv {
         background-position: -160px -99px;
     }
 
-    @include modifier('mw') {
+    &--mw {
         background-position: -176px -99px;
     }
 
-    @include modifier('mx') {
+    &--mx {
         background-position: -192px -99px;
     }
 
-    @include modifier('my') {
+    &--my {
         background-position: -208px -99px;
     }
 
-    @include modifier('mz') {
+    &--mz {
         background-position: -224px -99px;
     }
 
-    @include modifier('na') {
+    &--na {
         background-position: -240px -99px;
     }
 
-    @include modifier('nc') {
+    &--nc {
         background-position: 0 -110px;
     }
 
-    @include modifier('ne') {
+    &--ne {
         background-position: -16px -110px;
     }
 
-    @include modifier('nf') {
+    &--nf {
         background-position: -32px -110px;
     }
 
-    @include modifier('ng') {
+    &--ng {
         background-position: -48px -110px;
     }
 
-    @include modifier('ni') {
+    &--ni {
         background-position: -64px -110px;
     }
 
-    @include modifier('nl') {
+    &--nl {
         background-position: -80px -110px;
     }
 
-    @include modifier('no') {
+    &--no {
         background-position: -96px -110px;
     }
 
-    @include modifier('np') {
+    &--np {
         background-position: -112px -110px;
     }
 
-    @include modifier('nr') {
+    &--nr {
         background-position: -128px -110px;
     }
 
-    @include modifier('nu') {
+    &--nu {
         background-position: -144px -110px;
     }
 
-    @include modifier('nz') {
+    &--nz {
         background-position: -160px -110px;
     }
 
-    @include modifier('om') {
+    &--om {
         background-position: -176px -110px;
     }
 
-    @include modifier('pa') {
+    &--pa {
         background-position: -192px -110px;
     }
 
-    @include modifier('pe') {
+    &--pe {
         background-position: -208px -110px;
     }
 
-    @include modifier('pf') {
+    &--pf {
         background-position: -224px -110px;
     }
 
-    @include modifier('pg') {
+    &--pg {
         background-position: -240px -110px;
     }
 
-    @include modifier('ph') {
+    &--ph {
         background-position: 0 -121px;
     }
 
-    @include modifier('pk') {
+    &--pk {
         background-position: -16px -121px;
     }
 
-    @include modifier('pl') {
+    &--pl {
         background-position: -32px -121px;
     }
 
-    @include modifier('pm') {
+    &--pm {
         background-position: -48px -121px;
     }
 
-    @include modifier('pn') {
+    &--pn {
         background-position: -64px -121px;
     }
 
-    @include modifier('pr') {
+    &--pr {
         background-position: -80px -121px;
     }
 
-    @include modifier('ps') {
+    &--ps {
         background-position: -96px -121px;
     }
 
-    @include modifier('pt') {
+    &--pt {
         background-position: -112px -121px;
     }
 
-    @include modifier('pw') {
+    &--pw {
         background-position: -128px -121px;
     }
 
-    @include modifier('py') {
+    &--py {
         background-position: -144px -121px;
     }
 
-    @include modifier('qa') {
+    &--qa {
         background-position: -160px -121px;
     }
 
-    @include modifier('re') {
+    &--re {
         background-position: -176px -121px;
     }
 
-    @include modifier('ro') {
+    &--ro {
         background-position: -192px -121px;
     }
 
-    @include modifier('rs') {
+    &--rs {
         background-position: -208px -121px;
     }
 
-    @include modifier('ru') {
+    &--ru {
         background-position: -224px -121px;
     }
 
-    @include modifier('rw') {
+    &--rw {
         background-position: -240px -121px;
     }
 
-    @include modifier('sa') {
+    &--sa {
         background-position: 0 -132px;
     }
 
-    @include modifier('sb') {
+    &--sb {
         background-position: -16px -132px;
     }
 
-    @include modifier('sc') {
+    &--sc {
         background-position: -32px -132px;
     }
 
-    @include modifier('scotland') {
+    &--scotland {
         background-position: -48px -132px;
     }
 
-    @include modifier('sd') {
+    &--sd {
         background-position: -64px -132px;
     }
 
-    @include modifier('se') {
+    &--se {
         background-position: -80px -132px;
     }
 
-    @include modifier('sg') {
+    &--sg {
         background-position: -96px -132px;
     }
 
-    @include modifier('sh') {
+    &--sh {
         background-position: -112px -132px;
     }
 
-    @include modifier('si') {
+    &--si {
         background-position: -128px -132px;
     }
 
-    @include modifier('sk') {
+    &--sk {
         background-position: -144px -132px;
     }
 
-    @include modifier('sl') {
+    &--sl {
         background-position: -160px -132px;
     }
 
-    @include modifier('sm') {
+    &--sm {
         background-position: -176px -132px;
     }
 
-    @include modifier('sn') {
+    &--sn {
         background-position: -192px -132px;
     }
 
-    @include modifier('so') {
+    &--so {
         background-position: -208px -132px;
     }
 
-    @include modifier('somaliland') {
+    &--somaliland {
         background-position: -224px -132px;
     }
 
-    @include modifier('sr') {
+    &--sr {
         background-position: -240px -132px;
     }
 
-    @include modifier('ss') {
+    &--ss {
         background-position: 0 -143px;
     }
 
-    @include modifier('st') {
+    &--st {
         background-position: -16px -143px;
     }
 
-    @include modifier('sv') {
+    &--sv {
         background-position: -32px -143px;
     }
 
-    @include modifier('sx') {
+    &--sx {
         background-position: -48px -143px;
     }
 
-    @include modifier('sy') {
+    &--sy {
         background-position: -64px -143px;
     }
 
-    @include modifier('sz') {
+    &--sz {
         background-position: -80px -143px;
     }
 
-    @include modifier('tc') {
+    &--tc {
         background-position: -96px -143px;
     }
 
-    @include modifier('td') {
+    &--td {
         background-position: -112px -143px;
     }
 
-    @include modifier('tf') {
+    &--tf {
         background-position: -128px -143px;
     }
 
-    @include modifier('tg') {
+    &--tg {
         background-position: -144px -143px;
     }
 
-    @include modifier('th') {
+    &--th {
         background-position: -160px -143px;
     }
 
-    @include modifier('tj') {
+    &--tj {
         background-position: -176px -143px;
     }
 
-    @include modifier('tk') {
+    &--tk {
         background-position: -192px -143px;
     }
 
-    @include modifier('tl') {
+    &--tl {
         background-position: -208px -143px;
     }
 
-    @include modifier('tm') {
+    &--tm {
         background-position: -224px -143px;
     }
 
-    @include modifier('tn') {
+    &--tn {
         background-position: -240px -143px;
     }
 
-    @include modifier('to') {
+    &--to {
         background-position: 0 -154px;
     }
 
-    @include modifier('tr') {
+    &--tr {
         background-position: -16px -154px;
     }
 
-    @include modifier('tt') {
+    &--tt {
         background-position: -32px -154px;
     }
 
-    @include modifier('tv') {
+    &--tv {
         background-position: -48px -154px;
     }
 
-    @include modifier('tw') {
+    &--tw {
         background-position: -64px -154px;
     }
 
-    @include modifier('tz') {
+    &--tz {
         background-position: -80px -154px;
     }
 
-    @include modifier('ua') {
+    &--ua {
         background-position: -96px -154px;
     }
 
-    @include modifier('ug') {
+    &--ug {
         background-position: -112px -154px;
     }
 
-    @include modifier('um') {
+    &--um {
         background-position: -128px -154px;
     }
 
-    @include modifier('us') {
+    &--us {
         background-position: -144px -154px;
     }
 
-    @include modifier('uu') {
+    &--uu {
         box-sizing: border-box;
-        border: 1px dashed $Color-Light_Grey;
+        border: 1px dashed #B8B8B8;
     }
 
-    @include modifier('uy') {
+    &--uy {
         background-position: -160px -154px;
     }
 
-    @include modifier('uz') {
+    &--uz {
         background-position: -176px -154px;
     }
 
-    @include modifier('va') {
+    &--va {
         background-position: -192px -154px;
     }
 
-    @include modifier('vc') {
+    &--vc {
         background-position: -208px -154px;
     }
 
-    @include modifier('ve') {
+    &--ve {
         background-position: -224px -154px;
     }
 
-    @include modifier('vg') {
+    &--vg {
         background-position: -240px -154px;
     }
 
-    @include modifier('vi') {
+    &--vi {
         background-position: 0 -165px;
     }
 
-    @include modifier('vn') {
+    &--vn {
         background-position: -16px -165px;
     }
 
-    @include modifier('vu') {
+    &--vu {
         background-position: -32px -165px;
     }
 
-    @include modifier('wales') {
+    &--wales {
         background-position: -48px -165px;
     }
 
-    @include modifier('wf') {
+    &--wf {
         background-position: -64px -165px;
     }
 
-    @include modifier('ws') {
+    &--ws {
         background-position: -80px -165px;
     }
 
-    @include modifier('ye') {
+    &--ye {
         background-position: -96px -165px;
     }
 
-    @include modifier('yt') {
+    &--yt {
         background-position: -112px -165px;
     }
 
-    @include modifier('za') {
+    &--za {
         background-position: -128px -165px;
     }
 
-    @include modifier('zm') {
+    &--zm {
         background-position: -160px -165px;
     }
 
-    @include modifier('zw') {
+    &--zw {
         background-position: -176px -165px;
     }
 }
