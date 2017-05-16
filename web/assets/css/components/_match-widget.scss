@@ -15,14 +15,13 @@
 }
 
 .c-matchwidget {
-    @include view-container();
+    @include make-flex-container();
 
     margin-bottom: $Settings-Page_Section-Small_Margin;
 }
 
 .c-matchwidget__team {
-    @include view-columns(xs, 12);
-    @include view-columns(md, 6);
+    @include make-flex-columns(md, 6);
 
     align-items: center;
     display: flex;

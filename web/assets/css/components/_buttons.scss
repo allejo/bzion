@@ -1,0 +1,64 @@
+$Button-Colors: (
+    'red': #DB3434,
+    'blue': #3498DB,
+    'grey': #DBDBDB,
+    'black': #4F4F4F,
+    'green': #34DB6D,
+    'orange': #FF8400,
+    'purple': #6F34DB,
+    'yellow': #FFB608
+);
+
+// A button
+.c-button {
+    border-radius: $Border-Radius;
+    color: $Color-White;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    padding: 3px 15px 4px 13px;
+    text-decoration: none;
+
+    i {
+        @extend %fa-fw;
+    }
+}
+
+// A skinnier version of the button
+.c-button--skinny {
+    padding: 0 15px 1px;
+}
+
+// A button but with the default cursor instead of a pointer
+.c-button--no-click {
+    cursor: default;
+}
+
+// Loop through available button colors and create modifiers for each
+@each $color, $value in $Button-Colors {
+    .c-button--#{$color} {
+        $dark_color: darken($value, 7%);
+
+        background: linear-gradient($value, $dark_color);
+        border: 1px solid $dark_color;
+        color: set-text-from-color($value);
+        text-decoration: none;
+
+        // Workaround for ensuring that anchor tags with the .c-button class have the correct color for its text. This
+        // is ensures that this rule supersedes the theme defined anchor tag rule; i.e. `.t-light a {}`
+        @at-root a#{&} {
+            color: set-text-from-color($value);
+        }
+
+        &:hover {
+            &:not(.c-button--no-hover) {
+                $hoverColor: darken($value, 3%);
+                $hoverDarkColor: darken($hoverColor, 7%);
+
+                background: linear-gradient($hoverColor, $hoverDarkColor);
+                border-color: $hoverDarkColor;
+                color: set-text-from-color($hoverColor);
+            }
+        }
+    }
+}

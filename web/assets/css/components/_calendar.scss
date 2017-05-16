@@ -1,0 +1,28 @@
+.c-calendar--day {
+    @include size(50px);
+
+    background-color: #ffffff;
+    border: $Border-Default;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+
+    span {
+        display: block;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    .month {
+        font-size: 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    .date {
+        font-size: 20px;
+        letter-spacing: -0.05em;
+        padding-top: 20px;
+    }
+}

@@ -1,0 +1,50 @@
+.c-jumbotron {
+    background-size: cover;
+    display: flex;
+    min-height: 350px;
+    width: 100%;
+
+    @include respond-up(md) {
+        min-height: 250px;
+    }
+
+    @include respond-up(xs) {
+        min-height: 200px;
+    }
+
+    article {
+        @extend %container;
+
+        // Set a padding to have a minimum space from the edge should be no top and bottom margin
+        // The flex box will handle the centering so the padding won't affect the centering
+        margin: auto;
+        padding: 40px 0;
+        text-align: center;
+
+        h1,
+        h2 {
+            color: $Color-White;
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.9);
+        }
+
+        h1 {
+            font-size: 48px;
+            line-height: 48px;
+            margin-bottom: 20px;
+
+            @include respond-up(xs) {
+                font-size: 30px;
+                line-height: 30px;
+                margin-bottom: 15px;
+            }
+        }
+
+        h2 {
+            font-size: 24px;
+
+            @include respond-up(xs) {
+                font-size: 22px;
+            }
+        }
+    }
+}
