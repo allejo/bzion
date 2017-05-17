@@ -1,6 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% import '/Match/widget.html.twig' as matchUi %}
+{% from 'utilities.html.twig' import timestamp %}
 
 {% block pageHeader %}
 {% endblock %}
@@ -76,16 +77,13 @@
                     <h2 class="mb3">Latest News</h2>
                     <div class="bb-last-reset">
                         {% for post in news %}
-                            <article class="row row--nowrap bb mb2">
-                                <div class="mr2">
-                                    <time datetime="{{ post.created | date(constant('TimeDate::FULL')) }}" class="c-calendar--day">
-                                        <span class="month">{{ post.created | date('M') }}</span>
-                                        <span class="date">{{ post.created | date('d') }}</span>
-                                    </time>
+                            <article class="row row--nowrap bb mb2 pb2">
+                                <div class="col mr1">
+                                    {{- timestamp(post.created) -}}
                                 </div>
-                                <div class="u-flex-respect-parent">
+                                <div class="col u-flex-respect-parent">
                                     <h3 class="u-truncate-text mb0" title="{{ post.subject }}">{{ link_to(post) }}</h3>
-                                    <p>by {{ link_to(post.author) }}</p>
+                                    <p class="mb0">by {{ link_to(post.author) }}</p>
                                 </div>
                             </article>
                         {% endfor %}
@@ -95,7 +93,7 @@
                 <section class="col-md-6 col-lg-8">
                     <h2 class="mb3">Recent Matches</h2>
 
-                    <section class="o-row">
+                    <section class="bb-last-reset">
                         {% for match in matches %}
                             {{ matchUi.widget(match) }}
                         {% endfor %}

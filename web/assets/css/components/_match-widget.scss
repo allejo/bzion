@@ -1,10 +1,11 @@
 @mixin loserOrder() {
     .c-matchwidget__team__image {
+        margin-right: 0;
         order: 3;
     }
 
     .c-matchwidget__team__name {
-        text-align: right;
+        justify-content: flex-end;
         order: 2;
         padding-right: $Settings-Page_Section-Small_Margin;
     }
@@ -15,51 +16,46 @@
 }
 
 .c-matchwidget {
-    @include make-flex-container();
 
-    margin-bottom: $Settings-Page_Section-Small_Margin;
 }
 
-.c-matchwidget__team {
-    @include make-flex-columns(md, 6);
+.c-matchwidget__team--loser {
+    @include respond-up(lg) {
+        @include loserOrder();
+    }
+}
 
+.c-matchwidget__timestamp {
+    //margin-right: $Settings-Page_Section-Tiny_Margin;
+}
+
+.c-matchwidget__link,
+.c-matchwidget__team__name,
+.c-matchwidget__team__score {
     align-items: center;
     display: flex;
-    margin-bottom: $Settings-Page_Section-Tiny_Margin;
-
-    @include respond-up(md) {
-        margin-bottom: 0;
-    }
 }
 
 .c-matchwidget__team__image {
-    img {
-        display: block;
-        width: 40px;
 
-        @include respond-up(lg) {
-            width: auto;
-        }
-    }
 }
 
+.c-matchwidget__stats,
 .c-matchwidget__team__name {
-    flex: 1;
-    padding-left: $Settings-Page_Section-Small_Margin;
+    flex-grow: 1;
 }
 
-.c-matchwidget__team__score {
+.c-matchwidget__link {
+    border-left: $Border-Default;
+    //margin-left: $Settings-Page_Section-Small_Margin;
+
     a {
-        color: $Color-Black;
-
-        &:hover {
-            color: lighten($Color-Black, 15%);
-        }
+        display: block;
+        padding-left: $Settings-Page_Section-Small_Margin;
+        padding-right: $Settings-Page_Section-Small_Margin;
     }
-}
 
-.c-matchwidget__loser {
-    @include respond-up(md) {
-        @include loserOrder();
+    i {
+        font-size: 30px;
     }
 }

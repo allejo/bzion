@@ -1,0 +1,8 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+@mixin size($width, $height: $width) {
+    height: $height;
+    width: $width;
+}

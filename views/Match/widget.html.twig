@@ -1,36 +1,62 @@
 {% macro team_block(match, team) %}
     {% set isTeam = team is instanceof('Team') %}
 
-    <a class="c-matchwidget__team__image" href="{{ isTeam ? team.url : '' }}">
-        <img src="{%- if isTeam -%}
-                {{ team.avatar | imagine_filter('small_thumb') }}
-            {%- else -%}
-                {{ asset(team.avatar) }}
-            {%- endif -%}" />
-    </a>
-    <div class="c-matchwidget__team__name">
-        <p>
+    <div class="row row--nowrap">
+        <div class="col c-matchwidget__team__image">
             {% if isTeam %}
-                {{ link_to(team) }}
+                <a href="{{ team.url }}">
+                    <img src="{{ team.avatar | imagine_filter('small_thumb') }}"
+                         alt="{{ team.name }}'s Avatar"
+                         title="{{ team.name }}'s Avatar"
+                    >
+                </a>
             {% else %}
-                {{ team.name }}
+                <img src="{{ asset(team.avatar) }}"
+                     alt="{{ team.name }}'s Avatar"
+                     title="{{ team.name }}'s Avatar"
+                >
             {% endif %}
-        </p>
-    </div>
-    <div class="c-matchwidget__team__score">
-        <p>{{ link_to(match, content = match.score(team)) }}</p>
+        </div>
+        <div class="col c-matchwidget__team__name">
+            <span class="u-truncate-text">
+                {% if isTeam %}
+                    {{ link_to(team) }}
+                {% else %}
+                    {{ team.name }}
+                {% endif %}
+            </span>
+        </div>
+        <div class="col c-matchwidget__team__score">
+            {{ link_to(match, content = match.score(team)) }}
+        </div>
     </div>
 {% endmacro %}
 
 {% macro widget(match) %}
-    {% import _self as self %}
+    {% from 'utilities.html.twig' import timestamp %}
+    {% from _self import team_block %}
 
-    <section class="c-matchwidget">
-        <div class="c-matchwidget__team c-matchwidget__winner">
-            {{ self.team_block(match, match.winner) }}
+    <section class="c-matchwidget row row--nowrap bb mb2 pb2">
+        <div class="c-matchwidget__timestamp col">
+            {{- timestamp(match.timestamp) -}}
         </div>
-        <div class="c-matchwidget__team c-matchwidget__loser">
-            {{ self.team_block(match, match.loser) }}
+
+        <div class="c-matchwidget__stats col">
+            <div class="row">
+                <div class="c-matchwidget__team c-matchwidget__team--winner col-lg-6">
+                    {{ team_block(match, match.winner) }}
+                </div>
+                <div class="c-matchwidget__team c-matchwidget__team--loser col-lg-6">
+                    {{ team_block(match, match.loser) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="c-matchwidget__link col">
+            <a href="{{ match.url }}">
+                <i class="fa fa-angle-right"></i>
+                <span class="sr-only">See match details</span>
+            </a>
         </div>
     </section>
 {% endmacro %}
