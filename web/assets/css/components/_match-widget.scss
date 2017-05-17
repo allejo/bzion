@@ -26,7 +26,6 @@
 }
 
 .c-matchwidget__timestamp {
-    //margin-right: $Settings-Page_Section-Tiny_Margin;
 }
 
 .c-matchwidget__link,
@@ -43,11 +42,11 @@
 .c-matchwidget__stats,
 .c-matchwidget__team__name {
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .c-matchwidget__link {
     border-left: $Border-Default;
-    //margin-left: $Settings-Page_Section-Small_Margin;
 
     a {
         display: block;
