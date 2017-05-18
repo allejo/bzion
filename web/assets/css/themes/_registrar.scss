@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+// This file contains the logic for reading, parsing, and registering new themes
+// to BZiON
+// -----------------------------------------------------------------------------
+
+$registered_themes: (light, dark);
+$theme_definitions: ();
+
+@each $theme_name in $registered_themes {
+    $theme_definitions: map-set($theme_definitions, $theme_name, import-yaml("web/assets/css/themes/#{$theme_name}.yml"));
+}

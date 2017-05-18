@@ -38,6 +38,11 @@
 @import 'abstracts/axes-builder';
 @import 'abstracts/color-mixins';
 @import 'abstracts/mixins';
+@import 'abstracts/maps';
+@import 'abstracts/strings';
+
+
+@import 'abstracts/theming';
 
 @import 'base/typography';
 
@@ -45,6 +50,7 @@
 @import 'utilities/flex';
 @import 'utilities/lists';
 
+@import 'themes/registrar';
 
 //
 // Components
@@ -60,8 +66,9 @@
 // Layout
 //
 
-@import 'layout/page'
-;
+@import 'layout/page';
+@import 'layout/header';
+@import 'layout/navigation';
 
 
 @import 'vendor/insert-nth';
@@ -76,7 +83,6 @@
 @import 'modules/font-awesome-utilities';
 @import 'modules/placeholders';
 @import 'modules/siblings';
-@import 'modules/theming';
 
 
 //
@@ -110,10 +116,6 @@
 @import 'partials/Forms/select2';
 @import 'partials/Forms/md-editor';
 @import 'partials/Forms/structure';
-
-// Header + Navigation
-@import 'partials/Header/header';
-@import 'partials/Header/navigation';
 
 //
 // Sprites

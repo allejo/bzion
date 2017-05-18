@@ -1,5 +1,12 @@
+// -----------------------------------------------------------------------------
+// This file contains Sass functions dedicated to handling our custom color
+// themes.
+// -----------------------------------------------------------------------------
+
 /// This function loops through all of the available themes and generates the appropriate
 /// CSS based on the theme definition
+///
+/// @deprecated
 ///
 /// @param {String} $rule
 ///   The CSS keyword that will be effected based on the theme
@@ -44,6 +51,25 @@
             .t-#{$name} & {
                 $map: if(map-has-key($settings, $variable), $settings, $default);
                 $value: map-get($map, $variable);
+
+                @if $function == "" {
+                    #{$rule}: $value;
+                }
+                @else {
+                    $params: insert-nth($args, $nth, $value);
+
+                    #{$rule}: call($function, $params...);
+                }
+            }
+        }
+    }
+}
+
+@mixin theme-rule ($rule, $variable, $function: "", $nth: 0, $args...) {
+    @each $name, $settings in $theme_definitions {
+        @at-root {
+            .t-#{$name} & {
+                $value: map-deep-get($settings, str-explode($variable, '.'));
 
                 @if $function == "" {
                     #{$rule}: $value;

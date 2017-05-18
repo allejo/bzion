@@ -1,0 +1,9 @@
+body:
+  background: "#ffffff"
+
+elements:
+  anchor: "#009EFF"
+
+navigation:
+  background: "#f6f6f6"
+  links: "#656565"

@@ -1,0 +1,31 @@
+// -----------------------------------------------------------------------------
+// This file contains Sass functions related to working with maps.
+// -----------------------------------------------------------------------------
+
+/// Set a key in a map
+///
+/// @param {Map} $map - Map
+/// @param {String} $key - Key
+/// @param {*} $value - Value
+///
+/// @return {Map}
+@function map-set($map, $key, $value) {
+    $new: ($key: $value);
+    @return map-merge($map, $new);
+}
+
+/// Fetch nested keys
+///
+/// @author Hugo Giraudel (https://github.com/HugoGiraudel)
+///
+/// @param {Map} $map - Map
+/// @param {List} $keys - Keys to fetch
+///
+/// @return {*}
+@function map-deep-get($map, $keys) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+
+    @return $map;
+}
