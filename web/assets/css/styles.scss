@@ -20,6 +20,8 @@
 @import 'partials/base';
 @import 'partials/themes';
 
+@import 'abstracts/variables';
+
 
 //
 // Vendor
@@ -37,6 +39,7 @@
 //
 @import 'abstracts/axes-builder';
 @import 'abstracts/color-mixins';
+@import 'abstracts/functions';
 @import 'abstracts/mixins';
 @import 'abstracts/maps';
 @import 'abstracts/strings';
