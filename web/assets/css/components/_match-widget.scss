@@ -26,6 +26,19 @@
 }
 
 .c-matchwidget__timestamp {
+    display: none;
+
+    @include respond-up(sm) {
+        display: block;
+    }
+
+    @include respond-up(md) {
+        display: none;
+    }
+
+    @include respond-up(lg) {
+        display: block;
+    }
 }
 
 .c-matchwidget__link,
