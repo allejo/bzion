@@ -1,7 +1,6 @@
 .c-calendar--day {
     @include size(50px);
 
-    background-color: #ffffff;
     border: $Border-Default;
     display: inline-block;
     float: left;
