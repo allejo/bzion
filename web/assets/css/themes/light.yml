@@ -1,5 +1,6 @@
 body:
   background: "#ffffff"
+  color: "#000000"
 
 elements:
   anchor: "#009EFF"

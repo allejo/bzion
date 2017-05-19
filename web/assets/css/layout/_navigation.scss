@@ -27,7 +27,7 @@
 // The container of the links to public pages; e.g. News, Matches, etc. This element will have icon + text links
 .c-menulinks {
     @include respond-from(xs, md) {
-        @include theme-specific("background-color", "nav-bg");
+        @include theme-rule(background-color, 'navigation.background');
 
         border-bottom: 1px solid $Color-Header_Border;
         display: none;

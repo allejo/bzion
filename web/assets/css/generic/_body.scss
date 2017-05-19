@@ -1,6 +1,6 @@
 body {
-    @include theme-specific("background-color", "body-bg");
-    @include theme-specific("color", "font-color");
+    @include theme-rule(background-color, 'body.background');
+    @include theme-rule(color, 'body.color');
 
     font-family: $Font-Sans_Serif;
     font-size: $Settings-Base_Font_Size;

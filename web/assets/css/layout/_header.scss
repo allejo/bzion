@@ -4,17 +4,16 @@ $Color-Header_Border: #D4D4D4;
 
 // The entire top navigation bar
 .c-header {
-    @include theme-specific("background-image", "header-bg");
+    @include theme-rule(background-image, 'navigation.background');
 
     border-bottom: 1px solid $Color-Header_Border;
-    box-shadow: 0 2px 5px rgba(50, 50, 50, 0.075);
 
     a {
-        @include theme-specific("color", "header-color");
+        @include theme-rule(color, 'navigation.links');
 
         // This rule exists because all outgoing links automatically have an external link symbol added
         // so we need to hide it in the navigation for the login button
-        &:after {
+        &::after {
             display: none;
         }
 
