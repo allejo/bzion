@@ -5,7 +5,7 @@
     "url": "https://github.com/allejo/bzion.git"
   },
   "dependencies": {
-    "eyeglass": "^1.1.2",
+    "eyeglass": "^1.2.1",
     "eyeglass-sassy-data": "^0.1.2",
     "gulp": "^3.9.1",
     "gulp-combine-mq": "^0.4.0",
@@ -17,6 +17,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.2.1",
+    "node-sass": "^4.5.3",
     "pump": "^1.0.1",
     "sassdoc": "^2.1.20"
   },
