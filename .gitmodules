@@ -19,3 +19,6 @@
 [submodule "web/includes/markdown-it"]
 	path = web/includes/markdown-it
 	url = https://github.com/markdown-it/markdown-it.git
+[submodule "web/assets/css/vendor/SassyCast"]
+	path = web/assets/css/vendor/SassyCast
+	url = https://github.com/HugoGiraudel/SassyCast.git
