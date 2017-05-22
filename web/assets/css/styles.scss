@@ -29,6 +29,7 @@
 //
 
 @import 'vendor/OnTheRocks/scss/rocks';
+@import 'vendor/SassyCast/dist/SassyCast';
 @import 'vendor/flags';
 @import 'vendor/loaders';
 @import 'vendor/text-inputs';
@@ -43,6 +44,8 @@
 @import 'abstracts/mixins';
 @import 'abstracts/maps';
 @import 'abstracts/strings';
+
+@import 'vendor/insert-nth';
 
 
 @import 'abstracts/theming';
@@ -74,7 +77,6 @@
 @import 'layout/navigation';
 
 
-@import 'vendor/insert-nth';
 @import 'vendor/map-reverse';
 @import 'modules/strings-utils';
 @import 'modules/utilities';

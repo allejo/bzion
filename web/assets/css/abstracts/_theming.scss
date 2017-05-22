@@ -71,12 +71,15 @@
             .t-#{$name} & {
                 $value: map-deep-get($settings, str-explode($variable, '.'));
 
+                @if (is-color($value)) {
+                    $value: to-color($value);
+                }
+
                 @if $function == "" {
                     #{$rule}: $value;
                 }
                 @else {
                     $params: insert-nth($args, $nth, $value);
-
                     #{$rule}: call($function, $params...);
                 }
             }

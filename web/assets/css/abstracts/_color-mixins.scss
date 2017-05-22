@@ -19,3 +19,53 @@
     @return $Color-White; // Darker background, return light color
   }
 }
+
+
+/// Slightly lighten a color
+///
+/// @access public
+///
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+///
+/// @return {Color}
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+}
+
+
+/// Slightly darken a color
+///
+/// @access public
+///
+/// @param {Color}  $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+///
+/// @return {Color}
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+}
+
+
+/// Ignorantly try to guess whether a given object is a color or not
+///
+/// @param {*} $value
+///
+/// @return {Boolean}
+@function is-color($value) {
+    @if type-of($value) == 'color' {
+        @return true;
+    }
+
+    @if type-of($value) != 'string' {
+        @return false;
+    }
+
+    $lower: to-lower-case($value);
+
+    @return (
+        str-slice($lower, 1, 1) == '#' or
+        str-slice($lower, 1, 3) == 'rgb' or
+        str-slice($lower, 1, 3) == 'hsl'
+    );
+}
