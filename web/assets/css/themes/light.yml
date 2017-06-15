@@ -1,9 +1,12 @@
+_variables:
+  - &color_off_white "#e9e9e9"
+
 body:
   background: "#ffffff"
   color: "#000000"
 
 border:
-  default: "1px solid #e9e9e9"
+  default: 1px solid *color_off_white
 
 elements:
   anchor: "#009EFF"
@@ -13,7 +16,7 @@ elements:
 
 markdown:
   codeblock:
-    background: "#e9e9e9"
+    background: *color_off_white
 
 navigation:
   background: "#f6f6f6"
