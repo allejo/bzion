@@ -11,6 +11,10 @@ elements:
     background: "linear-gradient(#F65D5F, #E93631)"
     color: "#ffffff"
 
+markdown:
+  codeblock:
+    background: "#e9e9e9"
+
 navigation:
   background: "#f6f6f6"
   links: "#656565"

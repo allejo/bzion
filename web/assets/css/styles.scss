@@ -34,6 +34,7 @@
 @import 'vendor/flags';
 @import 'vendor/loaders';
 @import 'vendor/text-inputs';
+@import 'vendor/insert-nth';
 
 
 //
@@ -45,19 +46,30 @@
 @import 'abstracts/mixins';
 @import 'abstracts/maps';
 @import 'abstracts/strings';
-
-@import 'vendor/insert-nth';
-
-
 @import 'abstracts/theming';
 
-@import 'base/typography';
 
+//
+// Import all theme definitions
+//
+@import 'themes/registrar';
+
+
+//
+// Base HTML elements
+//
+@import 'base/typography';
+@import 'base/blockquote';
+@import 'base/code-block';
+
+
+//
+// Miscellaneous CSS helpers
+//
 @import 'utilities/axes';
 @import 'utilities/flex';
 @import 'utilities/lists';
 
-@import 'themes/registrar';
 
 //
 // Components
@@ -67,6 +79,7 @@
 @import 'components/calendar';
 @import 'components/jumbotron';
 @import 'components/match-widget';
+@import 'components/markdown';
 
 
 //
@@ -140,8 +153,6 @@
 @import 'partials/css-table';
 @import 'partials/font-awesome';
 @import 'partials/footer';
-@import 'components/jumbotron';
-@import 'components/markdown';
 @import 'partials/pagination';
 @import 'partials/pills';
 @import 'partials/typography';

@@ -1,54 +1,3 @@
-blockquote {
-    margin-bottom: 10px;
-    margin-left: 30px;
-    margin-top: 20px;
-    padding-right: 30px;
-    vertical-align: top;
-
-    span {
-        color: $Color-Light_Grey;
-        font-size: 16px;
-        font-style: italic;
-
-        &:before {
-            content: '\2014';
-            margin-left: 45px;
-            margin-right: 5px;
-        }
-    }
-
-    article {
-        color: darken($Color-Light_Grey, 10%);
-        display: inline;
-
-        > p {
-            margin: 10px 0 10px 45px;
-        }
-    }
-
-    &:before {
-        color: $Color-Medium_Grey;
-        content: '\f10d';
-        float: left;
-        font-family: FontAwesome;
-        font-size: 30px;
-        margin-bottom: 10px;
-        padding-right: 15px;
-        vertical-align: top;
-    }
-}
-
-code {
-    background-color: $Color-Off_White;
-    border: 1px dotted;
-    display: block;
-    font-family: monospace;
-    font-size: 13px;
-    margin: 10px 0;
-    padding: 15px 20px;
-    white-space: pre-wrap;
-}
-
 hr {
     background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
     border: 0;
@@ -59,13 +8,4 @@ hr {
     @include respond-up(sm) {
         margin: 30px auto;
     }
-}
-
-pre {
-    display: block;
-    font-family: monospace;
-    font-size: 13px;
-    margin: 10px 0;
-    padding: 0 20px;
-    white-space: pre-wrap;
 }
