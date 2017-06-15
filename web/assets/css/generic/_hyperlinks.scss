@@ -1,26 +1,9 @@
 a {
-    @include theme-specific("color", "link-color");
+    @include theme-specific('color', 'link-color');
 
     text-decoration: none;
 
     &:hover {
-        @include theme-specific("color", "link-color", darken, 1, 15%);
-    }
-
-    // If a link starts with "http" (this includes https), then add an outgoing link icon courtesy of FontAwesome. All
-    // of our internal links are relative so this is a safe move.
-    //
-    // @TODO Design a better way of handling these exceptions. I'll wait for 1.0.0 themes to take care of this
-    &[href^="http"] {
-        &:not([href*="leaguesunited.org"]):not([href*="localhost"]) {
-            &::after {
-                content: '\F08E';
-                font-family: FontAwesome;
-                font-size: 0.6em;
-                margin-left: 5px;
-                text-decoration: none;
-                vertical-align: top;
-            }
-        }
+        @include theme-specific('color', 'link-color', darken, 1, 15%);
     }
 }
