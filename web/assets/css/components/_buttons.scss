@@ -19,7 +19,7 @@ $Button-Colors: (
     padding: 3px 15px 4px 13px;
     text-decoration: none;
 
-    i {
+    .fa {
         @extend %fa-fw;
     }
 }
@@ -41,14 +41,8 @@ $Button-Colors: (
 
         background: linear-gradient($value, $dark_color);
         border: 1px solid $dark_color;
-        color: set-text-from-color($value);
+        color: set-text-from-color($value) !important; // buttons always know best when it comes to text color
         text-decoration: none;
-
-        // Workaround for ensuring that anchor tags with the .c-button class have the correct color for its text. This
-        // is ensures that this rule supersedes the theme defined anchor tag rule; i.e. `.t-light a {}`
-        @at-root a#{&} {
-            color: set-text-from-color($value);
-        }
 
         &:hover {
             &:not(.c-button--no-hover) {
