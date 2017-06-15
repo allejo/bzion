@@ -28,17 +28,19 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container o-section">
-        <section class="o-row">
-            {% include "News/categories.html.twig" %}
-
-            <section class="o-col--main">
+    <div class="container">
+        <div class="row">
+            <section class="col-md-9">
                 {% for article in news %}
                     {% include "News/article.html.twig" with { 'article': article } %}
                 {% endfor %}
 
                 {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
             </section>
-        </section>
-    </section>
+
+            <aside class="col-md-3">
+                {% include "News/categories.html.twig" with { 'category': category } %}
+            </aside>
+        </div>
+    </div>
 {% endblock %}

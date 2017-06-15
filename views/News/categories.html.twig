@@ -1,9 +1,15 @@
-<aside class="o-col--aside">
-    <ul class="c-categories">
-        <li><a href="{{ path('news_list') }}"><i class="fa fa-tag"></i> All Posts</a></li>
+<ul class="c-categories">
+    <li class="{% if category is null %}c-category--active{% endif %}">
+        <a href="{{ path('news_list') }}">
+            <i class="fa fa-tag"></i> All Posts
+        </a>
+    </li>
 
-        {% for category in categories %}
-            <li><a href="{{ category.url }}"><i class="fa fa-tag"></i> {{ category.name }}</a></li>
-        {% endfor %}
-    </ul>
-</aside>
+    {% for cat in categories %}
+        <li class="{% if category == cat %}c-category--active{% endif %}">
+            <a href="{{ cat.url }}">
+                <i class="fa fa-tag"></i> {{- cat.name -}}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
