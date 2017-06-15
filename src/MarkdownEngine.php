@@ -72,6 +72,29 @@ class MarkdownEngine extends \Parsedown
     }
 
     /**
+     * Overload the function replace the scheme + host of the link if belongs to the current website serving the link.
+     * This will prevent CSS rules from treating full URLs as external links.
+     *
+     * @param array $Excerpt The structure of the link to be processed
+     *
+     * @return array
+     */
+    protected function inlineLink($Excerpt)
+    {
+        $link = parent::inlineLink($Excerpt);
+
+        if (isset($link['element']['attributes']['href'])) {
+            $href = &$link['element']['attributes']['href'];
+
+            if (strpos($href, $scheme = \Service::getRequest()->getSchemeAndHttpHost()) === 0) {
+                $href = str_replace($scheme, '', $href);
+            }
+        }
+
+        return $link;
+    }
+
+    /**
      * Disable or enable Parsedown from rendering images
      *
      * @param bool $allowImages Whether to allow images to be rendered or not
