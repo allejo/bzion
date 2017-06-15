@@ -1,126 +1,68 @@
-.c-menulinks,
-.c-menuoptions {
+// The parent to both the generic pages and user-specific pages
+.c-navigation {
     display: flex;
-    padding-left: 0;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
 
-    a {
-        display: block;
-        padding: {
-            bottom: 17px;
-            top: 17px;
-        }
+.c-user_cp,
+.c-site_pages {
+    margin: 0;
+    padding: 0;
+}
+
+// This element contains all of the generic website pages available to everyone, even anonymous users
+.c-site_pages {
+    @include theme-rule(background, 'navigation.background');
+    @include position(absolute, 52px, null, null, 0);
+
+    display: none;
+    width: 100%;
+
+    @include respond-up(md) {
+        display: flex;
+        position: static;
     }
 
     li {
-        position: relative;
+        @include respond-only-to(sm) {
+            margin-left: auto;
+            margin-right: auto;
+            width: map-get($breakpoints, sm) - 30px;
 
-        &.active {
-            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.25);
-        }
-
-        &:hover {
-            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.1);
-        }
-    }
-}
-
-// The container of the links to public pages; e.g. News, Matches, etc. This element will have icon + text links
-.c-menulinks {
-    @include respond-from(xs, md) {
-        @include theme-rule(background-color, 'navigation.background');
-
-        border-bottom: 1px solid $Color-Header_Border;
-        display: none;
-        padding-left: 0;
-        left: 0;
-        position: absolute;
-        top: 57px;
-        width: 100%;
-        z-index: 100;
-    }
-
-    @include respond-up(lg) {
-        flex: 1;
-        padding-left: $Settings-Page_Section-Small_Margin;
-    }
-
-    a {
-        padding: {
-            left: 15px;
-            right: 15px;
-        }
-
-        @include respond-up(sm) {
-            padding: {
-                left: 20px;
-                right: 20px;
+            a {
+                padding-left: 0;
+                padding-right: 0;
             }
         }
 
-        @include respond-up(lg) {
+        a {
+            display: block;
             padding: 15px;
         }
     }
 
-    hr {
-        margin: {
-            bottom: 10px;
-            top: 10px;
-        }
-    }
-
-    li {
-        display: block;
-    }
-
-    // These are icon-only links in the menu that need special treatment based on the screen size
-    .c-useroptions {
-        &:hover,
-        &.active {
-            box-shadow: none;
-        }
-
-        a {
-            padding: {
-                left: $Settings-Page_Section-Margin;
-                right: $Settings-Page_Section-Margin;
-            }
-        }
-
-        ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-        }
-
-        @include respond-up(sm) {
-            display: none;
-        }
+    .fa {
+        margin-right: 5px;
     }
 }
 
-// The container of the links to pages that typically require you to be logged in; e.g. Messages, Notifications, etc.
-// This element will have icon-only links
-.c-menuoptions {
-    flex: 1;
+.c-site_pages--open {
+    display: block;
+}
+
+// These are the icons on the right hand side that handle user-specific actions
+//   e.g. messages, settings, logout
+
+.c-user_cp {
+    display: flex;
     justify-content: flex-end;
 
-    a {
-        padding: {
-            left: 10px;
-            right: 10px;
-        }
+    li {
+        padding: 15px 5px;
     }
+}
 
-    @include respond-up(lg) {
-        flex: none;
-    }
-
-    .c-useroptions {
-        display: none;
-
-        @include respond-up(sm) {
-            display: block;
-        }
-    }
+.c-user_cp__auth {
+    white-space: nowrap;
 }

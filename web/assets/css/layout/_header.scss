@@ -1,75 +1,49 @@
-// Hex values for colors that are used only in the header; there's no need to store them
-// globally in the base file
-$Color-Header_Border: #D4D4D4;
-
 // The entire top navigation bar
 .c-header {
-    @include theme-rule(background-image, 'navigation.background');
+    @include theme-rule(background, 'navigation.background');
 
-    border-bottom: 1px solid $Color-Header_Border;
-
-    a {
+    a,
+    .c-mobilemenu {
         @include theme-rule(color, 'navigation.links');
 
-        // This rule exists because all outgoing links automatically have an external link symbol added
-        // so we need to hide it in the navigation for the login button
-        &::after {
-            display: none;
-        }
-
-        &:hover {
-            @include theme-specific("color", "header-color-hover");
+        @include on-event() {
+            @include theme-rule(color, 'navigation.links', shade, 1, 30%);
         }
     }
 
-    .o-container {
-        align-items: center;
-        display: flex;
-
-        .c-navigation {
-            display: flex;
-            flex: 1;
-        }
+    i {
+        font-size: 18px;
     }
+}
+
+.c-mobilemenu {
+    padding: 0 15px 0 10px;
+
+    @include respond-up(md) {
+        display: none;
+    }
+}
+
+.c-branding {
+    img {
+        margin-right: 10px;
+    }
+}
+
+// Used for when an element has the ability to contain a badge
+.has-badge {
+    position: relative;
 }
 
 .c-badge {
-    background-image: linear-gradient(#F65D5F, #E93631);
+    @include theme-rule(background, 'elements.badge.background');
+    @include theme-rule(color, 'elements.badge.color');
+    @include position(absolute, 10px, 0);
+
     border-radius: 2px;
     box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 1px rgba(0, 0, 0, 0.2);
-    color: $Color-White;
     font-size: 11px;
     line-height: 16px;
     padding: 0 4px;
-    position: absolute;
-    right: 0;
     text-shadow: 0 1px #902A27;
-    top: 10px;
-}
-
-// The website's heading and icon/logo
-.c-branding {
-    align-items: center;
-    display: flex;
-    font-size: 22px;
-
-    img {
-        vertical-align: middle;
-    }
-
-    @include respond-up(md) {
-        font-size: 26px;
-    }
-}
-
-// The set of bars to expand the menu on mobile devices
-.c-mobilemenu {
-    @include theme-specific("color", "header-color");
-
-    cursor: pointer;
-    margin-right: 10px;
-
-    @include respond-up(sm) {
-        margin-right: $Settings-Page_Section-Small_Margin;
-    }
 }

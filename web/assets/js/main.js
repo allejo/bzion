@@ -47,7 +47,7 @@ $(function () {
     });
 
     $("#mobile-menu").click(function() {
-        $("#menu-pages").slideToggle();
+        $('.c-site_pages').toggleClass('c-site_pages--open');
     });
 
     if ($.fn.tipsy !== undefined) {

@@ -106,20 +106,23 @@
 
         <div class="app-body">
             <header class="c-header">
-                <section class="o-container">
-                    <div id="mobile-menu" class="u-mobile-only c-mobilemenu">
-                        <i class="fa fa-bars"></i>
+                <div class="container">
+                    <div class="row align-items-center">
+                        <button id="mobile-menu" class="c-mobilemenu">
+                            <i class="fa fa-bars"></i>
+                            <span class="sr-only">Open navigation menu</span>
+                        </button>
+
+                        <div class="c-branding">
+                            <a href="{{ path('index') }}">
+                                <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
+                                {{- app.siteTitle -}}
+                            </a>
+                        </div>
+
+                        {% include "navbar.html.twig" %}
                     </div>
-
-                    <h1 class="c-branding">
-                        <a href="{{ path('index') }}">
-                            <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
-                            {{ app.siteTitle }}
-                        </a>
-                    </h1>
-
-                    {% include "navbar.html.twig" %}
-                </section>
+                </div>
             </header>
 
             <main class="c-page {{ scopeClass | default('') }}">

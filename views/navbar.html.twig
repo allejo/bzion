@@ -1,7 +1,7 @@
-{% import _self as navbar %}
+{% import _self as _self %}
 
-{% macro badge(number, type) %}
-    <span class="c-badge {{ type }}">
+{% macro badge(number, class) %}
+    <span class="c-badge {{ class }}">
         {%- if number -%}
             {{- number -}}
         {%- endif -%}
@@ -9,46 +9,45 @@
 {% endmacro %}
 
 {% macro page(text, controller_name, path, icon, class, title) %}
-    <li class="{{ class | default('') }} {{ app.controller.name == controller_name ? 'active' }}" {% if title is not null %}title="{{ title }}"{% endif %}>
+    <li class="has-badge {{ class | default('') }} {{ app.controller.name == controller_name ? 'active' }}" {% if title is not null %}title="{{ title }}"{% endif %}>
         <a href="{{ path(path) }}">
-            <i class="fa fa-{{ icon }} fa-fw"></i> {{ text }}
+            <i class="fa fa-{{ icon }} fa-fw"></i>
+            {{- text -}}
         </a>
     </li>
 {% endmacro %}
 
 {% macro userOptions() %}
-    {% import _self as navbar %}
     {# TODO: Don't count notifications and messages twice #}
 
-    {{ navbar.page(
-        navbar.badge(me.countUnreadNotifications, "js-counter__notifications"),
-        'Notification', 'notification_list', 'bell', 'c-useroptions', 'Notifications'
-    )}}
-    {{ navbar.page(
-        navbar.badge(me.countUnreadMessages, "js-counter__messages"),
-        'Message', 'message_list', 'comments-o', 'c-useroptions', 'Messages'
-    )}}
-    {{ navbar.page(
+    {{ _self.page(
+        _self.badge(me.countUnreadNotifications, "js-counter__notifications"),
+        'Notification', 'notification_list', 'bell', '', 'Notifications'
+    ) }}
+    {{ _self.page(
+        _self.badge(me.countUnreadMessages, "js-counter__messages"),
+        'Message', 'message_list', 'comments-o', '', 'Messages'
+    ) }}
+    {{ _self.page(
         null,
-        'Profile', 'profile_edit', 'gear', 'c-useroptions', 'My Profile'
-    )}}
+        'Profile', 'profile_edit', 'gear', '', 'My Profile'
+    ) }}
 {% endmacro %}
 
 <nav class="c-navigation">
-    <ul id="menu-pages" class="c-menulinks">
-        {{ navbar.page('News', 'News', 'news_list', 'thumb-tack')}}
-        {{ navbar.page('Teams', 'Team', 'team_list', 'users')}}
-        {{ navbar.page('Players', 'Player', 'player_list', 'user')}}
-        {{ navbar.page('Matches', 'Match', 'match_list', 'trophy')}}
+    <ul id="menu-pages" class="c-site_pages">
+        {{ _self.page('News', 'News', 'news_list', 'thumb-tack') }}
+        {{ _self.page('Teams', 'Team', 'team_list', 'users') }}
+        {{ _self.page('Players', 'Player', 'player_list', 'user') }}
+        {{ _self.page('Matches', 'Match', 'match_list', 'trophy') }}
 
-        {% if me is valid %}
-            <li class="c-useroptions">
-                <hr>
-                <ul>
-                    {{ navbar.userOptions() }}
-                </ul>
-            </li>
-        {% endif %}
+        {#{% if me is valid %}#}
+            {#<li class="c-useroptions">#}
+                {#<ul>#}
+                    {#{{ _self.userOptions() }}#}
+                {#</ul>#}
+            {#</li>#}
+        {#{% endif %}#}
 
         {% if pageButtons is not null %}
             {% for button in pageButtons if button.condition %}
@@ -65,18 +64,18 @@
         {% endif %}
     </ul>
 
-    <ul class="c-menuoptions">
+    <ul class="c-user_cp">
         {% if me is valid %}
-            {{ navbar.userOptions() }}
+            {{ _self.userOptions() }}
 
-            <li>
+            <li class="c-user_cp__auth">
                 <a href="{{ path('logout') }}">
                     <i class="fa fa-sign-out"></i>
                     <span class="u-desktop-only">Logout</span>
                 </a>
             </li>
         {% else %}
-            <li>
+            <li class="c-user_cp__auth">
                 <a href="{{ loginUrl }}">
                     <i class="fa fa-sign-in"></i>
                     <span class="u-desktop-only">Login/Register</span>

@@ -3,7 +3,10 @@ body:
   color: "#ffffff"
 
 elements:
-  anchor: "#62a7c4"
+  anchor: "#5893ff"
+  badge:
+    background: "linear-gradient(#62abff, #4884cf)"
+    color: "#ffffff"
 
 navigation:
   background: "#323740"

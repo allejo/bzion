@@ -4,6 +4,9 @@ body:
 
 elements:
   anchor: "#009EFF"
+  badge:
+    background: "linear-gradient(#F65D5F, #E93631)"
+    color: "#ffffff"
 
 navigation:
   background: "#f6f6f6"
