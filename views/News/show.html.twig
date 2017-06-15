@@ -37,13 +37,15 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container o-section">
-        <section class="o-row">
-            {% include "News/categories.html.twig" %}
-
-            <section class="o-col--main">
-                {% include "News/article.html.twig" with { 'article': article } %}
-            </section>
+<div class="container">
+    <div class="row">
+        <section class="col-md-9">
+            {% include "News/article.html.twig" with { 'article': article } %}
         </section>
-    </section>
+
+        <aside class="col-md-3">
+            {% include "News/categories.html.twig" with { 'category': category } %}
+        </aside>
+    </div>
+</div>
 {% endblock %}
