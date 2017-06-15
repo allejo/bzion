@@ -52,12 +52,12 @@
         {% if pageButtons is not null %}
             {% for button in pageButtons if button.condition %}
                 {% if loop.first %}
-                    <li class="u-mobile-only"><hr></li>
+                    <li class="c-site_pages__separator my2"></li>
                 {% endif %}
 
-                <li class="u-mobile-only">
+                <li class="c-site_pages__action">
                     <a href="{{ button.url }}">
-                        <i class="fa fa-{{ button.icon }} fa-fw"></i> {{ button.text }}
+                        <i class="fa fa-{{ button.icon }} fa-fw"></i> {{- button.text -}}
                     </a>
                 </li>
             {% endfor %}

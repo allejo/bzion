@@ -1,6 +1,7 @@
 // The entire top navigation bar
 .c-header {
     @include theme-rule(background, 'navigation.background');
+    @include theme-rule(border-bottom, 'border.default');
 
     a,
     .c-mobilemenu {

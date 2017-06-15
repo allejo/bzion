@@ -14,7 +14,7 @@
 // This element contains all of the generic website pages available to everyone, even anonymous users
 .c-site_pages {
     @include theme-rule(background, 'navigation.background');
-    @include position(absolute, 52px, null, null, 0);
+    @include position(absolute, 53px, null, null, 0); // Magic number that's the .c-header's height + 1px bottom border
 
     display: none;
     width: 100%;
@@ -50,6 +50,17 @@
 
 .c-site_pages--open {
     display: block;
+}
+
+.c-site_pages__separator {
+    @include theme-rule(border-bottom, 'border.default');
+}
+
+.c-site_pages__action,
+.c-site_pages__separator {
+    @include respond-up(md) {
+        display: none;
+    }
 }
 
 // These are the icons on the right hand side that handle user-specific actions
