@@ -14,6 +14,12 @@ namespace BZIon;
 class MarkdownEngine extends \Parsedown
 {
     /**
+     * Whether or not to allow images to be rendered. If set to false, it'll be rendered as a hyperlink
+     * @var bool
+     */
+    protected $allowImages;
+
+    /**
      * Store all of the settings related to Camo
      * @var array
      */
@@ -33,12 +39,6 @@ class MarkdownEngine extends \Parsedown
             $this->camo['whitelisted_domains'] = \Service::getParameter('bzion.features.camo.whitelisted_domains');
         }
     }
-
-    /**
-     * Whether or not to allow images to be rendered. If set to false, it'll be rendered as a hyperlink
-     * @var bool
-     */
-    protected $allowImages;
 
     /**
      * Overload the function to either return nothing (if image image rendering is disable) or return the
