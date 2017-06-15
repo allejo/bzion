@@ -10,6 +10,7 @@
 //    (so we can have full control)
 //
 @import 'vendor/bs-reboot';
+@import 'base/reset';
 
 
 //
@@ -136,7 +137,6 @@
 //
 
 @import 'partials/alerts';
-@import 'components/buttons';
 @import 'partials/css-table';
 @import 'partials/font-awesome';
 @import 'partials/footer';

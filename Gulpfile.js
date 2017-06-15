@@ -177,7 +177,7 @@ gulp.task('sass:dev', function (cb) {
         gulp.src('web/assets/css/styles.scss'),
         sourcemaps.init(),
         sass(eyeglass({
-            outputStyle: 'expanded'
+            outputStyle: 'compact'
         })),
         combineMq({
             beautify: true

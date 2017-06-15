@@ -10,7 +10,7 @@ $_magicInputHeight: $Settings-Base_Font_Size + 4 + $Border-Width + emToPx($Setti
 // Set up the formatting of the generic items
 // ==========================================
 
-button {
+form button {
     // scss-lint:disable PlaceholderInExtend
     @extend .c-button;
     @extend .c-button--blue;
