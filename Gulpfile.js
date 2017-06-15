@@ -60,6 +60,7 @@ gulp.task('dev:watch', function() {
     });
 
     gulp.watch([
+        'web/assets/css/themes/*.yml',
         'web/assets/css/**/*.scss',
         '!web/assets/css/vendor/**/*.scss'
     ], ['sass:dev']);
