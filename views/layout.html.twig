@@ -125,7 +125,7 @@
                 </div>
             </header>
 
-            <main class="c-page {{ scopeClass | default('') }}">
+            <div class="c-page {{ scopeClass | default('') }}">
                 {% block pageHeader %}
                     <section class="c-page__header">
                         <div class="o-container">
@@ -147,8 +147,10 @@
                     </section>
                 {% endblock %}
 
-                {% block content %}{% endblock %}
-            </main>
+                <main role="main">
+                    {% block content %}{% endblock %}
+                </main>
+            </div>
 
             <footer class="c-footer">
                 <div class="c-footer__container o-container">
