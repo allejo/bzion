@@ -125,7 +125,7 @@
                 </div>
             </header>
 
-            <main class="c-page {{ scopeClass | default('') }}">
+            <div class="c-page {{ scopeClass | default('') }}">
                 {% block pageHeader %}
                     <section class="c-page__header">
                         <div class="o-container">
@@ -147,8 +147,10 @@
                     </section>
                 {% endblock %}
 
-                {% block content %}{% endblock %}
-            </main>
+                <main role="main">
+                    {% block content %}{% endblock %}
+                </main>
+            </div>
 
             <footer class="c-footer">
                 <div class="c-footer__container o-container">
@@ -210,6 +212,7 @@
             };
         </script>
 
+        <script src="{{ asset('build/app.js') }}"></script>
         <script src="{{ asset('components/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('includes/prefixfree.min.js') }}"></script>
         <script src="{{ asset('includes/favicojs/favico-0.3.10.min.js') }}"></script>

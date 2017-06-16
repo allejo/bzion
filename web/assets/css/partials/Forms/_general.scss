@@ -11,9 +11,10 @@ $_magicInputHeight: $Settings-Base_Font_Size + 4 + $Border-Width + emToPx($Setti
 // ==========================================
 
 form button {
-    // scss-lint:disable PlaceholderInExtend
-    @extend .c-button;
-    @extend .c-button--blue;
+    &:not(.c-button--no-style) {
+        @extend .c-button;
+        @extend .c-button--blue;
+    }
 
     margin-right: 5px;
 }

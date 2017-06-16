@@ -1,38 +1,27 @@
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section c-form__section--sidebar">
-        <article class="o-col--main c-form__section__main">
-            {{ form_row(form.subject, { 'container_attr': { 'class': 'c-form__group' } }) }}
+{% from 'md-editor.html.twig' import md_editor %}
 
-            <div class="c-form__group c-form__group--flex">
-                {{ form_label(form.content) }}
-                {{ form_errors(form.content) }}
+<div class="container">
+    {{ form_start(form, { 'attr': { 'class': '' } }) }}
+        {{ form_errors(form) }}
+        <section class="row">
+            <article class="col-md-9">
+                {{ form_row(form.subject, { 'container_attr': { 'class': 'c-form__group' } }) }}
 
-                <div class="c-md-editor">
-                    <ul class="c-md-editor__toolbar">
-                        <li class="active js-mdEditor" tabindex="0">
-                            <i class="fa fa-pencil"></i> Edit
-                        </li>
-                        <li class="js-mdPreview" tabindex="0">
-                            <i class="fa fa-eye"></i> Preview
-                        </li>
-                    </ul>
-                    <div id="c-md-editor__canvas" class="c-md-editor__canvas c-md-editor__canvas--editor">
-                        <div id="c-md-editor__preview" class="c-md-editor__preview s-markdown"></div>
-
-                        {{ form_widget(form.content, { 'attr': { 'class': 'c-md-editor__editor' }}) }}
-                    </div>
+                <div class="c-form__group c-form__group--flex">
+                    {{ form_label(form.content) }}
+                    {{ form_errors(form.content) }}
+                    {{ md_editor(form.content) }}
                 </div>
-            </div>
-        </article>
+            </article>
 
-        <aside class="o-col--aside c-form__section__aside">
-            {{ form_row(form.category, { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </aside>
-    </section>
+            <aside class="o-col--aside c-form__section__aside">
+                {{ form_row(form.category, { 'container_attr': { 'class': 'c-form__group' } }) }}
+                {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
+            </aside>
+        </section>
 
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+        <section class="c-form__section">
+            {{ form_rest(form) }}
+        </section>
+    {{ form_end(form) }}
+</div>

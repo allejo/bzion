@@ -17,11 +17,13 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.2.1",
+    "jquery": "^3.2.1",
     "node-sass": "^4.5.3",
     "pump": "^1.0.1",
     "sassdoc": "^2.1.20"
   },
   "devDependencies": {
+    "@symfony/webpack-encore": "^0.7.2",
     "gulp-jshint": "^2.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-postcss": "^6.1.1",

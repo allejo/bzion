@@ -1,0 +1,43 @@
+{% macro md_editor(form_textarea) %}
+    <div id="mde" class="c-mde">
+        <ul class="c-mde__toolbar" role="tablist">
+            <li id="mde__toolbar__editor"
+                role="tab"
+                aria-controls="mde__panel__editor"
+                aria-selected="true"
+                tabindex="0"
+            >
+                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+            </li>
+
+            <li id="mde__toolbar__preview"
+                role="tab"
+                aria-controls="mde__panel__preview"
+                aria-selected="false"
+                tabindex="0"
+            >
+                <i class="fa fa-eye" aria-hidden="true"></i> Preview
+            </li>
+        </ul>
+
+        <div class="c-mde__canvas">
+            <div id="mde__panel__preview"
+                 class="c-mde__panel"
+                 role="tabpanel"
+                 aria-labelledby="mde__toolbar__editor"
+                 aria-hidden="true"
+            >
+                <div id="mde__preview" class="c-md-editor__preview s-markdown"></div>
+            </div>
+
+            <div id="mde__panel__editor"
+                 class="c-mde__panel"
+                 role="tabpanel"
+                 aria-labelledby="mde__toolbar__preview"
+                 aria-hidden="false"
+            >
+                {{ form_widget(form_textarea) }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
