@@ -41,6 +41,7 @@
 // Abstracts
 //
 @import 'abstracts/axes-builder';
+@import 'abstracts/borders';
 @import 'abstracts/color-mixins';
 @import 'abstracts/functions';
 @import 'abstracts/mixins';
@@ -58,9 +59,10 @@
 //
 // Base HTML elements
 //
-@import 'base/typography';
 @import 'base/blockquote';
 @import 'base/code-block';
+@import 'base/lists';
+@import 'base/typography';
 
 
 //
@@ -68,7 +70,6 @@
 //
 @import 'utilities/axes';
 @import 'utilities/flex';
-@import 'utilities/lists';
 
 
 //
@@ -80,6 +81,7 @@
 @import 'components/jumbotron';
 @import 'components/match-widget';
 @import 'components/markdown';
+@import 'components/markdown-editor';
 
 
 //
@@ -96,7 +98,6 @@
 @import 'modules/utilities';
 @import 'vendor/include-media/dist/include-media';
 @import 'modules/bem-utilities';
-@import 'modules/borders';
 @import 'modules/visibility';
 @import 'modules/media-query-setup';
 @import 'modules/font-awesome-utilities';
@@ -120,7 +121,6 @@
 @import 'generic/formatting';
 @import 'generic/headers';
 @import 'generic/hyperlinks';
-@import 'generic/lists';
 @import 'generic/tables';
 
 
@@ -133,7 +133,6 @@
 @import 'partials/Forms/general';
 @import 'partials/Forms/avatar';
 @import 'partials/Forms/select2';
-@import 'partials/Forms/md-editor';
 @import 'partials/Forms/structure';
 
 //
