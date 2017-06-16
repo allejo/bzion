@@ -40,16 +40,6 @@ function notify(message, type) {
 }
 
 $(function () {
-    $(window).resize(function () {
-        if ($(window).width() >= 992) {
-            $(".pages").show();
-        }
-    });
-
-    $("#mobile-menu").click(function() {
-        $('.c-site_pages').toggleClass('c-site_pages--open');
-    });
-
     if ($.fn.tipsy !== undefined) {
         $(".js-tipsy").tipsy({ gravity: 's' });
     }
