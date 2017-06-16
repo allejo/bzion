@@ -95,6 +95,59 @@ class MarkdownEngine extends \Parsedown
     }
 
     /**
+     * Overload this function to add IDs to the headings (with pound signs) so they can be used as anchors
+     *
+     * @param array $Line
+     *
+     * @return array|null
+     */
+    protected function blockHeader($Line)
+    {
+        $Block = parent::blockHeader($Line);
+
+        if (isset($Block['element']['text']))
+        {
+            $Block['element']['attributes']['id'] = $this->slugifyHeader($Block);
+        }
+
+        return $Block;
+    }
+
+    /**
+     * Overload this function to add IDs to headings (with horizontal dashes) so they can be used as anchors
+     *
+     * @param array $Line
+     * @param array|null $Block
+     *
+     * @return array|null
+     */
+    protected function blockSetextHeader($Line, array $Block = null)
+    {
+        $Block = parent::blockSetextHeader($Line, $Block);
+
+        if (isset($Block['element']['name']))
+        {
+            $element = $Block['element']['name'];
+
+            if ($element == 'h1' || $element == 'h2')
+            {
+                $Block['element']['attributes']['id'] = $this->slugifyHeader($Block);
+            }
+        }
+
+        return $Block;
+    }
+
+    private function slugifyHeader($Block)
+    {
+        $id = strtolower($Block['element']['text']);
+        $id = str_replace(' ', '-', $id);
+        $id = preg_replace('/[^0-9a-zA-Z-_]/', '', $id);
+
+        return preg_replace('/-+/', '-', $id);
+    }
+
+    /**
      * Disable or enable Parsedown from rendering images
      *
      * @param bool $allowImages Whether to allow images to be rendered or not
