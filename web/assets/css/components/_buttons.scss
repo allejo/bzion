@@ -56,3 +56,6 @@ $Button-Colors: (
         }
     }
 }
+
+// A helper class used exclusively for :not() references to not apply .c-button styles. This class should be kept empty.
+.c-button--no-style {}
