@@ -1,4 +1,4 @@
-<article>
+<article class="{{ class | default('') }}">
     <header>
         <h1>
             {% if (article.status == "draft") %}
@@ -11,12 +11,12 @@
         </p>
     </header>
 
-    <section class="s-markdown">
+    <section class="s-markdown mb2">
         {{ article.content | markdown }}
     </section>
 
     <footer>
-        <ul class="is-horizontal">
+        <ul class="is-horizontal mb0">
             <li class="mr2">
                 <small><i class="fa fa-fw fa-user" aria-hidden="true"></i> {{ link_to(article.author) }}</small>
             </li>

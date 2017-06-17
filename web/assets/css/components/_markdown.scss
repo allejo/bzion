@@ -90,4 +90,11 @@
             list-style: circle;
         }
     }
+
+    // Just always remove the margin bottom from the last element so the parent can take care of margin bottom
+    //
+    // stylelint-disable selector-no-universal
+    *:last-child {
+        margin-bottom: 0;
+    }
 }
