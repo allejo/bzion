@@ -19,5 +19,28 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
 ;
 
+var config = Encore.getWebpackConfig();
+
+var ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
+
+config.plugins.push(new ModernizrWebpackPlugin({
+    minify: true,
+    options: [
+        'setClasses'
+    ],
+    'feature-detects': [
+        'test/canvas',
+        'test/canvastext',
+        'test/svg',
+        'test/css/animations',
+        'test/css/calc',
+        'test/css/transforms',
+        'test/css/transitions',
+        'test/css/vhunit',
+        'test/svg/inline'
+    ]
+}));
+
+
 // export the final configuration
-module.exports = Encore.getWebpackConfig();
+module.exports = config;

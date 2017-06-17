@@ -3,7 +3,7 @@
 {%- endif -%}
 
 <!DOCTYPE html>
-<html class="t-light {{ pageWideCSS }}" lang="en">
+<html class="t-dark no-js {{ pageWideCSS }}" lang="en">
     <head>
         {# ========================================================================================================== #}
         {#  Open Graph Markup  #}
@@ -213,6 +213,8 @@
         </script>
 
         <script src="{{ asset('build/app.js') }}"></script>
+        <script src="{{ asset('build/modernizr-bundle.js') }}"></script>
+
         <script src="{{ asset('components/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('includes/prefixfree.min.js') }}"></script>
         <script src="{{ asset('includes/favicojs/favico-0.3.10.min.js') }}"></script>
