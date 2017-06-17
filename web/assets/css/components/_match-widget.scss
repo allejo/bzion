@@ -15,9 +15,7 @@
     }
 }
 
-.c-matchwidget {
-
-}
+.c-matchwidget {}
 
 .c-matchwidget__team--loser {
     @include respond-up(lg) {
@@ -48,9 +46,7 @@
     display: flex;
 }
 
-.c-matchwidget__team__image {
-
-}
+.c-matchwidget__team__image {}
 
 .c-matchwidget__stats,
 .c-matchwidget__team__name {

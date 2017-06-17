@@ -18,7 +18,7 @@ ul {
 
 ul {
     &.is-horizontal {
-        @include ul-horizontal;
+        @include ul-horizontal();
     }
 
     &.has-no-padding {

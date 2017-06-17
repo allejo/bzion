@@ -1,12 +1,12 @@
 $Button-Colors: (
-    'red': #DB3434,
-    'blue': #3498DB,
-    'grey': #DBDBDB,
-    'black': #4F4F4F,
-    'green': #34DB6D,
-    'orange': #FF8400,
-    'purple': #6F34DB,
-    'yellow': #FFB608
+    'red': #db3434,
+    'blue': #3498db,
+    'grey': #dbdbdb,
+    'black': #4f4f4f,
+    'green': #34db6d,
+    'orange': #ff8400,
+    'purple': #6f34db,
+    'yellow': #ffb608
 );
 
 // A button
@@ -41,8 +41,15 @@ $Button-Colors: (
 
         background: linear-gradient($value, $dark_color);
         border: 1px solid $dark_color;
-        color: set-text-from-color($value) !important; // buttons always know best when it comes to text color
+        color: set-text-from-color($value);
         text-decoration: none;
+
+        // Workaround for ensuring that anchor tags with the .c-button class have the correct color for its text. This
+        // ensures that this rule supersedes the theme defined anchor tag rule; i.e. `.t-light a {}`. Doing it this way
+        // will prevent us from having to use !important
+        @at-root a#{&} {
+            color: set-text-from-color($value);
+        }
 
         &:hover {
             &:not(.c-button--no-hover) {
@@ -57,5 +64,6 @@ $Button-Colors: (
     }
 }
 
-// A helper class used exclusively for :not() references to not apply .c-button styles. This class should be kept empty.
+// A helper class used exclusively for :not() references to not apply .c-button styles. This class should be kept empty
+// and is kept on here to remember not to use this class for any other reasons.
 .c-button--no-style {}

@@ -4,10 +4,8 @@
 // e.g. Not have a markdown parsed H1 be the same size as an H1 used in a page header
 
 %markdown-spacing {
-    margin: {
-        bottom: $Settings-Page_Section-Small_Margin;
-        top: $Settings_Page_Section-Small_Margin;
-    }
+    margin-bottom: $Settings-Page_Section-Small_Margin;
+    margin-top: $Settings_Page_Section-Small_Margin;
 
     &:first-child {
         margin-top: 0;
@@ -34,11 +32,15 @@
         }
     }
 
-    h1, h2, h3,
-    h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         @extend %markdown-spacing;
 
-        font-weight: bold;
+        font-weight: 800;
     }
 
     h1,
@@ -62,18 +64,14 @@
     hr {
         background-color: $Border-Color;
         background-image: none;
-        margin: {
-            bottom: 20px;
-            top: 20px;
-        }
+        margin-bottom: 20px;
+        margin-top: 20px;
         width: 100%;
     }
 
     img {
-        margin: {
-            bottom: 10px;
-            top: 10px;
-        }
+        margin-bottom: 10px;
+        margin-top: 10px;
         max-width: 100%;
     }
 

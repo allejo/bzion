@@ -9,31 +9,32 @@
 
 @mixin build-axis($axis, $prop, $value) {
     @if $axis == null {
-        #{$prop}:        $value;
+        #{$prop}: $value;
     }
     @else if $axis == t {
-        #{$prop}-top:    $value;
+        #{$prop}-top: $value;
     }
     @else if $axis == r {
-        #{$prop}-right:  $value;
+        #{$prop}-right: $value;
     }
     @else if $axis == b {
         #{$prop}-bottom: $value;
     }
     @else if $axis == l {
-        #{$prop}-left:   $value;
+        #{$prop}-left: $value;
     }
     @else if $axis == x {
         #{$prop}-right: $value;
-        #{$prop}-left:  $value;
+        #{$prop}-left: $value;
     }
     @else if $axis == y {
-        #{$prop}-top:    $value;
+        #{$prop}-top: $value;
         #{$prop}-bottom: $value;
     }
 }
 
 @mixin build-axes($abbrev, $size, $prop, $suffix, $value) {
+    // stylelint-disable
     .#{$abbrev}#{$size}#{$suffix}  { @include build-axis(null, $prop, $value); }
     .#{$abbrev}t#{$size}#{$suffix} { @include build-axis(t, $prop, $value); }
     .#{$abbrev}r#{$size}#{$suffix} { @include build-axis(r, $prop, $value); }

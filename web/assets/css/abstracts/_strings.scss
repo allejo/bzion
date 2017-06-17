@@ -10,10 +10,11 @@
 /// @param {String} $delimiter - the boundary string
 ///
 /// @return {List} the result list
+
 @function str-explode($string, $delimiter) {
     $result: ();
 
-    @if $delimiter == "" {
+    @if $delimiter == '' {
         @for $i from 1 through str-length($string) {
             $result: append($result, str-slice($string, $i, $i));
         }
@@ -30,13 +31,16 @@
             @if $d-index > 1 {
                 $result: append($result, str-slice($string, 1, $d-index - 1));
                 $string: str-slice($string, $d-index + str-length($delimiter));
-            } @else if $d-index == 1 {
+            }
+            @else if $d-index == 1 {
                 $string: str-slice($string, 1, $d-index + str-length($delimiter));
-            } @else {
+            }
+            @else {
                 $result: append($result, $string);
                 $exploding: false;
             }
-        } @else {
+        }
+        @else {
             $result: append($result, $string);
             $exploding: false;
         }

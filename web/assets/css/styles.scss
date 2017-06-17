@@ -59,6 +59,7 @@
 //
 // Base HTML elements
 //
+@import 'base/anchors';
 @import 'base/blockquote';
 @import 'base/code-block';
 @import 'base/lists';
@@ -120,7 +121,6 @@
 @import 'generic/body';
 @import 'generic/formatting';
 @import 'generic/headers';
-@import 'generic/hyperlinks';
 @import 'generic/tables';
 
 
