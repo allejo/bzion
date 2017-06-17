@@ -43,6 +43,7 @@
 @import 'abstracts/axes-builder';
 @import 'abstracts/borders';
 @import 'abstracts/color-mixins';
+@import 'abstracts/font-awesome-utilities';
 @import 'abstracts/functions';
 @import 'abstracts/mixins';
 @import 'abstracts/maps';
@@ -81,6 +82,7 @@
 @import 'components/calendar';
 @import 'components/jumbotron';
 @import 'components/match-widget';
+@import 'components/list-group';
 @import 'components/markdown';
 @import 'components/markdown-editor';
 
@@ -101,7 +103,6 @@
 @import 'modules/bem-utilities';
 @import 'modules/visibility';
 @import 'modules/media-query-setup';
-@import 'modules/font-awesome-utilities';
 @import 'modules/placeholders';
 @import 'modules/siblings';
 
@@ -165,7 +166,6 @@
 @import 'pages/Landing/jumbotron';
 
 @import 'pages/News/article';
-@import 'pages/News/categories';
 
 @import 'pages/Teams/list';
 @import 'pages/Teams/show';
