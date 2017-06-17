@@ -108,7 +108,7 @@ gulp.task('js:hint', function (cb) {
 
     pump([
         gulp.src([
-            'Gruntfile.js',
+            'Gulpfile.js',
             'web/assets/js/*.js',
             'web/assets/js/partials/*.js'
         ]),
@@ -216,36 +216,12 @@ gulp.task('sass:docs', function (cb) {
     ], cb);
 });
 
-gulp.task("sass:lint", function(cb) {
-    var syntax_scss = require('postcss-scss');
-    var stylelint  = require('stylelint');
-    var reporter   = require('postcss-reporter');
-    var postcss    = require('gulp-postcss');
-    var processors = [
-        stylelint(),
-        reporter({
-            clearMessages: true,
-            throwError: true
-        })
-    ];
-
-    pump([
-        gulp.src([
-            'web/assets/css/**/*.scss',
-            '!web/assets/css/vendor/**/*.scss'
-        ]),
-        postcss(processors, {
-            syntax: syntax_scss
-        })
-    ], cb);
-});
-
 
 ///
 // Gulp Tasks
 ///
 
 gulp.task('dev', ['sass:dev', 'dev:watch']);
-gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:lint', 'sass:dist', 'js:hint', 'js:concat', 'js:uglify', 'js:modernizer']);
+gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:dist', 'js:concat', 'js:uglify', 'js:modernizr']);
 
 gulp.task('default', ['dev']);
