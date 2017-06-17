@@ -1,15 +1,11 @@
-<ul class="c-categories">
-    <li class="{% if category is null %}c-category--active{% endif %}">
-        <a href="{{ path('news_list') }}">
-            <i class="fa fa-tag"></i> All Posts
-        </a>
-    </li>
+<div class="c-list-group">
+    <a class="c-list-group__item {% if category is null %}c-list-group__item--active{% endif %}" href="{{ path('news_list') }}">
+        <i class="fa fa-tag" aria-hidden="true"></i> All Posts
+    </a>
 
     {% for cat in categories %}
-        <li class="{% if category == cat %}c-category--active{% endif %}">
-            <a href="{{ cat.url }}">
-                <i class="fa fa-tag"></i> {{- cat.name -}}
-            </a>
-        </li>
+        <a class="c-list-group__item {% if category == cat %}c-list-group__item--active{% endif %}" href="{{ cat.url }}">
+            <i class="fa fa-tag" aria-hidden="true"></i> {{- cat.name -}}
+        </a>
     {% endfor %}
-</ul>
+</div>

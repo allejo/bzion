@@ -4,12 +4,18 @@ body:
 
 border:
   default: "1px solid #e9e9e9"
+  radius: 3px
 
 elements:
-  anchor: "#5893ff"
+  anchor: "#8FD5FF"
   badge:
     background: "linear-gradient(#62abff, #4884cf)"
     color: "#ffffff"
+
+list_group:
+  active:
+    background: "#1f3f56"
+#    color: "#ffffff"
 
 markdown:
   codeblock:

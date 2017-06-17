@@ -6,6 +6,14 @@
     }
 }
 
+@mixin ul-no-padding() {
+    padding-left: 0;
+
+    li {
+        list-style-type: none;
+    }
+}
+
 ol,
 ul {
     list-style: none;
@@ -22,11 +30,6 @@ ul {
     }
 
     &.has-no-padding {
-        padding-left: 0;
+        @include ul-horizontal();
     }
-}
-
-
-.u-list-plain {
-    @extend %no-padding-ul;
 }

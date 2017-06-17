@@ -1,23 +1,26 @@
-_variables:
-  - &color_off_white "#e9e9e9"
-
 body:
   background: "#ffffff"
   color: "#000000"
 
 border:
-  default: 1px solid *color_off_white
+  default: "1px solid #d8dade"
+  radius: 3px
 
 elements:
-  anchor: "#009EFF"
+  anchor: "#0366d6"
   badge:
     background: "linear-gradient(#F65D5F, #E93631)"
     color: "#ffffff"
 
+list_group:
+  active:
+    background: "#badcff"
+#    color: "#ffffff"
+
 markdown:
   codeblock:
-    background: *color_off_white
+    background: "#e9e9e9"
 
 navigation:
-  background: "#f6f6f6"
-  links: "#656565"
+  background: "#333333"
+  links: "#d4d4d4"

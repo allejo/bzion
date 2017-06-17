@@ -1,16 +1,22 @@
-/// A magic placeholder for Font Awesome icons to have a fixed width. This uses the same code
-/// as Font Awesome's `.fa-fw` class but is available as a placeholder to be used in SASS
+/// A magic mixin for Font Awesome icons to have a fixed width. This uses the same code as Font Awesome's `.fa-fw` class
+/// but is available as a mixin to be used in Sass
 ///
 /// @link https://github.com/FortAwesome/Font-Awesome/blob/v4.3.0/scss/_fixed-width.scss
 
-%fa-fw {
+@mixin fa-fw() {
     text-align: center;
     width: (18em / 14);
 }
 
+
+/// @deprecated
+%fa-fw {
+    @include fa-fw();
+    @warn 'This placeholder has been deprecated. Use the mixin instead.';
+}
+
+
 /// Perfectly center a Font Awesome icon both horizontally and vertically
-///
-/// @todo If SASS ever officially supports @extends inside of @media queries, then this should be a placeholder. See [SASS issue #1050](https://github.com/sass/sass/issues/1050)
 
 @mixin fa-perfect-alignment() {
     border-radius: 50%;
@@ -18,6 +24,7 @@
     text-align: center;
     vertical-align: bottom;
 }
+
 
 /// Create a circle around a Font Awesome icon
 ///
