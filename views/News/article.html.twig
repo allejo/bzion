@@ -1,22 +1,28 @@
-<article class="c-article">
-    <h1 class="c-article__title">
-        {% if (article.status == "draft") %}
-            [Draft]
-        {% endif %}
-        {{ link_to(article) }}
-    </h1>
-    <p class="c-article__date">{{ article.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
+<article>
+    <header>
+        <h1>
+            {% if (article.status == "draft") %}
+                [Draft]
+            {% endif %}
+            {{ link_to(article) }}
+        </h1>
+        <p>
+            <small>{{ article.created | humanTime(constant('TimeDate::DATE_FULL')) }}</small>
+        </p>
+    </header>
 
-    <section class="c-article__content s-markdown">
+    <section class="s-markdown">
         {{ article.content | markdown }}
     </section>
 
-    <ul class="c-article__meta">
-        <li>
-            <i class="fa fa-user"></i> {{ link_to(article.author) }}
-        </li>
-        <li>
-            <i class="fa fa-tag"></i> {{ link_to(article.category) }}
-        </li>
-    </ul>
+    <footer>
+        <ul class="is-horizontal">
+            <li class="mr2">
+                <small><i class="fa fa-fw fa-user" aria-hidden="true"></i> {{ link_to(article.author) }}</small>
+            </li>
+            <li class="mr2">
+                <small><i class="fa fa-fw fa-tag" aria-hidden="true"></i> {{ link_to(article.category) }}</small>
+            </li>
+        </ul>
+    </footer>
 </article>

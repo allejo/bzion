@@ -1,3 +1,15 @@
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: 800;
+}
+
+small {
+    font-size: 14px;
+}
+
 .u-truncate-text {
     overflow: hidden;
     text-overflow: ellipsis;
