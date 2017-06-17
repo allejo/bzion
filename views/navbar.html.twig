@@ -11,7 +11,7 @@
 {% macro page(text, controller_name, path, icon, class, title) %}
     <li class="has-badge {{ class | default('') }} {{ app.controller.name == controller_name ? 'active' }}" {% if title is not null %}title="{{ title }}"{% endif %}>
         <a href="{{ path(path) }}">
-            <i class="fa fa-{{ icon }} fa-fw"></i>
+            <i class="fa fa-{{ icon }} fa-fw" aria-hidden="true"></i>
             {{- text -}}
         </a>
     </li>
@@ -57,7 +57,7 @@
 
                 <li class="c-site_pages__action">
                     <a href="{{ button.url }}">
-                        <i class="fa fa-{{ button.icon }} fa-fw"></i> {{- button.text -}}
+                        <i class="fa fa-{{ button.icon }} fa-fw" aria-hidden="true"></i> {{- button.text -}}
                     </a>
                 </li>
             {% endfor %}
@@ -70,14 +70,14 @@
 
             <li class="c-user_cp__auth">
                 <a href="{{ path('logout') }}">
-                    <i class="fa fa-sign-out"></i>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <span class="u-desktop-only">Logout</span>
                 </a>
             </li>
         {% else %}
             <li class="c-user_cp__auth">
                 <a href="{{ loginUrl }}">
-                    <i class="fa fa-sign-in"></i>
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
                     <span class="u-desktop-only">Login/Register</span>
                 </a>
             </li>
