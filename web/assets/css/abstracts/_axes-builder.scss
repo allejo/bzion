@@ -3,9 +3,20 @@
 // of an element.
 // -----------------------------------------------------------------------------
 
+///
+/// @access public
+///
+/// @since 0.9.3
+
 @function axis-directions() {
     @return (null, t, r, b, l, x, y);
 }
+
+
+///
+/// @access public
+///
+/// @since 0.9.3
 
 @mixin build-axis($axis, $prop, $value) {
     @if $axis == null {
@@ -24,14 +35,41 @@
         #{$prop}-left: $value;
     }
     @else if $axis == x {
-        #{$prop}-right: $value;
         #{$prop}-left: $value;
+        #{$prop}-right: $value;
     }
     @else if $axis == y {
-        #{$prop}-top: $value;
         #{$prop}-bottom: $value;
+        #{$prop}-top: $value;
     }
 }
+
+
+/// Build utility CSS classes used for CSS properties that have 4 directions (top, right, bottom, left) such as margin,
+/// padding, and border.
+///
+/// @access public
+///
+/// @param {String} $abbrev - A single letter abbreviation (ideally) representing the property that will be targeted
+/// @param {Number} $size   - A multiplier that will be in the class name used to represent what $value would be
+/// @param {String} $prop   - The CSS property that we'll be targeting
+/// @param {String} $suffix - A suffix to be added to the CSS classes; this is ideal for suffixing breakpoints. It's
+///                           necessary to prepend a '-' to this suffix as it will not be added automatically.
+/// @param {*}      $value  - The value the CSS property will take
+///
+/// @example scss
+///   @include build-axes(m, 0, margin, '-lg', 0);
+///
+/// @example css
+///   .m0-lg  { margin: 0; }
+///   .mt0-lg { margin-top: 0; }
+///   .mr0-lg { margin-right: 0; }
+///   .mb0-lg { margin-bottom: 0; }
+///   .ml0-lg { margin-left: 0; }
+///   .mx0-lg { margin-left: 0; margin-right: 0; }
+///   .my0-lg { margin-bottom: 0; margin-top: 0; }
+///
+/// @since 0.9.3
 
 @mixin build-axes($abbrev, $size, $prop, $suffix, $value) {
     @each $axis in axis-directions() {
@@ -40,6 +78,12 @@
         }
     }
 }
+
+
+///
+/// @access public
+///
+/// @since 0.9.3
 
 @mixin build-axes-last($abbrev, $prop, $value) {
     @each $a in axis-directions() {

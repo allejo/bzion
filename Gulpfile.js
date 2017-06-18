@@ -211,8 +211,17 @@ gulp.task('sass:docs', function (cb) {
     var sassdoc = require('sassdoc');
 
     pump([
-        gulp.src('web/assets/css/modules/*.scss'),
+        gulp.src('web/assets/css/abstracts/*.scss'),
         sassdoc()
+    ], cb);
+});
+
+gulp.task('sass:test', function(cb) {
+    var mocha = require('gulp-mocha');
+
+    pump([
+        gulp.src('web/assets/css/tests/test.js', { read: false }),
+        mocha()
     ], cb);
 });
 
