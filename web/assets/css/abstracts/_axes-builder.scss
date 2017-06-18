@@ -34,14 +34,11 @@
 }
 
 @mixin build-axes($abbrev, $size, $prop, $suffix, $value) {
-    // stylelint-disable
-    .#{$abbrev}#{$size}#{$suffix}  { @include build-axis(null, $prop, $value); }
-    .#{$abbrev}t#{$size}#{$suffix} { @include build-axis(t, $prop, $value); }
-    .#{$abbrev}r#{$size}#{$suffix} { @include build-axis(r, $prop, $value); }
-    .#{$abbrev}b#{$size}#{$suffix} { @include build-axis(b, $prop, $value); }
-    .#{$abbrev}l#{$size}#{$suffix} { @include build-axis(l, $prop, $value); }
-    .#{$abbrev}x#{$size}#{$suffix} { @include build-axis(x, $prop, $value); }
-    .#{$abbrev}y#{$size}#{$suffix} { @include build-axis(y, $prop, $value); }
+    @each $axis in axis-directions() {
+        .#{$abbrev}#{$axis}#{$size}#{$suffix} {
+            @include build-axis($axis, $prop, $value);
+        }
+    }
 }
 
 @mixin build-axes-last($abbrev, $prop, $value) {
