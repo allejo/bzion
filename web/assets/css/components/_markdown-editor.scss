@@ -7,10 +7,6 @@
     margin-bottom: 0;
     padding: 10px 10px 0;
 
-    li[aria-selected='true'] {
-        @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
-    }
-
     li {
         @include theme-rule(color, 'body.color');
         @include border-top-radius(5px);
@@ -20,6 +16,10 @@
 
         &:hover {
             @include theme-rule(background-color, 'navigation.background', tint, 1, 5%);
+        }
+
+        &[aria-selected='true'] {
+            @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
         }
 
         .fa {

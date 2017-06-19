@@ -63,6 +63,7 @@
 @import 'base/anchors';
 @import 'base/blockquote';
 @import 'base/code-block';
+@import 'base/images';
 @import 'base/lists';
 @import 'base/typography';
 
@@ -88,6 +89,7 @@
 @import 'components/list-group';
 @import 'components/markdown';
 @import 'components/markdown-editor';
+@import 'components/tabs';
 
 
 //
@@ -181,11 +183,3 @@
 @import 'pages/maps';
 @import 'pages/notifications';
 @import 'pages/visits';
-
-
-//
-// Helper Classes
-//    (CSS classes that are utilities classes are only meant to override other CSS)
-//
-
-@import 'partials/helpers';
