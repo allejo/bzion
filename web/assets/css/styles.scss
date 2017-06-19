@@ -98,12 +98,8 @@
 
 
 @import 'vendor/map-reverse';
-@import 'modules/strings-utils';
 @import 'modules/utilities';
-@import 'vendor/include-media/dist/include-media';
 @import 'modules/bem-utilities';
-@import 'modules/visibility';
-@import 'modules/media-query-setup';
 @import 'modules/placeholders';
 @import 'modules/siblings';
 
@@ -152,7 +148,6 @@
 @import 'partials/alerts';
 @import 'partials/css-table';
 @import 'partials/font-awesome';
-@import 'partials/footer';
 @import 'partials/pagination';
 @import 'partials/pills';
 @import 'partials/typography';
