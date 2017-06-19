@@ -3,18 +3,36 @@
 // of an element.
 // -----------------------------------------------------------------------------
 
+/// The valid directions this axis builder can take
+///
+/// - null -> all directions
+/// - 't' -> top
+/// - 'b' -> bottom
+/// - 'r' -> right
+/// - 'l' -> left
+/// - 'x' -> left + right
+/// - 'y' -> bottom + top
 ///
 /// @access public
 ///
 /// @since 0.9.3
+///
+/// @return {List} All the valid directions this axis builder can take
 
 @function axis-directions() {
     @return (null, t, r, b, l, x, y);
 }
 
 
+/// Generate CSS properties with the specified value based on an axis
 ///
 /// @access public
+///
+/// @param {String|null} $axis  - The axis we're working with
+/// @param {String}      $prop  - The CSS property base name to get the value of; e.g. margin will take on margin-top
+/// @param {*}           $value - The value the CSS property will be taking
+///
+/// @see axis-directions()
 ///
 /// @since 0.9.3
 
@@ -85,10 +103,18 @@
 ///
 /// @since 0.9.3
 
-@mixin build-axes-last($abbrev, $prop, $value) {
+@mixin build-axes-last($abbrev, $prop, $value, $size: ('')) {
     @each $a in axis-directions() {
-        .#{$abbrev}#{$a}-last-reset .#{$abbrev}#{$a}:last-of-type {
+        %__#{$abbrev}#{$a} {
             @include build-axis($a, $prop, $value);
+        }
+
+        .#{$abbrev}#{$a}-last-reset {
+            @each $s in $size {
+                .#{$abbrev}#{$a}#{$s}:last-of-type {
+                    @extend %__#{$abbrev}#{$a};
+                }
+            }
         }
     }
 }

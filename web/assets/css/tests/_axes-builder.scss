@@ -36,4 +36,67 @@
             }
         }
     }
+
+    @include it('creates *-last-reset utility classes for border') {
+        @include assert {
+            @include output {
+                @include build-axes-last(b, border, none);
+            }
+
+            @include expect {
+                .b-last-reset .b:last-of-type { border: none; }
+                .bt-last-reset .bt:last-of-type { border-top: none; }
+                .br-last-reset .br:last-of-type { border-right: none; }
+                .bb-last-reset .bb:last-of-type { border-bottom: none; }
+                .bl-last-reset .bl:last-of-type { border-left: none; }
+                .bx-last-reset .bx:last-of-type { border-left: none; border-right: none; }
+                .by-last-reset .by:last-of-type { border-bottom: none; border-top: none; }
+            }
+        }
+    }
+
+    @include it('creates *-last-reset utility classes for padding with multipliers') {
+        @include assert {
+            @include output {
+                @include build-axes-last(p, padding, 0, (0, 1, 2, 3));
+            }
+
+            @include expect {
+                .p-last-reset .p0:last-of-type,
+                .p-last-reset .p1:last-of-type,
+                .p-last-reset .p2:last-of-type,
+                .p-last-reset .p3:last-of-type { padding: 0; }
+
+                .pt-last-reset .pt0:last-of-type,
+                .pt-last-reset .pt1:last-of-type,
+                .pt-last-reset .pt2:last-of-type,
+                .pt-last-reset .pt3:last-of-type { padding-top: 0; }
+
+                .pr-last-reset .pr0:last-of-type,
+                .pr-last-reset .pr1:last-of-type,
+                .pr-last-reset .pr2:last-of-type,
+                .pr-last-reset .pr3:last-of-type { padding-right: 0; }
+
+                .pb-last-reset .pb0:last-of-type,
+                .pb-last-reset .pb1:last-of-type,
+                .pb-last-reset .pb2:last-of-type,
+                .pb-last-reset .pb3:last-of-type { padding-bottom: 0; }
+
+                .pl-last-reset .pl0:last-of-type,
+                .pl-last-reset .pl1:last-of-type,
+                .pl-last-reset .pl2:last-of-type,
+                .pl-last-reset .pl3:last-of-type { padding-left: 0; }
+
+                .px-last-reset .px0:last-of-type,
+                .px-last-reset .px1:last-of-type,
+                .px-last-reset .px2:last-of-type,
+                .px-last-reset .px3:last-of-type { padding-left: 0; padding-right: 0; }
+
+                .py-last-reset .py0:last-of-type,
+                .py-last-reset .py1:last-of-type,
+                .py-last-reset .py2:last-of-type,
+                .py-last-reset .py3:last-of-type { padding-bottom: 0; padding-top: 0; }
+            }
+        }
+    }
 }
