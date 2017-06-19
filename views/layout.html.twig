@@ -89,7 +89,7 @@
         </section>
 
         {% if app.debug %}
-            <section class="css-dev">
+            <section class="c-breakpoints">
                 <div class="xxxl">xxxl</div>
                 <div class="xxl">xxl</div>
                 <div class="xl">xl</div>
@@ -152,46 +152,71 @@
                 </main>
             </div>
 
-            <footer class="c-footer">
-                <div class="c-footer__container o-container">
-                    <section class="c-footer__copyright">
-                        <span>{{ app.siteTitle }} &copy; {{ "now" | date("Y") }}</span>
+            <footer class="bt py3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p>
+                                {{ app.siteTitle }} &copy; {{ "now" | date("Y") }}
 
-                        {% if app.debug %}
-                            <span class="c-footer__informational"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
-                        {% endif %}
+                                {% if app.debug %}
+                                    <span class="c-footer__informational"><i class="fa fa-wrench"></i> {{ app.environment }}</span>
+                                {% endif %}
 
-                        {% if app.maintenance and app.controller.name != "Maintenance" %}
-                            <span class="c-footer__informational"><i class="fa fa-plug "></i> Maintenance mode</span>
-                        {% endif %}
-                    </section>
+                                {% if app.maintenance and app.controller.name != "Maintenance" %}
+                                    <span class="c-footer__informational"><i class="fa fa-plug "></i> Maintenance mode</span>
+                                {% endif %}
+                            </p>
+                        </div>
 
-                    <ul class="c-footer__pages is-horizontal">
-                        {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
-                            <li>
-                                <a href="{{ path('custom_page_create') }}" title="Create new page">+</a>
-                            </li>
-                        {% endif %}
+                        <div class="col-lg-3">
+                            <ul class="has-no-padding m0">
+                                {% for page in app.pages %}
+                                    {% if not page.isHomePage %}
+                                        <li>{{ link_to(page) }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-                        {% for page in app.pages %}
-                            {% if not page.isHomePage %}
-                                <li>{{ link_to(page) }}</li>
-                            {% endif %}
-                        {% endfor %}
-
-                        <li><a href="{{ path('server_list') }}">Servers</a></li>
-                        <li><a href="{{ path('admin_list') }}">Admins</a></li>
-                        <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
-                        <li><a href="{{ path('map_list') }}">Maps</a></li>
-
-                        {%- if me.hasPermission(constant('Permission::EDIT_PAGE')) or me.hasPermission(constant('Permission::EDIT_ROLE')) -%}
-                            <li><a href="{{ path('admin_landing') }}">Administration Panel</a>
-                        {%- endif -%}
-                        {%- if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-                            <li><a href="{{ path('visit_list') }}">Visit Log</a></li>
-                        {%- endif -%}
-                    </ul>
+                        <div class="col-lg-3">
+                            <ul class="has-no-padding m0">
+                                <li><a href="{{ path('server_list') }}">Servers</a></li>
+                                <li><a href="{{ path('map_list') }}">Maps</a></li>
+                                <li><a href="{{ path('admin_list') }}">Admins</a></li>
+                                <li><a href="{{ path('ban_list') }}">Banned Players</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+
+                {% set showAdminBar = false %}
+
+                {% if me.hasPermission(constant('Permission::CREATE_PAGE')) %}
+                    {% set showAdminBar = true %}
+                {% elseif me.hasPermission(constant('Permission::EDIT_PAGE')) %}
+                    {% set showAdminBar = true %}
+                {% elseif me.hasPermission(constant('Permission::EDIT_ROLE')) %}
+                    {% set showAdminBar = true %}
+                {% elseif me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                    {% set showAdminBar = true %}
+                {% endif %}
+
+                {% if showAdminBar %}
+                    <div class="container bt mt2 pt2">
+                        <p class="m0">
+                            <strong class="mr2">[Admin Tools]</strong>
+
+                            {% if me.hasPermission(constant('Permission::EDIT_PAGE')) or me.hasPermission(constant('Permission::EDIT_ROLE')) %}
+                                <a class="mr2" href="{{ path('admin_landing') }}">Administration Panel</a>
+                            {% endif %}
+
+                            {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                                <a class="mr2" href="{{ path('visit_list') }}">Visit Log</a>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
             </footer>
         </div>
 

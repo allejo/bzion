@@ -30,6 +30,6 @@ ul {
     }
 
     &.has-no-padding {
-        @include ul-horizontal();
+        @include ul-no-padding();
     }
 }
