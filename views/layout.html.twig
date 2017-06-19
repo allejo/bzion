@@ -127,27 +127,29 @@
 
             <div class="c-page {{ scopeClass | default('') }}">
                 {% block pageHeader %}
-                    <section class="c-page__header">
-                        <div class="o-container">
-                            <section class="c-page__header__title">
-                                {% block pageTitle %}{% endblock %}
-                            </section>
+                    <div class="bb mb2 mb3-md p2">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-md-5">
+                                    {% block pageTitle %}{% endblock %}
+                                </div>
+                                <div class="col-md-7 text-right u-hide u-show-md">
+                                    {% for button in pageButtons %}
+                                        {% if button.condition %}
+                                            <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}">
+                                                <i class="fa fa-{{ button.icon }}" aria-hidden="true"></i> {{- button.text -}}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor -%}
 
-                            <section class="c-page__header__options">
-                                {% for button in pageButtons %}
-                                    {% if button.condition %}
-                                        <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}"><i class="fa fa-{{ button.icon }}"></i> {{ button.text }}</a>
-                                    {% endif %}
-                                {% endfor -%}
-
-                                {%- block headerOptions %}
-                                {% endblock %}
-                            </section>
+                                    {%- block headerOptions %}{% endblock %}
+                                </div>
+                            </div>
                         </div>
-                    </section>
+                    </div>
                 {% endblock %}
 
-                <main role="main">
+                <main class="mb3" role="main">
                     {% block content %}{% endblock %}
                 </main>
             </div>
