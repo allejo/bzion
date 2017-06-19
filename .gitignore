@@ -4,7 +4,7 @@ app/config.yml
 update.php
 vendor
 components
-!css/components
+!web/assets/css/components
 cache
 logs
 reDB.sh
