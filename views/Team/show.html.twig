@@ -63,7 +63,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-lg-3">
-                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="u-image-responsive mb2">
+                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}"
+                     class="u-image-responsive mb2"
+                     alt="Profile picture for {{ team.name }}"
+                >
 
                 <p class="mb0"><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
                 <p class="mb0"><strong>Activity:</strong>
@@ -146,7 +149,7 @@
                              aria-hidden="true"
                         >
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <h4>Match Statistics</h4>
                                     <section class="c-team__stats__container flex-column">
                                         <div id="team-matches-pie"
@@ -159,21 +162,50 @@
 
                                         <ul class="c-legend">
                                             <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--wld--wins"></div> {{ 'win' | plural(team.matchesWon) }}
+                                                <div class="c-legend__box c-legend__box--wld--wins" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
                                             </li>
                                             <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--wld--losses"></div> {{ 'loss' | plural(team.matchesLost) }}
+                                                <div class="c-legend__box c-legend__box--wld--losses" aria-hidden="true"></div> {{ 'loss' | plural(team.matchesLost) }}
                                             </li>
                                             <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--wld--draws"></div> {{ 'draw' | plural(team.matchesDraw) }}
+                                                <div class="c-legend__box c-legend__box--wld--draws" aria-hidden="true"></div> {{ 'draw' | plural(team.matchesDraw) }}
                                             </li>
                                         </ul>
                                     </section>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <h4>Team Activity</h4>
-                                    <section class="c-team__stats__container">
-                                        <canvas id="teamActivityStats" class="c-team__stats__graph"></canvas>
+                                    <section class="c-team__stats__container flex-column">
+                                        {% set matchLabels %}
+                                            {%- set labelPeriod = ((matches|length) / 12)|round ?: 1 %}
+                                            {%- for date in matches | keys -%}
+                                                {%- set farEnoughFromEdge = loop.revindex > (matches|length) / 20 -%}
+                                                {%- if loop.last or (loop.index % labelPeriod == 0 and farEnoughFromEdge) -%}
+                                                    {{ date }},
+                                                {%- else -%}
+                                                    ,
+                                                {%- endif -%}
+                                            {%- endfor -%}
+                                        {% endset %}
+
+                                        {% set winAmounts = [] %}
+                                        {% for date in matches|keys %}
+                                            {% set winAmounts = winAmounts | merge([wins[date] | default(0)]) %}
+                                        {% endfor %}
+
+                                        {% set matchData = {
+                                            'series': [
+                                                matches | array_values,
+                                                winAmounts
+                                            ],
+                                            'labels': matchLabels | split(',')
+                                        } %}
+                                        <div id="team-match-activity"
+                                             class="ct-chart ct-minor-seventh c-chart c-chart--activity mb2"
+                                             data-graph="line"
+                                             data-chart="{{ matchData | json_encode }}"
+                                        ></div>
+
                                         <ul class="c-team__stats__legend">
                                             <li>
                                                 <div id="drawColor" class="draws"></div> {{ 'match' | plural(team.numTotalMatches) }}
@@ -244,31 +276,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block jsCustom %}
-    {#<script src="{{ asset('includes/chartjs/Chart.min.js') }}"></script>#}
-    <script>
-        {%- set labelPeriod = ((matches|length) / 12)|round ?: 1 %}
-        var matchDates = [
-            {%- for date in matches|keys -%}
-                {%- set farEnoughFromEdge = loop.revindex > (matches|length)/20 -%}
-                {%- if loop.last or (loop.index % labelPeriod == 0 and farEnoughFromEdge) -%}
-                    "{{ date }}",
-                {%- else -%}
-                    "",
-                {%- endif -%}
-            {%- endfor -%}
-        ];
-
-        var matchCounts = [
-            {% for count in matches %}{{ count }},{% endfor %}
-        ];
-
-        var winCounts = [
-            {# Don't show bad data if keys are screwed up #}
-            {% for date in matches|keys %}{{ wins[date]|default(0) }},{% endfor %}
-        ];
-    </script>
-    {#<script src="{{ asset('assets/js/min/teams.js') }}"></script>#}
 {% endblock %}

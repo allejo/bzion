@@ -28,6 +28,17 @@ function buildWinLossDrawPieCharts() {
     });
 }
 
+function buildLineCharts() {
+    var $lines = $('div[data-graph="line"]');
+
+    $lines.each(function() {
+        var $this = $(this);
+        new Chartist.Line(this, $this.data('chart'), {
+            showPoint: false
+        });
+    });
+}
+
 module.exports = function() {
     // Due to hidden DOM objects not having a height and width, if the chart's parent is `display: none`, the chart won't
     // display. In this case, our charts may reside in tab panels, so we have to trigger a chart update when the tab is
@@ -45,4 +56,5 @@ module.exports = function() {
 
     // Start building all of the generic charts that we support
     buildWinLossDrawPieCharts();
+    buildLineCharts();
 };
