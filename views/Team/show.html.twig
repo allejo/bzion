@@ -17,11 +17,11 @@
         'condition': me.canEdit(team)
     },
     {
-        color: 'blue',
-        url: path('message_compose', { recipients: 'team:' ~ team.id }),
-        icon: 'send',
-        text: 'Send Message',
-        condition: me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+        'color': 'blue',
+        'url': path('message_compose', { recipients: 'team:' ~ team.id }),
+        'icon': 'send',
+        'text': 'Send Message',
+        'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     },
     {
         'color': 'grey',
