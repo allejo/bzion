@@ -5,6 +5,7 @@
     "url": "https://github.com/allejo/bzion.git"
   },
   "dependencies": {
+    "chartist-webpack": "^0.9.5-0",
     "eyeglass": "^1.2.1",
     "eyeglass-sassy-data": "^0.1.2",
     "gulp": "^3.9.1",
