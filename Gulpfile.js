@@ -72,6 +72,7 @@ gulp.task('dev:watch', function() {
     gulp.watch([
         'web/assets/js/**/*.js',
         'web/assets/css/styles.css',
+        'web/build/*.js',
         'views/**/*.html.twig',
         'controllers/*.php',
         'models/*.php'
