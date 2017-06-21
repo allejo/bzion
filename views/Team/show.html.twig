@@ -152,12 +152,29 @@
                                 <div class="col-lg-6">
                                     <h4>Match Statistics</h4>
                                     <section class="c-team__stats__container flex-column">
+                                        {% set matchSummary = {
+                                            'series': [
+                                                {
+                                                    'value': team.matchesWon,
+                                                    'name': 'Wins',
+                                                    'className': 'ct-chart-series--wins'
+                                                },
+                                                {
+                                                    'value': team.matchesLost,
+                                                    'name': 'Losses',
+                                                    'className': 'ct-chart-series--losses'
+                                                },
+                                                {
+                                                    'value': team.matchesDraw,
+                                                    'name': 'Draws',
+                                                    'className': 'ct-chart-series--draws'
+                                                }
+                                            ]
+                                        } %}
                                         <div id="team-matches-pie"
                                              class="ct-chart ct-minor-seventh c-chart c-chart--wld mb2"
-                                             data-graph="pie-wld"
-                                             data-wins="{{ team.matchesWon }}"
-                                             data-losses="{{ team.matchesLost }}"
-                                             data-draws="{{ team.matchesDraw }}"
+                                             data-graph="pie"
+                                             data-chart="{{ matchSummary | json_encode }}"
                                         ></div>
 
                                         <ul class="c-legend">

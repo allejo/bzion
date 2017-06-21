@@ -1,30 +1,11 @@
 var Chartist = require('chartist-webpack');
 
 function buildWinLossDrawPieCharts() {
-    var $pies = $('div[data-graph="pie-wld"]');
+    var $pies = $('div[data-graph="pie"]');
 
     $pies.each(function () {
         var $this = $(this);
-
-        new Chartist.Pie(this, {
-            series: [
-                {
-                    value: $this.data('wins'),
-                    name: 'Wins',
-                    className: 'ct-chart-series--wins'
-                },
-                {
-                    value: $this.data('losses'),
-                    name: 'Losses',
-                    className: 'ct-chart-series--losses'
-                },
-                {
-                    value: $this.data('draws'),
-                    name: 'Draws',
-                    className: 'ct-chart-series--draws'
-                }
-            ]
-        });
+        new Chartist.Pie(this, $this.data('chart'));
     });
 }
 
