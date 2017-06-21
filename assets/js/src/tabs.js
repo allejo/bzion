@@ -1,21 +1,23 @@
 module.exports = function() {
-    var $tabRole = $('li[role="tab"]');
+    var $tab = $('[role="tab"]');
 
-    $tabRole.click(function() {
+    $tab.click(function() {
         var $this = $(this);
 
-        $tabRole.attr('aria-selected', 'false'); // deselect all the tabs
+        $tab.attr('aria-selected', 'false'); // deselect all the tabs
         $this.attr('aria-selected', 'true');  // select this tab
 
-        var tabpanid = $this.attr('aria-controls'); // find out what tab panel this tab controls
-        var tabpan = $('#' + tabpanid);
+        var tabPanelID = $this.attr('aria-controls'); // find out what tab panel this tab controls
+        var $tabpan = $('#' + tabPanelID);
 
-        $('div[role="tabpanel"]').attr('aria-hidden', 'true'); // hide all the panels
+        $('[role="tabpanel"]').attr('aria-hidden', 'true'); // hide all the panels
 
-        tabpan.attr('aria-hidden','false');  // show our panel
+        $tabpan.attr('aria-hidden', 'false');  // show our panel
+
+        $this.trigger('shown.bzion.tab', $tabpan);
     });
 
-    $tabRole.keydown(function(e) {
+    $tab.keydown(function(e) {
         if (e.which === 13) {
             $(this).click();
         }
