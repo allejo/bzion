@@ -31,6 +31,7 @@
 
 @import 'vendor/OnTheRocks/scss/rocks';
 @import 'vendor/SassyCast/dist/SassyCast';
+@import 'vendor/chartist';
 @import 'vendor/flags';
 @import 'vendor/loaders';
 @import 'vendor/text-inputs';
@@ -83,6 +84,7 @@
 
 @import 'components/buttons';
 @import 'components/calendar';
+@import 'components/charts';
 @import 'components/debug';
 @import 'components/jumbotron';
 @import 'components/match-widget';

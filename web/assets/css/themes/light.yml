@@ -6,6 +6,12 @@ border:
   default: "1px solid #d8dade"
   radius: 3px
 
+charts:
+  wld:
+    wins: "#f05b4f"
+    losses: "#f4c63d"
+    draws: "#453d3f"
+
 elements:
   anchor: "#0366d6"
   badge:

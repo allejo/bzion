@@ -1,0 +1,40 @@
+.c-legend {
+    @include ul-horizontal();
+
+    text-align: center;
+}
+
+.c-legend__item {
+    margin-right: 15px;
+}
+
+.c-legend__box {
+    @include size(15px);
+
+    display: inline-block;
+}
+
+@each $status in (wins, losses, draws) {
+    .c-legend__box--wld--#{$status} {
+        @include theme-rule(background-color, "charts.wld.#{$status}");
+    }
+}
+
+// This is not a typo; '.ct-chart' is a class created by Chartist.js and `.c-chart` is our own internal class used for
+// styling
+.c-chart {
+    text {
+        font-weight: 800;
+    }
+}
+
+// `wld` -> win, losses, draws
+.c-chart--wld {
+    @each $status in (wins, losses, draws) {
+        // This is not a typo; Chartist.js is putting in these classes even though we're defining the name, it's still
+        // being put in by the library so it's not a class we're creating in Sass.
+        .ct-chart-series--#{$status} > path {
+            @include theme-rule(fill, "charts.wld.#{$status}");
+        }
+    }
+}
