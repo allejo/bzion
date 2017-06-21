@@ -13,6 +13,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
     "gulp-modernizr": "^1.0.0-alpha",
+    "gulp-postcss": "^7.0.0",
     "gulp-responsive": "^2.6.0",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0",
@@ -22,6 +23,8 @@
     "modernizr": "^3.5.0",
     "modernizr-webpack-plugin": "^1.0.6",
     "node-sass": "^4.5.3",
+    "postcss-remove-prefixes": "^1.2.0",
+    "postcss-unprefix": "^2.1.1",
     "pump": "^1.0.1"
   },
   "devDependencies": {

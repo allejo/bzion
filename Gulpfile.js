@@ -191,6 +191,9 @@ gulp.task('sass:dev', function (cb) {
 
 gulp.task('sass:dist', function (cb) {
     var cssmin = require('gulp-cssmin');
+    var postcss = require('gulp-postcss');
+    var unprefix = require('postcss-unprefix');
+    var removePrefixes = require('postcss-remove-prefixes');
 
     pump([
         gulp.src('web/assets/css/styles.scss'),
@@ -200,6 +203,10 @@ gulp.task('sass:dist', function (cb) {
         combineMq({
             beautify: false
         }),
+        postcss([
+            unprefix(),
+            removePrefixes()
+        ]),
         cssmin({
             processImport: false,
             mediaMerging: false
