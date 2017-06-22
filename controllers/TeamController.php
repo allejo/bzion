@@ -15,24 +15,24 @@ class TeamController extends CRUDController
 
     public function showAction(Team $team)
     {
-        $matches = $this->getQueryBuilder('Match')
+        $matches = Match::getQueryBuilder()
             ->with($team)
             ->getSummary($team);
 
-        $wins = $this->getQueryBuilder('Match')
+        $wins = Match::getQueryBuilder()
             ->with($team, "win")
             ->getSummary($team);
 
-        return array(
-            "matches" => $matches,
-            "wins"    => $wins,
-            "team"    => $team
-        );
+        return [
+            'matches' => $matches,
+            'wins'    => $wins,
+            'team'    => $team
+        ];
     }
 
     public function listAction()
     {
-        Team::$cachedMatches = $this->getQueryBuilder('Match')
+        Team::$cachedMatches = Match::getQueryBuilder()
             ->where('time')->isAfter(TimeDate::from('45 days ago'))
             ->active()
             ->getModels($fast = true);
