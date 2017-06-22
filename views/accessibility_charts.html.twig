@@ -1,5 +1,10 @@
-{% macro accessible_pie(caption, data) %}
-    <table class="sr-only">
+{% macro accessible_pie(caption, data, attrs) %}
+    {% from 'utilities.html.twig' import html_attr %}
+
+    {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
+    {% set attrs = attrs | default({}) | merge({ 'class': attrs['class'] | default([]) | merge(['sr-only']) }) %}
+
+    <table {{ html_attr(attrs) }} >
         <caption>{{ caption }}</caption>
         <thead>
             <tr>
@@ -21,7 +26,7 @@
 
                         {{- value | evaluate(embedData) | raw | trim -}}
 
-                        {% if loop.first %}</th>{% else %}</td>{% endif %}
+                        {%- if loop.first %}</th>{% else %}</td>{% endif -%}
                     {% endfor %}
                 </tr>
             {% endfor %}

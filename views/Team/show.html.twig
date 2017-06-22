@@ -158,19 +158,16 @@
                                                 {
                                                     'value': team.matchesWon,
                                                     'name': 'Wins',
-                                                    'verb': 'won',
                                                     'className': 'ct-chart-series--wins'
                                                 },
                                                 {
                                                     'value': team.matchesLost,
                                                     'name': 'Losses',
-                                                    'verb': 'lost',
                                                     'className': 'ct-chart-series--losses'
                                                 },
                                                 {
                                                     'value': team.matchesDraw,
                                                     'name': 'Draws',
-                                                    'verb': 'tied',
                                                     'className': 'ct-chart-series--draws'
                                                 }
                                             ],
@@ -196,7 +193,10 @@
 
                                         {{ accessible_pie(
                                             "A breakdown of the number of wins, losses, and draws of " ~ team.name,
-                                            matchBreakdownGraph
+                                            matchBreakdownGraph,
+                                            {
+                                                'class': ['c-table', 'c-table--wld']
+                                            }
                                         ) }}
 
                                         <ul class="c-legend">

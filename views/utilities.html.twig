@@ -4,3 +4,9 @@
         <span class="date">{{ timestamp | date('d') }}</span>
     </time>
 {%- endmacro %}
+
+{% macro html_attr(dictionary) %}
+    {%- for attr in dictionary | keys -%}
+        {{ attr }}="{{ dictionary[attr] | join(' ') }}"
+    {% endfor -%}
+{% endmacro %}
