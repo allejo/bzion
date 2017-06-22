@@ -2,7 +2,7 @@
     {% from 'utilities.html.twig' import html_attr %}
 
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
-    {% set attrs = attrs | default({}) | merge({ 'class': attrs['class'] | default([]) | merge(['sr-only']) }) %}
+    {% set attrs = attrs | extend_hash({ 'class': ['sr-only'] }) %}
 
     <table {{ html_attr(attrs) }} >
         <caption>{{ caption }}</caption>

@@ -15,6 +15,7 @@ class TwigExtension extends \Twig_Extension
         return array(
             ArrayValuesFilter::get(),
             EvaluateFilter::get(),
+            ExtendHashFilter::get(),
             HumanDateFilter::get(),
             TruncateFilter::get(),
             MarkdownFilter::get(),
