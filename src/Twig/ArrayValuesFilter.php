@@ -4,13 +4,18 @@ namespace BZIon\Twig;
 
 class ArrayValuesFilter
 {
-    public function __invoke(array $array)
+    public function __invoke($array)
     {
+        if (!is_array($array))
+        {
+            return $array;
+        }
+
         return array_values($array);
     }
 
     public static function get()
     {
-        return new \Twig_SimpleFilter('array_values', new self());
+        return new \Twig_SimpleFilter('values', new self());
     }
 }
