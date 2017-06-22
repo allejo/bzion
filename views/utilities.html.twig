@@ -6,7 +6,11 @@
 {%- endmacro %}
 
 {% macro html_attr(dictionary) %}
-    {%- for attr in dictionary | keys -%}
+    {%- for attr in dictionary | keys if attr != 'data' -%}
         {{ attr }}="{{ dictionary[attr] | join(' ') }}"
+    {% endfor -%}
+
+    {%- for attr in dictionary['data'] | default([]) | keys -%}
+        data-{{ attr }}="{{ dictionary['data'][attr] | join(' ') }}"
     {% endfor -%}
 {% endmacro %}
