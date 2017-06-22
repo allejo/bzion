@@ -87,10 +87,11 @@
 @import 'components/charts';
 @import 'components/debug';
 @import 'components/jumbotron';
-@import 'components/match-widget';
 @import 'components/list-group';
 @import 'components/markdown';
 @import 'components/markdown-editor';
+@import 'components/match-widget';
+@import 'components/player-widget';
 @import 'components/tabs';
 
 
@@ -168,7 +169,6 @@
 @import 'pages/Teams/list';
 @import 'pages/Teams/show';
 
-@import 'pages/Players/widget';
 @import 'pages/Players/list';
 @import 'pages/Players/show';
 

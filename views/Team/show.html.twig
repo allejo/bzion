@@ -265,25 +265,39 @@
                              aria-labelledby="tabs__header__members"
                              aria-hidden="true"
                         >
-                            {% for player in team.members %}
-                                <div class="c-table__row">
-                                    {% if me.canEdit(team) %}
-                                        <div class="c-table__row__column c-team__roster__option">
-                                            <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
-                                                <i class="fa fa-eject"></i>
-                                            </a>
-                                        </div>
-                                    {% endif %}
+                            <h4 class="mb2">Led By</h4>
+                            {% set leader = team.leader %}
 
-                                    <div class="c-table__row__column c-team__roster__callsign">
-                                        {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
+                            {% include 'Player/widget.html.twig' with {
+                                player: leader,
+                                attrs: {
+                                    class: 'mb2'
+                                }
+                            } %}
 
-                                        {% if player ~~ team.leader %}
-                                            <i class="fa fa-star" title="Team Leader"></i>
+                            <h4 class="mb2">Members</h4>
+                            <div class="row">
+                                {% for player in team.members if player != leader %}
+                                    <div class="col-lg-6 u-display-flex align-items-center">
+                                        {% include 'Player/widget.html.twig' with {
+                                            player: player,
+                                            attrs: {
+                                                class: 'flex-grow'
+                                            }
+                                        } %}
+
+                                        {% if me.canEdit(team) %}
+                                            <div>
+                                                <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}"
+                                                   title="Kick {{ player.username }} from team">
+                                                    <i class="fa fa-fw fa-eject" aria-hidden="true"></i>
+                                                    <span class="sr-only">Kick {{ player.username }} from team</span>
+                                                </a>
+                                            </div>
                                         {% endif %}
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
 
                         {# "Matches" panel #}
