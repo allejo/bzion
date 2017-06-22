@@ -1,11 +1,13 @@
-var Chartist = require('chartist-webpack');
+var Chartist = require('chartist');
 
 function buildWinLossDrawPieCharts() {
     var $pies = $('div[data-graph="pie"]');
 
     $pies.each(function () {
         var $this = $(this);
-        new Chartist.Pie(this, $this.data('chart'));
+        var chart = new Chartist.Pie(this, $this.data('chart'), {
+            plugins: []
+        });
     });
 }
 

@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% from 'accessibility_charts.html.twig' import accessible_pie %}
 
 {% set opengraph = {
     url: team.url | canonical,
@@ -152,30 +153,51 @@
                                 <div class="col-lg-6">
                                     <h4>Match Statistics</h4>
                                     <section class="c-team__stats__container flex-column">
-                                        {% set matchSummary = {
+                                        {% set matchBreakdownGraph = {
                                             'series': [
                                                 {
                                                     'value': team.matchesWon,
                                                     'name': 'Wins',
+                                                    'verb': 'won',
                                                     'className': 'ct-chart-series--wins'
                                                 },
                                                 {
                                                     'value': team.matchesLost,
                                                     'name': 'Losses',
+                                                    'verb': 'lost',
                                                     'className': 'ct-chart-series--losses'
                                                 },
                                                 {
                                                     'value': team.matchesDraw,
                                                     'name': 'Draws',
+                                                    'verb': 'tied',
                                                     'className': 'ct-chart-series--draws'
                                                 }
-                                            ]
+                                            ],
+                                            'table': {
+                                                'cols': ['Result', 'Count', 'Percent'],
+                                                'values': [
+                                                    '{{ series.name }}',
+                                                    '{{ series.value }}',
+                                                    '{{ ((series.value / meta.sum) * 100) | round }}%'
+                                                ]
+                                            },
+                                            'meta': {
+                                                'sum': team.matchesWon + team.matchesLost + team.matchesDraw
+                                            }
                                         } %}
+
                                         <div id="team-matches-pie"
                                              class="ct-chart ct-minor-seventh c-chart c-chart--wld mb2"
                                              data-graph="pie"
-                                             data-chart="{{ matchSummary | json_encode }}"
+                                             data-chart="{{ matchBreakdownGraph | json_encode }}"
+                                             aria-hidden="true"
                                         ></div>
+
+                                        {{ accessible_pie(
+                                            "A breakdown of the number of wins, losses, and draws of " ~ team.name,
+                                            matchBreakdownGraph
+                                        ) }}
 
                                         <ul class="c-legend">
                                             <li class="c-legend__item">
@@ -212,7 +234,7 @@
 
                                         {% set matchData = {
                                             'series': [
-                                                matches | array_values,
+                                                matches | values,
                                                 winAmounts
                                             ],
                                             'labels': matchLabels | split(',')

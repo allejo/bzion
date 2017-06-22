@@ -1,0 +1,30 @@
+{% macro accessible_pie(caption, data) %}
+    <table class="sr-only">
+        <caption>{{ caption }}</caption>
+        <thead>
+            <tr>
+                {% for col in data.table.cols %}
+                    <th scope="col">{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data.series %}
+                <tr>
+                    {% for value in data.table.values %}
+                        {% set embedData = {
+                            'series': row,
+                            'meta': data.meta,
+                        } %}
+
+                        {%- if loop.first %}<th scope="row">{% else %}<td>{% endif -%}
+
+                        {{- value | evaluate(embedData) | raw | trim -}}
+
+                        {% if loop.first %}</th>{% else %}</td>{% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
