@@ -158,17 +158,17 @@
                                                 {
                                                     'value': team.matchesWon,
                                                     'name': 'Wins',
-                                                    'className': 'ct-chart-series--wins'
+                                                    'className': 'ct-series-a'
                                                 },
                                                 {
                                                     'value': team.matchesLost,
                                                     'name': 'Losses',
-                                                    'className': 'ct-chart-series--losses'
+                                                    'className': 'ct-series-b'
                                                 },
                                                 {
                                                     'value': team.matchesDraw,
                                                     'name': 'Draws',
-                                                    'className': 'ct-chart-series--draws'
+                                                    'className': 'ct-series-c'
                                                 }
                                             ],
                                             'table': {
@@ -185,7 +185,7 @@
                                         } %}
 
                                         <div id="team-matches-pie"
-                                             class="ct-chart ct-minor-seventh c-chart c-chart--wld mb2"
+                                             class="ct-chart ct-minor-seventh c-chart c-chart--pie mb2"
                                              data-graph="pie"
                                              data-chart="{{ matchBreakdownGraph | json_encode }}"
                                              aria-hidden="true"
@@ -201,13 +201,13 @@
 
                                         <ul class="c-legend">
                                             <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--wld--wins" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
+                                                <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
                                             </li>
                                             <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--wld--losses" aria-hidden="true"></div> {{ 'loss' | plural(team.matchesLost) }}
+                                                <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'loss' | plural(team.matchesLost) }}
                                             </li>
                                             <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--wld--draws" aria-hidden="true"></div> {{ 'draw' | plural(team.matchesDraw) }}
+                                                <div class="c-legend__box c-legend__box--series-c" aria-hidden="true"></div> {{ 'draw' | plural(team.matchesDraw) }}
                                             </li>
                                         </ul>
                                     </section>
@@ -220,7 +220,7 @@
                                             {%- for date in matches | keys -%}
                                                 {%- set farEnoughFromEdge = loop.revindex > (matches|length) / 20 -%}
                                                 {%- if loop.last or (loop.index % labelPeriod == 0 and farEnoughFromEdge) -%}
-                                                    {{ date }},
+                                                    {{ date | date("M 'y") | raw }},
                                                 {%- else -%}
                                                     ,
                                                 {%- endif -%}
@@ -240,17 +240,17 @@
                                             'labels': matchLabels | split(',')
                                         } %}
                                         <div id="team-match-activity"
-                                             class="ct-chart ct-minor-seventh c-chart c-chart--activity mb2"
+                                             class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
                                              data-graph="line"
                                              data-chart="{{ matchData | json_encode }}"
                                         ></div>
 
-                                        <ul class="c-team__stats__legend">
-                                            <li>
-                                                <div id="drawColor" class="draws"></div> {{ 'match' | plural(team.numTotalMatches) }}
+                                        <ul class="c-legend">
+                                            <li class="c-legend__item">
+                                                <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'match' | plural(team.numTotalMatches) }}
                                             </li>
-                                            <li>
-                                                <div id="winsColor" class="wins"></div> {{ 'win' | plural(team.matchesWon) }}
+                                            <li class="c-legend__item">
+                                                <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
                                             </li>
                                         </ul>
                                     </section>

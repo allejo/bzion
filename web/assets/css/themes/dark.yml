@@ -7,10 +7,15 @@ border:
   radius: 3px
 
 charts:
-  wld:
-    wins: "#f05b4f"
-    losses: "#f4c63d"
-    draws: "#3f7b12"
+  line:
+    grid: "rgba(255, 255, 255, 0.25)"
+    label: "rgba(255, 255, 255, 0.50)"
+  series:
+    a: "#995d81"
+    b: "#eb8258"
+    c: "#f6f740"
+    d: "#d8dc6a"
+    e: "#6689a1"
 
 elements:
   anchor: "#8FD5FF"

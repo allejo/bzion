@@ -6,6 +6,10 @@
 
 .c-legend__item {
     margin-right: 15px;
+
+    &:last-child {
+        margin-right: 0;
+    }
 }
 
 .c-legend__box {
@@ -14,9 +18,9 @@
     display: inline-block;
 }
 
-@each $status in (wins, losses, draws) {
-    .c-legend__box--wld--#{$status} {
-        @include theme-rule(background-color, "charts.wld.#{$status}");
+@each $series in (a, b, c, d, e) {
+    .c-legend__box--series-#{$series} {
+        @include theme-rule(background-color, "charts.series.#{$series}");
     }
 }
 
@@ -28,13 +32,33 @@
     }
 }
 
-// `wld` -> win, losses, draws
-.c-chart--wld {
-    @each $status in (wins, losses, draws) {
+@each $series in (a, b, c, d, e) {
+    .c-chart--pie {
         // This is not a typo; Chartist.js is putting in these classes even though we're defining the name, it's still
         // being put in by the library so it's not a class we're creating in Sass.
-        .ct-chart-series--#{$status} > path {
-            @include theme-rule(fill, "charts.wld.#{$status}");
+        .ct-series-#{$series} > path {
+            @include theme-rule(fill, "charts.series.#{$series}");
+        }
+    }
+
+    .c-chart--line {
+        .ct-series-#{$series} > path {
+            @include theme-rule(stroke, "charts.series.#{$series}");
+        }
+    }
+}
+
+.ct-chart-line {
+    .ct-grids line {
+        @include theme-rule(stroke, 'charts.line.grid');
+    }
+
+    .ct-label {
+        @include theme-rule(color, 'charts.line.label');
+
+        &.ct-horizontal {
+            margin-top: 10px;
+            transform: rotate(-45deg);
         }
     }
 }
