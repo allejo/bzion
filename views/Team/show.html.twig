@@ -1,5 +1,5 @@
 {% extends 'layout.html.twig' %}
-{% from 'accessibility_charts.html.twig' import accessible_pie %}
+{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
 
 {% set opengraph = {
     url: team.url | canonical,
@@ -232,18 +232,33 @@
                                             {% set winAmounts = winAmounts | merge([wins[date] | default(0)]) %}
                                         {% endfor %}
 
+                                        {# Toss the first ',' with [1:] #}
                                         {% set matchData = {
                                             'series': [
                                                 matches | values,
-                                                winAmounts
+                                                winAmounts,
                                             ],
-                                            'labels': matchLabels | split(',')
+                                            'labels': matchLabels[1:] | split(','),
+                                            'meta': {
+                                                'series': [
+                                                    'Number of matches per month',
+                                                    'Number of victories per month',
+                                                ],
+                                                'labels': 'Month'
+                                            }
                                         } %}
                                         <div id="team-match-activity"
                                              class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
                                              data-graph="line"
                                              data-chart="{{ matchData | json_encode }}"
                                         ></div>
+                                        {{ accessible_line(
+                                            "A summary of the number of victories to total matches per month since the team's inception.",
+                                            matchData,
+                                            {
+                                                'class': ['c-table', 'c-table--activity']
+                                            }
+                                        ) }}
 
                                         <ul class="c-legend">
                                             <li class="c-legend__item">
