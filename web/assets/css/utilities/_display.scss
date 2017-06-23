@@ -1,0 +1,5 @@
+@each $display in (block, flex, inline, inline-block) {
+    .d-#{$display} {
+        display: $display;
+    }
+}
