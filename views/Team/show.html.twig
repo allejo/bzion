@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% from 'utilities.html.twig' import timestamp %}
 {% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
 
 {% set opengraph = {
@@ -50,7 +51,7 @@
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
 {% block pageTitle %}
-    <div class="u-display-flex">
+    <div class="d-flex">
         {{ team.rankImageLiteral | raw }}
 
         <div class="ml1">
@@ -293,7 +294,7 @@
                             <h4 class="mb2">Members</h4>
                             <div class="row">
                                 {% for player in team.members if player != leader %}
-                                    <div class="col-lg-6 u-display-flex align-items-center">
+                                    <div class="col-lg-6 d-flex align-items-center">
                                         {% include 'Player/widget.html.twig' with {
                                             player: player,
                                             attrs: {
@@ -322,22 +323,47 @@
                              aria-labelledby="tabs__header__matches"
                              aria-hidden="true"
                         >
-                            {% for match in team.matches %}
-                                <a class="c-table__row c-team__match" href="{{ match.url }}">
-                            <span class="c-table__row__column c-team__match__date">
-                                {{ match.timestamp | humanTime('D, M d') }}
-                            </span>
-                                    <span class="c-table__row__column c-team__match__opponent">
-                                <strong>vs.</strong> {{ match.opponent(team.id).name }}
-                            </span>
-                                    <span class="c-table__row__column c-team__match__score">
-                                <strong class="u-match-outcome">{{ match.matchLetter(team.id) }}</strong> {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
-                            </span>
+                            <div class="row">
+                                {% for match in team.matches('all', 6) %}
+                                    <div class="col-lg-6 mb2">
+                                        <article class="d-flex align-items-center">
+                                            <div class="mr2">
+                                                {{ timestamp(match.timestamp) }}
+                                            </div>
+
+                                            <div class="flex-grow">
+                                                <p class="mb0">
+                                                    <span class="sr-only">{{ match.matchDescription(team.id) }}</span>
+                                                    <strong aria-hidden="true"
+                                                            title="{{ match.matchDescription(team.id) }}"
+                                                    >
+                                                        {{ match.matchLetter(team.id) }}
+                                                    </strong>
+
+                                                    {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
+                                                </p>
+                                                <p class="mb0">vs. {{ link_to(match.opponent(team.id)) }}</p>
+                                            </div>
+
+                                            <div class="bl">
+                                                <a class="d-block pl2 pr1"
+                                                   href="{{ match.url }}">
+                                                    <i class="fa fa-angle-right t2" aria-hidden="true"></i>
+                                                    <span class="sr-only">See match details</span>
+                                                </a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="by text-center">
+                                <a class="d-block p2"
+                                   href="{{ path('match_by_team_list', { team: team.alias }) }}"
+                                >
+                                    View more matches...
                                 </a>
-                            {% endfor %}
-                            <a class="c-table__row c-team__matches__more" href="{{ path('match_by_team_list', { team: team.alias }) }}">
-                                View more matches...
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
