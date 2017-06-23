@@ -1,5 +1,7 @@
-{% macro timestamp(timestamp) -%}
-    <time datetime="{{ timestamp | date(constant('TimeDate::FULL')) }}" title="{{ timestamp | date('F d, Y h:ia') }}" class="c-calendar--day">
+{% macro timestamp(timestamp, attrs) -%}
+    {% set attrs = attrs | extend_hash({ 'class': 'c-calendar--day' }) %}
+
+    <time datetime="{{ timestamp | date(constant('TimeDate::FULL')) }}" title="{{ timestamp | date('F d, Y h:ia') }}" {{ _self.html_attr(attrs) }} >
         <span class="month">{{ timestamp | date('M') }}</span>
         <span class="date">{{ timestamp | date('d') }}</span>
     </time>
