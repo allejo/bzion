@@ -71,14 +71,14 @@
             <li class="c-user_cp__auth">
                 <a href="{{ path('logout') }}">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <span class="u-desktop-only">Logout</span>
+                    <span class="u-hide u-show-md">Logout</span>
                 </a>
             </li>
         {% else %}
             <li class="c-user_cp__auth">
                 <a href="{{ loginUrl }}">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
-                    <span class="u-desktop-only">Login/Register</span>
+                    <span class="u-hide u-show-md">Login/Register</span>
                 </a>
             </li>
         {% endif %}

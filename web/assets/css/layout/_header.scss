@@ -1,7 +1,7 @@
 .c-mobilemenu {
     padding: 0 15px 0 10px;
 
-    @include respond-up(md) {
+    @include respond-up(lg) {
         display: none;
     }
 }

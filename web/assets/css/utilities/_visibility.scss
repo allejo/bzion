@@ -9,7 +9,7 @@
 
     .u-show#{$infix} {
         @include respond-up($bp) {
-            display: block;
+            display: unset;
         }
     }
 }
