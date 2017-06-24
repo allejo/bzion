@@ -12,7 +12,11 @@
 ] %}
 
 {% macro teamWidget(team) %}
-    <div class="c-team-widget bb mb2 pb2 d-flex">
+    <div class="c-team-widget bb mb2 pb2 d-flex"
+         data-name="{{ team.name }}"
+         data-status="{{ team.status }}"
+         data-elo="{{ team.elo }}"
+    >
         <div class="mr2">
             {{ team.rankImageLiteral | raw }}
         </div>
@@ -30,36 +34,50 @@
                 </div>
             </header>
 
-            <section>
-                <small class="mr2 d-block d-inline-sm"
-                       title="{{ team.name }}'s leader"
-                >
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    {{ link_to(team.leader) }}
-                </small>
+            <div class="row">
+                <section class="col-md-8">
+                    <small class="mr2 d-block d-inline-sm"
+                           title="{{ team.name }}'s leader"
+                    >
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        {{ link_to(team.leader) }}
+                    </small>
 
-                <small class="mr2 d-block d-inline-sm"
-                       title="{{ team.name }}'s member count"
-                >
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    {{ 'member' | plural(team.numMembers) }}
-                </small>
+                    <small class="mr2 d-block d-inline-sm"
+                           title="{{ team.name }}'s member count"
+                    >
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        {{ 'member' | plural(team.numMembers) }}
+                    </small>
 
-                <small class="d-block d-inline-sm"
-                       title="Matches per day"
-                >
-                    <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
-                    {{ team.activity | number_format(2) }}
-                </small>
-            </section>
+                    <small class="d-block d-inline-sm"
+                           title="Matches per day"
+                    >
+                        <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+                        {{ team.activity | number_format(2) }}
+                    </small>
+                </section>
 
-            <footer>
-                {% if me is valid and me.teamless and team.status == "open" %}
-                    <span>
-                        <a href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join Team</a>
-                    </span>
-                {% endif %}
-            </footer>
+                <footer class="col-md-4 text-right-md">
+                    {% if me is valid %}
+                        {% if me.teamless and team.status == "open" %}
+                            <small>
+                                <a href="{{ team.url('join') }}">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Join Team
+                                </a>
+                            </small>
+                        {% elseif me.team == team %}
+                            <small>
+                                <a href="{{ team.url('abandon') }}">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    Leave Team
+                                </a>
+                            </small>
+                        {% endif %}
+                    {% endif %}
+                </footer>
+            </div>
         </article>
     </div>
 {% endmacro %}
