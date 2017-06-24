@@ -55,13 +55,6 @@
             </div>
         <![endif]-->
 
-        {#<noscript>#}
-            {#<div class="c-system-alert">#}
-                {#<h1>Javascript is not enabled</h1>#}
-                {#<p>This website works better with Javascript, please enable it to take full advantage of these features.</p>#}
-            {#</div>#}
-        {#</noscript>#}
-
         {% if app.alertEnabled %}
             <div id="SystemAlert" class="collapsible-entity collapsible-entity--open" data-id="{{ app.alertId }}" data-savestatus="true">
                 <div class="c-system-alert">
@@ -82,14 +75,14 @@
             {#<i class="fa fa-check"></i><span></span>#}
         {#</div>#}
 
-        <section class="c-flashbag">
+        <div class="c-flashbag">
             {% for message in session.flashbag.all %}
-                <p class="c-flashbag__item c-alert c-alert--info">{{ message.0 }}</p>
+                <p class="c-flashbag__item c-alert c-alert--info">{{- message.0 -}}</p>
             {% endfor %}
-        </section>
+        </div>
 
         {% if app.debug %}
-            <section class="c-breakpoints">
+            <div class="c-breakpoints">
                 <div class="xxxl">xxxl</div>
                 <div class="xxl">xxl</div>
                 <div class="xl">xl</div>
@@ -97,7 +90,7 @@
                 <div class="md">md</div>
                 <div class="sm">sm</div>
                 <div class="xs">xs</div>
-            </section>
+            </div>
         {% endif %}
 
 
@@ -130,10 +123,10 @@
                     <div class="bb mb2 mb3-md p2">
                         <div class="container">
                             <div class="row align-items-center">
-                                <div class="col-lg-5">
+                                <div class="col-lg-7">
                                     {% block pageTitle %}{% endblock %}
                                 </div>
-                                <div class="col-lg-7 text-right u-hide u-show-lg">
+                                <div class="col-lg-5 text-right u-hide u-show-lg">
                                     {% for button in pageButtons %}
                                         {% if button.condition %}
                                             <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}">
