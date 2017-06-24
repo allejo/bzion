@@ -1,9 +1,13 @@
-// -----------------------------------------------------------------------------
-// This file contains the logic for reading, parsing, and registering new themes
-// to BZiON
-// -----------------------------------------------------------------------------
+////
+/// This file contains the logic for reading, parsing, and registering new themes to BZiON.
+///
+/// Read `themes/README.md` for an explanation on how to register themes in BZiON.
+////
 
-$registered_themes: (light, dark);
+$registered_themes: (
+    light,
+    dark,
+);
 $theme_definitions: ();
 
 @each $theme_name in $registered_themes {

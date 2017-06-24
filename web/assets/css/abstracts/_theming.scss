@@ -1,27 +1,74 @@
-// -----------------------------------------------------------------------------
-// This file contains Sass functions dedicated to handling our custom color
-// themes.
-// -----------------------------------------------------------------------------
+////
+/// This file contains Sass functions dedicated to handling our custom color themes.
+///
+/// --------------------------------------------------------------------------------------------------------------------
+///
+/// Theme definitions are written in YAML and are parsed into Sass maps. For example, here is a snippet of a theme.
+///
+/// ```yaml
+/// # dark.yml
+///
+/// body:
+///   background: "#21252c"
+///   color: "#ffffff"
+/// ```
+///
+/// Each value is called a "theme attribute" and when used from Sass, is read as a period separated string. For example,
+/// when using the `theme-rule()` mixin to access the above attributes, you'd do the following:
+///
+/// ```scss
+/// body {
+///   @include theme-rule(background-color, 'body.background');
+/// }
+/// ```
+///
+/// In this example, we'll be defining the `background-color` CSS rule with the value `#21252c` when the dark theme is
+/// active. Each period defines a new child in the hierarchy of the theme definition.
+///
+/// **Note:** Support for array values in theme definitions hasn't been written since there hasn't been a need for it.
+/// This is subject to change should the need arise for it.
+////
+
+
+/// Get the names of the available themes
+///
+/// @access public
+///
+/// @return {String[]}
+
+@function get-themes() {
+    @return map-keys($theme_definitions);
+}
+
+
+/// Get the value of a theme setting
+///
+/// @access public
+///
+/// @param {String} $theme-name      - The name of the theme
+/// @param {String} $theme-attribute - The period separated path of a specific attribute from a theme definition file
+///
+/// @return {*}
+
+@function get-theme-value($theme-name, $theme-attribute) {
+    @return map-deep-get(map-get($theme_definitions, $theme-name), str-explode($theme-attribute, '.'));
+}
+
 
 /// This function loops through all of the available themes and generates the appropriate
 /// CSS based on the theme definition
 ///
-/// @deprecated
+/// @access public
 ///
-/// @param {String} $rule
-///   The CSS keyword that will be effected based on the theme
-/// @param {String} $variable
-///   The name of the key used in the theme map
-/// @param {String} $function [""]
-///   The name of the function that will be called with `call()`
-/// @param {Number [unitless]} $nth [0]
-///   The index that the value will belong in with respect to the `call()` function
-/// @param {Arglist} $args
-///   The arguments that will be passed to the `call()` function
+/// @param {String} $css-rule           - The CSS keyword that will be effected based on the theme
+/// @param {String} $theme-attribute    - A period separated path of the attribute value
+/// @param {String} $function [""]      - The name of the function that will be called with `call()`
+/// @param {Number [unitless]} $nth [0] - The index that the value will belong in with respect to the `call()` function
+/// @param {Arglist} $args              - The arguments that will be passed to the `call()` function
 ///
 /// @example scss
 ///   a {
-///       @include theme-specific("color", "hyperlink");
+///       @include theme-rule(color, 'elements.anchor');
 ///   }
 ///
 /// @example css
@@ -35,7 +82,7 @@
 ///
 /// @example scss - Usage with w/function call
 ///   a {
-///       @include theme-specific("color", "link-color", darken, 1, 15%);
+///       @include theme-darken(color, 'elements.anchor', darken, 1, 15%);
 ///   }
 ///
 /// @example scss - Pseudo code of previous example
@@ -43,44 +90,23 @@
 ///       // We use index 1 because the fetched value is the first argument in the function call
 ///       color: darken(<'link-color' value @ index 1>, 15%);
 ///   }
-///
 
-@mixin theme-specific ($rule, $variable, $function: "", $nth: 0, $args...) {
-    @each $name, $settings in $themes {
+@mixin theme-rule ($css-rule, $theme-attribute, $function: "", $nth: 0, $args...) {
+    @each $theme in get-themes() {
         @at-root {
-            .t-#{$name} & {
-                $map: if(map-has-key($settings, $variable), $settings, $default);
-                $value: map-get($map, $variable);
-
-                @if $function == "" {
-                    #{$rule}: $value;
-                }
-                @else {
-                    $params: insert-nth($args, $nth, $value);
-
-                    #{$rule}: call($function, $params...);
-                }
-            }
-        }
-    }
-}
-
-@mixin theme-rule ($rule, $variable, $function: "", $nth: 0, $args...) {
-    @each $name, $settings in $theme_definitions {
-        @at-root {
-            .t-#{$name} & {
-                $value: map-deep-get($settings, str-explode($variable, '.'));
+            .t-#{$theme} & {
+                $value: get-theme-value($theme, $theme-attribute);
 
                 @if (is-color($value)) {
                     $value: to-color($value);
                 }
 
                 @if $function == "" {
-                    #{$rule}: $value;
+                    #{$css-rule}: $value;
                 }
                 @else {
                     $params: insert-nth($args, $nth, $value);
-                    #{$rule}: call($function, $params...);
+                    #{$css-rule}: call($function, $params...);
                 }
             }
         }
