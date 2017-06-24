@@ -11,5 +11,5 @@ $registered_themes: (
 $theme_definitions: ();
 
 @each $theme_name in $registered_themes {
-    $theme_definitions: map-set($theme_definitions, $theme_name, import-yaml("web/assets/css/themes/#{$theme_name}.yml"));
+    $theme_definitions: map-set($theme_definitions, $theme_name, import-yaml("assets/css/themes/#{$theme_name}.yml"));
 }
