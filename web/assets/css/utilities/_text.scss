@@ -10,13 +10,13 @@
     }
 }
 
-@each $size in (2, 3) {
+@each $size in (2, 3, 4, 5) {
     @each $bp in map-keys($breakpoints) {
         $infix: if($bp == xs, '', '-' + $bp);
 
         @include respond-up($bp) {
             .t#{$size}#{$infix} {
-                font-size: (16px * $size);
+                font-size: (16px * ($size * 0.75));
             }
         }
     }
