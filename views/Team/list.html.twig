@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% import _self as self %}
-
 {% set scopeClass = "s-teams" %}
 {% set pageButtons = [
     {
@@ -14,39 +12,56 @@
 ] %}
 
 {% macro teamWidget(team) %}
-    <article class="c-team-widget">
-        {{ team.rankImageLiteral | raw }}
-        <section class="c-team-widget__body">
-            <article class="c-team-widget__header">
-                <section class="c-team-widget__summary">
-                    <span class="c-team-widget__summary__name">{{ link_to(team) }}</span>
-                    <span class="c-team-widget__summary__elo">{{ team.elo }}</span>
-                </section>
+    <div class="c-team-widget bb mb2 pb2 d-flex">
+        <div class="mr2">
+            {{ team.rankImageLiteral | raw }}
+        </div>
 
-                <section class="c-team-widget__matches">
-                    <p>
-                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}" title="Wins">{{ team.matchesWon }}</a> -
-                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}" title="Losses">{{ team.matchesLost }}</a> -
-                        <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}" title="Draws">{{ team.matchesDraw }}</a>
-                    </p>
-                </section>
-            </article>
+        <article class="flex-grow">
+            <header class="row">
+                <div class="col-md-9">
+                    <span class="t2">{{ link_to(team) }}</span>
+                    <small title="{{ team.name }}'s ELO rating">({{ team.elo }})</small>
+                </div>
+                <div class="col-md-3 text-right u-hide u-show-md">
+                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'wins'}   )}}" title="Wins">{{ team.matchesWon }}</a> -
+                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'losses'} )}}" title="Losses">{{ team.matchesLost }}</a> -
+                    <a href="{{ path('match_by_team_list_sort', {team: team.alias, type: 'draws'}  )}}" title="Draws">{{ team.matchesDraw }}</a>
+                </div>
+            </header>
 
-            <article class="c-team-widget__details">
-                <span><i class="fa fa-star"></i> {{ link_to(team.leader) }}</span>
-                <span><i class="fa fa-users"></i> {{ 'member' | plural(team.numMembers) }}</span>
-                <span title="Team activity">
-                    <i class="fa fa-bar-chart-o"></i> {{ team.activity|number_format(2) }}
-                </span>
+            <section>
+                <small class="mr2 d-block d-inline-sm"
+                       title="{{ team.name }}'s leader"
+                >
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    {{ link_to(team.leader) }}
+                </small>
 
-                {% if me.teamless and team.status == "open" %}
+                <small class="mr2 d-block d-inline-sm"
+                       title="{{ team.name }}'s member count"
+                >
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    {{ 'member' | plural(team.numMembers) }}
+                </small>
+
+                <small class="d-block d-inline-sm"
+                       title="Matches per day"
+                >
+                    <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+                    {{ team.activity | number_format(2) }}
+                </small>
+            </section>
+
+            <footer>
+                {% if me is valid and me.teamless and team.status == "open" %}
                     <span>
                         <a href="{{ team.url('join') }}"><i class="fa fa-plus"></i> Join Team</a>
                     </span>
                 {% endif %}
-            </article>
-        </section>
-    </article>
+            </footer>
+        </article>
+    </div>
 {% endmacro %}
 
 {% block title %}Teams{% endblock %}
@@ -56,25 +71,37 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container o-section">
-        <section class="c-team-list__header">
-            <h2>Active Teams</h2>
-            <p>Wins - Losses - Draws</p>
-        </section>
+    <section class="container mb3">
+        <div class="row mb2">
+            <div class="col-md-8">
+                <h2 class="mb1">Active Teams</h2>
+            </div>
+            <div class="col-md-4 u-hide u-show-md text-right">
+                <p class="mb0">Wins - Losses - Draws</p>
+            </div>
+        </div>
 
-        {% for team in teams if team.activity > 0 %}
-            {{ self.teamWidget(team) }}
-        {% endfor %}
+        <div class="bb-last-reset mb-last-reset pb-last-reset">
+            {% for team in teams if team.activity > 0 %}
+                {{ _self.teamWidget(team) }}
+            {% endfor %}
+        </div>
     </section>
 
-    <section class="o-container o-section">
-        <section class="c-team-list__header">
-            <h2>Inactive Teams</h2>
-            <p>Wins - Losses - Draws</p>
-        </section>
+    <section class="container mb3">
+        <div class="row mb2">
+            <div class="col-md-8">
+                <h2 class="mb0">Inactive Teams</h2>
+            </div>
+            <div class="col-md-4 u-hide u-show-md text-right">
+                <p class="mb0">Wins - Losses - Draws</p>
+            </div>
+        </div>
 
-        {% for team in teams if team.activity == 0 %}
-            {{ self.teamWidget(team) }}
-        {% endfor %}
+        <div class="bb-last-reset mb-last-reset pb-last-reset">
+            {% for team in teams if team.activity == 0 %}
+                {{ _self.teamWidget(team) }}
+            {% endfor %}
+        </div>
     </section>
 {% endblock %}

@@ -100,12 +100,6 @@
 
 
 //
-// Styling for specific pages
-//
-@import 'pages/Teams/show';
-
-
-//
 // Layout
 //
 
@@ -113,6 +107,16 @@
 @import 'layout/header';
 @import 'layout/navigation';
 
+
+//
+// Styling for specific pages
+//
+@import 'pages/Teams/show';
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// CSS below here is being phased out or rewritten
+// ---------------------------------------------------------------------------------------------------------------------
 
 @import 'vendor/map-reverse';
 @import 'modules/utilities';
@@ -175,8 +179,6 @@
 //
 
 @import 'pages/Landing/jumbotron';
-
-@import 'pages/Teams/list';
 
 @import 'pages/Players/list';
 @import 'pages/Players/show';
