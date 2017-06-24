@@ -4,12 +4,12 @@ app/config.yml
 update.php
 vendor
 components
-!web/assets/css/components
+!assets/css/components
 cache
 logs
 reDB.sh
 web/assets/imgs/avatars
-!web/assets/css/vendor
+!assets/css/vendor
 web/bundles
 app/lastupdate.yml
 *.css.map

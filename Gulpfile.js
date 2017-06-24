@@ -60,9 +60,9 @@ gulp.task('dev:watch', function() {
     });
 
     gulp.watch([
-        'web/assets/css/themes/*.yml',
-        'web/assets/css/**/*.scss',
-        '!web/assets/css/vendor/**/*.scss'
+        'assets/css/themes/*.yml',
+        'assets/css/**/*.scss',
+        '!assets/css/vendor/**/*.scss'
     ], ['sass:dev']);
 
     gulp.watch([
@@ -176,7 +176,7 @@ gulp.task('sass:dev', function (cb) {
     var sourcemaps = require('gulp-sourcemaps');
 
     pump([
-        gulp.src('web/assets/css/styles.scss'),
+        gulp.src('assets/css/styles.scss'),
         sourcemaps.init(),
         sass(eyeglass({
             outputStyle: 'compact'
@@ -196,7 +196,7 @@ gulp.task('sass:dist', function (cb) {
     var removePrefixes = require('postcss-remove-prefixes');
 
     pump([
-        gulp.src('web/assets/css/styles.scss'),
+        gulp.src('assets/css/styles.scss'),
         sass(eyeglass({
             outputStyle: 'compressed'
         })),
@@ -219,7 +219,7 @@ gulp.task('sass:docs', function (cb) {
     var sassdoc = require('sassdoc');
 
     pump([
-        gulp.src('web/assets/css/abstracts/*.scss'),
+        gulp.src('assets/css/abstracts/*.scss'),
         sassdoc()
     ], cb);
 });
@@ -228,7 +228,7 @@ gulp.task('sass:test', function(cb) {
     var mocha = require('gulp-mocha');
 
     pump([
-        gulp.src('web/assets/css/tests/test.js', { read: false }),
+        gulp.src('assets/css/tests/test.js', { read: false }),
         mocha()
     ], cb);
 });
