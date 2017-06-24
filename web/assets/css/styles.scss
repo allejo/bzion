@@ -41,6 +41,7 @@
 //
 // Abstracts
 //
+@import 'abstracts/accessibility';
 @import 'abstracts/axes-builder';
 @import 'abstracts/borders';
 @import 'abstracts/color-mixins';
@@ -72,9 +73,11 @@
 //
 // Miscellaneous CSS helpers
 //
+@import 'utilities/accessibility';
 @import 'utilities/axes';
 @import 'utilities/display';
 @import 'utilities/flex';
+@import 'utilities/javascript';
 @import 'utilities/text';
 @import 'utilities/visibility';
 

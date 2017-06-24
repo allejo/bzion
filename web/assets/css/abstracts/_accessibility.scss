@@ -1,0 +1,10 @@
+@mixin disableScreenReaderOnly() {
+    border: unset;
+    clip: unset;
+    height: unset;
+    margin: unset;
+    overflow: unset;
+    padding: unset;
+    position: unset;
+    width: unset;
+}

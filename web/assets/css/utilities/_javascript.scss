@@ -1,0 +1,11 @@
+.no-js {
+    .js-only {
+        display: none;
+    }
+}
+
+.js {
+    .js-only {
+        display: block;
+    }
+}
