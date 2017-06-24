@@ -10,7 +10,7 @@
         {%- endif -%}
     {%- endif -%}
     {%- if icon is not empty -%}
-        {% set fa_icon = '<i class="fa fa-%s"></i> ' | format(icon) %}
+        {% set fa_icon = '<i class="fa fa-%s" aria-hidden="true"></i> ' | format(icon) %}
     {%- endif -%}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ fa_icon | raw }}{{ label }}</button>
 {%- endblock button_widget -%}
@@ -84,7 +84,7 @@
     {%- if errors|length > 0 -%}
         <section class="c-form__errors o-row">
             <aside class="c-form__errors__icon">
-                <i class="fa fa-exclamation-circle"></i>
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
             </aside>
             <ul>
                 {%- for error in errors -%}
