@@ -100,6 +100,12 @@
 
 
 //
+// Styling for specific pages
+//
+@import 'pages/Teams/show';
+
+
+//
 // Layout
 //
 
@@ -171,7 +177,6 @@
 @import 'pages/Landing/jumbotron';
 
 @import 'pages/Teams/list';
-@import 'pages/Teams/show';
 
 @import 'pages/Players/list';
 @import 'pages/Players/show';

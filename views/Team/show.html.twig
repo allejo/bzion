@@ -2,6 +2,7 @@
 {% from 'utilities.html.twig' import timestamp %}
 {% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
 
+{% set pageWideCSS = 's-team__show' %}
 {% set opengraph = {
     url: team.url | canonical,
     type: 'article',
@@ -64,24 +65,30 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-lg-3">
-                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}"
-                     class="u-image-responsive mb2"
-                     alt="Profile picture for {{ team.name }}"
-                >
+            <div class="col-lg-3 mb3 mb0-lg">
+                <div class="row">
+                    <div class="col-xs-8 offset-xs-2 col-sm-6 offset-sm-3 col-md-4 offset-md-reset col-lg-12">
+                        <img src="{{ team.avatar | imagine_filter('huge_thumb') }}"
+                             class="u-image-responsive mb2"
+                             alt="Profile picture for {{ team.name }}"
+                        >
+                    </div>
 
-                <p class="mb0"><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
-                <p class="mb0"><strong>Activity:</strong>
-                    <span title="{{ team.activity|number_format(3) }}">
-                        {{ team.activity|number_format(2) }}
-                    </span>
-                    matches per day
-                </p>
+                    <div class="col-md-8 col-lg-12">
+                        <p class="mb0"><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
+                        <p class="mb0"><strong>Activity:</strong>
+                            <span title="{{ team.activity|number_format(3) }}">
+                                {{ team.activity|number_format(2) }}
+                            </span>
+                            matches per day
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-9">
-                <div class="c-tabs">
-                    <ul class="c-tabs__header" role="tablist">
+                <div class="c-tabs c-tabs--profile">
+                    <ul class="c-tabs__header" role="tablist" aria-hidden="true">
                         {# "Overview" Tab #}
                         <li id="tabs__header__overview"
                             role="tab"
@@ -126,7 +133,7 @@
                     <div class="c-tabs__canvas">
                         {# "Overview" panel #}
                         <div id="tabs__panel__overview"
-                             class="c-tabs__panel"
+                             class="c-tabs__panel mb3"
                              role="tabpanel"
                              aria-labelledby="tabs__header__overview"
                              aria-hidden="false"
@@ -148,7 +155,7 @@
                              class="c-tabs__panel"
                              role="tabpanel"
                              aria-labelledby="tabs__header__statistics"
-                             aria-hidden="true"
+                             aria-hidden="false"
                         >
                             <div class="row">
                                 <div class="col-lg-6">
@@ -185,12 +192,26 @@
                                             }
                                         } %}
 
-                                        <div id="team-matches-pie"
-                                             class="ct-chart ct-minor-seventh c-chart c-chart--pie mb2"
-                                             data-graph="pie"
-                                             data-chart="{{ matchBreakdownGraph | json_encode }}"
-                                             aria-hidden="true"
-                                        ></div>
+                                        <div class="js-only">
+                                            <div id="team-matches-pie"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--pie mb2"
+                                                 data-graph="pie"
+                                                 data-chart="{{ matchBreakdownGraph | json_encode }}"
+                                                 aria-hidden="true"
+                                            ></div>
+
+                                            <ul class="c-legend" aria-hidden="true">
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
+                                                </li>
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'loss' | plural(team.matchesLost) }}
+                                                </li>
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-c" aria-hidden="true"></div> {{ 'draw' | plural(team.matchesDraw) }}
+                                                </li>
+                                            </ul>
+                                        </div>
 
                                         {{ accessible_pie(
                                             "A breakdown of the number of wins, losses, and draws of " ~ team.name,
@@ -199,18 +220,6 @@
                                                 'class': ['c-table', 'c-table--wld']
                                             }
                                         ) }}
-
-                                        <ul class="c-legend">
-                                            <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
-                                            </li>
-                                            <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'loss' | plural(team.matchesLost) }}
-                                            </li>
-                                            <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--series-c" aria-hidden="true"></div> {{ 'draw' | plural(team.matchesDraw) }}
-                                            </li>
-                                        </ul>
                                     </section>
                                 </div>
                                 <div class="col-lg-6">
@@ -248,11 +257,24 @@
                                                 'labels': 'Month'
                                             }
                                         } %}
-                                        <div id="team-match-activity"
-                                             class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
-                                             data-graph="line"
-                                             data-chart="{{ matchData | json_encode }}"
-                                        ></div>
+
+                                        <div class="js-only">
+                                            <div id="team-match-activity"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+                                                 data-graph="line"
+                                                 data-chart="{{ matchData | json_encode }}"
+                                            ></div>
+
+                                            <ul class="c-legend">
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'match' | plural(team.numTotalMatches) }}
+                                                </li>
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                         {{ accessible_line(
                                             "A summary of the number of victories to total matches per month since the team's inception.",
                                             matchData,
@@ -260,15 +282,6 @@
                                                 'class': ['c-table', 'c-table--activity']
                                             }
                                         ) }}
-
-                                        <ul class="c-legend">
-                                            <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'match' | plural(team.numTotalMatches) }}
-                                            </li>
-                                            <li class="c-legend__item">
-                                                <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
-                                            </li>
-                                        </ul>
                                     </section>
                                 </div>
                             </div>
@@ -279,7 +292,7 @@
                              class="c-tabs__panel"
                              role="tabpanel"
                              aria-labelledby="tabs__header__members"
-                             aria-hidden="true"
+                             aria-hidden="false"
                         >
                             <h4 class="mb2">Led By</h4>
                             {% set leader = team.leader %}
@@ -294,7 +307,7 @@
                             <h4 class="mb2">Members</h4>
                             <div class="row">
                                 {% for player in team.members if player != leader %}
-                                    <div class="col-lg-6 d-flex align-items-center">
+                                    <div class="col-lg-6 mb2 d-flex align-items-center">
                                         {% include 'Player/widget.html.twig' with {
                                             player: player,
                                             attrs: {
@@ -321,8 +334,9 @@
                              class="c-tabs__panel"
                              role="tabpanel"
                              aria-labelledby="tabs__header__matches"
-                             aria-hidden="true"
+                             aria-hidden="false"
                         >
+                            <h4 class="mb2">Recent Matches</h4>
                             <div class="row">
                                 {% for match in team.matches('all', 6) %}
                                     <div class="col-lg-6 mb2">

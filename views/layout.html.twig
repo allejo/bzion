@@ -55,12 +55,12 @@
             </div>
         <![endif]-->
 
-        <noscript>
-            <div class="c-system-alert">
-                <h1>Javascript is not enabled</h1>
-                <p>This website works better with Javascript, please enable it to take full advantage of these features.</p>
-            </div>
-        </noscript>
+        {#<noscript>#}
+            {#<div class="c-system-alert">#}
+                {#<h1>Javascript is not enabled</h1>#}
+                {#<p>This website works better with Javascript, please enable it to take full advantage of these features.</p>#}
+            {#</div>#}
+        {#</noscript>#}
 
         {% if app.alertEnabled %}
             <div id="SystemAlert" class="collapsible-entity collapsible-entity--open" data-id="{{ app.alertId }}" data-savestatus="true">
