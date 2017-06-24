@@ -13,9 +13,6 @@
 [submodule "web/assets/css/vendor/OnTheRocks"]
 	path = assets/css/vendor/OnTheRocks
 	url = https://github.com/allejo/OnTheRocks.git
-[submodule "web/includes/markdown-it"]
-	path = web/includes/markdown-it
-	url = https://github.com/markdown-it/markdown-it.git
 [submodule "web/assets/css/vendor/SassyCast"]
 	path = assets/css/vendor/SassyCast
 	url = https://github.com/HugoGiraudel/SassyCast.git

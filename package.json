@@ -20,6 +20,7 @@
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.2.1",
     "jquery": "^3.2.1",
+    "markdown": "^0.5.0",
     "modernizr": "^3.5.0",
     "modernizr-webpack-plugin": "^1.0.6",
     "node-sass": "^4.5.3",
