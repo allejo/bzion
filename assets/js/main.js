@@ -4,4 +4,5 @@ $(function () {
     require('./src/menu')();
     require('./src/tabs')();
     require('./src/md-editor')();
+    require('./src/charts')();
 });

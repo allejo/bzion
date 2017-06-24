@@ -1,0 +1,9 @@
+a {
+    @include theme-rule(color, 'elements.anchor');
+
+    text-decoration: none;
+
+    &:hover {
+        @include theme-rule(color, 'elements.anchor', shade, 1, 15%);
+    }
+}

@@ -1,3 +1,11 @@
+.c-mobilemenu {
+    padding: 0 15px 0 10px;
+
+    @include respond-up(lg) {
+        display: none;
+    }
+}
+
 // The entire top navigation bar
 .c-header {
     @include theme-rule(background, 'navigation.background');
@@ -14,14 +22,6 @@
 
     i {
         font-size: 18px;
-    }
-}
-
-.c-mobilemenu {
-    padding: 0 15px 0 10px;
-
-    @include respond-up(md) {
-        display: none;
     }
 }
 
@@ -46,5 +46,5 @@
     font-size: 11px;
     line-height: 16px;
     padding: 0 4px;
-    text-shadow: 0 1px #902A27;
+    text-shadow: 0 1px #902a27;
 }

@@ -1,0 +1,69 @@
+{% macro accessible_pie(caption, data, attrs) %}
+    {% from 'utilities.html.twig' import html_attr %}
+
+    {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
+    {% set attrs = attrs | extend_hash({ 'class': ['sr-only'] }) %}
+
+    <table {{ html_attr(attrs) }} >
+        <caption>{{ caption }}</caption>
+        <thead>
+            <tr>
+                {% for col in data.table.cols %}
+                    <th scope="col">{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data.series %}
+                <tr>
+                    {% for value in data.table.values %}
+                        {% set embedData = {
+                            'series': row,
+                            'meta': data.meta,
+                        } %}
+
+                        {%- if loop.first %}<th scope="row">{% else %}<td>{% endif -%}
+
+                        {{- value | evaluate(embedData) | raw | trim -}}
+
+                        {%- if loop.first %}</th>{% else %}</td>{% endif -%}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro accessible_line(caption, data, attrs) %}
+    {% from 'utilities.html.twig' import html_attr %}
+
+    {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
+    {% set attrs = attrs | extend_hash({ 'class': ['sr-only'] }) %}
+
+    <table {{ html_attr(attrs) }} >
+        <caption>{{ caption }}</caption>
+        <thead>
+            <tr>
+                <th scope="col">{{ data.meta.labels }}</th>
+
+                {% for series in data.meta.series %}
+                    <th scope="col">{{ series }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in data.series | first %}
+                {% set label = data.labels[loop.index0] %}
+                {% if label != '' %}
+                    <tr>
+                        <td scope="row">{{ label }}</td>
+
+                        {% for series in data.series | keys %}
+                            <td>{{ data.series[series][loop.parent.loop.index0] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

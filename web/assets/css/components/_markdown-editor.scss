@@ -1,0 +1,47 @@
+.c-mde {}
+
+.c-mde__toolbar {
+    @include ul-horizontal();
+    @include theme-rule(background-color, 'navigation.background');
+
+    margin-bottom: 0;
+    padding: 10px 10px 0;
+
+    li {
+        @include theme-rule(color, 'body.color');
+        @include border-top-radius(5px);
+
+        cursor: pointer;
+        padding: 10px;
+
+        &:hover {
+            @include theme-rule(background-color, 'navigation.background', tint, 1, 5%);
+        }
+
+        &[aria-selected='true'] {
+            @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
+        }
+
+        .fa {
+            @extend %fa-fw;
+        }
+    }
+}
+
+.c-mde__canvas {
+    @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
+
+    padding: 15px;
+
+    textarea {
+        min-height: 400px;
+    }
+
+    .c-mde__panel {
+        display: none;
+
+        &[aria-hidden='false'] {
+            display: block;
+        }
+    }
+}

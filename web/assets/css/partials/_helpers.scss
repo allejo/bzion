@@ -16,22 +16,6 @@
     }
 }
 
-.css-dev {
-    background-color: red;
-    bottom: 0;
-    color: $Color-White;
-    display: block;
-    padding: 0 5px;
-    position: fixed;
-    text-align: center;
-
-    @each $size in map-keys($breakpoints) {
-        .#{$size} {
-            @include visible($size);
-        }
-    }
-}
-
 .u-hide-on-empty {
     &:empty {
         display: none;

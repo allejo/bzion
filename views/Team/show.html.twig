@@ -1,5 +1,8 @@
 {% extends 'layout.html.twig' %}
+{% from 'utilities.html.twig' import timestamp %}
+{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
 
+{% set pageWideCSS = 's-team__show' %}
 {% set opengraph = {
     url: team.url | canonical,
     type: 'article',
@@ -17,11 +20,11 @@
         'condition': me.canEdit(team)
     },
     {
-        color: 'blue',
-        url: path('message_compose', { recipients: 'team:' ~ team.id }),
-        icon: 'send',
-        text: 'Send Message',
-        condition: me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
+        'color': 'blue',
+        'url': path('message_compose', { recipients: 'team:' ~ team.id }),
+        'icon': 'send',
+        'text': 'Send Message',
+        'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     },
     {
         'color': 'grey',
@@ -49,166 +52,336 @@
 {% block title %}Teams :: {{ team.name }}{% endblock %}
 
 {% block pageTitle %}
-    {{ team.rankImageLiteral | raw }}
+    <div class="d-flex">
+        {{ team.rankImageLiteral | raw }}
 
-    <div class="c-team-title">
-        <h1>
-            {%- if app.urlType == 'vanity' -%}
-                <a href="{{ team.permaLink }}">{{ team.name }}</a>
-            {%- else -%}
-                <a href="{{ team.url('show', false, [], true) }}">{{ team.name }}</a>
-            {%- endif -%}
-        </h1>
-        <small>{{ team.elo }}</small>
+        <div class="ml1">
+            <h1 class="mb0 u-font-weight-100">{{- team.name -}}</h1>
+            <small title="{{ team.name }}'s ELO rating">{{- team.elo -}}</small>
+        </div>
     </div>
 {% endblock %}
 
 {% block content %}
-    <section class="o-container c-team">
-        <section class="o-row o-section">
-            <section class="o-col--aside c-team__profile-picture">
-                <img src="{{ team.avatar | imagine_filter('huge_thumb') }}" class="team_avatar">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 mb3 mb0-lg">
+                <div class="row">
+                    <div class="col-xs-8 offset-xs-2 col-sm-6 offset-sm-3 col-md-4 offset-md-reset col-lg-12">
+                        <img src="{{ team.avatar | imagine_filter('huge_thumb') }}"
+                             class="u-image-responsive mb2"
+                             alt="Profile picture for {{ team.name }}"
+                        >
+                    </div>
 
-                <div class="c-team__profile-picture__link">
-                    {%- if app.urlType == 'vanity' -%}
-                        <p><strong>Permalink</strong></p>
-                        <input type="text" value="{{ request.schemeAndHTTPHost }}{{ team.permaLink }}" disabled />
-                    {%- else -%}
-                        <p><strong>Vanity URL</strong></p>
-                        <input type="text" value="{{ request.schemeAndHTTPHost }}{{ team.url('show', false, [], true) }}" disabled />
-                    {%- endif -%}
+                    <div class="col-md-8 col-lg-12">
+                        <p class="mb0"><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
+                        <p class="mb0"><strong>Activity:</strong>
+                            <span title="{{ team.activity|number_format(3) }}">
+                                {{ team.activity|number_format(2) }}
+                            </span>
+                            matches per day
+                        </p>
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <section class="o-col--main c-team__information">
-                <p><strong>Founded:</strong> {{ team.creationDate | humanTime(constant('TimeDate::DATE_FULL'), tooltip = false) }}</p>
-                <p><strong>Activity:</strong>
-                    <span title="{{ team.activity|number_format(3) }}">
-                        {{ team.activity|number_format(2) }}
-                    </span>
-                    matches per day
-                </p>
-                {% spaceless %}
-                    <article class="c-team__information__bio s-markdown u-hide-on-empty">
-                        {{ team.description | markdown }}
-                    </article>
-                {% endspaceless %}
-            </section>
-        </section>
+            <div class="col-lg-9">
+                <div class="c-tabs c-tabs--profile">
+                    <ul class="c-tabs__header" role="tablist" aria-hidden="true">
+                        {# "Overview" Tab #}
+                        <li id="tabs__header__overview"
+                            role="tab"
+                            aria-controls="tabs__panel__overview"
+                            aria-selected="true"
+                            tabindex="0"
+                        >
+                            Overview
+                        </li>
 
-        <section class="o-row o-section">
-            <section class="o-col--half c-team__match-stats">
-                <h4>Match Statistics</h4>
-                <section class="c-team__stats__container">
-                    <canvas id="teamMatchStats" class="c-team__stats__graph"></canvas>
-                    <ul class="c-team__stats__legend">
-                        <li>
-                            <div id="winsColor" class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
+                        {# "Statistics" Tab #}
+                        <li id="tabs__header__statistics"
+                            role="tab"
+                            aria-controls="tabs__panel__statistics"
+                            aria-selected="false"
+                            tabindex="0"
+                        >
+                            Statistics
                         </li>
-                        <li>
-                            <div id="lossColor" class="losses"></div> {{ 'loss'|plural(team.matchesLost) }}
+
+                        {# "Members" Tab #}
+                        <li id="tabs__header__members"
+                            role="tab"
+                            aria-controls="tabs__panel__members"
+                            aria-selected="false"
+                            tabindex="0"
+                        >
+                            Members
                         </li>
-                        <li>
-                            <div id="drawColor" class="draws"></div> {{ 'draw'|plural(team.matchesDraw) }}
+
+                        {# "Matches" Tab #}
+                        <li id="tabs__header__matches"
+                            role="tab"
+                            aria-controls="tabs__panel__matches"
+                            aria-selected="false"
+                            tabindex="0"
+                        >
+                            Matches
                         </li>
                     </ul>
-                </section>
-            </section>
 
-            <section class="o-col--half c-team__activity">
-                <h4>Team Activity</h4>
-                <section class="c-team__stats__container">
-                    <canvas id="teamActivityStats" class="c-team__stats__graph"></canvas>
-                    <ul class="c-team__stats__legend">
-                        <li>
-                            <div id="drawColor" class="draws"></div> {{ 'match'|plural(team.numTotalMatches) }}
-                        </li>
-                        <li>
-                            <div id="winsColor" class="wins"></div> {{ 'win'|plural(team.matchesWon) }}
-                        </li>
-                    </ul>
-                </section>
-            </section>
-        </section>
-
-        <section class="o-row o-section">
-            <section class="o-col--half c-team__roster">
-                <h4>Team Members</h4>
-                <article class="c-table c-table--no-border c-table--no-hover">
-                    {% for player in team.members %}
-                        <div class="c-table__row">
-                            {% if me.canEdit(team) %}
-                                <div class="c-table__row__column c-team__roster__option">
-                                    <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}" title="Kick {{ player.username }} from team">
-                                        <i class="fa fa-eject"></i>
-                                    </a>
-                                </div>
+                    <div class="c-tabs__canvas">
+                        {# "Overview" panel #}
+                        <div id="tabs__panel__overview"
+                             class="c-tabs__panel mb3"
+                             role="tabpanel"
+                             aria-labelledby="tabs__header__overview"
+                             aria-hidden="false"
+                        >
+                            {% set bio = team.description | markdown %}
+                            {% if bio | length > 0 %}
+                                <article class="s-markdown">
+                                    {{ bio | raw }}
+                                </article>
+                            {% else %}
+                                <article>
+                                    <p>This team prefers to keep a certain air of mystery.</p>
+                                </article>
                             {% endif %}
+                        </div>
 
-                            <div class="c-table__row__column c-team__roster__callsign">
-                                {{ player.country.flagLiteral | raw }} {{ link_to(player) }}
+                        {# "Statistics" panel #}
+                        <div id="tabs__panel__statistics"
+                             class="c-tabs__panel"
+                             role="tabpanel"
+                             aria-labelledby="tabs__header__statistics"
+                             aria-hidden="false"
+                        >
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Match Statistics</h4>
+                                    <section class="c-team__stats__container flex-column">
+                                        {% set matchBreakdownGraph = {
+                                            'series': [
+                                                {
+                                                    'value': team.matchesWon,
+                                                    'name': 'Wins',
+                                                    'className': 'ct-series-a'
+                                                },
+                                                {
+                                                    'value': team.matchesLost,
+                                                    'name': 'Losses',
+                                                    'className': 'ct-series-b'
+                                                },
+                                                {
+                                                    'value': team.matchesDraw,
+                                                    'name': 'Draws',
+                                                    'className': 'ct-series-c'
+                                                }
+                                            ],
+                                            'table': {
+                                                'cols': ['Result', 'Count', 'Percent'],
+                                                'values': [
+                                                    '{{ series.name }}',
+                                                    '{{ series.value }}',
+                                                    '{{ ((series.value / meta.sum) * 100) | round }}%'
+                                                ]
+                                            },
+                                            'meta': {
+                                                'sum': team.matchesWon + team.matchesLost + team.matchesDraw
+                                            }
+                                        } %}
 
-                                {% if player ~~ team.leader %}
-                                    <i class="fa fa-star" title="Team Leader"></i>
-                                {% endif %}
+                                        <div class="js-only">
+                                            <div id="team-matches-pie"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--pie mb2"
+                                                 data-graph="pie"
+                                                 data-chart="{{ matchBreakdownGraph | json_encode }}"
+                                                 aria-hidden="true"
+                                            ></div>
+
+                                            <ul class="c-legend" aria-hidden="true">
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
+                                                </li>
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'loss' | plural(team.matchesLost) }}
+                                                </li>
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-c" aria-hidden="true"></div> {{ 'draw' | plural(team.matchesDraw) }}
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {{ accessible_pie(
+                                            "A breakdown of the number of wins, losses, and draws of " ~ team.name,
+                                            matchBreakdownGraph,
+                                            {
+                                                'class': ['c-table', 'c-table--wld']
+                                            }
+                                        ) }}
+                                    </section>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4>Team Activity</h4>
+                                    <section class="c-team__stats__container flex-column">
+                                        {% set matchLabels %}
+                                            {%- set labelPeriod = ((matches|length) / 12)|round ?: 1 %}
+                                            {%- for date in matches | keys -%}
+                                                {%- set farEnoughFromEdge = loop.revindex > (matches|length) / 20 -%}
+                                                {%- if loop.last or (loop.index % labelPeriod == 0 and farEnoughFromEdge) -%}
+                                                    {{ date | date("M 'y") | raw }},
+                                                {%- else -%}
+                                                    ,
+                                                {%- endif -%}
+                                            {%- endfor -%}
+                                        {% endset %}
+
+                                        {% set winAmounts = [] %}
+                                        {% for date in matches|keys %}
+                                            {% set winAmounts = winAmounts | merge([wins[date] | default(0)]) %}
+                                        {% endfor %}
+
+                                        {# Toss the first ',' with [1:] #}
+                                        {% set matchData = {
+                                            'series': [
+                                                matches | values,
+                                                winAmounts,
+                                            ],
+                                            'labels': matchLabels[1:] | split(','),
+                                            'meta': {
+                                                'series': [
+                                                    'Number of matches per month',
+                                                    'Number of victories per month',
+                                                ],
+                                                'labels': 'Month'
+                                            }
+                                        } %}
+
+                                        <div class="js-only">
+                                            <div id="team-match-activity"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+                                                 data-graph="line"
+                                                 data-chart="{{ matchData | json_encode }}"
+                                            ></div>
+
+                                            <ul class="c-legend">
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-a" aria-hidden="true"></div> {{ 'match' | plural(team.numTotalMatches) }}
+                                                </li>
+                                                <li class="c-legend__item">
+                                                    <div class="c-legend__box c-legend__box--series-b" aria-hidden="true"></div> {{ 'win' | plural(team.matchesWon) }}
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {{ accessible_line(
+                                            "A summary of the number of victories to total matches per month since the team's inception.",
+                                            matchData,
+                                            {
+                                                'class': ['c-table', 'c-table--activity']
+                                            }
+                                        ) }}
+                                    </section>
+                                </div>
                             </div>
                         </div>
-                    {% endfor %}
-                </article>
-            </section>
 
-            <section class="o-col--half c-team__matches">
-                <h4>Recent Matches</h4>
-                <article class="c-table c-table--no-border c-table--no-hover">
-                    {% for match in team.matches %}
-                        <a class="c-table__row c-team__match" href="{{ match.url }}">
-                            <span class="c-table__row__column c-team__match__date">
-                                {{ match.timestamp | humanTime('D, M d') }}
-                            </span>
-                            <span class="c-table__row__column c-team__match__opponent">
-                                <strong>vs.</strong> {{ match.opponent(team.id).name }}
-                            </span>
-                            <span class="c-table__row__column c-team__match__score">
-                                <strong class="u-match-outcome">{{ match.matchLetter(team.id) }}</strong> {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
-                            </span>
-                        </a>
-                    {% endfor %}
-                    <a class="c-table__row c-team__matches__more" href="{{ path('match_by_team_list', { team: team.alias }) }}">
-                        View more matches...
-                    </a>
-                </article>
-            </section>
-        </section>
-    </section>
-{% endblock %}
+                        {# "Members" panel #}
+                        <div id="tabs__panel__members"
+                             class="c-tabs__panel"
+                             role="tabpanel"
+                             aria-labelledby="tabs__header__members"
+                             aria-hidden="false"
+                        >
+                            <h4 class="mb2">Led By</h4>
+                            {% set leader = team.leader %}
 
-{% block jsCustom %}
-    <script src="{{ asset('includes/chartjs/Chart.min.js') }}"></script>
-    <script>
-        var teamWins   = {{ team.matchesWon }};
-        var teamLosses = {{ team.matchesLost }};
-        var teamDraws  = {{ team.matchesDraw }};
+                            {% include 'Player/widget.html.twig' with {
+                                player: leader,
+                                attrs: {
+                                    class: 'mb2'
+                                }
+                            } %}
 
-        {%- set labelPeriod = ((matches|length) / 12)|round ?: 1 %}
-        var matchDates = [
-            {%- for date in matches|keys -%}
-                {%- set farEnoughFromEdge = loop.revindex > (matches|length)/20 -%}
-                {%- if loop.last or (loop.index % labelPeriod == 0 and farEnoughFromEdge) -%}
-                    "{{ date }}",
-                {%- else -%}
-                    "",
-                {%- endif -%}
-            {%- endfor -%}
-        ];
+                            <h4 class="mb2">Members</h4>
+                            <div class="row">
+                                {% for player in team.members if player != leader %}
+                                    <div class="col-lg-6 mb2 d-flex align-items-center">
+                                        {% include 'Player/widget.html.twig' with {
+                                            player: player,
+                                            attrs: {
+                                                class: 'flex-grow'
+                                            }
+                                        } %}
 
-        var matchCounts = [
-            {% for count in matches %}{{ count }},{% endfor %}
-        ];
+                                        {% if me.canEdit(team) %}
+                                            <div>
+                                                <a href="{{ path('team_kick', {team: team.alias, player: player.alias}) }}"
+                                                   title="Kick {{ player.username }} from team">
+                                                    <i class="fa fa-fw fa-eject" aria-hidden="true"></i>
+                                                    <span class="sr-only">Kick {{ player.username }} from team</span>
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
 
-        var winCounts = [
-            {# Don't show bad data if keys are screwed up #}
-            {% for date in matches|keys %}{{ wins[date]|default(0) }},{% endfor %}
-        ];
-    </script>
-    <script src="{{ asset('assets/js/min/teams.js') }}"></script>
+                        {# "Matches" panel #}
+                        <div id="tabs__panel__matches"
+                             class="c-tabs__panel"
+                             role="tabpanel"
+                             aria-labelledby="tabs__header__matches"
+                             aria-hidden="false"
+                        >
+                            <h4 class="mb2">Recent Matches</h4>
+                            <div class="row">
+                                {% for match in team.matches('all', 6) %}
+                                    <div class="col-lg-6 mb2">
+                                        <article class="d-flex align-items-center">
+                                            <div class="mr2">
+                                                {{ timestamp(match.timestamp) }}
+                                            </div>
+
+                                            <div class="flex-grow">
+                                                <p class="mb0">
+                                                    <span class="sr-only">{{ match.matchDescription(team.id) }}</span>
+                                                    <strong aria-hidden="true"
+                                                            title="{{ match.matchDescription(team.id) }}"
+                                                    >
+                                                        {{ match.matchLetter(team.id) }}
+                                                    </strong>
+
+                                                    {{ match.score(team.id) }} - {{ match.opponentScore(team.id) }}
+                                                </p>
+                                                <p class="mb0">vs. {{ link_to(match.opponent(team.id)) }}</p>
+                                            </div>
+
+                                            <div class="bl">
+                                                <a class="d-block pl2 pr1"
+                                                   href="{{ match.url }}">
+                                                    <i class="fa fa-angle-right t2" aria-hidden="true"></i>
+                                                    <span class="sr-only">See match details</span>
+                                                </a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="by text-center">
+                                <a class="d-block p2"
+                                   href="{{ path('match_by_team_list', { team: team.alias }) }}"
+                                >
+                                    View more matches...
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

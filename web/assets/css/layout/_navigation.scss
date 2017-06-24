@@ -20,20 +20,25 @@
     width: 100%;
     z-index: 100;
 
-    @include respond-up(md) {
+    @include respond-up(lg) {
         display: flex;
         position: static;
     }
 
     li {
-        @include respond-only-to(sm) {
+        @include respond-down(md) {
             margin-left: auto;
             margin-right: auto;
-            width: map-get($breakpoints, sm) - 30px;
 
             a {
                 padding-left: 0;
                 padding-right: 0;
+            }
+        }
+
+        @each $bp in (xs, sm, md) {
+            @include respond-only-to($bp) {
+                width: map-get($breakpoints, $bp) - 30px;
             }
         }
 
@@ -58,7 +63,7 @@
 
 .c-site_pages__action,
 .c-site_pages__separator {
-    @include respond-up(md) {
+    @include respond-up(lg) {
         display: none;
     }
 }

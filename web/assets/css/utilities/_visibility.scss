@@ -1,0 +1,15 @@
+@each $bp in map-keys($breakpoints) {
+    $infix: if($bp == xs, '', '-' + $bp);
+
+    .u-hide#{$infix} {
+        @include respond-up($bp) {
+            display: none;
+        }
+    }
+
+    .u-show#{$infix} {
+        @include respond-up($bp) {
+            display: unset;
+        }
+    }
+}

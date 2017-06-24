@@ -1,0 +1,59 @@
+.c-tabs {}
+
+.c-tabs--profile {
+    .c-tabs__header {
+        display: none;
+
+        @include respond-up(md) {
+            display: block;
+        }
+    }
+}
+
+.c-tabs__header {
+    @include ul-horizontal();
+    @include theme-rule(border-bottom, 'border.default');
+
+    margin-bottom: 15px;
+
+    li {
+        cursor: pointer;
+        padding: 10px 30px;
+        position: relative;
+
+        &[aria-selected='true'] {
+            &::after {
+                @include position(absolute, null, null, -1px, 0);
+
+                border-bottom: 5px solid blue;
+                content: '';
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.c-tabs__canvas {
+    .c-tabs__panel {
+        display: none;
+
+        &[aria-hidden='false'] {
+            display: block;
+        }
+    }
+}
+
+
+//
+// JS disabled rule sets should always got at the end of the Sass file in order to take supersede any other previous
+// rules.
+//
+
+.no-js {
+    .c-tabs {
+        .c-tabs__header {
+            display: none;
+        }
+    }
+}

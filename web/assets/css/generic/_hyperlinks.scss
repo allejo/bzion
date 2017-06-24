@@ -1,9 +1,0 @@
-a {
-    @include theme-specific('color', 'link-color');
-
-    text-decoration: none;
-
-    &:hover {
-        @include theme-specific('color', 'link-color', darken, 1, 15%);
-    }
-}

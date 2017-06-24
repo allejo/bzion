@@ -1,0 +1,64 @@
+.c-legend {
+    @include ul-horizontal();
+
+    text-align: center;
+}
+
+.c-legend__item {
+    margin-right: 15px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.c-legend__box {
+    @include size(15px);
+
+    display: inline-block;
+}
+
+@each $series in (a, b, c, d, e) {
+    .c-legend__box--series-#{$series} {
+        @include theme-rule(background-color, "charts.series.#{$series}");
+    }
+}
+
+// This is not a typo; '.ct-chart' is a class created by Chartist.js and `.c-chart` is our own internal class used for
+// styling
+.c-chart {
+    text {
+        font-weight: 800;
+    }
+}
+
+@each $series in (a, b, c, d, e) {
+    .c-chart--pie {
+        // This is not a typo; Chartist.js is putting in these classes even though we're defining the name, it's still
+        // being put in by the library so it's not a class we're creating in Sass.
+        .ct-series-#{$series} > path {
+            @include theme-rule(fill, "charts.series.#{$series}");
+        }
+    }
+
+    .c-chart--line {
+        .ct-series-#{$series} > path {
+            @include theme-rule(stroke, "charts.series.#{$series}");
+        }
+    }
+}
+
+.ct-chart-line {
+    .ct-grids line {
+        @include theme-rule(stroke, 'charts.line.grid');
+    }
+
+    .ct-label {
+        @include theme-rule(color, 'charts.line.label');
+
+        &.ct-horizontal {
+            margin-top: 5px;
+            transform: rotate(-45deg);
+        }
+    }
+}

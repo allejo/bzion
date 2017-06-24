@@ -9,8 +9,9 @@
 /// @param {String} $path - asset path
 ///
 /// @return {Url}
+
 @function asset($base, $type, $path) {
-  @return url($base + $type + $path);
+    @return url($base + $type + $path);
 }
 
 /// Returns URL to an image based on its path
@@ -21,6 +22,7 @@
 /// @require $base-url
 ///
 /// @return {Url}
+
 @function image($path, $base: $base-url) {
-  @return asset($base, 'images/', $path);
+    @return asset($base, 'images/', $path);
 }

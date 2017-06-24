@@ -1,182 +1,26 @@
-.c-team-title {
-    margin-left: 10px;
-}
+.no-js {
+    &.s-team__show {
+        .c-table--wld,
+        .c-table--activity {
+            @include disableScreenReaderOnly();
 
-.c-team__information {
-    @include element('bio') {
-        margin-top: $Settings-Page_Section-Small_Margin;
-    }
-
-    @include respond-up(md) {
-        order: 1;
-    }
-}
-
-.c-team__profile-picture {
-    @include profile-picture();
-
-    img,
-    p {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
-    }
-
-    @include respond-up(md) {
-        order: 2;
-    }
-}
-
-.c-team__profile-picture__link {
-    text-align: left;
-}
-
-.c-team__roster,
-.c-team__matches,
-.c-team__match-stats {
-    h4 {
-        margin-bottom: $Settings-Page_Section-Small_Margin;
-    }
-}
-
-.c-team__stats__container {
-    @include respond-up(lg) {
-        display: flex;
-    }
-}
-
-.c-team__stats__graph {
-    @include size(150px);
-
-    display: block;
-    margin: 0 auto 15px;
-
-    @include respond-up(lg) {
-        display: block;
-        margin: 0 auto;
-    }
-}
-
-.c-team__stats__legend {
-    @extend %no-padding-ul;
-
-    text-align: center;
-    width: 100%;
-
-    @include respond-up(lg) {
-        flex: 1;
-        margin: auto;
-        text-align: left;
-        width: auto;
-    }
-
-    > li {
-        display: inline-block;
-        margin: 0 5px;
-
-        @include respond-up(lg) {
-            display: block;
-        }
-
-        > div {
-            @include size(10px);
-
-            border: $Border-Default;
-            float: left;
-            margin: 5px 10px;
-
-            &.wins {
-                background-color: $Match-Color_Wins;
-            }
-
-            &.losses {
-                background-color: $Match-Color_Losses;
-            }
-
-            &.draws {
-                background-color: $Match-Color_Draws;
-            }
+            width: 100%;
         }
     }
 }
 
-.c-team__roster {
-    a {
-        color: $Color-Black;
+.c-table--activity {
+    td:first-child {
+        width: 100px;
+    }
+}
 
-        &:hover {
-            color: $Color-Sky_Blue;
+.c-table--wld,
+.c-table--activity {
+    td,
+    th {
+        &:nth-child(n+2) {
+            text-align: center;
         }
     }
-
-    // FontAwesome icons being loaded
-    i {
-        font-size: 14px;
-
-        &.fa-eject {
-            color: $Color-Medium_Grey;
-        }
-
-        &.fa-star {
-            color: $Color-Yellow;
-        }
-    }
-
-    .c-table__row__column {
-        padding: 5px;
-    }
-}
-
-.c-team__roster__option {
-    flex: none;
-    text-align: center;
-}
-
-.c-team__roster__callsign {
-}
-
-.c-team__matches {
-    // Specify these rules here so they actually override the theme and default rules
-    .c-table__row {
-        border-bottom: $Border-Default;
-        color: $Color-Black;
-        flex-wrap: wrap;
-
-        &:last-child {
-            border-bottom: none;
-        }
-    }
-}
-
-.c-team__match {
-    padding: 5px 0;
-}
-
-.c-team__match__date {
-    order: 1;
-    padding-bottom: 0;
-}
-
-.c-team__match__opponent {
-    flex-basis: 100%;
-    order: 3;
-
-    @include respond-up(sm) {
-        flex: 2;
-        order: 2;
-    }
-}
-
-.c-team__match__score {
-    order: 2;
-    text-align: right;
-
-    @include respond-up(sm) {
-        order: 3;
-    }
-}
-
-.c-team__matches__more {
-    display: block;
-    padding: 13px;
-
-    text-align: center;
 }

@@ -73,6 +73,10 @@
         ],
         "update-configuration": [
             "BZIon\\Composer\\ScriptHandler::buildConfig"
+        ],
+        "release": [
+            "node_modules/.bin/gulp dist",
+            "node_modules/.bin/encore production"
         ]
     },
     "autoload": {

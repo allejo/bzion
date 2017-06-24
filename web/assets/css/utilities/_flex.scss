@@ -2,3 +2,50 @@
     flex: 1;
     min-width: 0;
 }
+
+@each $bp in map-keys($breakpoints) {
+    @include respond-up($bp) {
+        $infix: if($bp == 'xs', '', '-' + $bp);
+
+        .flex#{$infix}-grow { flex-grow: 1; }
+        .flex#{$infix}-nogrow { flex-grow: 0; }
+
+        .flex#{$infix}-shrink { flex-shrink: 1; }
+        .flex#{$infix}-noshrink { flex-shrink: 0; }
+
+        .flex#{$infix}-row            { flex-direction: row; }
+        .flex#{$infix}-column         { flex-direction: column; }
+        .flex#{$infix}-row-reverse    { flex-direction: row-reverse; }
+        .flex#{$infix}-column-reverse { flex-direction: column-reverse; }
+
+        .flex#{$infix}-wrap         { flex-wrap: wrap; }
+        .flex#{$infix}-nowrap       { flex-wrap: nowrap; }
+        .flex#{$infix}-wrap-reverse { flex-wrap: wrap-reverse; }
+
+        .justify-content#{$infix}-start   { justify-content: flex-start; }
+        .justify-content#{$infix}-end     { justify-content: flex-end; }
+        .justify-content#{$infix}-center  { justify-content: center; }
+        .justify-content#{$infix}-between { justify-content: space-between; }
+        .justify-content#{$infix}-around  { justify-content: space-around; }
+
+        .align-items#{$infix}-start    { align-items: flex-start; }
+        .align-items#{$infix}-end      { align-items: flex-end; }
+        .align-items#{$infix}-center   { align-items: center; }
+        .align-items#{$infix}-baseline { align-items: baseline; }
+        .align-items#{$infix}-stretch  { align-items: stretch; }
+
+        .align-content#{$infix}-start   { align-content: flex-start; }
+        .align-content#{$infix}-end     { align-content: flex-end; }
+        .align-content#{$infix}-center  { align-content: center; }
+        .align-content#{$infix}-between { align-content: space-between; }
+        .align-content#{$infix}-around  { align-content: space-around; }
+        .align-content#{$infix}-stretch { align-content: stretch; }
+
+        .align-self#{$infix}-auto     { align-self: auto; }
+        .align-self#{$infix}-start    { align-self: flex-start; }
+        .align-self#{$infix}-end      { align-self: flex-end; }
+        .align-self#{$infix}-center   { align-self: center; }
+        .align-self#{$infix}-baseline { align-self: baseline; }
+        .align-self#{$infix}-stretch  { align-self: stretch; }
+    }
+}

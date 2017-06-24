@@ -7,7 +7,7 @@
 
 @each $name, $position in $ranks-sprite {
     @at-root {
-        $split: str-split($name, "-");
+        $split: str-explode($name, "-");
         $rank: nth($split, 2);
         $theme: to-lower-case(nth($split, 1));
 

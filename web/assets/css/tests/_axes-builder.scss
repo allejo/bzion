@@ -1,0 +1,102 @@
+@import '../abstracts/axes-builder';
+
+@include describe('abstracts/_axes-builder.scss') {
+    @include it('creates axis utility classes for 5px margin with no suffix [size: 1]') {
+        @include assert {
+            @include output {
+                @include build-axes(m, 1, margin, '', 5px);
+            }
+
+            @include expect {
+                .m1  { margin: 5px; }
+                .mt1 { margin-top: 5px; }
+                .mr1 { margin-right: 5px; }
+                .mb1 { margin-bottom: 5px; }
+                .ml1 { margin-left: 5px; }
+                .mx1 { margin-left: 5px; margin-right: 5px; }
+                .my1 { margin-bottom: 5px; margin-top: 5px; }
+            }
+        }
+    }
+
+    @include it('creates axis utility classes for 0 margin with a suffix [size: 0]') {
+        @include assert {
+            @include output {
+                @include build-axes(m, 0, margin, '-lg', 0);
+            }
+
+            @include expect {
+                .m0-lg  { margin: 0; }
+                .mt0-lg { margin-top: 0; }
+                .mr0-lg { margin-right: 0; }
+                .mb0-lg { margin-bottom: 0; }
+                .ml0-lg { margin-left: 0; }
+                .mx0-lg { margin-left: 0; margin-right: 0; }
+                .my0-lg { margin-bottom: 0; margin-top: 0; }
+            }
+        }
+    }
+
+    @include it('creates *-last-reset utility classes for border') {
+        @include assert {
+            @include output {
+                @include build-axes-last(b, border, none);
+            }
+
+            @include expect {
+                .b-last-reset .b:last-of-type { border: none; }
+                .bt-last-reset .bt:last-of-type { border-top: none; }
+                .br-last-reset .br:last-of-type { border-right: none; }
+                .bb-last-reset .bb:last-of-type { border-bottom: none; }
+                .bl-last-reset .bl:last-of-type { border-left: none; }
+                .bx-last-reset .bx:last-of-type { border-left: none; border-right: none; }
+                .by-last-reset .by:last-of-type { border-bottom: none; border-top: none; }
+            }
+        }
+    }
+
+    @include it('creates *-last-reset utility classes for padding with multipliers') {
+        @include assert {
+            @include output {
+                @include build-axes-last(p, padding, 0, (0, 1, 2, 3));
+            }
+
+            @include expect {
+                .p-last-reset .p0:last-of-type,
+                .p-last-reset .p1:last-of-type,
+                .p-last-reset .p2:last-of-type,
+                .p-last-reset .p3:last-of-type { padding: 0; }
+
+                .pt-last-reset .pt0:last-of-type,
+                .pt-last-reset .pt1:last-of-type,
+                .pt-last-reset .pt2:last-of-type,
+                .pt-last-reset .pt3:last-of-type { padding-top: 0; }
+
+                .pr-last-reset .pr0:last-of-type,
+                .pr-last-reset .pr1:last-of-type,
+                .pr-last-reset .pr2:last-of-type,
+                .pr-last-reset .pr3:last-of-type { padding-right: 0; }
+
+                .pb-last-reset .pb0:last-of-type,
+                .pb-last-reset .pb1:last-of-type,
+                .pb-last-reset .pb2:last-of-type,
+                .pb-last-reset .pb3:last-of-type { padding-bottom: 0; }
+
+                .pl-last-reset .pl0:last-of-type,
+                .pl-last-reset .pl1:last-of-type,
+                .pl-last-reset .pl2:last-of-type,
+                .pl-last-reset .pl3:last-of-type { padding-left: 0; }
+
+                .px-last-reset .px0:last-of-type,
+                .px-last-reset .px1:last-of-type,
+                .px-last-reset .px2:last-of-type,
+                .px-last-reset .px3:last-of-type { padding-left: 0; padding-right: 0; }
+
+                .py-last-reset .py0:last-of-type,
+                .py-last-reset .py1:last-of-type,
+                .py-last-reset .py2:last-of-type,
+                .py-last-reset .py3:last-of-type { padding-bottom: 0; padding-top: 0; }
+            }
+        }
+    }
+}

@@ -72,6 +72,7 @@ gulp.task('dev:watch', function() {
     gulp.watch([
         'web/assets/js/**/*.js',
         'web/assets/css/styles.css',
+        'web/build/*.js',
         'views/**/*.html.twig',
         'controllers/*.php',
         'models/*.php'
@@ -108,7 +109,7 @@ gulp.task('js:hint', function (cb) {
 
     pump([
         gulp.src([
-            'Gruntfile.js',
+            'Gulpfile.js',
             'web/assets/js/*.js',
             'web/assets/js/partials/*.js'
         ]),
@@ -190,6 +191,9 @@ gulp.task('sass:dev', function (cb) {
 
 gulp.task('sass:dist', function (cb) {
     var cssmin = require('gulp-cssmin');
+    var postcss = require('gulp-postcss');
+    var unprefix = require('postcss-unprefix');
+    var removePrefixes = require('postcss-remove-prefixes');
 
     pump([
         gulp.src('web/assets/css/styles.scss'),
@@ -199,6 +203,10 @@ gulp.task('sass:dist', function (cb) {
         combineMq({
             beautify: false
         }),
+        postcss([
+            unprefix(),
+            removePrefixes()
+        ]),
         cssmin({
             processImport: false,
             mediaMerging: false
@@ -211,32 +219,17 @@ gulp.task('sass:docs', function (cb) {
     var sassdoc = require('sassdoc');
 
     pump([
-        gulp.src('web/assets/css/modules/*.scss'),
+        gulp.src('web/assets/css/abstracts/*.scss'),
         sassdoc()
     ], cb);
 });
 
-gulp.task("sass:lint", function(cb) {
-    var syntax_scss = require('postcss-scss');
-    var stylelint  = require('stylelint');
-    var reporter   = require('postcss-reporter');
-    var postcss    = require('gulp-postcss');
-    var processors = [
-        stylelint(),
-        reporter({
-            clearMessages: true,
-            throwError: true
-        })
-    ];
+gulp.task('sass:test', function(cb) {
+    var mocha = require('gulp-mocha');
 
     pump([
-        gulp.src([
-            'web/assets/css/**/*.scss',
-            '!web/assets/css/vendor/**/*.scss'
-        ]),
-        postcss(processors, {
-            syntax: syntax_scss
-        })
+        gulp.src('web/assets/css/tests/test.js', { read: false }),
+        mocha()
     ], cb);
 });
 
@@ -246,6 +239,6 @@ gulp.task("sass:lint", function(cb) {
 ///
 
 gulp.task('dev', ['sass:dev', 'dev:watch']);
-gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:lint', 'sass:dist', 'js:hint', 'js:concat', 'js:uglify', 'js:modernizer']);
+gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:dist', 'js:concat', 'js:uglify', 'js:modernizr']);
 
 gulp.task('default', ['dev']);

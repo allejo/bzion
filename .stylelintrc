@@ -1,4 +1,9 @@
 {
+    "ignoreFiles": [
+        "web/assets/css/**/__*",
+        "web/assets/css/{animations,generic,modules,partials}/*",
+        "web/assets/css/vendor/*"
+    ],
     "plugins": [
         "stylelint-scss"
     ],
@@ -16,7 +21,6 @@
         "block-closing-brace-empty-line-before": "never",
         "block-closing-brace-newline-after": "always",
         "block-closing-brace-newline-before": "always",
-        "block-no-empty": true,
         "block-no-single-line": true,
         "block-opening-brace-newline-after": "always",
         "block-opening-brace-newline-before": "never-single-line",
@@ -45,7 +49,6 @@
         "declaration-colon-newline-after": "always-multi-line",
         "declaration-colon-space-after": "always-single-line",
         "declaration-colon-space-before": "never",
-        "declaration-empty-line-before": "never",
         "declaration-no-important": true,
         "font-family-name-quotes": "always-where-recommended",
         "font-weight-notation": "numeric",
@@ -63,7 +66,7 @@
         "function-url-no-scheme-relative": true,
         "function-url-quotes": "always",
         "function-whitespace-after": "always",
-        "indentation": 2,
+        "indentation": 4,
         "keyframe-declaration-no-important": true,
         "length-zero-no-unit": true,
         "max-empty-lines": 3,
@@ -112,7 +115,6 @@
         "selector-max-compound-selectors": 3,
         "selector-max-empty-lines": 0,
         "selector-no-id": true,
-        "selector-no-qualifying-type": true,
         "selector-no-universal": true,
         "selector-no-vendor-prefix": true,
         "selector-pseudo-class-case": "lower",
@@ -126,7 +128,6 @@
         "shorthand-property-no-redundant-values": true,
         "string-no-newline": true,
         "string-quotes": "single",
-        "stylelint-disable-reason": "always-after",
         "time-no-imperceptible": true,
         "unit-case": "lower",
         "unit-no-unknown": true,
@@ -142,6 +143,10 @@
         "scss/at-mixin-argumentless-call-parentheses": "always",
         "scss/dollar-variable-colon-space-after": "always",
         "scss/dollar-variable-colon-space-before": "never",
+        "scss/dollar-variable-empty-line-before": ["always", {
+            "except": ["first-nested", "after-comment", "after-dollar-variable"],
+            "ignore": ["after-comment"]
+        }],
         "scss/dollar-variable-no-missing-interpolation": true,
         "scss/double-slash-comment-whitespace-inside": "always",
         "scss/operator-no-newline-after": true,

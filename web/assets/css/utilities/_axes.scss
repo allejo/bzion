@@ -33,3 +33,5 @@ $spacers: (
 }
 
 @include build-axes-last(b, border, none);
+@include build-axes-last(m, margin, 0, map-keys($spacers));
+@include build-axes-last(p, padding, 0, map-keys($spacers));
