@@ -1,27 +1,28 @@
 {% from 'md-editor.html.twig' import md_editor %}
 
 <div class="container">
-    {{ form_start(form, { 'attr': { 'class': '' } }) }}
+    {{ form_start(form) }}
         {{ form_errors(form) }}
+
         <section class="row">
             <article class="col-md-9">
-                {{ form_row(form.subject, { 'container_attr': { 'class': 'c-form__group' } }) }}
+                {{ form_row(form.subject, { 'container_attr': { 'class': 'mb3' } }) }}
 
-                <div class="c-form__group c-form__group--flex">
+                <div class="mb3">
                     {{ form_label(form.content) }}
                     {{ form_errors(form.content) }}
                     {{ md_editor(form.content) }}
                 </div>
             </article>
 
-            <aside class="o-col--aside c-form__section__aside">
-                {{ form_row(form.category, { 'container_attr': { 'class': 'c-form__group' } }) }}
-                {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
+            <aside class="col-md-3">
+                {{ form_row(form.category, { 'container_attr': { 'class': 'mb3' } }) }}
+                {{ form_row(form.status,   { 'container_attr': { 'class': 'mb3' } }) }}
             </aside>
         </section>
 
-        <section class="c-form__section">
+        <div>
             {{ form_rest(form) }}
-        </section>
+        </div>
     {{ form_end(form) }}
 </div>
