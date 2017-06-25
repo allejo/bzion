@@ -22,6 +22,10 @@ elements:
   badge:
     background: "linear-gradient(#62abff, #4884cf)"
     color: "#ffffff"
+  pills:
+    background: "#77541f"
+    color: "#ffffff"
+    color_active: "#ffffff"
 
 list_group:
   active:

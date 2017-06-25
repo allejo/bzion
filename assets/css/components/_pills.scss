@@ -1,0 +1,29 @@
+.c-pill-group {
+    display: inline-flex;
+}
+
+.c-pill-group__pill {
+    @include theme-rule(border-bottom, 'border.default');
+    @include theme-rule(border-left, 'border.default');
+    @include theme-rule(border-top, 'border.default');
+    @include theme-rule(color, 'elements.pills.color');
+
+    cursor: pointer;
+    padding: 5px 10px;
+
+    &:first-child {
+        @include theme-rule(border-bottom-left-radius, 'border.radius');
+        @include theme-rule(border-top-left-radius, 'border.radius');
+    }
+
+    &:last-child {
+        @include theme-rule(border-bottom-right-radius, 'border.radius');
+        @include theme-rule(border-top-right-radius, 'border.radius');
+        @include theme-rule(border-right, 'border.default');
+    }
+
+    @include on-event() {
+        @include theme-rule(background-color, 'elements.pills.background');
+        @include theme-rule(color, 'elements.pills.color_active');
+    }
+}
