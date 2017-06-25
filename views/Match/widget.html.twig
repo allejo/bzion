@@ -32,14 +32,20 @@
     </div>
 {% endmacro %}
 
-{% macro widget(match) %}
+{% macro widget(match, showTimestamp) %}
     {% from 'utilities.html.twig' import timestamp %}
     {% from _self import team_block %}
 
-    <section class="c-matchwidget row row--nowrap bb mb2 pb2">
-        <div class="c-matchwidget__timestamp col">
-            {{- timestamp(match.timestamp) -}}
-        </div>
+    {# Using the `default()` filter for booleans doesn't work as expected; we want this boolean to default to true #}
+    {#   see: https://stackoverflow.com/a/10794782 #}
+    {% set showTimestamp = showTimestamp is not defined or showTimestamp is null ? true : showTimestamp %}
+
+    <section class="c-matchwidget row row--nowrap">
+        {% if showTimestamp %}
+            <div class="c-matchwidget__timestamp col">
+                {{- timestamp(match.timestamp) -}}
+            </div>
+        {% endif %}
 
         <div class="c-matchwidget__stats col">
             <div class="row">

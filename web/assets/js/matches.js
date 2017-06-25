@@ -1,30 +1,4 @@
 $(function () {
-    var matchTypeFilter = $("#match-type-filter");
-
-    matchTypeFilter.nuclide({
-        filter: 'matchtype',
-        postFilter: function () {
-            var $elements = $('.c-match-history__matches');
-
-            $elements.each(function () {
-                var $this   = $(this);
-                var $parent = $this.parent();
-
-                $parent.show();
-
-                if ($this.height() === 0) {
-                    $parent.hide();
-                }
-            });
-        },
-        itemSelector: '.c-match-history__match'
-    });
-
-    matchTypeFilter.TabSelector({
-        itemSelector: '.c-pill-group__pill',
-        activeClass: 'c-pill-group__pill--active'
-    });
-
     //
     // Match ELO Recalculation
     //

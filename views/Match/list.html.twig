@@ -1,8 +1,7 @@
 {% extends 'layout.html.twig' %}
 
-{% import 'Match/widget.html.twig' as utils %}
+{% from 'Match/widget.html.twig' import widget as match_widget %}
 
-{% set scopeClass = "s-matches" %}
 {% set pageButtons = [
     {
         'color': 'blue',
@@ -26,27 +25,41 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
+    <div class="container">
         {% if not team %}
-            <div class="o-section u-text-center">
+            <div class="text-center mb3">
                 <div class="c-pill-group">
                     {% set matchTypeFilter = request.get('type') %}
                     {% set isOfficialFilter = matchTypeFilter == constant('Match::OFFICIAL') %}
                     {% set isFunFilter = matchTypeFilter == constant('Match::FUN') %}
 
                     <a href="{{ url('match_list') }}"
-                       class="c-pill-group__pill {{ not isOfficialFilter and not isFunFilter ? 'c-pill-group__pill--active' : '' }}">All</a>
+                       class="c-pill-group__pill {{ not isOfficialFilter and not isFunFilter ? 'active' : '' }}"
+                    >
+                        All
+                    </a>
 
                     <a href="{{ url('match_list', { type: constant('Match::OFFICIAL') }) }}"
-                       class="c-pill-group__pill {{ isOfficialFilter ? 'c-pill-group__pill--active' : '' }}">Official</a>
+                       class="c-pill-group__pill {{ isOfficialFilter ? 'active' : '' }}"
+                    >
+                        Official
+                    </a>
 
                     <a href="{{ url('match_list', { type: constant('Match::FUN') }) }}"
-                       class="c-pill-group__pill {{ isFunFilter ? 'c-pill-group__pill--active' : '' }}">FM</a>
+                       class="c-pill-group__pill {{ isFunFilter ? 'active' : '' }}"
+                    >
+                        FM
+                    </a>
                 </div>
             </div>
         {% endif %}
 
-        <section id="match-list" class="c-match-history">
+        {# *** Heads Up *** #}
+        {# This section will cause IDEs to complain about unmatched tags; that's normal. We're the eHarmony of tag matching, #}
+        {# all the tags will match up when generated. #}
+
+        <div data-name="Match Container">
+
             {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
             {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
             {% set lastMatchDate = "" %}
@@ -54,17 +67,22 @@
             {% for match in matches %}
                 {% set currentMatchDate = match.timestamp.format(dateFormat) %}
 
+                {# We've changed to another day, This will alwats happen on the first run, and it's intentional that #}
+                {# it behaves like this. #}
                 {% if lastMatchDate != currentMatchDate %}
-                    {% if not loop.first %} {# Close previous date's container #}
-                            </section>
-                        </div>
+
+                    {# We've changed changes again, so close the previous section #}
+                    {% if not loop.first %}
+                            </section> {# Closes .bb-last-reset #}
+                        </article> {# Closes .mb3 #}
                     {% endif %}
 
-                    <div class="c-match-history__container">
-                        <section class="c-match-history__date">
+                    {# This is the beginning of a group of matches that took place on a given day #}
+                    <article class="mb3">
+                        <header>
                             {% set currentYear = "now" | date("Y") %}
 
-                            <h4>
+                            <h4 class="mb2">
                                 {%- if match.timestamp.year != currentYear -%}
                                     {%- set format = dateFormatArchive -%}
                                 {%- else -%}
@@ -72,29 +90,29 @@
                                 {%- endif -%}
                                 {{ match.timestamp | humanTime(format, tooltip = false) }}
                             </h4>
-                        </section>
+                        </header>
 
-                        <section class="c-match-history__matches">
+                        <section class="bb-last-reset">
                 {% endif %}
 
-                <section class="c-match-history__match" data-matchtype="{{ match.matchType }}">
-                    {{ utils.widget(match) }}
-                </section>
+                {# Surround each match widget with a border and padding #}
+                <div class="bb mb2 pb2">
+                    {{ match_widget(match, false) }}
+                </div>
 
+                {# Update the last timestamp to know whether the next match occurred on the same day or a different #}
                 {% set lastMatchDate = match.timestamp.format(dateFormat) %}
 
-                {% if loop.last %} {# Close last date's container #}
-                    </section>
+                {# If we're on the last entry of the loop, then we need close the <section> we opened #}
+                {% if loop.last %}
+                    </section> {# Closes .bb-last-reset #}
                 {% endif %}
             {% endfor %}
 
-            <section>
+            <div>
                 {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
-            </section>
-        </section>
-    </section>
-{% endblock %}
+            </div>
 
-{% block jsCustom %}
-    <script src="{{ asset('assets/js/matches.js') }}"></script>
+        </div> {# Closes div[data-name="Match Container"] #}
+    </div> {# Closes .container #}
 {% endblock %}
