@@ -1,83 +1,83 @@
 {% extends 'layout.html.twig' %}
 
-{% import '/Match/widget.html.twig' as matchUi %}
+{% from '/Match/widget.html.twig' import widget as match_widget %}
 {% from 'utilities.html.twig' import timestamp %}
 
 {% block pageHeader %}
 {% endblock %}
 
 {% block content %}
-    <main class="s-landing">
-        <section class="c-jumbotron c-jumbotron--landing">
-            <article>
-                <h1>{{ app.siteWelcome }}</h1>
-                <h2>{{ app.siteSlug }}</h2>
-            </article>
+    <section class="c-jumbotron c-jumbotron--landing">
+        <article>
+            <h1>{{ app.siteWelcome }}</h1>
+            <h2>{{ app.siteSlug }}</h2>
+        </article>
+    </section>
+
+    <section class="o-container">
+        {% set cards = [
+            {
+                'path': 'server_list',
+                'path_opts': {},
+                'image': 'assets/imgs/landing-servers.png',
+                'image_alt': 'Match servers',
+                'title': 'Servers',
+                'description': 'Our servers are located close to home to provide the least latency to players from all around the world.',
+            },
+            {
+                'path': 'match_list',
+                'path_opts': {},
+                'image': 'assets/imgs/landing-matches.png',
+                'image_alt': 'Competitive matches',
+                'title': 'Matches',
+                'description': 'Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.',
+            },
+            {
+                'path': 'map_list',
+                'path_opts': {},
+                'image': 'assets/imgs/landing-matches.png',
+                'image_alt': "Player on BZFlag's most popular maps",
+                'title': 'Maps',
+                'description': "Like playing on a map with a lot of interesting ricos and new game styles? We've got you covered with our wide selection.",
+            },
+            {
+                'path': 'custom_page_show',
+                'path_opts': { page: 'getting-started' },
+                'image': 'assets/imgs/landing-gettingstarted.png',
+                'image_alt': 'Getting started with ' ~ app.title,
+                'title': 'Getting Started',
+                'description': 'Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!',
+            },
+        ] %}
+        <section class="row bb mb3">
+            {% for card in cards %}
+                <article class="col-lg-6 mb2-md mb3-lg">
+                    <div class="row">
+                        <section class="col-sm-4">
+                            <a href="{{ path(card.path, card.path_opts) }}">
+                                <img src="{{ asset(card.image) }}" alt="card.image_alt" style="width: 100%">
+                            </a>
+                        </section>
+
+                        <div class="col-sm-8">
+                            <h3>
+                                <a href="{{ path(card.path, card.path_opts) }}">{{ card.title }}</a>
+                            </h3>
+
+                            <p>{{ card.description }}</p>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
         </section>
 
-        <section class="o-container">
-            {% set cards = [
-                {
-                    'path': 'server_list',
-                    'path_opts': {},
-                    'image': 'assets/imgs/landing-servers.png',
-                    'image_alt': 'Match servers',
-                    'title': 'Servers',
-                    'description': 'Our servers are located close to home to provide the least latency to players from all around the world.',
-                },
-                {
-                    'path': 'match_list',
-                    'path_opts': {},
-                    'image': 'assets/imgs/landing-matches.png',
-                    'image_alt': 'Competitive matches',
-                    'title': 'Matches',
-                    'description': 'Match against the best of the west, and also the best of the rest. Join in our tournaments and special events.',
-                },
-                {
-                    'path': 'map_list',
-                    'path_opts': {},
-                    'image': 'assets/imgs/landing-matches.png',
-                    'image_alt': "Player on BZFlag's most popular maps",
-                    'title': 'Maps',
-                    'description': "Like playing on a map with a lot of interesting ricos and new game styles? We've got you covered with our wide selection.",
-                },
-                {
-                    'path': 'custom_page_show',
-                    'path_opts': { page: 'getting-started' },
-                    'image': 'assets/imgs/landing-gettingstarted.png',
-                    'image_alt': 'Getting started with ' ~ app.title,
-                    'title': 'Getting Started',
-                    'description': 'Need help getting started? Join the spawn list, read our rules, and join our servers to see how you do against our pros!',
-                },
-            ] %}
-            <section class="row o-section bb">
-                {% for card in cards %}
-                    <article class="col-lg-6 mb2-md mb3-lg">
-                        <div class="row">
-                            <section class="col-sm-4">
-                                <a href="{{ path(card.path, card.path_opts) }}">
-                                    <img src="{{ asset(card.image) }}" alt="card.image_alt" style="width: 100%">
-                                </a>
-                            </section>
-
-                            <div class="col-sm-8">
-                                <h3>
-                                    <a href="{{ path(card.path, card.path_opts) }}">{{ card.title }}</a>
-                                </h3>
-
-                                <p>{{ card.description }}</p>
-                            </div>
-                        </div>
-                    </article>
-                {% endfor %}
-            </section>
-
-            <section class="row">
-                <aside class="col-md-6 col-lg-4">
-                    <h2 class="mb3">Latest News</h2>
-                    <div class="bb-last-reset">
-                        {% for post in news %}
-                            <article class="row row--nowrap bb mb2 pb2">
+        <section class="row">
+            <aside class="col-md-6 col-lg-4">
+                <h2 class="mb3">Latest News</h2>
+                <div class="bb-last-reset">
+                    {% for post in news %}
+                        <div class="bb mb2 pb2">
+                            <article class="row row--nowrap">
                                 <div class="col mr1">
                                     {{- timestamp(post.created) -}}
                                 </div>
@@ -86,20 +86,22 @@
                                     <p class="mb0">by {{ link_to(post.author) }}</p>
                                 </div>
                             </article>
-                        {% endfor %}
-                    </div>
-                </aside>
+                        </div>
+                    {% endfor %}
+                </div>
+            </aside>
 
-                <section class="col-md-6 col-lg-8">
-                    <h2 class="mb3">Recent Matches</h2>
+            <section class="col-md-6 col-lg-8">
+                <h2 class="mb3">Recent Matches</h2>
 
-                    <section class="bb-last-reset">
-                        {% for match in matches %}
-                            {{ matchUi.widget(match) }}
-                        {% endfor %}
-                    </section>
+                <section class="bb-last-reset mb-last-reset pb-last-reset">
+                    {% for match in matches %}
+                        <div class="bb mb2 pb2">
+                            {{ match_widget(match) }}
+                        </div>
+                    {% endfor %}
                 </section>
             </section>
         </section>
-    </main>
+    </section>
 {% endblock %}
