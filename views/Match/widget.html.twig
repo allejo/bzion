@@ -1,4 +1,4 @@
-{% macro team_block(match, team) %}
+{% macro team_block(match, team, showLinkTo) %}
     {% set isTeam = team is instanceof('Team') %}
 
     <div class="row row--nowrap">
@@ -27,18 +27,23 @@
             </span>
         </div>
         <div class="col c-matchwidget__team__score">
-            {{ link_to(match, content = match.score(team)) }}
+            {% if showLinkTo %}
+                {{ link_to(match, content = match.score(team)) }}
+            {% else %}
+                <span>{{ match.score(team) }}</span>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
 
-{% macro widget(match, showTimestamp) %}
+{% macro widget(match, showTimestamp, showLinkTo) %}
     {% from 'utilities.html.twig' import timestamp %}
     {% from _self import team_block %}
 
     {# Using the `default()` filter for booleans doesn't work as expected; we want this boolean to default to true #}
     {#   see: https://stackoverflow.com/a/10794782 #}
     {% set showTimestamp = showTimestamp is not defined or showTimestamp is null ? true : showTimestamp %}
+    {% set showLinkTo    = showLinkTo    is not defined or showLinkTo    is null ? true : showLinkTo %}
 
     <section class="c-matchwidget row row--nowrap">
         {% if showTimestamp %}
@@ -50,19 +55,21 @@
         <div class="c-matchwidget__stats col">
             <div class="row">
                 <div class="c-matchwidget__team c-matchwidget__team--winner col-lg-6 mb2 mb0-lg">
-                    {{ team_block(match, match.winner) }}
+                    {{ team_block(match, match.winner, showLinkTo) }}
                 </div>
                 <div class="c-matchwidget__team c-matchwidget__team--loser col-lg-6">
-                    {{ team_block(match, match.loser) }}
+                    {{ team_block(match, match.loser, showLinkTo) }}
                 </div>
             </div>
         </div>
 
-        <div class="c-matchwidget__link col">
-            <a href="{{ match.url }}">
-                <i class="fa fa-angle-right"></i>
-                <span class="sr-only">See match details</span>
-            </a>
-        </div>
+        {% if showLinkTo %}
+            <div class="c-matchwidget__link col">
+                <a href="{{ match.url }}">
+                    <i class="fa fa-angle-right"></i>
+                    <span class="sr-only">See match details</span>
+                </a>
+            </div>
+        {% endif %}
     </section>
 {% endmacro %}
