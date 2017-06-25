@@ -1,23 +1,11 @@
 @each $alignment in (left, center, right) {
-    @each $bp in map-keys($breakpoints) {
-        $infix: if($bp == xs, '', '-' + $bp);
-
-        @include respond-up($bp) {
-            .text-#{$alignment}#{$infix} {
-                text-align: $alignment;
-            }
-        }
+    @include responsify('.text-%align%infix', (align: $alignment)) {
+        text-align: $alignment;
     }
 }
 
 @each $size in (2, 3, 4, 5) {
-    @each $bp in map-keys($breakpoints) {
-        $infix: if($bp == xs, '', '-' + $bp);
-
-        @include respond-up($bp) {
-            .t#{$size}#{$infix} {
-                font-size: (16px * ($size * 0.75));
-            }
-        }
+    @include responsify('.t%size%infix', (size: $size)) {
+        font-size: (16px * ($size * 0.75));
     }
 }

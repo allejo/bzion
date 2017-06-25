@@ -1,0 +1,44 @@
+/// A mixin that will create versions of a class for each breakpoint
+///
+/// @access public
+///
+/// @content The CSS rules the class will have
+///
+/// @param {String} $name - The name of the class using placeholders starting with '%'; a '%infix' placeholder must be
+///                         used
+/// @param {Map} $placeholders [()] - A map of placeholders that will be used to replace in the class name template
+///
+/// @example scss
+///   @each $alignment in (left, center, right) {
+///       $placeholders: (
+///           align: $alignment,
+///       );
+///
+///       @include responsify('.text-%align%infix', $placeholders) {
+///           text-align: $alignment;
+///       }
+///  }
+///
+/// @example css
+///   /* One of the generated classes; it'll generate for the rest of the break points */
+///   @media (min-width: 992px) {
+///       .text-left-lg { text-align: left; }
+///   }
+///
+
+@mixin responsify($name, $placeholders: ()) {
+    @each $bp in map-keys($breakpoints) {
+        $placeholders: map-set($placeholders, 'infix', if($bp == xs, '', '-' + $bp));
+        $className: $name;
+
+        @each $placeholder, $value in $placeholders {
+            $className: str-replace($className, '%' + $placeholder, $value);
+        }
+
+        @include respond-up($bp) {
+            #{$className} {
+                @content;
+            }
+        }
+    }
+}

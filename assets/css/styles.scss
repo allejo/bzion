@@ -41,15 +41,17 @@
 //
 // Abstracts
 //
+@import 'abstracts/functions';
+@import 'abstracts/maps';
+@import 'abstracts/strings';
+
 @import 'abstracts/accessibility';
 @import 'abstracts/axes-builder';
 @import 'abstracts/borders';
 @import 'abstracts/color-mixins';
 @import 'abstracts/font-awesome-utilities';
-@import 'abstracts/functions';
 @import 'abstracts/mixins';
-@import 'abstracts/maps';
-@import 'abstracts/strings';
+@import 'abstracts/responsify';
 @import 'abstracts/theming';
 
 

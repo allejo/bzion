@@ -1,11 +1,5 @@
 @each $display in (block, flex, inline, inline-block) {
-    @each $bp in map-keys($breakpoints) {
-        $infix: if($bp == xs, '', '-' + $bp);
-
-        @include respond-up($bp) {
-            .d-#{$display}#{$infix} {
-                display: $display;
-            }
-        }
+    @include responsify('.d-%display%infix', (display: $display)) {
+        display: $display;
     }
 }
