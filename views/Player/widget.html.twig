@@ -9,7 +9,9 @@
     >
 
     <div>
-        <p class="c-player-badge__callsign">{{ link_to(player) }}</p> {{ player.country.flagLiteral | raw }}
+        <div class="c-player-badge__callsign">
+            <span>{{ link_to(player) }}</span> {{ player.country.flagLiteral | raw }}
+        </div>
 
         {% if showTeam %}
             <p class="c-player-badge__team">{{ link_to(player.team) }}</p>

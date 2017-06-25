@@ -10,9 +10,13 @@
 }
 
 .c-player-badge__callsign {
-    display: inline-block;
+    align-items: center;
+    display: flex;
     font-size: 18px;
-    margin-bottom: 0;
+
+    .c-flag {
+        margin-left: 10px;
+    }
 }
 
 .c-player-badge__team {
@@ -25,5 +29,24 @@
         &:hover {
             color: lighten($Color-Medium_Grey, 15%);
         }
+    }
+}
+
+@include responsify('.c-player-badge--right%infix') {
+    justify-content: flex-end;
+
+    .c-player-badge__avatar {
+        margin-right: 0;
+        margin-left: 10px;
+        order: 3;
+    }
+
+    span {
+        order: 2;
+    }
+
+    .c-flag {
+        margin-right: 10px;
+        order: 1;
     }
 }
