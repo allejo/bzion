@@ -4,14 +4,14 @@
  * @returns {boolean}
  */
 function areTabsVisible() {
-    return ($('.c-tabs__header:visible').length >= 1);
+    return ($('[role="tablist"]:visible').length >= 1);
 }
 
 /**
  * Toggle the tabs' ARIA visibility based on whether or the tabs are visible via CSS
  */
 function toggleTabsAriaVisible() {
-    $('.c-tabs__header').attr('aria-hidden', (areTabsVisible()) ? 'false' : 'true');
+    $('[role="tablist"]').attr('aria-hidden', (areTabsVisible()) ? 'false' : 'true');
 }
 
 /**
