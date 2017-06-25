@@ -1,5 +1,10 @@
-{% macro md_editor(form_textarea) %}
-    <div id="mde" class="c-mde">
+{% macro md_editor(form_textarea, attrs) %}
+    {% from 'utilities.html.twig' import html_attr %}
+
+    {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
+    {% set attrs = attrs | extend_hash({ 'id': ['mde'], 'class': ['c-mde'] }) %}
+
+    <div {{ html_attr(attrs) }} >
         <ul class="c-mde__toolbar" role="tablist">
             <li id="mde__toolbar__editor"
                 role="tab"
