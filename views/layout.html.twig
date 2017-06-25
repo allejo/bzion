@@ -23,7 +23,7 @@
 
         {# Required attributes: url, type, title, description, image #}
         {%- for attr in opengraph | keys -%}
-            <meta property="og:{{ attr }}" content="{{ opengraph[attr] }}">
+            <meta property="og:{{ attr }}" content="{{ opengraph[attr] }}" />
         {% endfor -%}
 
 
@@ -32,13 +32,13 @@
         {#  Generic information for this page  #}
         {# ========================================================================================================== #}
 
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <title>{% spaceless %}{% block title %}{{ app.siteTitle }}{% endblock %}{% endspaceless %}</title>
-        <link rel="stylesheet" href="{{ asset('components/select2/dist/css/select2.css') }}">
+        <link rel="stylesheet" href="{{ asset('components/select2/dist/css/select2.css') }}" />
         <link rel="stylesheet" href="{{ asset('includes/ladda/dist/ladda-themeless.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" />
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
