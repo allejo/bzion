@@ -5,7 +5,7 @@
     {% set attrs = attrs | extend_hash({ 'id': ['mde'], 'class': ['c-mde'] }) %}
 
     <div {{ html_attr(attrs) }} >
-        <ul class="c-mde__toolbar" role="tablist">
+        <ul class="c-mde__toolbar js-only" role="tablist">
             <li id="mde__toolbar__editor"
                 role="tab"
                 aria-controls="mde__panel__editor"

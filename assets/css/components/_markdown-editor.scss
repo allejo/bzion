@@ -1,5 +1,7 @@
+// The parent container for the editor which holds both the toolbar and the canvas
 .c-mde {}
 
+// The toolbar which contains the buttons to switch between Edit and Preview modes
 .c-mde__toolbar {
     @include ul-horizontal();
     @include theme-rule(background-color, 'navigation.background');
@@ -28,6 +30,7 @@
     }
 }
 
+// The part of the editor which is the parent to the textarea box and the preview
 .c-mde__canvas {
     @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
 
@@ -43,5 +46,16 @@
         &[aria-hidden='false'] {
             display: block;
         }
+    }
+}
+
+//
+// Hide the styling for the canvas part of the editor when JS is disabled
+//
+
+.no-js {
+    .c-mde__canvas {
+        background-color: transparent;
+        padding: 0;
     }
 }
