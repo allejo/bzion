@@ -26,3 +26,17 @@
 @function image($path, $base: $base-url) {
     @return asset($base, 'images/', $path);
 }
+
+
+/// Convert an em value to pixels
+///
+/// @access public
+///
+/// @param {Number [px]} $px - The base pixel size to calculate the em from
+/// @param {Number [em]} $em - The em we're converting into pixels
+///
+/// @return {Number [px]}
+
+@function em-to-px($px, $em) {
+    @return ($px * ($em / 1em));
+}

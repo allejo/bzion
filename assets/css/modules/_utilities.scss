@@ -91,10 +91,6 @@
     width: $value;
 }
 
-@function emToPx($px, $em) {
-    @return ($px * ($em / 1em));
-}
-
 @mixin on-event() {
     &:active,
     &:focus,
