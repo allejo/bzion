@@ -65,7 +65,7 @@ class Country extends Model
      */
     public function getFlagLiteral()
     {
-        return '<div class="c-flag ' . $this->getFlagCssClass() . '" title="' . $this->getName() . '"></div>';
+        return '<div class="c-flag ' . $this->getFlagCssClass() . '" aria-hidden="true" title="' . $this->getName() . '"></div>';
     }
 
     /**
