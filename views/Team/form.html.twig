@@ -1,42 +1,36 @@
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section c-form__section--sidebar">
-        <aside class="o-col--aside c-avatar-manager c-form__section__aside">
-            <div class="c-avatar-manager__preview">
-                {# Only show an avatar if we're editing an existing team #}
-                {% if avatar is not null %}
-                    <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
-                {% endif %}
+{% from 'avatar-editor.html.twig' import avatar_editor %}
+{% from 'md-editor.html.twig' import md_editor %}
 
-                {# Only show the option to delete an avatar if we're editing an existing team #}
-                {% if form.delete_avatar is not null %}
-                    <div class="c-avatar-manager__preview__delete">
-                        {{ form_row(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+<div class="container">
+    {{ form_start(form, { 'attr': { 'class': 'c-form' } }) }}
+        {{ form_errors(form) }}
+
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2 offset-md-reset col-md-4 col-lg-3">
+                {{ avatar_editor(avatar, form.avatar, form.delete_avatar) }}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                {{ form_row(form.name, { 'container_attr': { 'class': 'mb3' } }) }}
+
+                {{ form_label(form.description) }}
+                {{ md_editor(form.description, { 'class': ['mb3'] }) }}
+
+                <div class="row">
+                    {# Only show the option to edit leadership if we're editing an existing team #}
+                    {% if form.leader is not null %}
+                        <div class="col-md-6 col-lg-3 mb3">
+                            {{ form_row(form.leader, { 'container_attr': { 'class': 'c-select--full-width' } }) }}
+                        </div>
+                    {% endif %}
+
+                    <div class="col-md-6 col-lg-3 mb3">
+                        {{ form_row(form.status, { 'container_attr': { 'class': 'c-select--full-width' } }) }}
                     </div>
-                {% endif %}
+                </div>
+
+                {{ form_rest(form) }}
             </div>
-
-            <div class="c-avatar-manager__uploader">
-                {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
-            </div>
-        </aside>
-
-        <article class="o-col--main c-form__section__main">
-            {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
-        </article>
-    </section>
-
-    <section class="c-form__section c-form__section--inline">
-        {# Only show the option to edit leadership if we're editing an existing team #}
-        {% if form.leader is not null %}
-            {{ form_row(form.leader, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        {% endif %}
-
-        {{ form_row(form.status, { 'container_attr': { 'class': 'c-form__group' } }) }}
-    </section>
-
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+        </div>
+    {{ form_end(form) }}
+</div>

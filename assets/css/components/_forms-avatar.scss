@@ -1,29 +1,13 @@
 // This container holds the preview of the avatar, the delete button, and the upload button for a new avatar
-.c-avatar-manager {
-
-}
+.c-avatar-manager {}
 
 // The container which holds the avatar preview and the delete button to ensure both elements have the same width
 .c-avatar-manager__preview {
-    margin: {
-        bottom: $Settings-Page_Section-Small_Margin;
-        left: auto;
-        right: auto;
-    }
     position: relative;
     text-align: center;
-    width: 65%;
 
     img {
         display: block;
-        width: 100%;
-    }
-
-    @include respond-up(sm) {
-        width: 50%;
-    }
-
-    @include respond-up(md) {
         width: 100%;
     }
 }
@@ -35,10 +19,10 @@
     width: 100%;
 
     button {
-        background: rgba($Color-Black, 0.5);
+        background: rgba(#000000, 0.7);
         border: 0;
+        color: #ffffff;
         display: block;
-        margin: auto;
         padding: 10px 0;
         width: 100%;
 
@@ -49,6 +33,4 @@
 }
 
 // The file upload elements for new avatars
-.c-avatar-manager__preview__uploader {
-
-}
+.c-avatar-manager__preview__uploader {}

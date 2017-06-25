@@ -1,0 +1,21 @@
+{% macro avatar_editor(current_avatar, form_upload, form_delete) %}
+    <div class="c-avatar-manager">
+        <div class="c-avatar-manager__preview mb2">
+            {# Only show an avatar if we're editing an existing team #}
+            {% if current_avatar is not null %}
+                <img src="{{ current_avatar | imagine_filter('huge_thumb') }}" />
+            {% endif %}
+
+            {# Only show the option to delete an avatar if we're editing an existing team #}
+            {% if form_delete is not null %}
+                <div class="c-avatar-manager__preview__delete">
+                    {{ form_row(form_delete, { 'attr': { 'class': 'c-button--no-style' }, 'icon': 'trash-o' }) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="c-avatar-manager__uploader">
+            {{ form_row(form_upload, { 'label': 'Upload new Avatar' }) }}
+        </div>
+    </div>
+{% endmacro %}

@@ -2,10 +2,6 @@
 //
 // https://github.com/thoughtbot/bitters
 
-// This is the magic height for input fields
-//   4 is a magic number which is automatically calculated by the browser
-$_magicInputHeight: $Settings-Base_Font_Size + 4 + $Border-Width + emToPx($Settings-Base_Font_Size, $Form-Spacing / 3) * 2;
-
 // ==========================================
 // Set up the formatting of the generic items
 // ==========================================
@@ -50,7 +46,7 @@ label {
 }
 
 #{$all-text-inputs},
-select[multiple=multiple],
+select,
 textarea {
     background-color: $Form-Base_Background_Color;
     border: $Border-Default;
@@ -103,13 +99,11 @@ input[type="file"] {
 }
 
 select {
-    appearance: none;
     background-color: $Form-Base_Background_Color;
     border: $Border-Default;
     box-shadow: $Form-Box_Shadow;
     max-width: 100%;
     padding: $Form-Spacing / 3;
-    width: auto;
 }
 
 // ===========================================

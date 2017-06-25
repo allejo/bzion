@@ -65,6 +65,7 @@
 @import 'base/anchors';
 @import 'base/blockquote';
 @import 'base/code-block';
+@import 'base/forms';
 @import 'base/images';
 @import 'base/lists';
 @import 'base/typography';
@@ -90,6 +91,7 @@
 @import 'components/calendar';
 @import 'components/charts';
 @import 'components/debug';
+@import 'components/forms-avatar';
 @import 'components/jumbotron';
 @import 'components/list-group';
 @import 'components/markdown';
@@ -147,8 +149,6 @@
 @import 'partials/Layout/fullflex';
 
 // Form styling
-@import 'partials/Forms/general';
-@import 'partials/Forms/avatar';
 @import 'partials/Forms/select2';
 @import 'partials/Forms/structure';
 
