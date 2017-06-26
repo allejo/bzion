@@ -1,0 +1,28 @@
+.s-match__show {
+    @include respond-up(lg) {
+        .c-matchwidget__team__image img {
+            width: 150px;
+        }
+
+        .c-matchwidget__team__name {
+            font-size: 25px;
+            overflow: visible;
+        }
+
+        .c-matchwidget__team__score {
+            font-size: 30px;
+        }
+
+        .c-matchwidget__team--winner {
+            .c-matchwidget__team__score {
+                padding-right: 15px;
+            }
+        }
+
+        .c-matchwidget__team--loser {
+            .c-matchwidget__team__score {
+                padding-left: 15px;
+            }
+        }
+    }
+}

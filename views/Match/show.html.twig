@@ -1,8 +1,8 @@
 {% extends 'layout.html.twig' %}
 
-{% import 'Match/widget.html.twig' as utils %}
-{% import _self as showUtils %}
+{% from 'Match/widget.html.twig' import widget as match_widget %}
 
+{% set scopeClass = 's-match__show' %}
 {% set ogTitle = '%s %s %s' | format(match.winner.name, (match.draw ? 'ties' : 'defeats'), match.loser.name) %}
 {% set opengraph = {
     url: match.url | canonical,
@@ -11,7 +11,6 @@
     description: '%s with a score of %d - %d' | format(ogTitle, match.score(match.winner), match.score(match.loser)),
     image: asset('assets/imgs/open-graph.jpg') | canonical
 } %}
-{% set scopeClass = "s-matches" %}
 {% set pageButtons = [
     {
         'color': 'grey',
@@ -45,120 +44,125 @@
     <h1>{{ match.winner.name }} vs {{ match.loser.name }}</h1>
 {% endblock %}
 
-{% block content %}
-    <section class="o-container">
-        {{ utils.widget(match) }}
+{% macro player_roster(match, team, align) %}
+    <h2 class="mb2 text-{{ align }}">
+        <span class="u-hide-md">{{ team.name }}'s</span>
+        <span class="u-hide u-show-md">Player</span>
+        Roster
+    </h2>
 
-        {{ showUtils.matchTeam(match, "Winner") }}
-        {{ showUtils.matchTeam(match, "Loser") }}
-
-        <section class="o-section">
-            <strong>Map</strong>
-            {% if match.map is valid %}
-                <p>{{ link_to(match.map) }}</p>
-            {% else %}
-                <p><em>None</em></p>
-            {% endif %}
-        </section>
-
-        {# TODO: This should be handled with spawn permissions once bzion takes over the spawn group #}
-        {% if me.hasPermission("add_match") %}
-            <section class="o-section">
-                <strong>Server Address</strong>
-                {% if match.serverAddress %}
-                    <p>{{ match.serverAddress }}</p>
-                {% else %}
-                    <p><em>Server address not available</em></p>
-                {% endif %}
-            </section>
-        {% endif %}
-
-        <section class="o-section">
-            <strong>Replay File</strong>
-            {% if match.replayFileName %}
-                <p>{{ match.replayFileName }}</p>
-            {% else %}
-                <p>File name not available</p>
-            {% endif %}
-        </section>
-
-        <section class="o-section">
-            <strong>Duration</strong>
-            <p>{{ match.duration }} minutes</p>
-        </section>
-
-        {% if match.matchType == constant('Match::OFFICIAL') %}
-            <section class="o-section">
-                <strong>ELO Difference</strong>
-                <p>&plusmn; {{ match.elodiff }}</p>
-            </section>
-        {% endif %}
-
-        <section class="o-section">
-            <strong>Match Type</strong>
-            <p>
-                {%- if match.matchType == constant('Match::OFFICIAL') -%}
-                    Official
-                {%- elseif match.matchType == constant('Match::SPECIAL') %}
-                    Special
-                {%- elseif match.matchType == constant('Match::FUN') -%}
-                    Fun Match
-                {%- else -%}
-                    Unknown
-                {%- endif -%}
-            </p>
-        </section>
-
-        {% if app.isDebug %}
-            <section class="o-section">
-                <strong>Contribution to team activity</strong>
-                <p>{{ match.activity }}</p>
-            </section>
-        {% endif %}
-
-
-        <section class="o-section">
-            <strong>Time</strong>
-            <p>
-                {{ match.timestamp|humanTime(constant('TimeDate::FULL')) }}
-                ({{ match.timestamp.diffForHumans }})
-            </p>
-        </section>
-
-        {% if match.timestamp.ne(match.updated) %}
-            <section class="o-section">
-                <strong>Updated</strong>
-                <p>{{ match.updated|humanTime }}</p>
-            </section>
-        {% endif %}
-
-        {% if match.enteredBy is valid %}
-            <section class="o-section">
-                <strong>Reported by</strong>
-                <p>{{ link_to(match.enteredBy) }}</p>
-            </section>
-        {% endif %}
-    </section>
-{% endblock %}
-
-{% macro matchTeam(match, description) %}
-    {%- set team = (description == "Loser") ? match.loser : match.winner -%}
-    <section class="o-section">
-        <strong>{{ description }}</strong>
-        <p>{{ link_to(team) }} - {{ match.score(team) }}</p>
-        <small>
-            {% for player in match.players(team) %}
-                {{ link_to(player) -}}
-                {%- if not loop.last %}, {% endif %}
-            {% endfor %}
-        </small>
-
-        {% if team is instanceof('Team') %}
-            <p>
-                {{ match.teamEloOld(team) }}
-                &rarr;
-                {{ match.teamEloNew(team) }}
-            </p>
-        {% endif %}
-    </section>
+    <div class="mb-last-reset">
+        {% for player in match.players(team) %}
+            <div class="mb2">
+                {% include 'Player/widget.html.twig' with { 'player': player, attrs: { 'class': 'c-player-badge--' ~ align  } } %}
+            </div>
+        {% endfor %}
+    </div>
 {% endmacro %}
+
+{% block content %}
+    <div class="container">
+        <div class="bb pb3 mb3">
+            {{ match_widget(match, false, false, true) }}
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb3">
+                {{ _self.player_roster(match, match.winner, 'left-md') }}
+            </div>
+            <div class="col-md-6 mb3">
+                {{ _self.player_roster(match, match.loser, 'right-md') }}
+            </div>
+        </div>
+
+        <h2 class="mb2">Match Location</h2>
+        <div class="row mb3">
+            <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-reset">
+                {% if match.map is valid %}
+                    <img class="u-image-responsive mb2 mb0-lg"
+                         src="{{ match.map.avatar | imagine_filter('huge_thumb') }}"
+                         alt="{{ match.map.name }}" >
+                {% endif %}
+            </div>
+            <div class="col-lg-8">
+                {% if match.map is valid %}
+                    <p class="mb1"><strong>Map</strong></p>
+                    <p>{{ link_to(match.map) }}</p>
+                {% endif %}
+
+                <p class="mb1"><strong>Match Duration</strong></p>
+                <p>{{ match.duration }} minutes</p>
+
+                {# TODO: This should be handled with spawn permissions once bzion takes over the spawn group #}
+                {% if me.hasPermission("add_match") %}
+                    <p class="mb1"><strong>Server Address</strong></p>
+                    {% if match.serverAddress %}
+                        <p>{{ match.serverAddress }}</p>
+                    {% else %}
+                        <p><em>Server address not available</em></p>
+                    {% endif %}
+                {% endif %}
+
+                <p class="mb1"><strong>Replay File</strong></p>
+                {% if match.replayFileName %}
+                    <p>{{ match.replayFileName }}</p>
+                {% else %}
+                    <p>File name not available</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <h2 class="mb2">Match Details</h2>
+        <div class="row mb2">
+            {% if match.matchType == constant('Match::OFFICIAL') %}
+                <div class="col-md-6 col-lg-3">
+                    <p class="mb1"><strong>ELO Change</strong></p>
+                    <p>&plusmn; {{ match.elodiff }}</p>
+                </div>
+            {% endif %}
+
+            <div class="col-md-6 col-lg-3">
+                <p class="mb1"><strong>Match Type</strong></p>
+                <p>
+                    {%- if match.matchType == constant('Match::OFFICIAL') -%}
+                        Official
+                    {%- elseif match.matchType == constant('Match::SPECIAL') %}
+                        Special
+                    {%- elseif match.matchType == constant('Match::FUN') -%}
+                        Fun Match
+                    {%- else -%}
+                        Unknown
+                    {%- endif -%}
+                </p>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <p class="mb1"><strong>Match Time</strong></p>
+                <p>{{ match.timestamp | humanTime(constant('TimeDate::FULL')) }} ({{ match.timestamp.diffForHumans }})</p>
+            </div>
+
+
+            {% if match.timestamp.ne(match.updated) %}
+                <div class="col-md-6 col-lg-3">
+                    <p class="mb1"><strong>Last Updated</strong></p>
+                    <p>{{ match.updated|humanTime }}</p>
+                </div>
+            {% endif %}
+
+            {% if match.enteredBy is valid %}
+                <div class="col-md-6 col-lg-3">
+                    <p><strong>Reported by</strong></p>
+                    <p>{{ link_to(match.enteredBy) }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if app.debug %}
+            <h2 class="mb2">Debug Information</h2>
+            <div>
+                <p class="mb1"><strong>Contribution to team activity</strong></p>
+                <p>{{ match.activity }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

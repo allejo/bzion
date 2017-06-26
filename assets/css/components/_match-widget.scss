@@ -4,8 +4,8 @@
         order: 3;
     }
 
-    .c-matchwidget__team__name {
-        justify-content: flex-end;
+    .c-matchwidget__team__info {
+        align-items: flex-end;
         order: 2;
         padding-right: 15px;
     }
@@ -40,18 +40,28 @@
 }
 
 .c-matchwidget__link,
-.c-matchwidget__team__name,
+.c-matchwidget__team__info,
 .c-matchwidget__team__score {
     align-items: center;
     display: flex;
 }
 
-.c-matchwidget__team__image {}
+.c-matchwidget__team__image {
+    img {
+        width: 50px;
+    }
+}
 
 .c-matchwidget__stats,
-.c-matchwidget__team__name {
+.c-matchwidget__team__info {
     flex-grow: 1;
     overflow: hidden;
+}
+
+.c-matchwidget__team__info {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .c-matchwidget__link {

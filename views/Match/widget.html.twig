@@ -1,11 +1,11 @@
-{% macro team_block(match, team, showLinkTo) %}
+{% macro team_block(match, team, showLinkTo, showElo) %}
     {% set isTeam = team is instanceof('Team') %}
 
     <div class="row row--nowrap">
         <div class="col c-matchwidget__team__image">
             {% if isTeam %}
                 <a href="{{ team.url }}">
-                    <img src="{{ team.avatar | imagine_filter('small_thumb') }}"
+                    <img src="{{ team.avatar | imagine_filter('large_thumb') }}"
                          alt="{{ team.name }}'s Avatar"
                          title="{{ team.name }}'s Avatar"
                     >
@@ -17,14 +17,24 @@
                 >
             {% endif %}
         </div>
-        <div class="col c-matchwidget__team__name">
-            <span class="u-truncate-text">
+        <div class="col c-matchwidget__team__info">
+            <p class="c-matchwidget__team__name mb0 u-truncate-text">
                 {% if isTeam %}
                     {{ link_to(team) }}
                 {% else %}
                     {{ team.name }}
                 {% endif %}
-            </span>
+            </p>
+
+            {% if showElo and team is instanceof('Team') %}
+                <p class="mb0">
+                    <small>
+                        {{ match.teamEloOld(team) }}
+                        &rarr;
+                        {{ match.teamEloNew(team) }}
+                    </small>
+                </p>
+            {% endif %}
         </div>
         <div class="col c-matchwidget__team__score">
             {% if showLinkTo %}
@@ -36,7 +46,7 @@
     </div>
 {% endmacro %}
 
-{% macro widget(match, showTimestamp, showLinkTo) %}
+{% macro widget(match, showTimestamp, showLinkTo, showElo) %}
     {% from 'utilities.html.twig' import timestamp %}
     {% from _self import team_block %}
 
@@ -44,6 +54,7 @@
     {#   see: https://stackoverflow.com/a/10794782 #}
     {% set showTimestamp = showTimestamp is not defined or showTimestamp is null ? true : showTimestamp %}
     {% set showLinkTo    = showLinkTo    is not defined or showLinkTo    is null ? true : showLinkTo %}
+    {% set showElo       = showElo       is not defined or showElo       is null ? false : showElo %}
 
     <section class="c-matchwidget row row--nowrap">
         {% if showTimestamp %}
@@ -55,10 +66,10 @@
         <div class="c-matchwidget__stats col">
             <div class="row">
                 <div class="c-matchwidget__team c-matchwidget__team--winner col-lg-6 mb2 mb0-lg">
-                    {{ team_block(match, match.winner, showLinkTo) }}
+                    {{ team_block(match, match.winner, showLinkTo, showElo) }}
                 </div>
                 <div class="c-matchwidget__team c-matchwidget__team--loser col-lg-6">
-                    {{ team_block(match, match.loser, showLinkTo) }}
+                    {{ team_block(match, match.loser, showLinkTo, showElo) }}
                 </div>
             </div>
         </div>
