@@ -105,7 +105,7 @@
                     #{$css-rule}: $value;
                 }
                 @else {
-                    $params: insert-nth($args, $nth, $value);
+                    $params: if($nth > 0, insert-nth($args, $nth, $value), ($value));
                     #{$css-rule}: call($function, $params...);
                 }
             }

@@ -35,6 +35,11 @@ list_group:
 markdown:
   codeblock:
     background: "#2b2b2b"
+  editor:
+    body_background: "#5f636b"
+    body_border: none
+    toolbar_background: "#323740"
+    toolbar_border: none
 
 navigation:
   background: "#323740"

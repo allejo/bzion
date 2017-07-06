@@ -1,10 +1,29 @@
+/// Explode a combined `border` syntax of `<width> <type> <color>` and get only the color.
+///
+/// This function is used solely for the theme-rule() call to extract the color and use it for the toolbar tabs.
+///
+/// @access private
+
+@function _border-color-explode($border-syntax) {
+    $explosion: str-explode($border-syntax, ' ');
+
+    @if length($explosion) == 3 {
+        @return nth($explosion, 3);
+    }
+
+    @return null;
+}
+
+
 // The parent container for the editor which holds both the toolbar and the canvas
 .c-mde {}
 
 // The toolbar which contains the buttons to switch between Edit and Preview modes
 .c-mde__toolbar {
+    @include border-top-radius(5px);
     @include ul-horizontal();
-    @include theme-rule(background-color, 'navigation.background');
+    @include theme-rule(background-color, 'markdown.editor.toolbar_background');
+    @include theme-rule(border, 'markdown.editor.toolbar_border');
 
     margin-bottom: 0;
     padding: 10px 10px 0;
@@ -13,15 +32,17 @@
         @include theme-rule(color, 'body.color');
         @include border-top-radius(5px);
 
+        border: 1px solid transparent;
         cursor: pointer;
+        margin-bottom: -1px;
         padding: 10px;
 
-        &:hover {
-            @include theme-rule(background-color, 'navigation.background', tint, 1, 5%);
-        }
-
+        &:hover,
         &[aria-selected='true'] {
-            @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
+            @include theme-rule(background-color, 'markdown.editor.body_background');
+            @include theme-rule(border-color, 'markdown.editor.toolbar_border', _border-color-explode);
+
+            border-bottom-color: transparent !important;
         }
 
         .fa {
@@ -32,8 +53,10 @@
 
 // The part of the editor which is the parent to the textarea box and the preview
 .c-mde__canvas {
-    @include theme-rule(background-color, 'navigation.background', tint, 1, 15%);
+    @include theme-rule(background-color, 'markdown.editor.body_background');
+    @include theme-rule(border, 'markdown.editor.body_border');
 
+    border-top: none !important;
     padding: 15px;
 
     textarea {
