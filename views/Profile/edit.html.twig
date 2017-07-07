@@ -1,8 +1,10 @@
 {% extends 'layout.html.twig' %}
 
+{% from 'avatar-editor.html.twig' import avatar_editor %}
+{% from 'md-editor.html.twig' import md_editor %}
+
 {% form_theme form _self %}
 
-{% set scopeClass = "s-profile" %}
 {% set pageButtons = [
     {
         'color': 'grey',
@@ -25,89 +27,81 @@
     <h1>{{ block('title') }}</h1>
 {% endblock %}
 
-{% block _form_email_label %}
-    {% set label_attr = label_attr|merge({'for': id}) %}
-    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-        {{- label -}}
-{% endblock %}
-
 {% block content %}
-    {{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-        {{ form_errors(form) }}
-        <section class="o-row c-form__section c-form__section--sidebar">
-            <aside class="o-col--aside c-avatar-manager c-form__section__aside">
-                <div class="c-avatar-manager__preview">
-                    <img src="{{ player.avatar | imagine_filter('huge_thumb') }}" />
+    <div class="container">
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
 
-                    {% if player.avatar is not null %}
-                        <div class="c-avatar-manager__preview__delete">
-                            {{ form_widget(form.delete_avatar, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
-                        </div>
-                    {% endif %}
+            <div class="row">
+                <div class="col-sm-8 offset-sm-2 offset-md-reset col-md-4 col-lg-3">
+                    {{ avatar_editor(player.avatar, form.avatar, form.delete_avatar) }}
                 </div>
 
-                <div class="c-avatar-manager__uploader">
-                    {{ form_row(form.avatar, { 'label': 'Upload new Avatar' }) }}
-                </div>
-            </aside>
-
-            <article class="o-col--main c-form__section__main">
-                <div class="c-form__group">
-                    <label for="{{ form.email.vars.id }}">
-                        {{ form.email.vars.label }}
-                        {% if not editingSelf and player.emailAddress is not empty %}
+                <div class="col-md-8 col-lg-9">
+                    <div class="mb3">
+                        <label for="{{ form.email.vars.id }}">
+                            {{ form.email.vars.label }}
+                            {% if not editingSelf and player.emailAddress is not empty %}
                                 {% if player.verified %}
-                                    <div class="c-form__editor__body__extra c-form__editor__body__extra--success">
-                                        <i class="fa fa-check-circle"></i> Verified
-                                    </div>
+                                    <span class="ml1">
+                                        <i class="fa fa-check-circle"
+                                           aria-hidden="true"
+                                           title="This email has been verified"
+                                        ></i>
+                                        <span class="sr-only">Verified e-mail</span>
+                                    </span>
                                 {% else %}
-                                    <div class="c-form__editor__body__extra c-form__editor__body__extra--error">
-                                        <i class="fa fa-times-circle"></i> Not verified
-                                    </div>
+                                    <span class="ml1">
+                                        <i class="fa fa-times-circle"
+                                           aria-hidden="true"
+                                           title="This email has not been verified by the user"
+                                        ></i>
+                                        <span class="sr-only">Unverified e-mail</span>
+                                    </span>
                                 {% endif %}
+                            {% endif %}
+                        </label>
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+
+                    <div class="mb3">
+                        {{ form_label(form.description) }}
+                        {{ md_editor(form.description) }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.country , {
+                                'container_attr': { 'class': 'mb3' }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.timezone, {
+                                'container_attr': { 'class': 'mb3' }
+                            }) }}
+                        </div>
+                    </div>
+
+                    <div class="mb3">
+                        {{ form_row(form.receive, {
+                            'attr': { 'class': 'c-form__choices' }
+                        }) }}
+                    </div>
+
+                    <div class="mb3">
+                        {% if form.roles is defined %}
+                            {{ form_row(form.roles) }}
                         {% endif %}
-                    </label>
-                    {{ form_errors(form.email) }}
-                    {{ form_widget(form.email) }}
+                    </div>
+
+                    <div>
+                        {{ form_rest(form) }}
+                    </div>
                 </div>
-
-                <div class="c-form__group c-form__group--flex">
-                    {{ form_label(form.description) }}
-                    {{ form_errors(form.description) }}
-                    {{ form_widget(form.description) }}
-                </div>
-            </article>
-        </section>
-
-        <section class="c-form__section c-form__section--inline">
-            {{ form_row(form.country , { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.timezone, { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </section>
-
-        <section class="c-form__section">
-            <div class="c-form__group">
-                {{ form_label(form.receive) }}
-                {{ form_errors(form.receive) }}
-                {{ form_widget(form.receive, { 'attr': { 'class': 'c-form__choices' } }) }}
             </div>
-        </section>
-
-        {% if form.roles is defined %}
-            <section class="c-form__section">
-                <div class="c-form__group">
-                    {{ form_label(form.roles) }}
-                    {{ form_errors(form.roles) }}
-                    {{ form_widget(form.roles) }}
-                </div>
-            </section>
-        {% endif %}
-
-        <section class="c-form__section">
-            <div class="c-form__buttons">
-                {{ form_rest(form) }}
-            </div>
-        </section>
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
 
 {% block jsCustom %}
