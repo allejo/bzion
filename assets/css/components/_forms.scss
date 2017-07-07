@@ -1,0 +1,58 @@
+// A form choices is a radio button section. This section will by default take up 100% of the container
+.c-form__choices {
+    > div {
+        display: block;
+        margin-right: 10px;
+
+        @include respond-up(sm) {
+            display: inline-block;
+        }
+
+        input,
+        label {
+            display: inline-block;
+            margin-bottom: 0;
+        }
+
+        label {
+            &.required:after {
+                content: '';
+            }
+        }
+    }
+}
+
+// A utility class intended to set the height of <select> objects to match the height of input boxes
+.c-form__select--tall {
+    // A magic number that is the height of the input boxes
+    // @TODO rewrite this to be dynamic with the rest of the Sass
+    height: 40px;
+}
+
+// This class defines the structure of a group of <select> objects which represents a timestamp
+.c-form__timestamp {
+    > div {
+        display: inline-block;
+        margin-right: 15px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        select {
+            display: inline-block;
+            margin-right: 5px;
+            width: auto;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.c-form__timestamp__time {
+    select:not(:first-child) {
+        margin-left: 5px;
+    }
+}

@@ -3,55 +3,66 @@
 {% macro team_score(_title, _team) %}
     <h4>{{ _title }}</h4>
 
-    <div class="o-row">
-        {{ form_row(_team.team, { 'container_attr':  { 'class': 'c-team-selector c-form__group' } }) }}
-        {{ form_row(_team.score, { 'container_attr': { 'class': 'c-team-score c-form__group' } }) }}
+    <div class="row">
+        <div class="col-sm-8 col-md-10 mb2">
+            {{ form_row(_team.team, { 'attr': { 'class': 'c-form__select--tall' } }) }}
+        </div>
+        <div class="col-sm-4 col-md-2 mb2">
+            {{ form_row(_team.score) }}
+        </div>
     </div>
 
-    {{ form_row(_team.participants) }}
+    <div class="mb3">
+        {{ form_row(_team.participants) }}
+    </div>
 {% endmacro %}
 
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container s-match-editor' } }) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section">
-        <article class="o-col--half c-team-match">
-            {{ self.team_score("First Team", form.first_team) }}
-        </article>
+<div class="container">
+    {{ form_start(form, { 'attr': { 'class': 'c-form' } }) }}
+        {{ form_errors(form) }}
 
-        <article class="o-col--half c-team-match">
-            {{ self.team_score("Second Team", form.second_team) }}
-        </article>
-    </section>
+        <div class="row">
+            <div class="col-md-6">
+                {{ self.team_score("First Team", form.first_team) }}
+            </div>
 
-    <section class="c-form__section">
-        {{ form_row(form.server_address, { 'container_attr': { 'class': 'c-form__group' } }) }}
-    </section>
+            <div class="col-md-6">
+                {{ self.team_score("Second Team", form.second_team) }}
+            </div>
+        </div>
 
-    <section class="c-form__section c-form__section--inline">
-        {{ form_row(form.duration, {
-            'attr': { 'class': 'c-form__choices' },
-            'container_attr': { 'class': 'c-form__group' }
-        }) }}
+        <div class="mb3">
+            {{ form_row(form.server_address, { 'container_attr': { 'class': 'c-form__group' } }) }}
+        </div>
 
-        {{ form_row(form.time.time, {
-            'attr': { 'class': 'c-form__timestamp' },
-            'container_attr': { 'class': 'c-form__group' }
-        }) }}
+        <div class="d-flex-md">
+            {{ form_row(form.time.time, {
+                'attr': { 'class': 'c-form__timestamp' },
+                'container_attr': { 'class': 'mr3-md mb3' }
+            }) }}
 
-        {{ form_row(form.time.timezone, {
-            'container_attr': { 'class': 'c-form__group' }
-        }) }}
+            {{ form_row(form.time.timezone, {
+                'container_attr': { 'class': 'mb3' }
+            }) }}
+        </div>
 
-        {{ form_row(form.map, {
-            'container_attr': { 'class': 'c-form__group' }
-        }) }}
+        <div class="d-flex-md">
+            {{ form_row(form.type, {
+                'container_attr': { 'class': 'mr3-md mb3' }
+            }) }}
 
-        {{ form_row(form.type, {
-            'container_attr': { 'class': 'c-form__group' }
-        }) }}
-    </section>
+            {{ form_row(form.map, {
+                'container_attr': { 'class': 'mr3-md mb3' }
+            }) }}
 
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+            {{ form_row(form.duration, {
+                'attr': { 'class': 'c-form__choices' },
+                'container_attr': { 'class': 'mr3-md mb3' }
+            }) }}
+        </div>
+
+        <div>
+            {{ form_rest(form) }}
+        </div>
+    {{ form_end(form) }}
+</div>
