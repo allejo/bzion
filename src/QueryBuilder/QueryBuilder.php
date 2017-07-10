@@ -155,7 +155,7 @@ class QueryBuilder implements Countable
      * `$queryBuilder->where('username')->equals('administrator');`
      *
      * @param  string $column The column to select
-     * @return self
+     * @return static
      */
     public function where($column)
     {
@@ -172,7 +172,7 @@ class QueryBuilder implements Countable
      * Request that a column equals a string (case-insensitive)
      *
      * @param  string $string The string that the column's value should equal to
-     * @return self
+     * @return static
      */
     public function equals($string)
     {
@@ -185,7 +185,7 @@ class QueryBuilder implements Countable
      * Request that a column doesNOT equals a string (case-insensitive)
      *
      * @param  string $string The string that the column's value should equal to
-     * @return self
+     * @return static
      */
     public function notEquals($string)
     {
@@ -198,7 +198,7 @@ class QueryBuilder implements Countable
      * Request that a column is greater than a quantity
      *
      * @param  string $quantity The quantity to test against
-     * @return self
+     * @return static
      */
     public function greaterThan($quantity)
     {
@@ -211,7 +211,7 @@ class QueryBuilder implements Countable
      * Request that a column is less than a quantity
      *
      * @param  string $quantity The quantity to test against
-     * @return self
+     * @return static
      */
     public function lessThan($quantity)
     {
@@ -227,7 +227,7 @@ class QueryBuilder implements Countable
      * @param bool            $inclusive Whether to include the given timestamp
      * @param bool            $reverse   Whether to reverse the results
      *
-     * @return self
+     * @return static
      */
     public function isBefore($time, $inclusive = false, $reverse = false)
     {
@@ -241,7 +241,7 @@ class QueryBuilder implements Countable
      * @param bool            $inclusive Whether to include the given timestamp
      * @param bool            $reverse   Whether to reverse the results
      *
-     * @return self
+     * @return static
      */
     public function isAfter($time, $inclusive = false, $reverse = false)
     {
@@ -263,7 +263,7 @@ class QueryBuilder implements Countable
      * @param  int|Model|null $number The number that the column's value should
      *                                equal to. If a Model is provided, use the
      *                                model's ID, while null values are ignored.
-     * @return self
+     * @return static
      */
     public function is($number)
     {
@@ -285,7 +285,7 @@ class QueryBuilder implements Countable
      *
      * @todo   Improve for PDO
      * @param  string[] $strings The list of accepted values for the column
-     * @return self
+     * @return static
      */
     public function isOneOf($strings)
     {
@@ -304,7 +304,7 @@ class QueryBuilder implements Countable
      * Request that a column value starts with a string (case-insensitive)
      *
      * @param  string $string The substring that the column's value should start with
-     * @return self
+     * @return static
      */
     public function startsWith($string)
     {
@@ -317,7 +317,7 @@ class QueryBuilder implements Countable
      * Request that a specific model is not returned
      *
      * @param  Model|int $model The ID or model you don't want to get
-     * @return self
+     * @return static
      */
     public function except($model)
     {
@@ -335,7 +335,7 @@ class QueryBuilder implements Countable
      * Return the results sorted by the value of a column
      *
      * @param  string $column The column based on which the results should be ordered
-     * @return self
+     * @return static
      */
     public function sortBy($column)
     {
@@ -353,7 +353,7 @@ class QueryBuilder implements Countable
      *
      * Note: This only works if you have specified a column in the sortBy() method
      *
-     * @return self
+     * @return static
      */
     public function reverse()
     {
@@ -366,7 +366,7 @@ class QueryBuilder implements Countable
      * Specify the number of results per page
      *
      * @param  int  $count The number of results
-     * @return self
+     * @return static
      */
     public function limit($count)
     {
@@ -379,7 +379,7 @@ class QueryBuilder implements Countable
      * Only show results from a specific page
      *
      * @param  int|null $page The page number (or null to show all pages - counting starts from 0)
-     * @return self
+     * @return static
      */
     public function fromPage($page)
     {
@@ -394,7 +394,7 @@ class QueryBuilder implements Countable
      * @param  int|Model $model     The model (or database ID) after the first result
      * @param  bool   $inclusive Whether to include the provided model
      * @param  bool   $reverse   Whether to reverse the results
-     * @return self
+     * @return static
      */
     public function endAt($model, $inclusive = false, $reverse = false)
     {
@@ -407,7 +407,7 @@ class QueryBuilder implements Countable
      * @param  int|Model $model     The model (or database ID) before the first result
      * @param  bool   $inclusive Whether to include the provided model
      * @param  bool   $reverse   Whether to reverse the results
-     * @return self
+     * @return static
      */
     public function startAt($model, $inclusive = false, $reverse = false)
     {
@@ -440,7 +440,7 @@ class QueryBuilder implements Countable
     /**
      * Request that only "active" Models should be returned
      *
-     * @return self
+     * @return static
      */
     public function active()
     {
@@ -462,7 +462,7 @@ class QueryBuilder implements Countable
      *
      * @param  Player  $player      The player in question
      * @param  bool $showDeleted false to hide deleted models even from admins
-     * @return self
+     * @return static
      */
     public function visibleTo($player, $showDeleted = false)
     {
@@ -614,7 +614,7 @@ class QueryBuilder implements Countable
      * specified as a MySQL column and not as a column name given by the model
      *
      * @param  string $column The column to select
-     * @return self
+     * @return static
      */
     protected function column($column)
     {
