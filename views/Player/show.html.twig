@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
 
 {% set opengraph = {
     url: player.url | canonical,
@@ -60,35 +61,43 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {{ player.country.flagLiteral | raw }}
-    <h1>
-        {%- if app.urlType == 'vanity' -%}
-            <a href="{{ player.permaLink }}">{{ player.username }}</a>
-        {%- else -%}
-            <a href="{{ player.url('show', false, [], true) }}">{{ player.username }}</a>
-        {%- endif -%}
-    </h1>
+    <div class="d-flex align-items-center">
+        <h1 class="mr1">{{ player.username }}</h1>
+
+        {{ player.country.flagLiteral | raw }}
+    </div>
 {% endblock %}
 
 {% block content %}
-    <section class="o-container c-player">
-        <section class="o-row">
-            <section class="o-col--aside c-player__picture">
-                <img src="{{ player.avatar|imagine_filter('huge_thumb') }}">
-
-                <div class="c-player__picture__link">
-                    {%- if app.urlType == 'vanity' -%}
-                        <p><strong>Permalink</strong></p>
-                        <input type="text" value="{{ request.schemeAndHTTPHost }}{{ player.permaLink }}" disabled />
-                    {%- else -%}
-                        <p><strong>Vanity URL</strong></p>
-                        <input type="text" value="{{ request.schemeAndHTTPHost }}{{ player.url('show', false, [], true) }}" disabled />
-                    {%- endif -%}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 mb3-mb0-lg">
+                <div class="row">
+                    <div class="col-xs-8 offset-xs-2 col-sm-6 offset-sm-3 col-md-4 offset-md-4 offset-lg-reset col-lg-12">
+                        <img src="{{ player.avatar | imagine_filter('huge_thumb') }}"
+                             class="u-image-responsive mb2"
+                             alt="{{ player.username }}'s avatar"
+                        >
+                    </div>
                 </div>
-            </section>
 
-            <section class="o-col--main c-player__details">
-                <p>
+                {% set displayRole = player.roles | first %}
+                {% for role in player.roles %}
+                    {% if role.displayOrder > displayRole.displayOrder %}
+                        {% set displayRole = role %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if displayRole.displayAsLeader %}
+                    <div class="text-center mb2">
+                        <p class="c-button c-button--skinny c-button--{{ displayRole.displayColor }} mb0">
+                            <i class="fa {{ displayRole.displayIcon }}" aria-hidden="true"></i>
+                            {{ displayRole.displayName }}
+                        </p>
+                    </div>
+                {% endif %}
+
+                <p class="mb0 mb2-md mb0-lg">
                     {% if player ~~ player.team.leader %}
                         <strong>Leader of</strong> {{ link_to(player.team) }}
                     {% else %}
@@ -100,103 +109,214 @@
                         {% endif %}
                     {% endif %}
                 </p>
-                <p><strong>Joined on</strong> {{ player.joinedDate | humanTime(constant("TimeDate::DATE_FULL"), tooltip = false) }}</p>
-                {% if me is valid %}
-                    <p><strong>Last seen</strong> {{ player.lastLogin.diffForHumans }}</p>
-                {% endif %}
+            </div>
 
-                {% if player.lastMatch is valid %}
-                    <p><strong>Last match</strong> {{ link_to(player.lastMatch, content=player.lastMatch.timestamp.diffForHumans) }}</p>
-                {% else %}
-                    <p><strong>Last match</strong> <em>never</em></p>
-                {% endif %}
+            <div class="col-lg-9">
+                <div class="c-tabs c-tabs--profile">
+                    <ul class="c-tabs__header" role="tablist" aria-hidden="true">
+                        {# 'Overview' Tab #}
+                        <li id="tabs__header__overview"
+                            role="tab"
+                            aria-controls="tabs__panel__overview"
+                            aria-selected="true"
+                            tabindex="0"
+                        >
+                            Overview
+                        </li>
 
-                {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-                    <p><strong>BZID</strong>
-                        <a href="https://forums.bzflag.org/memberlist.php?mode=viewprofile&amp;u={{ player.bzid }}">
-                            {{- player.bzid -}}
-                        </a>
-                    </p>
-                {% endif %}
+                        {# 'Match Stats' Tab #}
+                        <li id="tabs__header__match-stats"
+                            role="tab"
+                            aria-controls="tabs__panel__match-stats"
+                            aria-selected="false"
+                            tabindex="0"
+                        >
+                            Match Stats
+                        </li>
 
-                <section class="c-player__stats">
-                    <p><strong>Matches played:</strong> {{ player.matchCount }}</p>
-                    <p>
-                        <strong>Win ratio:</strong>
-                        {% set ratio = 100 * player.matchWinRatio -%}
-                        <span title="{{ ratio|number_format(1) }}%">{{ ratio|round }}%</span>
-                    </p>
-                    <p>
-                        <strong title="Number of captures made by the player's team per match">Team caps per match:</strong>
-                        <span>{{ player.matchAverageCaps|number_format(2) }}</span>
-                    </p>
-                    <p>
-                        <strong>Activity:</strong>
-                        <span>{{ player.matchActivity|number_format(2) }} matches per day</span>
-                    </p>
-                </section>
-
-                {% if player.description is not empty %}
-                    <section class="c-player__bio s-markdown">
-                        {{ player.description | markdown }}
-                    </section>
-                {% endif %}
-            </section>
-        </section>
-
-        {% if me.hasPermission("view_visitor_log") %}
-            <hr>
-
-            <section class="o-row">
-                <section class="o-col--half c-player__callsigns">
-                    <h4>
-                        Previous Callsigns
-                    </h4>
-
-                    <ul>
-                        {% for callsign in player.pastCallsigns %}
-                            <li>{{ callsign }}</li>
-                        {% endfor %}
+                        {# 'Administration' Tab #}
+                        {% if me.hasPermission("view_visitor_log") %}
+                            <li id="tabs__header__administration"
+                                role="tab"
+                                aria-controls="tabs__panel__administration"
+                                aria-selected="false"
+                                tabindex="0"
+                            >
+                                Administration
+                            </li>
+                        {% endif %}
                     </ul>
-                </section>
 
-                <section class="o-col--half c-player__ips">
-                    <h4>
-                        Known IP Addresses
-                        {# TODO: Add some kind of pagination #}
-                    </h4>
-                    <ul>
-                        {% for address in player.knownIPs %}
-                            <li>{{ address.ip }} - {{ address.host }}</li>
-                        {% endfor %}
-                    </ul>
-                </section>
-            </section>
+                    <div class="c-tabs__canvas">
+                        <div id="tabs__panel__overview"
+                             class="c-tabs__panel mb3"
+                             role="tabpanel"
+                             aria-labelledby="tabs__header__overview"
+                             aria-hidden="false"
+                        >
+                            <div class="row">
+                                <div class="col-lg-4 order-lg-2 mb3 mb0-lg">
+                                    <p class="mb0">
+                                        <strong>Member since</strong>
+                                        {{ player.joinedDate | humanTime("M d, Y", tooltip = false) }}
+                                    </p>
 
-            <section class="c-account__notes">
-                <h4>Admin Notes</h4>
+                                    {% if me is valid %}
+                                        <p class="mb0">
+                                            <strong>Last seen</strong>
+                                            {{ player.lastLogin.diffForHumans }}
+                                        </p>
+                                    {% endif %}
 
-                {{ form_start(adminNotesForm, { 'attr': { 'class': 'c-form u-no-margin--bottom' } }) }}
-                    {{ form_errors(adminNotesForm) }}
+                                    <p class="mb0">
+                                        {% if player.lastMatch is valid %}
+                                            <strong>Last match</strong>
+                                            {{ link_to(player.lastMatch, content=player.lastMatch.timestamp.diffForHumans) }}
+                                        {% else %}
+                                            <strong>Last match</strong> <em>never</em>
+                                        {% endif %}
+                                    </p>
 
-                    <section class="c-form__editor">
-                        {{ form_row(adminNotesForm.notes, { attr: { 'class': 'c-form__editor__body__content c-form__editor__body__content--small' }, label: false }) }}
-                    </section>
+                                    {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                                        <p class="mb0"><strong>BZID</strong>
+                                            <a href="https://forums.bzflag.org/memberlist.php?mode=viewprofile&amp;u={{ player.bzid }}">
+                                                {{- player.bzid -}}
+                                            </a>
+                                        </p>
+                                    {% endif %}
+                                </div>
 
-                    <section class="c-form__buttons">
-                        {{ form_rest(adminNotesForm) }}
-                    </section>
-                {{ form_end(adminNotesForm) }}
-            </section>
-        {% endif %}
-    </section>
-{% endblock %}
+                                <div class="col-lg-8 order-lg-1">
+                                    <article class="s-markdown">
+                                        {% if player.description %}
+                                            {{ player.description | markdown }}
+                                        {% else %}
+                                            <p>This user prefers to keep an air of mystery.</p>
+                                        {% endif %}
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
 
-{% block jsCustom %}
-    <script src="{{ asset('includes/chartjs/Chart.min.js') }}"></script>
-    <script src="{{ asset('includes/tipsy/src/javascripts/jquery.tipsy.js') }}"></script>
-    <script>
-        $("#prev_callsigns").tipsy({gravity: 's'});
-        $("#known_ips").tipsy({gravity: 's'});
-    </script>
+                        <div id="tabs__panel__match-stats"
+                             class="c-tabs__panel mb3"
+                             role="tabpanel"
+                             aria-labelledby="tabs__header__match-stats"
+                             aria-hidden="false"
+                        >
+                            {% set matchData = {
+                                'series': [
+                                    player.matchSummary | values
+                                ],
+                                'labels': player.matchSummary | keys | date_array_formatter("M 'y"),
+                                'meta': {
+                                    'series': [
+                                        'Number of matches per month'
+                                    ],
+                                    'labels': 'Month'
+                                }
+                            } %}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>
+                                        Match Activity
+                                        <small>
+                                            <i class="fa fa-info-circle ml1"
+                                               aria-hidden="true"
+                                               title="Number of matches {{ player.username }} has participated in each month in the past year"
+                                            ></i>
+                                        </small>
+                                    </h4>
+                                    <section>
+                                        <div class="js-only">
+                                            <div id="player-match-activity"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+                                                 data-graph="line"
+                                                 data-chart="{{ matchData | json_encode }}"
+                                            ></div>
+                                        </div>
+
+                                        {{ accessible_line(
+                                            "A breakdown of the number of matches per month for " ~ player.username ~ " in the past year",
+                                            matchData,
+                                            {
+                                                'class': ['c-table', 'c-table--activity']
+                                            }
+                                        ) }}
+                                    </section>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h4>
+                                        Match Statistics
+                                    </h4>
+
+                                    <section>
+                                        <p class="mb0"><strong>Matches played:</strong> {{ player.matchCount }}</p>
+                                        <p class="mb0">
+                                            <strong>Win ratio:</strong>
+                                            {{ (100 * player.matchWinRatio) | round }}%
+                                        </p>
+                                        <p class="mb0">
+                                            <strong title="Number of captures made by the player's team per match">Team caps per match:</strong>
+                                            {{ player.matchAverageCaps | number_format(2) }}
+                                        </p>
+                                        <p class="mb0">
+                                            <strong>Activity:</strong>
+                                            <span>{{ player.matchActivity | number_format(2) }} matches per day</span>
+                                        </p>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if me.hasPermission("view_visitor_log") %}
+                            <div id="tabs__panel__administration"
+                                 class="c-tabs__panel mb3"
+                                 role="tabpanel"
+                                 aria-labelledby="tabs__header__administration"
+                                 aria-hidden="false"
+                            >
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Previous Callsigns</h4>
+
+                                        <ul>
+                                            {% for callsign in player.pastCallsigns %}
+                                                <li>{{ callsign }}</li>
+                                            {% else %}
+                                                <li><em>There are no known previous callsigns</em></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Known IP Addresses</h4>
+                                        <ul>
+                                            {% for address in player.knownIPs %}
+                                                <li>{{ address.ip }} - {{ address.host }}</li>
+                                            {% else %}
+                                                <li><em>There are no recorded IP addresses</em></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <article>
+                                    <h4>Admin Notes</h4>
+
+                                    {{ form_start(adminNotesForm, { 'attr': { 'class': '' } }) }}
+                                        {{ form_errors(adminNotesForm) }}
+
+                                        {{ form_row(adminNotesForm.notes, { attr: { 'class': '' }, label: false }) }}
+                                        {{ form_rest(adminNotesForm) }}
+                                    {{ form_end(adminNotesForm) }}
+                                </article>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

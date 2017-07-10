@@ -17,6 +17,9 @@ function buildLineCharts() {
     $lines.each(function() {
         var $this = $(this);
         new Chartist.Line(this, $this.data('chart'), {
+            axisY: {
+                onlyInteger: true
+            },
             showPoint: false
         });
     });

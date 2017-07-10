@@ -83,10 +83,10 @@ class MatchQueryBuilder extends QueryBuilder
     /**
      * Get a count for each month's matches
      *
-     * @param Team $team The team in question
+     * @param TimeDate|Team $timeDate The team in question
      * @return array
      */
-    public function getSummary(Team $team)
+    public function getSummary(TimeDate $timeDate)
     {
         $this->groupByMonth();
 
@@ -96,19 +96,22 @@ class MatchQueryBuilder extends QueryBuilder
         $results = Database::getInstance()->query($query, $this->parameters);
 
         foreach ($results as $match) {
-            $matches[$match['y'] . '-' . sprintf('%02d', $match['m'])] = $match['count'];
+            $matches[sprintf("%d-%02d", $match['y'], $match['m'])] = $match['count'];
         }
 
         // Add entries for dates with 0 matches
-        $timestamp = $team->getCreationDate()->setTimezone('UTC')->startOfMonth();
+        $timestamp = $timeDate->startOfMonth();
+
         while ($timestamp->lte(TimeDate::now())) {
             $key = $timestamp->format('Y-m');
+
             if (!isset($matches[$key])) {
                 $matches[$key] = 0;
             }
 
             $timestamp->addMonth();
         }
+
         ksort($matches);
 
         return $matches;

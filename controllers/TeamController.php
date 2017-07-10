@@ -15,13 +15,15 @@ class TeamController extends CRUDController
 
     public function showAction(Team $team)
     {
+        $creationDate = $team->getCreationDate()->setTimezone('UTC')->startOfMonth();
+
         $matches = Match::getQueryBuilder()
             ->with($team)
-            ->getSummary($team);
+            ->getSummary($creationDate);
 
         $wins = Match::getQueryBuilder()
             ->with($team, "win")
-            ->getSummary($team);
+            ->getSummary($creationDate);
 
         return [
             'matches' => $matches,

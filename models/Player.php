@@ -370,7 +370,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
      */
     public function getKnownIPs()
     {
-        return $this->db->query("SELECT DISTINCT ip, host FROM visits WHERE player = ? LIMIT 10", array($this->getId()));
+        return $this->db->query(
+            'SELECT DISTINCT ip, host FROM visits WHERE player = ? GROUP BY ip, host ORDER BY MAX(timestamp) DESC LIMIT 10',
+            array($this->getId())
+        );
     }
 
     /**
@@ -989,6 +992,31 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         }
 
         return $activity;
+    }
+
+    /**
+     * Return an array of matches this player participated in per month.
+     *
+     * ```
+     * ['yyyy-mm'] = <number of matches>
+     * ```
+     *
+     * @param TimeDate|string $timePeriod
+     *
+     * @return int[]
+     */
+    public function getMatchSummary($timePeriod = '1 year ago')
+    {
+        $since = ($timePeriod instanceof TimeDate) ? $timePeriod : TimeDate::from($timePeriod);
+
+        $matches = Match::getQueryBuilder()
+            ->active()
+            ->with($this)
+            ->where('time')->isAfter($since)
+            ->getSummary($since)
+        ;
+
+        return $matches;
     }
 
     /**

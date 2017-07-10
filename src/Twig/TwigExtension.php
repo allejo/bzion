@@ -14,6 +14,7 @@ class TwigExtension extends \Twig_Extension
     {
         return array(
             ArrayValuesFilter::get(),
+            DateArrayFormatter::get(),
             EvaluateFilter::get(),
             ExtendHashFilter::get(),
             HumanDateFilter::get(),

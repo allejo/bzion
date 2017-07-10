@@ -57,6 +57,7 @@
         @include theme-rule(color, 'charts.line.label');
 
         &.ct-horizontal {
+            margin-left: -10px;
             margin-top: 5px;
             transform: rotate(-45deg);
         }
