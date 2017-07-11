@@ -42,6 +42,7 @@
     "stylelint-scss": "^1.4.4"
   },
   "scripts": {
+    "assets": "encore production && gulp sass:dist",
     "scss-lint": "stylelint web/assets/css/**/*.scss",
     "js-lint": "gulp js:hint"
   }
