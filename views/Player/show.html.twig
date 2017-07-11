@@ -1,6 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
 
+{% set pageWideCSS = 's-player__show' %}
 {% set opengraph = {
     url: player.url | canonical,
     type: 'article',
