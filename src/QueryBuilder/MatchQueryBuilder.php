@@ -88,28 +88,27 @@ class MatchQueryBuilder extends QueryBuilder
      */
     public function getSummary(TimeDate $timeDate)
     {
-        $this->groupByMonth();
+        $this->groupQuery = 'GROUP BY match_date';
 
-        $query = $this->createQuery("YEAR(timestamp) as y, MONTH(timestamp) as m, COUNT(*) as count");
+        $query = $this->createQuery("DATE_FORMAT(timestamp, '%Y-%m') AS match_date, COUNT(*) as match_count");
 
-        $matches = array();
+        $matches = [];
         $results = Database::getInstance()->query($query, $this->parameters);
 
         foreach ($results as $match) {
-            $matches[sprintf("%d-%02d", $match['y'], $match['m'])] = $match['count'];
+            $matches[$match['match_date']] = $match['match_count'];
         }
 
-        // Add entries for dates with 0 matches
-        $timestamp = $timeDate->startOfMonth();
+        $interval = new DateInterval('P1M');
+        $dateRange = new DatePeriod($timeDate, $interval, TimeDate::now());
 
-        while ($timestamp->lte(TimeDate::now())) {
-            $key = $timestamp->format('Y-m');
+        /** @var DateTime $month */
+        foreach($dateRange as $month) {
+            $key = $month->format('Y-m');
 
             if (!isset($matches[$key])) {
                 $matches[$key] = 0;
             }
-
-            $timestamp->addMonth();
         }
 
         ksort($matches);

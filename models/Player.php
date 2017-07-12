@@ -138,6 +138,13 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     protected $ban;
 
     /**
+     * Cached results for match summaries
+     *
+     * @var array
+     */
+    private $cachedMatchSummary;
+
+    /**
      * The cached match count for a player
      *
      * @var int
@@ -189,6 +196,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         $this->last_match = Match::get($player['last_match']);
         $this->admin_notes = $player['admin_notes'];
         $this->ban = Ban::getBan($this->id);
+
+        $this->cachedMatchSummary = [];
 
         $this->updateUserPermissions();
     }
@@ -1009,14 +1018,16 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     {
         $since = ($timePeriod instanceof TimeDate) ? $timePeriod : TimeDate::from($timePeriod);
 
-        $matches = Match::getQueryBuilder()
-            ->active()
-            ->with($this)
-            ->where('time')->isAfter($since)
-            ->getSummary($since)
-        ;
+        if (!isset($this->cachedMatchSummary[(string)$timePeriod])) {
+            $this->cachedMatchSummary[(string)$timePeriod] = Match::getQueryBuilder()
+                ->active()
+                ->with($this)
+                ->where('time')->isAfter($since)
+                ->getSummary($since)
+            ;
+        }
 
-        return $matches;
+        return $this->cachedMatchSummary[(string)$timePeriod];
     }
 
     /**
