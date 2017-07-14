@@ -4,6 +4,20 @@ var _ = require('lodash');
 var crel = require('crel');
 var tinysort = require('tinysort');
 
+/**
+ * Sort the players in each .js-player-list by the specified options
+ *
+ * @param sortBy  {String} The `data-` attribute used to sort by (exclude the 'data-' part)
+ * @param orderBy {String} Either 'asc' or 'desc'
+ */
+function sortPlayers(sortBy, orderBy) {
+    $('.js-player-list').each(function () {
+        var $this = $(this);
+
+        tinysort($this.find('.js-player'), { attr: 'data-' + sortBy, order: orderBy });
+    });
+}
+
 module.exports = function () {
     var playerNodeList = $('.js-player');
     var playerListCanvas = $('#player-list-canvas');
@@ -13,7 +27,11 @@ module.exports = function () {
         return;
     }
 
-    $('.js-group-by').click(function () {
+    // Grouping functionality
+
+    $('.js-group-by').click(function (event) {
+        event.preventDefault();
+
         var canvas = crel('div');
         var groupByAttribute = $(this).data('group-by');
         var grouped = _.groupBy(playerNodeList, function (element) {
@@ -38,5 +56,26 @@ module.exports = function () {
         playerListCanvas.html(canvas.innerHTML);
 
         tinysort('div#player-list-canvas>section', { attr: 'data-sortable' });
+    });
+
+    // Sorting functionality
+
+    var sortBy = 'callsign';
+    var orderBy = 'asc';
+
+    $('.js-sort-by').click(function (event) {
+        event.preventDefault();
+
+        sortBy = $(this).data('sort-by');
+
+        sortPlayers(sortBy, orderBy);
+    });
+
+    $('.js-order-by').click(function (event) {
+        event.preventDefault();
+
+        orderBy = $(this).data('order-by');
+
+        sortPlayers(sortBy, orderBy);
     });
 };
