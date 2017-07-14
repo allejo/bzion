@@ -49,7 +49,7 @@ class PlayerController extends JSONController
         $query = $this->getQueryBuilder();
 
         // Load all countries into the cache so they are ready for later
-        $this->getQueryBuilder('Country')->addToCache();
+        Country::getQueryBuilder()->addToCache();
 
         if ($team) {
             $query->where('team')->is($team);

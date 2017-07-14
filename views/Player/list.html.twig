@@ -15,28 +15,68 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container c-rollcall">
-        {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-            <section class="u-mobile-only o-row">
-                {{ listUtils.searchForm() }}
-            </section>
-        {% endif %}
-        <section class="o-row">
-            {% for player in players if player.hasBeenActive %}
-                {% include "Player/widget.html.twig" with {
-                    player: player,
-                    showTeam: true,
-                    data: {
-                        callsign: "username",
-                        teamid: "team.id",
-                        team: "team.name",
-                        iso: "country.iso",
-                        country: "country.name"
-                    }}
-                %}
-            {% endfor %}
-        </section>
-    </section>
+    <div class="container">
+        <div class="d-flex mb3">
+            <div>
+                <p>Group By</p>
+
+                <div class="c-pill-group">
+                    <a href="#"
+                       class="c-pill-group__pill js-group-by"
+                       data-group-by="activity"
+                    >
+                        Activity
+                    </a>
+                    <a href="#"
+                       class="c-pill-group__pill js-group-by"
+                       data-group-by="team"
+                    >
+                        Team
+                    </a>
+                    <a href="#"
+                       class="c-pill-group__pill js-group-by"
+                       data-group-by="country"
+                    >
+                        Country
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <p>Sort By</p>
+
+                <div class="c-pill-group">
+                    <a class="c-pill-group__pill">Activity</a>
+                    <a class="c-pill-group__pill">Callsign</a>
+                </div>
+            </div>
+        </div>
+
+        {#{% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}#}
+            {#<section class="u-mobile-only o-row">#}
+                {#{{ listUtils.searchForm() }}#}
+            {#</section>#}
+        {#{% endif %}#}
+
+        <div id="player-list-canvas">
+            <div class="row js-player-list">
+                {# @var player \Player #}
+                {% for player in players %}
+                    <div class="js-player col-md-6 col-lg-4 col-xl-3 mb2"
+                         data-callsign="{{ player.username }}"
+                         data-country="{{ player.country.name }}"
+                         data-team="{{ player.team.name != 'None' ? player.team.name : '' }}"
+                    >
+                        {% include "Player/widget.html.twig" with {
+                            player: player,
+                            showTeam: true,
+                            attr: {}
+                        } %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% macro searchForm() %}
