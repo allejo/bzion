@@ -8,55 +8,68 @@
     <h1>Player List</h1>
 {% endblock %}
 
-{% block headerOptions %}
-    {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-        {{ listUtils.searchForm() }}
-    {% endif %}
-{% endblock %}
-
 {% block content %}
     <div class="container">
-        <div class="d-flex mb3">
-            <div>
-                <p>Group By</p>
-
-                <div class="c-pill-group">
-                    <a href="#"
-                       class="c-pill-group__pill js-group-by"
-                       data-group-by="activity"
-                    >
-                        Activity
-                    </a>
-                    <a href="#"
-                       class="c-pill-group__pill js-group-by"
-                       data-group-by="team"
-                    >
-                        Team
-                    </a>
-                    <a href="#"
-                       class="c-pill-group__pill js-group-by"
-                       data-group-by="country"
-                    >
-                        Country
-                    </a>
-                </div>
+        <div class="row mb3">
+            <div class="col-md-3">
+                {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                    {{ listUtils.searchForm() }}
+                {% endif %}
             </div>
+            <div class="col-md-9 d-flex justify-content-end">
+                <div class="text-right">
+                    <p class="mb1">Group By</p>
 
-            <div>
-                <p>Sort By</p>
+                    <div class="c-pill-group">
+                        {% for grouping in ['activity', 'team', 'country'] %}
+                            <a href="{{ url_modify({ 'groupBy': grouping }) }}"
+                               class="c-pill-group__pill js-group-by"
+                               data-group-by="{{ grouping }}"
+                            >
+                                {{ grouping | title }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
 
-                <div class="c-pill-group">
-                    <a class="c-pill-group__pill">Activity</a>
-                    <a class="c-pill-group__pill">Callsign</a>
+                <div class="text-right ml2">
+                    <p class="mb1">Sort By</p>
+
+                    <div class="c-pill-group">
+                        {% for sorting in ['activity', 'callsign'] %}
+                            <a href="{{ url_modify({ 'sortBy': sorting }) }}"
+                               class="c-pill-group__pill js-sort-by"
+                               data-sort-by="{{ sorting }}"
+                            >
+                                {{ sorting | title }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="text-right ml2">
+                    <p class="mb1">Order</p>
+
+                    <div class="c-pill-group">
+                        <a href="{{ url_modify({ 'sortOrder': 'ASC' }) }}"
+                           class="c-pill-group__pill js-order-by"
+                           data-order-by="asc"
+                        >
+                            <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                            <span class="sr-only">Ascending</span>
+                        </a>
+
+                        <a href="{{ url_modify({ 'sortOrder': 'DESC' }) }}"
+                           class="c-pill-group__pill js-order-by"
+                           data-order-by="desc"
+                        >
+                            <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                            <span class="sr-only">Descending</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-
-        {#{% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}#}
-            {#<section class="u-mobile-only o-row">#}
-                {#{{ listUtils.searchForm() }}#}
-            {#</section>#}
-        {#{% endif %}#}
 
         <div id="player-list-canvas">
             <div class="row js-player-list">
