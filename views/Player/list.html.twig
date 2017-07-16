@@ -4,6 +4,8 @@
 
 {% block title %}Players{% endblock %}
 
+{% set pageWideCSS = 's-player__list' %}
+
 {% block pageTitle %}
     <h1>Player List</h1>
 {% endblock %}
@@ -93,17 +95,23 @@
 {% endblock %}
 
 {% macro searchForm() %}
-    <form class="c-page__search" action="{{ path('search_player_by_bzid') }}" method="GET">
-        <label class="c-page__search__icon" for="c-page__search__input" >
-            <i class="fa fa-search"></i>
-        </label>
-        <input
-            id="c-page__search__input"
-            class="c-page__search__input"
-            title="Search by player BZID"
-            placeholder="Search by BZID..."
-            type="search"
-            name="bzid"
+    <form action="{{ path('search_player_by_bzid') }}" method="GET">
+        <label class="c-form__icon mb1"
+               for="c-form__search__input"
         >
+            Search by BZID
+        </label>
+
+        <div class="c-form__group--icon">
+            <div class="c-form__icon">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+
+            <input class="c-form__input"
+                   placeholder="e.g. 12345"
+                   type="search"
+                   name="bzid"
+            >
+        </div>
     </form>
 {% endmacro %}

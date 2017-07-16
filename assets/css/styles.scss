@@ -94,6 +94,7 @@
 @import 'components/debug';
 @import 'components/forms';
 @import 'components/forms-avatar';
+@import 'components/forms-icon';
 @import 'components/jumbotron';
 @import 'components/list-group';
 @import 'components/markdown';
@@ -117,6 +118,7 @@
 // Styling for specific pages
 //
 @import 'pages/Match/show';
+@import 'pages/Players/list';
 @import 'pages/Players/show';
 @import 'pages/Teams/show';
 
