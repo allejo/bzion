@@ -38,7 +38,7 @@ class PlayerController extends JSONController
 
         $params = array(
             'me'   => $player,
-            'self' => false
+            'self' => false,
         );
 
         return $this->forward('edit', $params, 'Profile');
@@ -64,10 +64,69 @@ class PlayerController extends JSONController
             $query->except($me);
         }
 
-        $query->sortBy('name');
+        $players = $query
+            ->sortBy('name')
+            ->getModels($fast = true)
+        ;
+
+        $groupBy = $request->query->get('groupBy');
+        $sortBy = $request->query->get('sortBy');
+        $sortOrder = $request->query->get('sortOrder');
+
+        if ($groupBy) {
+            $grouped = [];
+
+            /** @var Player $player */
+            foreach ($players as $player) {
+                $key = '';
+
+                if ($groupBy == 'country') {
+                    $key = $player->getCountry()->getName();
+                } elseif ($groupBy == 'team') {
+                    $key = $player->getTeam()->getEscapedName();
+
+                    if ($key == '<em>None</em>') {
+                        $key = ' ';
+                    }
+                } elseif ($groupBy == 'activity') {
+                    $key = ($player->getMatchActivity() > 0.0) ? 'Active' : 'Inactive';
+                }
+
+                $grouped[$key][] = $player;
+            }
+
+            ksort($grouped);
+            $players = $grouped;
+        }
+
+        if ($sortBy || $sortOrder) {
+            $sortBy = $sortBy ? $sortBy : 'callsign';
+            $sortOrder = $sortOrder ? $sortOrder : 'ASC';
+
+            foreach ($players as &$playerList) {
+                if ($sortBy == 'callsign') {
+                    usort($playerList, function($a, $b) use ($sortOrder) {
+                        if ($sortOrder == 'DESC') {
+                            return strcmp($b->getUsername(), $a->getUsername());
+                        }
+
+                        return strcmp($a->getUsername(), $b->getUsername());
+                    });
+                } elseif ($sortBy == 'activity') {
+                    usort($playerList, function($a, $b) use ($sortOrder) {
+                        if ($sortOrder == 'DESC') {
+                            return ($b->getMatchActivity() > $a->getMatchActivity());
+                        }
+
+                        return ($a->getMatchActivity() > $b->getMatchActivity());
+                    });
+                }
+            }
+        }
 
         return array(
-            'players' => $query->getModels($fast = true)
+            'grouped' => ($groupBy != null),
+            'players' => $players,
         );
     }
 

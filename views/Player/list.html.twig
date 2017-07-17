@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% from _self import player_repeater %}
 
 {% block title %}Players{% endblock %}
 
@@ -90,23 +91,40 @@
         </div>
 
         <div id="player-list-canvas">
-            <div class="row js-player-list">
-                {# @var player \Player #}
-                {% for player in players %}
-                    <div class="js-player col-md-6 col-lg-4 col-xl-3 mb2"
-                         data-callsign="{{ player.username }}"
-                         data-country="{{ player.country.name }}"
-                         data-team="{{ player.team.name != 'None' ? player.team.name : '' }}"
-                         data-activity="{{ player.matchActivity }}"
-                    >
-                        {% include "Player/widget.html.twig" with {
-                            player: player,
-                            showTeam: true,
-                            attr: {}
-                        } %}
-                    </div>
+            {% if grouped %}
+                {% for key in players | keys %}
+                    <section data-sortable="{{ key }}">
+                        <h2 class="mb2">{{ key | trim | default('<em>None</em>') | raw }}</h2>
+
+                        <div class="row js-player-list">
+                            {{ player_repeater(players[key]) }}
+                        </div>
+                    </section>
                 {% endfor %}
-            </div>
+            {% else %}
+                <div class="row js-player-list">
+                    {{ player_repeater(players) }}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
+
+{% macro player_repeater(players) %}
+    {# @var player \Player #}
+    {% for player in players %}
+        <div class="js-player col-md-6 col-lg-4 col-xl-3 mb2"
+             data-callsign="{{ player.username }}"
+             data-country="{{ player.country.name }}"
+             data-team="{{ player.team.name != 'None' ? player.team.name : '' }}"
+             data-activity="{{ player.matchActivity }}"
+        >
+            {% include "Player/widget.html.twig" with {
+                player: player,
+                showTeam: true,
+                showActivity: true,
+                attr: {}
+            } %}
+        </div>
+    {% endfor %}
+{% endmacro %}

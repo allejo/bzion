@@ -14,7 +14,13 @@
         </div>
 
         {% if showTeam %}
-            <p class="c-player-badge__team">{{ link_to(player.team) }}</p>
+            <p class="c-player-badge__team">
+                {{ link_to(player.team) }}
+
+                {% if showActivity %}
+                    &bull; {{ player.matchActivity | number_format(2) }}
+                {% endif %}
+            </p>
         {% endif %}
     </div>
 </div>
