@@ -6,4 +6,5 @@ $(function () {
     require('./src/md-editor')();
     require('./src/charts')();
     require('./src/player-list')();
+    require('./src/pills')();
 });

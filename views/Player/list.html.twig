@@ -42,7 +42,7 @@
                     <div class="c-pill-group">
                         {% for grouping in ['activity', 'team', 'country'] %}
                             <a href="{{ url_modify({ 'groupBy': grouping }) }}"
-                               class="c-pill-group__pill js-group-by"
+                               class="c-pill-group__pill js-group-by {{ request.get('groupBy') == grouping ? 'active' : '' }}"
                                data-group-by="{{ grouping }}"
                             >
                                 {{ grouping | title }}
@@ -57,7 +57,7 @@
                     <div class="c-pill-group">
                         {% for sorting in ['activity', 'callsign'] %}
                             <a href="{{ url_modify({ 'sortBy': sorting }) }}"
-                               class="c-pill-group__pill js-sort-by"
+                               class="c-pill-group__pill js-sort-by {{ request.get('sortBy') == sorting ? 'active' : '' }}"
                                data-sort-by="{{ sorting }}"
                             >
                                 {{ sorting | title }}
@@ -71,7 +71,7 @@
 
                     <div class="c-pill-group">
                         <a href="{{ url_modify({ 'sortOrder': 'ASC' }) }}"
-                           class="c-pill-group__pill js-order-by"
+                           class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'ASC' ? 'active' : '' }}"
                            data-order-by="asc"
                         >
                             <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -79,7 +79,7 @@
                         </a>
 
                         <a href="{{ url_modify({ 'sortOrder': 'DESC' }) }}"
-                           class="c-pill-group__pill js-order-by"
+                           class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'DESC' ? 'active' : '' }}"
                            data-order-by="desc"
                         >
                             <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
