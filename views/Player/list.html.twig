@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% import _self as listUtils %}
-
 {% block title %}Players{% endblock %}
 
 {% set pageWideCSS = 's-player__list' %}
@@ -15,11 +13,29 @@
         <div class="row mb3">
             <div class="col-md-3">
                 {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-                    {{ listUtils.searchForm() }}
+                    <form action="{{ path('search_player_by_bzid') }}" method="GET">
+                        <label class="c-form__icon mb1"
+                               for="c-form__search__input"
+                        >
+                            Search by BZID
+                        </label>
+
+                        <div class="c-form__group--icon">
+                            <div class="c-form__icon">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </div>
+
+                            <input class="c-form__input"
+                                   placeholder="e.g. 12345"
+                                   type="search"
+                                   name="bzid"
+                            >
+                        </div>
+                    </form>
                 {% endif %}
             </div>
             <div class="col-md-9 d-flex justify-content-end">
-                <div class="text-right">
+                <div class="text-right-md">
                     <p class="mb1">Group By</p>
 
                     <div class="c-pill-group">
@@ -34,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="text-right ml2">
+                <div class="text-right-md ml2">
                     <p class="mb1">Sort By</p>
 
                     <div class="c-pill-group">
@@ -49,7 +65,7 @@
                     </div>
                 </div>
 
-                <div class="text-right ml2">
+                <div class="text-right-md ml2">
                     <p class="mb1">Order</p>
 
                     <div class="c-pill-group">
@@ -81,6 +97,7 @@
                          data-callsign="{{ player.username }}"
                          data-country="{{ player.country.name }}"
                          data-team="{{ player.team.name != 'None' ? player.team.name : '' }}"
+                         data-activity="{{ player.matchActivity }}"
                     >
                         {% include "Player/widget.html.twig" with {
                             player: player,
@@ -93,25 +110,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% macro searchForm() %}
-    <form action="{{ path('search_player_by_bzid') }}" method="GET">
-        <label class="c-form__icon mb1"
-               for="c-form__search__input"
-        >
-            Search by BZID
-        </label>
-
-        <div class="c-form__group--icon">
-            <div class="c-form__icon">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </div>
-
-            <input class="c-form__input"
-                   placeholder="e.g. 12345"
-                   type="search"
-                   name="bzid"
-            >
-        </div>
-    </form>
-{% endmacro %}
