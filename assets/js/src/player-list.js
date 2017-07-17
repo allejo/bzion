@@ -35,7 +35,13 @@ module.exports = function () {
         var canvas = crel('div');
         var groupByAttribute = $(this).data('group-by');
         var grouped = _.groupBy(playerNodeList, function (element) {
-            return element.getAttribute('data-' + groupByAttribute);
+            var sortValue = element.getAttribute('data-' + groupByAttribute);
+
+            if (groupByAttribute === 'activity') {
+                return (sortValue > 0) ? 'Active' : 'Inactive';
+            }
+
+            return sortValue;
         });
 
         _.forEach(grouped, function (value, key) {
