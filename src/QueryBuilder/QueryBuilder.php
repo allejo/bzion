@@ -31,11 +31,15 @@ class QueryBuilder implements Countable
      */
     protected $type;
 
+    protected $tableAlias = '';
+
     /**
      * The columns that the model provided us
      * @var array
      */
     protected $columns = array('id' => 'id');
+
+    protected $extraColumns = '';
 
     /**
      * The conditions to include in WHERE
@@ -547,6 +551,20 @@ class QueryBuilder implements Countable
 
         $columns = ($fastFetch) ? $type::getEagerColumns() : array();
 
+        if (!empty($this->tableAlias) && is_string($columns)) {
+            $columns = explode(',', $columns);
+
+            foreach ($columns as &$column) {
+                $column = 'p.' . $column;
+            }
+
+            $columns = implode(',', $columns);
+        }
+
+        if (is_string($columns) && !empty($this->extraColumns)) {
+            $columns .= ',' . $this->extraColumns;
+        }
+
         $results = $db->query($this->createQuery($columns), $this->getParameters());
 
         if ($fastFetch) {
@@ -716,7 +734,7 @@ class QueryBuilder implements Countable
             $columns = $this->createQueryColumns();
         }
 
-        return "SELECT $columns FROM $table $params";
+        return "SELECT $columns FROM $table {$this->tableAlias} $params";
     }
 
     /**

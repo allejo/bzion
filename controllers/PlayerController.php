@@ -46,7 +46,7 @@ class PlayerController extends JSONController
 
     public function listAction(Request $request, Player $me, Team $team = null)
     {
-        $query = $this->getQueryBuilder();
+        $query = Player::getQueryBuilder();
 
         // Load all countries into the cache so they are ready for later
         Country::getQueryBuilder()->addToCache();
@@ -65,7 +65,7 @@ class PlayerController extends JSONController
         }
 
         $players = $query
-            ->sortBy('name')
+            ->withMatchActivity()
             ->getModels($fast = true)
         ;
 
