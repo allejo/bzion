@@ -103,29 +103,17 @@ class PlayerController extends JSONController
             $sortBy = $sortBy ? $sortBy : 'callsign';
             $sortOrder = $sortOrder ? $sortOrder : 'ASC';
 
-            foreach ($players as &$playerList) {
-                if ($sortBy == 'callsign') {
-                    usort($playerList, function($a, $b) use ($sortOrder) {
-                        if ($sortOrder == 'DESC') {
-                            return strcmp($b->getUsername(), $a->getUsername());
-                        }
-
-                        return strcmp($a->getUsername(), $b->getUsername());
-                    });
-                } elseif ($sortBy == 'activity') {
-                    usort($playerList, function($a, $b) use ($sortOrder) {
-                        if ($sortOrder == 'DESC') {
-                            return ($b->getMatchActivity() > $a->getMatchActivity());
-                        }
-
-                        return ($a->getMatchActivity() > $b->getMatchActivity());
-                    });
+            if ($groupBy === null) {
+                $this->handleSorting($players, $sortBy, $sortOrder);
+            } else {
+                foreach ($players as &$playerList) {
+                    $this->handleSorting($playerList, $sortBy, $sortOrder);
                 }
             }
         }
 
         return array(
-            'grouped' => ($groupBy != null),
+            'grouped' => ($groupBy !== null),
             'players' => $players,
         );
     }
@@ -149,5 +137,26 @@ class PlayerController extends JSONController
 
         // Reset the form so that the user sees the updated admin notes
         return $this->creator->create();
+    }
+
+    private function handleSorting(&$playerList, $sortBy, $sortOrder)
+    {
+        if ($sortBy == 'callsign') {
+            usort($playerList, function($a, $b) use ($sortOrder) {
+                if ($sortOrder == 'DESC') {
+                    return strcasecmp($b->getUsername(), $a->getUsername());
+                }
+
+                return strcasecmp($a->getUsername(), $b->getUsername());
+            });
+        } elseif ($sortBy == 'activity') {
+            usort($playerList, function($a, $b) use ($sortOrder) {
+                if ($sortOrder == 'DESC') {
+                    return ($b->getMatchActivity() > $a->getMatchActivity());
+                }
+
+                return ($a->getMatchActivity() > $b->getMatchActivity());
+            });
+        }
     }
 }
