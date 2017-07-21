@@ -74,6 +74,10 @@ class PlayerController extends JSONController
             ->active()
         ;
 
+        if (!$request->query->get('showAll')) {
+            $query->having('activity')->greaterThan(0);
+        }
+
         if ($sortBy || $sortOrder) {
             $sortBy = $sortBy ? $sortBy : 'callsign';
             $sortOrder = $sortOrder ? $sortOrder : 'ASC';
