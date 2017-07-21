@@ -4,6 +4,8 @@ var _ = require('lodash');
 var crel = require('crel');
 var tinysort = require('tinysort');
 
+var utils = require('./utilities');
+
 /**
  * Sort the players in each .js-player-list by the specified options
  *
@@ -16,6 +18,16 @@ function sortPlayers(sortBy, orderBy) {
 
         tinysort($this.find('.js-player'), { attr: 'data-' + sortBy, order: orderBy });
     });
+}
+
+/**
+ * Update a query parameter from the browser's URL without a refresh
+ *
+ * @param getParam      {String} The query parameter
+ * @param getParamValue {String} The value the query parameter will take
+ */
+function updateURL(getParam, getParamValue) {
+    history.pushState(null, null, utils.setURLParameter(getParam, getParamValue));
 }
 
 module.exports = function () {
@@ -62,12 +74,13 @@ module.exports = function () {
         playerListCanvas.html(canvas.innerHTML);
 
         tinysort('div#player-list-canvas>section', { attr: 'data-sortable' });
+        updateURL('groupBy', groupByAttribute);
     });
 
     // Sorting functionality
 
     var sortBy = 'callsign';
-    var orderBy = 'asc';
+    var orderBy = 'ASC';
 
     $('.js-sort-by').click(function (event) {
         event.preventDefault();
@@ -75,6 +88,7 @@ module.exports = function () {
         sortBy = $(this).data('sort-by');
 
         sortPlayers(sortBy, orderBy);
+        updateURL('sortBy', sortBy);
     });
 
     $('.js-order-by').click(function (event) {
@@ -83,5 +97,6 @@ module.exports = function () {
         orderBy = $(this).data('order-by');
 
         sortPlayers(sortBy, orderBy);
+        updateURL('sortOrder', orderBy.toUpperCase());
     });
 };
