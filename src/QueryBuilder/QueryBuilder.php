@@ -53,7 +53,13 @@ class QueryBuilder implements Countable
      * The conditions to include in WHERE
      * @var string[]
      */
-    protected $conditions = array();
+    protected $whereConditions = array();
+
+    /**
+     * The conditions to include in HAVING
+     * @var string[]
+     */
+    protected $havingConditions = array();
 
     /**
      * The MySQL value parameters
@@ -96,6 +102,12 @@ class QueryBuilder implements Countable
      * @var string|null
      */
     private $currentColumn = null;
+
+    /**
+     * Either 'where' or 'having'
+     * @var string
+     */
+    private $currentColumnMode = '';
 
     /**
      * The currently selected column without the table name (unless it was
@@ -171,13 +183,20 @@ class QueryBuilder implements Countable
      */
     public function where($column)
     {
-        if (!isset($this->columns[$column])) {
-            throw new InvalidArgumentException("Unknown column '$column'");
-        }
+        return $this->grabColumn($column, 'where');
+    }
 
-        $this->column($this->columns[$column]);
-
-        return $this;
+    /**
+     * Select an alias from an aggregate function
+     *
+     * `$queryBuilder->where('activity')->greaterThan(0);`
+     *
+     * @param  string $column The column to select
+     * @return static
+     */
+    public function having($column)
+    {
+        return $this->grabColumn($column, 'having');
     }
 
     /**
@@ -632,12 +651,14 @@ class QueryBuilder implements Countable
      * @param  string $column The column to select
      * @return static
      */
-    protected function column($column)
+    protected function column($column, $mode)
     {
+        $this->currentColumnMode = $mode;
+
         if (strpos($column, '.') === false) {
             // Add the table name to the column if it isn't there already so that
             // MySQL knows what to do when handling multiple tables
-            $this->currentColumn = "`{$this->getFromAlias()}`.`$column`";
+            $this->currentColumn = ($this->currentColumnMode == 'having') ? "$column" : "`{$this->getFromAlias()}`.`$column`";
         } else {
             $this->currentColumn = $column;
         }
@@ -663,7 +684,8 @@ class QueryBuilder implements Countable
             $value = array($value);
         }
 
-        $this->conditions[] = "{$this->currentColumn} $condition";
+        $array = $this->currentColumnMode . 'Conditions';
+        $this->{$array}[] = "{$this->currentColumn} $condition";
         $this->parameters   = array_merge($this->parameters, $value);
 
         $this->currentColumn = null;
@@ -679,8 +701,9 @@ class QueryBuilder implements Countable
     protected function createQueryParams($respectPagination = true)
     {
         $extras     = $this->extras;
-        $conditions = $this->createQueryConditions();
+        $conditions = $this->createQueryConditions('where');
         $groupQuery = $this->groupQuery;
+        $havingClause = $this->createQueryConditions('having');
         $order      = $this->createQueryOrder();
         $pagination = "";
 
@@ -688,7 +711,7 @@ class QueryBuilder implements Countable
             $pagination = $this->createQueryPagination();
         }
 
-        return "$extras $conditions $groupQuery $order $pagination";
+        return "$extras $conditions $groupQuery $havingClause $order $pagination";
     }
 
     /**
@@ -776,14 +799,16 @@ class QueryBuilder implements Countable
      * Generates all the WHERE conditions for the query
      * @return string
      */
-    private function createQueryConditions()
+    private function createQueryConditions($mode)
     {
-        if ($this->conditions) {
+        $array = $mode . 'Conditions';
+
+        if ($this->{$array}) {
             // Add parentheses around the conditions to prevent conflicts due
             // to the order of operations
-            $conditions = array_map(function ($value) { return "($value)"; }, $this->conditions);
+            $conditions = array_map(function ($value) { return "($value)"; }, $this->{$array});
 
-            return 'WHERE ' . implode(' AND ', $conditions);
+            return strtoupper($mode) . ' ' . implode(' AND ', $conditions);
         }
 
         return '';
@@ -837,5 +862,24 @@ class QueryBuilder implements Countable
         $this->paginationParameters[] = $this->resultsPerPage;
 
         return "LIMIT $offset ?";
+    }
+
+    /**
+     * Set the current column we're working on
+     *
+     * @param string $column The column we're selecting
+     * @param string $mode   Either 'where' or 'having'
+     *
+     * @return $this
+     */
+    private function grabColumn($column, $mode)
+    {
+        if (!isset($this->columns[$column])) {
+            throw new InvalidArgumentException("Unknown column '$column'");
+        }
+
+        $this->column($this->columns[$column], $mode);
+
+        return $this;
     }
 }

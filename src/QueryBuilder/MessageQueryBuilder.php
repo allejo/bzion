@@ -21,7 +21,7 @@ class MessageQueryBuilder extends QueryBuilder
      */
     public function messagesOnly()
     {
-        $this->conditions[] = 'event_type IS NULL';
+        $this->whereConditions[] = 'event_type IS NULL';
 
         return $this;
     }
@@ -33,7 +33,7 @@ class MessageQueryBuilder extends QueryBuilder
      */
     public function eventsOnly()
     {
-        $this->conditions[] = 'event_type IS NOT NULL';
+        $this->whereConditions[] = 'event_type IS NOT NULL';
 
         return $this;
     }
@@ -81,7 +81,7 @@ class MessageQueryBuilder extends QueryBuilder
             $this->parameters[] = $keyword;
         }
 
-        $this->conditions[] = $query;
+        $this->whereConditions[] = $query;
 
         return $this;
     }

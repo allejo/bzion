@@ -22,7 +22,7 @@ class VisitQueryBuilder extends QueryBuilder
      */
     public function search($query)
     {
-        $this->conditions[] = "(ip LIKE CONCAT('%', ?, '%') OR host LIKE CONCAT('%', ?, '%'))";
+        $this->whereConditions[] = "(ip LIKE CONCAT('%', ?, '%') OR host LIKE CONCAT('%', ?, '%'))";
 
         $this->parameters[] = $query;
         $this->parameters[] = $query;
