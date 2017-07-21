@@ -1074,17 +1074,42 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     /**
      * {@inheritdoc}
      */
-    public static function getEagerColumns()
+    public static function getEagerColumns($prefix = null)
     {
-        return 'id,bzid,team,username,alias,status,avatar,country';
+        $columns = [
+            'id',
+            'bzid',
+            'team',
+            'username',
+            'alias',
+            'status',
+            'avatar',
+            'country',
+        ];
+
+        return self::formatColumns($prefix, $columns);
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getLazyColumns()
+    public static function getLazyColumns($prefix = null)
     {
-        return 'email,verified,receives,confirm_code,outdated,description,timezone,joined,last_login,last_match,admin_notes';
+        $columns = [
+            'email',
+            'verified',
+            'receives',
+            'confirm_code',
+            'outdated',
+            'description',
+            'timezone',
+            'joined',
+            'last_login',
+            'last_match',
+            'admin_notes',
+        ];
+
+        return self::formatColumns($prefix, $columns);
     }
 
     /**
@@ -1099,7 +1124,6 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
                 'team'     => 'team',
                 'outdated' => 'outdated',
                 'status'   => 'status',
-                'activity' => 'activity',
             ),
             'name' => 'name',
         ));

@@ -69,17 +69,17 @@ class PlayerController extends JSONController
         $sortOrder = $request->query->get('sortOrder');
 
         $query
-            ->active()
             ->withMatchActivity()
             ->sortBy('name')
+            ->active()
         ;
 
         if ($sortBy || $sortOrder) {
             $sortBy = $sortBy ? $sortBy : 'callsign';
             $sortOrder = $sortOrder ? $sortOrder : 'ASC';
 
-            if ($sortBy == 'activity') {
-                $query->sortBy('activity');
+            if ($sortBy === 'activity') {
+                $query->sortBy($sortBy);
             }
 
             if ($sortOrder == 'DESC') {

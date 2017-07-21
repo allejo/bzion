@@ -313,11 +313,14 @@ abstract class BaseModel implements ModelInterface
      * Get the MySQL columns that will be loaded as soon as the model is created
      *
      * @todo Make this protected
+     *
+     * @param string $prefix The prefix that'll be prefixed to column names
+     *
      * @return string The columns in a format readable by MySQL
      */
-    public static function getEagerColumns()
+    public static function getEagerColumns($prefix = null)
     {
-        return '*';
+        return self::formatColumns($prefix, ['*']);
     }
 
     /**
@@ -333,6 +336,23 @@ abstract class BaseModel implements ModelInterface
     protected static function getLazyColumns()
     {
         throw new Exception("You need to specify a Model::getLazyColumns() method");
+    }
+
+    /**
+     * Get a formatted string with a comma separated column list with table/alias prefixes if necessary.
+     *
+     * @param string|null $prefix  The table name or SQL alias to be prepend to these columns
+     * @param array       $columns The columns to format
+     *
+     * @return string
+     */
+    protected static function formatColumns($prefix = null, $columns = ['*'])
+    {
+        if ($prefix === null) {
+            return implode(',', $columns);
+        }
+
+        return (($prefix . '.') . implode(sprintf(',%s.', $prefix), $columns));
     }
 
     /**

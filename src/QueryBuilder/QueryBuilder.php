@@ -31,7 +31,11 @@ class QueryBuilder implements Countable
      */
     protected $type;
 
-    protected $tableAlias = '';
+    /**
+     * The alias for the table in the FROM query
+     * @var string|null
+     */
+    protected $tableAlias = null;
 
     /**
      * The columns that the model provided us
@@ -39,7 +43,11 @@ class QueryBuilder implements Countable
      */
     protected $columns = array('id' => 'id');
 
-    protected $extraColumns = '';
+    /**
+     * Extra columns that are generated from the SQL query (this should be a comma separated string or null)
+     * @var string|null
+     */
+    protected $extraColumns = null;
 
     /**
      * The conditions to include in WHERE
@@ -549,17 +557,7 @@ class QueryBuilder implements Countable
         $db   = Database::getInstance();
         $type = $this->type;
 
-        $columns = ($fastFetch) ? $type::getEagerColumns() : array();
-
-        if (!empty($this->tableAlias) && is_string($columns)) {
-            $columns = explode(',', $columns);
-
-            foreach ($columns as &$column) {
-                $column = 'p.' . $column;
-            }
-
-            $columns = implode(',', $columns);
-        }
+        $columns = ($fastFetch) ? $type::getEagerColumns($this->tableAlias) : array();
 
         if (is_string($columns) && !empty($this->extraColumns)) {
             $columns .= ',' . $this->extraColumns;
@@ -639,8 +637,7 @@ class QueryBuilder implements Countable
         if (strpos($column, '.') === false) {
             // Add the table name to the column if it isn't there already so that
             // MySQL knows what to do when handling multiple tables
-            $table = (isset($this->tableAlias) ? $this->tableAlias : $this->getTable());
-            $this->currentColumn = "`$table`.`$column`";
+            $this->currentColumn = "`{$this->getFromAlias()}`.`$column`";
         } else {
             $this->currentColumn = $column;
         }
@@ -702,6 +699,20 @@ class QueryBuilder implements Countable
     protected function getParameters()
     {
         return array_merge($this->parameters, $this->paginationParameters);
+    }
+
+    /**
+     * Get the alias used for the table in the FROM clause
+     *
+     * @return null|string
+     */
+    protected function getFromAlias()
+    {
+        if ($this->tableAlias === null) {
+            return $this->getTable();
+        }
+
+        return $this->tableAlias;
     }
 
     /**
@@ -788,7 +799,7 @@ class QueryBuilder implements Countable
             $order = 'ORDER BY ' . $this->sortBy;
 
             // Sort by ID if the sorting columns are equal
-            $id = '`' . ((isset($this->tableAlias)) ? $this->tableAlias : $this->getTable()) . '`.`id`';
+            $id = "`{$this->getFromAlias()}`.`id`";
             if ($this->reverseSort) {
                 $order .= " DESC, $id DESC";
             } else {

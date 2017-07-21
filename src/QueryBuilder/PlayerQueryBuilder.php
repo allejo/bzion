@@ -4,14 +4,12 @@ class PlayerQueryBuilder extends QueryBuilder
 {
     public function withMatchActivity()
     {
-        $type = $this->type;
-        $columns = explode(',', $type::getEagerColumns());
-
-        foreach ($columns as &$column) {
-            $column = 'p.' . $column;
-        }
-
         $this->tableAlias = 'p';
+
+        $type = $this->type;
+        $columns = $type::getEagerColumns($this->tableAlias);
+
+        $this->columns['activity'] = 'activity';
         $this->extraColumns = 'SUM(m2.activity) AS activity';
         $this->extras .= '
           LEFT JOIN
@@ -28,7 +26,7 @@ class PlayerQueryBuilder extends QueryBuilder
             ORDER BY
               timestamp DESC) m2 ON FIND_IN_SET(p.id, m2.team_a_players) OR FIND_IN_SET(p.id, m2.team_b_players)
         ';
-        $this->groupQuery = 'GROUP BY ' . implode(',', $columns);
+        $this->groupQuery = 'GROUP BY ' . $columns;
 
         return $this;
     }
