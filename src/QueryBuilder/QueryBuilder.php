@@ -639,7 +639,7 @@ class QueryBuilder implements Countable
         if (strpos($column, '.') === false) {
             // Add the table name to the column if it isn't there already so that
             // MySQL knows what to do when handling multiple tables
-            $table = $this->getTable();
+            $table = (isset($this->tableAlias) ? $this->tableAlias : $this->getTable());
             $this->currentColumn = "`$table`.`$column`";
         } else {
             $this->currentColumn = $column;
@@ -788,7 +788,7 @@ class QueryBuilder implements Countable
             $order = 'ORDER BY ' . $this->sortBy;
 
             // Sort by ID if the sorting columns are equal
-            $id = '`' . $this->getTable() . '`.`id`';
+            $id = '`' . ((isset($this->tableAlias)) ? $this->tableAlias : $this->getTable()) . '`.`id`';
             if ($this->reverseSort) {
                 $order .= " DESC, $id DESC";
             } else {

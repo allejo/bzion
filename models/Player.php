@@ -1098,7 +1098,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
                 'name'     => 'username',
                 'team'     => 'team',
                 'outdated' => 'outdated',
-                'status'   => 'status'
+                'status'   => 'status',
+                'activity' => 'activity',
             ),
             'name' => 'name',
         ));
