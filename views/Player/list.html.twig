@@ -14,7 +14,10 @@
         <div class="row mb3">
             <div class="col-md-3">
                 {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-                    <form action="{{ path('search_player_by_bzid') }}" method="GET">
+                    <form action="{{ path('search_player_by_bzid') }}"
+                          method="GET"
+                          class="mb2 mb0-md"
+                    >
                         <label class="c-form__icon mb1"
                                for="c-form__search__input"
                         >
@@ -35,8 +38,8 @@
                     </form>
                 {% endif %}
             </div>
-            <div class="col-md-9 d-flex justify-content-end">
-                <div class="text-right-md">
+            <div class="col-md-9 d-flex flex-wrap justify-content-md-end">
+                <div class="text-right-md mb2 mb0-sm mr2">
                     <p class="mb1">Group By</p>
 
                     <div class="c-pill-group">
@@ -53,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="text-right-md ml2">
+                <div class="text-right-md mb2 mb0-sm mr2">
                     <p class="mb1">Sort By</p>
 
                     <div class="c-pill-group">
@@ -68,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="text-right-md ml2">
+                <div class="text-right-md mb2 mb0-sm">
                     <p class="mb1">Order</p>
 
                     <div class="c-pill-group">
