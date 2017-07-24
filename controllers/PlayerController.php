@@ -69,9 +69,9 @@ class PlayerController extends JSONController
         $sortOrder = $request->query->get('sortOrder');
 
         $query
+            ->active()
             ->withMatchActivity()
             ->sortBy('name')
-            ->active()
         ;
 
         if (!$request->query->get('showAll')) {

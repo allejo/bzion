@@ -4,10 +4,8 @@ class PlayerQueryBuilder extends QueryBuilder
 {
     public function withMatchActivity()
     {
-        $this->tableAlias = 'p';
-
         $type = $this->type;
-        $columns = $type::getEagerColumns($this->tableAlias);
+        $columns = $type::getEagerColumns($this->getFromAlias());
 
         $this->columns['activity'] = 'activity';
         $this->extraColumns = 'SUM(m2.activity) AS activity';
@@ -24,7 +22,7 @@ class PlayerQueryBuilder extends QueryBuilder
             WHERE
               DATEDIFF(NOW(), timestamp) <= 45
             ORDER BY
-              timestamp DESC) m2 ON FIND_IN_SET(p.id, m2.team_a_players) OR FIND_IN_SET(p.id, m2.team_b_players)
+              timestamp DESC) m2 ON FIND_IN_SET(players.id, m2.team_a_players) OR FIND_IN_SET(players.id, m2.team_b_players)
         ';
         $this->groupQuery = 'GROUP BY ' . $columns;
 

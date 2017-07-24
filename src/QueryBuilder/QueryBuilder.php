@@ -32,12 +32,6 @@ class QueryBuilder implements Countable
     protected $type;
 
     /**
-     * The alias for the table in the FROM query
-     * @var string|null
-     */
-    protected $tableAlias = null;
-
-    /**
      * The columns that the model provided us
      * @var array
      */
@@ -576,7 +570,7 @@ class QueryBuilder implements Countable
         $db   = Database::getInstance();
         $type = $this->type;
 
-        $columns = ($fastFetch) ? $type::getEagerColumns($this->tableAlias) : array();
+        $columns = ($fastFetch) ? $type::getEagerColumns($this->getFromAlias()) : array();
 
         if (is_string($columns) && !empty($this->extraColumns)) {
             $columns .= ',' . $this->extraColumns;
@@ -731,11 +725,7 @@ class QueryBuilder implements Countable
      */
     protected function getFromAlias()
     {
-        if ($this->tableAlias === null) {
-            return $this->getTable();
-        }
-
-        return $this->tableAlias;
+        return $this->getTable();
     }
 
     /**
@@ -768,7 +758,7 @@ class QueryBuilder implements Countable
             $columns = $this->createQueryColumns();
         }
 
-        return "SELECT $columns FROM $table {$this->tableAlias} $params";
+        return "SELECT $columns FROM $table $params";
     }
 
     /**
