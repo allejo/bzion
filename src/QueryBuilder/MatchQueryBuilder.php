@@ -61,7 +61,7 @@ class MatchQueryBuilder extends QueryBuilder
                 $query = "$team_a_query OR $team_b_query";
         }
 
-        $this->conditions[] = $query;
+        $this->whereConditions[] = $query;
         $this->parameters[] = $participant->getId();
         $this->parameters[] = $participant->getId();
 

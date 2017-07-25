@@ -151,6 +151,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
      */
     private $cachedMatchCount = null;
 
+    private $matchActivity;
+
     /**
      * The name of the database table used for queries
      */
@@ -177,6 +179,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         $this->status = $player['status'];
         $this->avatar = $player['avatar'];
         $this->country = $player['country'];
+
+        if (key_exists('activity', $player)) {
+            $this->matchActivity = ($player['activity'] != null) ? $player['activity'] : 0.0;
+        }
     }
 
     /**
@@ -988,6 +994,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
      */
     public function getMatchActivity()
     {
+        if ($this->matchActivity !== null) {
+            return $this->matchActivity;
+        }
+
         $activity = 0.0;
 
         $matches = Match::getQueryBuilder()
@@ -1064,31 +1074,56 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
     /**
      * {@inheritdoc}
      */
-    public static function getEagerColumns()
+    public static function getEagerColumns($prefix = null)
     {
-        return 'id,bzid,team,username,alias,status,avatar,country';
+        $columns = [
+            'id',
+            'bzid',
+            'team',
+            'username',
+            'alias',
+            'status',
+            'avatar',
+            'country',
+        ];
+
+        return self::formatColumns($prefix, $columns);
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getLazyColumns()
+    public static function getLazyColumns($prefix = null)
     {
-        return 'email,verified,receives,confirm_code,outdated,description,timezone,joined,last_login,last_match,admin_notes';
+        $columns = [
+            'email',
+            'verified',
+            'receives',
+            'confirm_code',
+            'outdated',
+            'description',
+            'timezone',
+            'joined',
+            'last_login',
+            'last_match',
+            'admin_notes',
+        ];
+
+        return self::formatColumns($prefix, $columns);
     }
 
     /**
      * Get a query builder for players
-     * @return QueryBuilder
+     * @return PlayerQueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Player', array(
+        return new PlayerQueryBuilder('Player', array(
             'columns' => array(
                 'name'     => 'username',
                 'team'     => 'team',
                 'outdated' => 'outdated',
-                'status'   => 'status'
+                'status'   => 'status',
             ),
             'name' => 'name',
         ));

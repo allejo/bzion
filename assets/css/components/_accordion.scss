@@ -1,0 +1,10 @@
+.c-accordion__heading {
+    @include theme-rule(color, 'body.color');
+
+    text-align: left;
+    width: 100%;
+}
+
+.c-accordion__body[aria-expanded='false'] {
+    display: none;
+}

@@ -39,8 +39,8 @@ Feature: Matches
        And I press "Enter"
        Then I should be on "/matches/1"
        And I should see "The match was created successfully"
-       And I should see "Preeminent Cannoneers 16"
-       And I should see "Subpar Fusillade 2"
+       And I should see "Preeminent Cannoneers 1200 → 1225 16"
+       And I should see "Subpar Fusillade 1200 → 1175 2"
 
   Scenario: Enter fun match
        Given I am an admin

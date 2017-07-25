@@ -34,19 +34,19 @@
                     {% set isFunFilter = matchTypeFilter == constant('Match::FUN') %}
 
                     <a href="{{ url('match_list') }}"
-                       class="c-pill-group__pill {{ not isOfficialFilter and not isFunFilter ? 'active' : '' }}"
+                       class="c-pill-group__pill js-allow-propagation {{ not isOfficialFilter and not isFunFilter ? 'active' : '' }}"
                     >
                         All
                     </a>
 
                     <a href="{{ url('match_list', { type: constant('Match::OFFICIAL') }) }}"
-                       class="c-pill-group__pill {{ isOfficialFilter ? 'active' : '' }}"
+                       class="c-pill-group__pill js-allow-propagation {{ isOfficialFilter ? 'active' : '' }}"
                     >
                         Official
                     </a>
 
                     <a href="{{ url('match_list', { type: constant('Match::FUN') }) }}"
-                       class="c-pill-group__pill {{ isFunFilter ? 'active' : '' }}"
+                       class="c-pill-group__pill js-allow-propagation {{ isFunFilter ? 'active' : '' }}"
                     >
                         FM
                     </a>

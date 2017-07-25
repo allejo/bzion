@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "chartist": "^0.11.0",
+    "crel": "^3.0.1",
     "eyeglass": "^1.2.1",
     "eyeglass-sassy-data": "^0.1.2",
     "gulp": "^3.9.1",
@@ -20,13 +21,15 @@
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.2.1",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "markdown": "^0.5.0",
     "modernizr": "^3.5.0",
     "modernizr-webpack-plugin": "^1.0.6",
     "node-sass": "^4.5.3",
     "postcss-remove-prefixes": "^1.2.0",
     "postcss-unprefix": "^2.1.1",
-    "pump": "^1.0.1"
+    "pump": "^1.0.1",
+    "tinysort": "^2.3.6"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.7.2",
@@ -43,6 +46,7 @@
   },
   "scripts": {
     "assets": "encore production && gulp sass:dist",
+    "assets-dev": "encore dev --watch",
     "scss-lint": "stylelint web/assets/css/**/*.scss",
     "js-lint": "gulp js:hint"
   }

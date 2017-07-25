@@ -1,0 +1,14 @@
+.c-form__group--icon {
+    position: relative;
+
+    .c-form__icon {
+        left: 10px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .c-form__input {
+        padding-left: 30px;
+    }
+}

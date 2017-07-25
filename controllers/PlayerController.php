@@ -38,7 +38,7 @@ class PlayerController extends JSONController
 
         $params = array(
             'me'   => $player,
-            'self' => false
+            'self' => false,
         );
 
         return $this->forward('edit', $params, 'Profile');
@@ -46,10 +46,10 @@ class PlayerController extends JSONController
 
     public function listAction(Request $request, Player $me, Team $team = null)
     {
-        $query = $this->getQueryBuilder();
+        $query = Player::getQueryBuilder();
 
         // Load all countries into the cache so they are ready for later
-        $this->getQueryBuilder('Country')->addToCache();
+        Country::getQueryBuilder()->addToCache();
 
         if ($team) {
             $query->where('team')->is($team);
@@ -64,10 +64,64 @@ class PlayerController extends JSONController
             $query->except($me);
         }
 
-        $query->sortBy('name');
+        $groupBy = $request->query->get('groupBy');
+        $sortBy = $request->query->get('sortBy');
+        $sortOrder = $request->query->get('sortOrder');
+
+        $query
+            ->active()
+            ->withMatchActivity()
+            ->sortBy('name')
+        ;
+
+        if (!$request->query->get('showAll')) {
+            $query->having('activity')->greaterThan(0);
+        }
+
+        if ($sortBy || $sortOrder) {
+            $sortBy = $sortBy ? $sortBy : 'callsign';
+            $sortOrder = $sortOrder ? $sortOrder : 'ASC';
+
+            if ($sortBy === 'activity') {
+                $query->sortBy($sortBy);
+            }
+
+            if ($sortOrder == 'DESC') {
+                $query->reverse();
+            }
+        }
+
+        $players = $query->getModels($fast = true);
+
+        if ($groupBy) {
+            $grouped = [];
+
+            /** @var Player $player */
+            foreach ($players as $player) {
+                $key = '';
+
+                if ($groupBy == 'country') {
+                    $key = $player->getCountry()->getName();
+                } elseif ($groupBy == 'team') {
+                    $key = $player->getTeam()->getEscapedName();
+
+                    if ($key == '<em>None</em>') {
+                        $key = ' ';
+                    }
+                } elseif ($groupBy == 'activity') {
+                    $key = ($player->getMatchActivity() > 0.0) ? 'Active' : 'Inactive';
+                }
+
+                $grouped[$key][] = $player;
+            }
+
+            ksort($grouped);
+            $players = $grouped;
+        }
 
         return array(
-            'players' => $query->getModels($fast = true)
+            'grouped' => ($groupBy !== null),
+            'players' => $players,
         );
     }
 

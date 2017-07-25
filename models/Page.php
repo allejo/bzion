@@ -224,9 +224,19 @@ class Page extends AliasModel
     /**
      * {@inheritdoc}
      */
-    public static function getEagerColumns()
+    public static function getEagerColumns($prefix = null)
     {
-        return 'id,parent_id,name,alias,author,home,status';
+        $columns = [
+            'id',
+            'parent_id',
+            'name',
+            'alias',
+            'author',
+            'home',
+            'status',
+        ];
+
+        return self::formatColumns($prefix, $columns);
     }
 
     /**

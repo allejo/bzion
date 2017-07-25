@@ -34,7 +34,6 @@
 @import 'vendor/chartist';
 @import 'vendor/flags';
 @import 'vendor/loaders';
-@import 'vendor/text-inputs';
 @import 'vendor/insert-nth';
 
 
@@ -74,27 +73,17 @@
 
 
 //
-// Miscellaneous CSS helpers
-//
-@import 'utilities/accessibility';
-@import 'utilities/axes';
-@import 'utilities/display';
-@import 'utilities/flex';
-@import 'utilities/javascript';
-@import 'utilities/text';
-@import 'utilities/visibility';
-
-
-//
 // Components
 //
 
+@import 'components/accordion';
 @import 'components/buttons';
 @import 'components/calendar';
 @import 'components/charts';
 @import 'components/debug';
 @import 'components/forms';
 @import 'components/forms-avatar';
+@import 'components/forms-icon';
 @import 'components/jumbotron';
 @import 'components/list-group';
 @import 'components/markdown';
@@ -118,8 +107,21 @@
 // Styling for specific pages
 //
 @import 'pages/Match/show';
+@import 'pages/Players/list';
 @import 'pages/Players/show';
 @import 'pages/Teams/show';
+
+
+//
+// Miscellaneous CSS helpers
+//
+@import 'utilities/accessibility';
+@import 'utilities/axes';
+@import 'utilities/display';
+@import 'utilities/flex';
+@import 'utilities/javascript';
+@import 'utilities/text';
+@import 'utilities/visibility';
 
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -1,25 +1,28 @@
-// Thanks to ThoughtBot's Bitters for this awesome template
-//
-// https://github.com/thoughtbot/bitters
-
-// ==========================================
-// Set up the formatting of the generic items
-// ==========================================
-
-form button {
-    &:not(.c-button--no-style) {
-        @extend .c-button;
-        @extend .c-button--blue;
+form {
+    button,
+    input[type="reset"],
+    input[type="submit"] {
+        &:not(.c-button--no-style) {
+            @extend .c-button;
+            @extend .c-button--blue;
+        }
     }
-
-    margin-right: 5px;
 }
 
 fieldset {
-    background-color: lighten($Form-Border_Color, 10%);
-    border: $Border-Default;
+    @include theme-rule(border, 'border.default');
+
     margin: 0;
-    padding: $Form-Small_Spacing;
+    padding: 0 10px 15px;
+
+    legend {
+        font-size: 1em;
+        font-weight: 800;
+        margin-bottom: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+        width: auto;
+    }
 }
 
 input,
@@ -31,8 +34,8 @@ select {
 }
 
 label {
-    font-weight: 600;
-    margin-bottom: $Form-Small_Spacing / 2;
+    font-weight: 800;
+    margin-bottom: 0.75em;
 
     &.required::after {
         color: $Color-Red;
@@ -45,37 +48,35 @@ label {
     }
 }
 
-#{$all-text-inputs},
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
 select,
 textarea {
-    background-color: $Form-Base_Background_Color;
-    border: $Border-Default;
-    border-radius: $Border-Radius;
-    box-shadow: $Form-Box_Shadow;
-    box-sizing: border-box;
-    font-family: $Font-Sans_Serif;
-    padding: $Form-Spacing / 3;
+    @include theme-rule(background-color, 'form.background');
+    @include theme-rule(border, 'border.default');
+    @include theme-rule(border-radius, 'border.radius');
+    @include theme-rule(color, 'body.color');
+
+    padding: 5px;
     transition: border-color;
     width: 100%;
 
-    &:hover {
-        border-color: darken($Form-Border_Color, 10%);
-    }
-
-    &:focus {
-        border-color: $Form-Action_Color;
-        box-shadow: $Form-Box_Shadow_Focus;
-        outline: none;
-    }
-
-    .c-form__group--error & {
-        background-color: transparentize($Form-Error_Color, 0.98);
-        border-color: $Form-Error_Color;
-        box-shadow: $Form-Box_Shadow_Error;
-
-        &:focus {
-            box-shadow: $Form-Box_Shadow_Error_Focus;
-        }
+    &:active,
+    &:focus,
+    &:hover{
+        @include theme-rule(background-color, 'form.background_active');
     }
 }
 
@@ -83,37 +84,18 @@ textarea {
     resize: vertical;
 }
 
-input[type="search"] {
-    appearance: none;
-}
-
 input[type="checkbox"],
 input[type="radio"] {
     display: inline;
-    margin-right: $Form-Small_Spacing / 2;
+    margin-right: 5px;
 }
 
 input[type="file"] {
-    padding-bottom: $Form-Small_Spacing;
     width: 100%;
 }
 
 select {
-    background-color: $Form-Base_Background_Color;
-    border: $Border-Default;
-    box-shadow: $Form-Box_Shadow;
-    max-width: 100%;
-    padding: $Form-Spacing / 3;
-}
-
-// ===========================================
-// Placeholders that'll override form elements
-// ===========================================
-
-// @TODO Rewrite this without !important statements
-%remove-input-style {
-    background-color: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    &:not([size]) {
+        height: 30px;
+    }
 }

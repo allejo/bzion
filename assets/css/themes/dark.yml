@@ -27,6 +27,10 @@ elements:
     color: "#ffffff"
     color_active: "#ffffff"
 
+form:
+  background: "#373d49"
+  background_active: "#303b4f"
+
 list_group:
   active:
     background: "#1f3f56"
