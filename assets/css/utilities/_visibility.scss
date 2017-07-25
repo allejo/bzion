@@ -1,7 +1,7 @@
 @include responsify('.u-hide%infix') {
-    display: none;
+    display: none !important;
 }
 
 @include responsify('.u-show%infix') {
-    display: unset;
+    display: unset !important;
 }

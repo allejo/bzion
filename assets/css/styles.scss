@@ -73,18 +73,6 @@
 
 
 //
-// Miscellaneous CSS helpers
-//
-@import 'utilities/accessibility';
-@import 'utilities/axes';
-@import 'utilities/display';
-@import 'utilities/flex';
-@import 'utilities/javascript';
-@import 'utilities/text';
-@import 'utilities/visibility';
-
-
-//
 // Components
 //
 
@@ -121,6 +109,18 @@
 @import 'pages/Players/list';
 @import 'pages/Players/show';
 @import 'pages/Teams/show';
+
+
+//
+// Miscellaneous CSS helpers
+//
+@import 'utilities/accessibility';
+@import 'utilities/axes';
+@import 'utilities/display';
+@import 'utilities/flex';
+@import 'utilities/javascript';
+@import 'utilities/text';
+@import 'utilities/visibility';
 
 
 // ---------------------------------------------------------------------------------------------------------------------
