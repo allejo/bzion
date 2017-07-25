@@ -69,7 +69,7 @@ textarea {
     @include theme-rule(border-radius, 'border.radius');
     @include theme-rule(color, 'body.color');
 
-    padding: 0.5em;
+    padding: 5px;
     transition: border-color;
     width: 100%;
 

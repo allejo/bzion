@@ -20,8 +20,7 @@ module.exports = {
     //
     // Courtesy of: https://stackoverflow.com/a/10997390/1239484
     //
-    setURLParameter: function (param, paramVal, url)
-    {
+    setURLParameter: function (param, paramVal, url) {
         if (typeof url === 'undefined') {
             url = window.location.href;
         }

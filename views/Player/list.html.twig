@@ -12,11 +12,11 @@
 {% block content %}
     <div class="container">
         <div class="row mb3">
-            <div class="col-md-3">
+            <div class="col-md-4 d-flex flex-wrap">
                 {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
                     <form action="{{ path('search_player_by_bzid') }}"
                           method="GET"
-                          class="mb2 mb0-md"
+                          class="mb2 mb0-md mr2"
                     >
                         <label class="c-form__icon mb1"
                                for="c-form__search__input"
@@ -37,9 +37,29 @@
                         </div>
                     </form>
                 {% endif %}
+
+                <div class="text-left-md mb2 mb0-md mr2">
+                    <p class="mb1">Show All Players</p>
+
+                    <div class="c-pill-group">
+                        {%- set showAll = (request.get('showAll') is null) ? 1 : null -%}
+                        <a href="{{ url_modify({ 'showAll': showAll }) }}"
+                           class="c-pill-group__pill js-allow-propagation {{ request.get('showAll') is not empty ? 'active' : '' }}"
+                        >
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <span class="sr-only">
+                                {%- if showAll -%}
+                                    Show inactive players
+                                {%- else -%}
+                                    Show active players only
+                                {%- endif -%}
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-9 d-flex flex-wrap justify-content-md-end">
-                <div class="text-right-md mb2 mb0-sm mr2">
+            <div class="col-md-8 d-flex flex-wrap justify-content-md-end">
+                <div class="text-right-md mr2 mb2 mb0-sm">
                     <p class="mb1">Group By</p>
 
                     <div class="c-pill-group">
@@ -56,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="text-right-md mb2 mb0-sm mr2">
+                <div class="text-right-md mr2">
                     <p class="mb1">Sort By</p>
 
                     <div class="c-pill-group">
@@ -71,7 +91,7 @@
                     </div>
                 </div>
 
-                <div class="text-right-md mb2 mb0-sm">
+                <div class="text-right-md">
                     <p class="mb1">Order</p>
 
                     <div class="c-pill-group">
