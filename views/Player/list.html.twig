@@ -11,105 +11,124 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mb3">
-            <div class="col-md-4 d-flex flex-wrap">
-                {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
-                    <form action="{{ path('search_player_by_bzid') }}"
-                          method="GET"
-                          class="mb2 mb0-md mr2"
-                    >
-                        <label class="c-form__icon mb1"
-                               for="c-form__search__input"
+        <div class="js-only">
+            <button id="show-player-filters"
+                    class="c-accordion__heading c-button--no-style d-block py1 bb mb2 u-hide-md"
+                    data-role="accordion-heading"
+                    aria-controls="player-filters"
+                    tabindex="0"
+            >
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                Filters
+            </button>
+        </div>
+
+        <div id="player-filters"
+             class="c-accordion__body u-show-md"
+             data-role="accordion-body"
+             aria-labelledby="show-player-filters"
+             aria-expanded="true"
+        >
+            <div class="row mb3">
+                <div class="col-md-5 d-flex flex-wrap">
+                    {% if me.hasPermission(constant('Permission::VIEW_VISITOR_LOG')) %}
+                        <form action="{{ path('search_player_by_bzid') }}"
+                              method="GET"
+                              class="mb2 mb0-md mr2"
                         >
-                            Search by BZID
-                        </label>
-
-                        <div class="c-form__group--icon">
-                            <div class="c-form__icon">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </div>
-
-                            <input class="c-form__input"
-                                   placeholder="e.g. 12345"
-                                   type="search"
-                                   name="bzid"
+                            <label class="c-form__icon mb1"
+                                   for="c-form__search__input"
                             >
-                        </div>
-                    </form>
-                {% endif %}
+                                Search by BZID
+                            </label>
 
-                <div class="text-left-md mb2 mb0-md mr2">
-                    <p class="mb1">Show All Players</p>
+                            <div class="c-form__group--icon">
+                                <div class="c-form__icon">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </div>
 
-                    <div class="c-pill-group">
-                        {%- set showAll = (request.get('showAll') is null) ? 1 : null -%}
-                        <a href="{{ url_modify({ 'showAll': showAll }) }}"
-                           class="c-pill-group__pill js-allow-propagation {{ request.get('showAll') is not empty ? 'active' : '' }}"
-                        >
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                            <span class="sr-only">
+                                <input class="c-form__input"
+                                       placeholder="e.g. 12345"
+                                       type="search"
+                                       name="bzid"
+                                >
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    <div class="text-left-md mb2 mb0-md mr2">
+                        <p class="mb1">Show All Players</p>
+
+                        <div class="c-pill-group">
+                            {%- set showAll = (request.get('showAll') is null) ? 1 : null -%}
+                            <a href="{{ url_modify({ 'showAll': showAll }) }}"
+                               class="c-pill-group__pill js-allow-propagation {{ request.get('showAll') is not empty ? 'active' : '' }}"
+                            >
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                <span class="sr-only">
                                 {%- if showAll -%}
                                     Show inactive players
                                 {%- else -%}
                                     Show active players only
                                 {%- endif -%}
                             </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 d-flex flex-wrap justify-content-md-end">
-                <div class="text-right-md mr2 mb2 mb0-sm">
-                    <p class="mb1">Group By</p>
-
-                    <div class="c-pill-group">
-                        {% for grouping in ['activity', 'team', 'country'] %}
-                            {% if grouping != 'activity' or (grouping == 'activity' and request.get('showAll')) %}
-                                <a href="{{ url_modify({ 'groupBy': grouping }) }}"
-                                   class="c-pill-group__pill js-group-by {{ request.get('groupBy') == grouping ? 'active' : '' }}"
-                                   data-group-by="{{ grouping }}"
-                                >
-                                    {{ grouping | title }}
-                                </a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="text-right-md mr2">
-                    <p class="mb1">Sort By</p>
-
-                    <div class="c-pill-group">
-                        {% for sorting in ['activity', 'callsign'] %}
-                            <a href="{{ url_modify({ 'sortBy': sorting }) }}"
-                               class="c-pill-group__pill js-sort-by {{ request.get('sortBy') == sorting ? 'active' : '' }}"
-                               data-sort-by="{{ sorting }}"
-                            >
-                                {{ sorting | title }}
                             </a>
-                        {% endfor %}
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-7 d-flex flex-wrap justify-content-md-end">
+                    <div class="text-right-md mr2 mb2 mb0-sm">
+                        <p class="mb1">Group By</p>
 
-                <div class="text-right-md">
-                    <p class="mb1">Order</p>
+                        <div class="c-pill-group">
+                            {% for grouping in ['activity', 'team', 'country'] %}
+                                {% if grouping != 'activity' or (grouping == 'activity' and request.get('showAll')) %}
+                                    <a href="{{ url_modify({ 'groupBy': grouping }) }}"
+                                       class="c-pill-group__pill js-group-by {{ request.get('groupBy') == grouping ? 'active' : '' }}"
+                                       data-group-by="{{ grouping }}"
+                                    >
+                                        {{ grouping | title }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
 
-                    <div class="c-pill-group">
-                        <a href="{{ url_modify({ 'sortOrder': 'ASC' }) }}"
-                           class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'ASC' ? 'active' : '' }}"
-                           data-order-by="asc"
-                        >
-                            <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
-                            <span class="sr-only">Ascending</span>
-                        </a>
+                    <div class="text-right-md mr2">
+                        <p class="mb1">Sort By</p>
 
-                        <a href="{{ url_modify({ 'sortOrder': 'DESC' }) }}"
-                           class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'DESC' ? 'active' : '' }}"
-                           data-order-by="desc"
-                        >
-                            <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
-                            <span class="sr-only">Descending</span>
-                        </a>
+                        <div class="c-pill-group">
+                            {% for sorting in ['activity', 'callsign'] %}
+                                <a href="{{ url_modify({ 'sortBy': sorting }) }}"
+                                   class="c-pill-group__pill js-sort-by {{ request.get('sortBy') == sorting ? 'active' : '' }}"
+                                   data-sort-by="{{ sorting }}"
+                                >
+                                    {{ sorting | title }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="text-right-md">
+                        <p class="mb1">Order</p>
+
+                        <div class="c-pill-group">
+                            <a href="{{ url_modify({ 'sortOrder': 'ASC' }) }}"
+                               class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'ASC' ? 'active' : '' }}"
+                               data-order-by="asc"
+                            >
+                                <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                                <span class="sr-only">Ascending</span>
+                            </a>
+
+                            <a href="{{ url_modify({ 'sortOrder': 'DESC' }) }}"
+                               class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'DESC' ? 'active' : '' }}"
+                               data-order-by="desc"
+                            >
+                                <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                                <span class="sr-only">Descending</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
