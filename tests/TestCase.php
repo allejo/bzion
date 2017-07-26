@@ -146,7 +146,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         ++$this->lastBzid;
 
-        $player = Player::newPlayer($this->lastBzid, "Sample player" . $this->lastBzid - 1);
+        $player = Player::newPlayer($this->lastBzid, sprintf("Sample player %d", ($this->lastBzid - 1)));
         $this->playersCreated[] = $player->getId();
 
         return $player;
