@@ -55,6 +55,14 @@ class ColorTeam implements TeamInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isValid()
+    {
+        return true;
+    }
+
+    /**
      * Return whether a team color is valid
      *
      * @param string $color The color to check

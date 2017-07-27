@@ -32,4 +32,11 @@ interface TeamInterface extends NamedModel
      * @return string
      */
     public function getAvatar();
+
+    /**
+     * Returns whether this is a valid object
+     *
+     * @return bool
+     */
+    public function isValid();
 }
