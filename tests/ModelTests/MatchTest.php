@@ -78,7 +78,7 @@ class MatchTest extends TestCase
 
     public function testDraw()
     {
-        $this->team_a->changeElo(+10);
+        $this->team_a->adjustElo(+10);
 
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
 
@@ -98,7 +98,7 @@ class MatchTest extends TestCase
 
     public function testDrawReverse()
     {
-        $this->team_b->changeElo(+10);
+        $this->team_b->adjustElo(+10);
 
         $this->match = Match::enterMatch($this->team_a->getId(), $this->team_b->getId(), 3, 3, 30, $this->player_a->getId());
 
@@ -159,7 +159,37 @@ class MatchTest extends TestCase
         $this->assertEquals(2, count($matches) - count($old_matches));
     }
 
-    public function testIndividualPlayerEloChanges()
+    public function testIndividualPlayerEloDoesNotChangeInFunMatch()
+    {
+        $player_c = $this->getNewPlayer();
+        $player_d = $this->getNewPlayer();
+
+        $player_c->adjustElo(300, null);
+        $player_d->adjustElo(500, null);
+
+        $this->match = Match::enterMatch(
+            null,
+            null,
+            5,
+            1,
+            30,
+            null,
+            'now',
+            [$this->player_a->getId(), $this->player_b->getId()],
+            [$player_c->getId(), $player_d->getId()],
+            null,
+            null,
+            null,
+            Match::FUN
+        );
+
+        $this->assertEquals(1200, $this->player_a->getElo());
+        $this->assertEquals(1200, $this->player_b->getElo());
+        $this->assertEquals(1500, $player_c->getElo());
+        $this->assertEquals(1700, $player_d->getElo());
+    }
+
+    public function testIndividualPlayerEloChangesInOfficialMatch()
     {
         $player_c = $this->getNewPlayer();
         $player_d = $this->getNewPlayer();
@@ -180,12 +210,17 @@ class MatchTest extends TestCase
         $this->assertEquals(1175, $player_c->getElo());
     }
 
-    public function testEloUpdatesTeamVsTeamMatch()
-    {
-
-    }
-
-    public function testEloUpdatesMixedVsMixedMatch()
+    /**
+     * When a match occurs with mixed team vs mixed team, the ELOs for the teams they belong too should not change but
+     * their individual player ELOs should change.
+     *
+     * - Given Player A (Team A) and Player C (Team B) are the winners in this match, their individual ELOs should
+     *   increase
+     * - Given Player B (Team B) and Player D (Team A) are the losers in this match, their individual ELOs should
+     *   decrease
+     * - The ELOs for 'Team A' and 'Team B' should remain unchanged
+     */
+    public function testEloUpdatesMixedVsMixedOfficialMatch()
     {
         $player_c = $this->getNewPlayer();
         $player_d = $this->getNewPlayer();
@@ -215,9 +250,44 @@ class MatchTest extends TestCase
         $this->assertEquals(1200, $this->team_b->getElo());
     }
 
-    public function testEloUpdatesTeamVsMixedMatch()
+    /**
+     * When a match occurs with a team vs a mixed team, the ELOs for the complete team should change and the individual
+     * ELOs for the participants should change.
+     *
+     * - Given Player A and Player C both belong to 'Team A' and lose a match, their individual ELOs should decrease and
+     *   the ELO of their Team should decrease.
+     * - Given Player B (Team B) and Player D (Teamless) win the match, their individual ELOs should increase but the ELO
+     *   for Team B should remain unchanged
+     */
+    public function testEloUpdatesTeamVsMixedOfficialMatch()
     {
+        $player_c = $this->getNewPlayer();
+        $player_d = $this->getNewPlayer();
 
+        $this->team_a->addMember($player_c->getId());
+
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            null,
+            3,
+            4,
+            30,
+            null,
+            'now',
+            [$this->player_a->getId(), $player_c->getId()],
+            [$this->player_b->getId(), $player_d->getId()]
+        );
+
+        $this->assertTrue($player_d->isTeamless());
+
+        $this->assertEquals(1175, $this->team_a->getElo());
+        $this->assertEquals(1200, $this->team_b->getElo());
+
+        $this->assertGreaterThan(1200, $this->player_b->getElo());
+        $this->assertGreaterThan(1200, $player_d->getElo());
+
+        $this->assertLessThan(1200, $this->player_a->getElo());
+        $this->assertLessThan(1200, $player_c->getElo());
     }
 
     public function tearDown()

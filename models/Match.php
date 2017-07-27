@@ -856,6 +856,7 @@ class Match extends UrlModel implements NamedModel
         $db = Database::getInstance();
         $db->startTransaction();
 
+        /** @var Player $player */
         foreach ($players as $player) {
             $diff = $playerEloDiff;
 
