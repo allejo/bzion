@@ -16,7 +16,7 @@ bzion:
         # The type of URLs for Players and Teams
         #  permalink: URLs will contain the object's ID: http://example.com/players/539/greatplayer
         #     vanity: URLs will only contain the object's alias: http://example.com/players/greatplayer
-        url_type: vanity
+        url_type: permalink
     league:
         duration:
             30: 3/3 # 30 minute match gets full ELO
