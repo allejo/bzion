@@ -25,6 +25,9 @@
  */
 class QueryBuilder implements Countable
 {
+    const COL_HAVING = 'having';
+    const COL_WHERE = 'where';
+
     /**
      * The type of the model we're building a query for
      * @var string
@@ -643,16 +646,18 @@ class QueryBuilder implements Countable
      * specified as a MySQL column and not as a column name given by the model
      *
      * @param  string $column The column to select
+     * @param  string $mode   Whether this column is static or is a column from an aggregate function; Either 'having' or 'where'
+     *
      * @return static
      */
-    protected function column($column, $mode)
+    protected function column($column, $mode = self::COL_WHERE)
     {
         $this->currentColumnMode = $mode;
 
         if (strpos($column, '.') === false) {
             // Add the table name to the column if it isn't there already so that
             // MySQL knows what to do when handling multiple tables
-            $this->currentColumn = ($this->currentColumnMode == 'having') ? "$column" : "`{$this->getFromAlias()}`.`$column`";
+            $this->currentColumn = ($this->currentColumnMode == self::COL_HAVING) ? "$column" : "`{$this->getFromAlias()}`.`$column`";
         } else {
             $this->currentColumn = $column;
         }
