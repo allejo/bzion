@@ -161,6 +161,9 @@
                                 <div class="col-lg-6">
                                     <h4>Match Statistics</h4>
                                     <section class="c-team__stats__container flex-column">
+                                        {# We need to make sure that `meta.sum` doesn't not cause division by zero #}
+
+                                        {% set matchTotal = team.matchesWon + team.matchesLost + team.matchesDraw %}
                                         {% set matchBreakdownGraph = {
                                             'series': [
                                                 {
@@ -188,7 +191,7 @@
                                                 ]
                                             },
                                             'meta': {
-                                                'sum': team.matchesWon + team.matchesLost + team.matchesDraw
+                                                'sum': (matchTotal > 0) ? matchTotal : 1
                                             }
                                         } %}
 

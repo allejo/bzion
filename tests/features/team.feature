@@ -70,7 +70,7 @@ Feature: Teams
         Then I should see "Matchless"
         When I follow "Kick Matchless from team"
         And I press "Kick"
-        Then I should be on "/teams/effervescent-duelists"
+        Then the url should match "/teams/(\d+)/effervescent-duelists"
         When I reload the page
         Then I should not see "Matchless"
         When I go to "/teams/geranium-cauldrons"
@@ -92,6 +92,6 @@ Feature: Teams
         Then I should see "irked"
         When I follow "Abandon"
         And I press "Abandon"
-        Then I should be on "/teams/vexatious-vats"
+        Then the url should match "/teams/(\d+)/vexatious-vats"
         And I should see "You have left"
         But I should not see "irked"
