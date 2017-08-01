@@ -237,7 +237,13 @@ class MatchTest extends TestCase
             null,
             'now',
             [$this->player_a->getId(), $player_c->getId()],
-            [$this->player_b->getId(), $player_d->getId()]
+            [$this->player_b->getId(), $player_d->getId()],
+            null,
+            null,
+            null,
+            Match::OFFICIAL,
+            'red',
+            'purple'
         );
 
         $this->assertGreaterThan(1200, $this->player_a->getElo());
@@ -248,6 +254,9 @@ class MatchTest extends TestCase
 
         $this->assertEquals(1200, $this->team_a->getElo());
         $this->assertEquals(1200, $this->team_b->getElo());
+
+        $this->assertEquals('red', $this->match->getTeamA()->getId());
+        $this->assertEquals('purple', $this->match->getTeamB()->getId());
     }
 
     /**
@@ -275,7 +284,13 @@ class MatchTest extends TestCase
             null,
             'now',
             [$this->player_a->getId(), $player_c->getId()],
-            [$this->player_b->getId(), $player_d->getId()]
+            [$this->player_b->getId(), $player_d->getId()],
+            null,
+            null,
+            null,
+            Match::OFFICIAL,
+            'red',
+            'purple'
         );
 
         $this->assertTrue($player_d->isTeamless());
@@ -288,6 +303,9 @@ class MatchTest extends TestCase
 
         $this->assertLessThan(1200, $this->player_a->getElo());
         $this->assertLessThan(1200, $player_c->getElo());
+
+        $this->assertInstanceOf(Team::class, $this->match->getTeamA());
+        $this->assertInstanceOf(ColorTeam::class, $this->match->getTeamB());
     }
 
     public function tearDown()

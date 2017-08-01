@@ -39,4 +39,11 @@ interface TeamInterface extends NamedModel
      * @return bool
      */
     public function isValid();
+
+    /**
+     * Returns whether this object supports keeping count of matches
+     *
+     * @return bool
+     */
+    public function supportsMatchCount();
 }

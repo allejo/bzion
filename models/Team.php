@@ -542,6 +542,14 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function supportsMatchCount()
+    {
+        return true;
+    }
+
+    /**
      * Create a new team
      *
      * @param  string           $name        The name of the team

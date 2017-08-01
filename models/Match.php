@@ -305,8 +305,10 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamA()
     {
-        if ($this->match_type === self::OFFICIAL) {
-            return Team::get($this->team_a);
+        $team = Team::get($this->team_a);
+
+        if ($this->match_type === self::OFFICIAL && $team->isValid()) {
+            return $team;
         }
 
         return new ColorTeam($this->team_a_color);
@@ -318,8 +320,10 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamB()
     {
-        if ($this->match_type === self::OFFICIAL) {
-            return Team::get($this->team_b);
+        $team = Team::get($this->team_b);
+
+        if ($this->match_type === self::OFFICIAL && $team->isValid()) {
+            return $team;
         }
 
         return new ColorTeam($this->team_b_color);
@@ -1055,14 +1059,12 @@ class Match extends UrlModel implements NamedModel
 
         $diff = ($decrement) ? -1 : 1;
 
-        // @todo Confirm the spec
-        // Do we increase the match count if it's a Team vs mixed scenario
         if ($this->isDraw()) {
-            $this->getTeamA()->isValid() && $this->getTeamA()->changeMatchCount($diff, 'draw');
-            $this->getTeamB()->isValid() && $this->getTeamB()->changeMatchCount($diff, 'draw');
+            $this->getTeamA()->supportsMatchCount() && $this->getTeamA()->changeMatchCount($diff, 'draw');
+            $this->getTeamB()->supportsMatchCount() && $this->getTeamB()->changeMatchCount($diff, 'draw');
         } else {
-            $this->getWinner()->isValid() && $this->getWinner()->changeMatchCount($diff, 'win');
-            $this->getLoser()->isValid()  && $this->getLoser()->changeMatchCount($diff, 'loss');
+            $this->getWinner()->supportsMatchCount() && $this->getWinner()->changeMatchCount($diff, 'win');
+            $this->getLoser()->supportsMatchCount()  && $this->getLoser()->changeMatchCount($diff, 'loss');
         }
     }
 }
