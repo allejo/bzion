@@ -1009,13 +1009,13 @@ class Match extends UrlModel implements NamedModel
     {
         switch ($this->getMatchType()) {
             case self::OFFICIAL:
-                $description = "(+/- " . $this->getEloDiff() . ") ";
+                $description = "(+/- " . $this->getEloDiff() . ")";
                 break;
             case self::FUN:
                 $description = "Fun Match:";
                 break;
             case self::SPECIAL:
-                $description = "Special Match: ";
+                $description = "Special Match:";
                 break;
             default:
                 $description = "";

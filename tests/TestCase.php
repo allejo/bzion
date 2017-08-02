@@ -1,6 +1,8 @@
 <?php
 
-abstract class TestCase extends PHPUnit_Framework_TestCase
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+abstract class TestCase extends WebTestCase
 {
     /**
      * The BZID of the last player created, used to prevent conflicts when creating new players
