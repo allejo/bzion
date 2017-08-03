@@ -16,7 +16,7 @@ class PlayerQueryBuilder extends QueryBuilder
               m.team_a_players,
               m.team_b_players,
               TIMESTAMPDIFF(SECOND, timestamp, NOW()) / 86400 AS days_passed,
-              (0.0116687059537612 * (POW((45 - (SELECT days_passed)), (1/6)) + ATAN(31 - (SELECT days_passed)) / 2)) AS activity
+              (0.0116687059537612 * (POW((45 - LEAST((SELECT days_passed), 45)), (1/6)) + ATAN(31 - (SELECT days_passed)) / 2)) AS activity
             FROM
               matches m
             WHERE
