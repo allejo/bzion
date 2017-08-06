@@ -1,7 +1,6 @@
 {% extends 'layout.html.twig' %}
 
 {% from 'Match/widget.html.twig' import widget as match_widget %}
-{% from 'Player/widget.html.twig' import widget as player_widget %}
 
 {% set scopeClass = 's-match__show' %}
 {% set ogTitle = '%s %s %s' | format(match.winner.name, (match.draw ? 'ties' : 'defeats'), match.loser.name) %}
@@ -46,6 +45,8 @@
 {% endblock %}
 
 {% macro player_roster(match, team, align) %}
+    {% from 'Player/widget.html.twig' import widget as player_widget %}
+
     <h2 class="mb2 text-{{ align }}">
         <span class="u-hide-md">{{ team.name }}'s</span>
         <span class="u-hide u-show-md">Player</span>
