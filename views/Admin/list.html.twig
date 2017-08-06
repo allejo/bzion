@@ -7,30 +7,32 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
+    <div class="container mb-last-reset">
         {% for section in role_sections %}
-            <section class="o-section">
-                <p class="c-button c-button--{{ section.role.displayColor }} c-button--skinny c-button--no-click c-button--no-hover">
+            <section class="mb2">
+                <h2 class="c-button c-button--{{ section.role.displayColor }} c-button--skinny c-button--no-click c-button--no-hover m0">
                     {% if section.role.displayIcon is not null %}
-                        <i class="fa {{ section.role.displayIcon }}"></i>
+                        <i class="fa {{ section.role.displayIcon }}" aria-hidden="true"></i>
                     {% endif %}
 
                     <span>{{ section.role.displayName }}</span>
-                </p>
-            </section>
+                </h2>
 
-            <section class="o-row o-section c-rollcall">
-                {% for player in section.members %}
-                    {% include "Player/widget.html.twig" with {
-                        player: player,
-                        data: {
-                            callsign: "username",
-                            iso: "country.iso",
-                            country: "country.name"
-                        }}
-                    %}
-                {% endfor %}
+                <div class="row">
+                    {% for player in section.members %}
+                        <div class="col-sm-6 col-md-4 col-lg-3 mt2">
+                            {% include "Player/widget.html.twig" with {
+                                player: player,
+                                data: {
+                                    callsign: "username",
+                                    iso: "country.iso",
+                                    country: "country.name"
+                                }
+                            } %}
+                        </div>
+                    {% endfor %}
+                </div>
             </section>
         {% endfor %}
-    </section>
+    </div>
 {% endblock %}
