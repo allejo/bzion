@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% from 'Player/widget.html.twig' import widget as player_widget %}
+
 {% block title %}League Administration{% endblock %}
 
 {% block pageTitle %}
@@ -21,14 +23,13 @@
                 <div class="row">
                     {% for player in section.members %}
                         <div class="col-sm-6 col-md-4 col-lg-3 mt2">
-                            {% include "Player/widget.html.twig" with {
-                                player: player,
+                            {{ player_widget(player, {
                                 data: {
                                     callsign: "username",
                                     iso: "country.iso",
                                     country: "country.name"
                                 }
-                            } %}
+                            }) }}
                         </div>
                     {% endfor %}
                 </div>

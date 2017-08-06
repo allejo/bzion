@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+
 {% from _self import player_repeater %}
 
 {% block title %}Players{% endblock %}
@@ -155,6 +156,8 @@
 {% endblock %}
 
 {% macro player_repeater(players) %}
+    {% from 'Player/widget.html.twig' import widget as player_widget %}
+
     {# @var player \Player #}
     {% for player in players %}
         <div class="js-player col-md-6 col-lg-4 col-xl-3 mb2"
@@ -163,12 +166,7 @@
              data-team="{{ player.team.name != 'None' ? player.team.name : '' }}"
              data-activity="{{ player.matchActivity }}"
         >
-            {% include "Player/widget.html.twig" with {
-                player: player,
-                showTeam: true,
-                showActivity: true,
-                attr: {}
-            } %}
+            {{ player_widget(player, {}, true, true) }}
         </div>
     {% endfor %}
 {% endmacro %}

@@ -1,6 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% from 'Match/widget.html.twig' import widget as match_widget %}
+{% from 'Player/widget.html.twig' import widget as player_widget %}
 
 {% set scopeClass = 's-match__show' %}
 {% set ogTitle = '%s %s %s' | format(match.winner.name, (match.draw ? 'ties' : 'defeats'), match.loser.name) %}
@@ -54,7 +55,9 @@
     <div class="mb-last-reset">
         {% for player in match.players(team) %}
             <div class="mb2">
-                {% include 'Player/widget.html.twig' with { 'player': player, attrs: { 'class': 'c-player-badge--' ~ align  } } %}
+                {{ player_widget(player, {
+                    'class': 'c-player-badge--' ~ align
+                }) }}
             </div>
         {% endfor %}
     </div>

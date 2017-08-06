@@ -1,6 +1,8 @@
 {% extends 'layout.html.twig' %}
+
 {% from 'utilities.html.twig' import timestamp %}
 {% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
+{% from 'Player/widget.html.twig' import widget as player_widget %}
 
 {% set pageWideCSS = 's-team__show' %}
 {% set opengraph = {
@@ -300,23 +302,17 @@
                             <h4 class="mb2">Led By</h4>
                             {% set leader = team.leader %}
 
-                            {% include 'Player/widget.html.twig' with {
-                                player: leader,
-                                attrs: {
-                                    class: 'mb2'
-                                }
-                            } %}
+                            {{ player_widget(leader, {
+                                'class': 'mb2'
+                            }) }}
 
                             <h4 class="mb2">Members</h4>
                             <div class="row">
                                 {% for player in team.members if player != leader %}
                                     <div class="col-lg-6 mb2 d-flex align-items-center">
-                                        {% include 'Player/widget.html.twig' with {
-                                            player: player,
-                                            attrs: {
-                                                class: 'flex-grow'
-                                            }
-                                        } %}
+                                        {{ player_widget(player, {
+                                            'class': 'flex-grow'
+                                        }) }}
 
                                         {% if me.canEdit(team) %}
                                             <div>
