@@ -6,6 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use Carbon\Carbon;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
@@ -151,6 +152,13 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
      */
     private $cachedMatchCount = null;
 
+    /**
+     * The player's current Elo
+     *
+     * @var int
+     */
+    private $elo;
+
     private $matchActivity;
 
     /**
@@ -276,6 +284,51 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         $this->lazyLoad();
 
         return $this->email;
+    }
+
+    /**
+     * Get the player's Elo for a season.
+     *
+     * With the default arguments, it will fetch the Elo for the current season.
+     *
+     * @param string|null $season The season we're looking for: winter, spring, summer, or fall
+     * @param int|null    $year   The year of the season we're looking for
+     *
+     * @return int The player's Elo or -1 if the player hasn't played in the specified season.
+     */
+    public function getElo($season = null, $year = null)
+    {
+        if ($this->elo !== null) {
+            return $this->elo;
+        }
+
+        if ($season === null) {
+            $season = Season::getCurrentSeason();
+        }
+
+        if ($year === null) {
+            $year = Carbon::now()->year;
+        }
+
+        $query = $this->db->query('
+          SELECT
+            elo_new AS elo
+          FROM
+            player_elo
+          WHERE
+            user_id = ? AND season_year = ? AND season_period = ?
+          ORDER BY
+            match_id DESC
+          LIMIT 1
+        ', [$this->getId(), $year, $season]);
+
+        if (count($query) > 0) {
+            $this->elo = $query[0]['elo'];
+        } else {
+            $this->elo = -1;
+        }
+
+        return $this->elo;
     }
 
     /**
