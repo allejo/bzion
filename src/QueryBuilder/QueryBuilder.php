@@ -286,6 +286,18 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Request that a timestamp is between a date range
+     *
+     * @param MonthDateRange $range
+     * @param int|null       $year
+     */
+    public function betweenMonths(MonthDateRange $range, $year = null)
+    {
+        $this->isAfter($range->getStartOfRange($year), true);
+        $this->isBefore($range->getEndOfRange($year), true);
+    }
+
+    /**
      * Request that a column equals a number
      *
      * @param  int|Model|null $number The number that the column's value should
