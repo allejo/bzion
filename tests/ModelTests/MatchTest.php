@@ -2,11 +2,17 @@
 
 class MatchTest extends TestCase
 {
+    /** @var Team */
     protected $team_a;
+    /** @var Team */
     protected $team_b;
+    /** @var Match */
     protected $match;
+    /** @var Match */
     protected $match_b;
+    /** @var Player */
     protected $player_a;
+    /** @var Player */
     protected $player_b;
 
     protected function setUp()
@@ -151,6 +157,27 @@ class MatchTest extends TestCase
         $this->assertArrayContainsModel($this->match, $matches);
         $this->assertArrayContainsModel($this->match_b, $matches);
         $this->assertEquals(2, count($matches) - count($old_matches));
+    }
+
+    public function testIndividualPlayerEloChanges()
+    {
+        $player_c = $this->getNewPlayer();
+        $player_d = $this->getNewPlayer();
+
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            $this->team_b->getId(),
+            5,
+            1,
+            30,
+            null,
+            'now',
+            [$this->player_a->getId(), $this->player_b->getId()],
+            [$player_c->getId(), $player_d->getId()]
+        );
+
+        $this->assertEquals(1225, $this->player_a->getElo());
+        $this->assertEquals(1175, $player_c->getElo());
     }
 
     public function tearDown()

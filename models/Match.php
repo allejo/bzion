@@ -803,13 +803,26 @@ class Match extends UrlModel implements NamedModel
             'match_type'     => $matchType
         );
 
+        $playerEloDiff = null;
+
         if ($matchType === self::OFFICIAL) {
             $team_a = Team::get($a);
             $team_b = Team::get($b);
-            $a_elo = $team_a->getElo();
-            $b_elo = $team_b->getElo();
+            $a_team_elo = $team_a->getElo();
+            $b_team_elo = $team_b->getElo();
 
-            $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
+            if (!empty($a_players) && !empty($b_players)) {
+                $getElo = function ($n) {
+                    return Player::get($n)->getElo();
+                };
+
+                $a_players_elo = array_sum(array_map($getElo, $a_players)) / count($a_players);
+                $b_players_elo = array_sum(array_map($getElo, $b_players)) / count($b_players);
+
+                $playerEloDiff = self::calculateEloDiff($a_players_elo, $b_players_elo, $a_points, $b_points, $duration);
+            }
+
+            $teamEloDiff = self::calculateEloDiff($a_team_elo,    $b_team_elo,    $a_points, $b_points, $duration);
 
             // Update team ELOs
             $team_a->adjustElo($diff);
@@ -820,7 +833,7 @@ class Match extends UrlModel implements NamedModel
                 'team_b'         => $b,
                 'team_a_elo_new' => $team_a->getElo(),
                 'team_b_elo_new' => $team_b->getElo(),
-                'elo_diff'       => $diff
+                'elo_diff'       => $teamEloDiff
             ));
         }
 
@@ -832,13 +845,18 @@ class Match extends UrlModel implements NamedModel
 
         $players = $match->getPlayers();
 
-        Database::getInstance()->startTransaction();
+        $db = Database::getInstance();
+        $db->startTransaction();
 
         foreach ($players as $player) {
-            $player->setLastMatch($match->getId());
+            if ($playerEloDiff !== null && !in_array($player->getId(), $a_players)) {
+                $playerEloDiff = -$playerEloDiff;
+            }
+
+            $player->setMatchParticipation($match, $playerEloDiff);
         }
 
-        Database::getInstance()->finishTransaction();
+        $db->finishTransaction();
 
         return $match;
     }
