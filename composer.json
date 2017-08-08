@@ -89,6 +89,8 @@
             "src/Model",
             "src/QueryBuilder",
             "src/Database.php",
+            "src/Season.php",
+            "src/MonthDateRange.php",
             "src/Service.php",
             "src/TimeDate.php"
         ],

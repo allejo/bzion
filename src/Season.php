@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 
-class Season
+abstract class Season
 {
     const WINTER = 'winter';
     const SPRING = 'spring';
