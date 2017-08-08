@@ -1130,7 +1130,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     {
         $this->setLastMatch($match->getId());
 
-        if ($eloDiff !== null) {
+        if ($match->isOfficial() && $eloDiff !== null) {
             $this->adjustElo($eloDiff, $match);
         }
     }

@@ -180,6 +180,46 @@ class MatchTest extends TestCase
         $this->assertEquals(1175, $player_c->getElo());
     }
 
+    public function testEloUpdatesTeamVsTeamMatch()
+    {
+
+    }
+
+    public function testEloUpdatesMixedVsMixedMatch()
+    {
+        $player_c = $this->getNewPlayer();
+        $player_d = $this->getNewPlayer();
+
+        $this->team_a->addMember($player_d->getId());
+        $this->team_b->addMember($player_c->getId());
+
+        $this->match = Match::enterMatch(
+            null,
+            null,
+            4,
+            3,
+            30,
+            null,
+            'now',
+            [$this->player_a->getId(), $player_c->getId()],
+            [$this->player_b->getId(), $player_d->getId()]
+        );
+
+        $this->assertGreaterThan(1200, $this->player_a->getElo());
+        $this->assertGreaterThan(1200, $player_c->getElo());
+
+        $this->assertLessThan(1200, $this->player_b->getElo());
+        $this->assertLessThan(1200, $player_d->getElo());
+
+        $this->assertEquals(1200, $this->team_a->getElo());
+        $this->assertEquals(1200, $this->team_b->getElo());
+    }
+
+    public function testEloUpdatesTeamVsMixedMatch()
+    {
+
+    }
+
     public function tearDown()
     {
         $this->wipe($this->match, $this->match_b, $this->team_a, $this->team_b);
