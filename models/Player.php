@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Util\StringUtils;
  * A league player
  * @package    BZiON\Models
  */
-class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
+class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloInterface
 {
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
@@ -329,6 +329,20 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         }
 
         return $this->elo;
+    }
+
+    /**
+     * @param int   $adjust The value to be added to the current ELO (negative to subtract)
+     * @param Match $match  The match where this Elo change took place
+     */
+    public function adjustElo($adjust, Match $match)
+    {
+        $elo = $this->getElo();
+        $this->elo += $adjust;
+
+        $this->db->execute('
+          INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
+        ', [ $this->getId(), $match->getId(), Season::getCurrentSeason(), Carbon::now()->year, $elo, $this->elo ]);
     }
 
     /**

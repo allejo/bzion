@@ -812,8 +812,8 @@ class Match extends UrlModel implements NamedModel
             $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
 
             // Update team ELOs
-            $team_a->changeElo($diff);
-            $team_b->changeElo(-$diff);
+            $team_a->adjustElo($diff);
+            $team_b->adjustElo(-$diff);
 
             $matchData = array_merge($matchData, array(
                 'team_a'         => $a,

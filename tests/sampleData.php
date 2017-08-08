@@ -72,7 +72,7 @@ $reptitles = Team::createTeam("Reptitles", $snake->getId(), "", "", "open");
 $fflood    = Team::createTeam("Formal Flood", $allejo->getId(), "", "");
 $lweak     = Team::createTeam("[LakeWeakness]", $mdskpr->getId(), "", "");
 $gsepar    = Team::createTeam("Good Separation", $tw1sted->getId(), "", "");
-$gsepar->changeElo('100');
+$gsepar->adjustElo('100');
 $fradis    = Team::createTeam("Fractious disinclination", $ashvala->getId(), "", "");
 echo " done!";
 

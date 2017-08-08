@@ -10,7 +10,7 @@
  * A league team
  * @package    BZiON\Models
  */
-class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface
+class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, EloInterface
 {
     /**
      * The description of the team written in markdown
@@ -157,9 +157,10 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface
     /**
      * Increase or decrease the ELO of the team
      *
-     * @param int $adjust The value to be added to the current ELO (negative to substract)
+     * @param int   $adjust The value to be added to the current ELO (negative to subtract)
+     * @param Match $match  The match where this Elo change took place
      */
-    public function changeElo($adjust)
+    public function adjustElo($adjust, Match $match = null)
     {
         $this->elo += $adjust;
         $this->update("elo", $this->elo);
