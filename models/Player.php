@@ -294,7 +294,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      * @param string|null $season The season we're looking for: winter, spring, summer, or fall
      * @param int|null    $year   The year of the season we're looking for
      *
-     * @return int The player's Elo or -1 if the player hasn't played in the specified season.
+     * @return int The player's Elo
      */
     public function getElo($season = null, $year = null)
     {
@@ -325,24 +325,31 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         if (count($query) > 0) {
             $this->elo = $query[0]['elo'];
         } else {
-            $this->elo = -1;
+            $this->elo = 1200;
         }
 
         return $this->elo;
     }
 
     /**
-     * @param int   $adjust The value to be added to the current ELO (negative to subtract)
-     * @param Match $match  The match where this Elo change took place
+     * Adjust the Elo of a player for the current season based on a Match
+     *
+     * **Warning:** If $match is null, the Elo for the player will be modified but the value will not be persisted to
+     * the database.
+     *
+     * @param int        $adjust The value to be added to the current ELO (negative to subtract)
+     * @param Match|null $match  The match where this Elo change took place
      */
-    public function adjustElo($adjust, Match $match)
+    public function adjustElo($adjust, Match $match = null)
     {
         $elo = $this->getElo();
         $this->elo += $adjust;
 
-        $this->db->execute('
-          INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
-        ', [ $this->getId(), $match->getId(), Season::getCurrentSeason(), Carbon::now()->year, $elo, $this->elo ]);
+        if ($match !== null) {
+            $this->db->execute('
+              INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
+            ', [ $this->getId(), $match->getId(), Season::getCurrentSeason(), Carbon::now()->year, $elo, $this->elo ]);
+        }
     }
 
     /**
