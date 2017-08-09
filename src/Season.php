@@ -9,24 +9,36 @@ abstract class Season
     const SUMMER = 'summer';
     const FALL = 'fall';
 
-    public static function getCurrentSeason()
+    public static function getSeason(DateTime $dateTime)
     {
-        $now = Carbon::now()->month;
+        return [
+            'season' => self::getCurrentSeason((int)$dateTime->format('n')),
+            'year'   => (int)$dateTime->format('Y'),
+        ];
+    }
 
-        if (1 <= $now && $now <= 3) {
+    public static function getCurrentSeason($month = null)
+    {
+        if ($month === null) {
+            $month = Carbon::now()->month;
+        }
+
+        if (1 <= $month && $month <= 3) {
             return self::WINTER;
-        } elseif (4 <= $now && $now <= 6) {
+        } elseif (4 <= $month && $month <= 6) {
             return self::SPRING;
-        } elseif (7 <= $now && $now <= 9) {
+        } elseif (7 <= $month && $month <= 9) {
             return self::SUMMER;
         }
 
         return self::FALL;
     }
 
-    public static function getCurrentSeasonRange()
+    public static function getCurrentSeasonRange($season = null)
     {
-        $season = self::getCurrentSeason();
+        if ($season === null) {
+            $season = self::getCurrentSeason();
+        }
 
         switch ($season) {
             case self::WINTER:
