@@ -342,8 +342,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function adjustElo($adjust, Match $match = null)
     {
-        $seasonInfo = Season::getSeason($match->getTimestamp());
+        $timestamp = ($match !== null) ? $match->getTimestamp() : (Carbon::now());
+        $seasonInfo = Season::getSeason($timestamp);
 
+        // Get the Elo for the player, even if it's the default 1200 first adjusting it
         $elo = $this->getElo($seasonInfo['season'], $seasonInfo['year']);
         $this->elo += $adjust;
 
