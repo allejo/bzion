@@ -342,13 +342,15 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function adjustElo($adjust, Match $match = null)
     {
-        $elo = $this->getElo();
+        $seasonInfo = Season::getSeason($match->getTimestamp());
+
+        $elo = $this->getElo($seasonInfo['season'], $seasonInfo['year']);
         $this->elo += $adjust;
 
-        if ($match !== null) {
+        if ($match !== null && $this->isValid()) {
             $this->db->execute('
               INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
-            ', [ $this->getId(), $match->getId(), Season::getCurrentSeason(), Carbon::now()->year, $elo, $this->elo ]);
+            ', [ $this->getId(), $match->getId(), $seasonInfo['season'], $seasonInfo['year'], $elo, $this->elo ]);
         }
     }
 
