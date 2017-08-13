@@ -152,12 +152,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     private $cachedMatchCount = null;
 
-    /**
-     * The player's current Elo
-     *
-     * @var int
-     */
-    private $elo;
+    private $eloSeason;
+    private $eloSeasonHistory;
 
     private $matchActivity;
 
@@ -286,6 +282,43 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         return $this->email;
     }
 
+    public function getEloSeasonHistory($season = null, $year = null)
+    {
+        $season = ($season !== null) ? $season : Season::getCurrentSeason();
+        $year   = ($year   !== null) ? $year : Carbon::now()->year;
+        $cacheKey = sprintf('%s-%s', $year, $season);
+
+        if ($this->eloSeasonHistory !== null && array_key_exists($cacheKey, $this->eloSeasonHistory)) {
+            return $this->eloSeasonHistory[$cacheKey];
+        }
+
+        $query = $this->db->query('
+          SELECT
+            elo_new AS elo,
+            MONTH(matches.timestamp) AS `month`,
+            YEAR(matches.timestamp) AS `year`
+          FROM
+            player_elo
+            LEFT JOIN matches ON player_elo.match_id = matches.id
+          WHERE
+            user_id = ? AND season_period = ? AND season_year = ?
+          ORDER BY
+            match_id DESC
+        ', [ $this->getId(), $season, $year ]);
+
+        $this->eloSeasonHistory[$cacheKey] = $query;
+        $season = &$this->eloSeasonHistory[$cacheKey];
+
+        if (!empty($season)) {
+            $elo = reset($elo);
+            $this->eloSeason[$cacheKey] = ($elo !== false) ? $season['elo'] : 1200;
+        } else {
+            $this->eloSeason[$cacheKey] = 1200;
+        }
+
+        return $this->eloSeasonHistory[$cacheKey];
+    }
+
     /**
      * Get the player's Elo for a season.
      *
@@ -298,37 +331,13 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function getElo($season = null, $year = null)
     {
-        if ($this->elo !== null) {
-            return $this->elo;
-        }
+        $this->getEloSeasonHistory($season, $year);
 
-        if ($season === null) {
-            $season = Season::getCurrentSeason();
-        }
+        $season = ($season !== null) ? $season : Season::getCurrentSeason();
+        $year   = ($year   !== null) ? $year : Carbon::now()->year;
+        $cacheKey = sprintf('%s-%s', $year, $season);
 
-        if ($year === null) {
-            $year = Carbon::now()->year;
-        }
-
-        $query = $this->db->query('
-          SELECT
-            elo_new AS elo
-          FROM
-            player_elo
-          WHERE
-            user_id = ? AND season_year = ? AND season_period = ?
-          ORDER BY
-            match_id DESC
-          LIMIT 1
-        ', [$this->getId(), $year, $season]);
-
-        if (count($query) > 0) {
-            $this->elo = $query[0]['elo'];
-        } else {
-            $this->elo = 1200;
-        }
-
-        return $this->elo;
+        return $this->eloSeason[$cacheKey];
     }
 
     /**
@@ -347,12 +356,14 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
 
         // Get the Elo for the player, even if it's the default 1200 first adjusting it
         $elo = $this->getElo($seasonInfo['season'], $seasonInfo['year']);
-        $this->elo += $adjust;
+        $cacheKey = sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
+
+        $this->eloSeason[$cacheKey] += $adjust;
 
         if ($match !== null && $this->isValid()) {
             $this->db->execute('
               INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
-            ', [ $this->getId(), $match->getId(), $seasonInfo['season'], $seasonInfo['year'], $elo, $this->elo ]);
+            ', [ $this->getId(), $match->getId(), $seasonInfo['season'], $seasonInfo['year'], $elo, $this->eloSeason[$cacheKey] ]);
         }
     }
 
