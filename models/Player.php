@@ -282,17 +282,45 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         return $this->email;
     }
 
-    public function getEloSeasonHistory($season = null, $year = null)
+    /**
+     * Build a key that we'll use for caching season Elo data in this model
+     *
+     * @param  string|null $season The season to get
+     * @param  int|null    $year   The year of the season to get
+     *
+     * @return string
+     */
+    private function buildSeasonCacheKey(&$season, &$year)
     {
-        $season = ($season !== null) ? $season : Season::getCurrentSeason();
-        $year   = ($year   !== null) ? $year : Carbon::now()->year;
-        $cacheKey = sprintf('%s-%s', $year, $season);
-
-        if ($this->eloSeasonHistory !== null && array_key_exists($cacheKey, $this->eloSeasonHistory)) {
-            return $this->eloSeasonHistory[$cacheKey];
+        if ($season === null) {
+            $season = Season::getCurrentSeason();
         }
 
-        $query = $this->db->query('
+        if ($year === null) {
+            $year = Carbon::now()->year;
+        }
+
+        return sprintf('%s-%s', $year, $season);
+    }
+
+    /**
+     * Get the Elo changes for a player for a given season
+     *
+     * @param  string|null $season The season to get
+     * @param  int|null    $year   The year of the season to get
+     *
+     * @return array
+     */
+    public function getEloSeasonHistory($season = null, $year = null)
+    {
+        $seasonKey = $this->buildSeasonCacheKey($season, $year);
+
+        // This season's already been cached
+        if ($this->eloSeasonHistory !== null && array_key_exists($seasonKey, $this->eloSeasonHistory)) {
+            return $this->eloSeasonHistory[$seasonKey];
+        }
+
+        $results = $this->db->query('
           SELECT
             elo_new AS elo,
             MONTH(matches.timestamp) AS `month`,
@@ -306,17 +334,17 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             match_id DESC
         ', [ $this->getId(), $season, $year ]);
 
-        $this->eloSeasonHistory[$cacheKey] = $query;
-        $season = &$this->eloSeasonHistory[$cacheKey];
+        $this->eloSeasonHistory[$seasonKey] = $results;
+        $season = &$this->eloSeasonHistory[$seasonKey];
 
         if (!empty($season)) {
-            $elo = reset($elo);
-            $this->eloSeason[$cacheKey] = ($elo !== false) ? $season['elo'] : 1200;
+            $elo = reset($season);
+            $this->eloSeason[$seasonKey] = ($elo !== false) ? $elo['elo'] : 1200;
         } else {
-            $this->eloSeason[$cacheKey] = 1200;
+            $this->eloSeason[$seasonKey] = 1200;
         }
 
-        return $this->eloSeasonHistory[$cacheKey];
+        return $this->eloSeasonHistory[$seasonKey];
     }
 
     /**
@@ -332,12 +360,9 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     public function getElo($season = null, $year = null)
     {
         $this->getEloSeasonHistory($season, $year);
+        $seasonKey = $this->buildSeasonCacheKey($season, $year);
 
-        $season = ($season !== null) ? $season : Season::getCurrentSeason();
-        $year   = ($year   !== null) ? $year : Carbon::now()->year;
-        $cacheKey = sprintf('%s-%s', $year, $season);
-
-        return $this->eloSeason[$cacheKey];
+        return $this->eloSeason[$seasonKey];
     }
 
     /**
@@ -354,16 +379,16 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $timestamp = ($match !== null) ? $match->getTimestamp() : (Carbon::now());
         $seasonInfo = Season::getSeason($timestamp);
 
-        // Get the Elo for the player, even if it's the default 1200 first adjusting it
+        // Get the current Elo for the player, even if it's the default 1200. We need the value for adjusting
         $elo = $this->getElo($seasonInfo['season'], $seasonInfo['year']);
-        $cacheKey = sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
+        $seasonKey = sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
 
-        $this->eloSeason[$cacheKey] += $adjust;
+        $this->eloSeason[$seasonKey] += $adjust;
 
         if ($match !== null && $this->isValid()) {
             $this->db->execute('
               INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
-            ', [ $this->getId(), $match->getId(), $seasonInfo['season'], $seasonInfo['year'], $elo, $this->eloSeason[$cacheKey] ]);
+            ', [ $this->getId(), $match->getId(), $seasonInfo['season'], $seasonInfo['year'], $elo, $this->eloSeason[$seasonKey] ]);
         }
     }
 
