@@ -64,9 +64,10 @@
 {% block pageTitle %}
     <div class="d-flex align-items-center">
         <h1 class="mr1">{{ player.username }}</h1>
-
         {{ player.country.flagLiteral | raw }}
     </div>
+
+    <small title="{{ player.username }}'s Elo rating for the current season">{{ player.elo }}</small>
 {% endblock %}
 
 {% block content %}
@@ -205,19 +206,6 @@
                              aria-labelledby="tabs__header__match-stats"
                              aria-hidden="false"
                         >
-                            {% set matchData = {
-                                'series': [
-                                    player.matchSummary | values
-                                ],
-                                'labels': player.matchSummary | keys | date_array_formatter("M 'y"),
-                                'meta': {
-                                    'series': [
-                                        'Number of matches per month'
-                                    ],
-                                    'labels': 'Month'
-                                }
-                            } %}
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4>
@@ -230,6 +218,19 @@
                                         </small>
                                     </h4>
                                     <section>
+                                        {% set matchData = {
+                                            'series': [
+                                                player.matchSummary | values
+                                            ],
+                                            'labels': player.matchSummary | keys | date_array_formatter("M 'y"),
+                                            'meta': {
+                                                'series': [
+                                                    'Number of matches per month'
+                                                ],
+                                                'labels': 'Month'
+                                            }
+                                        } %}
+
                                         <div class="js-only">
                                             <div id="player-match-activity"
                                                  class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
@@ -245,6 +246,37 @@
                                                 'class': ['c-table', 'c-table--activity']
                                             }
                                         ) }}
+                                    </section>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h4>Elo Rating</h4>
+
+                                    <section>
+                                        {% set eloData = {
+                                            'series': [
+                                                [1200] | merge(player.eloSeasonHistory | values('elo'))
+                                            ],
+                                            'meta': {
+                                                'series': [
+                                                    'Elo changes in matches'
+                                                ],
+                                                'labels': 'Elo'
+                                            }
+                                        } %}
+                                        {% set eloOptions = {
+                                            axisX: {
+                                                showGrid: false
+                                            },
+                                            showArea: true
+                                        } %}
+
+                                        <div id="player-elo-rating"
+                                             class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+                                             data-graph="line"
+                                             data-chart="{{ eloData | json_encode }}"
+                                             data-chart-options="{{ eloOptions | json_encode }}"
+                                        ></div>
                                     </section>
                                 </div>
 
