@@ -111,10 +111,16 @@ class Match extends UrlModel implements NamedModel
     protected $replay_file;
 
     /**
-     * The absolute value of the ELO score difference
+     * The value of the ELO score difference
      * @var int
      */
     protected $elo_diff;
+
+    /**
+     * The value of the player Elo difference
+     * @var int
+     */
+    protected $player_elo_diff;
 
     /**
      * The timestamp representing when the match information was last updated
@@ -171,6 +177,7 @@ class Match extends UrlModel implements NamedModel
         $this->server = $match['server'];
         $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
+        $this->player_elo_diff = $match['player_elo_diff'];
         $this->timestamp = TimeDate::fromMysql($match['timestamp']);
         $this->updated = TimeDate::fromMysql($match['updated']);
         $this->duration = $match['duration'];
@@ -478,6 +485,16 @@ class Match extends UrlModel implements NamedModel
     public function getEloDiff()
     {
         return abs($this->elo_diff);
+    }
+
+    /**
+     * Get the Elo difference applied to players
+     *
+     * @return int The Elo difference for players
+     */
+    public function getPlayerEloDiff()
+    {
+        return abs($this->player_elo_diff);
     }
 
     /**
