@@ -331,14 +331,14 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
           WHERE
             user_id = ? AND season_period = ? AND season_year = ?
           ORDER BY
-            match_id DESC
+            match_id ASC
         ', [ $this->getId(), $season, $year ]);
 
         $this->eloSeasonHistory[$seasonKey] = $results;
         $season = &$this->eloSeasonHistory[$seasonKey];
 
         if (!empty($season)) {
-            $elo = reset($season);
+            $elo = end($season);
             $this->eloSeason[$seasonKey] = ($elo !== false) ? $elo['elo'] : 1200;
         } else {
             $this->eloSeason[$seasonKey] = 1200;
