@@ -179,5 +179,14 @@ abstract class TestCase extends WebTestCase
         foreach ($this->playersCreated as $id) {
             self::wipe(Player::get($id));
         }
+
+        // Workaround for leaving the current 'request' scope, which at the moment, I don't know how to properly fix
+        //   error msg: 'Resetting the container is not allowed when a scope is active'
+        // @todo
+        if (self::$kernel !== null) {
+            self::$kernel->getContainer()->leaveScope('request');
+        }
+
+        parent::tearDown();
     }
 }
