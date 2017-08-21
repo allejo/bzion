@@ -54,7 +54,7 @@ class LeagueOverseerHookTest extends TestCase
             'teamTwoIPs' => '127.0.0.3,127.0.0.4',
         ]);
 
-        $this->assertEquals('(+/- 25) Team A [5] vs [4] Team B', $this->client->getResponse()->getContent());
+        $this->assertEquals("(+/- 25) Team A [5] vs [4] Team B\n  player elo: +/- 25", $this->client->getResponse()->getContent());
     }
 
     /**

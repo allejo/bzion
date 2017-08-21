@@ -215,8 +215,14 @@ class LeagueOverseerHookController extends PlainTextController
             'map'     => $map->getName()
         ));
 
+        $bzfsAnnouncement = $match->getName();
+
+        if ($match->isOfficial()) {
+            $bzfsAnnouncement .= "\n  player elo: +/- " . $match->getPlayerEloDiff();
+        }
+
         // Output the match stats that will be sent back to BZFS
-        return $match->getName();
+        return $bzfsAnnouncement;
     }
 
     /**
