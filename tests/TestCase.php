@@ -1,8 +1,8 @@
 <?php
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-abstract class TestCase extends WebTestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * The BZID of the last player created, used to prevent conflicts when creating new players
@@ -23,6 +23,21 @@ abstract class TestCase extends WebTestCase
     public static function connectToDatabase()
     {
         return Database::getInstance();
+    }
+
+    /**
+     * Creates a Client.
+     *
+     * @param array $server  An array of server parameters
+     *
+     * @return Client A Client instance
+     */
+    public static function createClient(array $server = array())
+    {
+        $client = Service::getContainer()->get('test.client');
+        $client->setServerParameters($server);
+
+        return $client;
     }
 
     /**
@@ -179,14 +194,5 @@ abstract class TestCase extends WebTestCase
         foreach ($this->playersCreated as $id) {
             self::wipe(Player::get($id));
         }
-
-        // Workaround for leaving the current 'request' scope, which at the moment, I don't know how to properly fix
-        //   error msg: 'Resetting the container is not allowed when a scope is active'
-        // @todo
-        if (self::$kernel !== null) {
-            self::$kernel->getContainer()->leaveScope('request');
-        }
-
-        parent::tearDown();
     }
 }
