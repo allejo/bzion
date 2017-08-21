@@ -1008,7 +1008,7 @@ class Match extends UrlModel implements NamedModel
     {
         $this->updateMatchCount(true);
 
-        return parent::delete();
+        parent::delete();
     }
 
     /**
