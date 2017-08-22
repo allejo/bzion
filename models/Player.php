@@ -324,7 +324,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
           SELECT
             elo_new AS elo,
             MONTH(matches.timestamp) AS `month`,
-            YEAR(matches.timestamp) AS `year`
+            YEAR(matches.timestamp) AS `year`,
+            DAY(matches.timestamp) AS `day`
           FROM
             player_elo
             LEFT JOIN matches ON player_elo.match_id = matches.id

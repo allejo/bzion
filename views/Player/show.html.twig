@@ -271,12 +271,34 @@
                                             showArea: true
                                         } %}
 
-                                        <div id="player-elo-rating"
-                                             class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
-                                             data-graph="line"
-                                             data-chart="{{ eloData | json_encode }}"
-                                             data-chart-options="{{ eloOptions | json_encode }}"
-                                        ></div>
+                                        <div class="js-only">
+                                            <div id="player-elo-rating"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+                                                 data-graph="line"
+                                                 data-chart="{{ eloData | json_encode }}"
+                                                 data-chart-options="{{ eloOptions | json_encode }}"
+                                            ></div>
+                                        </div>
+
+                                        <div class="sr-only sr-show-no-js">
+                                            <table class="c-table c-table--elo">
+                                                <caption>A summary of {{ player.username }}'s Elo for the current season</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Season Period</th>
+                                                        <th scope="col">Elo Rating</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for date, elo in seasonSummary %}
+                                                        <tr>
+                                                            <td scope="row">{{ date }}</td>
+                                                            <td>{{ elo }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </section>
                                 </div>
 
