@@ -1024,27 +1024,35 @@ class Match extends UrlModel implements NamedModel
      */
     public function getName()
     {
+        $description = '';
+
         switch ($this->getMatchType()) {
             case self::OFFICIAL:
-                $description = "(+/- " . $this->getEloDiff() . ")";
+                // Only show Elo diff if both teams are actual teams
+                if ($this->getTeamA()->supportsMatchCount() && $this->getTeamB()->supportsMatchCount()) {
+                    $description = "(+/- {$this->getEloDiff()})";
+                }
                 break;
+
             case self::FUN:
-                $description = "Fun Match:";
+                $description = 'Fun Match:';
                 break;
+
             case self::SPECIAL:
-                $description = "Special Match:";
+                $description = 'Special Match:';
                 break;
+
             default:
-                $description = "";
+                break;
         }
 
-        return sprintf("%s %s [%d] vs [%d] %s",
+        return trim(sprintf('%s %s [%d] vs [%d] %s',
             $description,
             $this->getWinner()->getName(),
             $this->getScore($this->getWinner()),
             $this->getScore($this->getLoser()),
             $this->getLoser()->getName()
-        );
+        ));
     }
 
     /**

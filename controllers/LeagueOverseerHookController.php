@@ -217,6 +217,15 @@ class LeagueOverseerHookController extends PlainTextController
 
         $bzfsAnnouncement = $match->getName();
 
+        if (!$match->getWinner()->supportsMatchCount() || !$match->getLoser()->supportsMatchCount()) {
+            if ($match->getWinner()->supportsMatchCount()) {
+                $bzfsAnnouncement .= sprintf("\n  %s: +%d", $match->getWinner()->getName(), $match->getEloDiff());
+            }
+            elseif ($match->getLoser()->supportsMatchCount()) {
+                $bzfsAnnouncement .= sprintf("\n  %s: -%d", $match->getLoser()->getName(), $match->getEloDiff());
+            }
+        }
+
         if ($match->isOfficial()) {
             $bzfsAnnouncement .= "\n  player elo: +/- " . $match->getPlayerEloDiff();
         }
