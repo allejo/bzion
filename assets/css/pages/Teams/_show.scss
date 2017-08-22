@@ -1,14 +1,3 @@
-.no-js {
-    &.s-team__show {
-        .c-table--wld,
-        .c-table--activity {
-            @include disableScreenReaderOnly();
-
-            width: 100%;
-        }
-    }
-}
-
 .c-table--activity {
     td:first-child {
         width: 100px;

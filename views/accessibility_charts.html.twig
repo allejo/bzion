@@ -4,7 +4,7 @@
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
     {% set attrs = attrs | extend_hash({ 'class': [] }) %}
 
-    <div class="sr-only">
+    <div class="sr-only sr-show-no-js">
         <table {{ html_attr(attrs) }} >
             <caption>{{ caption }}</caption>
             <thead>
@@ -42,7 +42,7 @@
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
     {% set attrs = attrs | extend_hash({ 'class': [] }) %}
 
-    <div class="sr-only">
+    <div class="sr-only sr-show-no-js">
         <table {{ html_attr(attrs) }} >
             <caption>{{ caption }}</caption>
             <thead>
