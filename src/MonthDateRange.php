@@ -9,8 +9,8 @@ class MonthDateRange
 
     public function __construct($start, $end)
     {
-        $this->start = new Carbon('first of ' . $start);
-        $this->end = new Carbon('last of '. $end);
+        $this->start = new Carbon('first day of ' . $start);
+        $this->end = new Carbon('last day of '. $end);
     }
 
     /**
