@@ -22,7 +22,7 @@ class MonthDateRange
     {
         $year = ($year === null) ? Carbon::now()->year : $year;
 
-        return $this->start->copy()->year($year);
+        return $this->start->year($year)->copy();
     }
 
     /**
@@ -34,6 +34,6 @@ class MonthDateRange
     {
         $year = ($year === null) ? Carbon::now()->year : $year;
 
-        return $this->end->copy()->year($year);
+        return $this->end->year($year)->copy();
     }
 }
