@@ -74,7 +74,8 @@
 
 {% macro show_table_button(targetID, title) %}
     {# Hide the button for screen readers since our table will already be visible to screen readers #}
-    <button aria-hidden="true"
+    <button class="js-only"
+            aria-hidden="true"
             data-role="show-sr-table"
             data-target="{{ targetID }}"
     >
