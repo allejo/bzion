@@ -546,7 +546,7 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
      */
     public function supportsMatchCount()
     {
-        return true;
+        return $this->isValid();
     }
 
     /**
