@@ -8,4 +8,5 @@ $(function () {
     require('./src/charts')();
     require('./src/player-list')();
     require('./src/pills')();
+    require('./src/tables')();
 });

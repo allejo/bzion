@@ -1,5 +1,5 @@
 {% extends 'layout.html.twig' %}
-{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
+{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line, show_table_button %}
 
 {% set pageWideCSS = 's-player__show' %}
 {% set opengraph = {
@@ -210,12 +210,15 @@
                                 <div class="col-md-6">
                                     <h4>
                                         Match Activity
+
                                         <small>
                                             <i class="fa fa-info-circle ml1"
                                                aria-hidden="true"
                                                title="Number of matches {{ player.username }} has participated in each month in the past year"
                                             ></i>
                                         </small>
+
+                                        {{ show_table_button('match-activity', 'Show the table equivalent of match counts per month') }}
                                     </h4>
                                     <section>
                                         {% set matchData = {
@@ -243,6 +246,7 @@
                                             "A breakdown of the number of matches per month for " ~ player.username ~ " in the past year",
                                             matchData,
                                             {
+                                                'id': 'match-activity',
                                                 'class': ['c-table', 'c-table--activity']
                                             }
                                         ) }}
@@ -250,7 +254,18 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <h4>Elo Rating</h4>
+                                    <h4>
+                                        Elo Rating
+
+                                        <small>
+                                            <i class="fa fa-info-circle ml1"
+                                               aria-hidden="true"
+                                               title="The change in {{ player.username }}'s Elo during this current season"
+                                            ></i>
+                                        </small>
+
+                                        {{ show_table_button('elo-table', 'Show table equivalent of the Elo graph') }}
+                                    </h4>
 
                                     <section>
                                         {% set eloData = {
@@ -280,7 +295,9 @@
                                             ></div>
                                         </div>
 
-                                        <div class="sr-only sr-show-no-js">
+                                        <div class="sr-only sr-show-no-js"
+                                             id="elo-table"
+                                        >
                                             <table class="c-table c-table--elo">
                                                 <caption>A summary of {{ player.username }}'s Elo for the current season</caption>
                                                 <thead>

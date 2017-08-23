@@ -4,7 +4,7 @@
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
     {% set attrs = attrs | extend_hash({ 'class': [] }) %}
 
-    <div class="sr-only sr-show-no-js">
+    <div class="sr-only sr-show-no-js" {% if attrs.id is defined %}id="{{ attrs.id }}"{% endif %}>
         <table {{ html_attr(attrs) }} >
             <caption>{{ caption }}</caption>
             <thead>
@@ -42,7 +42,7 @@
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
     {% set attrs = attrs | extend_hash({ 'class': [] }) %}
 
-    <div class="sr-only sr-show-no-js">
+    <div class="sr-only sr-show-no-js" {% if attrs.id is defined %}id="{{ attrs.id }}"{% endif %}>
         <table {{ html_attr(attrs) }} >
             <caption>{{ caption }}</caption>
             <thead>
@@ -70,4 +70,19 @@
             </tbody>
         </table>
     </div>
+{% endmacro %}
+
+{% macro show_table_button(targetID, title) %}
+    {# Hide the button for screen readers since our table will already be visible to screen readers #}
+    <button aria-hidden="true"
+            data-role="show-sr-table"
+            data-target="{{ targetID }}"
+    >
+        <small>
+            <i class="fa fa-table"
+               aria-hidden="true"
+               title="{{ title }}"
+            ></i>
+        </small>
+    </button>
 {% endmacro %}
