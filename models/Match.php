@@ -17,6 +17,10 @@ class Match extends UrlModel implements NamedModel
     const SPECIAL  = "special";
     const FUN      = "fm";
 
+    const TEAM_V_TEAM   = 0;
+    const TEAM_V_MIXED  = 1;
+    const MIXED_V_MIXED = 2;
+
     use Timestamp;
 
     /**
@@ -584,6 +588,31 @@ class Match extends UrlModel implements NamedModel
     public function setMap($map)
     {
         $this->updateProperty($this->map, "map", $map, "s");
+    }
+
+    /**
+     * Get the type of official match this is. Whether it has just traditional teams or has mixed teams.
+     *
+     * Possible official match types:
+     *   - Team vs Team
+     *   - Team vs Mixed
+     *   - Mixed vs Mixed
+     *
+     * @see Match::TEAM_V_TEAM
+     * @see Match::TEAM_V_MIXED
+     * @see Match::MIXED_V_MIXED
+     *
+     * @return int
+     */
+    public function getTeamMatchType()
+    {
+        if ($this->getTeamA()->supportsMatchCount() && $this->getTeamB()->supportsMatchCount()) {
+            return self::TEAM_V_TEAM;
+        } elseif ($this->getTeamA()->isValid() || $this->getTeamB()->isValid()) {
+            return self::TEAM_V_MIXED;
+        }
+
+        return self::MIXED_V_MIXED;
     }
 
     /**
