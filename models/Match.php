@@ -704,10 +704,13 @@ class Match extends UrlModel implements NamedModel
      */
     public function getWinner()
     {
-        // Get the team that had its ELO increased
-        if ($this->elo_diff > 0) {
+        // "As Mother Teresa once said, it's not enough if you win. Others must lose."
+        //   -Stephen Colbert
+
+        // Get the team that had its Elo increased or the team whose players had their Elo increased
+        if ($this->elo_diff > 0 || $this->player_elo_diff > 0) {
             return $this->getTeamA();
-        } elseif ($this->elo_diff < 0) {
+        } elseif ($this->elo_diff < 0 || $this->player_elo_diff < 0) {
             return $this->getTeamB();
         } elseif ($this->team_a_points > $this->team_b_points) {
             // In case we're dealing with a match such an FM that doesn't have an ELO difference

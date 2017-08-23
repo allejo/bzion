@@ -146,6 +146,63 @@ class LeagueOverseerHookTest extends TestCase
         $this->assertEquals("Purple Team [3] vs [0] Red Team\n  player elo: +/- 25", $this->client->getResponse()->getContent());
     }
 
+    public function testMixedVsMixedReport_Draw_TeamAHasLowerPlayerElo()
+    {
+        $this->player_c->adjustElo(100);
+        $this->player_d->adjustElo(500);
+
+        $teamA_playerElo = ($this->player_a->getElo() + $this->player_c->getElo()) / 2;
+        $teamB_playerElo = ($this->player_b->getElo() + $this->player_d->getElo()) / 2;
+
+        $playerElo = Match::calculateEloDiff($teamA_playerElo, $teamB_playerElo, 1, 1, 1800);
+
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'teamOneWins' => 1,
+            'teamTwoWins' => 1,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
+        ]));
+
+        $this->assertEquals("Red Team [1] vs [1] Purple Team\n  player elo: +/- {$playerElo}", $this->client->getResponse()->getContent());
+
+        // This team had a combined _lower_ Elo, so they'll benefit from this match
+        $this->assertEquals((1200 + $playerElo), $this->player_a->getElo());
+        $this->assertEquals((1300 + $playerElo), $this->player_c->getElo());
+
+        // This team had a combined _higher_ Elo, so they'll take the penalty
+        $this->assertEquals((1200 - $playerElo), $this->player_b->getElo());
+        $this->assertEquals((1700 - $playerElo), $this->player_d->getElo());
+    }
+
+    public function testMixedVsMixedReport_Draw_TeamBHasLowerPlayerElo()
+    {
+        $this->player_a->adjustElo(300);
+        $this->player_c->adjustElo(500);
+        $this->player_d->adjustElo(100);
+
+        $teamA_playerElo = ($this->player_a->getElo() + $this->player_c->getElo()) / 2;
+        $teamB_playerElo = ($this->player_b->getElo() + $this->player_d->getElo()) / 2;
+
+        $playerElo = abs(Match::calculateEloDiff($teamA_playerElo, $teamB_playerElo, 1, 1, 1800));
+
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'teamOneWins' => 1,
+            'teamTwoWins' => 1,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
+        ]));
+
+        $this->assertEquals("Purple Team [1] vs [1] Red Team\n  player elo: +/- {$playerElo}", $this->client->getResponse()->getContent());
+
+        // This team had a combined _higher_ Elo, so they'll take the penalty
+        $this->assertEquals(1500 - $playerElo, $this->player_a->getElo());
+        $this->assertEquals(1700 - $playerElo, $this->player_c->getElo());
+
+        /// This team had a combined _lower_ Elo, so they'll benefit here
+        $this->assertEquals(1200 + $playerElo, $this->player_b->getElo());
+        $this->assertEquals(1300 + $playerElo, $this->player_d->getElo());
+    }
+
     /**
      * The same team playing against each other in an official match is disallowed; e.g. Team A vs Team A
      */
