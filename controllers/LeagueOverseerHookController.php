@@ -222,7 +222,8 @@ class LeagueOverseerHookController extends PlainTextController
                 $bzfsAnnouncement .= sprintf("\n  %s: +%d", $match->getWinner()->getName(), $match->getEloDiff());
             }
             elseif ($match->getLoser()->supportsMatchCount()) {
-                $bzfsAnnouncement .= sprintf("\n  %s: -%d", $match->getLoser()->getName(), $match->getEloDiff());
+                $diff = -$match->getEloDiff();
+                $bzfsAnnouncement .= sprintf("\n  %s: %d", $match->getLoser()->getName(), $diff);
             }
         }
 
