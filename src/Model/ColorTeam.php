@@ -81,10 +81,7 @@ class ColorTeam implements TeamInterface
     }
 
     /**
-     * Find out if a team is the same as another team
-     *
-     * @param mixed $team The team to compare
-     * @param bool
+     * {@inheritdoc}
      */
     public function isSameAs($team)
     {

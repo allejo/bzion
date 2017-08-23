@@ -41,6 +41,15 @@ interface TeamInterface extends NamedModel
     public function isValid();
 
     /**
+     * Returns whether or not this object matches the Model parameter passed
+     *
+     * @param  TeamInterface $model
+     *
+     * @return bool
+     */
+    public function isSameAs($model);
+
+    /**
      * Returns whether this object supports keeping count of matches
      *
      * @return bool
