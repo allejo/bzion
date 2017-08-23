@@ -844,15 +844,13 @@ class Match extends UrlModel implements NamedModel
                 $playerEloDiff = self::calculateEloDiff($a_players_elo, $b_players_elo, $a_points, $b_points, $duration);
             }
 
-            // Get team ELOs, if not default to the average ELO of the players on the respective team
-            $a_team_elo = ($team_a->isValid()) ? $team_a->getElo() : $a_players_elo;
-            $b_team_elo = ($team_b->isValid()) ? $team_b->getElo() : $b_players_elo;
+            // If it's a Team vs Team official match, we need to calculate the Elo diff between the two teams. Otherwise,
+            // we'll be using the player Elo diff as the "team" Elo diff for future calculations and database persistence
+            $teamEloDiff = $playerEloDiff;
 
-            if ($a_team_elo === null || $b_team_elo === null) {
-                throw new Exception('An ELO for each team must be calculated somehow.');
+            if ($team_a->isValid() && $team_b->isValid()) {
+                $teamEloDiff = self::calculateEloDiff($team_a->getElo(), $team_b->getElo(), $a_points, $b_points, $duration);
             }
-
-            $teamEloDiff = self::calculateEloDiff($a_team_elo, $b_team_elo, $a_points, $b_points, $duration);
 
             $matchData['elo_diff'] = $teamEloDiff;
             $matchData['player_elo_diff'] = $playerEloDiff;

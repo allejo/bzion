@@ -122,6 +122,47 @@ class LeagueOverseerHookTest extends TestCase
         $this->assertEquals(1200, $this->team_b->getElo());
     }
 
+    public function testTeamVsMixedReport_Draw_TeamHasLower()
+    {
+        $this->team_a->addMember($this->player_c->getId());
+
+        $this->player_b->adjustElo(200);
+        $this->player_d->adjustElo(200);
+
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'teamOneWins' => 2,
+            'teamTwoWins' => 2,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]), // player D is teamless
+        ]));
+
+        $this->assertEquals("Team A [2] vs [2] Purple Team\n  Team A: +12\n  player elo: +/- 12", $this->client->getResponse()->getContent());
+
+        $this->assertEquals(1212, $this->team_a->getElo());
+    }
+
+    public function testTeamVsMixedReport_Draw_MixedHasLower()
+    {
+        $this->team_a->addMember($this->player_c->getId());
+
+        $this->player_a->adjustElo(200);
+        $this->player_c->adjustElo(200);
+
+        $this->cacheModel($this->player_a);
+        $this->cacheModel($this->player_c);
+
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'teamOneWins' => 2,
+            'teamTwoWins' => 2,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]), // player D is teamless
+        ]));
+
+        $this->assertEquals("Purple Team [2] vs [2] Team A\n  Team A: -12\n  player elo: +/- 12", $this->client->getResponse()->getContent());
+
+        $this->assertEquals(1188, $this->team_a->getElo());
+    }
+
     public function testMixedVsMixedReport_FirstTeamWin()
     {
         $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
