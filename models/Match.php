@@ -484,21 +484,26 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the ELO difference applied to each team's old ELO
+     *
+     * @param bool $absoluteValue Whether or not to get the absolute value of the Elo difference
+     *
      * @return int The ELO difference
      */
-    public function getEloDiff()
+    public function getEloDiff($absoluteValue = true)
     {
-        return abs($this->elo_diff);
+        return ($absoluteValue) ? abs($this->elo_diff) : $this->elo_diff;
     }
 
     /**
      * Get the Elo difference applied to players
      *
+     * @param bool $absoluteValue Whether or not to get the absolute value of the Elo difference
+     *
      * @return int The Elo difference for players
      */
-    public function getPlayerEloDiff()
+    public function getPlayerEloDiff($absoluteValue = true)
     {
-        return abs($this->player_elo_diff);
+        return ($absoluteValue) ? abs($this->player_elo_diff) : $this->player_elo_diff;
     }
 
     /**
