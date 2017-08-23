@@ -141,6 +141,20 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Models in unit tests aren't cached. This function explicitly caches a model for the sake of unit tests.
+     *
+     * @param Model $model
+     */
+    public static function cacheModel(Model $model)
+    {
+        if (!Service::getModelCache()) {
+            return;
+        }
+
+        Service::getModelCache()->save($model);
+    }
+
+    /**
      * Wipe all the objects given as parameters
      *
      * @param Model $c,... The object(s) to call the wipe() method on
