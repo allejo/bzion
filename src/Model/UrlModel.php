@@ -6,6 +6,8 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 /**
  * A Model that has a URL
  * @package    BZiON\Models
@@ -84,7 +86,7 @@ abstract class UrlModel extends PermissionModel
         return Service::getGenerator()->generate(
             static::getRouteName($action),
             array_merge(array(static::getParamName() => $identifier), $params),
-            $absolute
+            ($absolute) ? UrlGeneratorInterface::ABSOLUTE_PATH : UrlGeneratorInterface::ABSOLUTE_URL
         );
     }
 }
