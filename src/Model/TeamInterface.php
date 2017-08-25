@@ -49,6 +49,8 @@ interface TeamInterface extends NamedModel
      */
     public function isSameAs($model);
 
+    public function isLastMatch($match);
+
     /**
      * Returns whether this object supports keeping count of matches
      *

@@ -65,6 +65,14 @@ class ColorTeam implements TeamInterface
     /**
      * {@inheritdoc}
      */
+    public function isLastMatch($match)
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function supportsMatchCount()
     {
         return false;

@@ -153,6 +153,9 @@ class MatchFormCreator extends ModelFormCreator
         $firstId = $firstTeam->get('team')->getData()->getId();
         $secondId = $secondTeam->get('team')->getData()->getId();
 
+        $a_color = \ColorTeam::isValidTeamColor($firstId) ? $firstId : null;
+        $b_color = \ColorTeam::isValidTeamColor($secondId) ? $secondId : null;
+
         $official = ($form->get('type')->getData() === \Match::OFFICIAL);
 
         $match = \Match::enterMatch(
@@ -169,8 +172,8 @@ class MatchFormCreator extends ModelFormCreator
             null,
             $form->get('map')->getData()->getId(),
             $form->get('type')->getData(),
-            $official ? null : $firstId,
-            $official ? null : $secondId
+            $a_color,
+            $b_color
         );
 
         return $match;

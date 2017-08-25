@@ -360,7 +360,7 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the list of players on Team A who participated in this match
-     * @return Player[]|null Returns null if there were no players recorded for this match
+     * @return Player[] Returns null if there were no players recorded for this match
      */
     public function getTeamAPlayers()
     {
@@ -369,7 +369,7 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the list of players on Team B who participated in this match
-     * @return Player[]|null Returns null if there were no players recorded for this match
+     * @return Player[] Returns null if there were no players recorded for this match
      */
     public function getTeamBPlayers()
     {
@@ -414,12 +414,12 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get an array of players based on a string representation
      * @param string $playerString
-     * @return Player[]|null Returns null if there were no players recorded for this match
+     * @return Player[] Returns null if there were no players recorded for this match
      */
     private function parsePlayers($playerString)
     {
         if ($playerString == null) {
-            return null;
+            return [];
         }
 
         return Player::arrayIdToModel(explode(",", $playerString));
@@ -793,8 +793,8 @@ class Match extends UrlModel implements NamedModel
     public function resetELOs()
     {
         if ($this->match_type === self::OFFICIAL) {
-            $this->getTeamA()->changeELO(-$this->elo_diff);
-            $this->getTeamB()->changeELO(+$this->elo_diff);
+            $this->getTeamA()->supportsMatchCount() && $this->getTeamA()->changeELO(-$this->elo_diff);
+            $this->getTeamB()->supportsMatchCount() && $this->getTeamB()->changeELO(+$this->elo_diff);
         }
 
         return $this;

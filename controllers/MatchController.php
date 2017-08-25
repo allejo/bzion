@@ -266,12 +266,7 @@ class MatchController extends CRUDController
         foreach (array('first_team', 'second_team') as $team) {
             $input = $form->get($team)->get('team');
 
-            if ($form->get('type')->getData() == Match::OFFICIAL) {
-                if ($input->getData() instanceof ColorTeam) {
-                    $message = "Please enter a valid team for an official match.";
-                    $input->addError(new FormError($message));
-                }
-            } else {
+            if ($form->get('type')->getData() == Match::FUN) {
                 if (!$input->getData() instanceof ColorTeam) {
                     $message = "Please enter a team color for fun and special matches.";
                     $input->addError(new FormError($message));
