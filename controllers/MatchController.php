@@ -263,13 +263,26 @@ class MatchController extends CRUDController
             $form->addError(new FormError($message));
         }
 
-        foreach (array('first_team', 'second_team') as $team) {
-            $input = $form->get($team)->get('team');
+        $matchType = $form->get('type')->getData();
 
-            if ($form->get('type')->getData() == Match::FUN) {
-                if (!$input->getData() instanceof ColorTeam) {
+        foreach (array('first_team', 'second_team') as $team) {
+            $input = $form->get($team);
+            $teamInput = $input->get('team');
+            $teamParticipants = $input->get('participants');
+
+            if ($matchType === Match::FUN) {
+                if (!$teamInput->getData() instanceof ColorTeam) {
                     $message = "Please enter a team color for fun and special matches.";
-                    $input->addError(new FormError($message));
+                    $teamInput->addError(new FormError($message));
+                }
+            } elseif ($matchType === Match::OFFICIAL) {
+                if ($teamInput->getData() instanceof ColorTeam) {
+                    $participants = $teamParticipants->getData();
+
+                    if (empty($participants)) {
+                        $message = 'A player roster is necessary for a color team for a mixed official match.';
+                        $teamInput->addError(new FormError($message));
+                    }
                 }
             }
         }

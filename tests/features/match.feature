@@ -26,7 +26,7 @@ Feature: Matches
        And the "form_first_team_participants_player" field should contain "uncherished, ..., Wildcat, unmercifuL"
        But I should not see "The match was created successfully"
 
-   Scenario: Enter match
+   Scenario: Enter Team vs Team match
        Given I am an admin
        And there is a team called "Preeminent Cannoneers"
        And there is a team called "Subpar Fusillade"
@@ -65,3 +65,37 @@ Feature: Matches
        And I should see "20 minutes"
        And I should see "Fun Match"
        But I should not see "ELO Difference"
+
+    Scenario: Enter Team vs Mixed match with the team winning
+      Given I am an admin
+      And there is a team called "Polymorphic wombats"
+      And there is a player called "joyful bread"
+      And there is a player called "angry hippos"
+      And a new user called "gabaliumes" joins "Polymorphic wombats"
+      And a new user called "tabloid" joins "Polymorphic wombats"
+      When I go to "/matches/enter"
+      And I select "Polymorphic wombats" from "form_first_team_team"
+      And I fill in "4" for "form_first_team_score"
+      And I select "Green Team" from "form_second_team_team"
+      And I fill in "2" for "form_second_team_score"
+      And I select "30" from "form_duration_0"
+      And I fill in "form_first_team_participants_player" with "gabaliumes,tabloid"
+      And I fill in "form_second_team_participants_player" with "joyful bread,angry hippos"
+      And I press "Enter"
+      Then I should be on "/matches/3"
+      And I should see "The match was created successfully"
+      And I should see "Polymorphic wombats 1200 → 1225 4"
+      And I should see "Green Team 2"
+
+    Scenario: Enter Team vs Mixed match without player roster for color team
+      Given I am an admin
+      And there is a team called "Numb3rs"
+      When I go to "/matches/enter"
+      And I select "Numb3rs" from "form_first_team_team"
+      And I fill in "3" for "form_first_team_score"
+      And I select "Green Team" from "form_second_team_team"
+      And I fill in "0" for "form_second_team_score"
+      And I select "30" from "form_duration_0"
+      And I press "Enter"
+      Then I should be on "/matches/enter"
+      And I should see "A player roster is necessary for a color team for a mixed official match"
