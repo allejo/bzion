@@ -613,7 +613,7 @@ class Match extends UrlModel implements NamedModel
     {
         if ($this->getTeamA()->supportsMatchCount() && $this->getTeamB()->supportsMatchCount()) {
             return self::TEAM_V_TEAM;
-        } elseif ($this->getTeamA()->isValid() || $this->getTeamB()->isValid()) {
+        } elseif ($this->getTeamA()->supportsMatchCount() xor $this->getTeamB()->supportsMatchCount()) {
             return self::TEAM_V_MIXED;
         }
 

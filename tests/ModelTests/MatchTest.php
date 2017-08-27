@@ -308,6 +308,48 @@ class MatchTest extends TestCase
         $this->assertInstanceOf(ColorTeam::class, $this->match->getTeamB());
     }
 
+    public function testGetTeamMatchTypeIsTeamVsTeam()
+    {
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            $this->team_b->getId(),
+            0,
+            0,
+            20,
+            $this->player_a->getId()
+        );
+
+        $this->assertEquals(Match::TEAM_V_TEAM, $this->match->getTeamMatchType());
+    }
+
+    public function testGetTeamMatchTypeIsTeamVsMixed()
+    {
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            null,
+            0,
+            0,
+            30,
+            $this->player_a->getId()
+        );
+
+        $this->assertEquals(Match::TEAM_V_MIXED, $this->match->getTeamMatchType());
+    }
+
+    public function testGetTeamMatchTypeIsMixedVsMixed()
+    {
+        $this->match = Match::enterMatch(
+            null,
+            null,
+            0,
+            0,
+            30,
+            $this->player_a->getId()
+        );
+
+        $this->assertEquals(Match::MIXED_V_MIXED, $this->match->getTeamMatchType());
+    }
+
     public function tearDown()
     {
         $this->wipe($this->match, $this->match_b, $this->team_a, $this->team_b);
