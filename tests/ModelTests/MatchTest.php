@@ -189,10 +189,13 @@ class MatchTest extends TestCase
         $this->assertEquals(1700, $player_d->getElo());
     }
 
-    public function testIndividualPlayerEloChangesInOfficialMatch()
+    public function testIndividualPlayerEloChangesInOfficialMatch_TeamAWin()
     {
         $player_c = $this->getNewPlayer();
         $player_d = $this->getNewPlayer();
+
+        $this->team_a->addMember($player_c->getId());
+        $this->team_b->addMember($player_d->getId());
 
         $this->match = Match::enterMatch(
             $this->team_a->getId(),
@@ -202,11 +205,45 @@ class MatchTest extends TestCase
             30,
             null,
             'now',
-            [$this->player_a->getId(), $this->player_b->getId()],
-            [$player_c->getId(), $player_d->getId()]
+            [$this->player_a->getId(), $player_c->getId()],
+            [$this->player_b->getId(), $player_d->getId()]
         );
 
+        $this->assertEquals(1225, $this->team_a->getElo());
+        $this->assertEquals(1175, $this->team_b->getElo());
+
         $this->assertEquals(1225, $this->player_a->getElo());
+        $this->assertEquals(1225, $player_c->getElo());
+        $this->assertEquals(1175, $this->player_b->getElo());
+        $this->assertEquals(1175, $player_d->getElo());
+    }
+
+    public function testIndividualPlayerEloChangesInOfficialMatch_TeamBWin()
+    {
+        $player_c = $this->getNewPlayer();
+        $player_d = $this->getNewPlayer();
+
+        $this->team_a->addMember($player_c->getId());
+        $this->team_b->addMember($player_d->getId());
+
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            $this->team_b->getId(),
+            1,
+            5,
+            30,
+            null,
+            'now',
+            [$this->player_a->getId(), $player_c->getId()],
+            [$this->player_b->getId(), $player_d->getId()]
+        );
+
+        $this->assertEquals(1225, $this->team_b->getElo());
+        $this->assertEquals(1175, $this->team_a->getElo());
+
+        $this->assertEquals(1225, $this->player_b->getElo());
+        $this->assertEquals(1225, $player_d->getElo());
+        $this->assertEquals(1175, $this->player_a->getElo());
         $this->assertEquals(1175, $player_c->getElo());
     }
 
