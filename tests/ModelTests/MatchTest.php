@@ -330,7 +330,10 @@ class MatchTest extends TestCase
             0,
             0,
             30,
-            $this->player_a->getId()
+            $this->player_a->getId(),
+            'now',
+            [],
+            [$this->player_b->getId()]
         );
 
         $this->assertEquals(Match::TEAM_V_MIXED, $this->match->getTeamMatchType());
@@ -344,10 +347,30 @@ class MatchTest extends TestCase
             0,
             0,
             30,
-            $this->player_a->getId()
+            $this->player_a->getId(),
+            'now',
+            [$this->player_a->getId()],
+            [$this->player_b->getId()]
         );
 
         $this->assertEquals(Match::MIXED_V_MIXED, $this->match->getTeamMatchType());
+    }
+
+    public function testEnterMatchWithColorTeamAndNoPlayerRoster()
+    {
+        $this->setExpectedException(\InvalidArgumentException::class);
+
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            null,
+            0,
+            0,
+            30,
+            $this->player_a->getId(),
+            'now',
+            [],
+            []
+        );
     }
 
     public function tearDown()

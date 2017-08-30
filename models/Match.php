@@ -831,12 +831,15 @@ class Match extends UrlModel implements NamedModel
      * @param  int[]           $a_players  The IDs of the first team's players
      * @param  int[]           $b_players  The IDs of the second team's players
      * @param  string|null     $server     The address of the server where the match was played
-     * @param  int|null        $port       The port of the server where the match was played
      * @param  string          $replayFile The name of the replay file of the match
      * @param  int             $map        The ID of the map where the match was played, only for rotational leagues
      * @param  string          $matchType  The type of match (e.g. official, fm, special)
      * @param  string          $a_color    Team A's color
      * @param  string          $b_color    Team b's color
+     *
+     * @throws InvalidArgumentException When a ColorTeam is selected for an official match and no players are defined
+     *                                  for that team
+     *
      * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch(
@@ -867,8 +870,10 @@ class Match extends UrlModel implements NamedModel
             $team_a = Team::get($a);
             $team_b = Team::get($b);
 
-            $a_players_elo = null;
-            $b_players_elo = null;
+            if ((!$team_a->isValid() && empty($a_players)) ||
+                (!$team_b->isValid() && empty($b_players))) {
+                throw new InvalidArgumentException('A color team must have a player roster to calculate the player Elo');
+            }
 
             // Only bother if we have players reported for both teams
             if (!empty($a_players) && !empty($b_players)) {
@@ -881,7 +886,6 @@ class Match extends UrlModel implements NamedModel
             // If it's a Team vs Team official match, we need to calculate the Elo diff between the two teams. Otherwise,
             // we'll be using the player Elo diff as the "team" Elo diff for future calculations and database persistence
             $teamEloDiff = $playerEloDiff;
-
             if ($team_a->isValid() && $team_b->isValid()) {
                 $teamEloDiff = self::calculateEloDiff($team_a->getElo(), $team_b->getElo(), $a_points, $b_points, $duration);
             }
