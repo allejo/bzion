@@ -387,9 +387,9 @@ class Match extends UrlModel implements NamedModel
             $team = $team->getId();
         }
 
-        if ($this->getTeamA()->isValid() && $team == $this->getTeamA()->getId()) {
+        if ($this->getTeamA()->isValid() && $team === $this->getTeamA()->getId()) {
             return $this->getTeamAPlayers();
-        } elseif ($this->getTeamB()->isValid() && $team == $this->getTeamB()->getId()) {
+        } elseif ($this->getTeamB()->isValid() && $team === $this->getTeamB()->getId()) {
             return $this->getTeamBPlayers();
         }
 
@@ -1046,6 +1046,12 @@ class Match extends UrlModel implements NamedModel
     public function delete()
     {
         $this->updateMatchCount(true);
+        $this->updatePlayerElo();
+
+        $this->db->execute(
+            "DELETE FROM player_elo WHERE match_id = ?",
+            [$this->getId()]
+        );
 
         parent::delete();
     }
@@ -1129,6 +1135,20 @@ class Match extends UrlModel implements NamedModel
         } else {
             $this->getWinner()->supportsMatchCount() && $this->getWinner()->changeMatchCount($diff, 'win');
             $this->getLoser()->supportsMatchCount()  && $this->getLoser()->changeMatchCount($diff, 'loss');
+        }
+    }
+
+    /**
+     * Undo the Elo change for each player in this match. Used for when deleting a match
+     */
+    private function updatePlayerElo()
+    {
+        foreach ($this->getTeamAPlayers() as $player) {
+            $player->adjustElo(-$this->getPlayerEloDiff(false));
+        }
+
+        foreach ($this->getTeamBPlayers() as $player) {
+            $player->adjustElo($this->getPlayerEloDiff(false));
         }
     }
 }
