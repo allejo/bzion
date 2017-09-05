@@ -1098,11 +1098,6 @@ class Match extends UrlModel implements NamedModel
     {
         $this->updateMatchCount(true);
 
-        $this->db->execute(
-            "DELETE FROM player_elo WHERE match_id = ?",
-            [$this->getId()]
-        );
-
         parent::delete();
     }
 
