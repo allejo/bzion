@@ -412,6 +412,8 @@ class MatchTest extends TestCase
 
     public function testDeletingMatchReturnsPlayerEloWithTeamAWinning()
     {
+        $this->markTestIncomplete("Match deletion shouldn't affect Elo; that's for recalculate");
+
         $player_c = $this->getNewPlayer();
         $player_d = $this->getNewPlayer();
 
@@ -442,6 +444,8 @@ class MatchTest extends TestCase
 
     public function testDeletingMatchReturnsPlayerEloWithTeamBWinning()
     {
+        $this->markTestIncomplete("Match deletion shouldn't affect Elo; that's for recalculate");
+
         $player_c = $this->getNewPlayer();
         $player_d = $this->getNewPlayer();
 

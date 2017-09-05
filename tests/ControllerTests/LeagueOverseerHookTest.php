@@ -271,9 +271,15 @@ class LeagueOverseerHookTest extends TestCase
 
         $this->player_a->adjustElo(200);
         $this->player_c->adjustElo(200);
+        $this->player_b->adjustElo(-100);
+        $this->player_d->adjustElo(-100);
 
         $this->cacheModel($this->player_a);
         $this->cacheModel($this->player_c);
+        $this->cacheModel($this->player_b);
+        $this->cacheModel($this->player_d);
+
+        $avgPlayerElo = Match::calculateEloDiff(1200, 1100, 2, 2, 30);
 
         $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
             'teamOneWins' => 2,
@@ -282,9 +288,8 @@ class LeagueOverseerHookTest extends TestCase
             'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]), // player D is teamless
         ]));
 
-        $this->assertEquals("Purple Team [2] vs [2] Team A\n  Team A: -12\n  player elo: +/- 12", $this->client->getResponse()->getContent());
-
-        $this->assertEquals(1188, $this->team_a->getElo());
+        $this->assertEquals("Purple Team [2] vs [2] Team A\n  Team A: {$avgPlayerElo}\n  player elo: +/- 17", $this->client->getResponse()->getContent());
+        $this->assertEquals(1200 + $avgPlayerElo, $this->team_a->getElo());
     }
 
     public function testMixedVsTeamReport_TeamLoss()
@@ -348,9 +353,15 @@ class LeagueOverseerHookTest extends TestCase
 
         $this->player_b->adjustElo(200);
         $this->player_d->adjustElo(200);
+        $this->player_a->adjustElo(-100);
+        $this->player_c->adjustElo(-100);
 
         $this->cacheModel($this->player_b);
         $this->cacheModel($this->player_d);
+        $this->cacheModel($this->player_a);
+        $this->cacheModel($this->player_c);
+
+        $avgPlayerElo = Match::calculateEloDiff(1100, 1200, 2, 2, 30);
 
         $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
             'teamOneWins' => 2,
@@ -359,9 +370,8 @@ class LeagueOverseerHookTest extends TestCase
             'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
         ]));
 
-        $this->assertEquals("Red Team [2] vs [2] Team B\n  Team B: -12\n  player elo: +/- 12", $this->client->getResponse()->getContent());
-
-        $this->assertEquals(1188, $this->team_b->getElo());
+        $this->assertEquals("Red Team [2] vs [2] Team B\n  Team B: -{$avgPlayerElo}\n  player elo: +/- 17", $this->client->getResponse()->getContent());
+        $this->assertEquals(1200 - $avgPlayerElo, $this->team_b->getElo());
     }
 
     public function testMixedVsMixedReport_FirstTeamWin()
@@ -488,7 +498,7 @@ class LeagueOverseerHookTest extends TestCase
             'matchType' => 'official',
             'teamOneColor' => 'Red',
             'teamTwoColor' => 'Purple',
-            'duration' => 1800,
+            'duration' => 30,
             'matchTime' => '17-08-01 13:00:00',
             'server' => 'localhost:5154',
             'port' => 5154,

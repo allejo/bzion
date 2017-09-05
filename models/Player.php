@@ -1167,23 +1167,6 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     }
 
     /**
-     * Routine maintenance for a player when they participate in a match.
-     *
-     * This function updates the last match played, changes the ELO, and creates a historic ELO change.
-     *
-     * @param Match $match
-     * @param int   $eloDiff
-     */
-    public function setMatchParticipation(Match $match, $eloDiff)
-    {
-        $this->setLastMatch($match->getId());
-
-        if ($match->isOfficial() && $eloDiff !== null) {
-            $this->adjustElo($eloDiff, $match);
-        }
-    }
-
-    /**
      * Get all of the members belonging to a team
      * @param  int      $teamID The ID of the team to fetch the members of
      * @return Player[] An array of Player objects of the team members
