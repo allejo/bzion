@@ -303,6 +303,27 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         return sprintf('%s-%s', $year, $season);
     }
 
+    public function invalidateMatchFromCache(Match $match)
+    {
+        $seasonInfo = Season::getSeason($match->getTimestamp());
+        $seasonKey = sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
+
+        unset($this->eloSeason[$seasonKey]);
+
+        $seasonElo = &$this->eloSeasonHistory[$seasonKey];
+
+        if ($seasonElo === null) {
+            return;
+        }
+
+        foreach (array_reverse($seasonElo) as $key => $match) {
+            if ($match['match'] === $match) {
+                unset($seasonElo[$key]);
+                break;
+            }
+        }
+    }
+
     /**
      * Get the Elo changes for a player for a given season
      *
@@ -320,9 +341,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             return $this->eloSeasonHistory[$seasonKey];
         }
 
-        $results = $this->db->query('
+        $this->eloSeasonHistory[$seasonKey] = $this->db->query('
           SELECT
             elo_new AS elo,
+            match_id AS `match`,
             MONTH(matches.timestamp) AS `month`,
             YEAR(matches.timestamp) AS `year`,
             DAY(matches.timestamp) AS `day`
@@ -334,16 +356,6 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
           ORDER BY
             match_id ASC
         ', [ $this->getId(), $season, $year ]);
-
-        $this->eloSeasonHistory[$seasonKey] = $results;
-        $season = &$this->eloSeasonHistory[$seasonKey];
-
-        if (!empty($season)) {
-            $elo = end($season);
-            $this->eloSeason[$seasonKey] = ($elo !== false) ? $elo['elo'] : 1200;
-        } else {
-            $this->eloSeason[$seasonKey] = 1200;
-        }
 
         return $this->eloSeasonHistory[$seasonKey];
     }
@@ -362,6 +374,19 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     {
         $this->getEloSeasonHistory($season, $year);
         $seasonKey = $this->buildSeasonCacheKey($season, $year);
+
+        if (isset($this->eloSeason[$seasonKey])) {
+            return $this->eloSeason[$seasonKey];
+        }
+
+        $season = &$this->eloSeasonHistory[$seasonKey];
+
+        if (!empty($season)) {
+            $elo = end($season);
+            $this->eloSeason[$seasonKey] = ($elo !== false) ? $elo['elo'] : 1200;
+        } else {
+            $this->eloSeason[$seasonKey] = 1200;
+        }
 
         return $this->eloSeason[$seasonKey];
     }

@@ -434,8 +434,6 @@ class MatchTest extends TestCase
 
     public function testPlayerEloRecalculationForOfficialMatch()
     {
-        $this->markTestIncomplete("Player Elo recalc needs to fix internal Elo caching from Player models");
-
         $player_c = $this->getNewPlayer();
         $player_d = $this->getNewPlayer();
 
@@ -454,15 +452,12 @@ class MatchTest extends TestCase
             [$this->player_b->getId(), $player_d->getId()]
         );
 
-        $this->assertEquals(25, $this->match->getPlayerEloDiff());
+        $this->assertEquals(25, $this->match->getPlayerEloDiff(false));
 
-        $newPlayerDiff = Match::calculateEloDiff(1275, 1175, 2, 1, 30);
-        $this->player_a->adjustElo(200);
-        $player_c->adjustElo(-100);
-
+        $this->match->setTeamPoints(1, 2);
         $this->match->recalculateElo();
 
-        $this->assertEquals($newPlayerDiff, $this->match->getPlayerEloDiff());
+        $this->assertEquals(-25, $this->match->getPlayerEloDiff(false));
     }
 
     public function testRecalculationForOfficialMatches()

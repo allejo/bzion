@@ -1046,6 +1046,12 @@ class Match extends UrlModel implements NamedModel
         $a = $this->getTeamA();
         $b = $this->getTeamB();
 
+        $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
+
+        foreach ($this->getPlayers() as $player) {
+            $player->invalidateMatchFromCache($this);
+        }
+
         $eloCalcs = self::calculateElos(
             $a, $b,
             $this->getTeamAPoints(), $this->getTeamBPoints(),
@@ -1207,7 +1213,6 @@ class Match extends UrlModel implements NamedModel
         $eloDiff = $this->getPlayerEloDiff(false);
 
         $this->db->startTransaction();
-        $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
 
         foreach ($this->getTeamAPlayers() as $player) {
             $player->adjustElo($eloDiff, $this);
