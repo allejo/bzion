@@ -1046,21 +1046,29 @@ class Match extends UrlModel implements NamedModel
         $a = $this->getTeamA();
         $b = $this->getTeamB();
 
-        $elo = $this->calculateEloDiff(
-            $a->getElo(),
-            $b->getElo(),
-            $this->getTeamAPoints(),
-            $this->getTeamBPoints(),
+        $eloCalcs = self::calculateElos(
+            $a, $b,
+            $this->getTeamAPoints(), $this->getTeamBPoints(),
+            $this->getTeamAPlayers(), $this->getTeamBPlayers(),
             $this->getDuration()
         );
 
-        $this->updateProperty($this->elo_diff, "elo_diff", $elo);
+        $elo = $eloCalcs['team_elo'];
 
-        $a->changeElo($elo);
-        $b->changeElo(-$elo);
+        $this->updateProperty($this->elo_diff, 'elo_diff', $elo);
+        $this->updateProperty($this->player_elo_diff, 'player_elo_diff', $eloCalcs['player_elo']);
 
-        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo());
-        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo());
+        if ($a->supportsMatchCount()) {
+            $a->adjustElo($elo);
+            $this->updateProperty($this->team_a_elo_new, 'team_a_elo_new', $a->getElo());
+        }
+
+        if ($b->supportsMatchCount()) {
+            $b->adjustElo(-$elo);
+            $this->updateProperty($this->team_b_elo_new, 'team_b_elo_new', $b->getElo());
+        }
+
+        $this->updatePlayerElo();
     }
 
     /**
@@ -1199,6 +1207,7 @@ class Match extends UrlModel implements NamedModel
         $eloDiff = $this->getPlayerEloDiff(false);
 
         $this->db->startTransaction();
+        $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
 
         foreach ($this->getTeamAPlayers() as $player) {
             $player->adjustElo($eloDiff, $this);
