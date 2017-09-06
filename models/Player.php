@@ -290,7 +290,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      *
      * @return string
      */
-    private function buildSeasonCacheKey(&$season, &$year)
+    private function buildSeasonKey(&$season, &$year)
     {
         if ($season === null) {
             $season = Season::getCurrentSeason();
@@ -303,22 +303,50 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         return sprintf('%s-%s', $year, $season);
     }
 
+    /**
+     * Build a key to use for caching season Elo data in this model from a timestamp
+     *
+     * @param DateTime $timestamp
+     *
+     * @return string
+     */
+    private function buildSeasonKeyFromTimestamp(\DateTime $timestamp)
+    {
+        $seasonInfo = Season::getSeason($timestamp);
+
+        return sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
+    }
+
+    /**
+     * Remove all Elo data for this model for matches occurring after the given match (inclusive)
+     *
+     * This function will not remove the Elo data for this match from the database. Ideally, this function should only
+     * be called during Elo recalculation for this match.
+     *
+     * @internal
+     *
+     * @param Match $match
+     *
+     * @see Match::recalculateElo()
+     */
     public function invalidateMatchFromCache(Match $match)
     {
-        $seasonInfo = Season::getSeason($match->getTimestamp());
-        $seasonKey = sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
-
-        unset($this->eloSeason[$seasonKey]);
-
+        $seasonKey = $this->buildSeasonKeyFromTimestamp($match->getTimestamp());
         $seasonElo = &$this->eloSeasonHistory[$seasonKey];
+
+        // Unset the currently cached Elo for a player so next time Player::getElo() is called, it'll pull the latest
+        // available Elo
+        unset($this->eloSeason[$seasonKey]);
 
         if ($seasonElo === null) {
             return;
         }
 
+        // This function is called when we recalculate, so assume that the match will be recent, therefore towards the
+        // end of the Elo history array. We splice the array to have all Elo data after this match to be removed.
         foreach (array_reverse($seasonElo) as $key => $match) {
             if ($match['match'] === $match) {
-                unset($seasonElo[$key]);
+                $seasonElo = array_splice($seasonElo, $key);
                 break;
             }
         }
@@ -334,7 +362,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function getEloSeasonHistory($season = null, $year = null)
     {
-        $seasonKey = $this->buildSeasonCacheKey($season, $year);
+        $seasonKey = $this->buildSeasonKey($season, $year);
 
         // This season's already been cached
         if ($this->eloSeasonHistory !== null && array_key_exists($seasonKey, $this->eloSeasonHistory)) {
@@ -373,7 +401,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     public function getElo($season = null, $year = null)
     {
         $this->getEloSeasonHistory($season, $year);
-        $seasonKey = $this->buildSeasonCacheKey($season, $year);
+        $seasonKey = $this->buildSeasonKey($season, $year);
 
         if (isset($this->eloSeason[$seasonKey])) {
             return $this->eloSeason[$seasonKey];
