@@ -159,6 +159,73 @@ class MatchTest extends TestCase
         $this->assertEquals(2, count($matches) - count($old_matches));
     }
 
+    public function testFunMatchHasOnlyColorTeams()
+    {
+        $player_d = $this->getNewPlayer();
+        $this->team_b->addMember($player_d->getId());
+
+        $this->match = Match::enterMatch(
+            null,
+            $this->team_b->getId(),
+            4,
+            1,
+            30,
+            null,
+            'now',
+            [],
+            [$this->player_b->getId(), $player_d->getId()],
+            null,
+            null,
+            null,
+            Match::FUN
+        );
+
+        $this->assertTrue($this->match->isValid());
+        $this->assertEquals(Match::FUN, $this->match->getMatchType());
+        $this->assertInstanceOf(ColorTeam::class, $this->match->getTeamA());
+        $this->assertInstanceOf(ColorTeam::class, $this->match->getTeamB());
+    }
+
+    public function testExceptionThrownMixedHasNoRoster_TeamVsMixed()
+    {
+        $this->setExpectedException(InvalidArgumentException::class);
+
+        $player_c = $this->getNewPlayer();
+        $this->team_a->addMember($player_c->getId());
+
+        $this->match = Match::enterMatch(
+            $this->team_a->getId(),
+            null,
+            4,
+            1,
+            30,
+            null,
+            'now',
+            [$this->team_a->getId(), $player_c],
+            []
+        );
+    }
+
+    public function testExceptionThrownMixedHasNoRoster_MixedVsTeam()
+    {
+        $this->setExpectedException(InvalidArgumentException::class);
+
+        $player_d = $this->getNewPlayer();
+        $this->team_b->addMember($player_d->getId());
+
+        $this->match = Match::enterMatch(
+            null,
+            $this->team_b->getId(),
+            4,
+            1,
+            30,
+            null,
+            'now',
+            [],
+            [$this->player_b->getId(), $player_d->getId()]
+        );
+    }
+
     public function testIndividualPlayerEloDoesNotChangeInFunMatch()
     {
         $player_c = $this->getNewPlayer();
