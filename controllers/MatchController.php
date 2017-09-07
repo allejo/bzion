@@ -124,7 +124,7 @@ class MatchController extends CRUDController
             $response = new StreamedResponse();
             $response->headers->set('Content-Type', 'text/plain');
             $response->setCallback(function () use ($match) {
-                $this->recalculate($match);
+                $this->log(Match::recalculateMatchesSince($match));
             });
             $response->send();
         }, "Do you want to recalculate ELO history for all teams and matches after the specified match?",
@@ -140,78 +140,6 @@ class MatchController extends CRUDController
             "Match/recalculate.html.twig",
             $noButton = true
         );
-    }
-
-    /**
-     * Recalculates match history for all teams and matches
-     *
-     * Recalculation is done as follows:
-     * 1. A match is chosen as a starting point - it's stored old team ELOs are
-     *    considered correct
-     * 2. Team ELOs are reset to their values at the starting point
-     * 3. Each match that occurred since the first specified match has its ELO
-     *    recalculated based on the current team values, and the new match data
-     *    and team ELOs are stored in the database
-     *
-     * @param Match $match The first match
-     */
-    private function recalculate(Match $match)
-    {
-        try {
-            // Commented out to prevent ridiculously large recalculations
-            //set_time_limit(0);
-
-            $query = Match::getQueryBuilder()
-                ->where('status')->notEquals('deleted')
-                ->where('type')->equals(Match::OFFICIAL)
-                ->where('time')->isAfter($match->getTimestamp(), $inclusive = true)
-                ->sortBy('time');
-
-            /** @var Match[] $matches */
-            $matches = $query->getModels($fast = true);
-
-            // Send the total count to client-side javascript
-            $this->log(count($matches) . "\n");
-
-            // Start a transaction so tables are locked and we don't stay with
-            // messed up data if something goes wrong
-            Database::getInstance()->startTransaction();
-
-            $teamsReset = [];
-
-            // Reset match teams, in case the selected match is deleted and does
-            // not show up in the list of matches to recalculate
-            $match->getTeamA()->setElo($match->getTeamAEloOld());
-            $match->getTeamB()->setElo($match->getTeamBEloOld());
-            $teamsReset[ $match->getTeamA()->getId() ] = true;
-            $teamsReset[ $match->getTeamB()->getId() ] = true;
-
-            foreach ($matches as $i => $match) {
-                // Reset teams' ELOs if they haven't been reset already
-                if (!isset($teamsReset[ $match->getTeamA()->getId() ])) {
-                    $teamsReset[ $match->getTeamA()->getId() ] = true;
-                    $match->getTeamA()->setElo($match->getTeamAEloOld());
-                }
-                if (!isset($teamsReset[ $match->getTeamB()->getId() ])) {
-                    $teamsReset[ $match->getTeamB()->getId() ] = true;
-                    $match->getTeamB()->setElo($match->getTeamBEloOld());
-                }
-
-                $match->recalculateElo();
-
-                // Send an update to the client-side javascript, so that a
-                // progress bar can be updated
-                $this->log("m");
-            }
-        } catch (Exception $e) {
-            Database::getInstance()->rollback();
-            Database::getInstance()->finishTransaction();
-            throw $e;
-        }
-
-        Database::getInstance()->finishTransaction();
-
-        $this->log("\n\nCalculation successful\n");
     }
 
     /**

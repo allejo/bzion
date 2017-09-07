@@ -462,8 +462,6 @@ class MatchTest extends TestCase
 
     public function testRecalculationForOfficialMatches()
     {
-        $this->markTestSkipped();
-
         $this->team_a->adjustElo(300);
         $this->team_b->adjustElo(100);
 
@@ -487,42 +485,42 @@ class MatchTest extends TestCase
         );
         $this->assertEquals($a_match_elo, $this->match->getEloDiff(false));
 
-        $b_match_elo = Match::calculateEloDiff($this->team_a->getElo(), $this->team_b->getElo(), 3, 1, 20);
+        $b_match_elo = Match::calculateEloDiff($this->team_a->getElo(), $this->team_b->getElo(), 3, 1, 30);
         $this->match_b = Match::enterMatch(
             $this->team_a->getId(),
             $this->team_b->getId(),
             3,
             1,
-            20,
+            30,
             null,
             'now',
             [$this->player_a->getId(), $player_c->getId()],
             [$this->player_b->getId(), $player_d->getId()]
         );
         $this->assertEquals($b_match_elo, $this->match_b->getEloDiff(false));
+        $this->assertNotEquals($this->match->getEloDiff(), $this->match_b->getEloDiff());
 
         $this->assertEquals(1500 + $a_match_elo + $b_match_elo, $this->team_a->getElo());
         $this->assertEquals(1300 - $a_match_elo - $b_match_elo, $this->team_b->getElo());
-        $this->assertEquals(1239, $this->player_a->getElo());
-        $this->assertEquals(1161, $this->player_b->getElo());
+        $this->assertEquals(1200 + $this->match->getPlayerEloDiff(false) + $this->match_b->getPlayerEloDiff(false), $this->player_a->getElo());
+        $this->assertEquals(1200 - $this->match->getPlayerEloDiff(false) - $this->match_b->getPlayerEloDiff(false), $this->player_b->getElo());
 
         $this->match->delete();
 
+        ob_start();
+        Match::recalculateMatchesSince($this->match);
+        ob_end_clean();
+
+        // Recreate the Match B object so the cached information is up to date
+        $this->match_b = Match::get($this->match_b->getId());
         $playerEloDiff = $this->match_b->getPlayerEloDiff(false);
 
-        $this->assertEquals(14, $playerEloDiff);
+        $this->assertEquals($this->match->getPlayerEloDiff(false), $playerEloDiff);
+        $this->assertEquals(1500 + $a_match_elo, $this->team_a->getElo());
+        $this->assertEquals(1300 - $a_match_elo, $this->team_b->getElo());
+
         $this->assertEquals(1200 + $playerEloDiff, $this->player_a->getElo());
         $this->assertEquals(1200 - $playerEloDiff, $this->player_b->getElo());
-
-        $this->match_b->recalculateElo();
-
-        $matchEloDiff = $this->match_b->getEloDiff();
-
-        $this->assertEquals(1500 + $matchEloDiff, $this->team_a->getElo());
-        $this->assertEquals(1300 - $matchEloDiff, $this->team_b->getElo());
-
-        $this->assertEquals(1225, $this->player_a->getElo());
-        $this->assertEquals(1175, $this->player_b->getElo());
     }
 
     public function tearDown()
