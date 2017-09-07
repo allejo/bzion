@@ -1200,18 +1200,22 @@ class Match extends UrlModel implements NamedModel
 
             // Reset match teams, in case the selected match is deleted and does
             // not show up in the list of matches to recalculate
-            $match->getTeamA()->setElo($match->getTeamAEloOld());
-            $match->getTeamB()->setElo($match->getTeamBEloOld());
-            $teamsReset[ $match->getTeamA()->getId() ] = true;
-            $teamsReset[ $match->getTeamB()->getId() ] = true;
+            if ($match->getTeamA()->supportsMatchCount()) {
+                $match->getTeamA()->setElo($match->getTeamAEloOld());
+                $teamsReset[ $match->getTeamA()->getId() ] = true;
+            }
+            if ($match->getTeamB()->supportsMatchCount()) {
+                $match->getTeamB()->setElo($match->getTeamBEloOld());
+                $teamsReset[ $match->getTeamB()->getId() ] = true;
+            }
 
             foreach ($matches as $i => &$match) {
                 // Reset teams' ELOs if they haven't been reset already
-                if (!isset($teamsReset[ $match->getTeamA()->getId() ])) {
+                if ($match->getTeamA()->supportsMatchCount() && !isset($teamsReset[ $match->getTeamA()->getId() ])) {
                     $teamsReset[ $match->getTeamA()->getId() ] = true;
                     $match->getTeamA()->setElo($match->getTeamAEloOld());
                 }
-                if (!isset($teamsReset[ $match->getTeamB()->getId() ])) {
+                if ($match->getTeamB()->supportsMatchCount() && !isset($teamsReset[ $match->getTeamB()->getId() ])) {
                     $teamsReset[ $match->getTeamB()->getId() ] = true;
                     $match->getTeamB()->setElo($match->getTeamBEloOld());
                 }
