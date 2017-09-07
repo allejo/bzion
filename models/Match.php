@@ -127,6 +127,11 @@ class Match extends UrlModel implements NamedModel
     protected $player_elo_diff;
 
     /**
+     * @var array
+     */
+    protected $player_elo_changelog;
+
+    /**
      * The timestamp representing when the match information was last updated
      * @var TimeDate
      */
@@ -504,6 +509,61 @@ class Match extends UrlModel implements NamedModel
     public function getPlayerEloDiff($absoluteValue = true)
     {
         return ($absoluteValue) ? abs($this->player_elo_diff) : $this->player_elo_diff;
+    }
+
+    /**
+     * Get the changelog for the player Elos for this match and cache them
+     */
+    private function getPlayerEloChangelog()
+    {
+        if ($this->player_elo_changelog !== null) {
+            return;
+        }
+
+        $results = $this->db->query('SELECT * FROM player_elo WHERE match_id = ?', $this->getId());
+
+        foreach ($results as $result) {
+            $this->player_elo_changelog[$result['user_id']] = [
+                'before' => $result['elo_previous'],
+                'after'  => $result['elo_new']
+            ];
+        }
+    }
+
+    /**
+     * Get the Elo for the player before this match occurred
+     *
+     * @param Player $player
+     *
+     * @return null|int
+     */
+    public function getPlayerEloBefore(Player $player)
+    {
+        $this->getPlayerEloChangelog();
+
+        if (isset($this->player_elo_changelog[$player->getId()])) {
+            return $this->player_elo_changelog[$player->getId()]['before'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the Elo for the player after this match occurred
+     *
+     * @param Player $player
+     *
+     * @return null|int
+     */
+    public function getPlayerEloAfter(Player $player)
+    {
+        $this->getPlayerEloChangelog();
+
+        if (isset($this->player_elo_changelog[$player->getId()])) {
+            return $this->player_elo_changelog[$player->getId()]['after'];
+        }
+
+        return null;
     }
 
     /**

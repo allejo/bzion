@@ -1,5 +1,6 @@
 {% macro widget(player, attrs, showTeam, showActivity) %}
     {% from 'utilities.html.twig' import html_attr %}
+    {% from _self import widget_custom %}
 
     {% set attrs = attrs | extend_hash({ 'class': ['c-player-badge'] }) %}
 
@@ -7,6 +8,27 @@
     {#   see: https://stackoverflow.com/a/10794782 #}
     {% set showActivity = showActivity is not defined or showActivity is null ? false : showActivity %}
     {% set showTeam     = showTeam     is not defined or showTeam     is null ? false : showTeam %}
+    {% set playerSlug %}
+        {% if showTeam or showActivity %}
+            {% if showTeam %}
+                {{ link_to(player.team) }}
+            {% endif %}
+
+            {% if showActivity %}
+                {% if showTeam %}&bull;{% endif %}
+
+                {{ player.matchActivity | number_format(2) }}
+            {% endif %}
+        {% endif %}
+    {% endset %}
+
+    {{ widget_custom(player, attrs, playerSlug) }}
+{% endmacro %}
+
+{% macro widget_custom(player, attrs, slug) %}
+    {% from 'utilities.html.twig' import html_attr %}
+
+    {% set attrs = attrs | extend_hash({ 'class': ['c-player-badge'] }) %}
 
     <div {{ html_attr(attrs) }}>
         <img class="c-player-badge__avatar"
@@ -19,18 +41,8 @@
                 <span>{{ link_to(player) }}</span> {{ player.country.flagLiteral | raw }}
             </div>
 
-            {% if showTeam or showActivity %}
-                <p class="c-player-badge__team">
-                    {% if showTeam %}
-                        {{ link_to(player.team) }}
-                    {% endif %}
-
-                    {% if showActivity %}
-                        {% if showTeam %}&bull;{% endif %}
-
-                        {{ player.matchActivity | number_format(2) }}
-                    {% endif %}
-                </p>
+            {% if slug %}
+                <p class="c-player-badge__team">{{- slug -}}</p>
             {% endif %}
         </div>
     </div>
