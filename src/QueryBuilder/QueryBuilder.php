@@ -223,6 +223,30 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Request that a column is not null
+     *
+     * @return static
+     */
+    public function isNotNull()
+    {
+        $this->addColumnCondition('IS NOT NULL', null);
+
+        return $this;
+    }
+
+    /**
+     * Request that a column is null
+     *
+     * @return static
+     */
+    public function isNull()
+    {
+        $this->addColumnCondition('IS NULL', null);
+
+        return $this;
+    }
+
+    /**
      * Request that a column is greater than a quantity
      *
      * @param  string $quantity The quantity to test against
@@ -283,6 +307,18 @@ class QueryBuilder implements Countable
         $this->addColumnCondition("$comparison ?",  $time);
 
         return $this;
+    }
+
+    /**
+     * Request that a timestamp is between a date range
+     *
+     * @param MonthDateRange $range
+     * @param int|null       $year
+     */
+    public function betweenMonths(MonthDateRange $range, $year = null)
+    {
+        $this->isAfter($range->getStartOfRange($year), true);
+        $this->isBefore($range->getEndOfRange($year), true);
     }
 
     /**
@@ -579,7 +615,9 @@ class QueryBuilder implements Countable
             $columns .= ',' . $this->extraColumns;
         }
 
-        $results = $db->query($this->createQuery($columns), $this->getParameters());
+        // Storing the value in a variable allows for quicker debugging
+        $query = $this->createQuery($columns);
+        $results = $db->query($query, $this->getParameters());
 
         if ($fastFetch) {
             return $type::createFromDatabaseResults($results);
@@ -679,13 +717,16 @@ class QueryBuilder implements Countable
             throw new Exception("You haven't selected a column!");
         }
 
-        if (!is_array($value)) {
+        if (!is_array($value) && $value !== null) {
             $value = array($value);
         }
 
         $array = $this->currentColumnMode . 'Conditions';
         $this->{$array}[] = "{$this->currentColumn} $condition";
-        $this->parameters   = array_merge($this->parameters, $value);
+
+        if ($value !== null) {
+            $this->parameters = array_merge($this->parameters, $value);
+        }
 
         $this->currentColumn = null;
         $this->currentColumnRaw = null;
@@ -842,7 +883,7 @@ class QueryBuilder implements Countable
         // had been called earlier
         $this->paginationParameters = array();
 
-        if (!$this->page && !$this->limited) {
+        if ($this->page === null && !$this->limited) {
             return '';
         }
 

@@ -5,7 +5,7 @@
     "license": "GPL-3.0",
 
     "require": {
-        "php"                        : ">=5.4.0",
+        "php"                        : ">=5.5.0",
         "cboden/ratchet"             : "0.2.*",
         "components/font-awesome"    : "^4.5",
         "components/jquery"          : "^2.2",
@@ -17,7 +17,7 @@
         "nesbot/carbon"              : "~1.14",
         "nelmio/api-doc-bundle"      : "~2.7",
         "ramsey/array_column"        : "~1.1",
-        "robmorgan/phinx"            : "~0.6",
+        "robmorgan/phinx"            : "~0.8",
         "select2/select2"            : "dev-master",
         "sensio/framework-extra-bundle": "~3.0",
         "symfony/icu"                : "1.0.*",
@@ -89,6 +89,8 @@
             "src/Model",
             "src/QueryBuilder",
             "src/Database.php",
+            "src/Season.php",
+            "src/MonthDateRange.php",
             "src/Service.php",
             "src/TimeDate.php"
         ],

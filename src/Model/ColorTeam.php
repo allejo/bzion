@@ -55,6 +55,30 @@ class ColorTeam implements TeamInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isValid()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isLastMatch($match)
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsMatchCount()
+    {
+        return false;
+    }
+
+    /**
      * Return whether a team color is valid
      *
      * @param string $color The color to check
@@ -65,10 +89,7 @@ class ColorTeam implements TeamInterface
     }
 
     /**
-     * Find out if a team is the same as another team
-     *
-     * @param mixed $team The team to compare
-     * @param bool
+     * {@inheritdoc}
      */
     public function isSameAs($team)
     {

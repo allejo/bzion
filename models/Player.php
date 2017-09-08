@@ -6,6 +6,7 @@
  * @license    https://github.com/allejo/bzion/blob/master/LICENSE.md GNU General Public License Version 3
  */
 
+use Carbon\Carbon;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\Util\StringUtils;
  * A league player
  * @package    BZiON\Models
  */
-class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
+class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloInterface
 {
     /**
      * These are built-in roles that cannot be deleted via the web interface so we will be storing these values as
@@ -151,6 +152,9 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
      */
     private $cachedMatchCount = null;
 
+    private $eloSeason;
+    private $eloSeasonHistory;
+
     private $matchActivity;
 
     /**
@@ -276,6 +280,184 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface
         $this->lazyLoad();
 
         return $this->email;
+    }
+
+    /**
+     * Build a key that we'll use for caching season Elo data in this model
+     *
+     * @param  string|null $season The season to get
+     * @param  int|null    $year   The year of the season to get
+     *
+     * @return string
+     */
+    private function buildSeasonKey(&$season, &$year)
+    {
+        if ($season === null) {
+            $season = Season::getCurrentSeason();
+        }
+
+        if ($year === null) {
+            $year = Carbon::now()->year;
+        }
+
+        return sprintf('%s-%s', $year, $season);
+    }
+
+    /**
+     * Build a key to use for caching season Elo data in this model from a timestamp
+     *
+     * @param DateTime $timestamp
+     *
+     * @return string
+     */
+    private function buildSeasonKeyFromTimestamp(\DateTime $timestamp)
+    {
+        $seasonInfo = Season::getSeason($timestamp);
+
+        return sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
+    }
+
+    /**
+     * Remove all Elo data for this model for matches occurring after the given match (inclusive)
+     *
+     * This function will not remove the Elo data for this match from the database. Ideally, this function should only
+     * be called during Elo recalculation for this match.
+     *
+     * @internal
+     *
+     * @param Match $match
+     *
+     * @see Match::recalculateElo()
+     */
+    public function invalidateMatchFromCache(Match $match)
+    {
+        $seasonKey = $this->buildSeasonKeyFromTimestamp($match->getTimestamp());
+        $seasonElo = null;
+
+        // If we have an existing season history cached, save a reference to it for easy access. Don't create one if
+        // nothing is cached or else it'll cause for an empty cache to be created
+        if (isset($this->eloSeasonHistory[$seasonKey])) {
+            $seasonElo = &$this->eloSeasonHistory[$seasonKey];
+        }
+
+        // Unset the currently cached Elo for a player so next time Player::getElo() is called, it'll pull the latest
+        // available Elo
+        unset($this->eloSeason[$seasonKey]);
+
+        if ($seasonElo === null) {
+            return;
+        }
+
+        // This function is called when we recalculate, so assume that the match will be recent, therefore towards the
+        // end of the Elo history array. We splice the array to have all Elo data after this match to be removed.
+        foreach (array_reverse($seasonElo) as $key => $match) {
+            if ($match['match'] === $match) {
+                $seasonElo = array_splice($seasonElo, $key);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Get the Elo changes for a player for a given season
+     *
+     * @param  string|null $season The season to get
+     * @param  int|null    $year   The year of the season to get
+     *
+     * @return array
+     */
+    public function getEloSeasonHistory($season = null, $year = null)
+    {
+        $seasonKey = $this->buildSeasonKey($season, $year);
+
+        // This season's already been cached
+        if (isset($this->eloSeasonHistory[$seasonKey])) {
+            return $this->eloSeasonHistory[$seasonKey];
+        }
+
+        $this->eloSeasonHistory[$seasonKey] = $this->db->query('
+          SELECT
+            elo_new AS elo,
+            match_id AS `match`,
+            MONTH(matches.timestamp) AS `month`,
+            YEAR(matches.timestamp) AS `year`,
+            DAY(matches.timestamp) AS `day`
+          FROM
+            player_elo
+            LEFT JOIN matches ON player_elo.match_id = matches.id
+          WHERE
+            user_id = ? AND season_period = ? AND season_year = ?
+          ORDER BY
+            match_id ASC
+        ', [ $this->getId(), $season, $year ]);
+
+        array_unshift($this->eloSeasonHistory[$seasonKey], [
+            'elo' => 1200,
+            'match' => null,
+            'month' => Season::getCurrentSeasonRange($season)->getStartOfRange()->month,
+            'year' => $year,
+            'day' => 1
+        ]);
+
+        return $this->eloSeasonHistory[$seasonKey];
+    }
+
+    /**
+     * Get the player's Elo for a season.
+     *
+     * With the default arguments, it will fetch the Elo for the current season.
+     *
+     * @param string|null $season The season we're looking for: winter, spring, summer, or fall
+     * @param int|null    $year   The year of the season we're looking for
+     *
+     * @return int The player's Elo
+     */
+    public function getElo($season = null, $year = null)
+    {
+        $this->getEloSeasonHistory($season, $year);
+        $seasonKey = $this->buildSeasonKey($season, $year);
+
+        if (isset($this->eloSeason[$seasonKey])) {
+            return $this->eloSeason[$seasonKey];
+        }
+
+        $season = &$this->eloSeasonHistory[$seasonKey];
+
+        if (!empty($season)) {
+            $elo = end($season);
+            $this->eloSeason[$seasonKey] = ($elo !== false) ? $elo['elo'] : 1200;
+        } else {
+            $this->eloSeason[$seasonKey] = 1200;
+        }
+
+        return $this->eloSeason[$seasonKey];
+    }
+
+    /**
+     * Adjust the Elo of a player for the current season based on a Match
+     *
+     * **Warning:** If $match is null, the Elo for the player will be modified but the value will not be persisted to
+     * the database.
+     *
+     * @param int        $adjust The value to be added to the current ELO (negative to subtract)
+     * @param Match|null $match  The match where this Elo change took place
+     */
+    public function adjustElo($adjust, Match $match = null)
+    {
+        $timestamp = ($match !== null) ? $match->getTimestamp() : (Carbon::now());
+        $seasonInfo = Season::getSeason($timestamp);
+
+        // Get the current Elo for the player, even if it's the default 1200. We need the value for adjusting
+        $elo = $this->getElo($seasonInfo['season'], $seasonInfo['year']);
+        $seasonKey = sprintf('%s-%s', $seasonInfo['year'], $seasonInfo['season']);
+
+        $this->eloSeason[$seasonKey] += $adjust;
+
+        if ($match !== null && $this->isValid()) {
+            $this->db->execute('
+              INSERT INTO player_elo VALUES (?, ?, ?, ?, ?, ?)
+            ', [ $this->getId(), $match->getId(), $seasonInfo['season'], $seasonInfo['year'], $elo, $this->eloSeason[$seasonKey] ]);
+        }
     }
 
     /**

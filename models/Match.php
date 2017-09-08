@@ -17,6 +17,10 @@ class Match extends UrlModel implements NamedModel
     const SPECIAL  = "special";
     const FUN      = "fm";
 
+    const TEAM_V_TEAM   = 0;
+    const TEAM_V_MIXED  = 1;
+    const MIXED_V_MIXED = 2;
+
     use Timestamp;
 
     /**
@@ -111,10 +115,21 @@ class Match extends UrlModel implements NamedModel
     protected $replay_file;
 
     /**
-     * The absolute value of the ELO score difference
+     * The value of the ELO score difference
      * @var int
      */
     protected $elo_diff;
+
+    /**
+     * The value of the player Elo difference
+     * @var int
+     */
+    protected $player_elo_diff;
+
+    /**
+     * @var array
+     */
+    protected $player_elo_changelog;
 
     /**
      * The timestamp representing when the match information was last updated
@@ -171,6 +186,7 @@ class Match extends UrlModel implements NamedModel
         $this->server = $match['server'];
         $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
+        $this->player_elo_diff = $match['player_elo_diff'];
         $this->timestamp = TimeDate::fromMysql($match['timestamp']);
         $this->updated = TimeDate::fromMysql($match['updated']);
         $this->duration = $match['duration'];
@@ -305,8 +321,10 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamA()
     {
-        if ($this->match_type === self::OFFICIAL) {
-            return Team::get($this->team_a);
+        $team = Team::get($this->team_a);
+
+        if ($this->match_type === self::OFFICIAL && $team->isValid()) {
+            return $team;
         }
 
         return new ColorTeam($this->team_a_color);
@@ -318,8 +336,10 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamB()
     {
-        if ($this->match_type === self::OFFICIAL) {
-            return Team::get($this->team_b);
+        $team = Team::get($this->team_b);
+
+        if ($this->match_type === self::OFFICIAL && $team->isValid()) {
+            return $team;
         }
 
         return new ColorTeam($this->team_b_color);
@@ -345,7 +365,7 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the list of players on Team A who participated in this match
-     * @return Player[]|null Returns null if there were no players recorded for this match
+     * @return Player[] Returns null if there were no players recorded for this match
      */
     public function getTeamAPlayers()
     {
@@ -354,7 +374,7 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the list of players on Team B who participated in this match
-     * @return Player[]|null Returns null if there were no players recorded for this match
+     * @return Player[] Returns null if there were no players recorded for this match
      */
     public function getTeamBPlayers()
     {
@@ -372,9 +392,9 @@ class Match extends UrlModel implements NamedModel
             $team = $team->getId();
         }
 
-        if ($team == $this->getTeamA()->getId()) {
+        if ($this->getTeamA()->isValid() && $team === $this->getTeamA()->getId()) {
             return $this->getTeamAPlayers();
-        } elseif ($team == $this->getTeamB()->getId()) {
+        } elseif ($this->getTeamB()->isValid() && $team === $this->getTeamB()->getId()) {
             return $this->getTeamBPlayers();
         }
 
@@ -399,12 +419,12 @@ class Match extends UrlModel implements NamedModel
     /**
      * Get an array of players based on a string representation
      * @param string $playerString
-     * @return Player[]|null Returns null if there were no players recorded for this match
+     * @return Player[] Returns null if there were no players recorded for this match
      */
     private function parsePlayers($playerString)
     {
         if ($playerString == null) {
-            return null;
+            return [];
         }
 
         return Player::arrayIdToModel(explode(",", $playerString));
@@ -469,11 +489,91 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the ELO difference applied to each team's old ELO
+     *
+     * @param bool $absoluteValue Whether or not to get the absolute value of the Elo difference
+     *
      * @return int The ELO difference
      */
-    public function getEloDiff()
+    public function getEloDiff($absoluteValue = true)
     {
-        return abs($this->elo_diff);
+        return ($absoluteValue) ? abs($this->elo_diff) : $this->elo_diff;
+    }
+
+    /**
+     * Get the Elo difference applied to players
+     *
+     * @param bool $absoluteValue Whether or not to get the absolute value of the Elo difference
+     *
+     * @return int The Elo difference for players
+     */
+    public function getPlayerEloDiff($absoluteValue = true)
+    {
+        return ($absoluteValue) ? abs($this->player_elo_diff) : $this->player_elo_diff;
+    }
+
+    /**
+     * Get the changelog for the player Elos for this match and cache them
+     */
+    private function getPlayerEloChangelog()
+    {
+        if ($this->player_elo_changelog !== null) {
+            return;
+        }
+
+        $results = $this->db->query('SELECT * FROM player_elo WHERE match_id = ?', $this->getId());
+
+        foreach ($results as $result) {
+            $this->player_elo_changelog[$result['user_id']] = [
+                'before' => $result['elo_previous'],
+                'after'  => $result['elo_new']
+            ];
+        }
+    }
+
+    /**
+     * Get the Elo for the player before this match occurred
+     *
+     * @param Player $player
+     *
+     * @return null|int
+     */
+    public function getPlayerEloBefore(Player $player)
+    {
+        $this->getPlayerEloChangelog();
+
+        if (isset($this->player_elo_changelog[$player->getId()])) {
+            return $this->player_elo_changelog[$player->getId()]['before'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the Elo for the player after this match occurred
+     *
+     * @param Player $player
+     *
+     * @return null|int
+     */
+    public function getPlayerEloAfter(Player $player)
+    {
+        $this->getPlayerEloChangelog();
+
+        if (isset($this->player_elo_changelog[$player->getId()])) {
+            return $this->player_elo_changelog[$player->getId()]['after'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Set the Elo difference applied to players
+     *
+     * @param int $diff
+     */
+    public function setPlayerEloDiff($diff)
+    {
+        $this->updateProperty($this->player_elo_diff, 'player_elo_diff', $diff);
     }
 
     /**
@@ -563,6 +663,31 @@ class Match extends UrlModel implements NamedModel
     public function setMap($map)
     {
         $this->updateProperty($this->map, "map", $map, "s");
+    }
+
+    /**
+     * Get the type of official match this is. Whether it has just traditional teams or has mixed teams.
+     *
+     * Possible official match types:
+     *   - Team vs Team
+     *   - Team vs Mixed
+     *   - Mixed vs Mixed
+     *
+     * @see Match::TEAM_V_TEAM
+     * @see Match::TEAM_V_MIXED
+     * @see Match::MIXED_V_MIXED
+     *
+     * @return int
+     */
+    public function getTeamMatchType()
+    {
+        if ($this->getTeamA()->supportsMatchCount() && $this->getTeamB()->supportsMatchCount()) {
+            return self::TEAM_V_TEAM;
+        } elseif ($this->getTeamA()->supportsMatchCount() xor $this->getTeamB()->supportsMatchCount()) {
+            return self::TEAM_V_MIXED;
+        }
+
+        return self::MIXED_V_MIXED;
     }
 
     /**
@@ -683,10 +808,13 @@ class Match extends UrlModel implements NamedModel
      */
     public function getWinner()
     {
-        // Get the team that had its ELO increased
-        if ($this->elo_diff > 0) {
+        // "As Mother Teresa once said, it's not enough if you win. Others must lose."
+        //   -Stephen Colbert
+
+        // Get the team that had its Elo increased or the team whose players had their Elo increased
+        if ($this->elo_diff > 0 || $this->player_elo_diff > 0) {
             return $this->getTeamA();
-        } elseif ($this->elo_diff < 0) {
+        } elseif ($this->elo_diff < 0 || $this->player_elo_diff < 0) {
             return $this->getTeamB();
         } elseif ($this->team_a_points > $this->team_b_points) {
             // In case we're dealing with a match such an FM that doesn't have an ELO difference
@@ -735,8 +863,8 @@ class Match extends UrlModel implements NamedModel
     public function resetELOs()
     {
         if ($this->match_type === self::OFFICIAL) {
-            $this->getTeamA()->changeELO(-$this->elo_diff);
-            $this->getTeamB()->changeELO(+$this->elo_diff);
+            $this->getTeamA()->supportsMatchCount() && $this->getTeamA()->changeELO(-$this->elo_diff);
+            $this->getTeamB()->supportsMatchCount() && $this->getTeamB()->changeELO(+$this->elo_diff);
         }
 
         return $this;
@@ -762,6 +890,81 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Calculate the Elo differences for players and teams for a given match.
+     *
+     * @param  Team $a
+     * @param  Team $b
+     * @param  int  $a_points
+     * @param  int  $b_points
+     * @param  int[]|Player[] $a_players
+     * @param  int[]|Player[] $b_players
+     * @param  int  $duration
+     *
+     * @throws InvalidArgumentException When a "Mixed" team is entered without a player roster
+     *
+     * @return array
+     */
+    private static function calculateElos($a, $b, $a_points, $b_points, $a_players, $b_players, $duration)
+    {
+        // Get the type of official match
+        $matchType = Match::MIXED_V_MIXED;
+
+        if ($a->supportsMatchCount() && $b->supportsMatchCount()) {
+            $matchType = Match::TEAM_V_TEAM;
+        } elseif ($a->supportsMatchCount() xor $b->supportsMatchCount()) {
+            $matchType = Match::TEAM_V_MIXED;
+        }
+
+        if ($matchType == Match::TEAM_V_MIXED &&
+            ((!$a->isValid() && empty($a_players)) || (!$b->isValid() && empty($b_players)))) {
+            throw new InvalidArgumentException('A Mixed team must have a player roster to calculate the Elo for team Elo differences');
+        }
+
+        //
+        // Handle Player Elo Diff Calculations
+        //
+
+        // By default, we won't have a player Elo difference since we won't force matches to have a roster
+        $playerEloDiff = null;
+
+        $a_players_elo = 1200;
+        $b_players_elo = 1200;
+
+        // Only bother to calculate a player Elo diff if we have players reported for both teams
+        if (!empty($a_players) && !empty($b_players)) {
+            $a_players_elo = self::getAveragePlayerElo($a_players);
+            $b_players_elo = self::getAveragePlayerElo($b_players);
+
+            $playerEloDiff = self::calculateEloDiff($a_players_elo, $b_players_elo, $a_points, $b_points, $duration);
+        }
+
+        //
+        // Handle Team Elo Diff Calculations
+        //
+
+        // By default, we'll assume a Mixed vs Mixed official match where Elos do not change for teams
+        $teamEloDiff = null;
+
+        // Work with calculations for team Elos to handle the following situations:
+        //   - Team vs Team  :: Use team Elos for calculations
+        //   - Team vs Mixed :: Use team Elo and the player average Elo for the "Mixed" team
+        if ($matchType == Match::TEAM_V_TEAM) {
+            $teamEloDiff = self::calculateEloDiff($a->getElo(), $b->getElo(), $a_points, $b_points, $duration);
+        } elseif ($matchType == Match::TEAM_V_MIXED) {
+            $a_team_elo = ($a->supportsMatchCount()) ? $a->getElo() : $a_players_elo;
+            $b_team_elo = ($b->supportsMatchCount()) ? $b->getElo() : $b_players_elo;
+
+            $teamEloDiff = self::calculateEloDiff($a_team_elo, $b_team_elo, $a_points, $b_points, $duration);
+        }
+
+        return [
+            'match_type' => $matchType,
+            'team_elo'   => $teamEloDiff,
+            'player_elo' => $playerEloDiff
+        ];
+    }
+
+    /**
      * Enter a new match to the database
      * @param  int             $a          Team A's ID
      * @param  int             $b          Team B's ID
@@ -773,12 +976,15 @@ class Match extends UrlModel implements NamedModel
      * @param  int[]           $a_players  The IDs of the first team's players
      * @param  int[]           $b_players  The IDs of the second team's players
      * @param  string|null     $server     The address of the server where the match was played
-     * @param  int|null        $port       The port of the server where the match was played
      * @param  string          $replayFile The name of the replay file of the match
      * @param  int             $map        The ID of the map where the match was played, only for rotational leagues
      * @param  string          $matchType  The type of match (e.g. official, fm, special)
      * @param  string          $a_color    Team A's color
      * @param  string          $b_color    Team b's color
+     *
+     * @throws InvalidArgumentException When a ColorTeam is selected for an official match and no players are defined
+     *                                  for that team
+     *
      * @return Match           An object representing the match that was just entered
      */
     public static function enterMatch(
@@ -803,42 +1009,36 @@ class Match extends UrlModel implements NamedModel
             'match_type'     => $matchType
         );
 
+        // (P)layer Elo Diff and (T)eam Elo Diff; respectively
+        $tEloDiff = null;
+
         if ($matchType === self::OFFICIAL) {
             $team_a = Team::get($a);
             $team_b = Team::get($b);
-            $a_elo = $team_a->getElo();
-            $b_elo = $team_b->getElo();
 
-            $diff = self::calculateEloDiff($a_elo, $b_elo, $a_points, $b_points, $duration);
+            $eloCalcs = self::calculateElos($team_a, $team_b, $a_points, $b_points, $a_players, $b_players, $duration);
+
+            $matchData['elo_diff'] = $tEloDiff = $eloCalcs['team_elo'];
+            $matchData['player_elo_diff'] = $eloCalcs['player_elo'];
 
             // Update team ELOs
-            $team_a->changeElo($diff);
-            $team_b->changeElo(-$diff);
+            if ($team_a->isValid()) {
+                $team_a->adjustElo($tEloDiff);
 
-            $matchData = array_merge($matchData, array(
-                'team_a'         => $a,
-                'team_b'         => $b,
-                'team_a_elo_new' => $team_a->getElo(),
-                'team_b_elo_new' => $team_b->getElo(),
-                'elo_diff'       => $diff
-            ));
+                $matchData['team_a'] = $a;
+                $matchData['team_a_elo_new'] = $team_a->getElo();
+            }
+            if ($team_b->isValid()) {
+                $team_b->adjustElo(-$tEloDiff);
+
+                $matchData['team_b'] = $b;
+                $matchData['team_b_elo_new'] = $team_b->getElo();
+            }
         }
 
         $match = self::create($matchData, 'updated');
-
-        if ($matchType === self::OFFICIAL) {
-            $match->updateMatchCount();
-        }
-
-        $players = $match->getPlayers();
-
-        Database::getInstance()->startTransaction();
-
-        foreach ($players as $player) {
-            $player->setLastMatch($match->getId());
-        }
-
-        Database::getInstance()->finishTransaction();
+        $match->updateMatchCount();
+        $match->updatePlayerElo();
 
         return $match;
     }
@@ -906,21 +1106,35 @@ class Match extends UrlModel implements NamedModel
         $a = $this->getTeamA();
         $b = $this->getTeamB();
 
-        $elo = $this->calculateEloDiff(
-            $a->getElo(),
-            $b->getElo(),
-            $this->getTeamAPoints(),
-            $this->getTeamBPoints(),
+        $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
+
+        foreach ($this->getPlayers() as $player) {
+            $player->invalidateMatchFromCache($this);
+        }
+
+        $eloCalcs = self::calculateElos(
+            $a, $b,
+            $this->getTeamAPoints(), $this->getTeamBPoints(),
+            $this->getTeamAPlayers(), $this->getTeamBPlayers(),
             $this->getDuration()
         );
 
-        $this->updateProperty($this->elo_diff, "elo_diff", $elo);
+        $elo = $eloCalcs['team_elo'];
 
-        $a->changeElo($elo);
-        $b->changeElo(-$elo);
+        $this->updateProperty($this->elo_diff, 'elo_diff', $elo);
+        $this->updateProperty($this->player_elo_diff, 'player_elo_diff', $eloCalcs['player_elo']);
 
-        $this->updateProperty($this->team_a_elo_new, "team_a_elo_new", $a->getElo());
-        $this->updateProperty($this->team_b_elo_new, "team_b_elo_new", $b->getElo());
+        if ($a->supportsMatchCount()) {
+            $a->adjustElo($elo);
+            $this->updateProperty($this->team_a_elo_new, 'team_a_elo_new', $a->getElo());
+        }
+
+        if ($b->supportsMatchCount()) {
+            $b->adjustElo(-$elo);
+            $this->updateProperty($this->team_b_elo_new, 'team_b_elo_new', $b->getElo());
+        }
+
+        $this->updatePlayerElo();
     }
 
     /**
@@ -958,7 +1172,7 @@ class Match extends UrlModel implements NamedModel
     {
         $this->updateMatchCount(true);
 
-        return parent::delete();
+        parent::delete();
     }
 
     /**
@@ -974,27 +1188,133 @@ class Match extends UrlModel implements NamedModel
      */
     public function getName()
     {
+        $description = '';
+
         switch ($this->getMatchType()) {
             case self::OFFICIAL:
-                $description = "(+/- " . $this->getEloDiff() . ") ";
+                // Only show Elo diff if both teams are actual teams
+                if ($this->getTeamA()->supportsMatchCount() && $this->getTeamB()->supportsMatchCount()) {
+                    $description = "(+/- {$this->getEloDiff()})";
+                }
                 break;
+
             case self::FUN:
-                $description = "Fun Match:";
+                $description = 'Fun Match:';
                 break;
+
             case self::SPECIAL:
-                $description = "Special Match: ";
+                $description = 'Special Match:';
                 break;
+
             default:
-                $description = "";
+                break;
         }
 
-        return sprintf("%s %s [%d] vs [%d] %s",
+        return trim(sprintf('%s %s [%d] vs [%d] %s',
             $description,
             $this->getWinner()->getName(),
             $this->getScore($this->getWinner()),
             $this->getScore($this->getLoser()),
             $this->getLoser()->getName()
-        );
+        ));
+    }
+
+    /**
+     * Recalculates match history for all teams and matches
+     *
+     * Recalculation is done as follows:
+     * 1. A match is chosen as a starting point - it's stored old team ELOs are
+     *    considered correct
+     * 2. Team ELOs are reset to their values at the starting point
+     * 3. Each match that occurred since the first specified match has its ELO
+     *    recalculated based on the current team values, and the new match data
+     *    and team ELOs are stored in the database
+     *
+     * @param Match $match The first match
+     *
+     * @throws Exception
+     */
+    public static function recalculateMatchesSince(Match $match)
+    {
+        try {
+            // Commented out to prevent ridiculously large recalculations
+            //set_time_limit(0);
+
+            $query = Match::getQueryBuilder()
+                ->where('status')->notEquals('deleted')
+                ->where('type')->equals(Match::OFFICIAL)
+                ->where('time')->isAfter($match->getTimestamp(), $inclusive = true)
+                ->sortBy('time');
+
+            /** @var Match[] $matches */
+            $matches = $query->getModels($fast = true);
+
+            // Send the total count to client-side javascript
+            echo count($matches) . "\n";
+
+            // Start a transaction so tables are locked and we don't stay with
+            // messed up data if something goes wrong
+            Database::getInstance()->startTransaction();
+
+            $teamsReset = [];
+
+            // Reset match teams, in case the selected match is deleted and does
+            // not show up in the list of matches to recalculate
+            if ($match->getTeamA()->supportsMatchCount()) {
+                $match->getTeamA()->setElo($match->getTeamAEloOld());
+                $teamsReset[ $match->getTeamA()->getId() ] = true;
+            }
+            if ($match->getTeamB()->supportsMatchCount()) {
+                $match->getTeamB()->setElo($match->getTeamBEloOld());
+                $teamsReset[ $match->getTeamB()->getId() ] = true;
+            }
+
+            foreach ($matches as $i => &$match) {
+                // Reset teams' ELOs if they haven't been reset already
+                if ($match->getTeamA()->supportsMatchCount() && !isset($teamsReset[ $match->getTeamA()->getId() ])) {
+                    $teamsReset[ $match->getTeamA()->getId() ] = true;
+                    $match->getTeamA()->setElo($match->getTeamAEloOld());
+                }
+                if ($match->getTeamB()->supportsMatchCount() && !isset($teamsReset[ $match->getTeamB()->getId() ])) {
+                    $teamsReset[ $match->getTeamB()->getId() ] = true;
+                    $match->getTeamB()->setElo($match->getTeamBEloOld());
+                }
+
+                $match->recalculateElo();
+
+                // Send an update to the client-side javascript, so that a
+                // progress bar can be updated
+                echo "m";
+            }
+        } catch (Exception $e) {
+            Database::getInstance()->rollback();
+            Database::getInstance()->finishTransaction();
+            throw $e;
+        }
+
+        Database::getInstance()->finishTransaction();
+
+        echo "\n\nCalculation successful\n";
+    }
+
+    /**
+     * Get the average ELO for an array of players
+     *
+     * @param int[]|Player[] $players
+     *
+     * @return float|int
+     */
+    private static function getAveragePlayerElo($players)
+    {
+        $getElo = function ($n) {
+            if ($n instanceof Player) {
+                return $n->getElo();
+            }
+
+            return Player::get($n)->getElo();
+        };
+
+        return array_sum(array_map($getElo, $players)) / count($players);
     }
 
     /**
@@ -1011,11 +1331,33 @@ class Match extends UrlModel implements NamedModel
         $diff = ($decrement) ? -1 : 1;
 
         if ($this->isDraw()) {
-            $this->getTeamA()->changeMatchCount($diff, 'draw');
-            $this->getTeamB()->changeMatchCount($diff, 'draw');
+            $this->getTeamA()->supportsMatchCount() && $this->getTeamA()->changeMatchCount($diff, 'draw');
+            $this->getTeamB()->supportsMatchCount() && $this->getTeamB()->changeMatchCount($diff, 'draw');
         } else {
-            $this->getWinner()->changeMatchCount($diff, 'win');
-            $this->getLoser()->changeMatchCount($diff, 'loss');
+            $this->getWinner()->supportsMatchCount() && $this->getWinner()->changeMatchCount($diff, 'win');
+            $this->getLoser()->supportsMatchCount()  && $this->getLoser()->changeMatchCount($diff, 'loss');
+        }
+    }
+
+    /**
+     * Update the Elos for the participating players in a match
+     */
+    private function updatePlayerElo()
+    {
+        if ($this->match_type !== self::OFFICIAL || $this->getPlayerEloDiff() === null) {
+            return;
+        }
+
+        $eloDiff = $this->getPlayerEloDiff(false);
+
+        foreach ($this->getTeamAPlayers() as $player) {
+            $player->adjustElo($eloDiff, $this);
+            $player->setLastMatch($this->getId());
+        }
+
+        foreach ($this->getTeamBPlayers() as $player) {
+            $player->adjustElo(-$eloDiff, $this);
+            $player->setLastMatch($this->getId());
         }
     }
 }

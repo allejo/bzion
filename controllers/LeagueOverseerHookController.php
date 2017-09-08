@@ -165,29 +165,13 @@ class LeagueOverseerHookController extends PlainTextController
         $teamOnePlayers = $this->bzidsToIdArray($teamOneBZIDs);
         $teamTwoPlayers = $this->bzidsToIdArray($teamTwoBZIDs);
 
+        $teamOne = $teamTwo = null;
+
         if (Match::OFFICIAL === $matchType) {
             $teamOne = $this->getTeam($teamOnePlayers);
             $teamTwo = $this->getTeam($teamTwoPlayers);
 
-            // If we fail to get the the team ID for either the teams or both reported teams are the same team, we cannot
-            // report the match due to it being illegal.
-
-            // An invalid team could be found in either or both teams, so we need to check both teams and log the match
-            // failure respectively.
-            $error = true;
-            if (!$teamOne->isValid()) {
-                $log->addNotice("The BZIDs ($teamOneBZIDs) were not found on the same team. Match invalidated.");
-            } elseif (!$teamTwo->isValid()) {
-                $log->addNotice("The BZIDs ($teamTwoBZIDs) were not found on the same team. Match invalidated.");
-            } else {
-                $error = false;
-            }
-
-            if ($error) {
-                throw new ForbiddenException("An invalid player was found during the match. Please message a referee to manually report the match.");
-            }
-
-            if ($teamOne->isSameAs($teamTwo)) {
+            if ($teamOne->isValid() && $teamTwo->isValid() && $teamOne->isSameAs($teamTwo)) {
                 $log->addNotice("The '" . $teamOne->getName() . "' team played against each other in an official match. Match invalidated.");
                 throw new ForbiddenException("Holy sanity check, Batman! The same team can't play against each other in an official match.");
             }
@@ -200,8 +184,8 @@ class LeagueOverseerHookController extends PlainTextController
         $map = Map::fetchFromAlias($this->params->get('mapPlayed'));
 
         $match = Match::enterMatch(
-            (isset($teamOne)) ? $teamOne->getId() : null,
-            (isset($teamTwo)) ? $teamTwo->getId() : null,
+            ($teamOne !== null) ? $teamOne->getId() : null,
+            ($teamTwo !== null) ? $teamTwo->getId() : null,
             $this->params->get('teamOneWins'),
             $this->params->get('teamTwoWins'),
             $this->params->get('duration'),
@@ -231,8 +215,29 @@ class LeagueOverseerHookController extends PlainTextController
             'map'     => $map->getName()
         ));
 
+        $bzfsAnnouncement = $match->getName();
+
+        if (!$match->getWinner()->supportsMatchCount() || !$match->getLoser()->supportsMatchCount()) {
+            if ($match->getWinner()->supportsMatchCount()) {
+                $bzfsAnnouncement .= sprintf("\n  %s: +%d", $match->getWinner()->getName(), $match->getEloDiff());
+            } elseif ($match->getLoser()->supportsMatchCount()) {
+                $diff = -$match->getEloDiff();
+                $bzfsAnnouncement .= sprintf("\n  %s: %d", $match->getLoser()->getName(), $diff);
+            }
+        }
+
+        if ($match->isOfficial()) {
+            $inverseSymbol = (
+                $match->getTeamMatchType() === Match::TEAM_V_TEAM && $match->isDraw() &&
+                ($match->getWinner()->isSameAs($match->getTeamB()) || $match->getPlayerEloDiff(false) < 0)
+            );
+
+            $symbol = ($inverseSymbol) ? '-/+' : '+/-';
+            $bzfsAnnouncement .= sprintf("\n  player elo: %s %d", $symbol, $match->getPlayerEloDiff());
+        }
+
         // Output the match stats that will be sent back to BZFS
-        return $match->getName();
+        return $bzfsAnnouncement;
     }
 
     /**

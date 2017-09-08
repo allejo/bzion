@@ -1,13 +1,18 @@
 var Chartist = require('chartist');
 
-function buildWinLossDrawPieCharts() {
+function buildPieCharts() {
     var $pies = $('div[data-graph="pie"]');
 
     $pies.each(function () {
         var $this = $(this);
-        var chart = new Chartist.Pie(this, $this.data('chart'), {
-            plugins: []
-        });
+        var customOpts = $this.data('chart-options');
+        var options = {};
+
+        if (typeof customOpts !== 'undefined') {
+            options = $.extend(options, customOpts);
+        }
+
+        new Chartist.Pie(this, $this.data('chart'), options);
     });
 }
 
@@ -16,12 +21,19 @@ function buildLineCharts() {
 
     $lines.each(function() {
         var $this = $(this);
-        new Chartist.Line(this, $this.data('chart'), {
+        var customOpts = $this.data('chart-options');
+        var options = {
             axisY: {
                 onlyInteger: true
             },
             showPoint: false
-        });
+        };
+
+        if (typeof customOpts !== 'undefined') {
+            options = $.extend(options, customOpts);
+        }
+
+        new Chartist.Line(this, $this.data('chart'), options);
     });
 }
 
@@ -41,6 +53,6 @@ module.exports = function() {
     });
 
     // Start building all of the generic charts that we support
-    buildWinLossDrawPieCharts();
+    buildPieCharts();
     buildLineCharts();
 };

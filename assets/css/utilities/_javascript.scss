@@ -2,10 +2,12 @@
     .js-only {
         display: none;
     }
+
+    .sr-only.sr-show-no-js {
+        @include disableScreenReaderOnly();
+    }
 }
 
 .js {
-    .js-only {
-        display: block;
-    }
+    .js-only {}
 }

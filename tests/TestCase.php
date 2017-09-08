@@ -1,6 +1,8 @@
 <?php
 
-abstract class TestCase extends PHPUnit_Framework_TestCase
+use Symfony\Bundle\FrameworkBundle\Client;
+
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * The BZID of the last player created, used to prevent conflicts when creating new players
@@ -21,6 +23,21 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public static function connectToDatabase()
     {
         return Database::getInstance();
+    }
+
+    /**
+     * Creates a Client.
+     *
+     * @param array $server  An array of server parameters
+     *
+     * @return Client A Client instance
+     */
+    public static function createClient(array $server = array())
+    {
+        $client = Service::getContainer()->get('test.client');
+        $client->setServerParameters($server);
+
+        return $client;
     }
 
     /**
@@ -124,6 +141,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Models in unit tests aren't cached. This function explicitly caches a model for the sake of unit tests.
+     *
+     * @param Model $model
+     */
+    public static function cacheModel(Model $model)
+    {
+        if (!Service::getModelCache()) {
+            return;
+        }
+
+        Service::getModelCache()->save($model);
+    }
+
+    /**
      * Wipe all the objects given as parameters
      *
      * @param Model $c,... The object(s) to call the wipe() method on
@@ -146,7 +177,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         ++$this->lastBzid;
 
-        $player = Player::newPlayer($this->lastBzid, "Sample player" . $this->lastBzid - 1);
+        $player = Player::newPlayer($this->lastBzid, sprintf("Sample player %d", ($this->lastBzid - 1)));
         $this->playersCreated[] = $player->getId();
 
         return $player;

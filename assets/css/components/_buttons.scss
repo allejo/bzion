@@ -9,6 +9,12 @@ $Button-Colors: (
     'yellow': #ffb608
 );
 
+button {
+    @include theme-rule('color', 'body.color');
+
+    cursor: pointer;
+}
+
 // A button
 .c-button {
     border-radius: $Border-Radius;

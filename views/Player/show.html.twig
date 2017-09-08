@@ -1,5 +1,5 @@
 {% extends 'layout.html.twig' %}
-{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line %}
+{% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line, show_table_button %}
 
 {% set pageWideCSS = 's-player__show' %}
 {% set opengraph = {
@@ -64,9 +64,10 @@
 {% block pageTitle %}
     <div class="d-flex align-items-center">
         <h1 class="mr1">{{ player.username }}</h1>
-
         {{ player.country.flagLiteral | raw }}
     </div>
+
+    <small title="{{ player.username }}'s Elo rating for the current season">{{ player.elo }}</small>
 {% endblock %}
 
 {% block content %}
@@ -205,31 +206,34 @@
                              aria-labelledby="tabs__header__match-stats"
                              aria-hidden="false"
                         >
-                            {% set matchData = {
-                                'series': [
-                                    player.matchSummary | values
-                                ],
-                                'labels': player.matchSummary | keys | date_array_formatter("M 'y"),
-                                'meta': {
-                                    'series': [
-                                        'Number of matches per month'
-                                    ],
-                                    'labels': 'Month'
-                                }
-                            } %}
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4>
                                         Match Activity
+
                                         <small>
                                             <i class="fa fa-info-circle ml1"
                                                aria-hidden="true"
                                                title="Number of matches {{ player.username }} has participated in each month in the past year"
                                             ></i>
                                         </small>
+
+                                        {{ show_table_button('match-activity', 'Show the table equivalent of match counts per month') }}
                                     </h4>
                                     <section>
+                                        {% set matchData = {
+                                            'series': [
+                                                player.matchSummary | values
+                                            ],
+                                            'labels': player.matchSummary | keys | date_array_formatter("M 'y"),
+                                            'meta': {
+                                                'series': [
+                                                    'Number of matches per month'
+                                                ],
+                                                'labels': 'Month'
+                                            }
+                                        } %}
+
                                         <div class="js-only">
                                             <div id="player-match-activity"
                                                  class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
@@ -242,9 +246,76 @@
                                             "A breakdown of the number of matches per month for " ~ player.username ~ " in the past year",
                                             matchData,
                                             {
+                                                'id': 'match-activity',
                                                 'class': ['c-table', 'c-table--activity']
                                             }
                                         ) }}
+                                    </section>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h4>
+                                        Elo Rating
+
+                                        <small>
+                                            <i class="fa fa-info-circle ml1"
+                                               aria-hidden="true"
+                                               title="The change in {{ player.username }}'s Elo during this current season"
+                                            ></i>
+                                        </small>
+
+                                        {{ show_table_button('elo-table', 'Show table equivalent of the Elo graph') }}
+                                    </h4>
+
+                                    <section>
+                                        {% set eloData = {
+                                            'series': [
+                                                player.eloSeasonHistory | values('elo')
+                                            ],
+                                            'meta': {
+                                                'series': [
+                                                    'Elo changes in matches'
+                                                ],
+                                                'labels': 'Elo'
+                                            }
+                                        } %}
+                                        {% set eloOptions = {
+                                            axisX: {
+                                                showGrid: false
+                                            },
+                                            showArea: true
+                                        } %}
+
+                                        <div class="js-only">
+                                            <div id="player-elo-rating"
+                                                 class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+                                                 data-graph="line"
+                                                 data-chart="{{ eloData | json_encode }}"
+                                                 data-chart-options="{{ eloOptions | json_encode }}"
+                                            ></div>
+                                        </div>
+
+                                        <div class="sr-only sr-show-no-js"
+                                             id="elo-table"
+                                        >
+                                            <table class="c-table c-table--elo">
+                                                <caption>A summary of {{ player.username }}'s Elo for the current season</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Season Period</th>
+                                                        <th scope="col">Elo Rating</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for date, elo in seasonSummary %}
+                                                        <tr>
+                                                            <td scope="row">{{ date }}</td>
+                                                            <td>{{ elo }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </section>
                                 </div>
 

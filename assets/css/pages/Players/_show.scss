@@ -1,9 +1,0 @@
-.no-js {
-    &.s-player__show {
-        .c-table--activity {
-            @include disableScreenReaderOnly();
-
-            width: 100%;
-        }
-    }
-}

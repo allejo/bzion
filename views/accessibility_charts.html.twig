@@ -2,68 +2,88 @@
     {% from 'utilities.html.twig' import html_attr %}
 
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
-    {% set attrs = attrs | extend_hash({ 'class': ['sr-only'] }) %}
+    {% set attrs = attrs | extend_hash({ 'class': [] }) %}
 
-    <table {{ html_attr(attrs) }} >
-        <caption>{{ caption }}</caption>
-        <thead>
-            <tr>
-                {% for col in data.table.cols %}
-                    <th scope="col">{{ col }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data.series %}
+    <div class="sr-only sr-show-no-js" {% if attrs.id is defined %}id="{{ attrs.id }}"{% endif %}>
+        <table {{ html_attr(attrs) }} >
+            <caption>{{ caption }}</caption>
+            <thead>
                 <tr>
-                    {% for value in data.table.values %}
-                        {% set embedData = {
-                            'series': row,
-                            'meta': data.meta,
-                        } %}
-
-                        {%- if loop.first %}<th scope="row">{% else %}<td>{% endif -%}
-
-                        {{- value | evaluate(embedData) | raw | trim -}}
-
-                        {%- if loop.first %}</th>{% else %}</td>{% endif -%}
+                    {% for col in data.table.cols %}
+                        <th scope="col">{{ col }}</th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for row in data.series %}
+                    <tr>
+                        {% for value in data.table.values %}
+                            {% set embedData = {
+                                'series': row,
+                                'meta': data.meta,
+                            } %}
+
+                            {%- if loop.first %}<th scope="row">{% else %}<td>{% endif -%}
+
+                            {{- value | evaluate(embedData) | raw | trim -}}
+
+                            {%- if loop.first %}</th>{% else %}</td>{% endif -%}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endmacro %}
 
 {% macro accessible_line(caption, data, attrs) %}
     {% from 'utilities.html.twig' import html_attr %}
 
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
-    {% set attrs = attrs | extend_hash({ 'class': ['sr-only'] }) %}
+    {% set attrs = attrs | extend_hash({ 'class': [] }) %}
 
-    <table {{ html_attr(attrs) }} >
-        <caption>{{ caption }}</caption>
-        <thead>
-            <tr>
-                <th scope="col">{{ data.meta.labels }}</th>
+    <div class="sr-only sr-show-no-js" {% if attrs.id is defined %}id="{{ attrs.id }}"{% endif %}>
+        <table {{ html_attr(attrs) }} >
+            <caption>{{ caption }}</caption>
+            <thead>
+                <tr>
+                    <th scope="col">{{ data.meta.labels }}</th>
 
-                {% for series in data.meta.series %}
-                    <th scope="col">{{ series }}</th>
+                    {% for series in data.meta.series %}
+                        <th scope="col">{{ series }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for value in data.series | first %}
+                    {% set label = data.labels[loop.index0] %}
+                    {% if label != '' %}
+                        <tr>
+                            <td scope="row">{{ label }}</td>
+
+                            {% for series in data.series | keys %}
+                                <td>{{ data.series[series][loop.parent.loop.index0] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
                 {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for value in data.series | first %}
-                {% set label = data.labels[loop.index0] %}
-                {% if label != '' %}
-                    <tr>
-                        <td scope="row">{{ label }}</td>
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
 
-                        {% for series in data.series | keys %}
-                            <td>{{ data.series[series][loop.parent.loop.index0] }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+{% macro show_table_button(targetID, title) %}
+    {# Hide the button for screen readers since our table will already be visible to screen readers #}
+    <button class="js-only"
+            aria-hidden="true"
+            data-role="show-sr-table"
+            data-target="{{ targetID }}"
+    >
+        <small>
+            <i class="fa fa-table"
+               aria-hidden="true"
+               title="{{ title }}"
+            ></i>
+        </small>
+    </button>
 {% endmacro %}

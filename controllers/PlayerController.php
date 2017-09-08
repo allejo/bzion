@@ -1,6 +1,7 @@
 <?php
 
 use BZIon\Form\Creator\PlayerAdminNotesFormCreator as FormCreator;
+use Carbon\Carbon;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,6 +11,8 @@ class PlayerController extends JSONController
 
     public function showAction(Player $player, Player $me, Request $request)
     {
+        $formView = null;
+
         if ($me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
             $this->creator = new FormCreator($player);
             $form = $this->creator->create()->handleRequest($request);
@@ -19,14 +22,37 @@ class PlayerController extends JSONController
             }
 
             $formView = $form->createView();
-        } else {
-            // Don't spend time rendering the form unless we need it
-            $formView = null;
+        }
+
+        $periods = [];
+        $season = Season::getCurrentSeasonRange();
+        $periodLength = round($season->getEndOfRange()->diffInDays($season->getStartOfRange()) / 30);
+        $seasonStart = $season->getStartOfRange();
+
+        for ($i = 0; $i < $periodLength; $i++) {
+            $periods[] = $seasonStart->firstOfMonth()->copy();
+            $periods[] = $seasonStart->day(15)->copy();
+            $periods[] = $seasonStart->lastOfMonth()->copy();
+
+            $seasonStart->addMonth();
+        }
+
+        $currentPeriod = new ArrayIterator($periods);
+        $playerEloSeason = $player->getEloSeasonHistory();
+        $seasonSummary = [];
+
+        foreach ($playerEloSeason as $elo) {
+            if ($elo['month'] > $currentPeriod->current()->month || $elo['day'] > $currentPeriod->current()->day) {
+                $currentPeriod->next();
+            }
+
+            $seasonSummary[$currentPeriod->current()->format('M d')] = $elo['elo'];
         }
 
         return array(
-            "player"         => $player,
-            "adminNotesForm" => $formView,
+            'player'         => $player,
+            'seasonSummary'  => $seasonSummary,
+            'adminNotesForm' => $formView,
         );
     }
 

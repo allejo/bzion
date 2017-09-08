@@ -32,4 +32,29 @@ interface TeamInterface extends NamedModel
      * @return string
      */
     public function getAvatar();
+
+    /**
+     * Returns whether this is a valid object
+     *
+     * @return bool
+     */
+    public function isValid();
+
+    /**
+     * Returns whether or not this object matches the Model parameter passed
+     *
+     * @param  TeamInterface $model
+     *
+     * @return bool
+     */
+    public function isSameAs($model);
+
+    public function isLastMatch($match);
+
+    /**
+     * Returns whether this object supports keeping count of matches
+     *
+     * @return bool
+     */
+    public function supportsMatchCount();
 }
