@@ -77,6 +77,9 @@
         "release": [
             "npm run-script assets",
             "@clear"
+        ],
+        "reset-avatars": [
+            "BZIon\\Composer\\UtilityHandler::resetAvatars"
         ]
     },
     "autoload": {
