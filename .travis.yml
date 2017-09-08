@@ -20,7 +20,10 @@ install:
 
 before_script: bash -xe tests/initialize.sh
 
-script: tests/runTests.sh
+script:
+  - tests/runTests.sh
+  - wget http://get.sensiolabs.org/security-checker.phar
+  - php security-checker.phar security:check composer.lock
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar

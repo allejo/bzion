@@ -20,6 +20,7 @@ assets/ranks/sprites/*.png
 coverage-report
 coverage.clover
 ocular.phar
+security-checker.phar
 
 # Documentation files #
 #######################
