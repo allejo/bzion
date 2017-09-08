@@ -537,8 +537,7 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
 
         // Remove all the members of a deleted team
         $this->updateProperty($this->members, 'members', 0);
-        $this->db->execute("UPDATE `players` SET `team` = NULL WHERE `team` = ?",
-            $this->id);
+        $this->db->execute('UPDATE players SET team = NULL WHERE team = ?', $this->id);
     }
 
     /**
