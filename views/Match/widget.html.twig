@@ -4,12 +4,12 @@
     <div class="row row--nowrap">
         <div class="col c-matchwidget__team__image">
             {% if isTeam %}
-                <a href="{{ team.url }}">
+                {% if team.active %}<a href="{{ team.url }}">{% endif %}
                     <img src="{{ team.avatar | imagine_filter('large_thumb') }}"
                          alt="{{ team.name }}'s Avatar"
                          title="{{ team.name }}'s Avatar"
                     >
-                </a>
+                {% if team.active %}</a>{% endif %}
             {% else %}
                 <img src="{{ asset(team.avatar) }}"
                      alt="{{ team.name }}'s Avatar"
