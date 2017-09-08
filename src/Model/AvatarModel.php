@@ -175,4 +175,15 @@ abstract class AvatarModel extends AliasModel implements NamedModel
 
         return "$hash.png";
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete()
+    {
+        parent::delete();
+
+        // Reset the avatar to an Identicon when this object is deleted
+        $this->resetAvatar();
+    }
 }
