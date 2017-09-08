@@ -46,6 +46,14 @@ class AdminController extends HTMLController
                 ->getModels($fast = true);
         }
 
+        // Permission checking
+        if (!$me->isValid()) {
+            throw new ForbiddenException("Please log in to view this page.");
+        }
+        if ($pages === null && $roles === null) {
+            throw new ForbiddenException("Contact a site administrator if you feel you should have access to this page.");
+        }
+
         return array(
             'pages' => $pages,
             'roles' => $roles
@@ -54,6 +62,7 @@ class AdminController extends HTMLController
 
     public function wipeAction(Player $me)
     {
+        $canViewThisPage = false;
         $wipeable = array('Ban', 'Map', 'Match', 'News', 'NewsCategory', 'Page', 'Server', 'Team');
         $models   = array();
 
@@ -62,9 +71,18 @@ class AdminController extends HTMLController
                 continue;
             }
 
+            $canViewThisPage = true;
             $models = array_merge($models, $type::getQueryBuilder()
                 ->where('status')->equals('deleted')
                 ->getModels());
+        }
+
+        // Permission checking
+        if (!$me->isValid()) {
+            throw new ForbiddenException("Please log in to view this page.");
+        }
+        if (!$canViewThisPage) {
+            throw new ForbiddenException("Contact a site administrator if you feel you should have access to this page.");
         }
 
         return array('models' => $models);
