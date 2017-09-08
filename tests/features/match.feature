@@ -138,4 +138,3 @@ Feature: Matches
     And I should see "jonas"
     And I should see "cliff"
     And I should see "lard"
-    But I should not see "→"
