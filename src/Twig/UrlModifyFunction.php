@@ -15,10 +15,15 @@ class UrlModifyFunction
         $attributes = \Service::getRequest()->attributes;
         $query = \Service::getRequest()->query;
 
-        return \Service::getGenerator()->generate(
-            $attributes->get('_route'),
-            $parameters + $attributes->get('_route_params') + $query->all()
-        );
+        $parameters = $parameters + $attributes->get('_route_params') + $query->all();
+
+        foreach ($parameters as $key => $value) {
+            if (empty($value)) {
+                unset($parameters[$key]);
+            }
+        }
+
+        return \Service::getGenerator()->generate($attributes->get('_route'), $parameters);
     }
 
     public static function get()
