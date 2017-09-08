@@ -15,7 +15,9 @@ class PlayerEloCalculations extends AbstractMigration
             'columns' => [
                 'team_a_players' => 'team_a_players',
                 'team_b_players' => 'team_b_players',
-                'timestamp' => 'timestamp',
+                'match_type' => 'match_type',
+                'timestamp'  => 'timestamp',
+                'status'     => 'status',
             ],
         ]);
 
@@ -24,6 +26,8 @@ class PlayerEloCalculations extends AbstractMigration
             ->where('team_a_players')->notEquals('')
             ->where('team_b_players')->isNotNull()
             ->where('team_b_players')->notEquals('')
+            ->where('match_type')->equals('official')
+            ->where('status')->equals('entered')
             ->sortBy('timestamp')
             ->limit(1000)
         ;
