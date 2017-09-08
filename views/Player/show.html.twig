@@ -270,7 +270,7 @@
                                     <section>
                                         {% set eloData = {
                                             'series': [
-                                                [1200] | merge(player.eloSeasonHistory | values('elo'))
+                                                player.eloSeasonHistory | values('elo')
                                             ],
                                             'meta': {
                                                 'series': [

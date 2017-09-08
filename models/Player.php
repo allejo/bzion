@@ -332,7 +332,13 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     public function invalidateMatchFromCache(Match $match)
     {
         $seasonKey = $this->buildSeasonKeyFromTimestamp($match->getTimestamp());
-        $seasonElo = &$this->eloSeasonHistory[$seasonKey];
+        $seasonElo = null;
+
+        // If we have an existing season history cached, save a reference to it for easy access. Don't create one if
+        // nothing is cached or else it'll cause for an empty cache to be created
+        if (isset($this->eloSeasonHistory[$seasonKey])) {
+            $seasonElo = &$this->eloSeasonHistory[$seasonKey];
+        }
 
         // Unset the currently cached Elo for a player so next time Player::getElo() is called, it'll pull the latest
         // available Elo
@@ -365,7 +371,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $seasonKey = $this->buildSeasonKey($season, $year);
 
         // This season's already been cached
-        if ($this->eloSeasonHistory !== null && array_key_exists($seasonKey, $this->eloSeasonHistory)) {
+        if (isset($this->eloSeasonHistory[$seasonKey])) {
             return $this->eloSeasonHistory[$seasonKey];
         }
 
@@ -384,6 +390,14 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
           ORDER BY
             match_id ASC
         ', [ $this->getId(), $season, $year ]);
+
+        array_unshift($this->eloSeasonHistory[$seasonKey], [
+            'elo' => 1200,
+            'match' => null,
+            'month' => Season::getCurrentSeasonRange($season)->getStartOfRange()->month,
+            'year' => $year,
+            'day' => 1
+        ]);
 
         return $this->eloSeasonHistory[$seasonKey];
     }
