@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/allejo/bzion.png?branch=master)](https://travis-ci.org/allejo/bzion)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/allejo/bzion/badges/quality-score.png?s=291afbdf9d3ff68b2e2f44e9d02533795bcbf107)](https://scrutinizer-ci.com/g/allejo/bzion/)
 [![Code Coverage](https://scrutinizer-ci.com/g/allejo/bzion/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/allejo/bzion/code-structure/master?elementType=class&orderField=test_coverage&order=asc&changesExpanded=0)
+[![Dependency Status](https://www.versioneye.com/user/projects/59b30b61368b08003d0e846d/badge.svg)](https://www.versioneye.com/user/projects/59b30b61368b08003d0e846d)
 
 BZiON is a modern league management system (LMS) written for BZFlag leagues to manage players, teams, matches, and tournaments.
 
