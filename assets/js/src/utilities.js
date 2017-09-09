@@ -72,5 +72,38 @@ module.exports = {
 
         var rows_txt = temp + "" + param + "=" + paramVal;
         return baseURL + "?" + newAdditionalURL + rows_txt;
+    },
+    //
+    // Courtesy of: https://stackoverflow.com/a/4893927/1239484
+    //
+    removeURLParameter: function (parameter, url) {
+        if (typeof url === 'undefined') {
+            url = window.location.href;
+        }
+
+        var urlParts = url.split('?');
+
+        if (urlParts.length >= 2) {
+            // Get first part, and remove from array
+            var urlBase = urlParts.shift();
+
+            // Join it back up
+            var queryString = urlParts.join('?');
+
+            var prefix = encodeURIComponent(parameter) + '=';
+            var parts = queryString.split(/[&;]/g);
+
+            // Reverse iteration as may be destructive
+            for (var i = parts.length; i-- > 0; ) {
+                // Idiom for string.startsWith
+                if (parts[i].lastIndexOf(prefix, 0) !== -1) {
+                    parts.splice(i, 1);
+                }
+            }
+
+            url = urlBase + '?' + parts.join('&');
+        }
+
+        return url;
     }
 };

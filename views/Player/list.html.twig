@@ -82,6 +82,14 @@
                         <p class="mb1">Group By</p>
 
                         <div class="c-pill-group">
+                            <a href="{{ url_modify({ 'groupBy': '' }) }}"
+                               class="c-pill-group__pill js-clear-group-by {% if not request.get('groupBy') %}u-hide{% endif %}"
+                               data-role="clear-group-by"
+                            >
+                                <i class="fa fa-close" aria-hidden="true"></i>
+                                Clear
+                            </a>
+
                             {% for grouping in ['activity', 'team', 'country'] %}
                                 {% if grouping != 'activity' or (grouping == 'activity' and request.get('showAll')) %}
                                     <a href="{{ url_modify({ 'groupBy': grouping }) }}"
@@ -99,9 +107,10 @@
                         <p class="mb1">Sort By</p>
 
                         <div class="c-pill-group">
+                            {% set defaultSort = 'callsign' %}
                             {% for sorting in ['activity', 'callsign'] %}
                                 <a href="{{ url_modify({ 'sortBy': sorting }) }}"
-                                   class="c-pill-group__pill js-sort-by {{ request.get('sortBy') == sorting ? 'active' : '' }}"
+                                   class="c-pill-group__pill js-sort-by {{ (request.get('sortBy') == sorting) or (not request.get('sortBy') and sorting == defaultSort) ? 'active' : '' }}"
                                    data-sort-by="{{ sorting }}"
                                 >
                                     {{ sorting | title }}
@@ -114,21 +123,18 @@
                         <p class="mb1">Order</p>
 
                         <div class="c-pill-group">
-                            <a href="{{ url_modify({ 'sortOrder': 'ASC' }) }}"
-                               class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'ASC' ? 'active' : '' }}"
-                               data-order-by="asc"
-                            >
-                                <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
-                                <span class="sr-only">Ascending</span>
-                            </a>
+                            {% set defaultOrder = 'ASC' %}
+                            {% set orderLiterals = ['Ascending', 'Descending'] %}
 
-                            <a href="{{ url_modify({ 'sortOrder': 'DESC' }) }}"
-                               class="c-pill-group__pill js-order-by {{ request.get('sortOrder') == 'DESC' ? 'active' : '' }}"
-                               data-order-by="desc"
-                            >
-                                <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
-                                <span class="sr-only">Descending</span>
-                            </a>
+                            {% for key, order in ['ASC', 'DESC'] %}
+                                <a href="{{ url_modify({ 'sortOrder': order }) }}"
+                                   class="c-pill-group__pill js-order-by {{ (request.get('sortOrder') == order) or (not request.get('sortOrder') and order == defaultOrder) ? 'active' : '' }}"
+                                   data-order-by="{{ order | lower }}"
+                                >
+                                    <i class="fa fa-sort-alpha-{{ order | lower }}" aria-hidden="true"></i>
+                                    <span class="sr-only">{{ orderLiterals[key] }}</span>
+                                </a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
