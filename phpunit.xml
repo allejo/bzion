@@ -4,8 +4,8 @@
          bootstrap="tests/bootstrap.php"
          colors="true">
   <testsuites>
-    <testsuite name="BzIon Test Suite">
-      <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">tests</directory>
+    <testsuite name="BZiON Test Suite">
+      <directory suffix="Test.php" phpVersion="5.6.0" phpVersionOperator=">=">tests</directory>
     </testsuite>
   </testsuites>
 
@@ -15,12 +15,8 @@
   </php>
 
   <filter>
-    <blacklist>
-      <directory suffix=".php">app/cache</directory>
-      <directory suffix=".php">src/Command</directory>
-      <directory suffix=".php">includes</directory>
-      <directory suffix=".php">tests</directory>
-      <directory suffix=".php">vendor</directory>
-    </blacklist>
+    <whitelist>
+        <directory suffix="Test.php">tests</directory>
+    </whitelist>
   </filter>
 </phpunit>

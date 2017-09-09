@@ -188,7 +188,7 @@ class MatchTest extends TestCase
 
     public function testExceptionThrownMixedHasNoRoster_TeamVsMixed()
     {
-        $this->setExpectedException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $player_c = $this->getNewPlayer();
         $this->team_a->addMember($player_c->getId());
@@ -208,7 +208,7 @@ class MatchTest extends TestCase
 
     public function testExceptionThrownMixedHasNoRoster_MixedVsTeam()
     {
-        $this->setExpectedException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $player_d = $this->getNewPlayer();
         $this->team_b->addMember($player_d->getId());
@@ -462,7 +462,7 @@ class MatchTest extends TestCase
 
     public function testEnterMatchWithColorTeamAndNoPlayerRoster()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $this->match = Match::enterMatch(
             $this->team_a->getId(),

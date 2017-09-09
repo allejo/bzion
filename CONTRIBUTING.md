@@ -35,3 +35,11 @@ We would love to hear your ideas and look forward to implementing the best of th
 ### Questions?
 
 All of the development discussions for this project occur on #sujevo on irc.freenode.net, feel free to stop by and talk with a developer. We love the company.
+
+## Developing
+
+These are notes targeted towards developers or contributors targeting more core related aspects of BZiON.
+
+### Updating Composer Dependencies
+
+The minimum PHP version that BZiON currently supports is **5.6**, therefore when running `composer update` it is necessary to run it with PHP 5.6. Should BZiON's minimum requirement change, updates to the lock file must be run with the lowest minimum version that BZiON targets.

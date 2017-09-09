@@ -5,18 +5,18 @@
     "license": "GPL-3.0",
 
     "require": {
-        "php"                        : ">=5.5.0",
+        "php"                        : ">=5.6",
         "cboden/ratchet"             : "0.2.*",
         "components/font-awesome"    : "^4.5",
         "components/jquery"          : "^2.2",
-        "doctrine/inflector"         : "~1.0",
+        "doctrine/annotations"       : "~1.4.0",
+        "doctrine/inflector"         : "~1.1.0",
         "erusev/parsedown"           : "~1.5",
         "ext-gd"                     : "*",
         "jms/serializer-bundle"      : "~0.13",
         "liip/imagine-bundle"        : "1.4.*",
         "nesbot/carbon"              : "~1.14",
         "nelmio/api-doc-bundle"      : "~2.7",
-        "ramsey/array_column"        : "~1.1",
         "robmorgan/phinx"            : "~0.8",
         "select2/select2"            : "dev-master",
         "sensio/framework-extra-bundle": "~3.0",
@@ -26,19 +26,19 @@
         "symfony/swiftmailer-bundle" : ">=2.3.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "~1.18",
-        "yzalis/identicon"           : "1.1.*@dev"
+        "yzalis/identicon"           : "~1.2.0"
     },
     "require-dev": {
-        "php": ">=5.5.0",
         "behat/behat": "~3.0",
         "behat/mink": "~1.6",
         "behat/mink-extension": "~2.0",
         "behat/mink-browserkit-driver": "~1.2",
         "behat/symfony2-extension": "dev-master",
-        "composer/composer": "dev-master",
+        "composer/composer": "~1.5",
         "jdorn/sql-formatter": "~1.2",
-        "phpunit/phpunit": "~4.6",
-        "sensio/distribution-bundle": "~3.0"
+        "phpunit/phpunit": "~5.7",
+        "sensio/distribution-bundle": "~3.0",
+        "sensiolabs/security-checker": "~4.1"
     },
 
     "scripts": {
@@ -109,5 +109,10 @@
     },
     "config": {
         "component-dir": "web/components"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.10-dev"
+        }
     }
 }

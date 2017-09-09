@@ -1,9 +1,11 @@
 <?php
 
+use Carbon\Carbon;
+
 /**
  * A class representing a timestamp
  */
-class TimeDate extends Carbon\Carbon
+class TimeDate extends Carbon
 {
     const DATE_SHORT = "Y-m-d";
     const DATE_MEDIUM = "F d";
@@ -14,14 +16,9 @@ class TimeDate extends Carbon\Carbon
     const MYSQL = "Y-m-d H:i:s";
 
     /**
-     * Get the time difference in a human readable format.
-     *
-     * @param \Carbon\Carbon|\TimeDate $other
-     * @param bool                     $absolute Removes time difference modifiers ago, after, etc
-     *
-     * @return string The time as a human readable string
+     * {@inheritdoc}
      */
-    public function diffForHumans(Carbon\Carbon $other = null, $absolute = false)
+    public function diffForHumans(Carbon $other = null, $absolute = false, $short = false)
     {
         if (self::diffInSeconds($other, true) < 4) {
             return "now";
