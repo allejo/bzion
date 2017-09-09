@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7cf3c72579f9279548329a7d49d25e5",
+    "content-hash": "004cc7a31da6150f5d3239d7aeb136a4",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -3416,16 +3416,16 @@
         },
         {
             "name": "behat/symfony2-extension",
-            "version": "dev-master",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Symfony2Extension.git",
-                "reference": "319b56cd6ddb87afaebf0648ef101ce138144275"
+                "reference": "cb9ff0ff2f1a901379616d95cc701601d139160c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/319b56cd6ddb87afaebf0648ef101ce138144275",
-                "reference": "319b56cd6ddb87afaebf0648ef101ce138144275",
+                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/cb9ff0ff2f1a901379616d95cc701601d139160c",
+                "reference": "cb9ff0ff2f1a901379616d95cc701601d139160c",
                 "shasum": ""
             },
             "require": {
@@ -3472,7 +3472,7 @@
                 "framework",
                 "symfony"
             ],
-            "time": "2017-06-21 18:29:14"
+            "time": "2016-01-13T17:06:48+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -5481,8 +5481,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "select2/select2": 20,
-        "behat/symfony2-extension": 20
+        "select2/select2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
