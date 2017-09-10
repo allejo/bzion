@@ -31,13 +31,15 @@
         {% endif %}
     {% endif %}
 
-    {% for i in begin..end if totalPages > 0 %}
-        {% if i == currentPage %}
-            <li class="c-pagination--current">{{ i }}</li>
-        {% else %}
-            <li><a href="{{ url_modify({ page: i }) }}">{{ i }}</a></li>
-        {% endif %}
-    {% endfor %}
+    {% if totalPages > 0 %}
+        {% for i in begin..end %}
+            {% if i == currentPage or (loop.last and currentPage > totalPages) %}
+                <li class="c-pagination--current">{{ i }}</li>
+            {% else %}
+                <li><a href="{{ url_modify({ page: i }) }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
     {% if showButtons %}
         <li class="{{ next ?: disabledCSS }}">

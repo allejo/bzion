@@ -13,7 +13,7 @@ class NewsController extends CRUDController
     {
         $qb = $this->getQueryBuilder();
 
-        $currentPage = $request->query->get('page', 1);
+        $currentPage = $this->getCurrentPage();
 
         $news = $qb->sortBy('created')->reverse()
             ->where('category')->is($category)

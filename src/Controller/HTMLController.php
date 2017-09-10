@@ -162,6 +162,18 @@ abstract class HTMLController extends Controller
     }
 
     /**
+     * Get the current pagination value
+     *
+     * @return int Always a positive value greater than 0
+     */
+    protected function getCurrentPage()
+    {
+        $page = intval(self::getRequest()->get('page', 1));
+
+        return (($page <= 0) ? 1 : $page);
+    }
+
+    /**
      * Get the session's flash bag
      * @return Symfony\Component\HttpFoundation\Session\Flash\FlashBag
      */

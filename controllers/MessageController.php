@@ -26,7 +26,7 @@ class MessageController extends JSONController
 
     protected function prepareTwig()
     {
-        $currentPage = $this->getRequest()->query->get('page', 1);
+        $currentPage = $this->getCurrentPage();
 
         $query = $this->getQueryBuilder('Conversation')
             ->forPlayer($this->getMe())
@@ -108,7 +108,7 @@ class MessageController extends JSONController
         $messages = $this->getQueryBuilder('AbstractMessage')
                   ->where('conversation')->is($conversation)
                   ->sortBy('time')->reverse()
-                  ->limit(10)->fromPage($request->query->get('page', 1))
+                  ->limit(10)->fromPage($this->getCurrentPage())
                   ->startAt($request->query->get('end'))
                   ->endAt($request->query->get('start'))
                   ->getModels();

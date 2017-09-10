@@ -22,7 +22,7 @@ class MatchController extends CRUDController
     {
         $qb = $this->getQueryBuilder();
 
-        $currentPage = $request->query->get('page', 1);
+        $currentPage = $this->getCurrentPage();
 
         if ($player) {
             $team = $player;

@@ -12,7 +12,7 @@ class BanController extends CRUDController
 
     public function listAction(Request $request)
     {
-        $currentPage = $request->query->get('page', 1);
+        $currentPage = $this->getCurrentPage();
 
         $qb = $this->getQueryBuilder()
             ->sortBy('updated')->reverse()

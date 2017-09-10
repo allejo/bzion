@@ -440,14 +440,22 @@ class QueryBuilder implements Countable
     }
 
     /**
-     * Only show results from a specific page
+     * Only show results from a specific page. This will
      *
      * @param  int|null $page The page number (or null to show all pages - counting starts from 0)
      * @return static
      */
     public function fromPage($page)
     {
-        $this->page = $page;
+        if ($page === null) {
+            $this->page = $page;
+            return $this;
+        }
+
+        $page = intval($page);
+        $page = ($page <= 0) ? 1 : $page;
+
+        $this->page = min($page, $this->countPages());
 
         return $this;
     }

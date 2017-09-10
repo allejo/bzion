@@ -10,7 +10,7 @@ class NotificationController extends HTMLController
 
         $query = $this->getQueryBuilder()
             ->where('receiver')->is($me)
-            ->limit(15)->fromPage($request->query->get('page', 1))
+            ->limit(15)->fromPage($this->getCurrentPage())
             ->sortBy('timestamp')->reverse();
 
         $notifications = $query->getModels($fast = true);

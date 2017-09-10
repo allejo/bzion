@@ -16,7 +16,7 @@ class VisitLogController extends HTMLController
         /** @var VisitQueryBuilder $qb */
         $qb = $this->getQueryBuilder();
 
-        $currentPage = $request->query->get('page', 1);
+        $currentPage = $this->getCurrentPage();
 
         if ($request->query->has('search')) {
             $qb->search($request->query->get('search'));
