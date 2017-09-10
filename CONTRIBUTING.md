@@ -43,3 +43,24 @@ These are notes targeted towards developers or contributors targeting more core 
 ### Updating Composer Dependencies
 
 The minimum PHP version that BZiON currently supports is **5.6**, therefore when running `composer update` it is necessary to run it with PHP 5.6. Should BZiON's minimum requirement change, updates to the lock file must be run with the lowest minimum version that BZiON targets.
+
+### Preparing a Release
+
+Before tagging a new release, here are few things that need to be done. Eventually this'll become a single command, but for now, go through the checklist.
+
+1. Check if Rank sprites have been modified. If so, rebuild them following the instructions at [/assets/ranks/README.md](https://github.com/allejo/bzion/blob/master/assets/ranks/README.md).
+2. Compile Sass and JavaScript assets. These files should **not** be committed during development since they'll change often. Developers are expected to always be able to compile the files themselves during development.
+
+   ```
+   node_modules/.bin/gulp dist
+   node_modules/.bin/encore production
+   ```
+3. Commit the modified files: CSS, JS, and the ranks sprite.
+
+### Branches
+
+This project follows a Git Flow-like scheme for branch management. Any branches where new features are being developed should be prepended with `feature/`; however that's the only practice that has been adopted.
+
+- **master** - This branch contains the most up to date code for the `0.10.x` pipeline. This branch is *usually* kept stable.
+- **0.9** - This branch has been retired and contains the latest development version of the `0.9.x` pipeline.
+- **0.1** - This branch contains legacy code for a very early attempt of BZiON. This branch is only around for historical purposes.
