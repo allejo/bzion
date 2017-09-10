@@ -107,11 +107,21 @@
                 {% if loop.last %}
                     </section> {# Closes .bb-last-reset #}
                 {% endif %}
+            {% else %}
+                <p class="text-center my3">
+                    {% if team %}
+                        There are no matches resulting in {{ matchType }} recorded for this team.
+                    {% else %}
+                        There are no matches recorded.
+                    {% endif %}
+                </p>
             {% endfor %}
 
-            <div>
-                {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
-            </div>
+            {% if totalPages > 0 %}
+                <div>
+                    {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+                </div>
+            {% endif %}
 
         </div> {# Closes div[data-name="Match Container"] #}
     </div> {# Closes .container #}

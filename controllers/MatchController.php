@@ -45,12 +45,13 @@ class MatchController extends CRUDController
             $match->getOriginalTimestamp()->setTimezone($me->getTimezone());
         }
 
-        return array(
-            "matches"     => $matches,
-            "team"        => $team,
-            "currentPage" => $currentPage,
-            "totalPages"  => $qb->countPages()
-        );
+        return [
+            'matchType'   => $type,
+            'matches'     => $matches,
+            'team'        => $team,
+            'currentPage' => $currentPage,
+            'totalPages'  => $qb->countPages()
+        ];
     }
 
     public function showAction(Match $match)
