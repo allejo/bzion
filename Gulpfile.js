@@ -1,7 +1,6 @@
 var gulp   = require('gulp');
 var pump   = require('pump');
 var util   = require('gulp-util');
-var uglify = require('gulp-uglify');
 
 
 ///
@@ -94,21 +93,13 @@ gulp.task('dev:watch:sassdocs', function () {
 // JS Functionality
 ///
 
-gulp.task('js:concat', function (cb) {
-    var concat = require('gulp-concat');
-
-    pump([
-        gulp.src('web/assets/js/partials/*.js'),
-        concat('utilities.js'),
-        gulp.dest('web/assets/js/')
-    ], cb);
-});
-
 gulp.task('js:hint', function (cb) {
     var jshint = require('gulp-jshint');
 
     pump([
         gulp.src([
+            'assets/js/src/*.js',
+            'assets/js/*.js',
             'Gulpfile.js',
             'web/assets/js/*.js',
             'web/assets/js/partials/*.js'
@@ -123,46 +114,6 @@ gulp.task('js:hint', function (cb) {
         jshint.reporter('jshint-stylish')
     ], cb);
 });
-
-gulp.task('js:modernizr', function (cb) {
-    var modernizr = require('gulp-modernizr');
-
-    pump([
-        gulp.src('web/assets/js/*.js'),
-        modernizr({
-            "crawl": true,
-            "customTests": [],
-            "tests": [
-                "canvas",
-                "canvastext",
-                "svg",
-                "cssanimations",
-                "csscalc",
-                "csstransforms",
-                "csstransitions",
-                "cssvhunit",
-                "inlinesvg"
-            ],
-            "options": [
-                "setClasses"
-            ]
-        }),
-        uglify(),
-        gulp.dest('web/assets/js/min/')
-    ], cb);
-});
-
-gulp.task('js:uglify', function (cb) {
-    pump([
-        gulp.src([
-            'web/assets/js/*.js',
-            '!web/assets/js/min/*.js'
-        ]),
-        uglify(),
-        gulp.dest('web/assets/js/min/')
-    ], cb);
-});
-
 
 ///
 // Sass Functionality
@@ -239,6 +190,6 @@ gulp.task('sass:test', function(cb) {
 ///
 
 gulp.task('dev', ['sass:dev', 'dev:watch']);
-gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:dist', 'js:concat', 'js:uglify', 'js:modernizr']);
+gulp.task('dist', ['assets:sprites', 'assets:responsive', 'sass:dist']);
 
 gulp.task('default', ['dev']);

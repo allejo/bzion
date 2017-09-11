@@ -5,21 +5,19 @@
     "url": "https://github.com/allejo/bzion.git"
   },
   "dependencies": {
+    "@symfony/webpack-encore": "^0.14.0",
     "chartist": "^0.11.0",
-    "crel": "^3.0.1",
+    "crel": "^3.1.0",
     "eyeglass": "^1.2.1",
     "eyeglass-sassy-data": "^0.1.2",
     "gulp": "^3.9.1",
     "gulp-combine-mq": "^0.4.0",
-    "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
-    "gulp-modernizr": "^1.0.0-alpha",
     "gulp-postcss": "^7.0.0",
-    "gulp-responsive": "^2.6.0",
+    "gulp-responsive": "^2.8.0",
     "gulp-sass": "^2.3.2",
-    "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "gulp.spritesmith": "^6.2.1",
+    "gulp.spritesmith": "^6.5.1",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "markdown": "^0.5.0",
@@ -32,17 +30,16 @@
     "tinysort": "^2.3.6"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.7.2",
     "gulp-jshint": "^2.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-mocha": "^4.3.1",
-    "gulp-sourcemaps": "^2.1.1",
-    "jshint": "^2.9.3",
+    "gulp-sourcemaps": "^2.6.1",
+    "jshint": "^2.9.5",
     "jshint-stylish": "^0.4.0",
-    "sass-true": "^3.0.0-beta.1",
+    "sass-true": "^3.0.0",
     "sassdoc": "^2.1.20",
-    "stylelint": "^7.11.1",
-    "stylelint-scss": "^1.4.4"
+    "stylelint": "^7.13.0",
+    "stylelint-scss": "^1.5.2"
   },
   "scripts": {
     "assets": "encore production && gulp sass:dist",

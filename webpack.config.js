@@ -1,5 +1,7 @@
 var Encore = require('@symfony/webpack-encore');
 
+var ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
+
 Encore
     // directory where all compiled assets will be stored
     .setOutputPath('web/build/')
@@ -16,31 +18,27 @@ Encore
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
 
+    // Modernizr configuration
+    .addPlugin(new ModernizrWebpackPlugin({
+        minify: true,
+        options: [
+            'setClasses'
+        ],
+        'feature-detects': [
+            'test/canvas',
+            'test/canvastext',
+            'test/svg',
+            'test/css/animations',
+            'test/css/calc',
+            'test/css/transforms',
+            'test/css/transitions',
+            'test/css/vhunit',
+            'test/svg/inline'
+        ]
+    }))
+
     .enableSourceMaps(!Encore.isProduction())
 ;
 
-var config = Encore.getWebpackConfig();
-
-var ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
-
-config.plugins.push(new ModernizrWebpackPlugin({
-    minify: true,
-    options: [
-        'setClasses'
-    ],
-    'feature-detects': [
-        'test/canvas',
-        'test/canvastext',
-        'test/svg',
-        'test/css/animations',
-        'test/css/calc',
-        'test/css/transforms',
-        'test/css/transitions',
-        'test/css/vhunit',
-        'test/svg/inline'
-    ]
-}));
-
-
 // export the final configuration
-module.exports = config;
+module.exports = Encore.getWebpackConfig();
