@@ -18,6 +18,7 @@ class TwigExtension extends \Twig_Extension
             EvaluateFilter::get(),
             ExtendHashFilter::get(),
             HumanDateFilter::get(),
+            NumberAbbreviation::get(),
             TruncateFilter::get(),
             MarkdownFilter::get(),
             CanonicalUrl::get(),
