@@ -25,6 +25,24 @@ class Map extends AvatarModel implements NamedModel
     protected $description;
 
     /**
+     * The number of a shots this map has
+     * @var int
+     */
+    protected $shot_count;
+
+    /**
+     * Whether or not this map has ricochet
+     * @var bool
+     */
+    protected $ricochet;
+
+    /**
+     * Whether or not this map has jumping
+     * @var bool
+     */
+    protected $jumping;
+
+    /**
      * The status of the map
      * @var string
      */
@@ -54,6 +72,9 @@ class Map extends AvatarModel implements NamedModel
         $this->description = $map['description'];
         $this->alias = $map['alias'];
         $this->avatar = $map['avatar'];
+        $this->shot_count = $map['shot_count'];
+        $this->ricochet = $map['ricochet'];
+        $this->jumping = $map['jumping'];
         $this->status = $map['status'];
     }
 
@@ -100,6 +121,36 @@ class Map extends AvatarModel implements NamedModel
     }
 
     /**
+     * Get the number of shots this map has
+     *
+     * @return int
+     */
+    public function getShotCount()
+    {
+        return $this->shot_count;
+    }
+
+    /**
+     * Get whether or not ricochet is enabled
+     *
+     * @return bool
+     */
+    public function isRicochetEnabled()
+    {
+        return $this->ricochet;
+    }
+
+    /**
+     * Get whether or not jumping is enabled
+     *
+     * @return bool
+     */
+    public function isJumpingEnabled()
+    {
+        return $this->jumping;
+    }
+
+    /**
      * Set the name of the map
      *
      * @param string $name The new name
@@ -119,6 +170,42 @@ class Map extends AvatarModel implements NamedModel
     public function setDescription($description)
     {
         return $this->updateProperty($this->description, 'description', $description);
+    }
+
+    /**
+     * Set the number of shots this map has
+     *
+     * @param int $shot_count
+     *
+     * @return self
+     */
+    public function setShotCount($shot_count)
+    {
+        return $this->updateProperty($this->shot_count, 'shot_count', $shot_count);
+    }
+
+    /**
+     * Set whether or not this map supports ricochet
+     *
+     * @param bool $ricochet
+     *
+     * @return self
+     */
+    public function setRicochetEnabled($ricochet)
+    {
+        return $this->updateProperty($this->ricochet, 'ricochet', $ricochet);
+    }
+
+    /**
+     * Set whether or not this map supports jumping
+     *
+     * @param bool $jumping
+     *
+     * @return self
+     */
+    public function setJumpingEnabled($jumping)
+    {
+        return $this->updateProperty($this->jumping, 'jumping', $jumping);
     }
 
     /**
