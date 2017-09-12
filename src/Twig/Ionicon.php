@@ -24,6 +24,7 @@ class Ionicon
             }
 
             $svgDoc->addAttribute('class', 'ionicon');
+            $svgDoc->addAttribute('aria-hidden', 'true');
             $height && $svgDoc->addAttribute('height', $height);
             $width  && $svgDoc->addAttribute('width', $width);
 
