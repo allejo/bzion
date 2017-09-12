@@ -52,7 +52,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      * Set the avatar of the object to be a specific file
      *
      * @param  File|null $file The avatar file
-     * @return self
+     * @return static
      */
     public function setAvatarFile($file)
     {
@@ -96,7 +96,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      * Change the avatar of the object
      *
      * @param  string $avatar The file name of the avatar
-     * @return self
+     * @return static
      */
     public function setAvatar($avatar)
     {
