@@ -9,4 +9,5 @@ $(function () {
     require('./src/player-list')();
     require('./src/pills')();
     require('./src/tables')();
+    require('./src/servers')();
 });

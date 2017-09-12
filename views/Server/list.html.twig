@@ -17,19 +17,20 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
-        <section class="o-row">
+    <div class="container">
+        <div class="row">
             {% for server in servers %}
-                <div class="c-server" data-id="{{ server.id }}">
-                    <div class="js-dimmable">
-                        {% include "Server/show.html.twig" %}
+                <div class="js-server col-md-6"
+                     data-id="{{ server.id }}"
+                     data-player-count="{{ server.numPlayers }}"
+                >
+                    <div class="c-server">
+                        <div class="js-dimmable">
+                            {% include "Server/show.html.twig" %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
-        </section>
-    </section>
-{% endblock %}
-
-{% block jsCustom %}
-    <script src="{{ asset('assets/js/servers.js') }}"></script>
+        </div>
+    </div>
 {% endblock %}
