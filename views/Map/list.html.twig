@@ -17,42 +17,89 @@
 {% endblock %}
 
 {% block content %}
-    {# TODO: Style this page #}
-    <section class="o-container">
-        {% for map in maps %}
-            <article class="o-section c-map-widget">
-                {% if map.avatar is not null %}
-                    <img class="c-map__icon" src="{{ map.avatar | imagine_filter('large_thumb') }}">
-                {% endif %}
+    <div class="container mbn3">
+        <div class="row">
+            {% for map in maps %}
+                {# @var map \Map #}
+                <div class="col-md-6 col-lg-4 mb3">
+                    <div class="c-card">
+                        {% if me.canEdit(map) or me.canDelete(map) %}
+                            <div class="c-card__editor">
+                                {% if me.canEdit(map) %}
+                                    <button title="Edit map">
+                                        {{ link_to(map, content='<span class="sr-only">Edit map</span>', icon='pencil', action='edit') }}
+                                    </button>
+                                {% endif %}
+                                {% if me.canDelete(map) %}
+                                    <button title="Delete map">
+                                        {{ link_to(map, content='<span class="sr-only">Delete map</span>', icon='trash-o', action='delete') }}
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% endif %}
 
-                <section class="c-map-widget__info">
-                    <article class="c-map-widget__info__header">
-                        <h1 class="c-map-widget__info__name">
-                            {{ map.name -}}
-                        </h1>
+                        <figure class="c-card__theater">
+                            <img alt="Bird's-eye view of {{ map.name }}"
+                                 src="{{ map.avatar | imagine_filter('landscape_thumb') }}" />
+                        </figure>
 
-                        <div class="c-map-widget__info__stats">
-                            {{ 'match'|plural(map.countMatches) }} played
-                        </div>
+                        <header class="c-card__header">
+                            <h2>{{ map.name }}</h2>
+                        </header>
 
-                        <article class="c-map-widget__info__meta">
-                            {% if me.canEdit(map) %}
-                                <span><i title="Alias" class="fa fa-wrench"></i> {{ map.alias }}</span>
-                                <span>{{ link_to(map, content='Edit', icon='pencil', action='edit') }}</span>
-                            {% endif %}
-                            {% if me.canDelete(map) %}
-                                <span>{{ link_to(map, content='Delete', icon='trash-o', action='delete') }}</span>
-                            {% endif %}
+                        <article class="c-card__body">
+                            <div class="s-markdown">{{ map.description | markdown }}</div>
                         </article>
-                    </article>
 
-                    <article class="c-map-widget__info__details s-markdown">
-                        {{ map.description|markdown }}
-                    </article>
-                </section>
-
-
-            </article>
-        {% endfor %}
-    </section>
+                        <footer class="c-card__footer">
+                            <ul class="is-horizontal mb0 text-right-md">
+                                <li class="mr2">
+                                    {% set matchCount = map.countMatches %}
+                                    <i class="fa fa-trophy" aria-hidden="true" title="Matches played"></i>
+                                    <small title="{{ matchCount | number_format }} matches played">
+                                        {{ matchCount | number_abbr }}
+                                    </small>
+                                </li>
+                                {% if map.shotCount %}
+                                    <li class="mr2">
+                                        <small>
+                                            <span class="sr-only">Maximum shots per player: </span>
+                                            <span title="Maximum shots per player">
+                                                <i class="fa fa-crosshairs" aria-hidden="true"></i>
+                                                {{ map.shotCount }}
+                                            </span>
+                                        </small>
+                                    </li>
+                                {% endif %}
+                                {% if map.jumpingEnabled is not null %}
+                                    {% set status = map.jumpingEnabled ? 'enabled' : 'disabled' %}
+                                    <li class="mr2">
+                                        <small>
+                                            <span class="sr-only">Jumping is {{ status }} on this map</span>
+                                            <span title="Jumping is {{ status }} on this map">
+                                                {{ ionicon('jumping') }}
+                                                {{ map.jumpingEnabled ? 'Y' : 'N' }}
+                                            </span>
+                                        </small>
+                                    </li>
+                                {% endif %}
+                                {% if map.ricochetEnabled is not null %}
+                                    {% set status = map.jumpingEnabled ? 'enabled' : 'disabled' %}
+                                    <li>
+                                        <small>
+                                            <span class="sr-only">Ricochet is {{ status }} on this map</span>
+                                            <span class="Ricochet is {{ status }} on this map">
+                                                {{ ionicon('ricochet') }}
+                                                {{ map.ricochetEnabled ? 'Y' : 'N' }}
+                                            </span>
+                                        </small>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </footer>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

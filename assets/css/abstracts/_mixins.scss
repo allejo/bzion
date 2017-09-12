@@ -23,3 +23,13 @@
     right: $right;
     top: $top;
 }
+
+@mixin padding-y($padding) {
+    padding-bottom: $padding;
+    padding-top: $padding;
+}
+
+@mixin padding-x($padding) {
+    padding-left: $padding;
+    padding-top: $padding;
+}

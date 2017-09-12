@@ -31,7 +31,7 @@ class LinkToFunction
         if ($content === '' || $content === null) {
             $content = $this->getContent($model, $icon, $forceText);
         } elseif ($icon) {
-            $content = "<i class=\"fa fa-$icon\"></i> " . $content;
+            $content = "<i class=\"fa fa-$icon\" aria-hidden=\"true\"></i> " . $content;
         }
 
         if ($this->isLinkable($model, $linkAll, $context)) {
@@ -61,7 +61,7 @@ class LinkToFunction
         $content = "";
 
         if ($icon) {
-            $content .= "<i class=\"fa fa-$icon\"></i>";
+            $content .= "<i class=\"fa fa-$icon\" aria-hidden=\"true\"></i>";
 
             if ($forceText) {
                 $content .= " ";

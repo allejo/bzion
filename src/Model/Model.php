@@ -126,7 +126,8 @@ abstract class Model extends CachedModel
      * @param  string $dbColumn The name of the database column to update
      * @param  mixed  $value    The value to insert
      * @param  string $type     The mysqli type of the value (s, i, d, b)
-     * @return self   Returns the model itself to allow method chaining
+     *
+     * @return static   Returns the model itself to allow method chaining
      */
     protected function updateProperty(&$property, $dbColumn, $value, $type = 'i')
     {

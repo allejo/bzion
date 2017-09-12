@@ -1,0 +1,36 @@
+/// Add styling to the last row of a grid regardless of the number of columns
+///
+/// @access  public
+/// @content
+///
+/// @link    https://stackoverflow.com/a/12693500/1239484
+///
+/// @param   {integer} - The number of columns that exist in the grid
+/// @param   {string}  - The target element, whether it be an HTML element or a class. Classes should be passed
+///                      as a quote **including** the period.
+
+@mixin last-grid-row($columns, $classOrElement) {
+    #{$classOrElement}:nth-child(#{$columns}n+1):nth-last-child(-n+#{$columns}),
+    #{$classOrElement}:nth-child(#{$columns}n+1):nth-last-child(-n+#{$columns}) ~ #{$classOrElement} {
+        @content;
+    }
+}
+
+/// Apply the specified CSS to the elements based on the number of siblings the element has.
+///
+/// @access  public
+/// @content
+///
+/// @link    http://stackoverflow.com/a/12198561/1239484
+///
+/// @param   {integer | string} - An exact number of siblings the target element must have or you may pass "odd" or
+///                               "even" values
+/// @param   {string}           - The target element, whether it be an HTML element or a class. Classes should be passed
+///                               as a quote **including** the period.
+
+@mixin siblings-count($count, $classOrElement: li) {
+    #{$classOrElement}:first-child:nth-last-child(#{$count}),
+    #{$classOrElement}:first-child:nth-last-child(#{$count}) ~ #{$classOrElement} {
+        @content;
+    }
+}
