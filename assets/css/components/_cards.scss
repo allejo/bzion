@@ -30,7 +30,14 @@
 }
 
 .c-card__theater {
+    height: 200px;
+    max-height: 200px;
     margin-bottom: 0;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+    }
 }
 
 .c-card__header {
@@ -45,7 +52,7 @@
 }
 
 .c-card__body {
-    height: 100%;
+    flex-grow: 1;
     padding: 15px;
 }
 
