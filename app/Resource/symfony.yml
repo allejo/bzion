@@ -56,6 +56,11 @@ liip_imagine:
             filters:
                 background: ~
                 thumbnail: { size: [600, 600], mode: inset }
+        landscape_thumb:
+            png_compression_level: 9
+            filters:
+                background: ~
+                thumbnail: { size: [600, 338], mode: outbound }
         huge_thumb:
             png_compression_level: 9
             filters:
