@@ -23,22 +23,20 @@
                 {# @var map \Map #}
                 <div class="col-md-6 col-lg-4 mb3">
                     <div class="c-card">
-                        <div class="c-card__editor">
-                            {% if me.canEdit(map) %}
-                                <span class="Map configuration name">
-                                    <i class="fa fa-wrench" aria-hidden="false"></i>
-                                    {{ map.alias }}
-                                </span>
-                                <button>
-                                    <span>{{ link_to(map, content='Edit', icon='pencil', action='edit') }}</span>
-                                </button>
-                            {% endif %}
-                            {% if me.canDelete(map) %}
-                                <button>
-                                    <span>{{ link_to(map, content='Delete', icon='trash-o', action='delete') }}</span>
-                                </button>
-                            {% endif %}
-                        </div>
+                        {% if me.canEdit(map) or me.canDelete(map) %}
+                            <div class="c-card__editor">
+                                {% if me.canEdit(map) %}
+                                    <button>
+                                        {{ link_to(map, content='<span class="sr-only">Edit map</span>', icon='pencil', action='edit') }}
+                                    </button>
+                                {% endif %}
+                                {% if me.canDelete(map) %}
+                                    <button>
+                                        {{ link_to(map, content='<span class="sr-only">Delete map</span>', icon='trash-o', action='delete') }}
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% endif %}
 
                         <figure class="c-card__theater">
                             <img alt="Bird's-eye view of {{ map.name }}"

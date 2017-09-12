@@ -7,10 +7,26 @@
     height: 100%;
     overflow: hidden;
     position: relative;
+
+    &:hover {
+        .c-card__editor {
+            display: block;
+        }
+    }
 }
 
 .c-card__editor {
+    @include theme-rule(background-color, 'navigation.background');
+    @include theme-rule(border-bottom-left-radius, 'border.radius');
     @include position(absolute, 0, 0);
+
+    display: none;
+    font-size: 120%;
+    padding: 5px;
+
+    a {
+        @include theme-rule(color, 'navigation.links');
+    }
 }
 
 .c-card__theater {
