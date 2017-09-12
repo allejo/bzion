@@ -1,35 +1,43 @@
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section c-form__section--sidebar">
-        <article class="o-col--main c-form__section__main">
-            {{ form_row(form.name,        { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.alias,       { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.description, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
-        </article>
+{% from 'avatar-editor.html.twig' import avatar_editor %}
+{% from 'md-editor.html.twig' import md_editor %}
 
-        <aside class="o-col--aside c-avatar-manager c-form__section__aside">
-            <div class="c-avatar-manager__preview">
-                {# Only show an avatar if we're editing an existing team #}
-                {% if avatar is not null %}
-                    <img src="{{ avatar | imagine_filter('huge_thumb') }}" />
-                {% endif %}
+<div class="container">
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-                {# Only show the option to delete an avatar if we're editing an existing team #}
-                {% if form.delete_image is not null %}
-                    <div class="c-avatar-manager__preview__delete">
-                        {{ form_row(form.delete_image, { 'attr': { 'class': 'c-button--no-hover' }, 'icon': 'trash-o' }) }}
+        <section class="row">
+            <aside class="col-md-3">
+                {{ avatar_editor(avatar, form.avatar, form.delete_avatar) }}
+            </aside>
+
+            <article class="col-md-9">
+                {{ form_row(form.name, { 'container_attr': { 'class': 'mb3' } }) }}
+                {{ form_row(form.alias, { 'container_attr': { 'class': 'mb3' } }) }}
+
+                <div class="mb3">
+                    {{ form_label(form.description) }}
+                    {{ form_errors(form.description) }}
+                    {{ md_editor(form.description) }}
+                </div>
+
+                <section class="row">
+                    <div class="col-md-3">
+                        {{ form_row(form.shot_count, { 'container_attr': { 'class': 'mb3' } }) }}
                     </div>
-                {% endif %}
-            </div>
 
-            <div class="c-avatar-manager__uploader">
-                {{ form_row(form.avatar, { 'label': 'Upload new Image' }) }}
-            </div>
-        </aside>
-    </section>
+                    <div class="col-md-3 text-center-md">
+                        {{ form_row(form.jumping, { 'container_attr': { 'class': 'mb3' } }) }}
+                    </div>
 
+                    <div class="col-md-3 text-center-md">
+                        {{ form_row(form.ricochet, { 'container_attr': { 'class': 'mb3' } }) }}
+                    </div>
+                </section>
 
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+                <div>
+                    {{ form_rest(form) }}
+                </div>
+            </article>
+        </section>
+    {{ form_end(form) }}
+</div>

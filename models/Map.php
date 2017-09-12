@@ -137,7 +137,7 @@ class Map extends AvatarModel implements NamedModel
      */
     public function isRicochetEnabled()
     {
-        return $this->ricochet;
+        return (bool)$this->ricochet;
     }
 
     /**
@@ -147,7 +147,7 @@ class Map extends AvatarModel implements NamedModel
      */
     public function isJumpingEnabled()
     {
-        return $this->jumping;
+        return (bool)$this->jumping;
     }
 
     /**

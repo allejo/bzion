@@ -11,6 +11,7 @@ use BZIon\Form\Constraint\UniqueAlias;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
@@ -72,10 +73,10 @@ class MapFormCreator extends ModelFormCreator
 
         if ($this->editing && $this->editing->getAvatar() !== null) {
             // We are editing the map, not creating it
-            $builder->add('delete_image', 'submit');
+            $builder->add('delete_avatar', SubmitType::class);
         }
 
-        return $builder->add('submit', 'submit');
+        return $builder->add('submit', SubmitType::class);
     }
 
     /**
