@@ -134,6 +134,16 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     }
 
     /**
+     * @Given I have a server with address :address
+     * @Given there is a server with address :address
+     */
+    public function iHaveAServer($address)
+    {
+        list($domain, $port) = explode(':', $address);
+        return Server::addServer('Localhost', $domain, $port, 1, $this->getUserId());
+    }
+
+    /**
      * @Then I should see :arg1 in the title
      */
     public function iShouldSeeInTheTitle($arg1)

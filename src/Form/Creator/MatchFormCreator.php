@@ -164,6 +164,9 @@ class MatchFormCreator extends ModelFormCreator
 
         $official = ($form->get('type')->getData() === \Match::OFFICIAL);
 
+        /** @var \Server $server */
+        $server = $form->get('server')->getData();
+
         $match = \Match::enterMatch(
             $official ? $firstId : null,
             $official ? $secondId : null,
@@ -174,7 +177,7 @@ class MatchFormCreator extends ModelFormCreator
             $form->get('time')->getData(),
             $this->getPlayerList($firstTeam),
             $this->getPlayerList($secondTeam),
-            $form->get('server_address')->getData(),
+            $server->getAddress(),
             null,
             $form->get('map')->getData()->getId(),
             $form->get('type')->getData(),
@@ -182,8 +185,9 @@ class MatchFormCreator extends ModelFormCreator
             $b_color
         );
 
-        $match
-            ->setServer($form->get('server')->getData()->getId());
+        if ($server->isValid()) {
+            $match->setServer($server->getId());
+        }
 
         return $match;
     }
