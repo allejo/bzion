@@ -476,6 +476,34 @@ class LeagueOverseerHookTest extends TestCase
         $this->assertContains('Holy sanity check, Batman!', $this->client->getResponse()->getContent());
     }
 
+    public function testServerAddressSetForNewMatch()
+    {
+        $server = Server::addServer('Localhost', 'localhost', '5154', 1, $this->player_a->getId());
+
+        $this->assertEquals('localhost:5154', $server->getAddress());
+
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'matchType' => 'fm',
+            'teamOneWins' => 1,
+            'teamTwoWins' => 0,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
+        ]));
+
+        $query = Match::getQueryBuilder()
+            ->limit(1)
+            ->reverse()
+            ->getModels(true)
+        ;
+
+        /** @var Match $lastMatch */
+        $lastMatch = $query[0];
+
+        $this->assertEquals($server->getId(), $lastMatch->getServer()->getId());
+
+        $server->wipe();
+    }
+
     /**
      * Get the default POST request sent to this API endpoint.
      *
