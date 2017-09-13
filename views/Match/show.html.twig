@@ -56,11 +56,13 @@
     <div class="mb-last-reset">
         {% for player in match.players(team) %}
             {% set elo_diff -%}
-                <small title="Elo change for {{ player.username }}">
-                    {{- match.playerEloBefore(player) }}
-                    &rarr;
-                    {{ match.playerEloAfter(player) -}}
-                </small>
+                {% if match.official %}
+                    <small title="Elo change for {{ player.username }}">
+                        {{- match.playerEloBefore(player) }}
+                        &rarr;
+                        {{ match.playerEloAfter(player) -}}
+                    </small>
+                {% endif %}
             {%- endset %}
 
             <div class="mb2">
