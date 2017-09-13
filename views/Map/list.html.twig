@@ -54,11 +54,8 @@
                         <footer class="c-card__footer">
                             <ul class="is-horizontal mb0 text-right-md">
                                 <li class="mr2">
-                                    {% set matchCount = map.countMatches %}
                                     <i class="fa fa-trophy" aria-hidden="true" title="Matches played"></i>
-                                    <small title="{{ matchCount | number_format }} matches played">
-                                        {{ matchCount | number_abbr }}
-                                    </small>
+                                    {{ map.countMatches | number_abbr(noun='match', content='played') }}
                                 </li>
                                 {% if map.shotCount %}
                                     <li class="mr2">

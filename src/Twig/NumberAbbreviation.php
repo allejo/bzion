@@ -4,7 +4,7 @@ namespace BZIon\Twig;
 
 class NumberAbbreviation
 {
-    public function __invoke($number, $precision = 1)
+    public function __invoke($number, $precision = 1, $noun = null, $content = null)
     {
         if ($number < 1000) {
             return $number;
@@ -29,11 +29,24 @@ class NumberAbbreviation
         }
 
         // We found our match, or there were no matches.
-        return number_format($number / $divisor, $precision) . $abbr;
+        $value = number_format($number / $divisor, $precision) . $abbr;
+
+        // English setup
+        $nounUsed = '';
+        if ($noun !== null) {
+            $plural = new PluralFilter();
+            $nounUsed = $plural($noun);
+        }
+
+        $title = trim(implode(' ', [number_format($number), $nounUsed, $content]));
+
+        return "<span title='{$title}'>{$value}</span>";
     }
 
     public static function get()
     {
-        return new \Twig_SimpleFilter('number_abbr', new self());
+        return new \Twig_SimpleFilter('number_abbr', new self(), [
+            'is_safe' => ['html']
+        ]);
     }
 }
