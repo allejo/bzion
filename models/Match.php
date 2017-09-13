@@ -769,20 +769,6 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
-     * Set the server address of the server where this match took place
-     *
-     * @param  string|null $server The server hostname
-     * @param  int|null    $port   The server port
-     * @return self
-     */
-    public function setServerAddress($server = null)
-    {
-        $this->updateProperty($this->server_address, 'server', $server);
-
-        return $this;
-    }
-
-    /**
      * Get the name of the replay file for this specific map
      * @param  int    $length The length of the replay file name; it will be truncated
      * @return string Returns null if there was no replay file name recorded
