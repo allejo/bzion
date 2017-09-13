@@ -47,6 +47,8 @@ class NewsFormCreator extends ModelFormCreator
 
     /**
      * {@inheritdoc}
+     *
+     * @param \News $article
      */
     public function fill($form, $article)
     {
@@ -58,6 +60,8 @@ class NewsFormCreator extends ModelFormCreator
 
     /**
      * {@inheritdoc}
+     *
+     * @param \News $article
      */
     public function update($form, $article)
     {
