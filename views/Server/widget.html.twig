@@ -1,0 +1,63 @@
+{% macro widget(server) %}
+    {% set status = (server.online) ? "online" : "offline" %}
+
+    <article class="c-card">
+        {% if me.canEdit(server) or me.canDelete(server) %}
+            <div class="c-card__editor">
+                {% if me.canEdit(server) %}
+                    <button title="Refresh server data">
+                        <a class="js-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                            <span class="sr-only">Refresh server data</span>
+                        </a>
+                    </button>
+
+                    <button title="Edit server">
+                        {{ link_to(server, content='<span class="sr-only">Edit server</span>', icon='pencil', action='edit') }}
+                    </button>
+                {% endif %}
+
+                {% if me.canDelete(server) %}
+                    <button title="Delete server">
+                        {{ link_to(server, content='<span class="sr-only">Delete server</span>', icon='times', action='delete') }}
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <header class="c-card__header">
+            <div class="d-flex">
+                <div class="d-flex align-self-center mrn1 pr2">
+                    {%- if server.numPlayers > 0 -%}
+                        {% set message %}{{ "player is" | plural(server.numPlayers, "players are") }} playing on the server{% endset %}
+
+                        <span class="c-server__status c-server__status--{{ status }}"
+                              title="{{ message }}"
+                        >
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="sr-only">{{ message }}</span>
+                        </span>
+                    {%- else -%}
+                        <span class="c-server__status c-server__status--{{ status }} t2"
+                              title="Server is currently {{ status }}">&bull;</span>
+                    {%- endif -%}
+                </div>
+
+                <div>
+                    <h2 class="t1">{{ server.name }} {{ server.country.flagLiteral | raw }}</h2>
+                    <small>{{ server.address }}</small>
+                </div>
+            </div>
+        </header>
+
+        {% if me.valid %}
+            <section class="c-card__body">
+                <p class="mb0">Player count: <span class="js-server__player-count">{{ server.numPlayers }}</span></p>
+            </section>
+
+            <footer class="c-card__footer">
+                <small>Updated <span class="js-server__last-update">{{ server.lastUpdate | humanTime }}</span></small>
+            </footer>
+        {% endif %}
+    </article>
+{% endmacro %}

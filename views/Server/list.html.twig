@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% from 'Server/widget.html.twig' import widget as server_widget %}
+
 {% set pageButtons = [
     {
         'color': 'blue',
@@ -22,10 +24,11 @@
             {% for server in servers %}
                 <div class="js-server col-md-6 mb3"
                      data-id="{{ server.id }}"
-                     data-player-count="{{ server.numPlayers }}"
+                     data-token="{{ csrf_token('server_token') }}"
+                     {% if me.valid %}data-player-count="{{ server.numPlayers }}" {% endif %}
                 >
                     <div class="js-dimmable">
-                        {% include "Server/show.html.twig" %}
+                        {{ server_widget(server) }}
                     </div>
                 </div>
             {% endfor %}

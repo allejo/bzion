@@ -11,8 +11,19 @@ var $servers = $('.js-server');
  */
 function Server(object) {
     this.$object = $(object);
-    this.url = baseURLNoHost + '/servers/' + this.$object.data('id');
+    this.url = baseURLNoHost + '/servers/status/' + this.$object.data('id');
+    this.token = this.$object.data('token');
 
+    this.updateCard = function (data) {
+        this.$object.find('.js-server__last-update').html(data['last_update']);
+        this.$object.find('.js-server__player-count').html(data['player_count']);
+        this.$object.data('player-count', data['player_count']);
+    };
+
+    /**
+     * Enable the spinner element for the server card
+     * @returns {Server}
+     */
     this.startSpinners = function () {
         this.$object
             .find('.js-dimmable')
@@ -23,6 +34,10 @@ function Server(object) {
         return this;
     };
 
+    /**
+     * Hide the spinner element
+     * @returns {Server}
+     */
     this.stopSpinners = function () {
         this.$object
             .find('.js-dimmable')
@@ -33,12 +48,20 @@ function Server(object) {
         return this;
     };
 
+    /**
+     * Update the server card with information we're pulling via AJAX
+     */
     this.updateServer = function () {
         var server = this;
 
         this.startSpinners();
-        this.$object
-            .load(this.url, function () {
+
+        jQuery
+            .post(this.url, {
+                token: this.token
+            })
+            .done(function(data) {
+                server.updateCard(data);
                 server.stopSpinners();
             })
         ;
@@ -61,7 +84,7 @@ function initialize() {
 }
 
 function loadAllServers() {
-    $servers.each(function (event) {
+    $servers.each(function () {
         new Server(this).updateServer();
     });
 }
