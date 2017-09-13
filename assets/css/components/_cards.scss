@@ -1,5 +1,7 @@
 .c-card {
-    @include theme-rule(border, 'border.default');
+    @include theme-rule(border-top, 'border.default');
+    @include theme-rule(border-right, 'border.default');
+    @include theme-rule(border-left, 'border.default');
     @include theme-rule(border-radius, 'border.radius');
 
     display: flex;
@@ -53,12 +55,14 @@
 }
 
 .c-card__body {
+    @include theme-rule(border-bottom, 'border.default');
+
     flex-grow: 1;
     padding: 15px;
 }
 
 .c-card__footer {
-    @include theme-rule(border-top, 'border.default');
+    @include theme-rule(border-bottom, 'border.default');
 
     align-self: flex-end;
     padding: 15px;
