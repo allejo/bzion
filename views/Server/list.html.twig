@@ -17,17 +17,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container mbn3">
         <div class="row">
             {% for server in servers %}
-                <div class="js-server col-md-6"
+                <div class="js-server col-md-6 mb3"
                      data-id="{{ server.id }}"
                      data-player-count="{{ server.numPlayers }}"
                 >
-                    <div class="c-server">
-                        <div class="js-dimmable">
-                            {% include "Server/show.html.twig" %}
-                        </div>
+                    <div class="js-dimmable">
+                        {% include "Server/show.html.twig" %}
                     </div>
                 </div>
             {% endfor %}

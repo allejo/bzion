@@ -22,7 +22,7 @@
             {% for map in maps %}
                 {# @var map \Map #}
                 <div class="col-md-6 col-lg-4 mb3">
-                    <div class="c-card">
+                    <article class="c-card">
                         {% if me.canEdit(map) or me.canDelete(map) %}
                             <div class="c-card__editor">
                                 {% if me.canEdit(map) %}
@@ -47,9 +47,9 @@
                             <h2>{{ map.name }}</h2>
                         </header>
 
-                        <article class="c-card__body">
+                        <section class="c-card__body">
                             <div class="s-markdown">{{ map.description | markdown }}</div>
-                        </article>
+                        </section>
 
                         <footer class="c-card__footer">
                             <ul class="is-horizontal mb0 text-right-md">
@@ -97,7 +97,7 @@
                                 {% endif %}
                             </ul>
                         </footer>
-                    </div>
+                    </article>
                 </div>
             {% endfor %}
         </div>

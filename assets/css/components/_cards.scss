@@ -30,6 +30,8 @@
 }
 
 .c-card__theater {
+    @include theme-rule(border-bottom, 'border.default');
+
     height: 200px;
     max-height: 200px;
     margin-bottom: 0;
@@ -42,7 +44,6 @@
 
 .c-card__header {
     @include theme-rule(border-bottom, 'border.default');
-    @include theme-rule(border-top, 'border.default');
 
     padding: 10px 15px;
 
