@@ -25,7 +25,7 @@ class MatchServerRelationship extends KernelReadyMigration
 
         /** @var Server $server */
         foreach ($servers as $server) {
-            $address[sprintf('%s:%s', $server->getDomain(), $server->getPort())] = $server->getId();
+            $address[$server->getAddress()] = $server->getId();
         }
 
         // Get all of the matches we can work with

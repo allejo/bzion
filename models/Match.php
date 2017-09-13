@@ -756,6 +756,11 @@ class Match extends UrlModel implements NamedModel
 
     /**
      * Get the server address of the server where this match took place
+     *
+     * @deprecated 0.10.0 Use Match::getServer() instead. Using this function is reserved for migrations/legacy support.
+     *
+     * @see 20170912201127_match_server_relationship.php
+     *
      * @return string|null Returns null if there was no server address recorded
      */
     public function getServerAddress()
