@@ -8,7 +8,7 @@ class DropApiKeysOnPlayerWipe extends AbstractMigration
     /**
      * {@inheritdoc}
      */
-    public function change()
+    public function up()
     {
         $apiKeys = $this->table('api_keys');
         $apiKeys

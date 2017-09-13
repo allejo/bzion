@@ -15,7 +15,7 @@ class MatchServerRelationship extends KernelReadyMigration
                 'null'    => true,
                 'comment' => 'The server where this match took place'
             ])
-            ->addForeignKey('server_id', 'servers', 'id', ['delete' => 'CASCADE'])
+            ->addForeignKey('server_id', 'servers', 'id', ['delete' => 'SET NULL'])
             ->save()
         ;
 
