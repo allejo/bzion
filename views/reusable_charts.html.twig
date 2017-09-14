@@ -1,0 +1,37 @@
+{#
+    This macro will generate a JavaScript graph of match activity per month along with an accessible table. To use this
+    macro, the data must be in the format that MatchQueryBuilder::getSummary() returns.
+#}
+{% macro match_summary(matchData, tableID, tableDescription) %}
+    {% from 'accessibility_charts.html.twig' import accessible_line %}
+
+    {% set matchData = {
+        'series': [
+            matchData | values
+        ],
+        'labels': matchData | keys | date_array_formatter("M 'y"),
+        'meta': {
+            'series': [
+                'Number of matches per month'
+            ],
+            'labels': 'Month'
+        }
+    } %}
+
+    <div class="js-only">
+        <div id="player-match-activity"
+             class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
+             data-graph="line"
+             data-chart="{{ matchData | json_encode }}"
+        ></div>
+    </div>
+
+    {{ accessible_line(
+        tableDescription,
+        matchData,
+        {
+            'id': tableID,
+            'class': ['c-table', 'c-table--activity']
+        }
+    ) }}
+{% endmacro %}

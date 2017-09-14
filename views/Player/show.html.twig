@@ -1,4 +1,6 @@
 {% extends 'layout.html.twig' %}
+
+{% from 'reusable_charts.html.twig' import match_summary %}
 {% from 'accessibility_charts.html.twig' import accessible_pie, accessible_line, show_table_button %}
 
 {% set pageWideCSS = 's-player__show' %}
@@ -221,34 +223,10 @@
                                         {{ show_table_button('match-activity', 'Show the table equivalent of match counts per month') }}
                                     </h4>
                                     <section>
-                                        {% set matchData = {
-                                            'series': [
-                                                player.matchSummary | values
-                                            ],
-                                            'labels': player.matchSummary | keys | date_array_formatter("M 'y"),
-                                            'meta': {
-                                                'series': [
-                                                    'Number of matches per month'
-                                                ],
-                                                'labels': 'Month'
-                                            }
-                                        } %}
-
-                                        <div class="js-only">
-                                            <div id="player-match-activity"
-                                                 class="ct-chart ct-minor-seventh c-chart c-chart--line mb2"
-                                                 data-graph="line"
-                                                 data-chart="{{ matchData | json_encode }}"
-                                            ></div>
-                                        </div>
-
-                                        {{ accessible_line(
-                                            "A breakdown of the number of matches per month for " ~ player.username ~ " in the past year",
-                                            matchData,
-                                            {
-                                                'id': 'match-activity',
-                                                'class': ['c-table', 'c-table--activity']
-                                            }
+                                        {{ match_summary(
+                                            player.matchSummary,
+                                            'match-activity',
+                                            'A breakdown of the number of matches per month for ' ~ player.username ~ ' in the past year'
                                         ) }}
                                     </section>
                                 </div>
