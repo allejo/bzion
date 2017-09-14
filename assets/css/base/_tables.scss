@@ -1,0 +1,63 @@
+table {
+    max-width: 100%;
+    width: 100%;
+}
+
+caption {
+    @include theme-rule(color, 'table.caption.color');
+    @include theme-rule(padding-bottom, 'table.padding');
+    @include theme-rule(padding-top, 'table.padding');
+
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+    text-align: left;
+}
+
+td {
+    &[scope="row"] {
+        font-weight: bold;
+    }
+}
+
+thead,
+tbody,
+tfoot {
+    th,
+    td {
+        @include theme-rule(border-top, 'table.border');
+        @include theme-rule(padding, 'table.padding');
+
+        vertical-align: top;
+    }
+}
+
+thead th {
+    @include theme-rule(border-bottom, 'table.border');
+
+    border-bottom-width: 2px !important;
+    vertical-align: bottom;
+}
+
+caption + thead,
+colgroup + thead,
+thead:first-child {
+    tr:first-child {
+        th,
+        td {
+            border-top: 0;
+        }
+    }
+}
+
+tbody {
+    tr:hover {
+        @include theme-rule(background-color, 'table.rows.hover');
+    }
+
+    & + tbody {
+        @include theme-rule(border-top, 'table.border');
+    }
+}
