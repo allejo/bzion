@@ -14,10 +14,11 @@ class PluralFilter
      * @param string $singular The noun in its singular form
      * @param string|null $plural The noun in its plural form (calculated
      *                            automatically by default)
+     * @param bool   $hideNumber Whether or not to hide the number from the return value
      *
      * @return string
      */
-    public function __invoke($singular, $number = null, $plural = null)
+    public function __invoke($singular, $number = null, $plural = null, $hideNumber = null)
     {
         if ($number == 1) {
             return "1 $singular";
@@ -25,7 +26,7 @@ class PluralFilter
 
         $plural = $plural ?: Inflector::pluralize($singular);
 
-        if ($number === null) {
+        if ($number === null || $hideNumber) {
             return $plural;
         }
 
