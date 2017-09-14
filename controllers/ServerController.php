@@ -8,24 +8,30 @@ class ServerController extends CRUDController
 {
     public function listAction()
     {
-        $servers = $this->getQueryBuilder()
+        $servers = $this
+            ->getQueryBuilder()
             ->sortBy('name')
-            ->getModels();
+            ->getModels()
+        ;
 
-        return array("servers" => $servers);
+        return [
+            'servers' => $servers
+        ];
     }
 
-    public function showAction(Server $server, Player $me, Request $request)
+    public function showAction(Server $server)
     {
-        if ($server->staleInfo()) {
-            $server->forceUpdate();
-        }
+        $aYearAgo = (new TimeDate())->subYear();
+        $matches = Match::getQueryBuilder()
+            ->where('server')->equals($server->getId())
+            ->where('time')->isAfter($aYearAgo)
+            ->getSummary($aYearAgo)
+        ;
 
-        if ($request->get('forced') && $me->canEdit($server)) {
-            $server->forceUpdate();
-        }
-
-        return array("server" => $server);
+        return [
+            'server'  => $server,
+            'matches' => $matches
+        ];
     }
 
     public function statusAction(Server $server, Player $me, Request $request)

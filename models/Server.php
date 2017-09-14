@@ -296,6 +296,25 @@ class Server extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the number of matches that have occurred on this server
+     *
+     * @return int
+     */
+    public function getMatchCount()
+    {
+        $qb = new MatchQueryBuilder('Match', [
+            'columns' => [
+                'server' => 'server_id'
+            ]
+        ]);
+        $query = $qb
+            ->where('server')->equals($this->getId())
+            ->count();
+
+        return $query;
+    }
+
+    /**
      * Returns the amount of time passed since the server was last updated
      * @return TimeDate
      */
