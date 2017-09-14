@@ -38,7 +38,7 @@ class ServerController extends CRUDController
     {
         $tokenLiteral = $request->get('token');
         $csrfManager = Service::getContainer()->get('security.csrf.token_manager');
-        $csrfToken = new CsrfToken('server_token', $tokenLiteral);
+        $csrfToken = new CsrfToken('server_token_' . $server->getId(), $tokenLiteral);
 
         if (!$csrfManager->isTokenValid($csrfToken)) {
             throw new ForbiddenException('Invalid CSRF token');

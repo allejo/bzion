@@ -24,7 +24,7 @@
             {% for server in servers %}
                 <div class="js-server col-md-6 mb3"
                      data-id="{{ server.id }}"
-                     data-token="{{ csrf_token('server_token') }}"
+                     data-token="{{ csrf_token('server_token_' ~ server.id) }}"
                      {% if me.valid %}data-player-count="{{ server.numPlayers }}" {% endif %}
                 >
                     <div class="js-dimmable">
