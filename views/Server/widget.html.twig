@@ -39,7 +39,7 @@
                 </div>
 
                 <div>
-                    <h2 class="t1">{{ server.name }} {{ server.country.flagLiteral | raw }}</h2>
+                    <h2 class="t1">{{ link_to(server) }} {{ server.country.flagLiteral | raw }}</h2>
                     <small>{{ server.address }}</small>
                 </div>
             </div>
