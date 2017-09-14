@@ -33,11 +33,11 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-lg-3 mb3">
                 <h2>Server Operator</h2>
                 {{ player_widget(server.owner) }}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4 col-lg-3 mb3">
                 <h2>Match Statistics</h2>
 
                 <div class="text-center">
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-8 col-lg-6">
                 {% set matchTableID = 'match-activity' %}
                 <h2>
                     Match Activity
