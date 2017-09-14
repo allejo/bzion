@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, { 'attr': { 'class': 'c-form o-container u-text-center' } }) }}
-        <section class="c-form__section">
-            {{ message | raw }}
-        </section>
+    <div class="container">
+        <div class="text-center">
+            {{ form_start(form) }}
+                <article class="mb2">
+                    {{ message | raw }}
+                </article>
 
-        <section class="c-form__section">
-            <div class="c-form__buttons">
-                {{ form_rest(form) }}
-            </div>
-        </section>
-    {{ form_end(form) }}
+                <div class="_form__auto-spacer">
+                    {{ form_rest(form) }}
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
