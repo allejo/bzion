@@ -3,12 +3,12 @@
         {% if me.canEdit(server) or me.canDelete(server) %}
             <div class="c-card__editor">
                 {% if me.canEdit(server) %}
-                    <button title="Refresh server data">
-                        <a class="js-refresh" href="{{ path('server_show', { server: server.id, forced: 1 }) }}">
+                    <div class="js-only d-inline">
+                        <button class="js-refresh" title="Refresh server data">
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                             <span class="sr-only">Refresh server data</span>
-                        </a>
-                    </button>
+                        </button>
+                    </div>
 
                     <button title="Edit server">
                         {{ link_to(server, content='<span class="sr-only">Edit server</span>', icon='pencil', action='edit') }}
