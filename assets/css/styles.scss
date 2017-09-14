@@ -66,10 +66,13 @@
 //
 @import 'base/anchors';
 @import 'base/blockquote';
+@import 'base/body';
 @import 'base/code-block';
 @import 'base/forms';
+@import 'base/headings';
 @import 'base/images';
 @import 'base/lists';
+@import 'base/tables';
 @import 'base/typography';
 
 
@@ -110,7 +113,6 @@
 // Styling for specific pages
 //
 @import 'pages/Match/show';
-@import 'pages/Players/list';
 @import 'pages/Teams/show';
 @import 'pages/Server/list';
 
@@ -134,7 +136,6 @@
 @import 'vendor/map-reverse';
 @import 'modules/utilities';
 @import 'modules/bem-utilities';
-@import 'modules/placeholders';
 
 
 //
@@ -142,15 +143,6 @@
 //    (CSS that deal with generic animations)
 //
 @import 'animations/collapsible';
-
-
-//
-// Generic HTML Elements
-//    (CSS for generic HTML elements)
-//
-@import 'generic/blocks';
-@import 'generic/body';
-@import 'generic/headers';
 
 
 // Layout + Grid
@@ -175,7 +167,6 @@
 
 @import 'partials/alerts';
 @import 'partials/css-table';
-@import 'partials/font-awesome';
 @import 'partials/pagination';
 @import 'partials/typography';
 
@@ -187,13 +178,10 @@
 
 @import 'pages/Landing/jumbotron';
 
-@import 'pages/Players/list';
-
 @import 'pages/Messaging/inbox';
 @import 'pages/Messaging/compose';
 @import 'pages/Messaging/messenger';
 
 @import 'pages/bans';
-@import 'pages/maps';
 @import 'pages/notifications';
 @import 'pages/visits';
