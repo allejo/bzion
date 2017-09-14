@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% from 'Server/widget.html.twig' import widget as server_widget %}
+
 {% set pageButtons = [
     {
         'color': 'blue',
@@ -17,19 +19,19 @@
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
-        <section class="o-row">
+    <div class="container mbn3">
+        <div class="row">
             {% for server in servers %}
-                <div class="c-server" data-id="{{ server.id }}">
+                <div class="js-server col-md-6 mb3"
+                     data-id="{{ server.id }}"
+                     data-token="{{ csrf_token('server_token_' ~ server.id) }}"
+                     {% if me.valid %}data-player-count="{{ server.numPlayers }}" {% endif %}
+                >
                     <div class="js-dimmable">
-                        {% include "Server/show.html.twig" %}
+                        {{ server_widget(server) }}
                     </div>
                 </div>
             {% endfor %}
-        </section>
-    </section>
-{% endblock %}
-
-{% block jsCustom %}
-    <script src="{{ asset('assets/js/servers.js') }}"></script>
+        </div>
+    </div>
 {% endblock %}

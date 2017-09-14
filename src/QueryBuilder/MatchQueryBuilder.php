@@ -83,7 +83,8 @@ class MatchQueryBuilder extends QueryBuilder
     /**
      * Get a count for each month's matches
      *
-     * @param TimeDate|Team $timeDate The team in question
+     * @param TimeDate $timeDate The team in question
+     *
      * @return array
      */
     public function getSummary(TimeDate $timeDate)

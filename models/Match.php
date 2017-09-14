@@ -103,10 +103,16 @@ class Match extends UrlModel implements NamedModel
     protected $match_details;
 
     /**
+     * The ID of the server where this match took place
+     * @var int
+     */
+    protected $server;
+
+    /**
      * The server location of there the match took place
      * @var string
      */
-    protected $server;
+    protected $server_address;
 
     /**
      * The file name of the replay file of the match
@@ -183,7 +189,8 @@ class Match extends UrlModel implements NamedModel
         $this->map = $match['map'];
         $this->match_type = $match['match_type'];
         $this->match_details = $match['match_details'];
-        $this->server = $match['server'];
+        $this->server = $match['server_id'];
+        $this->server_address = $match['server'];
         $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
         $this->player_elo_diff = $match['player_elo_diff'];
@@ -663,6 +670,8 @@ class Match extends UrlModel implements NamedModel
     public function setMap($map)
     {
         $this->updateProperty($this->map, "map", $map, "s");
+
+        return $this;
     }
 
     /**
@@ -722,26 +731,41 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the server this match took place on
+     *
+     * @return Server
+     */
+    public function getServer()
+    {
+        return Server::get($this->server);
+    }
+
+    /**
+     * Set the server this match took place on
+     *
+     * @param  int $serverID
+     *
+     * @return $this
+     */
+    public function setServer($serverID = null)
+    {
+        $this->updateProperty($this->server, 'server_id', $serverID);
+
+        return $this;
+    }
+
+    /**
      * Get the server address of the server where this match took place
+     *
+     * @deprecated 0.10.0 Use Match::getServer() instead. Using this function is reserved for migrations/legacy support.
+     *
+     * @see 20170912201127_match_server_relationship.php
+     *
      * @return string|null Returns null if there was no server address recorded
      */
     public function getServerAddress()
     {
-        return $this->server;
-    }
-
-    /**
-     * Set the server address of the server where this match took place
-     *
-     * @param  string|null $server The server hostname
-     * @param  int|null    $port   The server port
-     * @return self
-     */
-    public function setServerAddress($server = null)
-    {
-        $this->updateProperty($this->server, "server", $server);
-
-        return $this;
+        return $this->server_address;
     }
 
     /**
@@ -1159,6 +1183,7 @@ class Match extends UrlModel implements NamedModel
                 'secondTeamPoints' => 'team_b_points',
                 'time'             => 'timestamp',
                 'map'              => 'map',
+                'server'           => 'server_id',
                 'type'             => 'match_type',
                 'status'           => 'status'
             ),

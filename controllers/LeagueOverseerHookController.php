@@ -182,6 +182,7 @@ class LeagueOverseerHookController extends PlainTextController
         }
 
         $map = Map::fetchFromAlias($this->params->get('mapPlayed'));
+        $server = Server::fetchFromAddress($this->params->get('server'));
 
         $match = Match::enterMatch(
             ($teamOne !== null) ? $teamOne->getId() : null,
@@ -200,6 +201,10 @@ class LeagueOverseerHookController extends PlainTextController
             $this->params->get('teamOneColor'),
             $this->params->get('teamTwoColor')
         );
+
+        if ($server->isValid()) {
+            $match->setServer($server->getId());
+        }
 
         $log->addNotice("Match reported automatically", array(
             'winner' => array(

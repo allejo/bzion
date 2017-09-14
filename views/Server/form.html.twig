@@ -1,34 +1,26 @@
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section c-form__section--sidebar">
-        <article class="o-col--main o-row__section__main">
-            {{ form_row(form.name, { 'container__attr': { 'class': 'c-form__group' } }) }}
-        </article>
+<div class="container">
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-8 mb3">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-md-4 mb3">
+                {{ form_row(form.owner) }}
+            </div>
 
-        <article class="o-col--aside o-row__section--aside">
-            {{ form_row(form.owner, { 'container__attr': { 'class': 'c-form__group' } }) }}
-        </article>
-    </section>
+            <div class="col-sm-8 col-md-6 mb3">
+                {{ form_row(form.domain) }}
+            </div>
+            <div class="col-sm-4 col-md-2 mb3">
+                {{ form_row(form.port) }}
+            </div>
+            <div class="col-md-4 mb3">
+                {{ form_row(form.country) }}
+            </div>
+        </div>
 
-    <section class="o-row c-form__section">
-        <article class="o-col--third">
-            {{ form_row(form.domain, { 'container__attr': { 'class': 'c-form__group' } }) }}
-        </article>
-
-        <article class="o-col--third">
-            {{ form_row(form.port, { 'container__attr': { 'class': 'c-form__group' } }) }}
-        </article>
-    </section>
-
-    <section class="c-form__section">
-        <article>
-            {{ form_row(form.country, {
-                'container__attr': { 'class': 'c-form__group' }
-            }) }}
-        </article>
-    </section>
-
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+        <div>
+            {{ form_rest(form) }}
+        </div>
+    {{ form_end(form) }}
+</div>

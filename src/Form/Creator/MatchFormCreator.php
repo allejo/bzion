@@ -10,6 +10,8 @@ namespace BZIon\Form\Creator;
 use BZIon\Form\Type\DatetimeWithTimezoneType;
 use BZIon\Form\Type\MatchTeamType;
 use BZIon\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -36,15 +38,18 @@ class MatchFormCreator extends ModelFormCreator
             ->add('second_team', new MatchTeamType(), array(
                 'disableTeam' => $this->isEdit() && $this->editing->isOfficial()
             ))
-            ->add('duration', 'choice', array(
+            ->add('duration', ChoiceType::class, array(
                 'choices'     => $durations,
                 'constraints' => new NotBlank(),
                 'expanded'    => true
             ))
-            ->add('server_address', 'text', array(
-                'required' => false,
-                'attr'     => array('placeholder' => 'brad.guleague.org:5100'),
-            ))
+            ->add('server', new ModelType('Server'), [
+                'constraints' => new NotBlank(),
+                'choice_label' => function ($value) {
+                    $server = \Server::get($value);
+                    return $server->isValid() ? $server->getAddress() : '';
+                }
+            ])
             ->add('time', new DatetimeWithTimezoneType(), array(
                 'constraints' => array(
                     new NotBlank(),
@@ -61,7 +66,7 @@ class MatchFormCreator extends ModelFormCreator
             ->add('map', new ModelType('Map'), array(
                 'required' => false
             ))
-            ->add('type', 'choice', array(
+            ->add('type', ChoiceType::class, array(
                 'choices'  => array(
                     \Match::OFFICIAL => 'Official',
                     \Match::FUN => 'Fun match',
@@ -70,7 +75,7 @@ class MatchFormCreator extends ModelFormCreator
                 'disabled' => $this->editing && $this->editing->isOfficial(),
                 'label' => 'Match Type'
             ))
-            ->add('enter', 'submit');
+            ->add('enter', SubmitType::class);
     }
 
     /**
@@ -92,7 +97,7 @@ class MatchFormCreator extends ModelFormCreator
         ));
 
         $form->get('duration')->setData($match->getDuration());
-        $form->get('server_address')->setData($match->getServerAddress());
+        $form->get('server')->setData($match->getServer());
         $form->get('time')->setData($match->getTimestamp());
         $form->get('map')->setData($match->getMap());
         $form->get('type')->setData($match->getMatchType());
@@ -132,8 +137,9 @@ class MatchFormCreator extends ModelFormCreator
             $secondTeam->get('score')->getData()
         );
 
-        $match->setDuration($form->get('duration')->getData())
-            ->setServerAddress($form->get('server_address')->getData())
+        $match
+            ->setDuration($form->get('duration')->getData())
+            ->setServer($form->get('server')->getData()->getId())
             ->setTimestamp($form->get('time')->getData())
             ->setMap($form->get('map')->getData()->getId());
 
@@ -158,6 +164,9 @@ class MatchFormCreator extends ModelFormCreator
 
         $official = ($form->get('type')->getData() === \Match::OFFICIAL);
 
+        /** @var \Server $server */
+        $server = $form->get('server')->getData();
+
         $match = \Match::enterMatch(
             $official ? $firstId : null,
             $official ? $secondId : null,
@@ -168,13 +177,17 @@ class MatchFormCreator extends ModelFormCreator
             $form->get('time')->getData(),
             $this->getPlayerList($firstTeam),
             $this->getPlayerList($secondTeam),
-            $form->get('server_address')->getData(),
+            $server->getAddress(),
             null,
             $form->get('map')->getData()->getId(),
             $form->get('type')->getData(),
             $a_color,
             $b_color
         );
+
+        if ($server->isValid()) {
+            $match->setServer($server->getId());
+        }
 
         return $match;
     }

@@ -246,6 +246,10 @@ server_show:
     path:     /servers/{server}
     defaults: { _controller: 'Server', _action: 'show' }
 
+server_status:
+    path:     /servers/status/{server}
+    defaults: { _controller: 'Server', _action: 'status' }
+
 server_delete:
     path:     /servers/{server}/delete
     defaults: { _controller: 'Server', _action: 'delete' }

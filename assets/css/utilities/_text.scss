@@ -4,6 +4,14 @@
     }
 }
 
+@include responsify('.t0%infix') {
+    font-size: 16px;
+}
+
+@include responsify('.t1%infix') {
+    font-size: 18px;
+}
+
 @each $size in (2, 3, 4, 5) {
     @include responsify('.t%size%infix', (size: $size)) {
         font-size: (16px * ($size * 0.75));

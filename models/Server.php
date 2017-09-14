@@ -296,6 +296,25 @@ class Server extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the number of matches that have occurred on this server
+     *
+     * @return int
+     */
+    public function getMatchCount()
+    {
+        $qb = new MatchQueryBuilder('Match', [
+            'columns' => [
+                'server' => 'server_id'
+            ]
+        ]);
+        $query = $qb
+            ->where('server')->equals($this->getId())
+            ->count();
+
+        return $query;
+    }
+
+    /**
      * Returns the amount of time passed since the server was last updated
      * @return TimeDate
      */
@@ -401,9 +420,41 @@ class Server extends UrlModel implements NamedModel
         return new QueryBuilder('Server', array(
             'columns' => array(
                 'name'   => 'name',
-                'status' => 'status'
+                'domain' => 'domain',
+                'port'   => 'port',
+                'status' => 'status',
             ),
             'name' => 'name'
         ));
+    }
+
+    /**
+     * Get the Server model with the respective address
+     *
+     * @param  string $address The address in the format of `domain:port`
+     *
+     * @return static
+     */
+    public static function fetchFromAddress($address)
+    {
+        if (strpos($address, ':') === false) {
+            return Server::get(0);
+        }
+
+        list($domain, $port) = explode(':', $address);
+
+        $qb = self::getQueryBuilder();
+        $query = $qb
+            ->where('domain')->equals($domain)
+            ->where('port')->equals($port)
+            ->active()
+            ->getModels($fast = true)
+        ;
+
+        if (count($query) > 0) {
+            return $query[0];
+        }
+
+        return Server::get(0);
     }
 }
