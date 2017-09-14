@@ -1,6 +1,4 @@
 {% macro widget(server) %}
-    {% set status = (server.online) ? "online" : "offline" %}
-
     <article class="c-card">
         {% if me.canEdit(server) or me.canDelete(server) %}
             <div class="c-card__editor">
@@ -28,19 +26,16 @@
         <header class="c-card__header">
             <div class="d-flex">
                 <div class="d-flex align-self-center mrn1 pr2">
-                    {%- if server.numPlayers > 0 -%}
-                        {% set message %}{{ "player is" | plural(server.numPlayers, "players are") }} playing on the server{% endset %}
+                    {% set status = (server.online) ? 'online' : 'offline' %}
 
-                        <span class="c-server__status c-server__status--{{ status }}"
-                              title="{{ message }}"
-                        >
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span class="sr-only">{{ message }}</span>
-                        </span>
-                    {%- else -%}
-                        <span class="c-server__status c-server__status--{{ status }} t2"
-                              title="Server is currently {{ status }}">&bull;</span>
-                    {%- endif -%}
+                    {% if me.valid and server.numPlayers > 0 %}
+                        {% set status = 'active' %}
+                    {% endif %}
+
+                    <span class="js-server__status"
+                          title="Server is currently {{ status }}"
+                          data-status="{{ status }}"
+                    ></span>
                 </div>
 
                 <div>

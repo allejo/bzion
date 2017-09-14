@@ -1,11 +1,33 @@
-.c-server__status {
-    color: $Color-Medium_Grey;
-}
+.js-server__status {
+    &[data-status="active"],
+    &[data-status="online"],
+    &[data-status="offline"] {
+        &::after {
+            display: inline-block;
+            font-family: FontAwesome;
+        }
+    }
 
-.c-server__status--online {
-    color: $Color-Green;
-}
 
-.c-server__status--offline {
-    color: $Color-Red;
+    &[data-status="online"],
+    &[data-status="offline"] {
+        &::after {
+            content: '\f111';
+        }
+    }
+
+    &[data-status="online"] {
+        color: $Color-Green;
+    }
+
+    &[data-status="offline"] {
+        color: $Color-Red;
+    }
+
+    &[data-status="active"] {
+        &::after {
+            content: '\f007';
+            color: $Color-Green;
+        }
+    }
 }

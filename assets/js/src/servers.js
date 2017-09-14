@@ -17,7 +17,11 @@ function Server(object) {
     this.updateCard = function (data) {
         this.$object.find('.js-server__last-update').html(data['last_update']);
         this.$object.find('.js-server__player-count').html(data['player_count']);
-        this.$object.data('player-count', data['player_count']);
+        this.$object.attr('data-player-count', data['player_count']);
+
+        // Statuses
+        var status = (data['player_count'] > 0) ? 'active' : data['status'];
+        this.$object.find('.js-server__status').attr('data-status', status);
     };
 
     /**
