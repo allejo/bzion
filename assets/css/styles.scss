@@ -86,6 +86,7 @@
 @import 'components/calendar';
 @import 'components/cards';
 @import 'components/charts';
+@import 'components/conversation';
 @import 'components/debug';
 @import 'components/forms';
 @import 'components/forms-avatar';
@@ -177,7 +178,6 @@
 
 @import 'pages/Landing/jumbotron';
 
-@import 'pages/Messaging/inbox';
 @import 'pages/Messaging/compose';
 @import 'pages/Messaging/messenger';
 
