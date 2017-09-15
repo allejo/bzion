@@ -1,5 +1,7 @@
 {% extends 'Message/layout.html.twig' %}
 
+{% from 'md-editor.html.twig' import md_editor %}
+
 {% set pageButtons = [
     {
         'color': 'blue',
@@ -14,21 +16,37 @@
 
 {% block messages_body %}
     <section id="conversationMessages">
-        <div>
-            {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
-                {{ form_errors(form) }}
-                <div class="input_conversation">
-                    {{ form_row(form.Recipients) }}
-                    {{ form_row(form.Subject, { label: 'Subject: ', attr: { placeholder: 'Enter message subject'} }) }}
-                </div>
-                <div class="editor">
-                    {{ form_row(form.Message, { attr: { 'placeholder': 'Enter your message here...'} }) }}
-                </div>
+        {{ form_start(form, { attr: {class: 'compose_form', autocomplete: 'off'} }) }}
+            {{ form_errors(form) }}
 
-                <div class="buttons">
-                    {{ form_row(form.Send, {id: 'composeButton', attr: {'data-style': 'expand-right'} }) }}
-                </div>
-            {{ form_end(form) }}
-        </div>
+            {{ form_row(form.Recipients, {
+                container_attr: {
+                    class: 'mb3'
+                }
+            }) }}
+
+            {{ form_row(form.Subject, {
+                label: 'Subject: ',
+                container_attr: {
+                    class: 'mb3',
+                },
+                attr: {
+                    placeholder: 'Enter message subject'
+                }
+            }) }}
+
+            <div class="mb3">
+                {{ form_errors(form.Message) }}
+                {{ form_label(form.Message) }}
+                {{ md_editor(form.Message) }}
+            </div>
+
+            {{ form_row(form.Send, {
+                id: 'composeButton',
+                attr: {
+                    'data-style': 'expand-right'
+                }
+            }) }}
+        {{ form_end(form) }}
     </section>
 {% endblock %}
