@@ -31,5 +31,5 @@
 
 @mixin padding-x($padding) {
     padding-left: $padding;
-    padding-top: $padding;
+    padding-right: $padding;
 }

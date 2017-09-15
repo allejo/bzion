@@ -1,3 +1,23 @@
-.o-container {
-  @extend %container;
+.s-fullflex {
+    body {
+        height: 100vh;
+    }
+
+    main,
+    .c-page,
+    .app-body,
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .app-body {
+        height: 100%;
+    }
+
+    main,
+    .c-page,
+    .container {
+        flex-grow: 1;
+    }
 }

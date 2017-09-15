@@ -13,7 +13,7 @@
         {# We don't want to output or own names #}
         {%- if member ~/~ me -%}
             {%- if links -%}
-                {{- link_to(member, class = "asdasd") -}}
+                {{- link_to(member) -}}
             {%- else -%}
                 {{- member.name -}}
             {%- endif -%}

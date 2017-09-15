@@ -57,6 +57,11 @@
     }
 }
 
+.c-form__input--plain {
+    background-color: transparent !important;
+    border: none !important;
+}
+
 .c-form__errors {
     $errorColor: darken($Color-Red, 20%);
 

@@ -1,0 +1,69 @@
+// Styling for our messenger
+
+.c-messenger {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.c-messenger__toolbar {
+
+}
+
+.c-messenger__viewer {
+    flex-grow: 1;
+}
+
+.c-messenger__editor {
+
+}
+
+.c-messenger__conversation {
+    padding-left: 0;
+}
+
+// Styling for messages
+
+.c-message {
+    @include respond-up(md) {
+        &:hover {
+            .c-message__time {
+                display: block;
+            }
+        }
+    }
+}
+
+.c-message__body {
+    p {
+        margin-bottom: 5px;
+    }
+}
+
+.c-message__time {
+    display: none;
+}
+
+.c-action {
+    @include theme-rule(color, 'body.muted');
+
+    padding: 10px 0;
+    position: relative;
+    text-align: center;
+
+    @include respond-up(md) {
+        @include padding-x(80px);
+
+        &:hover {
+            .c-action__time {
+                display: block;
+            }
+        }
+    }
+}
+
+.c-action__time {
+    @include position(absolute, null, 0);
+
+    display: none;
+}

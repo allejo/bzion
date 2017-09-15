@@ -12,24 +12,43 @@
     {% set previousMessage = previousMessage.timestamp %}
 {% endif %}
 
-<ul class="c-messenger__conversation__messages">
+<ul class="c-messenger__conversation">
     {% for message in messages|reverse %}
         {% if message.isMessage %}
-            <li class="message" data-id="{{ message.id }}">
+            <li class="c-message" data-id="{{ message.id }}">
                 {%- if message.author.id != previousAuthor or not previousMessage.isSameDay(message.timestamp) %}
-                    <div class="details">
-                        <div class="author">{{ link_to(message.author) }}</div>
-                        <div class="date">{{ message.timestamp | humanTime }}</div>
+                    <div class="row mb2">
+                        <div class="col-xs-6 col-md-10">
+                            {{ link_to(message.author) }}
+                        </div>
+                        <div class="col-xs-6 col-md-2 text-right">
+                            {{ message.timestamp | humanTime }}
+                        </div>
                     </div>
                 {% endif -%}
 
-                <p>{{ message.content|markdown(true, false) }}</p>
+                <div class="row">
+                    <div class="c-message__body col-md-10">
+                        {{ message.content | markdown(true, false) }}
+                    </div>
+                    <div class="c-message__time col-md-2 text-right text-muted">
+                        <span title="{{ message.timestamp | date(constant('\TimeDate::FULL')) }}">
+                            {{ message.timestamp | date('h:ia') }}
+                        </span>
+                    </div>
+                </div>
             </li>
         {% else %}
             {% set type = message.category %}
             {% set event = message.event %}
 
-            <li class="action" data-id="{{ message.id }}">
+            <li class="c-action" data-id="{{ message.id }}">
+                <div class="c-action__time">
+                    <span title="{{ message.timestamp | date(constant('\TimeDate::FULL')) }}">
+                        {{ message.timestamp | date('h:ia') }}
+                    </span>
+                </div>
+
                 {% if type == 'conversation.rename' %}
                     <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
                 {% elseif type == 'conversation.abandon' %}

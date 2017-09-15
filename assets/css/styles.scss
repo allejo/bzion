@@ -96,6 +96,7 @@
 @import 'components/markdown';
 @import 'components/markdown-editor';
 @import 'components/match-widget';
+@import 'components/messenger';
 @import 'components/pills';
 @import 'components/player-widget';
 @import 'components/tabs';
@@ -148,7 +149,6 @@
 
 // Layout + Grid
 @import 'partials/Layout/user-content';
-@import 'partials/Layout/fullflex';
 
 // Form styling
 @import 'partials/Forms/select2';
@@ -178,8 +178,6 @@
 //
 
 @import 'pages/Landing/jumbotron';
-
-@import 'pages/Messaging/messenger';
 
 @import 'pages/bans';
 @import 'pages/notifications';

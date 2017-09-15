@@ -15,7 +15,7 @@
 {% set viewTitle = "Messages" %}
 
 {% block messages_body %}
-    <div class="bb pb3">
+    <div class="bb mtn3">
         {{ form_start(searchForm) }}
             <label class="c-form__icon sr-only mb1"
                    for="c-form__search__input"
@@ -28,7 +28,7 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </div>
 
-                {{ form_widget(searchForm.q, { attr: { class: 'c-form__input', placeholder: 'Search...' } } ) }}
+                {{ form_widget(searchForm.q, { attr: { class: 'c-form__input c-form__input--plain py2', placeholder: 'Search...' } } ) }}
             </div>
         {{ form_end(searchForm) }}
     </div>

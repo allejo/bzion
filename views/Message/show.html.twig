@@ -52,70 +52,95 @@
 {% endmacro %}
 
 {% block messages_body %}
-    <section class="c-messenger">
-        {# @TODO Include this once we have AJAX fetching for messages #}
-        {#<aside class="c-messenger__sidebar c-fullflex--scrollable">#}
-            {#{% include "Message/searchbar.html.twig" %}#}
-            {#{% include "Message/conversations.html.twig" with { customClass: 'c-conversation--compressed' } %}#}
-        {#</aside>#}
-
-        <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
-            <section class="c-messenger__conversation__options">
-                <div class="c-messenger__options__header o-row">
-                    <p class="c-messenger__options__header__meta">
-                        Conversation with {{ msgutils.listMembers(conversation.members, true) }}
-                    </p>
-                    <p class="c-messenger__options__header__actions">
-                        {% if me.canEdit(conversation) %}
-                            <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm" title="Invite players to the conversation"></i>
-                            <i class="fa fa-user-times"></i>
-                            <i class="fa fa-pencil collapsible-trigger" data-toggle="#SubjectRenameForm" title="Rename conversation"></i>
-                        {% endif %}
-                        {% if me.canEdit(me.team) and conversation.isMember(me.team) %}
-                            <a href="{{ conversation.url('team_refresh') }}" title="Add new team members to conversation">
-                                <i class="fa fa-plus-square-o"></i>
-                            </a>
-                            <a href="{{ conversation.url('team_leave') }}" title="Remove {{ me.team.name }} from conversation">
-                                {# TODO: Find a better icon #}
-                                <i class="fa fa-bolt"></i>
-                            </a>
-                        {% endif %}
-                        {% if me ~/~ conversation.creator and (not conversation.isTeamMember(me) or me.team.leader ~~ me) %}
-                            <a href="{{ conversation.url('leave') }}" title="Leave conversation">
-                                <i class="fa fa-sign-out"></i>
-                            </a>
-                        {% endif %}
-                    </p>
+    <div class="c-messenger">
+        <section class="c-messenger__toolbar bb pb2">
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="mb0">Conversation with {{ msgutils.listMembers(conversation.members, true) }}</p>
                 </div>
+                <div class="col-md-4 text-right">
+                    {% if me.canEdit(conversation) %}
+                        <button data-toggle="#InviteForm" title="Invite players to the conversation">
+                            <i class="fa fa-user-plus" aria-hidden="true" ></i>
+                            <span class="sr-only">Invite players to the conversation</span>
+                        </button>
 
-                {% if me.canEdit(conversation) %}
-                    {{ self.conversation_action("SubjectRenameForm", renameForm, renameForm.subject, renameForm.Rename) }}
-                    {{ self.conversation_action("InviteForm", inviteForm, inviteForm.players, inviteForm.Invite) }}
-                {% endif %}
-            </section>
+                        <button data-toggle="#RemovePlayer" title="Remove a player from the conversation">
+                            <i class="fa fa-user-times" aria-hidden="true"></i>
+                            <span class="sr-only">Remove a player from the conversation</span>
+                        </button>
 
-            <section id="messageView" class="c-messenger__conversation__scrolling">
-                {% include 'Message/messages.html.twig' %}
+                        <button data-toggle="#SubjectRenameForm" title="Rename conversation">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                            <span class="sr-only">Rename conversation</span>
+                        </button>
+                    {% endif %}
 
-                <noscript>
-                    <div class="c-messenger__conversation__archiver">
-                        <a href="{{ path('message_conversation_show', {conversation: conversation.id, end: (messages|first).id }) }}">
-                            <i class="fa fa-refresh"></i>
-                            <span>Load more recent messages</span>
+                    {% if me.canEdit(me.team) and conversation.isMember(me.team) %}
+                        <a href="{{ conversation.url('team_refresh') }}" title="Add new team members to conversation">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                            <span class="sr-only">Add new team members to conversation</span>
                         </a>
-                    </div>
-                </noscript>
-            </section>
+                        <a href="{{ conversation.url('team_leave') }}" title="Remove {{ me.team.name }} from conversation">
+                            {# TODO: Find a better icon #}
+                            <i class="fa fa-bolt" aria-hidden="true"></i>
+                            <span class="sr-only">Remove {{ me.team.name }} from conversation</span>
+                        </a>
+                    {% endif %}
 
-            {{ form_start(form, {'attr': {'class': 'c-messenger__conversation__response', 'autocomplete': 'off'} }) }}
-                {{ form_errors(form) }}
-                <div class="quick_reply">
-                    {{ form_errors(form.message) }}
-                    {{ form_widget(form.message, {id: 'composeArea', attr: {'autofocus': 'autofocus', class: 'input_compose_area', placeholder: 'Enter your message here...'} }) }}
-
-                    {{ form_row(form.Send, {id: 'composeButton', attr: {'data-style': 'expand-right'} }) }}
+                    {% if me ~/~ conversation.creator and (not conversation.isTeamMember(me) or me.team.leader ~~ me) %}
+                        <a href="{{ conversation.url('leave') }}" title="Leave conversation">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            <span class="sr-only">Leave conversation</span>
+                        </a>
+                    {% endif %}
                 </div>
+            </div>
+
+            {% if me.canEdit(conversation) %}
+                {{ self.conversation_action("SubjectRenameForm", renameForm, renameForm.subject, renameForm.Rename) }}
+                {{ self.conversation_action("InviteForm", inviteForm, inviteForm.players, inviteForm.Invite) }}
+            {% endif %}
+        </section>
+
+        <section id="messageView" class="c-messenger__viewer">
+            {% include 'Message/messages.html.twig' %}
+
+            <noscript>
+                <div class="c-messenger__conversation__archiver">
+                    <a href="{{ path('message_conversation_show', {conversation: conversation.id, end: (messages|first).id }) }}">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        <span>Load more recent messages</span>
+                    </a>
+                </div>
+            </noscript>
+        </section>
+
+        <section class="c-messenger__editor bt pt2">
+            {{ form_start(form, {
+                attr: {
+                    class: 'c-messenger__conversation__response',
+                    autocomplete: 'off'
+                }
+            }) }}
+                {{ form_errors(form) }}
+
+                {{ form_widget(form.message, {
+                    id: 'composeArea',
+                    attr: {
+                        autofocus: 'autofocus',
+                        class: 'input_compose_area',
+                        placeholder: 'Enter your message here...'
+                    }
+                }) }}
+
+                {{ form_row(form.Send, {
+                    id: 'composeButton',
+                    attr: {
+                        'data-style': 'expand-right'
+                    }
+                }) }}
             {{ form_end(form) }}
         </section>
-    </section>
+    </div>
 {% endblock %}
