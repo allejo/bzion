@@ -24,7 +24,9 @@
 {% endblock %}
 
 {% block content %}
-    <section class="s-user-html s-markdown o-container o-section">
-        {{ page.content | markdown(false) }}
-    </section>
+    <div class="container">
+        <section class="s-user-html s-markdown">
+            {{ page.content | markdown(escapeHTML=false) }}
+        </section>
+    </div>
 {% endblock %}

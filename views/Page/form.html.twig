@@ -1,17 +1,26 @@
-{{ form_start(form, { 'attr': { 'class': 'c-form o-container' } }) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section c-form__section--sidebar">
-        <article class="o-col--main c-form__section__main">
-            {{ form_row(form.name,    { 'container_attr': { 'class': 'c-form__group' } }) }}
-            {{ form_row(form.content, { 'container_attr': { 'class': 'c-form__group c-form__group--flex' } }) }}
-        </article>
+{% from 'md-editor.html.twig' import md_editor %}
 
-        <aside class="o-col--aside c-form__section__aside">
-            {{ form_row(form.status,   { 'container_attr': { 'class': 'c-form__group' } }) }}
-        </aside>
-    </section>
+<div class="container">
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+        <div class="row">
+            <div class="col-md-8 mb3">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-md-4 mb3">
+                {{ form_row(form.status) }}
+            </div>
+        </div>
+
+        <div class="mb3">
+            {{ form_errors(form.content) }}
+            {{ form_label(form.content) }}
+            {{ md_editor(form.content) }}
+        </div>
+
+        <div>
+            {{ form_rest(form) }}
+        </div>
+    {{ form_end(form) }}
+</div>
