@@ -1,0 +1,21 @@
+.c-conversation {
+    @include theme-rule(border-bottom, 'border.default');
+    @include theme-rule(color, 'body.color');
+
+    display: block;
+    padding: 15px;
+
+    &:hover {
+        @include theme-rule(background-color, 'body.alternate');
+
+        text-decoration: none;
+    }
+}
+
+.c-conversation__status {
+    @include theme-rule(color, 'elements.anchor');
+}
+
+.c-conversation__members {
+    @include theme-rule(color, 'body.muted');
+}

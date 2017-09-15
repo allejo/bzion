@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% set scopeClass = "s-messaging" %}
-
 {% block title %}{{ viewTitle }}{% endblock %}
 
 {% block button_row %}
@@ -18,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="o-container">
+    <div class="container">
         {% block messages_body %}
 
         {% endblock %}

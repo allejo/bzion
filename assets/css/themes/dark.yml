@@ -1,6 +1,8 @@
 body:
   background: "#21252c"
+  alternate: "#323740"
   color: "#ffffff"
+  muted: "#969696"
 
 border:
   default: "1px solid #e9e9e9"
