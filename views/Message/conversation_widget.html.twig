@@ -1,5 +1,5 @@
-{# @var \Conversation coversation #}
 {% macro widget(conversation) %}
+    {# @var coversation \Conversation #}
     {% from 'utilities.html.twig' import html_attr %}
 
     {% set unread = not conversation.readBy(me.id) %}
