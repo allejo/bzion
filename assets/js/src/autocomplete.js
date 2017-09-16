@@ -1,4 +1,4 @@
-$(document).ready(function() {
+module.exports = function() {
     $(".select2-compatible").each(function() {
         var input = $(this);
 
@@ -76,7 +76,6 @@ $(document).ready(function() {
             };
             items.push(item);
         }
-
 
         select.select2({
             data: items,
@@ -160,4 +159,4 @@ $(document).ready(function() {
             input.val(value);
         });
     });
-});
+};
