@@ -27,7 +27,7 @@
         "symfony/swiftmailer-bundle" : ">=2.3.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "~1.18",
-        "yzalis/identicon"           : "~1.2.0",
+        "yzalis/identicon"           : "~1.2.0"
     },
     "require-dev": {
         "behat/behat": "~3.0",
