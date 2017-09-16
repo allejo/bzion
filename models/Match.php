@@ -189,7 +189,6 @@ class Match extends UrlModel implements NamedModel
         $this->map = $match['map'];
         $this->match_type = $match['match_type'];
         $this->match_details = $match['match_details'];
-        $this->server = $match['server_id'];
         $this->server_address = $match['server'];
         $this->replay_file = $match['replay_file'];
         $this->elo_diff = $match['elo_diff'];
@@ -199,6 +198,12 @@ class Match extends UrlModel implements NamedModel
         $this->duration = $match['duration'];
         $this->entered_by = $match['entered_by'];
         $this->status = $match['status'];
+
+        // For legacy support (e.g. Phinx migrations) we need to check if the key exists. Prior to migrations, it didn't
+        // exist so Phinx migrations prior to 20170912201127_match_server_relationship will throw warnings.
+        //
+        // @todo Look for a better solution
+        $this->server = isset($match['server_id']) ? $match['server_id'] : null;
     }
 
     /**
