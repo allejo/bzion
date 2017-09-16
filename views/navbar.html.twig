@@ -15,20 +15,20 @@
     </li>
 {% endmacro %}
 
-{% macro userOptions() %}
+{% macro userOptions(class) %}
     {# TODO: Don't count notifications and messages twice #}
 
     {{ _self.page(
         _self.badge(me.countUnreadNotifications, "js-counter__notifications"),
-        'Notification', 'notification_list', 'bell', '', 'Notifications'
+        'Notification', 'notification_list', 'bell', class, 'Notifications'
     ) }}
     {{ _self.page(
         _self.badge(me.countUnreadMessages, "js-counter__messages"),
-        'Message', 'message_list', 'comments-o', '', 'Messages'
+        'Message', 'message_list', 'comments-o', class, 'Messages'
     ) }}
     {{ _self.page(
         null,
-        'Profile', 'profile_edit', 'gear', '', 'My Profile'
+        'Profile', 'profile_edit', 'gear', class, 'My Profile'
     ) }}
 {% endmacro %}
 
@@ -39,13 +39,13 @@
         {{ _self.page('Players', 'Player', 'player_list', 'user') }}
         {{ _self.page('Matches', 'Match', 'match_list', 'trophy') }}
 
-        {#{% if me is valid %}#}
-            {#<li class="c-useroptions">#}
-                {#<ul>#}
-                    {#{{ _self.userOptions() }}#}
-                {#</ul>#}
-            {#</li>#}
-        {#{% endif %}#}
+        {% if me is valid %}
+            <li class="u-show u-hide-sm">
+                <ul class="bt mr-last-reset is-horizontal text-center">
+                    {{ _self.userOptions('mr2') }}
+                </ul>
+            </li>
+        {% endif %}
 
         {% if pageButtons is not null %}
             {% for button in pageButtons if button.condition %}
@@ -64,7 +64,7 @@
 
     <ul class="c-user_cp">
         {% if me is valid %}
-            {{ _self.userOptions() }}
+            {{ _self.userOptions('u-hide u-show-sm') }}
 
             <li class="c-user_cp__auth">
                 <a href="{{ path('logout') }}">
