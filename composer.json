@@ -15,6 +15,7 @@
         "ext-gd"                     : "*",
         "jms/serializer-bundle"      : "~0.13",
         "liip/imagine-bundle"        : "1.4.*",
+        "mcaskill/php-array-group-by": "dev-master",
         "nesbot/carbon"              : "~1.14",
         "nelmio/api-doc-bundle"      : "~2.7",
         "robmorgan/phinx"            : "~0.8",
@@ -26,7 +27,7 @@
         "symfony/swiftmailer-bundle" : ">=2.3.0",
         "swiftmailer/swiftmailer"    : ">=5.2.0",
         "twig/twig"                  : "~1.18",
-        "yzalis/identicon"           : "~1.2.0"
+        "yzalis/identicon"           : "~1.2.0",
     },
     "require-dev": {
         "behat/behat": "~3.0",

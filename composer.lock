@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "004cc7a31da6150f5d3239d7aeb136a4",
+    "content-hash": "f4b884fb7e0681f41997fa53c09b909c",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -1290,6 +1290,40 @@
                 "imagine"
             ],
             "time": "2016-01-14T07:16:25+00:00"
+        },
+        {
+            "name": "mcaskill/php-array-group-by",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://gist.github.com/mcaskill/baaee44487653e1afc0d",
+                "reference": "636cfc90b2e71c4d355b1784429e1b6782f6ae08"
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Function.Array-Group-By.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chauncey McAskill",
+                    "email": "chauncey@mcaskill.ca",
+                    "homepage": "https://github.com/mcaskill"
+                }
+            ],
+            "description": "Groups an array by a given key.",
+            "keywords": [
+                "function"
+            ],
+            "time": "2017-04-16 18:33:00"
         },
         {
             "name": "michelf/php-markdown",
@@ -5482,7 +5516,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "select2/select2": 20
+        "select2/select2": 20,
+        "mcaskill/php-array-group-by": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
