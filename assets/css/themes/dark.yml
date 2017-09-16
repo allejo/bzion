@@ -30,6 +30,11 @@ elements:
 form:
   background: "#373d49"
   background_active: "#303b4f"
+  select2:
+    arrow_color_up: "#ffffff transparent transparent transparent"
+    arrow_color_dn: "transparent transparent #ffffff transparent"
+    selected: "#6a6e76"
+    drop_shadow: "0 6px 14px 2px rgba(0, 0, 0, 0.75)"
 
 list_group:
   active:

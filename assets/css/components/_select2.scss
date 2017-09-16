@@ -1,0 +1,48 @@
+// This file consists of overrides for Select2 elements. The nesting in this file is intentional and is necessary so the
+// rules here will take precedence over Select2's default very specific rules.
+
+// The element that takes place of the <select> element
+span.select2 {
+    .select2-selection {
+        @include theme-rule(background-color, 'form.background');
+        @include theme-rule(border, 'border.default');
+
+        height: 34px;
+    }
+
+    .select2-selection,
+    .select2-selection__rendered {
+        @include theme-rule(color, 'body.color');
+
+        line-height: 30px;
+    }
+
+    .select2-selection__arrow {
+        height: 32px;
+
+        b {
+            @include theme-rule(border-color, 'form.select2.arrow_color_up');
+        }
+    }
+
+    &.select2-container--open {
+        .select2-selection__arrow b {
+            @include theme-rule(border-color, 'form.select2.arrow_color_dn');
+        }
+    }
+}
+
+.select2-dropdown {
+    @include theme-rule(box-shadow, 'form.select2.drop_shadow');
+}
+
+// The "down down" component where all the options are listed
+.select2-container {
+    .select2-dropdown {
+        @include theme-rule(background-color, 'form.background');
+    }
+
+    .select2-results__option[aria-selected=true] {
+        @include theme-rule(background-color, 'form.select2.selected')
+    }
+}
