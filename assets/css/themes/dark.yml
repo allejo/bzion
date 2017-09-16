@@ -33,6 +33,8 @@ form:
   select2:
     arrow_color_up: "#ffffff transparent transparent transparent"
     arrow_color_dn: "transparent transparent #ffffff transparent"
+    choice_color: "#ffffff"
+    choice_background: "#1b6a7c"
     selected: "#6a6e76"
     drop_shadow: "0 6px 14px 2px rgba(0, 0, 0, 0.75)"
 

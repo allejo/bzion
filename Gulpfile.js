@@ -118,6 +118,7 @@ gulp.task('js:hint', function (cb) {
 var sass = require('gulp-sass');
 var eyeglass = require('eyeglass');
 var combineMq = require('gulp-combine-mq');
+var moduleImporter = require('sass-module-importer');
 
 gulp.task('sass:dev', function (cb) {
     var sourcemaps = require('gulp-sourcemaps');
@@ -126,6 +127,7 @@ gulp.task('sass:dev', function (cb) {
         gulp.src('assets/css/styles.scss'),
         sourcemaps.init(),
         sass(eyeglass({
+            importer: moduleImporter(),
             outputStyle: 'compact'
         })),
         combineMq({
@@ -145,6 +147,7 @@ gulp.task('sass:dist', function (cb) {
     pump([
         gulp.src('assets/css/styles.scss'),
         sass(eyeglass({
+            importer: moduleImporter(),
             outputStyle: 'compressed'
         })),
         combineMq({

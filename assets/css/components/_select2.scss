@@ -13,8 +13,6 @@ span.select2 {
     .select2-selection,
     .select2-selection__rendered {
         @include theme-rule(color, 'body.color');
-
-        line-height: 30px;
     }
 
     .select2-selection__arrow {
@@ -29,6 +27,17 @@ span.select2 {
         .select2-selection__arrow b {
             @include theme-rule(border-color, 'form.select2.arrow_color_dn');
         }
+    }
+
+    .select2-selection__choice {
+        @include theme-rule(background-color, 'form.select2.choice_background');
+        @include theme-rule(color, 'form.select2.choice_color');
+    }
+
+    .select2-selection__choice__remove {
+        @include theme-rule(color, 'form.select2.choice_color');
+
+        margin-right: 4px !important;
     }
 }
 
