@@ -1,11 +1,21 @@
-var md = require('markdown').markdown;
+var md = require('marked');
 
 module.exports = function() {
     $('#mde__toolbar__preview').click(function() {
-        var formID = $(this).data('textarea');
+        var $this = $(this);
+        var $parent = $('#mde');
+        var formID = $this.data('textarea');
         var markdown = $('#' + formID).val();
-        var result = md.toHTML(markdown);
 
-        $('#mde__preview').html(result);
+        // Rendering options
+        var sanitizeContent = $parent.data('sanitize');
+        md.setOptions({
+            sanitize: (typeof sanitizeContent === 'undefined') || sanitizeContent,
+            breaks: true
+        });
+
+        // Set our rendered HTML into the preview area
+        var html = md(markdown);
+        $('#mde__preview').html(html);
     });
 };
