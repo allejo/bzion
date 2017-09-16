@@ -1,18 +1,12 @@
-.c-mobilemenu {
-    padding: 0 15px 0 10px;
-
-    @include respond-up(lg) {
-        display: none;
-    }
-}
-
 // The entire top navigation bar
 .c-header {
     @include theme-rule(background, 'navigation.background');
     @include theme-rule(border-bottom, 'border.default');
 
+    position: relative;
+
     a,
-    .c-mobilemenu {
+    .c-mobile-menu {
         @include theme-rule(color, 'navigation.links');
 
         @include on-event() {
@@ -26,6 +20,12 @@
 }
 
 .c-branding {
+    margin-left: 30px;
+
+    @include respond-up(lg) {
+        margin-left: 0;
+    }
+
     img {
         margin-right: 10px;
     }

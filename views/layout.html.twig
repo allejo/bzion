@@ -100,10 +100,8 @@
             <header class="c-header">
                 <div class="container">
                     <div class="row align-items-center">
-                        <button id="mobile-menu" class="c-mobilemenu">
-                            <i class="fa fa-bars"></i>
-                            <span class="sr-only">Open navigation menu</span>
-                        </button>
+                        <label class="sr-only" for="mobile-menu">Press space to open navigation menu</label>
+                        <input type="checkbox" id="mobile-menu" class="c-mobile-menu">
 
                         <div class="c-branding">
                             <a href="{{ path('index') }}">

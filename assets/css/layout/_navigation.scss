@@ -56,10 +56,6 @@
     }
 }
 
-.c-site_pages--open {
-    display: block;
-}
-
 .c-site_pages__separator {
     @include theme-rule(border-bottom, 'border.default');
 }
@@ -85,4 +81,34 @@
 
 .c-user_cp__auth {
     white-space: nowrap;
+}
+
+// JavaScript-less Mobile menu
+//   (specificity matters here, increase it by using the tag type)
+
+input.c-mobile-menu {
+    appearance: none;
+    position: absolute;
+    top: 16px;
+
+    @include respond-up(lg) {
+        display: none;
+    }
+
+    &::before {
+        //@include theme-rule(color, 'navigation.links');
+
+        content: '\f0c9';
+        font-family: FontAwesome;
+        font-size: 18px;
+        position: absolute;
+    }
+
+    &:checked ~ .c-navigation {
+        .c-site_pages {
+            @include respond-down(md) {
+                display: block;
+            }
+        }
+    }
 }

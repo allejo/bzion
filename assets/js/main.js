@@ -4,7 +4,6 @@ import 'select2';
 $(function () {
     require('./src/accordion')();
     require('./src/autocomplete')();
-    require('./src/menu')();
     require('./src/tabs')();
     require('./src/md-editor')();
     require('./src/charts')();
