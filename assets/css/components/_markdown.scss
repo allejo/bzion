@@ -17,7 +17,7 @@
 }
 
 .s-markdown {
-    overflow-x: auto;
+    overflow-x: hidden;
 
     a {
         &[href^='http'] {
