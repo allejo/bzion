@@ -184,6 +184,24 @@ abstract class Service
     }
 
     /**
+     * @return string[][]
+     */
+    public static function getSiteThemes()
+    {
+        return self::getParameter('bzion.site.themes');
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDefaultSiteTheme()
+    {
+        $themes = self::getSiteThemes();
+
+        return $themes[0]['slug'];
+    }
+
+    /**
      * @return ContainerInterface
      */
     public static function getContainer()

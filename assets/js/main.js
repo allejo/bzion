@@ -10,6 +10,7 @@ $(function () {
     require('./src/charts')();
     require('./src/player-list')();
     require('./src/pills')();
+    require('./src/profile')();
     require('./src/tables')();
     require('./src/select-objects')();
     require('./src/servers')();

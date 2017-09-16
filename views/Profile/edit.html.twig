@@ -82,17 +82,28 @@
                         </div>
                     </div>
 
-                    <div class="mb3">
-                        {{ form_row(form.receive, {
-                            'attr': { 'class': 'c-form__choices' }
-                        }) }}
+                    <div class="row">
+                        <div class="col-md-6 mb3">
+                            {{ form_row(form.receive, {
+                                'attr': {
+                                    'class': 'c-form__choices'
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6 mb3">
+                            {{ form_row(form.theme, {
+                                'attr': {
+                                    'data-role': 'site-theme-selector'
+                                }
+                            }) }}
+                        </div>
                     </div>
 
-                    <div class="mb3">
-                        {% if form.roles is defined %}
+                    {% if form.roles is defined %}
+                        <div class="mb3">
                             {{ form_row(form.roles) }}
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% endif %}
 
                     <div>
                         {{ form_rest(form) }}

@@ -189,4 +189,12 @@ class AppGlobal
             ->where('status')->equals('live')
             ->getModels($fast = true);
     }
+
+    /**
+     * @return string
+     */
+    public function getDefaultTheme()
+    {
+        return \Service::getDefaultSiteTheme();
+    }
 }

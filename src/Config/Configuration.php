@@ -55,6 +55,20 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('vanity')
                             ->info("`permalink` to make links for players and teams include the object's ID, `vanity` so they only include its alias")
                         ->end()
+                        ->arrayNode('themes')
+                            ->isRequired()
+                            ->requiresAtLeastOneElement()
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('name')->end()
+                                    ->scalarNode('slug')->end()
+                                ->end()
+                            ->end()
+                            ->defaultValue([
+                                ['name' => 'Dark', 'slug' => 'dark'],
+                                ['name' => 'Light', 'slug' => 'light'],
+                            ])
+                        ->end()
                     ->end()
                 ->end()
 

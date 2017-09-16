@@ -91,6 +91,12 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     protected $country;
 
     /**
+     * The site theme this player has chosen
+     * @var string
+     */
+    protected $theme;
+
+    /**
      * The player's timezone PHP identifier, e.g. "Europe/Paris"
      * @var string
      */
@@ -186,6 +192,14 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
 
         if (key_exists('activity', $player)) {
             $this->matchActivity = ($player['activity'] != null) ? $player['activity'] : 0.0;
+        }
+
+        // Theme user options
+        if (isset($player['theme'])) {
+            $this->theme = $player['theme'];
+        } else {
+            $themes = Service::getSiteThemes();
+            $this->theme = $themes[0]['slug'];
         }
     }
 
@@ -953,6 +967,34 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     }
 
     /**
+     * Get the player's chosen theme preference
+     *
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * Set the site theme for the player
+     *
+     * If the chosen site theme is invalid, it'll be defaulted to the site default (the first theme defined)
+     *
+     * @param string $theme
+     */
+    public function setTheme($theme)
+    {
+        $themes = array_column(Service::getSiteThemes(), 'slug');
+
+        if (!in_array($theme, $themes)) {
+            $theme = Service::getDefaultSiteTheme();
+        }
+
+        $this->updateProperty($this->theme, 'theme', $theme);
+    }
+
+    /**
      * Updates this player's last login
      */
     public function updateLastLogin()
@@ -1267,6 +1309,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             'status',
             'avatar',
             'country',
+            'theme',
         ];
 
         return self::formatColumns($prefix, $columns);
