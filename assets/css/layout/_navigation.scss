@@ -38,7 +38,10 @@
 
         @each $bp in (xs, sm, md) {
             @include respond-only-to($bp) {
-                width: map-get($breakpoints, $bp) - 30px;
+                // Since `xs` will give us 0, we need to default to 320px for xs for correct calculations
+                $bp-width: map-get($breakpoints, $bp);
+
+                width: max(320px, $bp-width) - 30px;
             }
         }
 
