@@ -91,17 +91,17 @@
 ///       color: darken(<'link-color' value @ index 1>, 15%);
 ///   }
 
-@mixin theme-rule ($css-rule, $theme-attribute, $function: "", $nth: 0, $args...) {
+@mixin theme-rule ($css-rule, $theme-attribute, $function: '', $nth: 0, $args...) {
     @each $theme in get-themes() {
         @at-root {
             .t-#{$theme} & {
                 $value: get-theme-value($theme, $theme-attribute);
 
-                @if (is-color($value)) {
+                @if is-color($value) {
                     $value: to-color($value);
                 }
 
-                @if $function == "" {
+                @if $function == '' {
                     #{$css-rule}: $value;
                 }
                 @else {
