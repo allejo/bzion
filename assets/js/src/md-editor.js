@@ -10,8 +10,7 @@ module.exports = function() {
         // Rendering options
         var sanitizeContent = $parent.data('sanitize');
         md.setOptions({
-            sanitize: (typeof sanitizeContent === 'undefined') || sanitizeContent,
-            breaks: true
+            sanitize: (typeof sanitizeContent === 'undefined') || sanitizeContent
         });
 
         // Set our rendered HTML into the preview area
