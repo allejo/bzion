@@ -65,10 +65,6 @@ gulp.task('dev:watch', function() {
     ], ['sass:dev']);
 
     gulp.watch([
-        'web/assets/js/partials/*.js'
-    ], ['js:concat']);
-
-    gulp.watch([
         'web/assets/js/**/*.js',
         'web/assets/css/styles.css',
         'web/build/*.js',
