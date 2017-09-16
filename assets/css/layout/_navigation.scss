@@ -96,8 +96,6 @@ input.c-mobile-menu {
     }
 
     &::before {
-        //@include theme-rule(color, 'navigation.links');
-
         content: '\f0c9';
         font-family: FontAwesome;
         font-size: 18px;
