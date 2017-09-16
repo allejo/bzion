@@ -4,6 +4,9 @@
     {# This is an accessible table, so make sure to add the `.sr-only` class to it, even if no other classes exist #}
     {% set attrs = attrs | extend_hash({ 'id': ['mde'], 'class': ['c-mde'] }) %}
 
+    {{ form_label(form_textarea) }}
+    {{ form_errors(form_textarea) }}
+
     <div {{ html_attr(attrs) }} >
         <ul class="c-mde__toolbar js-only" role="tablist">
             <li id="mde__toolbar__editor"

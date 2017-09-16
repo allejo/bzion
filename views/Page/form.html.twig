@@ -14,8 +14,6 @@
         </div>
 
         <div class="mb3">
-            {{ form_errors(form.content) }}
-            {{ form_label(form.content) }}
             {{ md_editor(form.content, {
                 data: {
                     sanitize: "false"

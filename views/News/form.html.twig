@@ -9,8 +9,6 @@
                 {{ form_row(form.subject, { 'container_attr': { 'class': 'mb3' } }) }}
 
                 <div class="mb3">
-                    {{ form_label(form.content) }}
-                    {{ form_errors(form.content) }}
                     {{ md_editor(form.content) }}
                 </div>
             </article>

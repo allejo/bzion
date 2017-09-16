@@ -13,8 +13,9 @@
             <div class="col-md-8 col-lg-9">
                 {{ form_row(form.name, { 'container_attr': { 'class': 'mb3' } }) }}
 
-                {{ form_label(form.description) }}
-                {{ md_editor(form.description, { 'class': ['mb3'] }) }}
+                <div class="mb3">
+                    {{ md_editor(form.description) }}
+                </div>
 
                 <div class="row">
                     {# Only show the option to edit leadership if we're editing an existing team #}
