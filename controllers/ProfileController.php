@@ -3,6 +3,7 @@
 use BZIon\Form\Creator\ProfileFormCreator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends HTMLController
 {
@@ -16,10 +17,11 @@ class ProfileController extends HTMLController
      *
      * @param  Player  $me      The player's profile to edit
      * @param  Request $request
-     * @param  bool $self    Whether a player is editing their own profile,
+     * @param  bool    $self    Whether a player is editing their own profile,
      *                          instead of an admin editing another player's
      *                          profile
-     * @return array
+     *
+     * @return string|Response
      */
     public function editAction(Player $me, Request $request, $self = true)
     {
@@ -55,6 +57,10 @@ class ProfileController extends HTMLController
 
             $message = ($self) ? "Your profile has been updated." : $me->getUsername() . "'s profile has been updated.";
             $this->getFlashBag()->add("success", $message);
+
+            if ($form->get('enter')->isClicked()) {
+                return (new RedirectResponse($me->getURL()));
+            }
         }
 
         return $this->render('Profile/edit.html.twig', array(

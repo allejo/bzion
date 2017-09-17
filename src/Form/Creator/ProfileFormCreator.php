@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
@@ -120,7 +121,9 @@ class ProfileFormCreator extends ModelFormCreator
             ));
         }
 
-        $builder->add('enter', 'submit');
+        $builder->add('enter', SubmitType::class, [
+            'label' => 'Save Profile'
+        ]);
 
         $address = $this->editing->getEmailAddress();
         if (!$this->editingSelf && !empty($address) && !$this->editing->isVerified()) {
