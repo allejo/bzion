@@ -193,14 +193,6 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         if (key_exists('activity', $player)) {
             $this->matchActivity = ($player['activity'] != null) ? $player['activity'] : 0.0;
         }
-
-        // Theme user options
-        if (isset($player['theme'])) {
-            $this->theme = $player['theme'];
-        } else {
-            $themes = Service::getSiteThemes();
-            $this->theme = $themes[0]['slug'];
-        }
     }
 
     /**
@@ -222,6 +214,14 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $this->ban = Ban::getBan($this->id);
 
         $this->cachedMatchSummary = [];
+
+        // Theme user options
+        if (isset($player['theme'])) {
+            $this->theme = $player['theme'];
+        } else {
+            $themes = Service::getSiteThemes();
+            $this->theme = $themes[0]['slug'];
+        }
 
         $this->updateUserPermissions();
     }
@@ -973,6 +973,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function getTheme()
     {
+        $this->lazyLoad();
+
         return $this->theme;
     }
 
@@ -1309,7 +1311,6 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             'status',
             'avatar',
             'country',
-            'theme',
         ];
 
         return self::formatColumns($prefix, $columns);
@@ -1327,6 +1328,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             'confirm_code',
             'outdated',
             'description',
+            'theme',
             'timezone',
             'joined',
             'last_login',
