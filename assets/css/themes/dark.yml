@@ -22,6 +22,8 @@ elements:
   badge:
     background: "linear-gradient(#62abff, #4884cf)"
     color: "#ffffff"
+  blockquote:
+    icon: "#bfcfd1"
   pills:
     background: "#77541f"
     color: "#ffffff"

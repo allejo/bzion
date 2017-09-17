@@ -1,38 +1,15 @@
 blockquote {
-    margin-bottom: 10px;
-    margin-left: 30px;
-    margin-top: 20px;
-    padding-right: 30px;
+    margin: 20px 30px;
+    padding-left: 40px;
+    position: relative;
     vertical-align: top;
 
-    span {
-        color: $Color-Light_Grey;
-        font-size: 16px;
-        font-style: italic;
-
-        &::before {
-            content: '\2014';
-            margin-left: 45px;
-            margin-right: 5px;
-        }
-    }
-
-    article {
-        color: darken($Color-Light_Grey, 10%);
-        display: inline;
-
-        > p {
-            margin: 10px 0 10px 45px;
-        }
-    }
-
     &::before {
-        color: $Color-Medium_Grey;
+        @include theme-rule(color, 'elements.blockquote.icon');
+        @include position(absolute, 5px, null, null, 0);
+
         content: '\f10d';
-        float: left;
         font-family: FontAwesome;
         font-size: 30px;
-        margin-bottom: 10px;
-        padding-right: 15px;
     }
 }

@@ -26,9 +26,11 @@
                 {%- if type == 'welcome' %}
                     {{ event.message }}
                 {% elseif type == 'team.invite' %}
-                    You were invited to {{ link_to(event.invitation.team) }}
+                    You were invited to {{ link_to(event.invitation.team) }} by {{ link_to(event.invitation.sentBy) }}.
                     {% if event.invitation.text %}
-                        {{ event.invitation.text }}
+                        <blockquote>
+                            {{ event.invitation.text }}
+                        </blockquote>
                     {% endif %}
                 {% elseif type == 'team.kick' %}
                     You left {{ link_to(event.team) }}
