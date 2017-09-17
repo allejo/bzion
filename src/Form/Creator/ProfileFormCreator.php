@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
@@ -21,6 +22,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator to allow users to edit their profiles
+ *
+ * @property \Player $editing
  */
 class ProfileFormCreator extends ModelFormCreator
 {
@@ -104,6 +107,7 @@ class ProfileFormCreator extends ModelFormCreator
             ))
             ->add('theme', ChoiceType::class, [
                 'choices'  => $themes,
+                'data'     => $this->editing->getTheme(),
                 'required' => true,
             ])
         ;
