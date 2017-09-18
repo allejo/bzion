@@ -93,6 +93,16 @@ abstract class AvatarModel extends AliasModel implements NamedModel
     }
 
     /**
+     * Check whether this model has a non-null avatar
+     *
+     * @return bool
+     */
+    public function hasAvatar()
+    {
+       return ($this->avatar === null);
+    }
+
+    /**
      * Change the avatar of the object
      *
      * @param  string $avatar The file name of the avatar

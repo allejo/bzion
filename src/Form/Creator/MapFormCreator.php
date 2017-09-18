@@ -17,9 +17,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Form creator for teams
+ *
+ * @property \Map $editing
  */
 class MapFormCreator extends ModelFormCreator
 {
@@ -30,24 +33,38 @@ class MapFormCreator extends ModelFormCreator
     {
         $builder
             ->add('name', TextType::class, array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
                         'min' => 2,
                         'max' => 40,
-                    ))
-                )
+                    ]),
+                ],
+                'data'      => $this->editing->getName(),
+                'required' => true,
             ))
             ->add('alias', TextType::class, array(
-                'constraints' => array(
-                   new Length(array(
+                'constraints' => [
+                    new Length([
                         'max' => 40,
-                    )),
-                    new UniqueAlias('Map', $this->editing)
-                ),
-                'required' => false
+                    ]),
+                    new UniqueAlias('Map', $this->editing),
+                    new Type([
+                        'type' => 'alpha'
+                    ]),
+                ],
+                'data'     => $this->editing->getAlias(),
+                'required' => true
             ))
             ->add('description', TextareaType::class, array(
-                'required' => false
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 10
+                    ]),
+                ],
+                'data'     => $this->editing->getDescription(),
+                'required' => true,
             ))
             ->add('avatar', FileType::class, array(
                 'constraints' => new Image(array(
@@ -55,43 +72,33 @@ class MapFormCreator extends ModelFormCreator
                     'minHeight' => 60,
                     'maxSize'   => '8M'
                 )),
-                'required' => false
+                'required' => ($this->editing === null || $this->editing->hasAvatar())
             ))
             ->add('shot_count', IntegerType::class, [
+                'data'     => $this->editing->getShotCount(),
                 'label'    => 'Max shot count',
                 'required' => true,
             ])
             ->add('jumping', CheckboxType::class, [
+                'data'     => $this->editing->isJumpingEnabled(),
                 'label'    => 'Map allows jumping',
                 'required' => false,
             ])
             ->add('ricochet', CheckboxType::class, [
+                'data'     => $this->editing->isRicochetEnabled(),
                 'label'    => 'Map allows ricochet',
                 'required' => false,
             ])
         ;
 
-        if ($this->editing && $this->editing->getAvatar() !== null) {
+        if ($this->editing) {
             // We are editing the map, not creating it
             $builder->add('delete_avatar', SubmitType::class);
         }
 
-        return $builder->add('submit', SubmitType::class);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param \Map $map
-     */
-    public function fill($form, $map)
-    {
-        $form->get('name')->setData($map->getName());
-        $form->get('alias')->setData($map->getAlias());
-        $form->get('description')->setData($map->getDescription());
-        $form->get('shot_count')->setData($map->getShotCount());
-        $form->get('jumping')->setData($map->isJumpingEnabled());
-        $form->get('ricochet')->setData($map->isRicochetEnabled());
+        return $builder->add('submit', SubmitType::class, [
+            'label' => 'Save'
+        ]);
     }
 
     /**
@@ -126,8 +133,8 @@ class MapFormCreator extends ModelFormCreator
         $map->setJumpingEnabled($form->get('jumping')->getData());
         $map->setRicochetEnabled($form->get('ricochet')->getData());
 
-        if ($form->has('delete_image') && $form->get('delete_image')->isClicked()) {
-            $map->setAvatar(null);
+        if ($form->has('delete_avatar') && $form->get('delete_avatar')->isClicked()) {
+            $map->resetAvatar();
         } else {
             $map->setAvatarFile($form->get('avatar')->getData());
         }
