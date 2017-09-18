@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ErrorController extends JSONController
@@ -30,10 +31,15 @@ class ErrorController extends JSONController
      * Show a generic error message
      *
      * @param  string $message The error message to show
-     * @return array
+     * @return string|Response
      */
     public function genericErrorAction($message = 'An error occured')
     {
+        // @todo Nasty workaround to get the exception throwing controller
+        $exception = $this->getRequest()->attributes->get('exception');
+        $prevController = [];
+        preg_match('/\/(\w+)Controller.php$/', $exception->getFile(), $prevController);
+
         if ($this->isJson()) {
             return new JSONResponse(array(
                 "success" => false,
@@ -41,9 +47,10 @@ class ErrorController extends JSONController
             ));
         }
 
-        return $this->render('Error/genericError.html.twig', array(
-            'message' => $message
-        ));
+        return $this->render('Error/genericError.html.twig', [
+            'message' => $message,
+            'model' => isset($prevController[1]) ? $prevController[1] : 'Generic',
+        ]);
     }
 
     /**

@@ -1,13 +1,13 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Generic Error{% endblock %}
+{% block title %}{{ model }} Error{% endblock %}
 
 {% block pageTitle %}
     <h1>{{ block('title') }}</h1>
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
+    <div class="container">
         {{ message }}
-    </section>
+    </div>
 {% endblock %}
