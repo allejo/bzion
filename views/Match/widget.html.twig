@@ -5,7 +5,12 @@
         <div class="col c-matchwidget__team__image">
             {% if isTeam %}
                 {% if team.active %}<a href="{{ team.url }}">{% endif %}
-                    <img src="{{ team.avatar | imagine_filter('large_thumb') }}"
+                    {% set imgURL = team.avatar | imagine_filter('large_thumb') %}
+                    {% if team.avatar is null %}
+                        {% set imgURL = asset('assets/imgs/team_' ~ random(['red', 'green', 'blue', 'purple']) ~ '.png') %}
+                    {% endif %}
+
+                    <img src="{{ imgURL }}"
                          alt="{{ team.name }}'s Avatar"
                          title="{{ team.name }}'s Avatar"
                     >

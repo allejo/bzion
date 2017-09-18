@@ -31,8 +31,13 @@
     {% set attrs = attrs | extend_hash({ 'class': ['c-player-badge'] }) %}
 
     <div {{ html_attr(attrs) }}>
+        {% set imgURL = player.avatar | imagine_filter('small_thumb') %}
+        {% if player.avatar is null %}
+            {% set imgURL = asset('assets/imgs/team_' ~ random(['red', 'green', 'blue', 'purple']) ~ '.png') %}
+        {% endif %}
+
         <img class="c-player-badge__avatar"
-             src="{{ player.avatar | imagine_filter('small_thumb') }}"
+             src="{{ imgURL }}"
              alt="{{ player.name }}'s avatar"
         >
 
