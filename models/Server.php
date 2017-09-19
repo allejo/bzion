@@ -309,7 +309,9 @@ class Server extends UrlModel implements NamedModel
         ]);
         $query = $qb
             ->where('server')->equals($this->getId())
-            ->count();
+            ->active()
+            ->count()
+        ;
 
         return $query;
     }
