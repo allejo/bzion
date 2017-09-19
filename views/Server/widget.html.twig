@@ -10,15 +10,11 @@
                         </button>
                     </div>
 
-                    <button title="Edit server">
-                        {{ link_to(server, content='<span class="sr-only">Edit server</span>', icon='pencil', action='edit') }}
-                    </button>
+                    {{ link_to(server, content='<span class="sr-only">Edit server</span>', icon='pencil', action='edit') }}
                 {% endif %}
 
                 {% if me.canDelete(server) %}
-                    <button title="Delete server">
-                        {{ link_to(server, content='<span class="sr-only">Delete server</span>', icon='times', action='delete') }}
-                    </button>
+                    {{ link_to(server, content='<span class="sr-only">Delete server</span>', icon='times', action='delete') }}
                 {% endif %}
             </div>
         {% endif %}

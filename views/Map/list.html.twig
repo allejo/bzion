@@ -26,14 +26,10 @@
                         {% if me.canEdit(map) or me.canDelete(map) %}
                             <div class="c-card__editor">
                                 {% if me.canEdit(map) %}
-                                    <button title="Edit map">
-                                        {{ link_to(map, content='<span class="sr-only">Edit map</span>', icon='pencil', action='edit') }}
-                                    </button>
+                                    {{ link_to(map, content='<span class="sr-only">Edit map</span>', icon='pencil', action='edit', class='px1') }}
                                 {% endif %}
                                 {% if me.canDelete(map) %}
-                                    <button title="Delete map">
-                                        {{ link_to(map, content='<span class="sr-only">Delete map</span>', icon='trash-o', action='delete') }}
-                                    </button>
+                                    {{ link_to(map, content='<span class="sr-only">Delete map</span>', icon='trash-o', action='delete', class='px1') }}
                                 {% endif %}
                             </div>
                         {% endif %}
