@@ -87,21 +87,6 @@
 //   (specificity matters here, increase it by using the tag type)
 
 input.c-mobile-menu {
-    appearance: none;
-    position: absolute;
-    top: 16px;
-
-    @include respond-up(lg) {
-        display: none;
-    }
-
-    &::before {
-        content: '\f0c9';
-        font-family: FontAwesome;
-        font-size: 18px;
-        position: absolute;
-    }
-
     &:checked ~ .c-navigation {
         .c-site_pages {
             @include respond-down(md) {

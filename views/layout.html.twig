@@ -101,8 +101,11 @@
             <header class="c-header">
                 <div class="container">
                     <div class="row align-items-center">
-                        <label class="sr-only" for="mobile-menu">Press space to open navigation menu</label>
-                        <input type="checkbox" id="mobile-menu" class="c-mobile-menu">
+                        <label class="mb0" for="mobile-menu" tabindex="1" data-option="clickable-label">
+                            <i class="fa fa-bars u-hide-lg" aria-hidden="true"></i>
+                            <span class="sr-only">Press space to open navigation menu</span>
+                        </label>
+                        <input type="checkbox" id="mobile-menu" class="c-mobile-menu sr-only">
 
                         <div class="c-branding">
                             <a href="{{ path('index') }}">

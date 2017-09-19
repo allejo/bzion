@@ -5,6 +5,7 @@ $(function () {
     require('./src/accordion')();
     require('./src/autocomplete')();
     require('./src/tabs')();
+    require('./src/menu')();
     require('./src/md-editor')();
     require('./src/charts')();
     require('./src/player-list')();
