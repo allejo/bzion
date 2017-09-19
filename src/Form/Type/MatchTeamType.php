@@ -48,7 +48,7 @@ class MatchTeamType extends AbstractType
                     ]),
                 ],
                 'multiple' => true,
-                'required' => false,
+                'required' => true,
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'checkTeamMembers'])
         ;

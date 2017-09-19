@@ -29,15 +29,23 @@ Feature: Matches
   Scenario: Enter Team vs Team match
     Given I am an admin
     And I have a server with address "localhost:5154"
+    And I have a map named "Oblivious Walrus"
     And there is a team called "Preeminent Cannoneers"
+    And a new user called "cornval" joins "Preeminent Cannoneers"
+    And a new user called "the annoying" joins "Preeminent Cannoneers"
     And there is a team called "Subpar Fusillade"
+    And a new user called "joyce" joins "Subpar Fusillade"
+    And a new user called "spright" joins "Subpar Fusillade"
     When I go to "/matches/enter"
     And I select "Preeminent Cannoneers" from "form_first_team_team"
     And I fill in "16" for "form_first_team_score"
+    And I fill in "form_first_team_participants_player" with "cornval,the annoying"
     And I select "Subpar Fusillade" from "form_second_team_team"
     And I fill in "2" for "form_second_team_score"
+    And I fill in "form_second_team_participants_player" with "joyce,spright"
     And I select "localhost:5154" from "form_server"
     And I select "30" from "form_duration_0"
+    And I select "Oblivious Walrus" from "form_map"
     And I press "Enter"
     Then I should be on "/matches/1"
     And I should see "The match was created successfully"
@@ -47,6 +55,7 @@ Feature: Matches
   Scenario: Enter fun match
     Given I am an admin
     And I have a server with address "localhost:5155"
+    And I have a map named "Hot Shot"
     And there is a player called "convivial"
     And there is a player called "mirthful"
     And there is a player called "jocund"
@@ -61,6 +70,7 @@ Feature: Matches
     And I fill in "form_second_team_participants_player" with "jocund,sprightly"
     And I select "localhost:5155" from "form_server"
     And I select "Fun match" from "form_type"
+    And I select "Hot Shot" from "form_map"
     And I press "Enter"
     Then I should be on "/matches/2"
     And I should see "The match was created successfully"
@@ -73,6 +83,7 @@ Feature: Matches
   Scenario: Enter Team vs Mixed match with the team winning
     Given I am an admin
     And I have a server with address "localhost:5156"
+    And I have a map named "Shut Up Coworkers"
     And there is a team called "Polymorphic wombats"
     And there is a player called "joyful bread"
     And there is a player called "angry hippos"
@@ -87,6 +98,7 @@ Feature: Matches
     And I fill in "form_first_team_participants_player" with "gabaliumes,tabloid"
     And I fill in "form_second_team_participants_player" with "joyful bread,angry hippos"
     And I select "localhost:5156" from "form_server"
+    And I select "Shut Up Coworkers" from "form_map"
     And I press "Enter"
     Then I should be on "/matches/3"
     And I should see "The match was created successfully"
@@ -96,6 +108,7 @@ Feature: Matches
   Scenario: Enter Team vs Mixed match without player roster for color team
     Given I am an admin
     And I have a server with address "localhost:5157"
+    And I have a map named "Whiplash"
     And there is a team called "Numb3rs"
     When I go to "/matches/enter"
     And I select "Numb3rs" from "form_first_team_team"
@@ -104,31 +117,15 @@ Feature: Matches
     And I fill in "0" for "form_second_team_score"
     And I select "localhost:5157" from "form_server"
     And I select "30" from "form_duration_0"
+    And I select "Whiplash" from "form_map"
     And I press "Enter"
     Then I should be on "/matches/enter"
     And I should see "A player roster is necessary for a color team for a mixed official match"
 
-  Scenario: Enter fun match without player roster
-    Given I am an admin
-    And I have a server with address "localhost:5158"
-    When I go to "/matches/enter"
-    And I select "Blue Team" from "form_first_team_team"
-    And I fill in "3" for "form_first_team_score"
-    And I select "Purple Team" from "form_second_team_team"
-    And I fill in "2" for "form_second_team_score"
-    And I select "localhost:5158" from "form_server"
-    And I select "15" from "form_duration_0"
-    And I select "Fun match" from "form_type"
-    And I press "Enter"
-    Then I should be on "/matches/4"
-    And I should see "Blue Team 3"
-    And I should see "Purple Team 2"
-    And I should see "15 minutes"
-    And I should see "Fun Match"
-
   Scenario: Enter Mixed vs Mixed official match
     Given I am an admin
     And I have a server with address "localhost:5159"
+    And I have a map named "Hix"
     And there is a player called "sands"
     And there is a player called "jonas"
     And there is a player called "cliff"
@@ -142,8 +139,9 @@ Feature: Matches
     And I fill in "form_second_team_participants_player" with "cliff,lard"
     And I select "localhost:5159" from "form_server"
     And I select "30" from "form_duration_0"
+    And I select "Hix" from "form_map"
     And I press "Enter"
-    Then I should be on "/matches/5"
+    Then I should be on "/matches/4"
     And I should see "Red Team 5"
     And I should see "Green Team 3"
     And I should see "sands"

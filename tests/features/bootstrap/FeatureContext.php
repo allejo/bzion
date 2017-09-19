@@ -124,6 +124,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     {
         $this->visit('/logout');
     }
+
     /**
      * @Given I have a team called :name
      * @Given there is a team called :name
@@ -141,6 +142,15 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     {
         list($domain, $port) = explode(':', $address);
         return Server::addServer('Localhost', $domain, $port, 1, $this->getUserId());
+    }
+
+    /**
+     * @Given I have a map named :map
+     * @Given there is a map named :map
+     */
+    public function iHaveAMap($map)
+    {
+        return Map::addMap($map);
     }
 
     /**
