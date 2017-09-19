@@ -4,11 +4,14 @@ namespace BZIon\Form\Type;
 
 use BZIon\Form\Transformer\MatchTeamTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -18,30 +21,37 @@ class MatchTeamType extends AbstractType
     {
         $builder
             ->add(
-                $builder->create(
-                    'team', 'choice', array(
-                    'choices' => array(
-                        'red' => 'Red Team',
-                        'green' => 'Green Team',
-                        'blue' => 'Blue Team',
-                        'purple' => 'Purple Team',
-                         null => '',
-                    ) + \Controller::getQueryBuilder('Team')->getNames(),
-                    'constraints' => new NotBlank(),
-                    'disabled'    => $options['disableTeam']
-                ))->addModelTransformer(new MatchTeamTransformer())
+                $builder
+                    ->create('team', ChoiceType::class, [
+                        'choices' => [
+                            'red' => 'Red Team',
+                            'green' => 'Green Team',
+                            'blue' => 'Blue Team',
+                            'purple' => 'Purple Team',
+                             null => '',
+                        ] + \Controller::getQueryBuilder('Team')->getNames(),
+                        'constraints' => new NotBlank(),
+                        'disabled'    => $options['disableTeam']
+                    ])
+                    ->addModelTransformer(new MatchTeamTransformer())
             )
-            ->add('score', 'integer', array(
-                'constraints' => array(
+            ->add('score', IntegerType::class, [
+                'constraints' => [
                     new NotBlank(),
                     new GreaterThanOrEqual(0)
-                )
-            ))
-            ->add('participants', new AdvancedModelType('player'), array(
+                ],
+            ])
+            ->add('participants', new AdvancedModelType('player'), [
+                'constraints' => [
+                    new Count([
+                        'min' => 2,
+                    ]),
+                ],
                 'multiple' => true,
                 'required' => false,
-            ))
-            ->addEventListener(FormEvents::POST_SUBMIT, array($this, 'checkTeamMembers'));
+            ])
+            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'checkTeamMembers'])
+        ;
     }
 
     /**

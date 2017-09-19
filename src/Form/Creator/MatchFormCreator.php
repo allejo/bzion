@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for matches
+ *
+ * @property \Match $editing
  */
 class MatchFormCreator extends ModelFormCreator
 {
@@ -32,23 +34,23 @@ class MatchFormCreator extends ModelFormCreator
         }
 
         return $builder
-            ->add('first_team', new MatchTeamType(), array(
-                'disableTeam' => $this->isEdit() && $this->editing->isOfficial()
-            ))
-            ->add('second_team', new MatchTeamType(), array(
-                'disableTeam' => $this->isEdit() && $this->editing->isOfficial()
-            ))
+            ->add('first_team', new MatchTeamType(), [
+                'disableTeam' => $this->isEdit() && $this->editing->isOfficial(),
+            ])
+            ->add('second_team', new MatchTeamType(), [
+                'disableTeam' => $this->isEdit() && $this->editing->isOfficial(),
+            ])
             ->add('duration', ChoiceType::class, array(
                 'choices'     => $durations,
                 'constraints' => new NotBlank(),
-                'expanded'    => true
+                'expanded'    => true,
             ))
             ->add('server', new ModelType('Server'), [
-                'constraints' => new NotBlank(),
+                'constraints'  => new NotBlank(),
                 'choice_label' => function ($value) {
                     $server = \Server::get($value);
                     return $server->isValid() ? $server->getAddress() : '';
-                }
+                },
             ])
             ->add('time', new DatetimeWithTimezoneType(), array(
                 'constraints' => array(
@@ -61,10 +63,10 @@ class MatchFormCreator extends ModelFormCreator
                 'data' => ($this->isEdit())
                     ? $this->editing->getTimestamp()->setTimezone(\Controller::getMe()->getTimezone())
                     : \TimeDate::now(\Controller::getMe()->getTimezone()),
-                'with_seconds' => $this->isEdit()
+                'with_seconds' => $this->isEdit(),
             ))
             ->add('map', new ModelType('Map'), array(
-                'required' => false
+                'required' => true,
             ))
             ->add('type', ChoiceType::class, array(
                 'choices'  => array(
@@ -73,9 +75,10 @@ class MatchFormCreator extends ModelFormCreator
                     \Match::SPECIAL => 'Special event match',
                 ),
                 'disabled' => $this->editing && $this->editing->isOfficial(),
-                'label' => 'Match Type'
+                'label'    => 'Match Type',
             ))
-            ->add('enter', SubmitType::class);
+            ->add('enter', SubmitType::class)
+        ;
     }
 
     /**
@@ -85,16 +88,16 @@ class MatchFormCreator extends ModelFormCreator
      */
     public function fill($form, $match)
     {
-        $form->get('first_team')->setData(array(
+        $form->get('first_team')->setData([
             'team'         => $match->getTeamA(),
             'participants' => $match->getTeamAPlayers(),
             'score'        => $match->getTeamAPoints()
-        ));
-        $form->get('second_team')->setData(array(
+        ]);
+        $form->get('second_team')->setData([
             'team'         => $match->getTeamB(),
             'participants' => $match->getTeamBPlayers(),
             'score'        => $match->getTeamBPoints()
-        ));
+        ]);
 
         $form->get('duration')->setData($match->getDuration());
         $form->get('server')->setData($match->getServer());
