@@ -12,6 +12,9 @@ use BZIon\Form\Type\MatchTeamType;
 use BZIon\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -78,7 +81,27 @@ class MatchFormCreator extends ModelFormCreator
                 'label'    => 'Match Type',
             ))
             ->add('enter', SubmitType::class)
+            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'checkUniqueRoster'])
         ;
+    }
+
+    /**
+     * Form event handler that makes sure the participants are not on both teams.
+     *
+     * @param FormEvent $event
+     */
+    public function checkUniqueRoster(FormEvent $event)
+    {
+        $playersA = $event->getForm()->get('first_team')->get('participants')->getData();
+        $playersB = $event->getForm()->get('second_team')->get('participants')->getData();
+
+        $duplicates = array_intersect($playersA, $playersB);
+
+        if (!empty($duplicates)) {
+            $callsigns = array_map(function ($player) { return $player->getUsername(); }, $duplicates);
+
+            $event->getForm()->addError(new FormError('Players ' . implode(', ', $callsigns) . ' cannot belong to both teams.'));
+        }
     }
 
     /**
