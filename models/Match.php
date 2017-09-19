@@ -520,7 +520,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function getPlayerEloDiff($absoluteValue = true)
     {
-        return ($absoluteValue) ? abs($this->player_elo_diff) : $this->player_elo_diff;
+        return ($absoluteValue && $this->player_elo_diff !== null) ? abs($this->player_elo_diff) : $this->player_elo_diff;
     }
 
     /**
