@@ -209,7 +209,7 @@ pageSelector.on("click", ".compose-link", function(event) {
 
 // Response Ctrl+Enter event
 pageSelector.on("keydown", ".input_compose_area", function(event) {
-    if ((event.keyCode === 10 || event.keyCode === 13) && event.ctrlKey) {
+    if ((event.keyCode === 10 || event.keyCode === 13) && (event.ctrlKey || event.metaKey)) {
         $(this).trigger('submit');
     }
 });
