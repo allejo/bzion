@@ -1,0 +1,60 @@
+{# @var \Conversation coversation #}
+{% macro widget(conversation) %}
+    {% from 'utilities.html.twig' import html_attr %}
+
+    {% set unread = not conversation.readBy(me.id) %}
+    {% set attrs = {
+        'class': 'c-conversation',
+        'data-id': conversation.id,
+        'href': conversation.url
+    } %}
+
+    {% if unread %}
+        {% set attrs = attrs | extend_hash({ 'class': 'c-conversation--unread' }) %}
+    {% endif %}
+
+    <a {{ html_attr(attrs) }}>
+        <section class="row">
+            <div class="col-xs-8">
+                <p class="c-conversation__subject mb0 t1">
+                    {% if unread %}
+                        <span class="c-conversation__status"
+                              title="Unread message"
+                        >
+                            &bull;
+                            <span class="sr-only">Unread Message</span>
+                        </span>
+                    {% endif %}
+                    <strong>{{ conversation.subject }}</strong>
+                </p>
+            </div>
+            <div class="c-conversation__timestamp col-xs-4 text-right">
+                <span class="u-hide u-show-md">{{ conversation.lastActivity | humanTime(tooltip = false) }}</span>
+                <span class="u-hide-md">{{ conversation.lastActivity | date("M d 'y") }}</span>
+            </div>
+        </section>
+
+        <p class="c-conversation__members">
+            {% set members = conversation.members %}
+
+            <small>
+                {%- if members|length == 2 -%}
+                    {{ msgutils.listMembers(members, false) }}
+                {%- elseif members|length > 2 -%}
+                    {{ members | length - 1 }} participants
+                    {{ msgutils.listMembers(members, false) }}
+                {%- else -%}
+                    No other recipients
+                {%- endif -%}
+            </small>
+        </p>
+
+        <section class="c-conversation__latest-message">
+            {% set lastmessage = conversation.lastmessage %}
+            {% if lastmessage is valid %}
+                <strong>{{ lastmessage.author.username }}:</strong>
+                {{ lastmessage.content | markdown(true, false) | striptags | truncate(50) | raw }}
+            {% endif %}
+        </section>
+    </a>
+{% endmacro %}

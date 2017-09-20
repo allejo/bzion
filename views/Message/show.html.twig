@@ -21,7 +21,7 @@
 ] %}
 
 {% set viewTitle = "Subject: " ~ conversation.subject %}
-{% set pageWideCSS = "s-fullflex" %}
+{#{% set pageWideCSS = "s-fullflex" %}#}
 
 {% macro conversation_action(id, form, input, action) %}
     <div id="{{ id }}" class="c-messenger__option collapsible-entity">
@@ -53,19 +53,13 @@
 
 {% block messages_body %}
     <section class="c-messenger">
-        {# @TODO Include this once we have AJAX fetching for messages #}
-        {#<aside class="c-messenger__sidebar c-fullflex--scrollable">#}
-            {#{% include "Message/searchbar.html.twig" %}#}
-            {#{% include "Message/conversations.html.twig" with { customClass: 'c-conversation--compressed' } %}#}
-        {#</aside>#}
-
-        <section class="c-messenger__conversation" data-id="{{ conversation.id }}" id="conversationMessages">
-            <section class="c-messenger__conversation__options">
-                <div class="c-messenger__options__header o-row">
-                    <p class="c-messenger__options__header__meta">
+        <div id="conversationMessages" data-id="{{ conversation.id }}">
+            <section class="bb pb2 pb3-lg">
+                <div class="row">
+                    <div class="col-md-9 pb1 pb0-md">
                         Conversation with {{ msgutils.listMembers(conversation.members, true) }}
-                    </p>
-                    <p class="c-messenger__options__header__actions">
+                    </div>
+                    <div class="col-md-3 text-right-md">
                         {% if me.canEdit(conversation) %}
                             <i class="fa fa-user-plus collapsible-trigger" data-toggle="#InviteForm" title="Invite players to the conversation"></i>
                             <i class="fa fa-user-times"></i>
@@ -85,7 +79,7 @@
                                 <i class="fa fa-sign-out"></i>
                             </a>
                         {% endif %}
-                    </p>
+                    </div>
                 </div>
 
                 {% if me.canEdit(conversation) %}
@@ -99,8 +93,8 @@
 
                 <noscript>
                     <div class="c-messenger__conversation__archiver">
-                        <a href="{{ path('message_conversation_show', {conversation: conversation.id, end: (messages|first).id }) }}">
-                            <i class="fa fa-refresh"></i>
+                        <a href="{{ path('message_conversation_show', { conversation: conversation.id, end: (messages|first).id }) }}">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
                             <span>Load more recent messages</span>
                         </a>
                     </div>
@@ -116,6 +110,6 @@
                     {{ form_row(form.Send, {id: 'composeButton', attr: {'data-style': 'expand-right'} }) }}
                 </div>
             {{ form_end(form) }}
-        </section>
+        </div>
     </section>
 {% endblock %}

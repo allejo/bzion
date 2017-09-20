@@ -12,32 +12,34 @@
     {% set previousMessage = previousMessage.timestamp %}
 {% endif %}
 
-<ul class="c-messenger__conversation__messages">
+<ul class="c-messenger__conversation__messages p0">
     {% for message in messages|reverse %}
         {% if message.isMessage %}
-            <li class="message" data-id="{{ message.id }}">
+            <li class="message my2" data-id="{{ message.id }}">
                 {%- if message.author.id != previousAuthor or not previousMessage.isSameDay(message.timestamp) %}
-                    <div class="details">
-                        <div class="author">{{ link_to(message.author) }}</div>
-                        <div class="date">{{ message.timestamp | humanTime }}</div>
+                    <div class="details row mb1">
+                        <div class="author col-xs-8"><strong>{{ link_to(message.author) }}</strong></div>
+                        <div class="date col-xs-4 text-right">{{ message.timestamp | humanTime }}</div>
                     </div>
                 {% endif -%}
 
-                <p>{{ message.content|markdown(true, false) }}</p>
+                <article class="s-markdown">
+                    {{ message.content | markdown(allowImages=false) }}
+                </article>
             </li>
         {% else %}
             {% set type = message.category %}
             {% set event = message.event %}
 
-            <li class="action" data-id="{{ message.id }}">
+            <li class="action py1 text-center" data-id="{{ message.id }}">
                 {% if type == 'conversation.rename' %}
-                    <i class="fa fa-pencil"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
+                    <i class="fa fa-pencil" aria-hidden="true"></i> {{ link_to(event.player) }} renamed the discussion to "{{ event.newSubject }}"
                 {% elseif type == 'conversation.abandon' %}
-                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.member) }} left the discussion
+                    <i class="fa fa-hand-o-left" aria-hidden="true"></i> {{ link_to(event.member) }} left the discussion
                 {% elseif type == 'conversation.kick' %}
-                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left the discussion
+                    <i class="fa fa-hand-o-left" aria-hidden="true"></i> {{ link_to(event.kicked) }} left the discussion
                 {% elseif type == 'conversation.join' %}
-                    <i class="fa fa-plus-circle"></i>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     {% for member in event.newMembers -%}
                         {%- if not loop.first -%}
                             {%- if loop.last %} and
@@ -51,11 +53,11 @@
                     {%- endfor %}
                     joined the discussion
                 {% elseif type == 'team.join' %}
-                    <i class="fa fa-plus-circle"></i> {{ link_to(event.player) }} joined {{ link_to(event.team) }}
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> {{ link_to(event.player) }} joined {{ link_to(event.team) }}
                 {% elseif type == 'team.abandon' %}
-                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.player) }} left {{ link_to(event.team) }}
+                    <i class="fa fa-hand-o-left" aria-hidden="true"></i> {{ link_to(event.player) }} left {{ link_to(event.team) }}
                 {% elseif type == 'team.kick' %}
-                    <i class="fa fa-hand-o-left"></i> {{ link_to(event.kicked) }} left {{ link_to(event.team) }}
+                    <i class="fa fa-hand-o-left" aria-hidden="true"></i> {{ link_to(event.kicked) }} left {{ link_to(event.team) }}
                 {% endif %}
             </li>
         {% endif %}

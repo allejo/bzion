@@ -41,7 +41,7 @@
 
         {% if me is valid %}
             <li class="u-show u-hide-sm">
-                <ul class="bt mr-last-reset is-horizontal text-center">
+                <ul class="by mr-last-reset is-horizontal text-center">
                     {{ _self.userOptions('mr2') }}
                 </ul>
             </li>
@@ -49,10 +49,6 @@
 
         {% if pageButtons is not null %}
             {% for button in pageButtons if button.condition %}
-                {% if loop.first %}
-                    <li class="c-site_pages__separator my2"></li>
-                {% endif %}
-
                 <li class="c-site_pages__action">
                     <a href="{{ button.url }}">
                         <i class="fa fa-{{ button.icon }} fa-fw" aria-hidden="true"></i> {{- button.text -}}

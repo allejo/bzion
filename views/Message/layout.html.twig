@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% set scopeClass = "s-messaging" %}
-
 {% block title %}{{ viewTitle }}{% endblock %}
 
 {% block button_row %}
@@ -18,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="o-container">
+    <div class="container">
         {% block messages_body %}
 
         {% endblock %}
@@ -26,10 +24,8 @@
 {% endblock %}
 
 {% block jsCustom %}
-    <script src="{{ asset('assets/js/autocomplete.js') }}"></script>
     <script src="{{ asset('includes/ladda/dist/spin.min.js') }}"></script>
     <script src="{{ asset('includes/ladda/dist/ladda.min.js') }}"></script>
-    <script src="{{ asset('components/select2/dist/js/select2.js') }}"></script>
     <script src="{{ asset('assets/js/messages.js') }}"></script>
 {% endblock %}
 

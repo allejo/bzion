@@ -1,45 +1,8 @@
-// A Messenger defines the view with a list of conversations on the side and a main view of the current conversation
-.c-messenger {
-    @include view-container();
-
-    margin: 0;
-}
-
-// The sidebar in this view contains the search bar and the list of conversations
-.c-messenger__sidebar {
-    @include view-columns(md, 4);
-    @include view-columns(xxl, 3);
-
-    border-left: $Border-Default;
-    border-right: $Border-Default;
-    display: none;
-
-    @include respond-up(md) {
-        display: block;
-    }
-}
-
 // This container has the current conversation and all of the chat messages
 // @TODO Reenable the columns and remove the left border when the sidebar is added back
 .c-messenger__conversation {
-    @include view-columns(xs, 12);
-    //@include view-columns(md, 8);
-    //@include view-columns(xxl, 9);
-
-    border-left: $Border-Default;
-    border-right: $Border-Default;
     display: flex;
     flex-direction: column;
-}
-
-// Since we are inheriting OnTheRocks' grid system, we need to clear the padding that is automatically added
-// @todo Get rid of these !importants
-.c-messenger__sidebar,
-.c-messenger__conversation {
-    padding: {
-        left: 0 !important;
-        right: 0 !important;
-    }
 }
 
 // This is the element that actually contains all of the elements that make up the actually "messaging app UI" which
@@ -55,25 +18,6 @@
 .c-messenger__conversation__options {
     border-bottom: $Border-Default;
     padding: $Settings-Page_Section-Small_Margin;
-}
-
-.c-messenger__options__header {
-
-}
-
-.c-messenger__options__header__meta {
-    @include view-columns(xs, 9);
-}
-
-.c-messenger__options__header__actions {
-    @include view-columns(xs, 3);
-
-    text-align: right;
-
-    i {
-        color: $Color-Medium_Grey;
-        margin-left: $Settings-Page_Section-Tiny_Margin;
-    }
 }
 
 .c-messenger__option {
@@ -128,50 +72,13 @@
 // This object actually contains the list of messages as individual objects. This element will be much taller than its
 // parent container.
 .c-messenger__conversation__messages {
-    padding: {
-        left: $Settings-Page_Section-Small_Margin;
-        right: $Settings-Page_Section-Small_Margin;
-    }
-
     li {
         list-style-type: none;
-        margin: {
-            bottom: 10px;
-            top: 10px;
-        }
         overflow: hidden; // @FIXME this shouldn't be needed since view-container() shouldn't escape our parent
 
+        .date,
         &.action {
-            color: $Color-Medium_Grey;
             font-size: 0.8em;
-            margin: {
-                bottom: 5px;
-                top: 5px;
-            }
-            text-align: center;
-        }
-
-        &.message {
-            .details {
-                @include view-container();
-
-                margin-bottom: 5px;
-
-                .author,
-                .date {
-                    @include view-columns(xs, 6);
-                }
-
-                .author {
-
-                }
-
-                .date {
-                    font-size: 12px;
-                    margin: 0;
-                    text-align: right;
-                }
-            }
         }
     }
 }
