@@ -339,9 +339,11 @@
                              aria-labelledby="tabs__header__matches"
                              aria-hidden="false"
                         >
+                            {% set recentMatches = team.matches('all', 6) %}
+
                             <h4 class="mb2">Recent Matches</h4>
                             <div class="row">
-                                {% for match in team.matches('all', 6) %}
+                                {% for match in recentMatches %}
                                     <div class="col-lg-6 mb2">
                                         <article class="d-flex align-items-center">
                                             <div class="mr2">
@@ -371,16 +373,22 @@
                                             </div>
                                         </article>
                                     </div>
+                                {% else %}
+                                    <div class="col-xs-12">
+                                        <p class="mb0"><em>This team has not played any recent matches</em></p>
+                                    </div>
                                 {% endfor %}
                             </div>
 
-                            <div class="by text-center">
-                                <a class="d-block p2"
-                                   href="{{ path('match_by_team_list', { team: team.alias }) }}"
-                                >
-                                    View more matches...
-                                </a>
-                            </div>
+                            {% if recentMatches is not empty %}
+                                <div class="by text-center">
+                                    <a class="d-block p2"
+                                       href="{{ path('match_by_team_list', { team: team.alias }) }}"
+                                    >
+                                        View more matches...
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
