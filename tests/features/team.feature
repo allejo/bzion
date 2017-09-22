@@ -6,7 +6,7 @@ Feature: Teams
   Scenario: List teams
     Given I have a team called "Fractional disguise"
     And I have a team called "Irresolute serpents"
-    When I go to "/teams"
+    When I go to "/teams?showAll=1"
     Then I should see "Fractional disguise"
     And I should see "Irresolute serpents"
     And I should see "Teams" in the title
@@ -49,14 +49,14 @@ Feature: Teams
     When I go to "/teams/shatterproof-reservoir"
     And I follow "Delete"
     And I press "Delete"
-    Then I should be on "/teams"
+    Then I should be on "/teams?showAll=1"
     And I should see "The team Shatterproof Reservoir was deleted successfully"
     When I go to "/teams/parlous-provender"
     And I follow "Delete"
     And I press "Cancel"
     Then I should be on "/teams/parlous-provender"
     When I log out
-    And I go to "/teams"
+    And I go to "/teams?showAll=1"
     Then I should see "Parlous Provender"
     But I should not see "Shatterproof Reservoir"
 
