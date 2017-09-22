@@ -92,10 +92,13 @@
     <section class="container mb3">
         <div class="row mb2">
             <div class="col-md-8">
-                <h2 class="mb1">Active Teams</h2>
+                <h2 class="mb0">
+                    Active Teams
+                    {% if not showAll %}<small><a href="{{ url_modify({'showAll': 1}) }}">[Show All]</a></small>{% endif %}
+                </h2>
             </div>
             <div class="col-md-4 u-hide u-show-md text-right">
-                <p class="mb0">Wins - Losses - Draws</p>
+                <p class="mb0 mt1">Wins - Losses - Draws</p>
             </div>
         </div>
 
@@ -104,22 +107,25 @@
                 {{ _self.teamWidget(team) }}
             {% endfor %}
         </div>
-    </section>
 
-    <section class="container mb3">
-        <div class="row mb2">
-            <div class="col-md-8">
-                <h2 class="mb0">Inactive Teams</h2>
+        {% if showAll %}
+            <div class="row mb2 mt3">
+                <div class="col-md-8">
+                    <h2 class="mb0">
+                        Inactive Teams
+                        {% if showAll %}<small><a href="{{ url_modify({'showAll': null}) }}">[Hide Inactive]</a></small>{% endif %}
+                    </h2>
+                </div>
+                <div class="col-md-4 u-hide u-show-md text-right">
+                    <p class="mb0 mt1">Wins - Losses - Draws</p>
+                </div>
             </div>
-            <div class="col-md-4 u-hide u-show-md text-right">
-                <p class="mb0">Wins - Losses - Draws</p>
-            </div>
-        </div>
 
-        <div class="bb-last-reset mb-last-reset pb-last-reset">
-            {% for team in teams if team.activity == 0 %}
-                {{ _self.teamWidget(team) }}
-            {% endfor %}
-        </div>
+            <div class="bb-last-reset mb-last-reset pb-last-reset">
+                {% for team in teams if team.activity == 0 %}
+                    {{ _self.teamWidget(team) }}
+                {% endfor %}
+            </div>
+        {% endif %}
     </section>
 {% endblock %}

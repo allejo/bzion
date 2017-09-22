@@ -4,6 +4,7 @@ use BZIon\Event as Event;
 use BZIon\Event\Events;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class TeamController extends CRUDController
 {
@@ -32,7 +33,7 @@ class TeamController extends CRUDController
         ];
     }
 
-    public function listAction()
+    public function listAction(Request $request)
     {
         Team::$cachedMatches = Match::getQueryBuilder()
             ->where('time')->isAfter(TimeDate::from('45 days ago'))
@@ -44,7 +45,8 @@ class TeamController extends CRUDController
             ->getModels($fast = true);
 
         return array(
-            "teams" => $teams
+            "teams"   => $teams,
+            'showAll' => (bool)$request->get('showAll', false)
         );
     }
 
