@@ -51,7 +51,7 @@
         "clear": [
             "BZIon\\Composer\\ScriptHandler::clearCache"
         ],
-        "upgrade": [
+        "upgrade-dist": [
             "git fetch && latestTag=$(git describe --tags `git rev-list --tags --max-count=1`) && git checkout $latestTag",
             "git submodule sync",
             "git submodule update --init",
