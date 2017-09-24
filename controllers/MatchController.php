@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,9 +80,9 @@ class MatchController extends CRUDController
     public function deleteAction(Player $me, Match $match)
     {
         return $this->delete($match, $me, function () use ($match, $me) {
-            if ($match->getTeamA()->isLastMatch($match)
-                && $match->getTeamB()->isLastMatch($match)) {
-                $match->resetELOs();
+            if ($match->getTeamA()->isLastMatch($match) && $match->getTeamB()->isLastMatch($match)) {
+                $match->resetTeamElos();
+                $match->resetPlayerElos();
             } elseif ($me->canEdit($match)) {
                 $url = Service::getGenerator()->generate('match_recalculate', array(
                     'match' => $match->getId(),
@@ -176,6 +177,9 @@ class MatchController extends CRUDController
         return $messages;
     }
 
+    /**
+     * @param Form $form
+     */
     protected function validate($form)
     {
         // Make sure that two different teams participated in a match, i.e. a team
@@ -217,6 +221,10 @@ class MatchController extends CRUDController
         }
     }
 
+    /**
+     * @param Form $form
+     * @param Match $match
+     */
     protected function validateEdit($form, $match)
     {
         if ($match->isOfficial() && $form->get('type')->getData() !== Match::OFFICIAL) {

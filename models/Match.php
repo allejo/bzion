@@ -889,7 +889,7 @@ class Match extends UrlModel implements NamedModel
      *
      * @return self
      */
-    public function resetELOs()
+    public function resetTeamElos()
     {
         if ($this->match_type === self::OFFICIAL) {
             $this->getTeamA()->supportsMatchCount() && $this->getTeamA()->changeELO(-$this->elo_diff);
@@ -1124,6 +1124,14 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Remove Elo recordings for players participating in this match
+     */
+    public function resetPlayerElos()
+    {
+        $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
+    }
+
+    /**
      * Recalculate the match's elo and adjust the team ELO values
      */
     public function recalculateElo()
@@ -1135,7 +1143,7 @@ class Match extends UrlModel implements NamedModel
         $a = $this->getTeamA();
         $b = $this->getTeamB();
 
-        $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
+        $this->resetPlayerElos();
 
         foreach ($this->getPlayers() as $player) {
             $player->invalidateMatchFromCache($this);
