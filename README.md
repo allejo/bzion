@@ -7,10 +7,6 @@
 
 BZiON is a modern league management system (LMS) written for BZFlag leagues to manage players, teams, matches, and tournaments.
 
-> **Heads up!**
->
-> The master branch is currently in a feature freeze for the upcoming **0.10.0** release. Treat the master branch as "Release Candidate" status.
-
 ## Project Maintainers
 
 These individuals are charged with maintaining and leading the project.
