@@ -61,25 +61,30 @@ liip_imagine:
             filters:
                 background: ~
                 thumbnail: { size: [600, 338], mode: outbound }
-        huge_thumb:
+        profile_picture:
             png_compression_level: 9
             filters:
                 background: ~
                 thumbnail: { size: [500, 500], mode: inset }
+        huge_thumb:
+            png_compression_level: 9
+            filters:
+                background: { color: '#000000', position: center }
+                thumbnail: { size: [500, 500], mode: outbound }
         large_thumb:
             png_compression_level: 9
             filters:
-                background: ~
-                thumbnail: { size: [200, 200], mode: inset }
+                background: { color: '#000000', position: center }
+                thumbnail: { size: [200, 200], mode: outbound }
         medium_thumb:
             png_compression_level: 9
             filters:
-                background: ~
+                background: { color: '#000000', position: center }
                 thumbnail: { size: [60, 60], mode: outbound }
         small_thumb:
             png_compression_level: 9
             filters:
-                background: ~
+                background: { color: '#000000', position: center }
                 thumbnail: { size: [50, 50], mode: outbound }
 
 nelmio_api_doc: ~
