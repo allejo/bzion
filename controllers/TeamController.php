@@ -40,12 +40,21 @@ class TeamController extends CRUDController
             ->active()
             ->getModels($fast = true);
 
-        $teams = $this->getQueryBuilder()
+        $teamQB = $this->getQueryBuilder()
+            ->active()
             ->sortBy('elo')->reverse()
-            ->getModels($fast = true);
+        ;
+
+        // Cache team captains so we don't fetch each manually
+        $captains = $teamQB->getArray('leader');
+        $captIDs = array_column($captains, 'leader');
+        Player::getQueryBuilder()
+            ->where('id')->isOneOf($captIDs)
+            ->addToCache()
+        ;
 
         return array(
-            "teams"   => $teams,
+            "teams"   => $teamQB->getModels($fast = true),
             'showAll' => (bool)$request->get('showAll', false)
         );
     }

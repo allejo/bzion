@@ -643,6 +643,7 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
             'columns' => array(
                 'name'    => 'name',
                 'elo'     => 'elo',
+                'leader'  => 'leader',
                 'members' => 'members',
                 'status'  => 'status'
             ),
