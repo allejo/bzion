@@ -35,12 +35,7 @@ class TeamController extends CRUDController
 
     public function listAction(Request $request)
     {
-        Team::$cachedMatches = Match::getQueryBuilder()
-            ->where('time')->isAfter(TimeDate::from('45 days ago'))
-            ->active()
-            ->getModels($fast = true);
-
-        $teamQB = $this->getQueryBuilder()
+        $teamQB = Team::getQueryBuilder()
             ->active()
             ->sortBy('elo')->reverse()
         ;
@@ -53,10 +48,10 @@ class TeamController extends CRUDController
             ->addToCache()
         ;
 
-        return array(
-            "teams"   => $teamQB->getModels($fast = true),
-            'showAll' => (bool)$request->get('showAll', false)
-        );
+        return [
+            'teams'   => $teamQB->withMatchActivity()->getModels($fast = true),
+            'showAll' => (bool)$request->get('showAll', false),
+        ];
     }
 
     public function createAction(Player $me)

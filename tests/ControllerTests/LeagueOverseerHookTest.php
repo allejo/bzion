@@ -530,7 +530,7 @@ class LeagueOverseerHookTest extends TestCase
             'teamOneColor' => 'Red',
             'teamTwoColor' => 'Purple',
             'duration' => 30,
-            'matchTime' => '17-08-01 13:00:00',
+            'matchTime' => TimeDate::now()->format(\DATE_ATOM),
             'server' => 'localhost:5154',
             'port' => 5154,
             'replayFile' => 'my-replay-file.rec',

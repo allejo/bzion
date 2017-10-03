@@ -92,13 +92,6 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
     protected $status;
 
     /**
-     * A list of cached matches to calculate team activity
-     *
-     * @var Match[]|null
-     */
-    public static $cachedMatches = null;
-
-    /**
      * The name of the database table used for queries
      */
     const TABLE = "teams";
@@ -124,7 +117,6 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
         $this->avatar = $team['avatar'];
         $this->created = TimeDate::fromMysql($team['created']);
         $this->elo = $team['elo'];
-        $this->activity = null;
         $this->leader = $team['leader'];
         $this->matches_won = $team['matches_won'];
         $this->matches_lost = $team['matches_lost'];
@@ -133,6 +125,8 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
         $this->status = $team['status'];
 
         $this->matches_total = $this->matches_won + $this->matches_lost + $this->matches_draw;
+
+        $this->activity = isset($team['activity']) ? $team['activity'] : 0;
     }
 
     /**
@@ -221,24 +215,6 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
      */
     public function getActivity()
     {
-        if ($this->activity === null) {
-            // We don't have a cached activity value
-            if (self::$cachedMatches === null) {
-                self::$cachedMatches = Match::getQueryBuilder()
-                    ->active()
-                    ->with($this)
-                    ->where('time')->isAfter(TimeDate::from('45 days ago'))
-                    ->getModels($fast = true);
-            }
-
-            $this->activity = 0.0;
-            foreach (self::$cachedMatches as $match) {
-                if ($match->involvesTeam($this)) {
-                    $this->activity += $match->getActivity();
-                }
-            }
-        }
-
         return $this->activity;
     }
 
@@ -569,7 +545,6 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
             'alias'        => self::generateAlias($name),
             'description'  => $description,
             'elo'          => 1200,
-            'activity'     => 0.00,
             'matches_won'  => 0,
             'matches_draw' => 0,
             'matches_lost' => 0,
@@ -634,12 +609,36 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getEagerColumns($prefix = null)
+    {
+        $columns = [
+            'id',
+            'name',
+            'alias',
+            'description',
+            'avatar',
+            'created',
+            'elo',
+            'leader',
+            'matches_won',
+            'matches_lost',
+            'matches_draw',
+            'members',
+            'status',
+        ];
+
+        return self::formatColumns($prefix, $columns);
+    }
+
+    /**
      * Get a query builder for teams
-     * @return QueryBuilder
+     * @return TeamQueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Team', array(
+        return new TeamQueryBuilder('Team', array(
             'columns' => array(
                 'name'    => 'name',
                 'elo'     => 'elo',
