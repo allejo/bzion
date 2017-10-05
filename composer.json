@@ -12,7 +12,7 @@
         "erusev/parsedown"           : "~1.5",
         "ext-gd"                     : "*",
         "jms/serializer-bundle"      : "~0.13",
-        "liip/imagine-bundle"        : "1.4.*",
+        "liip/imagine-bundle"        : "~1.9.0",
         "mcaskill/php-array-group-by": "dev-master",
         "nesbot/carbon"              : "~1.14",
         "nelmio/api-doc-bundle"      : "~2.7",
