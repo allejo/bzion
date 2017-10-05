@@ -14,6 +14,7 @@ web/bundles
 app/lastupdate.yml
 *.css.map
 assets/ranks/sprites/*.png
+web/build/manifest.json
 
 # Test files #
 ##############
