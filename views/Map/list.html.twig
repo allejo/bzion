@@ -77,7 +77,7 @@
                                     </li>
                                 {% endif %}
                                 {% if map.ricochetEnabled is not null %}
-                                    {% set status = map.jumpingEnabled ? 'enabled' : 'disabled' %}
+                                    {% set status = map.ricochetEnabled ? 'enabled' : 'disabled' %}
                                     <li>
                                         <small>
                                             <span class="sr-only">Ricochet is {{ status }} on this map</span>
