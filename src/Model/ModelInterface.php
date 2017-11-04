@@ -21,6 +21,13 @@ interface ModelInterface
      * @return void
      */
     public function delete();
+
+    /**
+     * Undo the deletion of a model marked as "deleted" in the database
+     * @return void
+     */
+    public function restore();
+
     /**
      * Permanently delete the object from the database
      * @return void

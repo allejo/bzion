@@ -54,11 +54,7 @@ class News extends UrlModel implements NamedModel
      */
     protected $editor;
 
-    /**
-     * The status of the news article
-     * @var string
-     */
-    protected $status;
+    const DEFAULT_STATUS = 'published';
 
     /**
      * The name of the database table used for queries

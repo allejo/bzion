@@ -91,6 +91,8 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
      */
     protected $status;
 
+    const DEFAULT_STATUS = 'closed';
+
     /**
      * The name of the database table used for queries
      */

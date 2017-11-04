@@ -69,12 +69,6 @@ class Server extends UrlModel implements NamedModel
     protected $updated;
 
     /**
-     * The server's status
-     * @var string
-     */
-    protected $status;
-
-    /**
      * The name of the database table used for queries
      */
     const TABLE = "servers";

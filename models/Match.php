@@ -155,11 +155,7 @@ class Match extends UrlModel implements NamedModel
      */
     protected $entered_by;
 
-    /**
-     * The status of the match. Can be 'entered', 'disabled', 'deleted' or 'reported'
-     * @var string
-     */
-    protected $status;
+    const DEFAULT_STATUS = 'entered';
 
     /**
      * The name of the database table used for queries
@@ -1211,14 +1207,6 @@ class Match extends UrlModel implements NamedModel
         $this->updateMatchCount(true);
 
         parent::delete();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getActiveStatuses()
-    {
-        return array('entered');
     }
 
     /**

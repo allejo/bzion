@@ -52,7 +52,7 @@ abstract class Model extends CachedModel
     public function getStatus()
     {
         if (!isset($this->status)) {
-            return 'active';
+            $this->status = static::DEFAULT_STATUS;
         }
 
         return $this->status;
@@ -86,7 +86,7 @@ abstract class Model extends CachedModel
      */
     public static function getActiveStatuses()
     {
-        return array('active');
+        return [static::DEFAULT_STATUS];
     }
 
     /**

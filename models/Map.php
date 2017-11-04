@@ -222,14 +222,6 @@ class Map extends AvatarModel implements NamedModel
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function getActiveStatuses()
-    {
-        return array('active');
-    }
-
-    /**
      * Get a query builder for news
      * @return QueryBuilder
      */

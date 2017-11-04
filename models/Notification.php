@@ -41,21 +41,12 @@ class Notification extends Model
     protected $event;
 
     /**
-     * The status of the notification (unread, read, deleted)
-     * @var string
-     */
-    protected $status;
-
-    /**
-     * When the notification was sent
-     * @var TimeDate
-     */
-
-    /**
      * Services that will be notified when a new notification is created
      * @var NotificationAdapter[]
      */
     private static $adapters = array();
+
+    const DEFAULT_STATUS = 'read';
 
     /**
      * The name of the database table used for queries
@@ -135,6 +126,7 @@ class Notification extends Model
     {
         return Player::get($this->receiver);
     }
+
     /**
      * Get the type of the notification
      *
