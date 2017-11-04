@@ -282,6 +282,10 @@ team_delete:
     path:     /teams/{team}/delete
     defaults: { _controller: 'Team', _action: 'delete' }
 
+team_restore:
+    path:     /teams/{team}/restore
+    defaults: { _controller: 'Team', _action: 'restore' }
+
 team_kick:
     path:     /teams/{team}/kick/{player}
     defaults: { _controller: 'Team', _action: 'kick' }

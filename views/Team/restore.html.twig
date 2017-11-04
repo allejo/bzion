@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Teams :: {{ team.name }} :: {{ Restoration }}{% endblock %}
+
+{% block pageTitle %}
+    <h1>Restoring "{{ team.name }}"</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p>Are you sure you would like to restore <strong>{{ team.name }}</strong>?</p>
+
+        {% if form.leader %}
+            <ul>
+                <li>The previous leader of this team now belongs to a new team. Please select a new teamless player to take leadership of this team.</li>
+            </ul>
+        {% endif %}
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {% if form.leader %}
+                <div class="mb3">
+                    {{ form_row(form.leader) }}
+                </div>
+            {% endif %}
+
+            <div class="text-center">
+                {{ form_widget(form.cancel) }}
+                {{ form_widget(form.submit) }}
+            </div>
+
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
