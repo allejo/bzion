@@ -333,21 +333,29 @@
                                         <h4>Previous Callsigns</h4>
 
                                         <ul>
-                                            {% for callsign in player.pastCallsigns %}
-                                                <li>{{ callsign }}</li>
+                                            {% if app.demoMode %}
+                                                <li><em>Previous callsigns are not displayed in demo mode</em></li>
                                             {% else %}
-                                                <li><em>There are no known previous callsigns</em></li>
-                                            {% endfor %}
+                                                {% for callsign in player.pastCallsigns %}
+                                                    <li>{{ callsign }}</li>
+                                                {% else %}
+                                                    <li><em>There are no known previous callsigns</em></li>
+                                                {% endfor %}
+                                            {% endif %}
                                         </ul>
                                     </div>
                                     <div class="col-md-6">
                                         <h4>Known IP Addresses</h4>
                                         <ul>
-                                            {% for address in player.knownIPs %}
-                                                <li>{{ address.ip }} - {{ address.host }}</li>
+                                            {% if app.demoMode %}
+                                                <li><em>IP addresses are not displayed in demo mode</em></li>
                                             {% else %}
-                                                <li><em>There are no recorded IP addresses</em></li>
-                                            {% endfor %}
+                                                {% for address in player.knownIPs %}
+                                                    <li>{{ address.ip }} - {{ address.host }}</li>
+                                                {% else %}
+                                                    <li><em>There are no recorded IP addresses</em></li>
+                                                {% endfor %}
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
@@ -355,12 +363,18 @@
                                 <article>
                                     <h4>Admin Notes</h4>
 
-                                    {{ form_start(adminNotesForm, { 'attr': { 'class': '' } }) }}
-                                        {{ form_errors(adminNotesForm) }}
+                                    {% if adminNotesForm %}
+                                        {{ form_start(adminNotesForm, { 'attr': { 'class': '' } }) }}
+                                            {{ form_errors(adminNotesForm) }}
 
-                                        {{ form_row(adminNotesForm.notes, { attr: { 'class': '' }, label: false }) }}
-                                        {{ form_rest(adminNotesForm) }}
-                                    {{ form_end(adminNotesForm) }}
+                                            {{ form_row(adminNotesForm.notes, { attr: { 'class': '' }, label: false }) }}
+                                            {{ form_rest(adminNotesForm) }}
+                                        {{ form_end(adminNotesForm) }}
+                                    {% else %}
+                                        {% if app.demoMode %}
+                                            <p><em>Admin notes are not displayed while the site is in demo mode.</em></p>
+                                        {% endif %}
+                                    {% endif %}
                                 </article>
                             </div>
                         {% endif %}

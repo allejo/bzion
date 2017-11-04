@@ -74,6 +74,16 @@ class AppGlobal
     }
 
     /**
+     * Find out whether the site is in demo mode
+     *
+     * @return bool
+     */
+    public function isDemoMode()
+    {
+        return $this->container->getParameter('bzion.miscellaneous.demo_mode');
+    }
+
+    /**
      * Get the name of the website
      *
      * @return string

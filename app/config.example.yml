@@ -61,6 +61,8 @@ bzion:
         development: false
         # Set to true to enable maintenance mode
         maintenance: false
+        # Setting this to true will hide all private information recorded, such as IP addresses
+        demo_mode: false
         # This is a string that should be unique to your installation and it's
         # commonly used to add more entropy to security related operations.
         # Its value should be a series of characters, numbers and symbols chosen

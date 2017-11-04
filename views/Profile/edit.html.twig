@@ -41,7 +41,7 @@
                     <div class="mb3">
                         <label for="{{ form.email.vars.id }}">
                             {{ form.email.vars.label }}
-                            {% if not editingSelf and player.emailAddress is not empty %}
+                            {% if not editingSelf and player.emailAddress is not empty and not app.demoMode %}
                                 {% if player.verified %}
                                     <span class="ml1">
                                         <i class="fa fa-check-circle"
@@ -61,8 +61,18 @@
                                 {% endif %}
                             {% endif %}
                         </label>
+
+                        {% if app.demoMode %}
+                            {% set emailAttrs = {
+                                attr: { disabled: 'true' },
+                                value: 'demo_user@domain.com'
+                            } %}
+                        {% else %}
+                            {% set emailAttrs = {} %}
+                        {% endif %}
+
                         {{ form_errors(form.email) }}
-                        {{ form_widget(form.email) }}
+                        {{ form_widget(form.email, emailAttrs) }}
                     </div>
 
                     <div class="mb3">

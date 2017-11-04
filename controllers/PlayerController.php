@@ -13,7 +13,7 @@ class PlayerController extends JSONController
     {
         $formView = null;
 
-        if ($me->hasPermission(Permission::VIEW_VISITOR_LOG)) {
+        if ($me->hasPermission(Permission::VIEW_VISITOR_LOG) && !$this->isDemoMode()) {
             $this->creator = new FormCreator($player);
             $form = $this->creator->create()->handleRequest($request);
 

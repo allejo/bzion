@@ -430,6 +430,16 @@ abstract class Controller
     }
 
     /**
+     * Find out whether the site is in demo mode
+     *
+     * @return bool
+     */
+    public function isDemoMode()
+    {
+        return $this->container->getParameter('bzion.miscellaneous.demo_mode');
+    }
+
+    /**
      * Gets the monolog logger
      *
      * @param  string         $channel The log channel, defaults to the Controller's default

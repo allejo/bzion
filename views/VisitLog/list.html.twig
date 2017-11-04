@@ -36,43 +36,49 @@
                 <div class="c-table__row__column c-visit__useragent">User agent</div>
             </div>
 
-            {% for visit in visits %}
-                <div class="c-table__row c-visit">
-                    <div class="c-table__row__column c-visit__ip">
-                        <span class="c-visit__label">IP Address:</span>
-                        {{ visit.ipAddress }}
-                    </div>
-                    <div class="c-table__row__column c-visit__host">
-                        <span class="c-visit__label">Host:</span>
-                        {{ visit.host }}
-                    </div>
-                    <div class="c-table__row__column c-visit__player">
-                        <span class="c-visit__label">Player:</span>
-                        {{ link_to(visit.player) }}
-                        <span class="c-visit__player__bzid">{{ visit.player.bzid }}</span>
-                    </div>
-                    <div class="c-table__row__column c-visit__roles">
-                        {% for role in visit.player.roles if role.displayIcon %}
-                            {% if loop.first %}
-                                <span class="c-visit__label">Player Roles:</span>
-                            {% endif %}
+            {% if not app.demoMode %}
+                {% for visit in visits %}
+                    <div class="c-table__row c-visit">
+                        <div class="c-table__row__column c-visit__ip">
+                            <span class="c-visit__label">IP Address:</span>
+                            {{ visit.ipAddress }}
+                        </div>
+                        <div class="c-table__row__column c-visit__host">
+                            <span class="c-visit__label">Host:</span>
+                            {{ visit.host }}
+                        </div>
+                        <div class="c-table__row__column c-visit__player">
+                            <span class="c-visit__label">Player:</span>
+                            {{ link_to(visit.player) }}
+                            <span class="c-visit__player__bzid">{{ visit.player.bzid }}</span>
+                        </div>
+                        <div class="c-table__row__column c-visit__roles">
+                            {% for role in visit.player.roles if role.displayIcon %}
+                                {% if loop.first %}
+                                    <span class="c-visit__label">Player Roles:</span>
+                                {% endif %}
 
-                            <i title="{{ role.name }}" class="fa {{ role.displayIcon }}"></i>
-                        {% endfor %}
+                                <i title="{{ role.name }}" class="fa {{ role.displayIcon }}"></i>
+                            {% endfor %}
+                        </div>
+                        <div class="c-table__row__column c-visit__timestamp">
+                            <span class="c-visit__label">Timestamp:</span>
+                            {{ visit.timestamp|humanTime }}
+                        </div>
+                        <div class="c-table__row__column c-visit__useragent">
+                            <span class="c-visit__label">User Agent:</span>
+                            {{ visit.userAgent }}
+                        </div>
                     </div>
-                    <div class="c-table__row__column c-visit__timestamp">
-                        <span class="c-visit__label">Timestamp:</span>
-                        {{ visit.timestamp|humanTime }}
-                    </div>
-                    <div class="c-table__row__column c-visit__useragent">
-                        <span class="c-visit__label">User Agent:</span>
-                        {{ visit.userAgent }}
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p><em>The visit log is disabled in demo mode.</em></p>
+            {% endif %}
         </section>
 
-        {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+        {% if not app.demoMode %}
+            {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
+        {% endif %}
     </section>
 {% endblock %}
 
