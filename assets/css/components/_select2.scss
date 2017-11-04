@@ -6,8 +6,6 @@ span.select2 {
     .select2-selection {
         @include theme-rule(background-color, 'form.background');
         @include theme-rule(border, 'border.default');
-
-        height: 34px;
     }
 
     .select2-selection,
@@ -16,8 +14,6 @@ span.select2 {
     }
 
     .select2-selection__arrow {
-        height: 32px;
-
         b {
             @include theme-rule(border-color, 'form.select2.arrow_color_up');
         }
