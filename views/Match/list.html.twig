@@ -54,59 +54,23 @@
             </div>
         {% endif %}
 
-        {# *** Heads Up *** #}
-        {# This section will cause IDEs to complain about unmatched tags; that's normal. We're the eHarmony of tag matching, #}
-        {# all the tags will match up when generated. #}
-
         <div data-name="Match Container">
+            {% for date in matches | keys %}
+                <article class="mb3">
+                    <header>
+                        <h4 class="mb2">
+                            {{ date }}
+                        </h4>
+                    </header>
 
-            {% set dateFormat = constant('TimeDate::DATE_MEDIUM') %}
-            {% set dateFormatArchive = constant('TimeDate::DATE_FULL') %}
-            {% set lastMatchDate = "" %}
-
-            {% for match in matches %}
-                {% set currentMatchDate = match.timestamp.format(dateFormat) %}
-
-                {# We've changed to another day, This will alwats happen on the first run, and it's intentional that #}
-                {# it behaves like this. #}
-                {% if lastMatchDate != currentMatchDate %}
-
-                    {# We've changed changes again, so close the previous section #}
-                    {% if not loop.first %}
-                            </section> {# Closes .bb-last-reset #}
-                        </article> {# Closes .mb3 #}
-                    {% endif %}
-
-                    {# This is the beginning of a group of matches that took place on a given day #}
-                    <article class="mb3">
-                        <header>
-                            {% set currentYear = "now" | date("Y") %}
-
-                            <h4 class="mb2">
-                                {%- if match.timestamp.year != currentYear -%}
-                                    {%- set format = dateFormatArchive -%}
-                                {%- else -%}
-                                    {%- set format = dateFormat -%}
-                                {%- endif -%}
-                                {{ match.timestamp | humanTime(format, tooltip = false) }}
-                            </h4>
-                        </header>
-
-                        <section class="bb-last-reset">
-                {% endif %}
-
-                {# Surround each match widget with a border and padding #}
-                <div class="bb mb2 pb2">
-                    {{ match_widget(match, false) }}
-                </div>
-
-                {# Update the last timestamp to know whether the next match occurred on the same day or a different #}
-                {% set lastMatchDate = match.timestamp.format(dateFormat) %}
-
-                {# If we're on the last entry of the loop, then we need close the <section> we opened #}
-                {% if loop.last %}
-                    </section> {# Closes .bb-last-reset #}
-                {% endif %}
+                    <section class="bb-last-reset">
+                        {% for match in matches[date] %}
+                            <div class="bb mb2 pb2">
+                                {{ match_widget(match, false) }}
+                            </div>
+                        {% endfor %}
+                    </section>
+                </article>
             {% else %}
                 <p class="text-center my3">
                     {% if team %}
@@ -122,7 +86,6 @@
                     {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
                 </div>
             {% endif %}
-
-        </div> {# Closes div[data-name="Match Container"] #}
-    </div> {# Closes .container #}
+        </div>
+    </div>
 {% endblock %}

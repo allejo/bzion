@@ -21,37 +21,51 @@ class MatchController extends CRUDController
 
     public function listAction(Request $request, Player $me, Team $team = null, Player $player = null, $type = null)
     {
-        $qb = $this->getQueryBuilder();
-
+        /** @var MatchQueryBuilder $qb */
+        $qb = self::getQueryBuilder();
         $currentPage = $this->getCurrentPage();
 
         if ($player) {
             $team = $player;
         }
 
-        $query = $qb->sortBy('time')->reverse()
-               ->with($team, $type)
-               ->limit(50)->fromPage($currentPage);
+        $query = $qb
+            ->sortBy('time')->reverse()
+            ->with($team, $type)
+            ->limit(50)->fromPage($currentPage)
+        ;
 
         $matchType = $request->query->get('type', 'all');
 
-        if (in_array($matchType, array(Match::FUN, Match::OFFICIAL, Match::SPECIAL))) {
+        if (in_array($matchType, [Match::FUN, Match::OFFICIAL, Match::SPECIAL])) {
             $query->where('type')->is($matchType);
         }
 
         $matches = $query->getModels($fast = true);
 
+        /** @var Match $match */
         foreach ($matches as $match) {
             // Don't show wrong labels for matches
             $match->getOriginalTimestamp()->setTimezone($me->getTimezone());
         }
+
+        $matches = __::groupBy($matches, function ($match) {
+            /** @var Match $match */
+            $ts = $match->getOriginalTimestamp();
+
+            if ($ts->year !== TimeDate::now()->year) {
+                return $ts->format(TimeDate::DATE_FULL);
+            }
+
+            return $ts->format(TimeDate::DATE_MEDIUM);
+        });
 
         return [
             'matchType'   => $type,
             'matches'     => $matches,
             'team'        => $team,
             'currentPage' => $currentPage,
-            'totalPages'  => $qb->countPages()
+            'totalPages'  => $qb->countPages(),
         ];
     }
 

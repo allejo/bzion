@@ -373,9 +373,8 @@ abstract class Controller
      * The returned QueryBuilder will only show models visible to the currently
      * logged in user
      *
-     * @param  string|null The model whose query builder we should get (null
+     * @param string $type The model whose query builder we should get (null
      *                     to get the builder of the controller's model)
-     * @param string $type
      * @return QueryBuilder
      */
     public static function getQueryBuilder($type = null)

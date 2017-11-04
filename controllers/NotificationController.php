@@ -13,7 +13,7 @@ class NotificationController extends HTMLController
         ;
 
         $notifications = $query->getModels($fast = true);
-        $notificationsGrouped = array_group_by($notifications, function ($item) {
+        $notificationsGrouped = __::groupBy($notifications, function ($item) {
             /** @var Notification $item */
             return $item->getTimestamp()->format('F Y');
         });

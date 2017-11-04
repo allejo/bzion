@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1db61ec7b684a690de07b8b90411fdfb",
+    "content-hash": "34b892dc362453b89c446f7d263772d5",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -1165,21 +1165,34 @@
             "time": "2017-09-09T03:53:30+00:00"
         },
         {
-            "name": "mcaskill/php-array-group-by",
+            "name": "maciejczyzewski/bottomline",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://gist.github.com/mcaskill/baaee44487653e1afc0d",
-                "reference": "636cfc90b2e71c4d355b1784429e1b6782f6ae08"
+                "url": "https://github.com/maciejczyzewski/bottomline.git",
+                "reference": "eafab94dda8800f9318a0ad9c76c4e800e61dd58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maciejczyzewski/bottomline/zipball/eafab94dda8800f9318a0ad9c76c4e800e61dd58",
+                "reference": "eafab94dda8800f9318a0ad9c76c4e800e61dd58",
+                "shasum": ""
             },
             "require": {
+                "ext-mbstring": "*",
                 "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
             },
             "type": "library",
             "autoload": {
                 "files": [
-                    "Function.Array-Group-By.php"
-                ]
+                    "bottomline.php"
+                ],
+                "psr-4": {
+                    "__\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1187,16 +1200,19 @@
             ],
             "authors": [
                 {
-                    "name": "Chauncey McAskill",
-                    "email": "chauncey@mcaskill.ca",
-                    "homepage": "https://github.com/mcaskill"
+                    "name": "Maciej A. Czyzewski",
+                    "email": "maciejanthonyczyzewski@gmail.com"
                 }
             ],
-            "description": "Groups an array by a given key.",
+            "description": "A full-on PHP manipulation utility-belt that provides support for the usual functional.",
             "keywords": [
-                "function"
+                "__",
+                "bottomline",
+                "functions",
+                "library",
+                "utility"
             ],
-            "time": "2017-04-16 18:33:00"
+            "time": "2017-10-29 11:05:59"
         },
         {
             "name": "michelf/php-markdown",
@@ -5300,7 +5316,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mcaskill/php-array-group-by": 20
+        "maciejczyzewski/bottomline": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
