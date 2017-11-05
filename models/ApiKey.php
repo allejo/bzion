@@ -8,8 +8,6 @@ class ApiKey extends Model
 
     protected $key;
 
-    protected $status;
-
     /**
      * The name of the database table used for queries
      */
@@ -62,11 +60,6 @@ class ApiKey extends Model
     public function getOwner()
     {
         return $this->owner;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     public static function getKeys($owner = -1)

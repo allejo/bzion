@@ -32,6 +32,13 @@ abstract class BaseModel implements ModelInterface
     protected $valid;
 
     /**
+     * The status of this model in the database; active, deleted, etc.
+     *
+     * @var string
+     */
+    protected $status;
+
+    /**
      * The database variable used for queries
      * @var Database
      */
@@ -42,6 +49,11 @@ abstract class BaseModel implements ModelInterface
      * @var bool
      */
     protected $loaded = false;
+
+    /**
+     * The default status value for deletable models
+     */
+    const DEFAULT_STATUS = 'active';
 
     /**
      * The name of the database table used for queries
@@ -153,6 +165,16 @@ abstract class BaseModel implements ModelInterface
     public function wipe()
     {
         $this->db->execute("DELETE FROM " . static::TABLE . " WHERE id = ?", array($this->id));
+    }
+
+    /**
+     * If a model has been marked as deleted in the database, this'll go through the process of marking the model
+     * "active" again.
+     */
+    public function restore()
+    {
+        $this->status = static::DEFAULT_STATUS;
+        $this->update('status', static::DEFAULT_STATUS);
     }
 
     /**

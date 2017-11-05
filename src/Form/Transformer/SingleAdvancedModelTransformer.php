@@ -18,7 +18,7 @@ class SingleAdvancedModelTransformer extends AdvancedModelTransformer
         // Handle the data provided by Javascript, if any
         $transformed = self::transformJSON($data);
 
-        if ($transformed !== false) {
+        if ($transformed !== false && !empty($transformed)) {
             if (count($transformed) > 1) {
                 // Return array so that the model validator can show an error
                 // (throwing an exception here would not show a proper message

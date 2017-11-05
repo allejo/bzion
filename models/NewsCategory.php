@@ -22,11 +22,7 @@ class NewsCategory extends AliasModel
      */
     protected $protected;
 
-    /**
-     * The status of the category: 'enabled', 'disabled', or 'deleted'
-     * @var string
-     */
-    protected $status;
+    const DEFAULT_STATUS = 'enabled';
 
     /**
      * The name of the database table used for queries
@@ -159,14 +155,6 @@ class NewsCategory extends AliasModel
                 "ORDER BY name ASC"
             )
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getActiveStatuses()
-    {
-        return array('enabled');
     }
 
     /**

@@ -43,12 +43,6 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     protected $team;
 
     /**
-     * The player's status
-     * @var string
-     */
-    protected $status;
-
-    /**
      * The player's e-mail address
      * @var string
      */

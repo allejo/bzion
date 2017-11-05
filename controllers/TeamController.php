@@ -2,6 +2,7 @@
 
 use BZIon\Event as Event;
 use BZIon\Event\Events;
+use BZIon\Form\Creator\TeamRestorationFormCreator;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,6 +86,43 @@ class TeamController extends CRUDController
             $event = new Event\TeamDeleteEvent($team, $me, $members);
             Service::getDispatcher()->dispatch(Events::TEAM_DELETE, $event);
         });
+    }
+
+    public function restoreAction(Player $me, Team $team)
+    {
+        if (!$this->canDelete($me, $team)) {
+            throw new ForbiddenException("You do not have permissions to restore \"{$team->getName()}\"");
+        }
+
+        if (!$team->isDeleted()) {
+            throw new LogicException('You cannot restore an object that is not marked as deleted.');
+        }
+
+        $creator = new TeamRestorationFormCreator($team, $me, $this);
+        $form = $creator->create()->handleRequest(self::getRequest());
+
+        if ($form->isSubmitted()) {
+            $this->validate($form);
+
+            if ($form->isValid()) {
+                $clickedButton = $form->getClickedButton()->getName();
+
+                if ($clickedButton === 'submit') {
+                    $model = $creator->enter($form);
+
+                    self::getFlashBag()->add('success', "\"{$model->getName()}\" has been restored.");
+
+                    return $this->redirectTo($model);
+                }
+
+                return (new RedirectResponse($this->getPreviousURL()));
+            }
+        }
+
+        return [
+            'form' => $form->createView(),
+            'team' => $team,
+        ];
     }
 
     public function joinAction(Team $team, Player $me)

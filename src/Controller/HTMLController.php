@@ -65,12 +65,15 @@ abstract class HTMLController extends Controller
     {
         $model = parent::findModelInParameters($modelParameter, $routeParameters);
 
+        // Special action to restore objects meaning we should always be able to see the model we're working with.
+        $restoring = ($routeParameters->get('_action') === 'restore');
+
         if (!$model instanceof Model || $modelParameter->getName() === "me") {
             // `$me` can be invalid if, for example, no user is currently logged
             // in - in this case we can just pass the invalid Player model to
             // the controller without complaining
             return $model;
-        } elseif (!$this->canSee($model)) {
+        } elseif (!$this->canSee($model, $restoring)) {
             // If the model is not supposed to be visible to the player
             // requesting it, pretend it's not there
             throw new ModelNotFoundException($model->getTypeForHumans());
@@ -189,16 +192,17 @@ abstract class HTMLController extends Controller
      * query into consideration to find out if the user wants to see deleted
      * models or not.
      *
-     * @param  Model Model Model in question
+     * @param  Model $model     Model in question
+     * @param  bool  $restoring If we're attempting to restore the object, we should always be able to see it
      * @return bool
      */
-    public static function canSee($model)
+    public static function canSee($model, $restoring = false)
     {
         if (!$model instanceof PermissionModel) {
             return !$model->isDeleted();
         }
 
-        return static::getMe()->canSee($model, static::getRequest()->get('showDeleted'));
+        return static::getMe()->canSee($model, (static::getRequest()->get('showDeleted') || $restoring));
     }
 
     /**

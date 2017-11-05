@@ -42,11 +42,7 @@ class Page extends AliasModel
      */
     protected $home;
 
-    /**
-     * The status of the page
-     * @var string
-     */
-    protected $status;
+    const DEFAULT_STATUS = 'live';
 
     /**
      * The name of the database table used for queries

@@ -87,6 +87,32 @@ abstract class CRUDController extends JSONController
         }, $this->getMessage($model, $message, 'confirm'), $successMessage, $action);
     }
 
+    protected function restore(PermissionModel $model, Player $me, $onSuccess)
+    {
+        if (!$this->canDelete($me, $model)) {
+            throw new ForbiddenException($this->getMessage($model, 'restore', 'forbidden'));
+        }
+
+        if (!$model->isDeleted()) {
+            throw new LogicException('You cannot restore an object that is not marked as deleted.');
+        }
+
+        $successMessage = $this->getMessage($model, 'restore', 'success');
+
+        return $this->showConfirmationForm(function () use ($model, $successMessage, $onSuccess) {
+            $model->restore();
+
+            if ($onSuccess) {
+                $response = $onSuccess();
+                if ($response instanceof Response) {
+                    return $response;
+                }
+            }
+
+            return $this->redirectTo($model);
+        }, $this->getMessage($model, 'restore', 'confirm'), $successMessage, 'Restore');
+    }
+
     /**
      * Create a model
      *
@@ -326,17 +352,31 @@ WARNING
                 ),
                 'forbidden' => array(
                     'named'   => "You are not allowed to delete the $type $name",
-                    'unnamed' => "You aren't allowed to delete this $type",
+                    'unnamed' => "You are not allowed to delete this $type",
                 ),
                 'success' => array(
                     'named'   => "The $type $name was deleted successfully",
                     'unnamed' => "The $type was deleted successfully",
                 ),
             ),
+            'restore' => array(
+                'confirm' => array(
+                    'named'   => "Are you sure you want to restore <strong>$name</strong>?",
+                    'unnamed' => "Are you sure you want to restore this $type?",
+                ),
+                'forbidden' => array(
+                    'named'   => "You are not allowed to restore the $type $name",
+                    'unnamed' => "You are not allowed to restore this $type",
+                ),
+                'success' => array(
+                    'named'   => "The $type $name has been restored successfully",
+                    'unnamed' => "The $type has been restored successfully",
+                ),
+            ),
             'edit' => array(
                 'forbidden' => array(
                     'named'   => "You are not allowed to edit the $type $name",
-                    'unnamed' => "You aren't allowed to edit this $type",
+                    'unnamed' => "You are not allowed to edit this $type",
                 ),
                 'success' => array(
                     'named'   => "The $type $name has been successfully updated",

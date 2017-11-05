@@ -72,6 +72,8 @@ class Ban extends UrlModel implements NamedModel
      */
     protected $status;
 
+    const DEFAULT_STATUS = 'public';
+
     /**
      * The name of the database table used for queries
      */
@@ -426,14 +428,6 @@ class Ban extends UrlModel implements NamedModel
     {
         $this->getVictim()->markAsUnbanned();
         parent::delete();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getActiveStatuses()
-    {
-        return array('public');
     }
 
     /**
