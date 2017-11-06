@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block pageTitle %}
+    <h1>{{ season }} {{ year }} Season</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <h2>Season Leaderboard</h2>
+
+                <table>
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Player</th>
+                            <th>Elo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set lastElo = 9999 %}
+                        {% set pos = 0 %}
+
+                        {% for player in players %}
+                            {% if player.elo < lastElo %}
+                                {% set pos = pos + 1 %}
+                                {% set lastElo = player.elo %}
+                            {% endif %}
+                            <tr>
+                                <td>{{ pos }}</td>
+                                <td>{{ link_to(player) }}</td>
+                                <td>{{ player.elo }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

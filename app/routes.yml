@@ -234,6 +234,10 @@ search_player_by_bzid:
     path:    /search/players/bzid/{bzid}
     defaults: { _controller: 'Search', _action: 'playerByBzid', bzid: ~ }
 
+season_show:
+    path:     /season/{season}
+    defaults: { _controller: 'Season', _action: 'show', season: 'current' }
+
 server_list:
     path:     /servers
     defaults: { _controller: 'Server', _action: 'list' }

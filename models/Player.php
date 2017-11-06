@@ -152,6 +152,13 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     private $cachedMatchCount = null;
 
+    /**
+     * The Elo for this player that has been explicitly set for this player from a database query. This value will take
+     * precedence over having to build to an Elo season history.
+     *
+     * @var int
+     */
+    private $elo;
     private $eloSeason;
     private $eloSeasonHistory;
 
@@ -186,6 +193,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
 
         if (key_exists('activity', $player)) {
             $this->matchActivity = ($player['activity'] != null) ? $player['activity'] : 0.0;
+        }
+
+        if (key_exists('elo', $player)) {
+            $this->elo = $player['elo'];
         }
     }
 
@@ -422,6 +433,11 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function getElo($season = null, $year = null)
     {
+        // The Elo for this player has been forcefully set from a trusted database query, so just return that.
+        if ($this->elo !== null) {
+            return $this->elo;
+        }
+
         $this->getEloSeasonHistory($season, $year);
         $seasonKey = $this->buildSeasonKey($season, $year);
 

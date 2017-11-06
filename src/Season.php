@@ -9,6 +9,26 @@ abstract class Season
     const SUMMER = 'summer';
     const FALL = 'fall';
 
+    public static function toInt($season)
+    {
+        switch ($season) {
+            case self::WINTER:
+                return 1;
+
+            case self::SPRING:
+                return 2;
+
+            case self::SUMMER:
+                return 3;
+
+            case self::FALL:
+                return 4;
+
+            default:
+                return -1;
+        }
+    }
+
     public static function getSeason(DateTime $dateTime)
     {
         return [
