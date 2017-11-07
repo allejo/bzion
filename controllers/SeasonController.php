@@ -31,10 +31,53 @@ class SeasonController extends HTMLController
         $results = $db->query($seasonQuery, [$term, $year]);
         $players = Player::createFromDatabaseResults($results);
 
+        $seasonRange = Season::getCurrentSeasonRange($term);
+        $matchQuery = Match::getQueryBuilder();
+        $matchQuery
+            ->active()
+            ->where('time')->isAfter($seasonRange->getStartOfRange($year), true)
+            ->where('time')->isBefore($seasonRange->getEndOfRange($year), true)
+        ;
+
+        $fmQuery   = clone $matchQuery;
+        $offiQuery = clone $matchQuery;
+
+        $fmCount   = $fmQuery->where('type')->equals(Match::FUN)->count();
+        $offiCount = $offiQuery->where('type')->equals(Match::OFFICIAL)->count();
+
+        Map::getQueryBuilder()->addToCache();
+        $mapQuery = '
+            SELECT
+                map AS map_id,
+                COUNT(*) AS match_count
+            FROM
+                matches
+            WHERE
+                timestamp >= ? AND timestamp <= ? AND map IS NOT NULL
+            GROUP BY
+                map
+            HAVING
+                match_count > 0
+            ORDER BY
+                match_count DESC
+        ';
+        $results = $db->query($mapQuery, [
+            $seasonRange->getStartOfRange($year),
+            $seasonRange->getEndOfRange($year),
+        ]);
+
+        $mapIDs = array_column($results, 'map_id');
+        $maps = Map::arrayIdToModel($mapIDs);
+        $mapCount = array_combine($mapIDs, $results);
+
         return [
             'season'  => ucfirst($term),
             'year'    => $year,
             'players' => $players,
+            'fmCount' => $fmCount,
+            'offiCount' => $offiCount,
+            'maps'    => $maps,
+            'mapCount' => $mapCount
         ];
     }
 
