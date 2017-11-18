@@ -1,7 +1,7 @@
 body:
   background: "#21252c"
   alternate: "#323740"
-  color: "#ffffff"
+  color: "#dedede"
   muted: "#969696"
 
 border:
