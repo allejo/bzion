@@ -6,9 +6,23 @@ class PublicAPIController extends JSONController
 {
     public function playerListAction()
     {
+        $request = Service::getRequest();
+        $bzidsParam = $request->get('bzids');
+        $bzids = (!empty($bzidsParam)) ? explode(',', $bzidsParam) : [];
+
+        $pqb = $this
+            ->getQueryBuilder('Player')
+            ->selectColumn('bzid')
+        ;
+
+        if (!empty($bzids)) {
+            $pqb
+                ->where('bzid')->isOneOf($bzids)
+            ;
+        }
+
         /** @var Player[] $players */
-        $players = $this->getQueryBuilder('Player')
-            ->getModels($fast = true);
+        $players = $pqb->getModels($fast = true);
 
         $response = array(
             'players' => array(),
@@ -19,10 +33,12 @@ class PublicAPIController extends JSONController
         foreach ($players as $player) {
             $response['players'][] = array(
                 'id'       => $player->getId(),
+                'bzid'     => $player->getBZID(),
                 'alias'    => $player->getAlias(),
                 'username' => $player->getUsername(),
                 'team'     => $player->getTeam()->getId(),
-                'url'      => $player->getPermaLink('show', $absolute = true)
+                'url'      => $player->getPermaLink('show', $absolute = true),
+                'elo'      => $player->getElo($request->get('season'), $request->get('year')),
             );
         }
 

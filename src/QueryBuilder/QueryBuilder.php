@@ -171,6 +171,25 @@ class QueryBuilder implements Countable
     }
 
     /**
+     * Add a new column to select by in the query.
+     *
+     * @param string      $alias      An alias that can be used in the query builder
+     * @param string|null $columnName The name of the column we're accessing
+     *
+     * @return $this
+     */
+    public function selectColumn($alias, $columnName = null)
+    {
+        if ($columnName === null) {
+            $columnName = $alias;
+        }
+
+        $this->columns[$alias] = $columnName;
+
+        return $this;
+    }
+
+    /**
      * Select a column
      *
      * `$queryBuilder->where('username')->equals('administrator');`
