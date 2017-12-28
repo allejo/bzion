@@ -191,11 +191,11 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $this->avatar = $player['avatar'];
         $this->country = $player['country'];
 
-        if (key_exists('activity', $player)) {
+        if (array_key_exists('activity', $player)) {
             $this->matchActivity = ($player['activity'] != null) ? $player['activity'] : 0.0;
         }
 
-        if (key_exists('elo', $player)) {
+        if (array_key_exists('elo', $player)) {
             $this->elo = $player['elo'];
         }
     }
