@@ -60,14 +60,26 @@ class Match extends UrlModel implements NamedModel
     protected $team_b_points;
 
     /**
-     * The BZIDs of players part of Team A who participated in the match, separated by commas
-     * @var string
+     * The callsigns players used during this match.
+     * @var string[]
+     */
+    protected $player_callsigns;
+
+    /**
+     * An associative array of IP addresses used by players during this match.
+     * @var string[]
+     */
+    protected $player_ip_addresses;
+
+    /**
+     * The players who participated in Team A during this match.
+     * @var Player[]
      */
     protected $team_a_players;
 
     /**
-     * The BZIDs of players part of Team B who participated in the match, separated by commas
-     * @var string
+     * The players who participated in Team B during this match.
+     * @var Player[]
      */
     protected $team_b_players;
 
@@ -178,8 +190,6 @@ class Match extends UrlModel implements NamedModel
         $this->team_b_color = $match['team_b_color'];
         $this->team_a_points = $match['team_a_points'];
         $this->team_b_points = $match['team_b_points'];
-        $this->team_a_players = $match['team_a_players'];
-        $this->team_b_players = $match['team_b_players'];
         $this->team_a_elo_new = $match['team_a_elo_new'];
         $this->team_b_elo_new = $match['team_b_elo_new'];
         $this->map = $match['map'];
@@ -372,12 +382,50 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the IP address a player used during this match.
+     *
+     * @param Player|int $id
+     *
+     * @return string|null
+     */
+    public function getPlayerIpAddress($id)
+    {
+        $this->lazyLoadMatchParticipants();
+
+        if ($id instanceof Player) {
+            $id = $id->getId();
+        }
+
+        return __::get($this->player_ip_addresses, $id, null);
+    }
+
+    /**
+     * Get the callsign a player used during this match.
+     *
+     * @param Player|int $id
+     *
+     * @return string|null
+     */
+    public function getPlayerCallsign($id)
+    {
+        $this->lazyLoadMatchParticipants();
+
+        if ($id instanceof Player) {
+            $id = $id->getId();
+        }
+
+        return __::get($this->player_callsigns, $id, null);
+    }
+
+    /**
      * Get the list of players on Team A who participated in this match
      * @return Player[] Returns null if there were no players recorded for this match
      */
     public function getTeamAPlayers()
     {
-        return $this->parsePlayers($this->team_a_players);
+        $this->lazyLoadMatchParticipants();
+
+        return $this->team_a_players;
     }
 
     /**
@@ -386,7 +434,9 @@ class Match extends UrlModel implements NamedModel
      */
     public function getTeamBPlayers()
     {
-        return $this->parsePlayers($this->team_b_players);
+        $this->lazyLoadMatchParticipants();
+
+        return $this->team_b_players;
     }
 
     /**
@@ -406,7 +456,7 @@ class Match extends UrlModel implements NamedModel
             return $this->getTeamBPlayers();
         }
 
-        return $this->parsePlayers($this->team_a_players . "," . $this->team_b_players);
+        return array_merge($this->getTeamAPlayers(), $this->getTeamBPlayers());
     }
 
     /**
@@ -418,24 +468,33 @@ class Match extends UrlModel implements NamedModel
      */
     public function setTeamPlayers($teamAPlayers = array(), $teamBPlayers = array())
     {
-        $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers));
-        $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers));
+        // @todo Update this to use the new table and add support for IPs and callsigns
+        // $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers));
+        // $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers));
 
         return $this;
     }
 
     /**
-     * Get an array of players based on a string representation
-     * @param string $playerString
-     * @return Player[] Returns null if there were no players recorded for this match
+     * Load player participation in this match from its respective tables.
      */
-    private function parsePlayers($playerString)
+    private function lazyLoadMatchParticipants()
     {
-        if ($playerString == null) {
-            return [];
+        if ($this->team_a_players !== null || $this->team_b_players !== null) {
+            return;
         }
 
-        return Player::arrayIdToModel(explode(",", $playerString));
+        $participation = $this->db->query('SELECT * FROM match_participation WHERE match_id = ?', [
+            $this->getId(),
+        ]);
+
+        $loyalty = __::groupBy($participation, 'team_loyalty');
+
+        $this->team_a_players = Player::arrayIdToModel(array_column(__::get($loyalty, 0, []), 'user_id'));
+        $this->team_b_players = Player::arrayIdToModel(array_column(__::get($loyalty, 1, []), 'user_id'));
+
+        $this->player_callsigns = array_column($participation, 'callsign', 'user_id');
+        $this->player_ip_addresses = array_column($participation, 'ip_address', 'user_id');
     }
 
     /**
@@ -1006,7 +1065,16 @@ class Match extends UrlModel implements NamedModel
      * @param  string          $matchType  The type of match (e.g. official, fm, special)
      * @param  string          $a_color    Team A's color
      * @param  string          $b_color    Team b's color
+     * @param  string[]        $a_ipAddresses The IP addresses of players on Team A. The order of this array should
+     *                                        match the order of $a_players
+     * @param  string[]        $b_ipAddresses The IP addresses of players on Team B. The order of this array should
+     *                                        match the order of $b_players
+     * @param  string[]        $a_callsigns   The callsigns of players on Team A. The order of this array should match
+     *                                        the order of $a_players
+     * @param  string[]        $b_callsigns   The callsigns of players on Team B. The order of this array should match
+     *                                        the order of $b_players
      *
+     * @throws \Exception               When no testing environment has been configured for the database.
      * @throws InvalidArgumentException When a ColorTeam is selected for an official match and no players are defined
      *                                  for that team
      *
@@ -1015,15 +1083,14 @@ class Match extends UrlModel implements NamedModel
     public static function enterMatch(
         $a, $b, $a_points, $b_points, $duration, $entered_by, $timestamp = "now",
         $a_players = array(), $b_players = array(), $server = null, $replayFile = null,
-        $map = null, $matchType = "official", $a_color = null, $b_color = null
+        $map = null, $matchType = "official", $a_color = null, $b_color = null,
+        $a_ipAddresses = array(), $b_ipAddresses = array(), $a_callsigns = array(), $b_callsigns = array()
     ) {
         $matchData = array(
             'team_a_color'   => strtolower($a_color),
             'team_b_color'   => strtolower($b_color),
             'team_a_points'  => $a_points,
             'team_b_points'  => $b_points,
-            'team_a_players' => implode(',', $a_players),
-            'team_b_players' => implode(',', $b_players),
             'timestamp'      => TimeDate::from($timestamp)->toMysql(),
             'duration'       => $duration,
             'entered_by'     => $entered_by,
@@ -1062,6 +1129,32 @@ class Match extends UrlModel implements NamedModel
         }
 
         $match = self::create($matchData, 'updated');
+
+        $matchParticipation = [];
+        $dataBuilder = function ($playerIDs, $callsigns, $ipAddresses, $isTeamB) use (&$matchParticipation, $match, $matchData) {
+            foreach ($playerIDs as $index => $playerID) {
+                if (empty($playerID)) {
+                    continue;
+                }
+
+                $workspace = [
+                    'match_id' => $match->getId(),
+                    'user_id' => $playerID,
+                    'team_id' => __::get($matchData, ($isTeamB ? 'team_b' : 'team_a'), null),
+                    'callsign' => __::get($callsigns, $index, null),
+                    'ip_address' => __::get($ipAddresses, $index, null),
+                    'team_loyalty' => (int)$isTeamB,
+                ];
+
+                $matchParticipation[] = $workspace;
+            }
+        };
+        $dataBuilder($a_players, $a_callsigns, $a_ipAddresses, false);
+        $dataBuilder($b_players, $b_callsigns, $b_ipAddresses, true);
+
+        $db = Database::getInstance();
+        $db->insertBatch('match_participation', $matchParticipation);
+
         $match->updateMatchCount();
         $match->updatePlayerElo();
 

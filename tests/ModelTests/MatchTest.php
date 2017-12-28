@@ -590,6 +590,56 @@ class MatchTest extends TestCase
         $this->assertEquals(1200 - $playerEloDiff, $this->player_b->getElo());
     }
 
+    public function testPlayerMatchParticipationIsRecorded()
+    {
+        $player_c = $this->getNewPlayer();
+        $player_d = $this->getNewPlayer();
+
+        $player_a_ip = '127.0.0.1';
+        $player_b_ip = '127.0.0.2';
+        $player_c_ip = '127.0.0.3';
+        $player_d_ip = '127.0.0.4';
+
+        $this->match = Match::enterMatch(
+            null,
+            null,
+            0,
+            0,
+            30,
+            null,
+            'now',
+            [$this->player_a->getId(), $player_c->getId()],
+            [$this->player_b->getId(), $player_d->getId()],
+            null,
+            null,
+            null,
+            'official',
+            'red',
+            'purple',
+            [$player_a_ip, $player_c_ip],
+            [$player_b_ip, $player_d_ip],
+            [$this->player_a->getName(), $player_c->getName()],
+            [$this->player_b->getName(), $player_d->getName()]
+        );
+
+        $this->assertNotEmpty($this->match->getTeamAPlayers());
+        $this->assertNotEmpty($this->match->getTeamBPlayers());
+        $this->assertInstanceOf(Player::class, $this->match->getTeamAPlayers()[0]);
+        $this->assertInstanceOf(Player::class, $this->match->getTeamBPlayers()[0]);
+        $this->assertArrayContainsModel($this->player_a, $this->match->getTeamAPlayers());
+        $this->assertArrayContainsModel($this->player_b, $this->match->getTeamBPlayers());
+
+        $this->assertEquals($player_a_ip, $this->match->getPlayerIpAddress($this->player_a));
+        $this->assertEquals($player_b_ip, $this->match->getPlayerIpAddress($this->player_b));
+        $this->assertEquals($player_c_ip, $this->match->getPlayerIpAddress($player_c));
+        $this->assertEquals($player_d_ip, $this->match->getPlayerIpAddress($player_d));
+
+        $this->assertEquals($this->player_a->getName(), $this->match->getPlayerCallsign($this->player_a));
+        $this->assertEquals($this->player_b->getName(), $this->match->getPlayerCallsign($this->player_b));
+        $this->assertEquals($player_c->getName(), $this->match->getPlayerCallsign($player_c));
+        $this->assertEquals($player_d->getName(), $this->match->getPlayerCallsign($player_d));
+    }
+
     public function tearDown()
     {
         $this->wipe($this->match, $this->match_b, $this->team_a, $this->team_b);
