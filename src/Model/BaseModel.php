@@ -446,29 +446,9 @@ abstract class BaseModel implements ModelInterface
     {
         $table = (empty($table)) ? static::TABLE : $table;
         $db = Database::getInstance();
+        $id = $db->insert($table, $params, $now);
 
-        $columns = implode('`,`', array_keys($params));
-        $columns = "`$columns`";
-
-        $question_marks = str_repeat('?,', count($params));
-        $question_marks = rtrim($question_marks, ','); // Remove last comma
-
-        if ($now) {
-            if (!is_array($now)) {
-                // Convert $now to an array if it's a string
-                $now = array($now);
-            }
-
-            foreach ($now as $column) {
-                $columns .= ",$column";
-                $question_marks .= ",UTC_TIMESTAMP()";
-            }
-        }
-
-        $query = "INSERT into $table ($columns) VALUES ($question_marks)";
-        $db->execute($query, array_values($params));
-
-        return static::get($db->getInsertId());
+        return static::get($id);
     }
 
     /**
