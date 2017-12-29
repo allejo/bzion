@@ -466,11 +466,32 @@ class Match extends UrlModel implements NamedModel
      * @param int[] $teamBPlayers An array of player IDs
      * @return self
      */
-    public function setTeamPlayers($teamAPlayers = array(), $teamBPlayers = array())
+    public function setTeamPlayers($teamAPlayers = [], $teamBPlayers = [], $teamAIPs = [], $teamBIPs = [], $teamACallsigns = [], $teamBCallsigns = [])
     {
-        // @todo Update this to use the new table and add support for IPs and callsigns
-        // $this->updateProperty($this->team_a_players, "team_a_players", implode(',', $teamAPlayers));
-        // $this->updateProperty($this->team_b_players, "team_b_players", implode(',', $teamBPlayers));
+        $this->db->execute('DELETE FROM match_participation WHERE match_id = ?', [
+            $this->getId(),
+        ]);
+
+        $matchParticipation = [];
+
+        $this->matchParticipationEntryBuilder(
+            $matchParticipation,
+            ($this->getTeamA() instanceof Team) ? $this->team_a : null,
+            0,
+            $teamAPlayers,
+            $teamAIPs,
+            $teamACallsigns
+        );
+        $this->matchParticipationEntryBuilder(
+            $matchParticipation,
+            ($this->getTeamB() instanceof Team) ? $this->team_b : null,
+            1,
+            $teamBPlayers,
+            $teamBIPs,
+            $teamBCallsigns
+        );
+
+        $this->db->insertBatch('match_participation', $matchParticipation);
 
         return $this;
     }
@@ -1129,32 +1150,11 @@ class Match extends UrlModel implements NamedModel
         }
 
         $match = self::create($matchData, 'updated');
-
-        $matchParticipation = [];
-        $dataBuilder = function ($playerIDs, $callsigns, $ipAddresses, $isTeamB) use (&$matchParticipation, $match, $matchData) {
-            foreach ($playerIDs as $index => $playerID) {
-                if (empty($playerID)) {
-                    continue;
-                }
-
-                $workspace = [
-                    'match_id' => $match->getId(),
-                    'user_id' => $playerID,
-                    'team_id' => __::get($matchData, ($isTeamB ? 'team_b' : 'team_a'), null),
-                    'callsign' => __::get($callsigns, $index, null),
-                    'ip_address' => __::get($ipAddresses, $index, null),
-                    'team_loyalty' => (int)$isTeamB,
-                ];
-
-                $matchParticipation[] = $workspace;
-            }
-        };
-        $dataBuilder($a_players, $a_callsigns, $a_ipAddresses, false);
-        $dataBuilder($b_players, $b_callsigns, $b_ipAddresses, true);
-
-        $db = Database::getInstance();
-        $db->insertBatch('match_participation', $matchParticipation);
-
+        $match->setTeamPlayers(
+            $a_players, $b_players,
+            $a_ipAddresses, $b_ipAddresses,
+            $a_callsigns, $b_callsigns
+        );
         $match->updateMatchCount();
         $match->updatePlayerElo();
 
@@ -1477,6 +1477,36 @@ class Match extends UrlModel implements NamedModel
         foreach ($this->getTeamBPlayers() as $player) {
             $player->adjustElo(-$eloDiff, $this);
             $player->setLastMatch($this->getId());
+        }
+    }
+
+    /**
+     * Build an array of match participation records for a given match.
+     *
+     * @param array    $storage     The referenced array that'll be storing all of the created references.
+     * @param int|null $teamID      The ID of the Team this player played for, or NULL if players didn't play for a team
+     * @param int      $teamLoyalty Representation for team color: 0 for "Team A" or 1 for "Team B"
+     * @param int[]    $playerIDs   The BZiON player IDs that played for this team
+     * @param string[] $ipAddresses The IP addresses for the recorded players, the order must match the order of $playerIDs
+     * @param string[] $callsigns   The callsigns for the recorded players, the order must match the order of $playerIDs
+     */
+    private function matchParticipationEntryBuilder(array &$storage, $teamID, $teamLoyalty, array $playerIDs, array $ipAddresses = [], array $callsigns = [])
+    {
+        foreach ($playerIDs as $index => $playerID) {
+            if (empty($playerID)) {
+                continue;
+            }
+
+            $workspace = [
+                'match_id' => $this->getId(),
+                'user_id' => $playerID,
+                'team_id' => $teamID,
+                'callsign' => __::get($callsigns, $index, null),
+                'ip_address' => __::get($ipAddresses, $index, null),
+                'team_loyalty' => $teamLoyalty,
+            ];
+
+            $storage[] = $workspace;
         }
     }
 }
