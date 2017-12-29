@@ -103,10 +103,12 @@
         "classmap": [ "tests/" ]
     },
     "archive": {
-        "exclude": [ "!/vendor", "!/web/bundles", "!/web/components" ]
+        "exclude": [ "!/vendor", "!/web/bundles" ]
     },
     "config": {
-        "component-dir": "web/components"
+        "platform": {
+            "php": "5.6.0"
+        }
     },
     "extra": {
         "branch-alias": {
