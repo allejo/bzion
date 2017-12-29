@@ -4,10 +4,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SeasonController extends HTMLController
 {
-    public function showAction($season, Request $request)
+    /**
+     * @param Request $request
+     * @param string  $period    The season's period: winter, spring, summer, fall
+     * @param int     $year      The season's year
+     *
+     * @throws Exception         When a database instance is not configured for the current environment
+     * @throws NotFoundException When an invalid season is given
+     *
+     * @return array
+     */
+    public function showAction(Request $request, $period, $year)
     {
-        $term = $year = '';
-        $this->parseSeason($season, $term, $year);
+        $this->parseSeason($period, $year);
 
         // Because this query can't be created efficiently using our QueryBuilder, let's do things manually
         $db = Database::getInstance();
@@ -28,10 +37,10 @@ class SeasonController extends HTMLController
             WHERE p.status = 'active'
             ORDER BY elo DESC, p.username ASC LIMIT 10;
         ", Player::getEagerColumns('p'));
-        $results = $db->query($seasonQuery, [$term, $year]);
+        $results = $db->query($seasonQuery, [$period, $year]);
         $players_w_elos = Player::createFromDatabaseResults($results);
 
-        $seasonRange = Season::getCurrentSeasonRange($term);
+        $seasonRange = Season::getCurrentSeasonRange($period);
         $matchQuery = Match::getQueryBuilder();
         $matchQuery
             ->active()
@@ -98,7 +107,7 @@ class SeasonController extends HTMLController
         ]);
 
         return [
-            'season'  => ucfirst($term),
+            'season'  => ucfirst($period),
             'year'    => $year,
             'players' => $players_w_elos,
             'fmCount' => $fmCount,
@@ -118,54 +127,51 @@ class SeasonController extends HTMLController
         ];
     }
 
-    private function parseSeason($string, &$term, &$year)
+    /**
+     * Default to current season or ensure the given season is valid.
+     *
+     * @param string $period
+     * @param int    $year
+     *
+     * @throws NotFoundException When an invalid season is found
+     */
+    private function parseSeason(&$period, &$year)
     {
-        $string = strtolower($string);
-        $currentSeason = ($string === 'current');
-
-        if (!$currentSeason) {
-            $seasonTerm = explode('-', $string);
-
-            if ($this->validSeason($seasonTerm)) {
-                $term = $seasonTerm[0];
-                $year = (int)$seasonTerm[1];
-
-                return;
-            }
+        if (!$this->isValidSeason($period, $year)) {
+            throw new NotFoundException('The specified season does not seem to exist.');
         }
 
-        $term = Season::getCurrentSeason();
-        $year = TimeDate::now()->year;
-
-        return;
+        if ($period === 'current') {
+            $period = Season::getCurrentSeason();
+            $year = TimeDate::now()->year;
+        }
     }
 
-    private function validSeason($seasonSplit)
+    /**
+     * Check that a given season is valid.
+     *
+     * @param string $period
+     * @param int    $seasonYear
+     *
+     * @return bool
+     */
+    private function isValidSeason($period, $seasonYear)
     {
-        if (empty($seasonSplit) || count($seasonSplit) != 2) {
+        $currentYear = TimeDate::now()->year;
+
+        // The season's in the future
+        if ($seasonYear > $currentYear) {
             return false;
         }
 
-        if (in_array($seasonSplit[0], [Season::WINTER, Season::SPRING, Season::SUMMER, Season::FALL])) {
-            $currentYear = TimeDate::now()->year;
-            $seasonYear = (int)$seasonSplit[1];
-
-            // The season's in the future
-            if ($seasonYear > $currentYear) {
-                return false;
-            }
-
-            // If the year's the same, we need to make sure the season's not in the future; e.g. Fall 2017 shouldn't be
-            // valid when it's only July 2017
-            if ($seasonYear == $currentYear &&
-                Season::toInt($seasonSplit[0]) > Season::toInt(Season::getCurrentSeason())
-            ) {
-                return false;
-            }
-
-            return true;
+        // If the year's the same, we need to make sure the season's not in the future; e.g. Fall 2017 shouldn't be
+        // valid when it's only July 2017
+        if ($seasonYear == $currentYear &&
+            Season::toInt($period) > Season::toInt(Season::getCurrentSeason())
+        ) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }

@@ -235,8 +235,11 @@ search_player_by_bzid:
     defaults: { _controller: 'Search', _action: 'playerByBzid', bzid: ~ }
 
 season_show:
-    path:     /season/{season}
-    defaults: { _controller: 'Season', _action: 'show', season: 'current' }
+    path:     /season/{period}-{year}
+    defaults: { _controller: 'Season', _action: 'show', period: 'current', year: 'current' }
+    requirements:
+        period: winter|spring|summer|fall
+        year: \d{4}
 
 server_list:
     path:     /servers
