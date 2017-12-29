@@ -94,6 +94,8 @@ class Database
      *
      * @todo Move this to the Service class
      *
+     * @throws \Exception When no testing environment has been specified in the configuation file.
+     *
      * @return Database The Database object
      */
     public static function getInstance()
@@ -148,6 +150,59 @@ class Database
     public function getInsertId()
     {
         return $this->last_id;
+    }
+
+    /**
+     * Insert an associative array into the database.
+     *
+     * @param string            $table  The table to perform the query on
+     * @param array             $params An associative array, with the keys (columns) pointing to the values you want to put on each
+     * @param array|string|null $now    Column(s) to update with the current timestamp
+     *
+     * @return int
+     */
+    public function insert($table, array $params, $now = null)
+    {
+        $columns = implode('`,`', array_keys($params));
+        $columns = "`$columns`";
+
+        $question_marks = str_repeat('?,', count($params));
+        $question_marks = rtrim($question_marks, ','); // Remove last comma
+
+        if ($now) {
+            if (!is_array($now)) {
+                // Convert $now to an array if it's a string
+                $now = array($now);
+            }
+
+            foreach ($now as $column) {
+                $columns .= ",$column";
+                $question_marks .= ",UTC_TIMESTAMP()";
+            }
+        }
+
+        $query = "INSERT INTO $table ($columns) VALUES ($question_marks)";
+        $this->execute($query, array_values($params));
+
+        return $this->getInsertId();
+    }
+
+    /**
+     * Insert an array of associative arrays into the database.
+     *
+     * @param string            $table The table to perform the query on
+     * @param array             $batch An array of associative arrays that'll be passed on to Database::insert()
+     * @param array|string|null $now   Column(s) to update with the current timestamp
+     */
+    public function insertBatch($table, array $batch, $now = null)
+    {
+        $this->startTransaction();
+
+        foreach ($batch as $entry) {
+            $this->insert($table, $entry, $now);
+        }
+
+        $this->commit();
     }
 
     /**

@@ -159,11 +159,8 @@ class LeagueOverseerHookController extends PlainTextController
 
         $matchType = $this->params->get('matchType', Match::OFFICIAL);
 
-        $teamOneBZIDs = $this->params->get('teamOnePlayers');
-        $teamTwoBZIDs = $this->params->get('teamTwoPlayers');
-
-        $teamOnePlayers = $this->bzidsToIdArray($teamOneBZIDs);
-        $teamTwoPlayers = $this->bzidsToIdArray($teamTwoBZIDs);
+        $teamOnePlayers = $this->bzidsToIdArray('teamOnePlayers');
+        $teamTwoPlayers = $this->bzidsToIdArray('teamTwoPlayers');
 
         $teamOne = $teamTwo = null;
 
@@ -199,7 +196,11 @@ class LeagueOverseerHookController extends PlainTextController
             $map->getId(),
             $this->params->get('matchType'),
             $this->params->get('teamOneColor'),
-            $this->params->get('teamTwoColor')
+            $this->params->get('teamTwoColor'),
+            $this->explodeQueryParam('teamOneIPs'),
+            $this->explodeQueryParam('teamTwoIPs'),
+            $this->explodeQueryParam('teamOneCallsigns'),
+            $this->explodeQueryParam('teamTwoCallsigns')
         );
 
         if ($server->isValid()) {
@@ -246,15 +247,34 @@ class LeagueOverseerHookController extends PlainTextController
     }
 
     /**
-     * Convert a comma-separated list of bzids to player IDs so we can pass
-     * them to Match::enterMatch()
+     * Split a query parameter with a delimiter.
      *
-     * @param  string $players A comma-separated list of BZIDs
+     * @param string $parameter The query parameter to get and split
+     * @param string $delimiter A delimiter for splitting the string
+     *
+     * @return array
+     */
+    private function explodeQueryParam($parameter, $delimiter = ',')
+    {
+        $split = explode($delimiter, $this->params->get($parameter, ''));
+
+        if (!is_array($split)) {
+            return [];
+        }
+
+        return $split;
+    }
+
+    /**
+     * Convert a comma-separated list of bzids to player IDs so we can pass them to Match::enterMatch()
+     *
+     * @param  string $queryParam The query parameter storing a comma-separated list of BZIDs
+     *
      * @return int[]  A list of Player IDs
      */
-    private function bzidsToIdArray($players)
+    private function bzidsToIdArray($queryParam)
     {
-        $players = explode(',', $players);
+        $players = $this->explodeQueryParam($queryParam);
 
         foreach ($players as &$player) {
             $player = Player::getFromBZID($player)->getId();
