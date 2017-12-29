@@ -460,13 +460,18 @@ class Match extends UrlModel implements NamedModel
     }
 
     /**
-     * Set the players of the match's teams
+     * Set the players of the match's teams.
      *
-     * @param int[] $teamAPlayers An array of player IDs
-     * @param int[] $teamBPlayers An array of player IDs
+     * @param int[]    $a_players   An array of player IDs on Team A
+     * @param int[]    $b_players   An array of player IDs on Team B
+     * @param string[] $a_ips       The IPs used by players on Team A. The order MUST match the order of $teamAPlayers
+     * @param string[] $b_ips       The IPs used by players on Team B. The order MUST match the order of $teamBPlayers
+     * @param string[] $a_callsigns The callsigns used by players on Team A. The order MUST match the order of $teamAPlayers
+     * @param string[] $b_callsigns The callsigns used by players on Team B. The order MUST match the order of $teamBPlayers
+     *
      * @return self
      */
-    public function setTeamPlayers($teamAPlayers = [], $teamBPlayers = [], $teamAIPs = [], $teamBIPs = [], $teamACallsigns = [], $teamBCallsigns = [])
+    public function setTeamPlayers($a_players = [], $b_players = [], $a_ips = [], $b_ips = [], $a_callsigns = [], $b_callsigns = [])
     {
         $this->db->execute('DELETE FROM match_participation WHERE match_id = ?', [
             $this->getId(),
@@ -478,17 +483,17 @@ class Match extends UrlModel implements NamedModel
             $matchParticipation,
             ($this->getTeamA() instanceof Team) ? $this->team_a : null,
             0,
-            $teamAPlayers,
-            $teamAIPs,
-            $teamACallsigns
+            $a_players,
+            $a_ips,
+            $a_callsigns
         );
         $this->matchParticipationEntryBuilder(
             $matchParticipation,
             ($this->getTeamB() instanceof Team) ? $this->team_b : null,
             1,
-            $teamBPlayers,
-            $teamBIPs,
-            $teamBCallsigns
+            $b_players,
+            $b_ips,
+            $b_callsigns
         );
 
         $this->db->insertBatch('match_participation', $matchParticipation);
