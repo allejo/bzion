@@ -492,19 +492,47 @@ class LeagueOverseerHookTest extends TestCase
             'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
         ]));
 
-        $query = Match::getQueryBuilder()
-            ->limit(1)
-            ->reverse()
-            ->getModels(true)
-        ;
-
-        /** @var Match $lastMatch */
-        $lastMatch = $query[0];
+        $lastMatch = $this->getLatestMatch();
 
         $this->assertEquals(Match::FUN, $lastMatch->getMatchType());
         $this->assertEquals(1, $lastMatch->getTeamAPoints());
         $this->assertEquals(0, $lastMatch->getTeamBPoints());
         $this->assertEquals($this->server->getId(), $lastMatch->getServer()->getId());
+    }
+
+    public function testIpAddressesSetForNewMatch()
+    {
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'teamOneWins' => 1,
+            'teamTwoWins' => 0,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
+        ]));
+
+        $lastMatch = $this->getLatestMatch();
+
+        $this->assertEquals('127.0.0.1', $lastMatch->getPlayerIpAddress($this->player_a));
+        $this->assertEquals('127.0.0.2', $lastMatch->getPlayerIpAddress($this->player_c));
+        $this->assertEquals('127.0.0.3', $lastMatch->getPlayerIpAddress($this->player_b));
+        $this->assertEquals('127.0.0.4', $lastMatch->getPlayerIpAddress($this->player_d));
+    }
+
+    public function testCallsignsSetForNewMatch()
+    {
+        $this->client->request('POST', '/api/leagueOverseer', self::defaultPOST([
+            'teamOneWins' => 1,
+            'teamTwoWins' => 0,
+            'teamOnePlayers' => implode(',', [$this->player_a->getBZID(), $this->player_c->getBZID()]),
+            'teamTwoPlayers' => implode(',', [$this->player_b->getBZID(), $this->player_d->getBZID()]),
+            'teamOneCallsigns' => 'Absurd Penguin,greenElephant',
+        ]));
+
+        $lastMatch = $this->getLatestMatch();
+
+        $this->assertEquals('Absurd Penguin', $lastMatch->getPlayerCallsign($this->player_a));
+        $this->assertEquals('greenElephant', $lastMatch->getPlayerCallsign($this->player_c));
+        $this->assertEquals(null, $lastMatch->getPlayerCallsign($this->player_b));
+        $this->assertEquals(null, $lastMatch->getPlayerCallsign($this->player_d));
     }
 
     /**
@@ -538,6 +566,20 @@ class LeagueOverseerHookTest extends TestCase
             'teamOneIPs' => '127.0.0.1,127.0.0.2',
             'teamTwoIPs' => '127.0.0.3,127.0.0.4',
         ], $overrides);
+    }
+
+    /**
+     * @return Match
+     */
+    private function getLatestMatch()
+    {
+        $query = Match::getQueryBuilder()
+            ->limit(1)
+            ->reverse()
+            ->getModels(true)
+        ;
+
+        return $query[0];
     }
 
     /**
