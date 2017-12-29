@@ -11,7 +11,7 @@ class SeasonController extends HTMLController
 
         // Because this query can't be created efficiently using our QueryBuilder, let's do things manually
         $db = Database::getInstance();
-        $seasonQuery = sprintf('
+        $seasonQuery = sprintf("
             SELECT %s, e.elo_new AS elo FROM players p 
               INNER JOIN player_elo e ON e.user_id = p.id 
               INNER JOIN (
@@ -25,11 +25,11 @@ class SeasonController extends HTMLController
                 GROUP BY
                   user_id
               ) i ON i.user_id = p.id AND i.last_match = e.match_id
-            WHERE p.status = \'active\'
+            WHERE p.status = 'active'
             ORDER BY elo DESC, p.username ASC LIMIT 10;
-        ', Player::getEagerColumns('p'));
+        ", Player::getEagerColumns('p'));
         $results = $db->query($seasonQuery, [$term, $year]);
-        $players = Player::createFromDatabaseResults($results);
+        $players_w_elos = Player::createFromDatabaseResults($results);
 
         $seasonRange = Season::getCurrentSeasonRange($term);
         $matchQuery = Match::getQueryBuilder();
@@ -48,18 +48,18 @@ class SeasonController extends HTMLController
         Map::getQueryBuilder()->addToCache();
         $mapQuery = '
             SELECT
-                map AS map_id,
-                COUNT(*) AS match_count
+              map AS map_id,
+              COUNT(*) AS match_count
             FROM
-                matches
+              matches
             WHERE
-                timestamp >= ? AND timestamp <= ? AND map IS NOT NULL
+              timestamp >= ? AND timestamp <= ? AND map IS NOT NULL
             GROUP BY
-                map
+              map
             HAVING
-                match_count > 0
+              match_count > 0
             ORDER BY
-                match_count DESC
+              match_count DESC
         ';
         $results = $db->query($mapQuery, [
             $seasonRange->getStartOfRange($year),
@@ -70,14 +70,51 @@ class SeasonController extends HTMLController
         $maps = Map::arrayIdToModel($mapIDs);
         $mapCount = array_combine($mapIDs, $results);
 
+        $matchCount = "
+            SELECT
+              p.user_id,
+              SUM(m.match_type = ?) AS match_count
+            FROM
+              match_participation p
+            INNER JOIN
+              matches m ON m.id = p.match_id
+            WHERE
+              m.timestamp >= ? AND m.timestamp < ?
+            GROUP BY
+              p.user_id
+            ORDER BY
+              match_count DESC
+            LIMIT 10
+        ";
+        $fmResults = $db->query($matchCount, [
+            'fm',
+            $seasonRange->getStartOfRange($year),
+            $seasonRange->getEndOfRange($year),
+        ]);
+        $offiResults = $db->query($matchCount, [
+            'official',
+            $seasonRange->getStartOfRange($year),
+            $seasonRange->getEndOfRange($year),
+        ]);
+
         return [
             'season'  => ucfirst($term),
             'year'    => $year,
-            'players' => $players,
+            'players' => $players_w_elos,
             'fmCount' => $fmCount,
             'offiCount' => $offiCount,
             'maps'    => $maps,
-            'mapCount' => $mapCount
+            'mapCount' => $mapCount,
+            'player_matches' => [
+                'fm' => [
+                    'players' => Player::arrayIdToModel(array_column($fmResults, 'user_id')),
+                    'count' => array_column($fmResults, 'match_count'),
+                ],
+                'official' => [
+                    'players' => Player::arrayIdToModel(array_column($offiResults, 'user_id')),
+                    'count' => array_column($offiResults, 'match_count'),
+                ],
+            ],
         ];
     }
 

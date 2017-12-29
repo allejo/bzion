@@ -27,7 +27,7 @@
         </section>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 mb3">
                 <h2>Favorite Season Maps</h2>
                 <p>Which map is your favorite and is it on the list? If not, go gather players and play some matches on those maps!</p>
 
@@ -51,7 +51,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mb3">
                 <h2>Season Leaderboard</h2>
 
                 <p>How do you rank amongst the leaders of this season? Got what it takes to climb up to the top? Put your money where your Elo is.</p>
@@ -84,6 +84,68 @@
                                 <td>{{ player.elo }}</td>
                             </tr>
                         {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% macro match_count_table(match_type, match_array) %}
+                {% set lastCount = 9999 %}
+                {% set pos = 0 %}
+
+                {% for index, player in match_array[match_type].players %}
+                    {% if match_array[match_type].count[index] < lastCount %}
+                        {% set pos = pos + 1 %}
+                        {% set lastCount = match_array[match_type].count[index] %}
+                    {% endif %}
+                    <tr>
+                        <td>{{ pos }}.</td>
+                        <td>{{ link_to(player) }}</td>
+                        <td>{{ match_array[match_type].count[index] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endmacro %}
+
+            <div class="col-md-6 mb3 mb0-md">
+                <h2>Most Active FMers</h2>
+                <p>Who doesn't love a good old fun match? Well, these players certainly love them.</p>
+
+                <table>
+                    <caption>
+                        The players who have participated in the most fun matches for this season sorted in descending
+                        order based on match count. Only the top ten players will be listed regardless of ties for
+                        the last spots.
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Player</th>
+                            <th>Match Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ _self.match_count_table('fm', player_matches) }}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h2>Most Active Offi Matchers</h2>
+                <p>If you're in it for the Elo, these are the players to compete against.</p>
+
+                <table>
+                    <caption>
+                        The players who have participated in the most official matches for this season sorted in
+                        descending order based on match count. Only the top ten players will be listed regardless of
+                        ties for the last spots.
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Player</th>
+                        <th>Match Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {{ _self.match_count_table('official', player_matches) }}
                     </tbody>
                 </table>
             </div>
