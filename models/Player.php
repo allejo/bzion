@@ -1190,19 +1190,19 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             return 0;
         }
 
-        // Get the sum of team A points if the player was in team A, team B
-        // points if the player was in team B, and their average if the player
-        // was on both teams for some reason
-        $query = $this->db->query(
-            "SELECT SUM(
-                IF(
-                    FIND_IN_SET(?, team_a_players) AND FIND_IN_SET(?, team_b_players),
-                    (team_a_points+team_b_points)/2,
-                    IF(FIND_IN_SET(?, team_a_players), team_a_points, team_b_points)
-                )
-            ) AS sum FROM matches WHERE status='entered' AND (FIND_IN_SET(?, team_a_players) OR FIND_IN_SET(?, team_b_players))",
-            array_fill(0, 5, $this->id)
-        );
+        // Get the sum of team A points if the player was in team A, team B points if the player was in team B
+        $query = $this->db->query("
+            SELECT
+              SUM(
+                IF(mp.team_loyalty = 0, team_a_points, team_b_points)
+              ) AS sum
+            FROM
+              matches
+            INNER JOIN
+              match_participation mp ON mp.match_id = matches.id
+            WHERE
+              status = 'entered' AND mp.user_id = ?
+        ", [$this->id]);
 
         return $query[0]['sum'] / $count;
     }

@@ -31,11 +31,14 @@ class MatchQueryBuilder extends QueryBuilder
             $team_a_query = "team_a = ?";
             $team_b_query = "team_b = ?";
         } elseif ($participant instanceof Player) {
-            $team_a_query = "FIND_IN_SET(?, team_a_players)";
-            $team_b_query = "FIND_IN_SET(?, team_b_players)";
+            $this->extras = 'INNER JOIN match_participation mp ON mp.match_id = matches.id';
+            $team_a_query = '? = mp.user_id';
+            $team_b_query = '? = mp.user_id';
         } else {
             throw new InvalidArgumentException("Invalid model provided");
         }
+
+        $team_query_or = ($team_b_query === null) ? $team_a_query : "$team_a_query OR $team_b_query";
 
         switch ($result) {
             case "wins":
@@ -55,10 +58,10 @@ class MatchQueryBuilder extends QueryBuilder
             case "draws":
             case "tie":
             case "ties":
-                $query = "($team_a_query OR $team_b_query) AND team_a_points = team_b_points";
+                $query = "($team_query_or) AND team_a_points = team_b_points";
                 break;
             default:
-                $query = "$team_a_query OR $team_b_query";
+                $query = "$team_query_or";
         }
 
         $this->whereConditions[] = $query;
