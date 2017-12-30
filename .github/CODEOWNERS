@@ -1,0 +1,3 @@
+# Require @allejo's :+1: for changes to the .github repo-config files
+# in case future Probot configurations require privilege escalations
+.github/* @allejo

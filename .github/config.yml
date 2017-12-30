@@ -1,0 +1,15 @@
+# Configuration for Probot's "todo" app
+#   https://github.com/jasonetco/todo
+
+todo:
+  keyword: "@todo"
+  label: needs triage
+
+
+# Configuration for Probot's "request-info" app
+#   https://github.com/behaviorbot/request-info
+
+requestInfoReplyComment: >
+  We would appreciate it if you could provide us with more info about this issue/pr!
+
+requestInfoLabelToAdd: more information needed
