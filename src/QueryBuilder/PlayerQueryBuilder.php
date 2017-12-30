@@ -6,7 +6,8 @@ class PlayerQueryBuilder extends MatchActivityQueryBuilder
     {
         return $this->includeMatchActivity(
             ['mp.user_id'],
-            'players.id = m2.user_id'
+            'players.id = m2.user_id',
+            true
         );
     }
 }

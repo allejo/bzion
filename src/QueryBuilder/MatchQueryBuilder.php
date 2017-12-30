@@ -32,13 +32,19 @@ class MatchQueryBuilder extends QueryBuilder
             $team_b_query = "team_b = ?";
         } elseif ($participant instanceof Player) {
             $this->extras = 'INNER JOIN match_participation mp ON mp.match_id = matches.id';
-            $team_a_query = '? = mp.user_id';
-            $team_b_query = '? = mp.user_id';
+            $team_a_query = $team_b_query = '? = mp.user_id';
         } else {
             throw new InvalidArgumentException("Invalid model provided");
         }
 
-        $team_query_or = ($team_b_query === null) ? $team_a_query : "$team_a_query OR $team_b_query";
+        if ($team_a_query === $team_b_query) {
+            $team_query_or = $team_a_query;
+            $this->parameters[] = $participant->getId();
+        } else {
+            $team_query_or = "$team_a_query OR $team_b_query";
+            $this->parameters[] = $participant->getId();
+            $this->parameters[] = $participant->getId();
+        }
 
         switch ($result) {
             case "wins":
@@ -65,8 +71,6 @@ class MatchQueryBuilder extends QueryBuilder
         }
 
         $this->whereConditions[] = $query;
-        $this->parameters[] = $participant->getId();
-        $this->parameters[] = $participant->getId();
 
         return $this;
     }
