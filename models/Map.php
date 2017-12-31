@@ -25,6 +25,18 @@ class Map extends AvatarModel implements NamedModel
     protected $description;
 
     /**
+     * The world size of the map
+     * @var int|null
+     */
+    protected $world_size;
+
+    /**
+     * Whether or not the map is randomly generated each match
+     * @var bool
+     */
+    protected $randomly_generated;
+
+    /**
      * The number of a shots this map has
      * @var int
      */
@@ -41,6 +53,16 @@ class Map extends AvatarModel implements NamedModel
      * @var bool
      */
     protected $jumping;
+
+    /**
+     * The game mode this map supports
+     *
+     * @see Map::GAME_MODE_CTF
+     * @see Map::GAME_MODE_AHOD
+     *
+     * @var int
+     */
+    protected $game_mode;
 
     /**
      * The status of the map
@@ -63,6 +85,9 @@ class Map extends AvatarModel implements NamedModel
     const SOFT_DELETE_PERMISSION = Permission::SOFT_DELETE_MAP;
     const HARD_DELETE_PERMISSION = Permission::HARD_DELETE_MAP;
 
+    const GAME_MODE_CTF = 1;
+    const GAME_MODE_AHOD = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -70,11 +95,14 @@ class Map extends AvatarModel implements NamedModel
     {
         $this->name = $map['name'];
         $this->description = $map['description'];
+        $this->world_size = $map['world_size'];
+        $this->randomly_generated = $map['randomly_generated'];
         $this->alias = $map['alias'];
         $this->avatar = $map['avatar'];
         $this->shot_count = $map['shot_count'];
         $this->ricochet = $map['ricochet'];
         $this->jumping = $map['jumping'];
+        $this->game_mode = $map['game_mode'];
         $this->status = $map['status'];
     }
 
@@ -121,6 +149,16 @@ class Map extends AvatarModel implements NamedModel
     }
 
     /**
+     * Get the world size of the map
+     *
+     * @return int|null
+     */
+    public function getWorldSize()
+    {
+        return $this->world_size;
+    }
+
+    /**
      * Get the number of shots this map has
      *
      * @return int
@@ -128,6 +166,29 @@ class Map extends AvatarModel implements NamedModel
     public function getShotCount()
     {
         return $this->shot_count;
+    }
+
+    /**
+     * Get the game mode supported by this map
+     *
+     * @see Map::GAME_MODE_CTF
+     * @see Map::GAME_MODE_AHOD
+     *
+     * @return int
+     */
+    public function getGameMode()
+    {
+        return (int)$this->game_mode;
+    }
+
+    /**
+     * Get whether or not the map is randomly generated each match
+     *
+     * @return bool
+     */
+    public function isRandomlyGenerated()
+    {
+        return (bool)$this->randomly_generated;
     }
 
     /**
@@ -173,6 +234,18 @@ class Map extends AvatarModel implements NamedModel
     }
 
     /**
+     * Set the world size of this map
+     *
+     * @param int $world_size
+     *
+     * @return Map
+     */
+    public function setWorldSize($world_size)
+    {
+        return $this->updateProperty($this->world_size, 'world_size', $world_size);
+    }
+
+    /**
      * Set the number of shots this map has
      *
      * @param int $shot_count
@@ -182,6 +255,18 @@ class Map extends AvatarModel implements NamedModel
     public function setShotCount($shot_count)
     {
         return $this->updateProperty($this->shot_count, 'shot_count', $shot_count);
+    }
+
+    /**
+     * Set whether or not this map is randomly generated
+     *
+     * @param bool $randomly_generated
+     *
+     * @return Map
+     */
+    public function setRandomlyGenerated($randomly_generated)
+    {
+        return $this->updateProperty($this->randomly_generated, 'randomly_generated', $randomly_generated);
     }
 
     /**
@@ -206,6 +291,21 @@ class Map extends AvatarModel implements NamedModel
     public function setJumpingEnabled($jumping)
     {
         return $this->updateProperty($this->jumping, 'jumping', $jumping);
+    }
+
+    /**
+     * Set the game mode for this map
+     *
+     * @param int $game_mode
+     *
+     * @see Map::GAME_MODE_CTF
+     * @see Map::GAME_MODE_AHOD
+     *
+     * @return Map
+     */
+    public function setGameMode($game_mode)
+    {
+        return $this->updateProperty($this->game_mode, 'game_mode', $game_mode);
     }
 
     /**

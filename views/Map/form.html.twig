@@ -19,16 +19,30 @@
                 </div>
 
                 <section class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        {{ form_row(form.world_size, { 'container_attr': { 'class': 'mb3' } }) }}
+                    </div>
+
+                    <div class="col-md-4">
                         {{ form_row(form.shot_count, { 'container_attr': { 'class': 'mb3' } }) }}
                     </div>
 
+                    <div class="col-md-4">
+                        {{ form_row(form.game_mode, { 'container_attr': { 'class': 'mb3' } }) }}
+                    </div>
+                </section>
+
+                <section class="row">
                     <div class="col-md-3 text-center-md">
                         {{ form_row(form.jumping, { 'container_attr': { 'class': 'mb3' } }) }}
                     </div>
 
                     <div class="col-md-3 text-center-md">
                         {{ form_row(form.ricochet, { 'container_attr': { 'class': 'mb3' } }) }}
+                    </div>
+
+                    <div class="col-md-3 text-center-md">
+                        {{ form_row(form.randomly_generated, { 'container_attr': { 'class': 'mb3' } }) }}
                     </div>
                 </section>
 

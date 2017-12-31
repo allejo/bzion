@@ -40,7 +40,23 @@
                         </figure>
 
                         <header class="c-card__header">
-                            <h2>{{ map.name }}</h2>
+                            <h2>
+                                {{ map.name }}
+                                <small>
+                                    {% if map.gameMode == constant('Map::GAME_MODE_CTF') %}
+                                        {% set gameModeLiteral = 'a Capture the Flag' %}
+                                        {% set gameModeIcon = 'flag' %}
+                                    {% elseif map.gameMode == constant('Map::GAME_MODE_AHOD') %}
+                                        {% set gameModeLiteral = 'an All Hands On Deck' %}
+                                        {% set gameModeIcon = 'bullhorn' %}
+                                    {% endif %}
+
+                                    <span title="{{ map.name }} is {{ gameModeLiteral }} map">
+                                        <i class="fa fa-{{ gameModeIcon }}" aria-hidden="true"></i>
+                                        <span class="sr-only">{{ gameModeLiteral }} map</span>
+                                    </span>
+                                </small>
+                            </h2>
                         </header>
 
                         <section class="c-card__body">
@@ -53,11 +69,30 @@
                                     <i class="fa fa-trophy" aria-hidden="true" title="Matches played"></i>
                                     {{ map.countMatches | number_abbr(noun='match', content='played') }}
                                 </li>
-                                {% if map.shotCount %}
+                                {% if map.randomlyGenerated is not null %}
                                     <li class="mr2">
                                         <small>
-                                            <span class="sr-only">Maximum shots per player: </span>
-                                            <span title="Maximum shots per player">
+                                            {% if map.randomlyGenerated %}
+                                                {% set message = 'This map is randomly generated at the start of each match' %}
+                                            {% else %}
+                                                {% set message = 'This is a static map and does not change' %}
+                                            {% endif %}
+
+                                            <span class="sr-only">{{ message }}</span>
+                                            <span title="{{ message }}" aria-hidden="true">
+                                                <i class="fa fa-random" aria-hidden="true"></i>
+                                                {{ map.randomlyGenerated ? 'Y' : 'N' }}
+                                            </span>
+                                        </small>
+                                    </li>
+                                {% endif %}
+                                {% if map.shotCount %}
+                                    {% set message %}This map allows {{ map.shotCount }} shots per player{% endset %}
+
+                                    <li class="mr2">
+                                        <small>
+                                            <span class="sr-only">{{ message }}</span>
+                                            <span title="{{ message }}" aria-hidden="true">
                                                 <i class="fa fa-crosshairs" aria-hidden="true"></i>
                                                 {{ map.shotCount }}
                                             </span>
@@ -65,11 +100,12 @@
                                     </li>
                                 {% endif %}
                                 {% if map.jumpingEnabled is not null %}
-                                    {% set status = map.jumpingEnabled ? 'enabled' : 'disabled' %}
+                                    {% set message %}Jumping is {{ map.jumpingEnabled ? 'allowed' : 'not allowed' }} on this map{% endset %}
+
                                     <li class="mr2">
                                         <small>
-                                            <span class="sr-only">Jumping is {{ status }} on this map</span>
-                                            <span title="Jumping is {{ status }} on this map">
+                                            <span class="sr-only">{{ message }}</span>
+                                            <span title="{{ message }}" aria-hidden="true">
                                                 {{ ionicon('jumping') }}
                                                 {{ map.jumpingEnabled ? 'Y' : 'N' }}
                                             </span>
@@ -77,11 +113,12 @@
                                     </li>
                                 {% endif %}
                                 {% if map.ricochetEnabled is not null %}
-                                    {% set status = map.ricochetEnabled ? 'enabled' : 'disabled' %}
+                                    {% set message %}This map {{ map.ricochetEnabled ? 'has' : 'does not have' }} ricochet shots{% endset %}
+
                                     <li>
                                         <small>
-                                            <span class="sr-only">Ricochet is {{ status }} on this map</span>
-                                            <span title="Ricochet is {{ status }} on this map">
+                                            <span class="sr-only">{{ message }}</span>
+                                            <span title="{{ message }}" aria-hidden="true">
                                                 {{ ionicon('ricochet') }}
                                                 {{ map.ricochetEnabled ? 'Y' : 'N' }}
                                             </span>

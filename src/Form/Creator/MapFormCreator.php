@@ -9,11 +9,14 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Constraint\UniqueAlias;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -54,6 +57,7 @@ class MapFormCreator extends ModelFormCreator
                     ]),
                 ],
                 'data'     => $this->editing->getAlias(),
+                'label'    => 'Mapchange Configuration Name',
                 'required' => true
             ))
             ->add('description', TextareaType::class, array(
@@ -66,6 +70,21 @@ class MapFormCreator extends ModelFormCreator
                 'data'     => $this->editing->getDescription(),
                 'required' => true,
             ))
+            ->add('world_size', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual([
+                        'value' => 200
+                    ]),
+                ],
+                'data'     => $this->editing->getWorldSize(),
+                'label'    => 'BZDB _worldSize',
+                'required' => true,
+            ])
+            ->add('randomly_generated', CheckboxType::class, [
+                'data'     => $this->editing->isRandomlyGenerated(),
+                'label'    => 'Map is randomly generated',
+                'required' => false,
+            ])
             ->add('avatar', FileType::class, array(
                 'constraints' => new Image(array(
                     'minWidth'  => 60,
@@ -75,6 +94,11 @@ class MapFormCreator extends ModelFormCreator
                 'required' => ($this->editing === null || $this->editing->hasAvatar())
             ))
             ->add('shot_count', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThan([
+                        'value' => 0
+                    ]),
+                ],
                 'data'     => $this->editing->getShotCount(),
                 'label'    => 'Max shot count',
                 'required' => true,
@@ -88,6 +112,15 @@ class MapFormCreator extends ModelFormCreator
                 'data'     => $this->editing->isRicochetEnabled(),
                 'label'    => 'Map allows ricochet',
                 'required' => false,
+            ])
+            ->add('game_mode', ChoiceType::class, [
+                'choices' => [
+                    \Map::GAME_MODE_CTF  => 'CTF',
+                    \Map::GAME_MODE_AHOD => 'AHOD',
+                ],
+                'data'     => $this->editing->getGameMode(),
+                'multiple' => false,
+                'label'    => 'Game Mode',
             ])
         ;
 
@@ -116,6 +149,9 @@ class MapFormCreator extends ModelFormCreator
             ->setShotCount($form->get('shot_count')->getData())
             ->setJumpingEnabled($form->get('jumping')->getData())
             ->setRicochetEnabled($form->get('ricochet')->getData())
+            ->setWorldSize($form->get('world_size')->getData())
+            ->setRandomlyGenerated($form->get('randomly_generated')->getData())
+            ->setGameMode($form->get('game_mode')->getData())
         ;
     }
 
@@ -129,9 +165,12 @@ class MapFormCreator extends ModelFormCreator
         $map->setName($form->get('name')->getData());
         $map->setAlias($form->get('alias')->getData());
         $map->setDescription($form->get('description')->getData());
+        $map->setWorldSize($form->get('world_size')->getData());
+        $map->setRandomlyGenerated($form->get('randomly_generated')->getData());
         $map->setShotCount($form->get('shot_count')->getData());
         $map->setJumpingEnabled($form->get('jumping')->getData());
         $map->setRicochetEnabled($form->get('ricochet')->getData());
+        $map->setGameMode($form->get('game_mode')->getData());
 
         if ($form->has('delete_avatar') && $form->get('delete_avatar')->isClicked()) {
             $map->resetAvatar();
