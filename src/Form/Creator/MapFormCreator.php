@@ -43,7 +43,6 @@ class MapFormCreator extends ModelFormCreator
                         'max' => 40,
                     ]),
                 ],
-                'data'      => $this->editing->getName(),
                 'required' => true,
             ))
             ->add('alias', TextType::class, array(
@@ -56,7 +55,6 @@ class MapFormCreator extends ModelFormCreator
                         'type' => 'alpha'
                     ]),
                 ],
-                'data'     => $this->editing->getAlias(),
                 'label'    => 'Mapchange Configuration Name',
                 'required' => true
             ))
@@ -67,7 +65,6 @@ class MapFormCreator extends ModelFormCreator
                         'min' => 10
                     ]),
                 ],
-                'data'     => $this->editing->getDescription(),
                 'required' => true,
             ))
             ->add('world_size', IntegerType::class, [
@@ -76,12 +73,10 @@ class MapFormCreator extends ModelFormCreator
                         'value' => 200
                     ]),
                 ],
-                'data'     => $this->editing->getWorldSize(),
                 'label'    => 'BZDB _worldSize',
                 'required' => true,
             ])
             ->add('randomly_generated', CheckboxType::class, [
-                'data'     => $this->editing->isRandomlyGenerated(),
                 'label'    => 'Map is randomly generated',
                 'required' => false,
             ])
@@ -99,17 +94,14 @@ class MapFormCreator extends ModelFormCreator
                         'value' => 0
                     ]),
                 ],
-                'data'     => $this->editing->getShotCount(),
                 'label'    => 'Max shot count',
                 'required' => true,
             ])
             ->add('jumping', CheckboxType::class, [
-                'data'     => $this->editing->isJumpingEnabled(),
                 'label'    => 'Map allows jumping',
                 'required' => false,
             ])
             ->add('ricochet', CheckboxType::class, [
-                'data'     => $this->editing->isRicochetEnabled(),
                 'label'    => 'Map allows ricochet',
                 'required' => false,
             ])
@@ -118,7 +110,6 @@ class MapFormCreator extends ModelFormCreator
                     \Map::GAME_MODE_CTF  => 'CTF',
                     \Map::GAME_MODE_AHOD => 'AHOD',
                 ],
-                'data'     => $this->editing->getGameMode(),
                 'multiple' => false,
                 'label'    => 'Game Mode',
             ])
@@ -132,6 +123,24 @@ class MapFormCreator extends ModelFormCreator
         return $builder->add('submit', SubmitType::class, [
             'label' => 'Save'
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param \Map $map
+     */
+    public function fill($form, $map)
+    {
+        $form->get('name')->setData($map->getName());
+        $form->get('alias')->setData($map->getAlias());
+        $form->get('description')->setData($map->getDescription());
+        $form->get('world_size')->setData($map->getWorldSize());
+        $form->get('randomly_generated')->setData($map->isRandomlyGenerated());
+        $form->get('shot_count')->setData($map->getShotCount());
+        $form->get('jumping')->setData($map->isJumpingEnabled());
+        $form->get('ricochet')->setData($map->isRicochetEnabled());
+        $form->get('game_mode')->setData($map->getGameMode());
     }
 
     /**
