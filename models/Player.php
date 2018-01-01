@@ -760,36 +760,34 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
 
     /**
      * Mark a player's account as banned
+     *
+     * @deprecated The players table shouldn't have any indicators of banned status, the Bans table is the authoritative source
      */
     public function markAsBanned()
     {
-        if ($this->status != 'active') {
-            return $this;
-        }
-
-        return $this->updateProperty($this->status, "status", "banned");
+        return;
     }
 
     /**
      * Mark a player's account as unbanned
+     *
+     * @deprecated The players table shouldn't have any indicators of banned status, the Bans table is the authoritative source
      */
     public function markAsUnbanned()
     {
-        if ($this->status != 'banned') {
-            return $this;
-        }
-
-        return $this->updateProperty($this->status, "status", "active");
+        return;
     }
 
     /**
-     * Find out if a player is banned
+     * Find out if a player is hard banned
      *
      * @return bool
      */
     public function isBanned()
     {
-        return Ban::getBan($this->id) !== null;
+        $ban = Ban::getBan($this->id);
+
+        return ($ban !== null && !$ban->isSoftBan());
     }
 
     /**
