@@ -25,7 +25,17 @@
     <div {{ block('container_attributes') }}>
         {{- form_label(form) -}}
         {{- form_errors(form) -}}
-        {{- form_widget(form) -}}
+
+        {%- if attr['data-help-message'] is defined -%}
+            {{- form_widget(form, { attr: {
+                'aria-describedby': '#aria-' ~ id
+            } }) }}
+            <p id="aria-{{ id }}" class="c-form__help_message">
+                <small>{{- attr['data-help-message'] -}}</small>
+            </p>
+        {%- else -%}
+            {{- form_widget(form) -}}
+        {%- endif -%}
     </div>
 {%- endblock form_row %}
 
@@ -63,8 +73,7 @@
     {%- if (not compound or force_error|default(false)) and not valid -%}
         {%- set container_attr = container_attr | default([]) | merge({
             'class': container_attr['class'] | default('')
-        })
-        -%}
+        }) -%}
     {%- endif -%}
 
     {%- for attrname, attrvalue in container_attr -%}
