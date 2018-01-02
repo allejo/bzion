@@ -39,11 +39,8 @@ class MatchQueryBuilder extends QueryBuilder
 
         if ($team_a_query === $team_b_query) {
             $team_query_or = $team_a_query;
-            $this->parameters[] = $participant->getId();
         } else {
             $team_query_or = "$team_a_query OR $team_b_query";
-            $this->parameters[] = $participant->getId();
-            $this->parameters[] = $participant->getId();
         }
 
         switch ($result) {
@@ -52,22 +49,34 @@ class MatchQueryBuilder extends QueryBuilder
             case "victory":
             case "victories":
                 $query = "($team_a_query AND team_a_points > team_b_points) OR ($team_b_query AND team_b_points > team_a_points)";
+                $this->parameters[] = $participant->getId();
+                $this->parameters[] = $participant->getId();
+
                 break;
+
             case "loss":
             case "lose":
             case "losses":
             case "defeat":
             case "defeats":
                 $query = "($team_a_query AND team_b_points > team_a_points) OR ($team_b_query AND team_a_points > team_b_points)";
+                $this->parameters[] = $participant->getId();
+                $this->parameters[] = $participant->getId();
+
                 break;
+
             case "draw":
             case "draws":
             case "tie":
             case "ties":
                 $query = "($team_query_or) AND team_a_points = team_b_points";
+                $this->parameters[] = $participant->getId();
+
                 break;
+
             default:
                 $query = "$team_query_or";
+                $this->parameters[] = $participant->getId();
         }
 
         $this->whereConditions[] = $query;
