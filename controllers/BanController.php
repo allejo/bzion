@@ -16,12 +16,12 @@ class BanController extends CRUDController
 
         $qb = $this->getQueryBuilder()
             ->sortBy('updated')->reverse()
-            ->limit(15)->fromPage($currentPage);
+            ->limit(16)->fromPage($currentPage);
 
         return array(
-            "bans"        => $qb->getModels(),
-            "currentPage" => $currentPage,
-            "totalPages"  => $qb->countPages()
+            'bans'        => $qb->getModels(),
+            'currentPage' => $currentPage,
+            'totalPages'  => $qb->countPages()
         );
     }
 

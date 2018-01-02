@@ -16,41 +16,49 @@
 
 {% block title %}Bans{% endblock %}
 
+{% macro ban_preview(ban_instance) %}
+    {% from 'Player/widget.html.twig' import widget_custom as player_widget %}
+
+    <div class="c-link_combinator row">
+        <div class="c-link_combinator__body col">
+            {% set banMessage -%}
+                banned {{ ban_instance.permanent ? 'indefinitely' : '' }} on <strong>{{ ban_instance.created | humanTime }}</strong>
+
+                {%- if not ban_instance.permanent %}
+                    {% set expiration = ban_instance.expiration.diff(ban_instance.created) %}
+
+                    {# If there are hours in the date difference, just round up to an entire day #}
+                    {% set daysApprox = expiration.days %}
+                    {% if expiration.h > 0 %}
+                        {% set daysApprox = daysApprox + 1 %}
+                    {% endif %}
+
+                    for ~<strong>{{ 'day' | plural(daysApprox) }}</strong>
+                {%- endif -%}
+            {%- endset %}
+
+            {{ player_widget(ban_instance.victim, {}, banMessage) }}
+        </div>
+
+        <div class="c-link_combinator__pointer col">
+            <a href="{{ ban_instance.url }}">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <span class="sr-only">See ban details</span>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
+
 {% block content %}
-    <section class="o-container">
-        <section class="c-table c-table--no-border c-table--no-hover c-banlist">
-            <div class="c-table__row c-table__row--header">
-                <div class="c-table__row__column c-ban__creation">Date</div>
-                <div class="c-table__row__column c-ban__victim">Victim</div>
-                <div class="c-table__row__column c-ban__expiration">Expires</div>
-                <div class="c-table__row__column c-ban__info"></div>
-            </div>
-
+    <div class="container">
+        <div class="row mb3">
             {% for ban in bans %}
-                <div class="c-table__row c-ban">
-                    <div class="c-table__row__column c-ban__creation">
-                        <span class="c-ban__label">Ban issued:</span> {{ ban.created | humanTime }}
-                    </div>
-                    <div class="c-table__row__column c-ban__victim">
-                        <span class="c-ban__label">Ban victim:</span> {{ link_to(ban.victim) }}
-                    </div>
-                    <div class="c-table__row__column c-ban__expiration">
-                        <span class="c-ban__label">Ban expiration:</span>
-
-                        {% if ban.willExpire %}
-                            {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }}
-                        {% else %}
-                            <em>Never</em>
-                        {% endif %}
-                    </div>
-                    <div class="c-table__row__column c-ban__info">
-                        {{ link_to(ban, icon='info-circle', class='c-ban__info__details--desktop') }}
-                        {{ link_to(ban, class='c-ban__info__details--mobile', content='View ban details') }}
-                    </div>
+                <div class="col-md-6 mb2">
+                    {{ _self.ban_preview(ban) }}
                 </div>
             {% endfor %}
-        </section>
+        </div>
 
         {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
-    </section>
+    </div>
 {% endblock %}

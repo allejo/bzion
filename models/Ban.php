@@ -279,7 +279,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function isPermanent()
     {
-        return $this->expiration !== null;
+        return $this->expiration === null;
     }
 
     /**

@@ -1,0 +1,25 @@
+.c-link_combinator {
+
+}
+
+.c-link_combinator__body {
+    flex-grow: 1;
+}
+
+.c-link_combinator__pointer {
+    @include theme-rule(border-left, 'border.default');
+
+    align-items: center;
+    display: flex;
+    margin-left: 15px;
+
+    a {
+        display: block;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    i {
+        font-size: 30px;
+    }
+}

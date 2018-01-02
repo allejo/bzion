@@ -47,7 +47,7 @@
             </div>
 
             {% if slug %}
-                <p class="c-player-badge__team">{{- slug -}}</p>
+                <p class="c-player-badge__team">{{- slug | raw -}}</p>
             {% endif %}
         </div>
     </div>
