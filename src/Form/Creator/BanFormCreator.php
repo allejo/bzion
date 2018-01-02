@@ -44,7 +44,11 @@ class BanFormCreator extends ModelFormCreator
                 'required' => false,
             ])
             ->add('is_permanent', CheckboxType::class, [
+                'label' => 'Permanent Ban',
                 'required' => false,
+                'attr' => [
+                    'data-help-message' => 'When checked, no expiration date needs to be set and will be ignored',
+                ],
             ])
             ->add('reason', TextareaType::class, [
                 'constraints' => [
@@ -55,6 +59,9 @@ class BanFormCreator extends ModelFormCreator
             ->add('is_soft_ban', CheckboxType::class, [
                 'label' => 'Soft Ban',
                 'required' => false,
+                'attr' => [
+                    'data-help-message' => "A soft ban will not affect a player's permissions on this site; e.g. a mute",
+                ],
             ])
             ->add('server_message', TextType::class, [
                 'required' => false,
@@ -63,10 +70,16 @@ class BanFormCreator extends ModelFormCreator
                         'max' => 150,
                     ]),
                 ],
+                'attr' => [
+                    'data-help-message' => 'The ban message that will appear on match servers',
+                ],
             ])
             ->add('ip_addresses', new IpType(), [
                 'label' => 'IP Addresses',
                 'required' => false,
+                'attr' => [
+                    'data-help-message' => 'The IP addresses that will be banned on match servers. Use commas to separate multiple IPs.',
+                ],
             ])
         ;
 
