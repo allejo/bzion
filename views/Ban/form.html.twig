@@ -15,13 +15,13 @@
                 {{ form_row(form.server_message, { 'container_attr': { 'class': 'mb3' } }) }}
                 {{ form_row(form.ip_addresses, { 'container_attr': { 'class': 'mb3' } }) }}
             </div>
-            <aside class="col-md-3">
-                {{ form_row(form.expiration, {
-                    'attr': { 'class': 'c-form__date', 'id': 'ban_expiration_date' },
-                    'container_attr': { 'class': 'mb3' }
-                }) }}
-                {{ form_row(form.is_permanent, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+            <aside class="col-md-3 py3-md">
                 {{ form_row(form.is_soft_ban, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                {{ form_row(form.is_permanent, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                {{ form_row(form.expiration, {
+                    'attr': { 'class': 'c-form__date' },
+                    'container_attr': { 'class': 'mb3', 'id': 'ban_expiration_date' }
+                }) }}
             </aside>
         </div>
 

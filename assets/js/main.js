@@ -4,6 +4,7 @@ import 'select2';
 $(function () {
     require('./src/accordion')();
     require('./src/autocomplete')();
+    require('./src/bans')();
     require('./src/tabs')();
     require('./src/menu')();
     require('./src/md-editor')();
@@ -17,4 +18,4 @@ $(function () {
 });
 
 // Export $ as jQuery for legacy JS scripts
-window.$ = $;
+global.$ = $;
