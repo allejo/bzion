@@ -19,22 +19,32 @@
 {% macro ban_preview(ban_instance) %}
     {% from 'Player/widget.html.twig' import widget_custom as player_widget %}
 
-    <div class="c-link_combinator row">
+    <div class="c-link_combinator row row--nowrap">
         <div class="c-link_combinator__body col">
             {% set banMessage -%}
-                banned {{ ban_instance.permanent ? 'indefinitely' : '' }} on <strong>{{ ban_instance.created | humanTime }}</strong>
+                banned <span class="u-hide u-show-sm">{{ ban_instance.permanent ? 'indefinitely' : '' }}</span> on
 
-                {%- if not ban_instance.permanent %}
-                    {% set expiration = ban_instance.expiration.diff(ban_instance.created) %}
+                <span class="u-hide-md">
+                    <strong>{{ ban_instance.created | date("M d, 'y") }}</strong>
+                </span>
 
-                    {# If there are hours in the date difference, just round up to an entire day #}
-                    {% set daysApprox = expiration.days %}
-                    {% if expiration.h > 0 %}
-                        {% set daysApprox = daysApprox + 1 %}
-                    {% endif %}
+                <span class="u-hide u-show-md">
+                    <strong>{{ ban_instance.created | humanTime }}</strong>
+                </span>
 
-                    for ~<strong>{{ 'day' | plural(daysApprox) }}</strong>
-                {%- endif -%}
+                <span class="u-hide u-show-sm">
+                    {%- if not ban_instance.permanent %}
+                        {% set expiration = ban_instance.expiration.diff(ban_instance.created) %}
+
+                        {# If there are hours in the date difference, just round up to an entire day #}
+                        {% set daysApprox = expiration.days %}
+                        {% if expiration.h > 0 %}
+                            {% set daysApprox = daysApprox + 1 %}
+                        {% endif %}
+
+                        for ~<strong>{{ 'day' | plural(daysApprox) }}</strong>
+                    {%- endif -%}
+                </span>
             {%- endset %}
 
             {{ player_widget(ban_instance.victim, {}, banMessage) }}

@@ -36,14 +36,20 @@
             {% set imgURL = asset('assets/imgs/team_' ~ random(['red', 'green', 'blue', 'purple']) ~ '.png') %}
         {% endif %}
 
-        <img class="c-player-badge__avatar"
-             src="{{ imgURL }}"
-             alt="{{ player.name }}'s avatar"
-        >
+        <div class="c-player-badge__avatar">
+            <img src="{{ imgURL }}"
+                 alt="{{ player.name }}'s avatar"
+            >
+        </div>
 
-        <div>
+        <div class="c-player-badge__body">
             <div class="c-player-badge__callsign">
-                <span>{{ link_to(player) }}</span> {{ player.country.flagLiteral | raw }}
+                <div class="u-truncate-text">
+                    {{ link_to(player) }}
+                </div>
+                <div class="flex-grow pl1">
+                    {{ player.country.flagLiteral | raw }}
+                </div>
             </div>
 
             {% if slug %}

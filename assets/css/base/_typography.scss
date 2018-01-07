@@ -19,6 +19,7 @@ small {
 }
 
 .u-truncate-text {
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
