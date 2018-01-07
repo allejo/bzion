@@ -11,6 +11,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class FeatureContext extends MinkContext implements SnippetAcceptingContext, KernelAwareContext
 {
+    /** @var Match|null */
+    private $lastMatch = null;
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
@@ -174,12 +176,52 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public function playsAMatchAgainstWithScore($team1, $team2, $score1, $score2)
     {
-        Match::enterMatch(Team::getFromName($team1)->getId(),
-                          Team::getFromName($team2)->getId(),
-                          $score1,
-                          $score2,
-                          30,
-                          $this->getUserId());
+        $this->lastMatch = Match::enterMatch(
+            Team::getFromName($team1)->getId(),
+            Team::getFromName($team2)->getId(),
+            $score1,
+            $score2,
+            30,
+            $this->getUserId()
+        );
+    }
+
+    /**
+     * @Given :team plays a match against the :color team with score :teamScore - :colorScore with players ":teamAPlayers" on Team A and ":teamBPlayers" on Team B
+     */
+    public function playsAMatchAgainstColoredTeamWithScores($team, $color, $teamScore, $colorScore, $teamAPlayers, $teamBPlayers)
+    {
+        $teamANames = explode(',', $teamAPlayers);
+        $teamBNames = explode(',', $teamBPlayers);
+
+        $teamAPlayers = [];
+        $teamBPlayers = [];
+
+        foreach ($teamANames as $name) {
+            $teamAPlayers[] = Player::getFromUsername($name)->getId();
+        }
+
+        foreach ($teamBNames as $name) {
+            $teamBPlayers[] = Player::getFromUsername($name)->getId();
+        }
+
+        $this->lastMatch = Match::enterMatch(
+            Team::getFromName($team)->getId(),
+            null,
+            $teamScore,
+            $colorScore,
+            30,
+            null,
+            'now',
+            $teamAPlayers,
+            $teamBPlayers,
+            null,
+            null,
+            null,
+            Match::OFFICIAL,
+            null,
+            $color
+        );
     }
 
     /**
