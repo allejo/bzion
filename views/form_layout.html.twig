@@ -30,7 +30,7 @@
             {{- form_widget(form, { attr: {
                 'aria-describedby': '#aria-' ~ id
             } }) }}
-            <p id="aria-{{ id }}" class="c-form__help_message">
+            <p id="aria-{{ id }}" class="c-form__help_message mt1">
                 <small>{{- attr['data-help-message'] -}}</small>
             </p>
         {%- else -%}
