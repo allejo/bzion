@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% from 'Player/widget.html.twig' import widget_custom as player_widget %}
 
 {% set pageButtons = [
     {
@@ -24,61 +25,61 @@
 {% block title %}Bans{% endblock %}
 
 {% block content %}
-    <section class="o-container">
-        <section class="o-section">
-            <strong>Victim</strong>
-            <p>{{ link_to(ban.victim) }}</p>
-        </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <section class="mb3">
+                    <h2>Victim</h2>
+                    {{ player_widget(ban.victim) }}
+                </section>
+            </div>
+            <div class="col-md-4">
+                <section class="mb3">
+                    <h2>Expiration</h2>
+                    <p>
+                        {% if not ban.isPermanent %}
+                            {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }}
 
-        {% if me.canEdit(ban) %}
-            <section class="o-section">
-                <strong>Banned by</strong>
-                <p>{{ link_to(ban.author) }}</p>
-            </section>
-        {% endif %}
+                            {% if not ban.isExpired %}
+                                ({{ ban.expiration.diffForHumans }})
+                            {% endif %}
+                        {% else %}
+                            <em>Until further notice</em>
+                        {% endif %}
+                    </p>
+                </section>
+            </div>
+            <div class="col-md-4">
+                <h2>Post Date</h2>
+                <p>{{ ban.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
+            </div>
+        </div>
 
-        <section class="o-section">
-            <strong>Date</strong>
-            <p>{{ ban.created | humanTime(constant('TimeDate::DATE_FULL')) }}</p>
-        </section>
-
-        <section class="o-section">
-            <strong>Expiration</strong>
-            <p>
-                {% if ban.willExpire %}
-                    {{ ban.expiration | humanTime(constant('TimeDate::DATE_FULL')) }} ({{ ban.expiration.diffForHumans }})
-                {% else %}
-                    <em>Until further notice</em>
-                {% endif %}
-            </p>
-        </section>
-
-        <section class="o-section">
-            <strong>Reason</strong>
+        <section>
+            <h2>Ban Reason</h2>
             <article class="s-markdown">
                 {{ ban.reason | markdown }}
             </article>
         </section>
 
         {% if me.hasPermission("edit_ban") %}
-            <section class="o-section">
-                <strong>Server Ban Message</strong>
-                <p>{{ ban.serverMessage | raw }}</p>
+            <section class="my3">
+                <h2>Posted By</h2>
+                {{ player_widget(ban.author) }}
             </section>
 
-            <section class="o-section">
-                <strong>Allow Server Join</strong>
-                <p>{{ ban.allowedServerJoin | yesNo }}</p>
-            </section>
-
-            <section class="o-section">
-                <strong>Banned IP Addresses</strong>
-                <ul>
-                    {% for ip in ban.ipAddresses %}
-                        <li>{{ ip }}</li>
-                    {% endfor %}
-                </ul>
+            <section class="mb3">
+                <h2>Banned IP Addresses</h2>
+                <div class="s-markdown">
+                    <ul>
+                        {% for ip in ban.ipAddresses %}
+                            <li>{{ ip }}</li>
+                        {% else %}
+                            <li>No IPs affected by this ban</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </section>
         {% endif %}
-    </section>
+    </div>
 {% endblock %}
