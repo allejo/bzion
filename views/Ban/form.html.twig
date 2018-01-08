@@ -1,47 +1,32 @@
-{{ form_start(form, {'attr': {'class': 'c-form o-container'}}) }}
-    {{ form_errors(form) }}
-    <section class="o-row c-form__section">
-        <div class="o-col--third">
-            {{ form_row(form.player, { 'attr': { 'class': 'c-form__group' } }) }}
-        </div>
+{% from 'md-editor.html.twig' import md_editor %}
 
-        <div class="o-col--third">
-            {{ form_row(form.expiration, {
-                'attr': { 'class': 'c-form__timestamp' },
-                'container_attr': { 'class': 'c-form__group' }
-            }) }}
-        </div>
-    </section>
+<div class="container">
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-    <section class="c-form__section">
-        {{ form_row(form.server_message, { 'container_attr': { 'class': 'c-form__group' } }) }}
-    </section>
+        {{ form_row(form.player, { 'container_attr': { 'class': 'mb3' } }) }}
 
-    <section class="c-form__section">
-        {{ form_row(form.reason, { 'container_attr': { 'class': 'c-form__group' } }) }}
-    </section>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="mb3">
+                    {{ md_editor(form.reason) }}
+                </div>
 
-    <section class="c-form__section">
-        <p class="c-form__section__heading">Ban Settings</p>
-
-        <div class="c-form__options">
-            <div>
-                {{ form_widget(form.automatic_expiration) }}
-                {{ form_label(form.automatic_expiration) }}
+                {{ form_row(form.server_message, { 'container_attr': { 'class': 'mb3' } }) }}
+                {{ form_row(form.ip_addresses, { 'container_attr': { 'class': 'mb3' } }) }}
             </div>
-
-            <div>
-                {{ form_widget(form.server_join_allowed) }}
-                {{ form_label(form.server_join_allowed) }}
-            </div>
+            <aside class="col-md-3 py3-md">
+                {{ form_row(form.is_soft_ban, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                {{ form_row(form.is_permanent, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                {{ form_row(form.expiration, {
+                    'attr': { 'class': 'c-form__date' },
+                    'container_attr': { 'class': 'mb3', 'id': 'ban_expiration_date' }
+                }) }}
+            </aside>
         </div>
-    </section>
 
-    <section class="c-form__section">
-        {{ form_row(form.ip_addresses, { 'container_attr': { 'class': 'c-form__group' } }) }}
-    </section>
-
-    <section class="c-form__section">
-        {{ form_rest(form) }}
-    </section>
-{{ form_end(form) }}
+        <div>
+            {{ form_rest(form) }}
+        </div>
+    {{ form_end(form) }}
+</div>

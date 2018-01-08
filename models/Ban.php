@@ -28,19 +28,13 @@ class Ban extends UrlModel implements NamedModel
      * The message that will appear when a player is denied connecting to a game server
      * @var string
      */
-    protected $srvmsg;
+    protected $server_message;
 
     /**
      * The ban reason
      * @var string
      */
     protected $reason;
-
-    /**
-     * Whether or not a player is allowed to join a server when they are banned
-     * @var bool
-     */
-    protected $allowServerJoin;
 
     /**
      * The ban creation date
@@ -59,6 +53,12 @@ class Ban extends UrlModel implements NamedModel
      * @var int
      */
     protected $author;
+
+    /**
+     * Set to true when a player should NOT be penalized throughout the website while this ban is active
+     * @var bool
+     */
+    protected $is_soft_ban;
 
     /**
      * The IP of the banned player if the league would like to implement a global ban list
@@ -90,12 +90,10 @@ class Ban extends UrlModel implements NamedModel
     protected function assignResult($ban)
     {
         $this->player = $ban['player'];
-        $this->expiration = ($ban['expiration'] === null)
-                          ? null
-                          : TimeDate::fromMysql($ban['expiration']);
-        $this->srvmsg = $ban['server_message'];
+        $this->expiration = ($ban['expiration'] === null) ? null : TimeDate::fromMysql($ban['expiration']);
+        $this->server_message = $ban['server_message'];
         $this->reason = $ban['reason'];
-        $this->allowServerJoin = $ban['allow_server_join'];
+        $this->is_soft_ban = $ban['is_soft_ban'];
         $this->created = TimeDate::fromMysql($ban['created']);
         $this->updated = TimeDate::fromMysql($ban['updated']);
         $this->author = $ban['author'];
@@ -107,7 +105,18 @@ class Ban extends UrlModel implements NamedModel
      */
     protected function assignLazyResult($result)
     {
-        $this->ipAddresses = self::fetchIds("WHERE ban_id = ?", array($this->getId()), "banned_ips", "ip_address");
+        $this->ipAddresses = self::fetchIds('WHERE ban_id = ?', [$this->getId()], 'banned_ips', 'ip_address');
+    }
+
+    /**
+     * Get the IP address of the banned player
+     * @return string[]
+     */
+    public function getIpAddresses()
+    {
+        $this->lazyLoad();
+
+        return $this->ipAddresses;
     }
 
     /**
@@ -120,7 +129,7 @@ class Ban extends UrlModel implements NamedModel
         $this->lazyLoad();
 
         $this->ipAddresses[] = $ipAddress;
-        $this->db->execute("INSERT IGNORE INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)", array($this->getId(), $ipAddress));
+        $this->db->execute('INSERT IGNORE INTO banned_ips (id, ban_id, ip_address) VALUES (NULL, ?, ?)', [$this->getId(), $ipAddress]);
     }
 
     /**
@@ -133,8 +142,8 @@ class Ban extends UrlModel implements NamedModel
         $this->lazyLoad();
 
         // Remove $ipAddress from $this->ipAddresses
-        $this->ipAddresses = array_diff($this->ipAddresses, array($ipAddress));
-        $this->db->execute("DELETE FROM banned_ips WHERE ban_id = ? AND ip_address = ?", array($this->getId(), $ipAddress));
+        $this->ipAddresses = array_diff($this->ipAddresses, [$ipAddress]);
+        $this->db->execute('DELETE FROM banned_ips WHERE ban_id = ? AND ip_address = ?', [$this->getId(), $ipAddress]);
     }
 
     /**
@@ -163,15 +172,6 @@ class Ban extends UrlModel implements NamedModel
         }
 
         return $this;
-    }
-
-    /**
-     * Check whether or not a player is allowed to join a server when they've been banned
-     * @return bool Whether or not a player is allowed to join
-     */
-    public function allowedServerJoin()
-    {
-        return $this->allowServerJoin;
     }
 
     /**
@@ -216,22 +216,7 @@ class Ban extends UrlModel implements NamedModel
      */
     public function getServerMessage()
     {
-        if ($this->allowedServerJoin()) {
-            return '';
-        }
-
-        return $this->srvmsg;
-    }
-
-    /**
-     * Get the IP address of the banned player
-     * @return string[]
-     */
-    public function getIpAddresses()
-    {
-        $this->lazyLoad();
-
-        return $this->ipAddresses;
+        return $this->server_message;
     }
 
     /**
@@ -244,7 +229,18 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
+     * Get the ID of the player who was banned
+     *
+     * @return int The ID of the victim of the ban
+     */
+    public function getVictimID()
+    {
+        return $this->player;
+    }
+
+    /**
      * Get the player who was banned
+     *
      * @return Player The banned player
      */
     public function getVictim()
@@ -253,12 +249,13 @@ class Ban extends UrlModel implements NamedModel
     }
 
     /**
-     * Get the ID of the player who was banned
-     * @return int The ID of the victim of the ban
+     * Get whether or not the player should be penalized on the site.
+     *
+     * @return bool True if the player should NOT be penalized on the site.
      */
-    public function getVictimID()
+    public function isSoftBan()
     {
-        return $this->player;
+        return (bool) $this->is_soft_ban;
     }
 
     /**
@@ -280,9 +277,9 @@ class Ban extends UrlModel implements NamedModel
      *
      * @return bool
      */
-    public function willExpire()
+    public function isPermanent()
     {
-        return $this->expiration !== null;
+        return $this->expiration === null;
     }
 
     /**
@@ -293,14 +290,15 @@ class Ban extends UrlModel implements NamedModel
     public function expire()
     {
         $this->setExpiration(TimeDate::now());
-        $this->getVictim()->markAsUnbanned();
 
         return $this;
     }
 
     /**
      * Set the expiration date of the ban
+     *
      * @param  TimeDate $expiration The expiration
+     *
      * @return self
      */
     public function setExpiration($expiration)
@@ -314,12 +312,14 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Set the server message of the ban
+     *
      * @param  string $message The new server message
+     *
      * @return self
      */
     public function setServerMessage($message)
     {
-        return $this->updateProperty($this->srvmsg, 'server_message', $message);
+        return $this->updateProperty($this->server_message, 'server_message', $message);
     }
 
     /**
@@ -338,62 +338,55 @@ class Ban extends UrlModel implements NamedModel
      */
     public function updateEditTimestamp()
     {
-        return $this->updateProperty($this->updated, "updated", TimeDate::now());
+        return $this->updateProperty($this->updated, 'updated', TimeDate::now());
     }
 
     /**
      * Set whether the ban's victim is allowed to enter a match server
-     * @param  bool $allowServerJoin
+     *
+     * @param  bool $is_soft_ban
+     *
      * @return self
      */
-    public function setAllowServerJoin($allowServerJoin)
+    public function setSoftBan($is_soft_ban)
     {
-        return $this->updateProperty($this->allowServerJoin, 'allow_server_join', (bool) $allowServerJoin);
+        return $this->updateProperty($this->is_soft_ban, 'is_soft_ban', (bool) $is_soft_ban);
     }
 
     /**
-     * Add a new ban
+     * Add a new ban.
      *
-     * @param int         $playerID        The ID of the victim of the ban
-     * @param int         $authorID        The ID of the player responsible for the ban
-     * @param mixed|null $expiration      The expiration of the ban (set to NULL so that it never expires)
-     * @param string      $reason          The full reason for the ban
-     * @param string      $srvmsg          A summary of the ban to be displayed on server banlists (max 150 characters)
-     * @param string[]    $ipAddresses     An array of IPs that have been banned
-     * @param bool        $allowServerJoin Whether or not the player is allowed to join match servers
+     * @param int        $playerID    The ID of the victim of the ban
+     * @param int        $authorID    The ID of the player responsible for the ban
+     * @param mixed|null $expiration  The expiration of the ban (set to NULL for permanent ban)
+     * @param string     $reason      The full reason for the ban (supports markdown)
+     * @param string     $serverMsg   A summary of the ban to be displayed on server banlists (max 150 characters)
+     * @param string[]   $ipAddresses An array of IPs that have been banned
+     * @param bool       $is_soft_ban Whether or not the player is allowed to join match servers
      *
      * @return Ban An object representing the ban that was just entered or false if the ban was not created
      */
-    public static function addBan($playerID, $authorID, $expiration, $reason, $srvmsg = "", $ipAddresses = array(), $allowServerJoin = false)
+    public static function addBan($playerID, $authorID, $expiration, $reason, $serverMsg = '', $ipAddresses = [], $is_soft_ban = false)
     {
-        $player = Player::get($playerID);
-
         if ($expiration !== null) {
             $expiration = TimeDate::from($expiration)->toMysql();
-        } else {
-            $player->markAsBanned();
-        }
-
-        // If there are no IPs to banned or no server ban message, then we'll allow the players to join as observers
-        if (empty($srvmsg) || empty($ipAddresses)) {
-            $allowServerJoin = true;
         }
 
         $ban = self::create(array(
-            'player'            => $playerID,
-            'expiration'        => $expiration,
-            'server_message'    => $srvmsg,
-            'reason'            => $reason,
-            'allow_server_join' => $allowServerJoin,
-            'author'            => $authorID,
-        ), array('created', 'updated'));
+            'player'         => $playerID,
+            'expiration'     => $expiration,
+            'server_message' => $serverMsg,
+            'reason'         => $reason,
+            'is_soft_ban'    => $is_soft_ban,
+            'author'         => $authorID,
+        ), ['created', 'updated']);
 
-        if (is_array($ipAddresses)) {
-            foreach ($ipAddresses as $ip) {
-                $ban->addIP($ip);
-            }
-        } else {
-            $ban->addIP($ipAddresses);
+        if (!is_array($ipAddresses)) {
+            $ipAddresses = [$ipAddresses];
+        }
+
+        foreach ($ipAddresses as $ip) {
+            $ban->addIP($ip);
         }
 
         return $ban;
@@ -401,12 +394,14 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Get a query builder for news
+     *
      * @return QueryBuilder
      */
     public static function getQueryBuilder()
     {
         return new QueryBuilder('Ban', array(
             'columns' => array(
+                'player'  => 'player',
                 'status'  => 'status',
                 'updated' => 'updated'
             ),
@@ -426,7 +421,6 @@ class Ban extends UrlModel implements NamedModel
      */
     public function delete()
     {
-        $this->getVictim()->markAsUnbanned();
         parent::delete();
     }
 
@@ -440,21 +434,24 @@ class Ban extends UrlModel implements NamedModel
 
     /**
      * Get all the bans in the database that aren't disabled or deleted
+     *
      * @return Ban[] An array of ban objects
      */
     public static function getBans()
     {
-        return self::arrayIdToModel(self::fetchIds("ORDER BY updated DESC"));
+        return self::arrayIdToModel(self::fetchIds('ORDER BY updated DESC'));
     }
 
     /**
      * Get an active ban for the player
+     *
      * @param  int      $playerId The player's ID
+     *
      * @return Ban|null null if the player isn't currently banned
      */
     public static function getBan($playerId)
     {
-        $bans = self::fetchIdsFrom('player', array($playerId), false, "AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())");
+        $bans = self::fetchIdsFrom('player', [$playerId], false, 'AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())');
 
         if (empty($bans)) {
             return null;

@@ -9,12 +9,19 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\AdvancedModelType;
 use BZIon\Form\Type\IpType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for bans
+ *
+ * @property \Ban $editing
  */
 class BanFormCreator extends ModelFormCreator
 {
@@ -23,73 +30,97 @@ class BanFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        return $builder
-            ->add('player', new AdvancedModelType('player'), array(
-                'constraints' => new NotBlank(),
-                'disabled'    => $this->isEdit(),
-                'data'        => $this->controller->data->get('player')
-            ))
-            ->add(
-                $builder->create('automatic_expiration', 'checkbox', array(
-                    'data'     => true,
-                    'required' => false,
-                ))->setDataLocked(false) // Don't lock the data so we can change
-                                         // the default value later if needed
-            )
-            ->add(
-                $builder->create('expiration', 'datetime', array(
-                    'data' => \TimeDate::now(),
-                ))->setDataLocked(false)
-            )
-            ->add('reason', 'textarea', array(
-                'constraints' => new NotBlank(),
-                'required'    => true
-            ))
-            ->add('server_join_allowed', 'checkbox', array(
-                'data'     => true,
+        $builder
+            ->add('player', new AdvancedModelType('player'), [
+                'constraints' => [
+                    new NotBlank()
+                ],
+                'disabled' => $this->isEdit(),
+                'required' => true,
+            ])
+            ->add('expiration', DateType::class, [
+                'data' => \TimeDate::now(),
+                'label' => 'Expiration Date',
                 'required' => false,
-            ))
-            ->add('server_message', 'text', array(
-                'required'    => false,
-                'constraints' => new Length(array(
-                    'max' => 150,
-                ))
-            ))
-            ->add('ip_addresses', new IpType(), array(
+            ])
+            ->add('is_permanent', CheckboxType::class, [
+                'label' => 'Permanent Ban',
                 'required' => false,
-            ))
-            ->add('enter', 'submit')
-            ->setDataLocked(false);
+                'attr' => [
+                    'data-help-message' => 'When checked, no expiration date needs to be set and will be ignored',
+                ],
+            ])
+            ->add('reason', TextareaType::class, [
+                'constraints' => [
+                    new NotBlank()
+                ],
+                'required' => true,
+            ])
+            ->add('is_soft_ban', CheckboxType::class, [
+                'label' => 'Soft Ban',
+                'required' => false,
+                'attr' => [
+                    'data-help-message' => "A soft ban will not affect a player's permissions on this site; e.g. a mute",
+                ],
+            ])
+            ->add('server_message', TextType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 150,
+                    ]),
+                ],
+                'attr' => [
+                    'data-help-message' => 'The ban message that will appear on match servers',
+                ],
+            ])
+            ->add('ip_addresses', new IpType(), [
+                'label' => 'IP Addresses',
+                'required' => false,
+                'attr' => [
+                    'data-help-message' => 'The IP addresses that will be banned on match servers. Use commas to separate multiple IPs.',
+                ],
+            ])
+        ;
+
+        return $builder->add('submit', SubmitType::class, [
+            'label' => 'Enter Ban',
+        ]);
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param \Ban $ban
      */
     public function fill($form, $ban)
     {
         $form->get('player')->setData($ban->getVictim());
+        $form->get('is_permanent')->setData($ban->isPermanent());
         $form->get('reason')->setData($ban->getReason());
+        $form->get('is_soft_ban')->setData($ban->isSoftBan());
         $form->get('server_message')->setData($ban->getServerMessage());
-        $form->get('server_join_allowed')->setData($ban->allowedServerJoin());
         $form->get('ip_addresses')->setData($ban->getIpAddresses());
 
-        if ($ban->willExpire()) {
+        if (!$ban->isPermanent()) {
             $form->get('expiration')->setData($ban->getExpiration());
-        } else {
-            $form->get('automatic_expiration')->setData(false);
         }
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param \Ban $ban
      */
     public function update($form, $ban)
     {
-        $ban->setIPs($form->get('ip_addresses')->getData())
+        $ban
+            ->setIPs($form->get('ip_addresses')->getData())
             ->setExpiration($this->getExpiration($form))
             ->setReason($form->get('reason')->getData())
             ->setServerMessage($form->get('server_message')->getData())
-            ->setAllowServerJoin($form->get('server_join_allowed')->getData());
+            ->setSoftBan($form->get('is_soft_ban')->getData())
+        ;
     }
 
     /**
@@ -97,29 +128,32 @@ class BanFormCreator extends ModelFormCreator
      */
     public function enter($form)
     {
-        return \Ban::addBan(
-            $form->get('player')->getData()->getId(),
-            $this->me->getId(),
-            $this->getExpiration($form),
-            $form->get('reason')->getData(),
-            $form->get('server_message')->getData(),
-            $form->get('ip_addresses')->getData(),
-            $form->get('server_join_allowed')->getData()
-        );
+        return
+            \Ban::addBan(
+                $form->get('player')->getData()->getId(),
+                $this->me->getId(),
+                $this->getExpiration($form),
+                $form->get('reason')->getData(),
+                $form->get('server_message')->getData(),
+                $form->get('ip_addresses')->getData(),
+                $form->get('is_soft_ban')->getData()
+            )
+        ;
     }
 
     /**
      * Get the expiration time of the ban based on the fields of the form
      *
      * @param  Form          $form The form
+     *
      * @return \TimeDate|null
      */
     private function getExpiration($form)
     {
-        if ($form->get('automatic_expiration')->getData()) {
-            return $form->get('expiration')->getData();
-        } else {
+        if ($form->get('is_permanent')->getData()) {
             return null;
         }
+
+        return $form->get('expiration')->getData();
     }
 }

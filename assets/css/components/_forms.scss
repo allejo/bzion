@@ -29,6 +29,31 @@
     height: 40px;
 }
 
+.c-form__checkbox--horizontal {
+    position: relative;
+
+    label {
+        padding-left: 25px;
+    }
+
+    input {
+        @include position(absolute, 3px, null, null, 0);
+    }
+}
+
+// This class defines the structure of a group of three <select> objects which represents a date: year, month, day
+.c-form__date {
+    > select {
+        display: inline-block;
+        margin-right: 15px;
+        width: auto;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
 // This class defines the structure of a group of <select> objects which represents a timestamp
 .c-form__timestamp {
     > div {

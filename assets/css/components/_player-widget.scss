@@ -9,14 +9,15 @@
     margin-right: 10px;
 }
 
+.c-player-badge__body {
+    flex-grow: 1;
+    min-width: 0;
+}
+
 .c-player-badge__callsign {
     align-items: center;
     display: flex;
     font-size: 18px;
-
-    .c-flag {
-        margin-left: 10px;
-    }
 }
 
 .c-player-badge__team {

@@ -20,6 +20,7 @@
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.5.1",
     "jquery": "^3.2.1",
+    "jquery-depends-on": "^1.5.1",
     "lodash": "^4.17.4",
     "modernizr": "^3.5.0",
     "modernizr-webpack-plugin": "^1.0.6",
