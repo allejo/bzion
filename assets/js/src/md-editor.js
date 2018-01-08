@@ -1,4 +1,4 @@
-var md = require('8fold-marked');
+var md = require('marked');
 
 module.exports = function() {
     $('#mde__toolbar__preview').click(function() {
