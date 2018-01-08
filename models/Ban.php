@@ -401,6 +401,7 @@ class Ban extends UrlModel implements NamedModel
     {
         return new QueryBuilder('Ban', array(
             'columns' => array(
+                'player'  => 'player',
                 'status'  => 'status',
                 'updated' => 'updated'
             ),

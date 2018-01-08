@@ -140,6 +140,15 @@
 
                         {# 'Administration' Tab #}
                         {% if me.hasPermission("view_visitor_log") %}
+                            <li id="tabs__header__bans"
+                                role="tab"
+                                aria-controls="tabs__panel__bans"
+                                aria-selected="false"
+                                tabindex="0"
+                            >
+                                Player Bans
+                            </li>
+
                             <li id="tabs__header__administration"
                                 role="tab"
                                 aria-controls="tabs__panel__administration"
@@ -322,6 +331,29 @@
                         </div>
 
                         {% if me.hasPermission("view_visitor_log") %}
+                            <div id="tabs__panel__bans"
+                                 class="c-tabs__panel mb3"
+                                 role="tabpanel"
+                                 aria-labelledby="tabs__header__bans"
+                                 aria-hidden="false"
+                            >
+                                <h4 class="u-hide-md">Player Bans</h4>
+
+                                {% for ban in bans %}
+                                    <article class="mb2">
+                                        <h2 class="t1">
+                                            <a href="{{ ban.url }}">Banned on {{ ban.date | date('M d, Y') }}</a>
+                                        </h2>
+
+                                        <div class="s-markdown">
+                                            {{ ban.reason | markdown }}
+                                        </div>
+                                    </article>
+                                {% else %}
+                                    <p>This player does not have any recorded bans.</p>
+                                {% endfor %}
+                            </div>
+
                             <div id="tabs__panel__administration"
                                  class="c-tabs__panel mb3"
                                  role="tabpanel"

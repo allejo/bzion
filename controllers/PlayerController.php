@@ -49,7 +49,13 @@ class PlayerController extends JSONController
             $seasonSummary[$currentPeriod->current()->format('M d')] = $elo['elo'];
         }
 
+        $bans = Ban::getQueryBuilder()
+            ->where('player')->is($player->getId())
+            ->getModels($fast = true)
+        ;
+
         return array(
+            'bans' => $bans,
             'player'         => $player,
             'seasonSummary'  => $seasonSummary,
             'adminNotesForm' => $formView,
