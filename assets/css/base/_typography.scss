@@ -2,11 +2,13 @@ body, p, td, th {
     line-height: 1.4em;
 }
 
-em {
+em,
+.em {
     font-style: italic;
 }
 
-strong {
+strong,
+.strong {
     font-weight: 800;
 }
 
