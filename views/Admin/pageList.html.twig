@@ -1,0 +1,83 @@
+{% extends 'layout.html.twig' %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': url('custom_page_create'),
+        'icon': 'plus',
+        'text': 'Create New',
+        'condition': canCreate
+    }
+] %}
+
+{% block title %}BZiON Admin Panel :: Custom Pages{% endblock %}
+
+{% block pageTitle %}
+    <h1>BZiON Custom Pages</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="bb-last-reset" role="grid">
+            <div class="row bb pb2" role="row">
+                <div class="col-md-4" role="columnheader">
+                    <span class="strong">Page</span>
+                </div>
+                <div class="col-md-4 text-center-md" role="columnheader">
+                    <span class="strong">Last Update</span>
+                </div>
+                <div class="col-md-2 text-center-md" role="columnheader">
+                    <span class="strong">Status</span>
+                </div>
+                <div class="col-md-2 text-right-md" role="columnheader">
+                    <span class="strong">Options</span>
+                </div>
+            </div>
+            {% for page in pages %}
+                {# @var page \Page #}
+                <div class="row bb py2" role="row">
+                    <div class="col-md-4" role="gridcell">
+                        {{ link_to(page) }}
+                    </div>
+                    <div class="col-md-4 text-center-md" role="gridcell">
+                        <span class="em">{{ page.updated | date(constant('TimeDate::DATE_FULL')) }}</span>
+                    </div>
+                    <div class="col-md-2 text-center-md" role="gridcell">
+                        {{ page.status }}
+                    </div>
+                    <div class="col-md-2 text-right-md" role="gridcell">
+                        {% if canEdit %}
+                            <a href="{{ page.url('edit') }}"
+                               class="c-button c-button--blue ml1"
+                               title="Edit page"
+                            >
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <span class="sr-only">Edit page</span>
+                            </a>
+                        {% endif %}
+
+                        {% if canDelete %}
+                            <a href="{{ page.url('delete') }}"
+                               class="c-button c-button--red ml1"
+                               title="Delete page"
+                            >
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                <span class="sr-only">Delete page</span>
+                            </a>
+                        {% endif %}
+
+                        {% if canWipe and page.deleted %}
+                            <a href="{{ page.url('wipe') }}"
+                               class="c-button c-button--red"
+                               title="Permanently eradicate page ml1"
+                            >
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                <span class="sr-only">Permanently eradicate page</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

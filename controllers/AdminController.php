@@ -1,6 +1,5 @@
 <?php
 
-
 class AdminController extends HTMLController
 {
     public function listAction()
@@ -24,40 +23,50 @@ class AdminController extends HTMLController
 
     public function landingAction(Player $me)
     {
-        $pages = $roles = null;
-
-        if (
-            $me->hasPermission(Permission::SOFT_DELETE_PAGE)
-            || $me->hasPermission(Permission::EDIT_PAGE)
-        ) {
-            $pages = Page::getQueryBuilder()
-                ->where('status')->notEquals('active')
-                ->where('status')->notEquals('deleted')
-                ->getModels($fast = true);
-        }
-
-        if (
-            $me->hasPermission(Permission::CREATE_ROLE)
-            || $me->hasPermission(Permission::EDIT_ROLE)
-            || $me->hasPermission(Permission::HARD_DELETE_ROLE)
-        ) {
-            $roles = Role::getQueryBuilder()
-                ->sortBy('display_order')
-                ->getModels($fast = true);
-        }
-
-        // Permission checking
         if (!$me->isValid()) {
-            throw new ForbiddenException("Please log in to view this page.");
-        }
-        if ($pages === null && $roles === null) {
-            throw new ForbiddenException("Contact a site administrator if you feel you should have access to this page.");
+            throw new ForbiddenException('Please log in to view this page.');
         }
 
-        return array(
+        // @todo Model editing should be a generic permission
+        $canViewModelEditor = true;
+        $canViewPageEditor = $this->isEditorFor(Page::class, $me);
+        $canViewRoleEditor = $this->isEditorFor(Role::class, $me);
+        $canViewVisitLog   = $me->hasPermission(Permission::VIEW_VISITOR_LOG);
+
+        if (!$canViewPageEditor && !$canViewRoleEditor && !$canViewVisitLog) {
+            throw new ForbiddenException('Contact a site administrator if you feel you should have access to this page.');
+        }
+
+        return [
+            'canViewPageEditor' => $canViewPageEditor,
+            'canViewRoleEditor' => $canViewRoleEditor,
+            'canViewModelEditor' => $canViewModelEditor,
+            'canViewVisitLog' => $canViewVisitLog,
+        ];
+    }
+
+    public function pageListAction(Player $me)
+    {
+        if (!$me->isValid()) {
+            throw new ForbiddenException('Please log in to view this page.');
+        }
+
+        if (!$this->isEditorFor(Page::class, $me)) {
+            throw new ForbiddenException('Contact a site administrator if you feel you should have access to this page.');
+        }
+
+        $pages = Page::getQueryBuilder()
+            ->where('status')->notEquals('deleted')
+            ->getModels(true)
+        ;
+
+        return [
             'pages' => $pages,
-            'roles' => $roles
-        );
+            'canCreate' => $me->hasPermission(Page::CREATE_PERMISSION),
+            'canEdit' => $me->hasPermission(Page::EDIT_PERMISSION),
+            'canDelete' => $me->hasPermission(Page::SOFT_DELETE_PERMISSION),
+            'canWipe' => $me->hasPermission(Page::HARD_DELETE_PERMISSION),
+        ];
     }
 
     public function wipeAction(Player $me)
@@ -86,5 +95,27 @@ class AdminController extends HTMLController
         }
 
         return array('models' => $models);
+    }
+
+    private function isEditorFor($className, Player $me)
+    {
+        $permissionConstants = [
+            'CREATE_PERMISSION',
+            'EDIT_PERMISSION',
+            'SOFT_DELETE_PERMISSION',
+            'HARD_DELETE_PERMISSION',
+        ];
+
+        $reflector = new ReflectionClass($className);
+
+        foreach ($permissionConstants as $permission) {
+            $permissionName = $reflector->getConstant($permission);
+
+            if ($me->hasPermission($permissionName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
