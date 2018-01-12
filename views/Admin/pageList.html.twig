@@ -20,35 +20,36 @@
     <div class="container">
         <div class="bb-last-reset" role="grid">
             <div class="row bb pb2" role="row">
-                <div class="col-md-4" role="columnheader">
+                <div class="col-sm-8 col-md-4" role="columnheader">
                     <span class="strong">Page</span>
                 </div>
-                <div class="col-md-4 text-center-md" role="columnheader">
+                <div class="col-sm-4 text-right-sm text-center-md sr-only disable-sr-only-sm" role="columnheader">
                     <span class="strong">Last Update</span>
                 </div>
-                <div class="col-md-2 text-center-md" role="columnheader">
+                <div class="col-md-2 text-center-md sr-only disable-sr-only-md" role="columnheader">
                     <span class="strong">Status</span>
                 </div>
-                <div class="col-md-2 text-right-md" role="columnheader">
+                <div class="col-md-2 text-right-md sr-only disable-sr-only-md" role="columnheader">
                     <span class="strong">Options</span>
                 </div>
             </div>
             {% for page in pages %}
                 {# @var page \Page #}
                 <div class="row bb py2" role="row">
-                    <div class="col-md-4" role="gridcell">
-                        {{ link_to(page) }}
+                    <div class="col-sm-8 col-md-4 mb2 mb0-md" role="gridcell">
+                        <strong>{{ link_to(page) }}</strong>
                     </div>
-                    <div class="col-md-4 text-center-md" role="gridcell">
+                    <div class="col-sm-4 text-right-sm text-center-md" role="gridcell">
+                        <span class="u-hide-sm strong">Last Update:</span>
                         <span class="em">{{ page.updated | date(constant('TimeDate::DATE_FULL')) }}</span>
                     </div>
-                    <div class="col-md-2 text-center-md" role="gridcell">
-                        {{ page.status }}
+                    <div class="col-md-2 text-center-md mb2 mb0-md" role="gridcell">
+                        <span class="u-hide-md strong">Status:</span> {{ page.status | title }}
                     </div>
                     <div class="col-md-2 text-right-md" role="gridcell">
                         {% if canEdit %}
                             <a href="{{ page.url('edit') }}"
-                               class="c-button c-button--blue ml1"
+                               class="c-button c-button--blue ml1-md"
                                title="Edit page"
                             >
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -58,7 +59,7 @@
 
                         {% if canDelete %}
                             <a href="{{ page.url('delete') }}"
-                               class="c-button c-button--red ml1"
+                               class="c-button c-button--red ml1-md"
                                title="Delete page"
                             >
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -68,8 +69,8 @@
 
                         {% if canWipe and page.deleted %}
                             <a href="{{ page.url('wipe') }}"
-                               class="c-button c-button--red"
-                               title="Permanently eradicate page ml1"
+                               class="c-button c-button--red ml1-md"
+                               title="Permanently eradicate page"
                             >
                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                 <span class="sr-only">Permanently eradicate page</span>
