@@ -1,3 +1,14 @@
+a.skip-to-content {
+    @include theme-rule(background-color, 'navigation.background');
+
+    &:active,
+    &:focus {
+        @include position(absolute, 0, null, null, 0);
+
+        z-index: 1000;
+    }
+}
+
 @include responsify('.sr-only%infix') {
     @include sr-only();
 }

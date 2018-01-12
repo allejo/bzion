@@ -48,6 +48,10 @@
     <body>
         {# Elements that are positioned absolutely or fixed w/CSS should be placed here BEFORE the app-body container #}
 
+        <a href="#content" class="skip-to-content sr-only sr-only-focusable p2" tabindex="0">
+            Skip to Content
+        </a>
+
         <!--[if lte IE 9]>
             <div class="c-system-alert">
                 <h1>You're using an unsupported browser</h1>
@@ -77,7 +81,7 @@
 
         <div class="c-flashbag">
             {% for message in session.flashbag.all %}
-                <p class="c-flashbag__item c-alert c-alert--info">{{- message.0 -}}</p>
+                <p class="c-flashbag__item c-alert c-alert--info" role="alert">{{- message.0 -}}</p>
             {% endfor %}
         </div>
 
@@ -101,15 +105,15 @@
             <header class="c-header">
                 <div class="container">
                     <div class="row align-items-center">
-                        <label class="mb0" for="mobile-menu" tabindex="1" data-option="clickable-label">
+                        <label class="mb0" for="mobile-menu" tabindex="0" data-option="clickable-label">
                             <i class="fa fa-bars u-hide-lg" aria-hidden="true"></i>
                             <span class="sr-only">Press space to open navigation menu</span>
                         </label>
-                        <input type="checkbox" id="mobile-menu" class="c-mobile-menu sr-only">
+                        <input type="checkbox" id="mobile-menu" class="c-mobile-menu sr-only" tabindex="-1">
 
                         <div class="c-branding">
                             <a href="{{ path('index') }}">
-                                <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" />
+                                <img src="{{ asset('assets/imgs/bzflag_icon.png') }}" aria-hidden="true" />
                                 {{- app.siteTitle -}}
                             </a>
                         </div>
@@ -143,7 +147,7 @@
                     </div>
                 {% endblock %}
 
-                <main class="mb3" role="main">
+                <main class="mb3" id="content" role="main">
                     {% block content %}{% endblock %}
                 </main>
             </div>
