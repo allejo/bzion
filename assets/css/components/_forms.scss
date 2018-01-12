@@ -111,18 +111,3 @@
         }
     }
 }
-
-// A hack as a temporary workaround until a better option can be designed
-// @todo
-._form__auto-spacer {
-    display: flex;
-    justify-content: center;
-
-    > div {
-        margin-right: 15px;
-
-        &:last-child {
-            margin-right: 0;
-        }
-    }
-}

@@ -2,10 +2,7 @@ form {
     button,
     input[type="reset"],
     input[type="submit"] {
-        &:not(.c-button--no-style) {
-            @extend .c-button;
-            @extend .c-button--blue;
-        }
+        @extend .c-button;
     }
 }
 

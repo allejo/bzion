@@ -223,19 +223,15 @@ abstract class HTMLController extends Controller
      * Show a confirmation (Yes, No) form to the user
      *
      * @param  callable $onYes          What to do if the user clicks on "Yes"
-     * @param  string   $message        The message to show to the user, asking
-     *                                  them to confirm their action (RAW text
-     *                                  is shown - don't forget to properly
-     *                                  escape your parameters!)
+     * @param  string   $message        The message to show to the user, asking them to confirm their action (RAW text
+     *                                  is shown - don't forget to properly escape your parameters!)
      * @param  string   $action         The text to show on the "Yes" button
-     * @param  string   $successMessage A message to add on the session's
-     *                                  flashbag on success (flashbags
-     *                                  automatically escape text)
-     * @param  callable $onNo           What to do if the user presses "No" -
-     *                                  defaults to redirecting them back
+     * @param  string   $successMessage A message to add on the session's flashbag on success (flashbags automatically escape text)
+     * @param  callable $onNo           What to do if the user presses "No" - defaults to redirecting them back
      * @param  string   $view           The view to redirect to
-     * @param  bool  $noButton       Whether to show a "No" instead of a
-     *                                  "Cancel" button
+     * @param  bool     $noButton       Whether to show a "No" instead of a "Cancel" button
+     * @param  bool     $destructive    Whether or not to mark the action button as being a destructive operation
+     *
      * @return mixed    The response
      */
     protected function showConfirmationForm(
@@ -245,9 +241,10 @@ abstract class HTMLController extends Controller
         $action = "Yes",
         $onNo = null,
         $view = 'confirmation.html.twig',
-        $noButton = false
+        $noButton = false,
+        $destructive = false
     ) {
-        $creator = new ConfirmationFormCreator($action, $this->getPreviousURL(), $noButton);
+        $creator = new ConfirmationFormCreator($action, $this->getPreviousURL(), $noButton, $destructive);
         $form = $creator->create()->handleRequest($this->getRequest());
 
         if ($form->isValid()) {

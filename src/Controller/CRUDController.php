@@ -69,22 +69,31 @@ abstract class CRUDController extends JSONController
         $successMessage = $this->getMessage($model, $message, 'success');
         $redirection    = $this->redirectToList($model);
 
-        return $this->showConfirmationForm(function () use ($model, $hard, $redirection, $onSuccess) {
-            if ($hard) {
-                $model->wipe();
-            } else {
-                $model->delete();
-            }
-
-            if ($onSuccess) {
-                $response = $onSuccess();
-                if ($response instanceof Response) {
-                    return $response;
+        return $this->showConfirmationForm(
+            function () use ($model, $hard, $redirection, $onSuccess) {
+                if ($hard) {
+                    $model->wipe();
+                } else {
+                    $model->delete();
                 }
-            }
 
-            return $redirection;
-        }, $this->getMessage($model, $message, 'confirm'), $successMessage, $action);
+                if ($onSuccess) {
+                    $response = $onSuccess();
+                    if ($response instanceof Response) {
+                        return $response;
+                    }
+                }
+
+                return $redirection;
+            },
+            $this->getMessage($model, $message, 'confirm'),
+            $successMessage,
+            $action,
+            null,
+            'confirmation.html.twig',
+            false,
+            true
+        );
     }
 
     protected function restore(PermissionModel $model, Player $me, $onSuccess)
