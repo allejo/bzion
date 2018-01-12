@@ -1,3 +1,7 @@
+//
+// Skip to Content
+//
+
 a.skip-to-content {
     @include theme-rule(background-color, 'navigation.background');
 
@@ -9,6 +13,10 @@ a.skip-to-content {
     }
 }
 
+//
+// Visibility utilities
+//
+
 @include responsify('.sr-only%infix') {
     @include sr-only();
 }
@@ -19,4 +27,74 @@ a.skip-to-content {
 
 @include responsify('.disable-sr-only%infix') {
     @include disableScreenReaderOnly();
+}
+
+//
+// Color Blind patterns
+//
+// See: https://twitter.com/trello/status/543420024166174721
+//
+
+.color-blind-mode-enabled {
+    $_transparency: hsla(0, 0%, 100%, 0.23);
+
+    .pattern--diamonds,
+    .pattern--upward-stripes,
+    .pattern--downward-stripes,
+    .pattern--vertical-stripes {
+        position: relative;
+
+        &::before {
+            @include position(absolute, 0, 0, 0, 0);
+
+            content: '';
+        }
+    }
+
+    .pattern--downward-stripes::before {
+        background-image:
+            linear-gradient(
+                to bottom left,
+                $_transparency 25%,
+                transparent 0,
+                transparent 50%,
+                $_transparency 0,
+                $_transparency 75%,
+                transparent 0,
+                transparent
+            )
+        ;
+        background-size: 16px 16px;
+    }
+
+    .pattern--diamonds::before {
+        background-image:
+            linear-gradient(135deg, $_transparency 25%, transparent 0),
+            linear-gradient(225deg, $_transparency 25%, transparent 0),
+            linear-gradient(315deg, $_transparency 25%, transparent 0),
+            linear-gradient(45deg,  $_transparency 25%, transparent 0)
+        ;
+        background-size: 12px 12px;
+    }
+
+    .pattern--vertical-stripes::before {
+        background-image: linear-gradient(90deg, $_transparency 50%, transparent 0, transparent);
+        background-size: 8px 8px;
+    }
+
+    .pattern--upward-stripes::before {
+        background-image:
+            linear-gradient(
+                to bottom right,
+                $_transparency 25%,
+                transparent 0,
+                transparent 50%,
+                $_transparency 0,
+                $_transparency 75%,
+                transparent 0,
+                transparent
+            )
+        ;
+        background-size: 16px 16px;
+    }
 }
