@@ -1,38 +1,78 @@
 $Button-Colors: (
     'red': #db3434,
     'blue': #3498db,
-    'grey': #dbdbdb,
-    'black': #4f4f4f,
+    'grey': #8a8a8a,
     'green': #34db6d,
     'orange': #ff8400,
     'purple': #6f34db,
     'yellow': #ffb608
 );
+$_default-btn-bg-color: map-get($Button-Colors, 'grey');
+$_default-btn-font-color: $Color-White;
 
 button {
-    @include theme-rule('color', 'body.color');
+    @include theme-rule(color, 'body.color');
 
     cursor: pointer;
 }
 
 // A button
 .c-button {
+    background: $_default-btn-bg-color linear-gradient(rgba(#000, 0.1), rgba(#000, 0.25));
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: $Border-Radius;
-    color: $Color-White;
+    color: $_default-btn-font-color;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
-    padding: 3px 15px 4px 13px;
-    text-decoration: none;
+    padding: .3em .8em;
+    text-shadow: 0 0 0.05em rgba(0, 0, 0, 0.5);
+    user-select: none;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus,
+    &.focus {
+        background-image: linear-gradient(rgba(#000, 0.2), rgba(#000, 0.4));
+        border-color: rgba(0, 0, 0, 0.3);
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        background-image: linear-gradient(rgba(#fff, 0.4), rgba(#fff, 0.2));
+        cursor: not-allowed;
+    }
 
     .fa {
         @extend %fa-fw;
     }
 }
 
+// When anchors are buttons, have them behave differently
+a.c-button {
+    text-decoration: none;
+
+    &,
+    &:hover,
+    &:focus,
+    &.focus {
+        color: $_default-btn-font-color;
+    }
+
+    &.disabled,
+    fieldset[disabled] & {
+        pointer-events: none;
+    }
+}
+
+///
+// Button Modifiers
+///
+
 // A skinnier version of the button
 .c-button--skinny {
-    padding: 0 15px 1px;
+    padding: 0.20em 1em 0.25em;
 }
 
 // A button but with the default cursor instead of a pointer
@@ -43,33 +83,11 @@ button {
 // Loop through available button colors and create modifiers for each
 @each $color, $value in $Button-Colors {
     .c-button--#{$color} {
-        $dark_color: darken($value, 7%);
-
-        background: linear-gradient($value, $dark_color);
-        border: 1px solid $dark_color;
-        color: set-text-from-color($value);
-        text-decoration: none;
-
-        // Workaround for ensuring that anchor tags with the .c-button class have the correct color for its text. This
-        // ensures that this rule supersedes the theme defined anchor tag rule; i.e. `.t-light a {}`. Doing it this way
-        // will prevent us from having to use !important
-        @at-root a#{&} {
-            color: set-text-from-color($value);
-        }
-
-        &:hover {
-            &:not(.c-button--no-hover) {
-                $hoverColor: darken($value, 3%);
-                $hoverDarkColor: darken($hoverColor, 7%);
-
-                background: linear-gradient($hoverColor, $hoverDarkColor);
-                border-color: $hoverDarkColor;
-                color: set-text-from-color($hoverColor);
-            }
-        }
+        background-color: $value;
     }
 }
 
-// A helper class used exclusively for :not() references to not apply .c-button styles. This class should be kept empty
-// and is kept on here to remember not to use this class for any other reasons.
+// A helper classes used exclusively for :not() references to not apply .c-button styles. These classes should be kept
+// empty and are kept on here to remember not to use these names for any other reasons.
+.c-button--no-hover {}
 .c-button--no-style {}
