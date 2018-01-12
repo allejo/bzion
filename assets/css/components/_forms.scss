@@ -22,13 +22,6 @@
     }
 }
 
-// A utility class intended to set the height of <select> objects to match the height of input boxes
-.c-form__select--tall {
-    // A magic number that is the height of the input boxes
-    // @TODO rewrite this to be dynamic with the rest of the Sass
-    height: 40px;
-}
-
 .c-form__checkbox--horizontal {
     position: relative;
 
