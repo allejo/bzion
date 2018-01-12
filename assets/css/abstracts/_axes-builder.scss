@@ -111,7 +111,7 @@
 
         .#{$abbrev}#{$a}-last-reset {
             @each $s in $size {
-                .#{$abbrev}#{$a}#{$s}:last-of-type {
+                > .#{$abbrev}#{$a}#{$s}:last-of-type {
                     @extend %__#{$abbrev}#{$a};
                 }
             }
