@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': url('role_create'),
+        'icon': 'plus',
+        'text': 'Create New',
+        'condition': canCreate
+    }
+] %}
+
+{% block title %}BZiON Admin Panel :: Player Roles{% endblock %}
+
+{% block pageTitle %}
+    <h1>BZiON Player Roles</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="bb-last-reset" role="grid">
+            <div class="row bb pb2" role="row">
+                <div class="col-sm-8" role="columnheader">
+                    <span class="strong">Role</span>
+                </div>
+                <div class="col-md-4 text-right-md sr-only disable-sr-only-md" role="columnheader">
+                    <span class="strong">Options</span>
+                </div>
+            </div>
+
+            {% for role in roles %}
+                {# @var role \Role #}
+                <div class="row bb py2" role="row">
+                    <div class="col-sm-8 mb2 mb0-md" role="gridcell">
+                        <i class="fa fa-fw {{ role.displayIcon }}" aria-hidden="true"></i>
+                        {{ role.name }}
+                    </div>
+                    <div class="col-md-4 text-right-md" role="gridcell">
+                        {# @todo Add buttons for deleting and wiping when it's supported #}
+                        {% if canEdit %}
+                            <a href="{{ role.url('edit') }}"
+                               class="c-button c-button--blue"
+                               title="Edit role"
+                            >
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <span class="sr-only-md">Edit role</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

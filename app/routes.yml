@@ -18,6 +18,10 @@ admin_page_list:
     path:     /admin/pages
     defaults: { _controller: 'Admin', _action: 'pageList' }
 
+admin_role_list:
+    path:     /admin/roles
+    defaults: { _controller: 'Admin', _action: 'roleList' }
+
 admin_wipe:
     path:     /admin/deleted
     defaults: { _controller: 'Admin', _action: 'wipe' }

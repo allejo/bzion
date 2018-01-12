@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @todo Configure the AdminController to be behind a Symfony firewall
+ */
 class AdminController extends HTMLController
 {
     public function listAction()
@@ -66,6 +69,30 @@ class AdminController extends HTMLController
             'canEdit' => $me->hasPermission(Page::EDIT_PERMISSION),
             'canDelete' => $me->hasPermission(Page::SOFT_DELETE_PERMISSION),
             'canWipe' => $me->hasPermission(Page::HARD_DELETE_PERMISSION),
+        ];
+    }
+
+    public function roleListAction(Player $me)
+    {
+        if (!$me->isValid()) {
+            throw new ForbiddenException('Please log in to view this page.');
+        }
+
+        if (!$this->isEditorFor(Role::class, $me)) {
+            throw new ForbiddenException('Contact a site administrator if you feel you should have access to this page.');
+        }
+
+        $roles = Role::getQueryBuilder()
+            ->sortBy('display_order')
+            ->getModels($fast = true)
+        ;
+
+        return [
+            'roles' => $roles,
+            'canCreate' => $me->hasPermission(Role::CREATE_PERMISSION),
+            'canEdit' => $me->hasPermission(Role::EDIT_PERMISSION),
+            'canDelete' => $me->hasPermission(Role::SOFT_DELETE_PERMISSION),
+            'canWipe' => $me->hasPermission(Role::HARD_DELETE_PERMISSION),
         ];
     }
 
