@@ -1,3 +1,11 @@
-.disable-sr-only {
+@include responsify('.sr-only%infix') {
+    @include sr-only();
+}
+
+@include responsify('.sr-only-focusable%infix') {
+    @include sr-only-focusable();
+}
+
+@include responsify('.disable-sr-only%infix') {
     @include disableScreenReaderOnly();
 }
