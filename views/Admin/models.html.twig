@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% from 'Player/widget.html.twig' import widget as player_widget %}
+
+{% block title %}BZiON :: Deleted Models{% endblock %}
+
+{% block pageTitle %}
+    <h1>Deleted Models</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            Support for restoring models is a feature still in development! However, the following models have beta support for restoring models:
+        </p>
+        <ul>
+            <li>
+                <a href="{{ url('admin_model_list', { type: 'team' }) }}">Teams</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

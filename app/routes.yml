@@ -14,6 +14,10 @@ admin_landing:
     path:     /admin
     defaults: { _controller: 'Admin', _action: 'landing' }
 
+admin_model:
+    path:     /admin/models
+    defaults: { _controller: 'Admin', _action: 'models' }
+
 admin_model_list:
     path:     /admin/models/{type}
     defaults: { _controller: 'Admin', _action: 'modelList' }

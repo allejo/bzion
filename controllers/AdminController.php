@@ -100,6 +100,22 @@ class AdminController extends HTMLController
         ];
     }
 
+    public function modelsAction(Player $me)
+    {
+        if (!$me->isValid()) {
+            throw new ForbiddenException('Please log in to view this page.');
+        }
+
+        // @todo Implement a new and proper "Model Editor" permission
+        if (!$me->hasPermission(Team::SOFT_DELETE_PERMISSION)) {
+            throw new ForbiddenException('Contact a site administrator if you feel you should have access to this page.');
+        }
+
+        return [
+
+        ];
+    }
+
     public function modelListAction(Request $request, Player $me, $type)
     {
         $type = ucfirst($type);
