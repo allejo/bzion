@@ -1,0 +1,124 @@
+{% extends 'layout.html.twig' %}
+
+{% set pageButtons = [
+    {
+        'color': 'blue',
+        'url': url('custom_page_create'),
+        'icon': 'plus',
+        'text': 'Create New',
+        'condition': canCreate
+    }
+] %}
+
+{% block title %}BZiON Admin Panel :: Custom Pages{% endblock %}
+
+{% block pageTitle %}
+    <h1>Deleted {{ type | plural }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb3">
+            <div class="col-xs-10 col-md-4">
+                <form method="GET">
+                    <label class="c-form__icon mb1"
+                           for="c-form__search__input"
+                    >
+                        Search by Team Name
+                    </label>
+
+                    <div class="c-form__group--icon">
+                        <div class="c-form__icon">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </div>
+
+                        <input id="c-form__search__input"
+                               class="c-form__input"
+                               placeholder="Team Name"
+                               value="{{ searchTerm }}"
+                               type="text"
+                               name="search"
+                        >
+                    </div>
+
+                    {# Little hack so searches will always take the user to the first page #}
+                    <input type="hidden" name="page" value="1">
+                </form>
+            </div>
+            {% if searchTerm %}
+                <div class="col-xs-2 col-md-8 text-right">
+                    <p class="mb1 strong" aria-hidden="true">
+                        Clear <span class="u-hide u-show-md">Search Results</span>
+                    </p>
+                    <a href="{{ url('admin_model_list', { type: (type | lower) }) }}"
+                       class="c-button"
+                       title="Clear Search Results"
+                    >
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        <span class="sr-only">Clear Search Results</span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="bb-last-reset pb-last-reset" role="grid">
+            <div class="row bb mb2 pb2" role="row">
+                <div class="col-sm-8" role="columnheader">
+                    <strong>{{ type }} Name</strong>
+                </div>
+                <div class="col-sm-4 col-md-2 text-right-sm text-center-md sr-only disable-sr-only-sm" role="columnheader">
+                    <strong>Last Modified</strong>
+                </div>
+                <div class="col-md-2 text-right sr-only disable-sr-only-md" role="columnheader">
+                    <strong>Options</strong>
+                </div>
+            </div>
+
+            {% for model in models %}
+                {# @var model \Model #}
+
+                <div class="row bb mb2 pb2 align-items-center" role="row">
+                    <div class="col-sm-8 mb2 mb0-md" role="gridcell">
+                        <span class="strong">{{ link_to(model, linkAll = true) }}</span>
+                    </div>
+                    <div class="col-sm-4 col-md-2 text-right-sm text-center-md mb2 mb0-md" role="gridcell">
+                        <span class="u-hide-sm strong">Last Update:</span>
+
+                        {% if page.updated is defined %}
+                            <span class="em">{{ page.updated | date(constant('TimeDate::DATE_FULL')) }}</span>
+                        {% else %}
+                            <span class="em">N/A</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-2 text-right-md" role="gridcell">
+                        <div class="c-button-container">
+                            {% if canRestore %}
+                                <a href="{{ model.url('restore') }}"
+                                   class="c-button c-button--yellow pattern--downward-stripes"
+                                   title="{{ 'Restore the "%s" %s' | format(model.name, (type | lower)) }}"
+                                >
+                                    <i class="fa fa-undo" aria-hidden="true"></i>
+                                    <span class="u-hide-md">Restore {{ type }}</span>
+                                    <span class="u-hide u-show-md sr-only">Restore "{{ model.name }}"</span>
+                                </a>
+                            {% endif %}
+
+                            {% if canWipe %}
+                                <a href="{{ model.url('delete', false, { showDeleted: 1 }) }}"
+                                   class="c-button c-button--red pattern--diamonds ml2"
+                                   title="{{ 'Eradicate the "%s" %s from the database' | format(model.name, (type | lower)) }}"
+                                >
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                    <span class="u-hide-md">Eradicate {{ type }}</span>
+                                    <span class="u-hide u-show-md sr-only">Eradicate "{{ model.name }}"</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'pagination.html.twig' with { totalPages: totalPages, currentPage: currentPage } %}
+    </div>
+{% endblock %}

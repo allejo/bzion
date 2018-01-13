@@ -1,10 +1,14 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * @todo Configure the AdminController to be behind a Symfony firewall
  */
 class AdminController extends HTMLController
 {
+    private static $wipeableModels = ['Ban', 'Map', 'Match', 'News', 'NewsCategory', 'Page', 'Server', 'Team'];
+
     public function listAction()
     {
         $rolesToDisplay = Role::getLeaderRoles();
@@ -93,6 +97,49 @@ class AdminController extends HTMLController
             'canEdit' => $me->hasPermission(Role::EDIT_PERMISSION),
             'canDelete' => $me->hasPermission(Role::SOFT_DELETE_PERMISSION),
             'canWipe' => $me->hasPermission(Role::HARD_DELETE_PERMISSION),
+        ];
+    }
+
+    public function modelListAction(Request $request, Player $me, $type)
+    {
+        $type = ucfirst($type);
+
+        if (!$me->isValid()) {
+            throw new ForbiddenException('Please log in to view this page.');
+        }
+
+        if (!$me->hasPermission($type::SOFT_DELETE_PERMISSION)) {
+            throw new ForbiddenException('Contact a site administrator if you feel you should have access to this page.');
+        }
+
+        $searchTerm = $request->get('search');
+
+        $currentPage = $this->getCurrentPage();
+
+        /** @var QueryBuilder $qb */
+        $qb = $type::getQueryBuilder()
+            ->where('status')->equals('deleted')
+            ->sortBy('name')
+        ;
+
+        if ($searchTerm !== null) {
+            $qb->where('name')->isLike($searchTerm);
+        }
+
+        $models = $qb
+            ->limit(15)
+            ->fromPage($currentPage)
+            ->getModels()
+        ;
+
+        return [
+            'type' => $type,
+            'models' => $models,
+            'canRestore' => $me->hasPermission($type::SOFT_DELETE_PERMISSION),
+            'canWipe' => $me->hasPermission($type::HARD_DELETE_PERMISSION),
+            'currentPage' => $currentPage,
+            'totalPages' => $qb->countPages(),
+            'searchTerm' => $searchTerm,
         ];
     }
 

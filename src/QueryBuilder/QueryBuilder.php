@@ -351,6 +351,17 @@ class QueryBuilder implements Countable
         return $this;
     }
 
+    public function isLike($string)
+    {
+        if (empty($string)) {
+            return $this;
+        }
+
+        $this->addColumnCondition('LIKE CONCAT("%", ?, "%")', $string);
+
+        return $this;
+    }
+
     /**
      * Request that a column equals one of some strings
      *
