@@ -18,7 +18,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="bb-last-reset" role="grid">
+        <div class="c-table bb-last-reset" role="grid">
             <div class="row bb pb2" role="row">
                 <div class="col-sm-8" role="columnheader">
                     <span class="strong">Role</span>
@@ -30,7 +30,7 @@
 
             {% for role in roles %}
                 {# @var role \Role #}
-                <div class="row bb py2" role="row">
+                <div class="row align-items-center bb py2" role="row">
                     <div class="col-sm-8 mb2 mb0-md" role="gridcell">
                         <i class="fa fa-fw {{ role.displayIcon }}" aria-hidden="true"></i>
                         {{ role.name }}

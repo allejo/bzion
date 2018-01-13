@@ -61,8 +61,8 @@
             {% endif %}
         </div>
 
-        <div class="bb-last-reset pb-last-reset" role="grid">
-            <div class="row bb mb2 pb2" role="row">
+        <div class="c-table bb-last-reset pb-last-reset" role="grid">
+            <div class="row bb pb2" role="row">
                 <div class="col-sm-8" role="columnheader">
                     <strong>{{ type }} Name</strong>
                 </div>
@@ -77,7 +77,7 @@
             {% for model in models %}
                 {# @var model \Model #}
 
-                <div class="row bb mb2 pb2 align-items-center" role="row">
+                <div class="row bb py2 align-items-center" role="row">
                     <div class="col-sm-8 mb2 mb0-md" role="gridcell">
                         <span class="strong">{{ link_to(model, linkAll = true) }}</span>
                     </div>

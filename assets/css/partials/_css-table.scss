@@ -1,44 +1,13 @@
 .c-table {
-}
+    &[role="grid"] {
+        div[role="row"] {
+            &:nth-child(even) {
+                @include theme-rule(background-color, 'table.rows.alternate');
+            }
 
-.c-table--no-border {
-    .c-table__row {
-        border: none;
-
-        .c-table__row__column {
-            border: none;
+            &:hover {
+                @include theme-rule(background-color, 'table.rows.hover');
+            }
         }
     }
-}
-
-.c-table--no-hover {
-    .c-table__row {
-        &:hover {
-            background-color: transparent;
-        }
-    }
-}
-
-.c-table__row {
-    border-bottom: $Table-Border;
-    border-top: $Table-Border;
-    display: flex;
-
-    &:hover {
-        background-color: $Table-Background-Hover;
-    }
-}
-
-.c-table__row--header {
-    .c-table__row__column {
-        font-weight: bold;
-    }
-}
-
-.c-table__row__column {
-    border-left: $Table-Border;
-    border-right: $Table-Border;
-    box-sizing: border-box;
-    flex: 1;
-    padding: $Table-Cell_Padding;
 }

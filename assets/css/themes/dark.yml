@@ -66,4 +66,5 @@ table:
         color: "#969696"
     padding: 8px
     rows:
-        hover: "#323740"
+        alternate: "#323740"
+        hover: "#35435d"
