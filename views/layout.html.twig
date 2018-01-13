@@ -134,7 +134,16 @@
                                 <div class="col-lg-5 text-right u-hide u-show-lg">
                                     {% for button in pageButtons %}
                                         {% if button.condition %}
-                                            <a class="c-button c-button--{{ button.color }}" href="{{ button.url }}">
+                                            {% set classes = [
+                                                'c-button',
+                                                'c-button--' ~ button.color
+                                            ] %}
+
+                                            {% if button.pattern %}
+                                                {% set classes = classes | merge([ 'pattern--' ~ button.pattern ]) %}
+                                            {% endif %}
+
+                                            <a class="{{ classes | join(' ') }}" href="{{ button.url }}">
                                                 <i class="fa fa-{{ button.icon }}" aria-hidden="true"></i> {{- button.text -}}
                                             </a>
                                         {% endif %}
