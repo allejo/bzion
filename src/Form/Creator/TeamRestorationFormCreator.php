@@ -25,22 +25,20 @@ class TeamRestorationFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        $previousLeader = $this->editing->getLeader();
+        $playerModel = new AdvancedModelType('player');
 
-        // The previous leader of the team being restored is already on a new team; we need to assign a new team leader
-        if ($previousLeader->getTeam()->isValid()) {
-            $playerModel = new AdvancedModelType('player');
-
-            $builder->add('leader', $playerModel, [
-                'constraints' => new NotBlankModel(),
-                'required' => true,
-            ]);
-        }
+        $builder->add('leader', $playerModel, [
+            'constraints' => new NotBlankModel(),
+            'required' => true,
+        ]);
 
         $builder
             ->add('cancel', ButtonType::class)
             ->add('submit', SubmitType::class, [
-                'label' => 'Restore Team'
+                'label' => 'Restore Team',
+                'attr' => [
+                    'class' => 'c-button--blue pattern--upward-stripes'
+                ]
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'checkAvailableLeader'])
         ;

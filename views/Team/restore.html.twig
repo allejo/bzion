@@ -10,12 +10,6 @@
     <div class="container">
         <p>Are you sure you would like to restore <strong>{{ team.name }}</strong>?</p>
 
-        {% if form.leader %}
-            <ul>
-                <li>The previous leader of this team now belongs to a new team. Please select a new teamless player to take leadership of this team.</li>
-            </ul>
-        {% endif %}
-
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
