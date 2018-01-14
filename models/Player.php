@@ -91,6 +91,12 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     protected $theme;
 
     /**
+     * Whether or not this player has opted-in for color blindness assistance.
+     * @var bool
+     */
+    protected $color_blind_enabled;
+
+    /**
      * The player's timezone PHP identifier, e.g. "Europe/Paris"
      * @var string
      */
@@ -217,6 +223,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $this->last_match = Match::get($player['last_match']);
         $this->admin_notes = $player['admin_notes'];
         $this->ban = Ban::getBan($this->id);
+        $this->color_blind_enabled = $player['color_blind_enabled'];
 
         $this->cachedMatchSummary = [];
 
@@ -1001,7 +1008,31 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             $theme = Service::getDefaultSiteTheme();
         }
 
-        $this->updateProperty($this->theme, 'theme', $theme);
+        return $this->updateProperty($this->theme, 'theme', $theme);
+    }
+
+    /**
+     * Whether or not this player has color blind assistance enabled.
+     *
+     * @return bool
+     */
+    public function hasColorBlindAssist()
+    {
+        $this->lazyLoad();
+
+        return (bool)$this->color_blind_enabled;
+    }
+
+    /**
+     * Set a player's setting for color blind assistance.
+     *
+     * @param bool $enabled
+     *
+     * @return self
+     */
+    public function setColorBlindAssist($enabled)
+    {
+        return $this->updateProperty($this->color_blind_enabled, 'color_blind_enabled', $enabled);
     }
 
     /**
@@ -1337,6 +1368,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             'outdated',
             'description',
             'theme',
+            'color_blind_enabled',
             'timezone',
             'joined',
             'last_login',

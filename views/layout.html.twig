@@ -3,7 +3,7 @@
 {%- endif -%}
 
 <!DOCTYPE html>
-<html class="t-{{ me.valid ? me.theme : app.defaultTheme }} no-js {{ pageWideCSS }}" lang="en">
+<html class="t-{{ me.valid ? me.theme : app.defaultTheme }} no-js {{ me.valid and me.hasColorBlindAssist ? 'color-blind-mode-enabled' : '' }} {{ pageWideCSS }}" lang="en">
     <head>
         {# ========================================================================================================== #}
         {#  Open Graph Markup  #}

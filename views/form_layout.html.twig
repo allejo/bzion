@@ -125,6 +125,7 @@
 
             {%- if description is not empty %} [<a class="js-tipsy" href="#" original-title="{{ description }}">?</a>]
             {%- endif -%}
+            {%- if label_attr['data-beta'] %} <small class="u-font-weight-100 u-color--red">(Beta)</small>{% endif -%}
         </label>
     {%- endif -%}
 {%- endblock form_label -%}

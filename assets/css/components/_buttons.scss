@@ -11,8 +11,7 @@ $_default-btn-bg-color: map-get($Button-Colors, 'grey');
 $_default-btn-font-color: $Color-White;
 
 button {
-    @include theme-rule(color, 'body.color');
-
+    color: $_default-btn-bg-color;
     cursor: pointer;
 }
 

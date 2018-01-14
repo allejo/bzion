@@ -9,6 +9,7 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
 use BZIon\Form\Type\TimezoneType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -111,6 +112,17 @@ class ProfileFormCreator extends ModelFormCreator
                 'data'     => $this->editing->getTheme(),
                 'required' => true,
             ])
+            ->add('color_blind_assist', CheckboxType::class, [
+                'data'     => $this->editing->hasColorBlindAssist(),
+                'required' => false,
+                'label'    => 'Color Blind Assistance',
+                'label_attr' => [
+                    'data-beta' => true,
+                ],
+                'attr' => [
+                    'data-help-message' => 'When checked, actions denoted by color are modified to help color blindness.',
+                ],
+            ])
         ;
 
         if (!$this->editingSelf) {
@@ -122,7 +134,10 @@ class ProfileFormCreator extends ModelFormCreator
         }
 
         $builder->add('enter', SubmitType::class, [
-            'label' => 'Save Profile'
+            'label' => 'Save Profile',
+            'attr' => [
+                'class' => 'c-button--blue pattern--upward-stripes',
+            ],
         ]);
 
         $address = $this->editing->getEmailAddress();
@@ -152,6 +167,7 @@ class ProfileFormCreator extends ModelFormCreator
         $player->setCountry($form->get('country')->getData()->getId());
         $player->setReceives($form->get('receive')->getData());
         $player->setTheme($form->get('theme')->getData());
+        $player->setColorBlindAssist($form->get('color_blind_assist')->getData());
 
         if ($form->get('delete_avatar')->isClicked()) {
             $player->resetAvatar();

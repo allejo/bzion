@@ -116,6 +116,12 @@
                     {% endif %}
 
                     <div>
+                        <h2 class="mb2">Accessibility</h2>
+
+                        {{ form_row(form.color_blind_assist, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                    </div>
+
+                    <div>
                         {{ form_rest(form) }}
                     </div>
                 </div>
