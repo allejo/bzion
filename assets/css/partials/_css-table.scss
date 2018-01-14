@@ -5,7 +5,7 @@
                 @include theme-rule(background-color, 'table.rows.alternate');
             }
 
-            &:hover {
+            &:not(.c-table__header):hover {
                 @include theme-rule(background-color, 'table.rows.hover');
             }
         }
