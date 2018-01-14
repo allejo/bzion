@@ -2,6 +2,9 @@
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @todo Add controller action to handle deleting of non-protected roles
+ */
 class RoleController extends CRUDController
 {
     public function createAction(Player $me)

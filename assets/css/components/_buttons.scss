@@ -66,9 +66,10 @@ a.c-button {
     }
 }
 
-///
+
+//
 // Button Modifiers
-///
+//
 
 // A skinnier version of the button
 .c-button--skinny {
@@ -91,3 +92,20 @@ a.c-button {
 // empty and are kept on here to remember not to use these names for any other reasons.
 .c-button--no-hover {}
 .c-button--no-style {}
+
+
+//
+// Special containers
+//
+
+// This container will add padding around all the buttons and negate that in the container itself to prevent disrupting
+// the layout
+.c-button-container {
+    $_spacing: 4px;
+
+    margin: -1 * $_spacing;
+
+    .c-button {
+        margin: $_spacing;
+    }
+}

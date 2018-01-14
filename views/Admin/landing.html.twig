@@ -1,57 +1,54 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}League Administration{% endblock %}
+{% block title %}BZiON Admin Panel{% endblock %}
 
 {% block pageTitle %}
-    <h1>League Administration Panel</h1>
+    <h1>BZiON Admin Panel</h1>
 {% endblock %}
 
 {% block content %}
-    <section class="o-container">
-        <section class="o-row o-section">
-            {% if pages %}
-                <section class="o-col--half">
-                    <h4>Pages</h4>
-                    <ul>
-                        {% for page in pages %}
-                            <li>
-                                {{ link_to(page) }}
-                                {%- if page.status != 'active' %}
-                                    <small>({{ page.status }})</small>
-                                {%- endif -%}
-                            </li>
-                        {% endfor %}
-                    </ul>
+    <div class="container">
+        <div class="row text-center mb-last-reset">
+            {% set options = [
+                {
+                    url: url('admin_page_list'),
+                    icon: 'file',
+                    text: 'Custom Pages',
+                    condition: canViewPageEditor,
+                },
+                {
+                    url: url('admin_role_list'),
+                    icon: 'user',
+                    text: 'Roles',
+                    condition: canViewRoleEditor,
+                },
+                {
+                    url: url('admin_model'),
+                    icon: 'trash-o',
+                    text: 'Deleted Models',
+                    condition: canViewModelEditor,
+                },
+                {
+                    url: url('visit_list'),
+                    icon: 'user-secret',
+                    text: 'Visit Log',
+                    condition: canViewVisitLog,
+                }
+            ] %}
 
-                    <p>
-                        <a class="c-button c-button--blue" href="{{ path('custom_page_create') }}">
-                            <i class="fa fa-plus"></i>
-                            New page
+            {% for option in options %}
+                {% if option.condition %}
+                    <div class="col-sm-6 col-md-3 mb3 mb0-md">
+                        <a class="d-block" href="{{ option.url }}">
+                            <div class="mb2">
+                                <i class="fa fa-fw fa-{{ option.icon }} t5" aria-hidden="true"></i>
+                            </div>
+
+                            {{ option.text }}
                         </a>
-                    </p>
-                </section>
-            {% endif %}
-
-            {% if roles %}
-                <section class="o-col--half">
-                    <h4>Roles</h4>
-                    <ul class="fa-ul">
-                        {% for role in roles %}
-                            <li>
-                                <i class="fa fa-fw {{ role.displayIcon }}"></i>
-                                {{ link_to(role, action='edit') }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-
-                    <p>
-                        <a class="c-button c-button--blue" href="{{ path('role_create') }}">
-                            <i class="fa fa-plus"></i>
-                            New role
-                        </a>
-                    </p>
-                </section>
-            {% endif %}
-        </section>
-    </section>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

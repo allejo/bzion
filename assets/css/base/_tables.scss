@@ -27,7 +27,7 @@ tbody,
 tfoot {
     th,
     td {
-        @include theme-rule(border-top, 'table.border');
+        @include theme-rule(border-bottom, 'table.border');
         @include theme-rule(padding, 'table.padding');
 
         vertical-align: top;
@@ -39,6 +39,7 @@ thead th {
 
     border-bottom-width: 2px !important;
     vertical-align: bottom;
+    white-space: normal;
 }
 
 caption + thead,
@@ -53,6 +54,10 @@ thead:first-child {
 }
 
 tbody {
+    tr:nth-child(even) {
+        @include theme-rule(background-color, 'table.rows.alternate');
+    }
+
     tr:hover {
         @include theme-rule(background-color, 'table.rows.hover');
     }

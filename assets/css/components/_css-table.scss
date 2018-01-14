@@ -1,0 +1,13 @@
+.c-table {
+    &[role="grid"] {
+        div[role="row"] {
+            &:nth-child(even) {
+                @include theme-rule(background-color, 'table.rows.alternate');
+            }
+
+            &:not(.c-table__header):hover {
+                @include theme-rule(background-color, 'table.rows.hover');
+            }
+        }
+    }
+}

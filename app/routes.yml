@@ -14,6 +14,22 @@ admin_landing:
     path:     /admin
     defaults: { _controller: 'Admin', _action: 'landing' }
 
+admin_model:
+    path:     /admin/models
+    defaults: { _controller: 'Admin', _action: 'models' }
+
+admin_model_list:
+    path:     /admin/models/{type}
+    defaults: { _controller: 'Admin', _action: 'modelList' }
+
+admin_page_list:
+    path:     /admin/pages
+    defaults: { _controller: 'Admin', _action: 'pageList' }
+
+admin_role_list:
+    path:     /admin/roles
+    defaults: { _controller: 'Admin', _action: 'roleList' }
+
 admin_wipe:
     path:     /admin/deleted
     defaults: { _controller: 'Admin', _action: 'wipe' }

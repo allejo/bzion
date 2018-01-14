@@ -43,11 +43,20 @@
         'condition': me is valid and me.team ~~ team
     },
     {
+        'color': 'yellow',
+        'pattern': 'upward-stripes',
+        'url': url('team_restore', { team: team.id }),
+        'icon': 'undo',
+        'text': 'Restore',
+        'condition': me is valid and team.deleted and me.canDelete(team)
+    },
+    {
         'color': 'red',
+        'pattern': 'diamonds',
         'url': team.url('delete'),
         'icon': 'trash-o',
         'text': 'Delete',
-        'condition': me.canDelete(team)
+        'condition': not team.deleted and me is valid and  me.canDelete(team)
     }
 ] %}
 

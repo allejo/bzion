@@ -13,88 +13,75 @@
     </h1>
 {% endblock %}
 
-{% block headerOptions %}
-    {{ listUtils.searchForm(search) }}
-{% endblock %}
-
 {% block content %}
-    <section class="o-container">
-        <section class="u-mobile-only o-row">
-            {{ listUtils.searchForm(search) }}
-        </section>
+    <div class="container">
+        <form class="mb3" method="GET">
+            <label class="c-form__icon mb1"
+                   for="c-form__search__input"
+            >
+                Search by IP
+            </label>
 
-        <section class="c-table c-visitlog">
-            <div class="c-table__row c-table__row--header c-visit__header">
-                <div class="c-table__row__column c-visit__ip">IP Address</div>
-                <div class="c-table__row__column c-visit__host">Host</div>
-                <div class="c-table__row__column c-visit__player">
-                    Player
-                    <span class="c-visit__player__bzid">BZID</span>
+            <div class="c-form__group--icon">
+                <div class="c-form__icon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </div>
-                <div class="c-table__row__column c-visit__roles">Roles</div>
-                <div class="c-table__row__column c-visit__timestamp">Timestamp</div>
-                <div class="c-table__row__column c-visit__useragent">User agent</div>
+
+                <input id="c-form__search__input"
+                       class="c-form__input"
+                       placeholder="Search by player IP address or host"
+                       value="{{ searchTerm }}"
+                       type="text"
+                       name="search"
+                >
             </div>
 
-            {% if not app.demoMode %}
-                {% for visit in visits %}
-                    <div class="c-table__row c-visit">
-                        <div class="c-table__row__column c-visit__ip">
-                            <span class="c-visit__label">IP Address:</span>
-                            {{ visit.ipAddress }}
-                        </div>
-                        <div class="c-table__row__column c-visit__host">
-                            <span class="c-visit__label">Host:</span>
-                            {{ visit.host }}
-                        </div>
-                        <div class="c-table__row__column c-visit__player">
-                            <span class="c-visit__label">Player:</span>
-                            {{ link_to(visit.player) }}
-                            <span class="c-visit__player__bzid">{{ visit.player.bzid }}</span>
-                        </div>
-                        <div class="c-table__row__column c-visit__roles">
-                            {% for role in visit.player.roles if role.displayIcon %}
-                                {% if loop.first %}
-                                    <span class="c-visit__label">Player Roles:</span>
-                                {% endif %}
+            {# Little hack so searches will always take the user to the first page #}
+            <input type="hidden" name="page" value="1">
+        </form>
 
-                                <i title="{{ role.name }}" class="fa {{ role.displayIcon }}"></i>
-                            {% endfor %}
+        <div class="c-table" role="grid">
+            {% if not app.demoMode %}
+                <div class="c-table__header row bb pb2" role="row">
+                    <div class="col-md-2" role="columnheader">
+                        <span class="strong">Player</span>
+                    </div>
+                    <div class="col-md-2 text-center sr-only disable-sr-only-md" role="columnheader">
+                        <strong>Last Modified</strong>
+                    </div>
+                    <div class="col-md-8 text-right sr-only disable-sr-only-md" role="columnheader">
+                        <span class="strong">IP (host)</span>
+                    </div>
+                </div>
+
+                {% for visit in visits %}
+                    {# @var visit \Visit #}
+
+                    <div class="row bb py1" role="row">
+                        <div class="col-md-2" role="gridcell">
+                            {{ link_to(visit.player) }}
                         </div>
-                        <div class="c-table__row__column c-visit__timestamp">
-                            <span class="c-visit__label">Timestamp:</span>
-                            {{ visit.timestamp|humanTime }}
+                        <div class="col-md-2 text-center-md" role="gridcell">
+                            {{ visit.timestamp | humanTime }}
                         </div>
-                        <div class="c-table__row__column c-visit__useragent">
-                            <span class="c-visit__label">User Agent:</span>
-                            {{ visit.userAgent }}
+                        <div class="col-md-8 text-right-md" role="gridcell">
+                            {{ visit.ipAddress }} (<small>{{ visit.host }}</small>)
+                        </div>
+
+                        <div class="col-xs-12 mt1" role="gridcell">
+                            <p class="pl2 mb0">
+                                <small><strong>Browser:</strong> {{ visit.userAgent }}</small>
+                            </p>
                         </div>
                     </div>
                 {% endfor %}
             {% else %}
                 <p><em>The visit log is disabled in demo mode.</em></p>
             {% endif %}
-        </section>
+        </div>
 
         {% if not app.demoMode %}
             {% include "pagination.html.twig" with { 'totalPages': totalPages, 'currentPage': currentPage } %}
         {% endif %}
-    </section>
+    </div>
 {% endblock %}
-
-{% macro searchForm(search) %}
-    <form class="c-page__search" action="{{ path('visit_list') }}" method="GET">
-        <label class="c-page__search__icon" for="c-page__search__input" title="search">
-            <i class="fa fa-search"></i>
-        </label>
-        <input
-                id="c-page__search__input"
-                class="c-page__search__input"
-                title="Search by player IP address or host"
-                placeholder="Search by IP..."
-                type="search"
-                name="search"
-                value="{{ search }}"
-        >
-    </form>
-{% endmacro %}
