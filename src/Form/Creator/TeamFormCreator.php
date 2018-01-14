@@ -61,7 +61,12 @@ class TeamFormCreator extends ModelFormCreator
                     'closed' => 'Closed',
                 ),
             ))
-            ->add('submit', 'submit');
+            ->add('submit', 'submit', [
+                'attr' => [
+                    'class' => 'c-button--blue pattern pattern--downward-stripes',
+                ],
+            ])
+        ;
     }
 
     /**

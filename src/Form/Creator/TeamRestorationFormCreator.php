@@ -37,7 +37,7 @@ class TeamRestorationFormCreator extends ModelFormCreator
             ->add('submit', SubmitType::class, [
                 'label' => 'Restore Team',
                 'attr' => [
-                    'class' => 'c-button--blue pattern--upward-stripes'
+                    'class' => 'c-button--blue pattern pattern--upward-stripes'
                 ]
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'checkAvailableLeader'])

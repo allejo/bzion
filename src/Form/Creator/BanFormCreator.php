@@ -85,6 +85,9 @@ class BanFormCreator extends ModelFormCreator
 
         return $builder->add('submit', SubmitType::class, [
             'label' => 'Enter Ban',
+            'attr' => [
+                'class' => 'c-button--blue pattern pattern--downward-stripes',
+            ],
         ]);
     }
 

@@ -16,27 +16,31 @@
 {% set pageButtons = [
     {
         'color': 'grey',
+        'pattern': 'upward-stripes',
         'url': team.url('edit'),
         'icon': 'pencil',
         'text': 'Edit',
         'condition': me.canEdit(team)
     },
     {
-        'color': 'blue',
+        'color': 'green',
+        'pattern': 'vertical-stripes',
         'url': path('message_compose', { recipients: 'team:' ~ team.id }),
         'icon': 'send',
         'text': 'Send Message',
         'condition': me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     },
     {
-        'color': 'grey',
+        'color': 'yellow',
+        'pattern': 'downward-stripes',
         'url': team.url('join'),
         'icon': 'plus',
         'text': 'Join',
         'condition': me is valid and me.team ~/~ team and me.isTeamless and team.status == 'open'
     },
     {
-        'color': 'grey',
+        'color': 'red',
+        'pattern': 'diamonds',
         'url': team.url('abandon'),
         'icon': 'sign-out',
         'text': 'Abandon',
@@ -44,7 +48,7 @@
     },
     {
         'color': 'yellow',
-        'pattern': 'upward-stripes',
+        'pattern': 'downward-stripes',
         'url': url('team_restore', { team: team.id }),
         'icon': 'undo',
         'text': 'Restore',

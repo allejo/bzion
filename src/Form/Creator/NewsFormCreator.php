@@ -42,7 +42,11 @@ class NewsFormCreator extends ModelFormCreator
                     'draft'     => 'Draft',
                 ),
             ))
-            ->add('enter', 'submit');
+            ->add('enter', 'submit', [
+                'attr' => [
+                    'class' => 'c-button--blue pattern pattern--downward-stripes',
+                ],
+            ]);
     }
 
     /**

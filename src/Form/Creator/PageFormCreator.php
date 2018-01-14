@@ -43,7 +43,11 @@ class PageFormCreator extends ModelFormCreator
                 'description' => "'Revision' pages are accessible by all users but not listed in the menu, " .
                     "while 'Disabled' pages cannot be accessed by players."
             ))
-            ->add('enter', 'submit');
+            ->add('enter', 'submit', [
+                'attr' => [
+                    'class' => 'c-button--blue pattern pattern--downward-stripes',
+                ],
+            ]);
     }
 
     /**

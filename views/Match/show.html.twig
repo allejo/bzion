@@ -14,13 +14,15 @@
 {% set pageButtons = [
     {
         'color': 'grey',
+        'pattern': 'upward-stripes',
         'url': match.url('edit'),
         'icon': 'pencil',
         'text': 'Edit',
         'condition': me.canEdit(match)
     },
     {
-        'color': 'orange',
+        'color': 'yellow',
+        'pattern': 'downward-stripes',
         'url': match.url('recalculate'),
         'icon': 'calculator',
         'text': 'Recalculate ELOs',
@@ -28,6 +30,7 @@
     },
     {
         'color': 'red',
+        'pattern': 'diamonds',
         'url': match.url('delete'),
         'icon': 'trash-o',
         'text': 'Delete',

@@ -44,7 +44,12 @@ class RoleFormCreator extends ModelFormCreator
                 'multiple' => true,
                 'required' => false
             ))
-            ->add('enter', 'submit');
+            ->add('enter', 'submit', [
+                'attr' => [
+                    'class' => 'c-button--blue pattern pattern--downward-stripes',
+                ],
+            ])
+        ;
     }
 
     /**

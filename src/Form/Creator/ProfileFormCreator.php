@@ -136,7 +136,7 @@ class ProfileFormCreator extends ModelFormCreator
         $builder->add('enter', SubmitType::class, [
             'label' => 'Save Profile',
             'attr' => [
-                'class' => 'c-button--blue pattern--upward-stripes',
+                'class' => 'c-button--blue pattern pattern--downward-stripes',
             ],
         ]);
 

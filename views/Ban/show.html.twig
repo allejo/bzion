@@ -4,13 +4,15 @@
 {% set pageButtons = [
     {
         'color': 'grey',
+        'pattern': 'upward-stripes',
         'url': ban.url('edit'),
         'icon': 'pencil',
         'text': 'Edit Ban',
         'condition': me.canEdit(ban)
     },
     {
-        'color': 'grey',
+        'color': 'red',
+        'pattern': 'diamonds',
         'url': ban.url('expire'),
         'icon': 'unlock',
         'text': 'Expire',

@@ -140,7 +140,7 @@
                                             ] %}
 
                                             {% if button.pattern %}
-                                                {% set classes = classes | merge([ 'pattern--' ~ button.pattern ]) %}
+                                                {% set classes = classes | merge([ 'pattern', 'pattern--' ~ button.pattern ]) %}
                                             {% endif %}
 
                                             <a class="{{ classes | join(' ') }}" href="{{ button.url }}">

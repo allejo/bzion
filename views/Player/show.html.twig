@@ -14,28 +14,32 @@
 
 {% set pageButtons = [
     {
-        color: 'grey',
+        color: 'yellow',
+        pattern: 'downward-stripes',
         url: me.team.url('invite', false, { player: player.id }),
         icon: 'plus',
         text: 'Invite to team',
         condition: me.isValid and not me.isTeamless and me.team.leader ~~ me
     },
     {
-        color: 'blue',
+        color: 'green',
+        pattern: 'vertical-stripes',
         url: path('message_compose', { recipients: 'player:' ~ player.id }),
         icon: 'send',
         text: 'Send Message',
         condition: me ~/~ player and me.hasPermission(constant('Permission::SEND_PRIVATE_MSG'))
     },
     {
-        color: 'blue',
+        color: 'grey',
+        pattern: 'upward-stripes',
         url: player.url('edit'),
         icon: 'edit',
         text: 'Edit',
         condition: me.canEdit(player)
     },
     {
-        color: 'blue',
+        color: 'grey',
+        pattern: 'upward-stripes',
         url: path('profile_edit'),
         icon: 'edit',
         text: 'Edit Profile',
@@ -43,6 +47,7 @@
     },
     {
         color: 'red',
+        pattern: 'diamonds',
         url: path('ban_create_player', { player: player.id }),
         icon: 'lock',
         text: 'Ban',
@@ -50,6 +55,7 @@
     },
     {
         color: 'red',
+        pattern: 'diamonds',
         url: player.ban.url('expire'),
         icon: 'unlock',
         text: 'Unban',

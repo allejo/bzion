@@ -80,7 +80,11 @@ class MatchFormCreator extends ModelFormCreator
                 'disabled' => $this->editing && $this->editing->isOfficial(),
                 'label'    => 'Match Type',
             ))
-            ->add('enter', SubmitType::class)
+            ->add('enter', SubmitType::class, [
+                'attr' => [
+                    'class' => 'c-button--blue pattern pattern--downward-stripes',
+                ],
+            ])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'checkUniqueRoster'])
         ;
     }

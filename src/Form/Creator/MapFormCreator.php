@@ -121,7 +121,10 @@ class MapFormCreator extends ModelFormCreator
         }
 
         return $builder->add('submit', SubmitType::class, [
-            'label' => 'Save'
+            'label' => 'Save',
+            'attr' => [
+                'class' => 'c-button--blue pattern pattern--downward-stripes',
+            ],
         ]);
     }
 

@@ -50,7 +50,12 @@ class ServerFormCreator extends ModelFormCreator
             ->add('owner', new AdvancedModelType('Player'), array(
                 'constraints' => new NotBlank()
             ))
-            ->add('enter', 'submit');
+            ->add('enter', 'submit', [
+                'attr' => [
+                    'class' => 'c-button--blue pattern pattern--downward-stripes',
+                ],
+            ])
+        ;
     }
 
     /**

@@ -67,7 +67,7 @@ class ConfirmationFormCreator implements FormCreatorInterface
             $cssClasses[] = 'pattern--diamonds';
         } else {
             $cssClasses[] = 'c-button--blue';
-            $cssClasses[] = 'pattern--upward-stripes';
+            $cssClasses[] = 'pattern--downward-stripes';
         }
 
         return $builder
