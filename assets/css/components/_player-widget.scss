@@ -42,6 +42,10 @@
         order: 3;
     }
 
+    .c-player-badge__callsign {
+        justify-content: flex-end;
+    }
+
     .c-player-badge__team {
         text-align: right;
     }
