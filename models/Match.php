@@ -1223,6 +1223,10 @@ class Match extends UrlModel implements NamedModel
     public function resetPlayerElos()
     {
         $this->db->execute('DELETE FROM player_elo WHERE match_id = ?', [$this->getId()]);
+
+        foreach ($this->getPlayers() as $player) {
+            $player->invalidateMatchFromCache($this);
+        }
     }
 
     /**
@@ -1238,10 +1242,6 @@ class Match extends UrlModel implements NamedModel
         $b = $this->getTeamB();
 
         $this->resetPlayerElos();
-
-        foreach ($this->getPlayers() as $player) {
-            $player->invalidateMatchFromCache($this);
-        }
 
         $eloCalcs = self::calculateElos(
             $a, $b,
@@ -1302,6 +1302,7 @@ class Match extends UrlModel implements NamedModel
      */
     public function delete()
     {
+        $this->resetPlayerElos();
         $this->updateMatchCount(true);
 
         parent::delete();
