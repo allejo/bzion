@@ -43,7 +43,6 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
      */
     public static function prepare($event)
     {
-        self::clearDatabase();
     }
 
     /**
@@ -327,29 +326,5 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext, Ker
     public function iAmAMemberOfATeamCalled($name)
     {
         $this->iHaveATeamCalled($name)->addMember($this->me->getId());
-    }
-
-    /**
-     * @Given that the database is empty
-     */
-    public static function clearDatabase()
-    {
-        $db = Database::getInstance();
-
-        // Get an array of the tables in the database, so that we can remove them
-        $tables = array_map(function ($val) { return current($val); },
-                            $db->query('SHOW TABLES'));
-
-        if (count($tables) > 0) {
-            $db->execute('SET foreign_key_checks = 0');
-            $db->execute('DROP TABLES ' . implode($tables, ','));
-            $db->execute('SET foreign_key_checks = 1');
-        }
-
-        ScriptHandler::migrateDatabase(null, true);
-
-        if ($modelCache = Service::getModelCache()) {
-            $modelCache->clear();
-        }
     }
 }
