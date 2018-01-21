@@ -2,7 +2,7 @@
     "name": "allejo/bzion",
     "description": "A CMS for BZFlag leagues offered as a replacement for the bz-owl project",
     "type": "project",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-only",
 
     "require": {
         "php"                        : ">=5.4.0",
