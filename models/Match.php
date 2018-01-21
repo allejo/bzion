@@ -1359,7 +1359,7 @@ class Match extends UrlModel implements NamedModel
      *
      * @throws Exception
      */
-    public static function recalculateMatchesSince(Match $match)
+    public static function recalculateMatchesSince(Match $match, callable $callable = null)
     {
         try {
             // Commented out to prevent ridiculously large recalculations
@@ -1374,8 +1374,13 @@ class Match extends UrlModel implements NamedModel
             /** @var Match[] $matches */
             $matches = $query->getModels($fast = true);
 
-            // Send the total count to client-side javascript
-            echo count($matches) . "\n";
+            // Send the total count to whoever is listening
+            if ($callable !== null) {
+                $callable([
+                    'type'  => 'recalculation.count',
+                    'value' => count($matches),
+                ]);
+            }
 
             // Start a transaction so tables are locked and we don't stay with
             // messed up data if something goes wrong
@@ -1407,9 +1412,13 @@ class Match extends UrlModel implements NamedModel
 
                 $match->recalculateElo();
 
-                // Send an update to the client-side javascript, so that a
-                // progress bar can be updated
-                echo "m";
+                // Send an update that a match has been recalculated
+                if ($callable !== null) {
+                    $callable([
+                        'type'  => 'recalculation.progress',
+                        'value' => $match->getId(),
+                    ]);
+                }
             }
         } catch (Exception $e) {
             Database::getInstance()->rollback();
@@ -1419,7 +1428,13 @@ class Match extends UrlModel implements NamedModel
 
         Database::getInstance()->finishTransaction();
 
-        echo "\n\nCalculation successful\n";
+        // Send an update that all of the calculations have finished
+        if ($callable !== null) {
+            $callable([
+                'type'  => 'recalculation.complete',
+                'value' => true,
+            ]);
+        }
     }
 
     /**
