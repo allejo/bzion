@@ -357,10 +357,11 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
      */
     public function invalidateMatchFromCache(Match $match)
     {
+        $seasonInfo = Season::getSeason($match->getTimestamp());
         $seasonKey = $this->buildSeasonKeyFromTimestamp($match->getTimestamp());
         $seasonElo = null;
 
-        $this->getEloSeasonHistory();
+        $this->getEloSeasonHistory($seasonInfo['season'], $seasonInfo['year']);
 
         if (!isset($this->eloSeasonHistory[$seasonKey][$match->getId()])) {
             return;
