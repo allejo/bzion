@@ -360,6 +360,8 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $seasonKey = $this->buildSeasonKeyFromTimestamp($match->getTimestamp());
         $seasonElo = null;
 
+        $this->getEloSeasonHistory();
+
         if (!isset($this->eloSeasonHistory[$seasonKey][$match->getId()])) {
             return;
         }
@@ -388,7 +390,7 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             return $this->eloSeasonHistory[$seasonKey];
         }
 
-        $this->eloSeasonHistory[$seasonKey] = $this->db->query('
+        $result = $this->db->query('
           SELECT
             elo_new AS elo,
             match_id AS `match`,
@@ -404,13 +406,13 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
             match_id ASC
         ', [ $this->getId(), $season, $year ]);
 
-        array_unshift($this->eloSeasonHistory[$seasonKey], [
+        $this->eloSeasonHistory[$seasonKey] = [[
             'elo' => 1200,
             'match' => null,
             'month' => Season::getCurrentSeasonRange($season)->getStartOfRange()->month,
             'year' => $year,
             'day' => 1
-        ]);
+        ]] + array_combine(array_column($result, 'match'), $result);
 
         return $this->eloSeasonHistory[$seasonKey];
     }
