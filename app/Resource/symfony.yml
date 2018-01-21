@@ -126,6 +126,10 @@ services:
         class: BZIon\Command\SuccessCommand
         tags:
             - { name: console.command }
+    bzion.command.recalc_elo_command:
+        class: BZIon\Command\RecalculateEloCommand
+        tags:
+            - { name: console.command }
     bzion.listener.maintenance:
         class: BZIon\Event\MaintenanceListener
         arguments: [%bzion.miscellaneous.maintenance%]
