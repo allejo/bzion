@@ -546,7 +546,7 @@ class MatchTest extends TestCase
             4,
             30,
             null,
-            'now',
+            '-1 day',
             [$this->player_a->getId(), $player_c->getId()],
             [$this->player_b->getId(), $player_d->getId()]
         );

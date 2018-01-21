@@ -5,7 +5,7 @@ namespace BZIon\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\Output;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 class Command extends ContainerAwareCommand
@@ -14,8 +14,8 @@ class Command extends ContainerAwareCommand
 
     /**
      * Initialise the progress bar
-     * @param  Output $output The output
-     * @param  int    $count  The number of steps
+     * @param  OutputInterface $output The output
+     * @param  int             $count  The number of steps
      * @return void
      */
     protected function initProgress($output, $count)
@@ -69,7 +69,7 @@ class Command extends ContainerAwareCommand
      * Return a function that can be used by Symfony's process to show the output
      * of a process live on our screen
      *
-     * @param  Output $output The console output
+     * @param  OutputInterface $output The console output
      *
      * @return null|\Closure
      */

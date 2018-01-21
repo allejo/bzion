@@ -140,7 +140,24 @@ class MatchController extends CRUDController
             $response = new StreamedResponse();
             $response->headers->set('Content-Type', 'text/plain');
             $response->setCallback(function () use ($match) {
-                $this->log(Match::recalculateMatchesSince($match));
+                $this->log(Match::recalculateMatchesSince($match, function ($event) {
+                    switch ($event['type']) {
+                        case 'recalculation.count':
+                            echo $event['type'] . "\n";
+                            break;
+
+                        case 'recalculation.progress':
+                            echo 'm';
+                            break;
+
+                        case 'recalculation.complete':
+                            echo "\n\nCalculation successful\n";
+                            break;
+
+                        default:
+                            break;
+                    }
+                }));
             });
             $response->send();
         }, "Do you want to recalculate ELO history for all teams and matches after the specified match?",
