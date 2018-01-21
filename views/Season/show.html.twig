@@ -1,7 +1,9 @@
 {% extends 'layout.html.twig' %}
 
+{% block title %}{{ season }} {{ year }} Season{% endblock %}
+
 {% block pageTitle %}
-    <h1>{{ season }} {{ year }} Season</h1>
+    <h1>{{ block('title') }}</h1>
 {% endblock %}
 
 {% block content %}

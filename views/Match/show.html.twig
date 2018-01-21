@@ -39,7 +39,7 @@
 ] %}
 
 {% block title %}
-    Matches :: {{ match.winner.name }} vs {{ match.loser.name }}
+    {{ match.winner.name }} vs {{ match.loser.name }} Match
     {%- if match.map is valid %} on {{ match.map.name }}{%- endif -%}
 {% endblock %}
 
