@@ -7,6 +7,8 @@
  */
 
 use BZIon\Cache\ModelCache;
+use Pixie\Connection;
+use Pixie\QueryBuilder\QueryBuilderHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormFactory;
@@ -55,6 +57,23 @@ abstract class Service
      * @var AppKernel
      */
     private static $kernel;
+
+    private static $qbConnection;
+    private static $qbConfig;
+
+    public static function setQueryBuilderConfig(array $config)
+    {
+        self::$qbConfig = $config;
+    }
+
+    public static function getQueryBuilderConnection()
+    {
+        if (!self::$qbConnection) {
+            self::$qbConnection = new Connection('mysql', self::$qbConfig);
+        }
+
+        return self::$qbConnection;
+    }
 
     /**
      * @param Request $request

@@ -112,6 +112,14 @@ class Database
                     Service::getParameter('bzion.testing.password'),
                     Service::getParameter('bzion.testing.database')
                 );
+
+                $config = [
+                    'driver'    => 'mysql',
+                    'host'      => Service::getParameter('bzion.testing.host'),
+                    'database'  => Service::getParameter('bzion.testing.database'),
+                    'username'  => Service::getParameter('bzion.testing.username'),
+                    'password'  => Service::getParameter('bzion.testing.password'),
+                ];
             } else {
                 self::$Database = new self(
                     Service::getParameter('bzion.mysql.host'),
@@ -119,7 +127,17 @@ class Database
                     Service::getParameter('bzion.mysql.password'),
                     Service::getParameter('bzion.mysql.database')
                 );
+
+                $config = [
+                    'driver'    => 'mysql',
+                    'host'      => Service::getParameter('bzion.mysql.host'),
+                    'database'  => Service::getParameter('bzion.mysql.database'),
+                    'username'  => Service::getParameter('bzion.mysql.username'),
+                    'password'  => Service::getParameter('bzion.mysql.password'),
+                ];
             }
+
+            Service::setQueryBuilderConfig($config);
         }
 
         return self::$Database;
