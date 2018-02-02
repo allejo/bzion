@@ -67,6 +67,17 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * {@inheritdoc}
      */
+    public function __construct(\Pixie\Connection $connection = null)
+    {
+        parent::__construct($connection);
+
+        $this->setFetchMode(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
     public function limit($limit)
     {
         $this->resultsPerPage = $limit;
@@ -168,7 +179,6 @@ class QueryBuilderFlex extends QueryBuilderHandler
         $columns = ($fastFetch) ? $type::getEagerColumns() : ['*'];
 
         $this->select($columns);
-        $this->setFetchMode(PDO::FETCH_ASSOC);
 
         /** @var array $results */
         $results = $this->get();
