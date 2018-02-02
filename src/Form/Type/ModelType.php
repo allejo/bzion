@@ -44,7 +44,7 @@ class ModelType extends AbstractType
      */
     public function __construct($type, $emptyElem = true, $modifier = null)
     {
-        $this->type = "$type";
+        $this->type = $type;
         $this->emptyElem = $emptyElem;
         $this->modifier = $modifier;
     }
@@ -123,7 +123,9 @@ class ModelType extends AbstractType
 
     private function getAll()
     {
-        $query    = \Controller::getQueryBuilder($this->type);
+        $query = \Controller::getQueryBuilder($this->type);
+        $query->active();
+
         $modifier = $this->modifier;
 
         if ($modifier) {

@@ -7,6 +7,9 @@ use Pixie\QueryBuilder\QueryBuilderHandler;
  */
 class QueryBuilderFlex extends QueryBuilderHandler
 {
+    /** @var string The column name of the column dedicated to storing the name of the model */
+    private $modelNameColumn;
+
     /** @var Model|string The FQN of the model object this QueryBuilder instance is for */
     private $modelType = null;
 
@@ -191,6 +194,27 @@ class QueryBuilderFlex extends QueryBuilderHandler
     }
 
     /**
+     * Perform the query and get back the results in an array of names.
+     *
+     * @throws UnexpectedValueException When no name column has been specified
+     *
+     * @return string[] An array of the type $id => $name
+     */
+    public function getNames()
+    {
+        if (!$this->modelNameColumn) {
+            throw new UnexpectedValueException(sprintf('The name column has not been specified for this query builder. Use %s::setNameColumn().', get_called_class()));
+        }
+
+        $this->select(['id', $this->modelNameColumn]);
+
+        /** @var array $results */
+        $results = $this->get();
+
+        return array_column($results, $this->modelNameColumn, 'id');
+    }
+
+    /**
      * Set the model this QueryBuilder will be working this.
      *
      * This information is used for automatically retrieving table names, eager columns, and lazy columns for these
@@ -203,6 +227,24 @@ class QueryBuilderFlex extends QueryBuilderHandler
     public function setModelType($modelType)
     {
         $this->modelType = $modelType;
+
+        return $this;
+    }
+
+    /**
+     * Set the column that'll be used as the human-friendly name of the model.
+     *
+     * @param string $columnName
+     *
+     * @return static
+     */
+    public function setNameColumn($columnName)
+    {
+        if (!is_subclass_of($this->modelType, NamedModel::class)) {
+            throw new LogicException(sprintf('Setting name columns is only supported in models implementing the "%s" interface.', NamedModel::class));
+        }
+
+        $this->modelNameColumn = $columnName;
 
         return $this;
     }
