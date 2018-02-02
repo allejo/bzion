@@ -50,7 +50,7 @@ class PlayerController extends JSONController
         }
 
         $bans = Ban::getQueryBuilder()
-            ->where('player')->is($player->getId())
+            ->where('player', '=', $player->getId())
             ->getModels($fast = true)
         ;
 

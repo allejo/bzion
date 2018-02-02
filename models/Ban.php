@@ -391,17 +391,13 @@ class Ban extends UrlModel implements NamedModel
     /**
      * Get a query builder for news
      *
-     * @return QueryBuilder
+     * @throws Exception
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Ban', array(
-            'columns' => array(
-                'player'  => 'player',
-                'status'  => 'status',
-                'updated' => 'updated'
-            ),
-        ));
+        return QueryBuilderFlex::createForModel(Ban::class);
     }
 
     /**

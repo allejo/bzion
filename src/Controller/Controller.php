@@ -375,7 +375,7 @@ abstract class Controller
      *
      * @param string $type The model whose query builder we should get (null
      *                     to get the builder of the controller's model)
-     * @return QueryBuilder
+     * @return QueryBuilder|QueryBuilderFlex
      */
     public static function getQueryBuilder($type = null)
     {
