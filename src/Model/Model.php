@@ -13,6 +13,12 @@
 abstract class Model extends CachedModel
 {
     /**
+     * Whether or not this model has been soft deleted.
+     * @var bool
+     */
+    protected $is_deleted;
+
+    /**
      * Generates a string with the object's type and ID
      */
     public function __toString()
@@ -27,7 +33,7 @@ abstract class Model extends CachedModel
      */
     public function isDeleted()
     {
-        if (!$this->isValid() || $this->getStatus() == 'deleted') {
+        if (!$this->isValid() || $this->is_deleted || $this->getStatus() == 'deleted') {
             return true;
         }
 
@@ -41,16 +47,26 @@ abstract class Model extends CachedModel
      */
     public function isActive()
     {
+        if (self::DELETED_COLUMN !== null) {
+            return (!$this->is_deleted);
+        }
+
+        @trigger_error('Update this model to use the DELETED_* constants instead of the "status" column.', E_USER_DEPRECATED);
+
         return in_array($this->getStatus(), $this->getActiveStatuses());
     }
 
     /**
      * Get the models's status
      *
+     * @deprecated 0.10.3 Use isDeleted() for checking for deleted models instead.
+     *
      * @return string
      */
     public function getStatus()
     {
+        @trigger_error('The "status" of models has been deprecated. Use isDeleted() for checking for deleted models.', E_USER_DEPRECATED);
+
         if (!isset($this->status)) {
             $this->status = static::DEFAULT_STATUS;
         }

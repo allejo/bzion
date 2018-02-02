@@ -52,8 +52,20 @@ abstract class BaseModel implements ModelInterface
 
     /**
      * The default status value for deletable models
+     *
+     * @deprecated 0.10.3 The `status` SET columns are deprecated. Using boolean columns is now the new standard.
      */
     const DEFAULT_STATUS = 'active';
+
+    /**
+     * The column name in the database that is used for marking a row as soft deleted.
+     */
+    const DELETED_COLUMN = null;
+
+    /**
+     * The value that's used in `self::DELETED_COLUMN` to mark something as soft deleted.
+     */
+    const DELETED_VALUE = true;
 
     /**
      * The name of the database table used for queries

@@ -66,13 +66,9 @@ class Ban extends UrlModel implements NamedModel
      */
     protected $ipAddresses;
 
-    /**
-     * The ban's status
-     * @var string
-     */
-    protected $status;
-
     const DEFAULT_STATUS = 'public';
+
+    const DELETED_COLUMN = 'is_deleted';
 
     /**
      * The name of the database table used for queries
@@ -97,7 +93,7 @@ class Ban extends UrlModel implements NamedModel
         $this->created = TimeDate::fromMysql($ban['created']);
         $this->updated = TimeDate::fromMysql($ban['updated']);
         $this->author = $ban['author'];
-        $this->status = $ban['status'];
+        $this->is_deleted = $ban['is_deleted'];
     }
 
     /**
