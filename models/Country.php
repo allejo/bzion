@@ -8,26 +8,17 @@
 
 /**
  * A country
- * @package    BZiON\Models
  */
-class Country extends Model
+class Country extends Model implements NamedModel
 {
-    /**
-     * The name of the country
-     * @var string
-     */
+    /** @var string The name of the country */
     protected $name;
 
-    /**
-     * The ISO code of the country
-     * @var string
-     */
+    /** @var string The ISO code of the country */
     protected $iso;
 
-    /**
-     * The name of the database table used for queries
-     */
-    const TABLE = "countries";
+    const DELETED_COLUMN = 'is_deleted';
+    const TABLE = 'countries';
 
     /**
      * {@inheritdoc}
@@ -69,31 +60,6 @@ class Country extends Model
     }
 
     /**
-     * Get all the countries in the database
-     *
-     * @return Country[] An array of country objects
-     */
-    public static function getCountries()
-    {
-        return self::arrayIdToModel(self::fetchIds());
-    }
-
-    /**
-     * Get an associative array with country ISO code as keys and country names
-     * as values
-     *
-     * @return array
-     */
-    public static function getCountriesWithISO()
-    {
-        $result = Database::getInstance()->query(
-            'SELECT iso, name from ' . static::TABLE
-        );
-
-        return array_column($result, 'name', 'iso');
-    }
-
-    /**
      * Get the country's flag's CSS class
      *
      * @return string The URL to the country's flag
@@ -104,28 +70,16 @@ class Country extends Model
     }
 
     /**
-     * Given a country's ISO, get its ID
-     *
-     * @param  string $iso The two-letter ISO code of the country
-     * @return int    The country's database ID
-     */
-    public static function getIdFromISO($iso)
-    {
-        return self::fetchIdFrom($iso, 'iso');
-    }
-
-    /**
      * Get a query builder for countries
      *
-     * @return QueryBuilder
+     * @throws Exception When no database is configured for BZiON
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Country', array(
-            'columns' => array(
-                'name' => 'name',
-            ),
-            'name' => 'name',
-        ));
+        return QueryBuilderFlex::createForModel(Country::class)
+            ->setNameColumn('name')
+        ;
     }
 }

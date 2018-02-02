@@ -115,6 +115,19 @@ class QueryBuilderFlex extends QueryBuilderHandler
     }
 
     /**
+     * An alias for QueryBuilder::getModels(), with fast fetching on by default and no return of results.
+     *
+     * @param  bool $fastFetch Whether to perform one query to load all the model data instead of fetching them one by
+     *              one
+     *
+     * @return void
+     */
+    public function addToCache($fastFetch = true)
+    {
+        $this->getModels($fastFetch);
+    }
+
+    /**
      * Get the amount of pages this query would have.
      *
      * @return int

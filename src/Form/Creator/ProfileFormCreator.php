@@ -9,6 +9,7 @@ namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
 use BZIon\Form\Type\TimezoneType;
+use Country;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -65,6 +66,9 @@ class ProfileFormCreator extends ModelFormCreator
         $themeSlugs = array_column(\Service::getSiteThemes(), 'slug');
         $themes = array_combine($themeSlugs, $themeNames);
 
+        // Add all of our countries into the cache since flags are displayed
+        Country::getQueryBuilder()->addToCache();
+
         $builder
             ->add('description', TextareaType::class, array(
                 'constraints' => new Length(array('max' => 8000)),
@@ -80,7 +84,7 @@ class ProfileFormCreator extends ModelFormCreator
                 'required' => false
             ))
             ->add('delete_avatar', SubmitType::class)
-            ->add('country', new ModelType('Country'), array(
+            ->add('country', new ModelType(Country::class), array(
                 'constraints' => new NotBlank(),
                 'data'        => $this->editing->getCountry()
             ))
