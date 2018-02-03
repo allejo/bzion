@@ -13,12 +13,6 @@
 abstract class Model extends CachedModel
 {
     /**
-     * Whether or not this model has been soft deleted.
-     * @var bool
-     */
-    protected $is_deleted;
-
-    /**
      * Generates a string with the object's type and ID
      */
     public function __toString()

@@ -39,6 +39,12 @@ abstract class BaseModel implements ModelInterface
     protected $status;
 
     /**
+     * Whether or not this model has been soft deleted.
+     * @var bool
+     */
+    protected $is_deleted;
+
+    /**
      * The database variable used for queries
      * @var Database
      */
@@ -167,8 +173,17 @@ abstract class BaseModel implements ModelInterface
      */
     public function delete()
     {
-        $this->status = 'deleted';
-        $this->update('status', 'deleted');
+        if (static::DELETED_COLUMN === null) {
+            @trigger_error(sprintf('The %s class is using the deprecated `status` column and needs to be updated.', get_called_class()), E_USER_DEPRECATED);
+
+            $this->status = 'deleted';
+            $this->update('status', 'deleted');
+
+            return;
+        }
+
+        $this->is_deleted = true;
+        $this->update('is_deleted', true);
     }
 
     /**
