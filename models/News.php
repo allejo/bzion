@@ -54,11 +54,10 @@ class News extends UrlModel implements NamedModel
      */
     protected $editor;
 
-    const DEFAULT_STATUS = 'published';
+    /** @var bool Whether or not the News item is a draft */
+    protected $is_draft;
 
-    /**
-     * The name of the database table used for queries
-     */
+    const DELETED_COLUMN = 'is_deleted';
     const TABLE = "news";
 
     const CREATE_PERMISSION = Permission::CREATE_NEWS;
@@ -78,7 +77,8 @@ class News extends UrlModel implements NamedModel
         $this->updated = TimeDate::fromMysql($news['updated']);
         $this->author = $news['author'];
         $this->editor = $news['editor'];
-        $this->status = $news['status'];
+        $this->is_draft = $news['is_draft'];
+        $this->is_deleted = $news['is_deleted'];
     }
 
     /**
@@ -182,6 +182,16 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
+     * Get whether or not this news article is
+     *
+     * @return bool
+     */
+    public function isDraft()
+    {
+        return $this->is_draft;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function getParamName()
@@ -195,6 +205,18 @@ class News extends UrlModel implements NamedModel
     public static function getRouteName($action = 'show')
     {
         return "news_$action";
+    }
+
+    /**
+     * Update the "draft" status of a post
+     *
+     * @param bool $draft
+     *
+     * @return static
+     */
+    public function setDraft($draft)
+    {
+        return $this->updateProperty($this->is_draft, 'is_draft', $draft);
     }
 
     /**
@@ -248,6 +270,8 @@ class News extends UrlModel implements NamedModel
      */
     public function updateStatus($status = 'published')
     {
+        @trigger_error('The `status` column of the News article has been deprecated. Use `is_draft` or `is_deleted`', E_USER_DEPRECATED);
+
         return $this->updateProperty($this->status, 'status', $status);
     }
 
@@ -263,34 +287,26 @@ class News extends UrlModel implements NamedModel
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function getActiveStatuses()
-    {
-        return array('published', 'revision');
-    }
-
-    /**
      * Add a new news article
      *
      * @param string $subject    The subject of the article
      * @param string $content    The content of the article
      * @param int    $authorID   The ID of the author
      * @param int    $categoryId The ID of the category this article will be published under
-     * @param string $status     The status of the article: 'published', 'disabled', or 'deleted'
+     * @param bool   $is_draft   Whether or not the added news item should be stored as a draft
      *
      * @return News An object representing the article that was just created or false if the article was not created
      */
-    public static function addNews($subject, $content, $authorID, $categoryId = 1, $status = 'published')
+    public static function addNews($subject, $content, $authorID, $categoryId = 1, $is_draft = false)
     {
-        return self::create(array(
+        return self::create([
             'category' => $categoryId,
             'subject'  => $subject,
             'content'  => $content,
             'author'   => $authorID,
             'editor'   => $authorID,
-            'status'   => $status,
-        ), array('created', 'updated'));
+            'is_draft' => $is_draft,
+        ], ['created', 'updated']);
     }
 
     /**
@@ -300,38 +316,37 @@ class News extends UrlModel implements NamedModel
      * @param int  $limit     The amount of matches to be retrieved
      * @param bool $getDrafts Whether or not to fetch drafts
      *
+     * @throws Exception When a database is not configured in BZiON
+     *
      * @return News[] An array of news objects
      */
     public static function getNews($start = 0, $limit = 5, $getDrafts = false)
     {
-        $ignoredStatuses[] = "deleted";
+        $qb = self::getQueryBuilder()
+            ->limit($limit)
+            ->offset($start)
+            ->orderBy('created', 'DESC')
+            ->active()
+        ;
 
-        if (!$getDrafts) {
-            $ignoredStatuses[] = "draft";
+        if ($getDrafts) {
+            $qb->orWhere('is_draft', '=', true);
         }
 
-        return self::arrayIdToModel(
-            self::fetchIdsFrom(
-                "status", $ignoredStatuses, true,
-                "ORDER BY created DESC LIMIT $limit OFFSET $start"
-            )
-        );
+        return $qb->getModels(true);
     }
 
     /**
      * Get a query builder for news
-     * @return QueryBuilder
+     *
+     * @throws Exception
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('News', array(
-            'columns' => array(
-                'subject'  => 'subject',
-                'category' => 'category',
-                'created'  => 'created',
-                'status'   => 'status'
-            ),
-            'name' => 'subject'
-        ));
+        return QueryBuilderFlex::createForModel(News::class)
+            ->setNameColumn('subject')
+        ;
     }
 }

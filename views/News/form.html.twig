@@ -15,9 +15,24 @@
 
             <aside class="col-md-3">
                 {{ form_row(form.category, { 'container_attr': { 'class': 'mb3' } }) }}
-                {{ form_row(form.status,   { 'container_attr': { 'class': 'mb3' } }) }}
             </aside>
         </section>
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-6">
+                        {{ form_row(form.publish) }}
+                    </div>
+
+                    {% if form.save_draft is defined %}
+                        <div class="col-xs-6 text-right">
+                            {{ form_row(form.save_draft) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
         <div>
             {{ form_rest(form) }}

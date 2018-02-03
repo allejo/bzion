@@ -1,7 +1,7 @@
 <article class="{{ class | default('') }}">
     <header>
         <h1>
-            {% if (article.status == "draft") %}
+            {% if article.draft %}
                 [Draft]
             {% endif %}
             {{ link_to(article) }}

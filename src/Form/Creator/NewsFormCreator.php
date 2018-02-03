@@ -8,11 +8,17 @@
 namespace BZIon\Form\Creator;
 
 use BZIon\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form creator for news
+ *
+ * @property \News|null $editing
  */
 class NewsFormCreator extends ModelFormCreator
 {
@@ -21,32 +27,41 @@ class NewsFormCreator extends ModelFormCreator
      */
     protected function build($builder)
     {
-        return $builder
+        $builder
             ->add('category', new ModelType('NewsCategory'), array(
                 'constraints' => new NotBlank()
             ))
-            ->add('subject', 'text', array(
-                'constraints' => array(
-                    new NotBlank(), new Length(array(
+            ->add('subject', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
                         'max' => 100,
-                    )),
-                ),
-            ))
-            ->add('content', 'textarea', array(
+                    ]),
+                ],
+            ])
+            ->add('content', TextareaType::class, array(
                 'constraints' => new NotBlank()
             ))
-            ->add('status', 'choice', array(
-                'choices' => array(
-                    'published' => 'Public',
-                    'revision'  => 'Revision',
-                    'draft'     => 'Draft',
-                ),
-            ))
-            ->add('enter', 'submit', [
+            ->add('publish', SubmitType::class, [
                 'attr' => [
                     'class' => 'c-button--blue pattern pattern--downward-stripes',
                 ],
-            ]);
+                'label' => 'Publish',
+            ])
+        ;
+
+        if ($this->editing === null || $this->editing->isDraft()) {
+            $builder
+                ->add('save_draft', SubmitType::class, [
+                    'attr' => [
+                        'class' => 'c-button--green pattern pattern--upward-stripes',
+                    ],
+                    'label' => 'Save Draft'
+                ])
+            ;
+        }
+
+        return $builder;
     }
 
     /**
@@ -59,7 +74,6 @@ class NewsFormCreator extends ModelFormCreator
         $form->get('category')->setData($article->getCategory());
         $form->get('subject')->setData($article->getSubject());
         $form->get('content')->setData($article->getContent());
-        $form->get('status')->setData($article->getStatus());
     }
 
     /**
@@ -69,12 +83,16 @@ class NewsFormCreator extends ModelFormCreator
      */
     public function update($form, $article)
     {
-        $article->updateCategory($form->get('category')->getData()->getId())
-                ->updateSubject($form->get('subject')->getData())
-                ->updateContent($form->get('content')->getData())
-                ->updateStatus($form->get('status')->getData())
-                ->updateLastEditor($this->me->getId())
-                ->updateEditTimestamp();
+        $saveDraft = $form->get('save_draft');
+
+        $article
+            ->updateCategory($form->get('category')->getData()->getId())
+            ->updateSubject($form->get('subject')->getData())
+            ->updateContent($form->get('content')->getData())
+            ->setDraft($saveDraft && $saveDraft->isClicked())
+            ->updateLastEditor($this->me->getId())
+            ->updateEditTimestamp()
+        ;
     }
 
     /**
@@ -82,12 +100,14 @@ class NewsFormCreator extends ModelFormCreator
      */
     public function enter($form)
     {
+        $saveDraft = $form->get('save_draft');
+
         return \News::addNews(
             $form->get('subject')->getData(),
             $form->get('content')->getData(),
             $this->me->getId(),
             $form->get('category')->getData()->getId(),
-            $form->get('status')->getData()
+            ($saveDraft && $saveDraft->isClicked())
         );
     }
 }

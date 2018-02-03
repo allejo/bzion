@@ -97,22 +97,25 @@ class NewsCategory extends AliasModel
      * @param int  $limit     The amount of matches to be retrieved
      * @param bool $getDrafts Whether or not to fetch drafts
      *
+     * @throws \Pixie\Exception
+     * @throws Exception
+     *
      * @return News[] An array of news objects
      */
     public function getNews($start = 0, $limit = 5, $getDrafts = false)
     {
-        $ignoredStatuses = "";
+        $qb = News::getQueryBuilder()
+            ->limit($limit)
+            ->offset($start)
+            ->active()
+            ->where('category', '=', $this->getId())
+        ;
 
-        if (!$getDrafts) {
-            $ignoredStatuses = "'draft', ";
+        if ($getDrafts) {
+            $qb->whereNot('is_draft', '=', true);
         }
 
-        $ignoredStatuses .= "'deleted'";
-
-        $query  = "WHERE status NOT IN ($ignoredStatuses) AND category = ? ";
-        $query .= "ORDER BY created DESC LIMIT $limit OFFSET $start";
-
-        return News::arrayIdToModel(News::fetchIds($query, array($this->getId())));
+        return $qb->getModels(true);
     }
 
     /**
