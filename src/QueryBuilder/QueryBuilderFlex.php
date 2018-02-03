@@ -1,5 +1,6 @@
 <?php
 
+use BZIon\Debug\DatabaseQuery;
 use Pixie\QueryBuilder\QueryBuilderHandler;
 
 /**
@@ -186,6 +187,8 @@ class QueryBuilderFlex extends QueryBuilderHandler
      * @param  bool $fastFetch Whether to perform one query to load all the model data instead of fetching them one by
      *                         one (ignores cache)
      *
+     * @throws \Pixie\Exception
+     *
      * @return array
      */
     public function getModels($fastFetch = false)
@@ -196,8 +199,13 @@ class QueryBuilderFlex extends QueryBuilderHandler
 
         $this->select($columns);
 
+        $queryObject = $this->getQuery();
+        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
+
         /** @var array $results */
         $results = $this->get();
+
+        $debug->finish($results);
 
         if ($fastFetch) {
             return $type::createFromDatabaseResults($results);

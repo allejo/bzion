@@ -72,7 +72,7 @@ class DatabaseQuery
      * @param string     $query  The MySQL query
      * @param array|null $params The query parameters
      */
-    public function __construct(&$query, &$params)
+    public function __construct($query, $params)
     {
         $this->query  = $query;
         $this->params = ($params !== false) ? array_values($params) : null;
