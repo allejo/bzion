@@ -45,7 +45,7 @@ abstract class Model extends CachedModel
             return (!$this->is_deleted);
         }
 
-        @trigger_error('Update this model to use the DELETED_* constants instead of the "status" column.', E_USER_DEPRECATED);
+        @trigger_error(sprintf('Update the "%s" model to use the DELETED_* constants instead of the "status" column.', get_called_class()), E_USER_DEPRECATED);
 
         return in_array($this->getStatus(), $this->getActiveStatuses());
     }
@@ -59,7 +59,7 @@ abstract class Model extends CachedModel
      */
     public function getStatus()
     {
-        @trigger_error('The "status" of models has been deprecated. Use isDeleted() for checking for deleted models.', E_USER_DEPRECATED);
+        @trigger_error(sprintf('The "status" of models has been deprecated. Use %s::isDeleted() for checking for deleted models.', get_called_class()), E_USER_DEPRECATED);
 
         if (!isset($this->status)) {
             $this->status = static::DEFAULT_STATUS;
