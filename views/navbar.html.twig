@@ -1,3 +1,5 @@
+{% from _self import page, userOptions %}
+
 {% macro badge(number, class) %}
     <span class="c-badge {{ class }}">
         {%- if number -%}
@@ -16,17 +18,18 @@
 {% endmacro %}
 
 {% macro userOptions(class) %}
+    {% from _self import badge, page %}
     {# TODO: Don't count notifications and messages twice #}
 
-    {{ _self.page(
-        _self.badge(me.countUnreadNotifications, "js-counter__notifications"),
+    {{ page(
+        badge(me.countUnreadNotifications, "js-counter__notifications"),
         'Notification', 'notification_list', 'bell', class, 'Notifications'
     ) }}
-    {{ _self.page(
-        _self.badge(me.countUnreadMessages, "js-counter__messages"),
+    {{ page(
+        badge(me.countUnreadMessages, "js-counter__messages"),
         'Message', 'message_list', 'comments-o', class, 'Messages'
     ) }}
-    {{ _self.page(
+    {{ page(
         null,
         'Profile', 'profile_edit', 'gear', class, 'My Profile'
     ) }}
@@ -34,16 +37,16 @@
 
 <nav class="c-navigation" role="navigation">
     <ul id="menu-pages" class="c-site_pages">
-        {{ _self.page('News', 'News', 'news_list', 'thumb-tack') }}
-        {{ _self.page('Teams', 'Team', 'team_list', 'users') }}
-        {{ _self.page('Players', 'Player', 'player_list', 'user') }}
-        {{ _self.page('Matches', 'Match', 'match_list', 'trophy') }}
-        {{ _self.page('Season', 'Season', 'season_show', 'calendar') }}
+        {{ page('News', 'News', 'news_list', 'thumb-tack') }}
+        {{ page('Teams', 'Team', 'team_list', 'users') }}
+        {{ page('Players', 'Player', 'player_list', 'user') }}
+        {{ page('Matches', 'Match', 'match_list', 'trophy') }}
+        {{ page('Season', 'Season', 'season_show', 'calendar') }}
 
         {% if me is valid %}
             <li class="u-show u-hide-sm">
                 <ul class="by mr-last-reset is-horizontal text-center">
-                    {{ _self.userOptions('mr2') }}
+                    {{ userOptions('mr2') }}
                 </ul>
             </li>
         {% endif %}
@@ -61,7 +64,7 @@
 
     <ul class="c-user_cp">
         {% if me is valid %}
-            {{ _self.userOptions('u-hide u-show-sm') }}
+            {{ userOptions('u-hide u-show-sm') }}
 
             <li class="c-user_cp__auth">
                 <a href="{{ path('logout') }}">
