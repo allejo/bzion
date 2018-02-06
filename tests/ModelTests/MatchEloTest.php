@@ -6,27 +6,6 @@ class MatchEloTest extends TestCase
     const TEAM_WIN = 1;
     const TEAM_DRAW = 2;
 
-    /** @var \Faker\Generator */
-    private $faker;
-    private $createdModels = [];
-
-    protected function setUp()
-    {
-        $this->connectToDatabase();
-
-        $this->faker = Faker\Factory::create();
-    }
-
-    public function tearDown()
-    {
-        foreach ($this->createdModels as $model)
-        {
-            $this->wipe($model);
-        }
-
-        parent::tearDown();
-    }
-
     //
     // Yes, we need to test our own helper function in our tests
     //

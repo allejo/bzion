@@ -4,6 +4,10 @@ use Symfony\Bundle\FrameworkBundle\Client;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
+    /** @var \Faker\Generator */
+    protected $faker;
+    protected $createdModels = [];
+
     /**
      * The BZID of the last player created, used to prevent conflicts when creating new players
      * @var int
@@ -200,11 +204,22 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         }
     }
 
+    protected function setUp()
+    {
+        self::connectToDatabase();
+
+        $this->faker = Faker\Factory::create();
+    }
+
     /**
      * Clean-up all the database entries added during the test
      */
     public function tearDown()
     {
+        foreach ($this->createdModels as $model) {
+            $this->wipe($model);
+        }
+
         foreach ($this->playersCreated as $id) {
             self::wipe(Player::get($id));
         }
