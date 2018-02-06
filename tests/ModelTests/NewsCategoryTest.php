@@ -19,22 +19,28 @@ class NewsTest extends TestCase
 
     protected function setUp()
     {
-        $this->connectToDatabase();
+        parent::setUp();
 
         $this->player_with_create_perms = $this->getNewPlayer();
         $this->player_without_create_perms = $this->getNewPlayer();
 
         $this->player_with_create_perms->addRole(Role::ADMINISTRATOR);
 
-        $this->newsCategory = NewsCategory::addCategory("Sample Category");
+        $this->newsCategory = NewsCategory::addCategory('Sample Category');
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        $this->wipe($this->newsCategory);
     }
 
     public function testCustomNewsCategorySetup()
     {
-        $this->assertInstanceOf('NewsCategory', $this->newsCategory);
-        $this->assertEquals(array("enabled"), $this->newsCategory->getActiveStatuses());
-        $this->assertEquals("category", $this->newsCategory->getParamName());
-        $this->assertEquals("news category", $this->newsCategory->getTypeForHumans());
+        $this->assertInstanceOf(NewsCategory::class, $this->newsCategory);
+        $this->assertEquals('category', $this->newsCategory->getParamName());
+        $this->assertEquals('news category', $this->newsCategory->getTypeForHumans());
     }
 
     public function testCustomNewsCategoryExists()
@@ -47,79 +53,40 @@ class NewsTest extends TestCase
         $this->assertFalse($this->newsCategory->isProtected());
     }
 
-    public function testCustomNewsCategoryDefaultStatus()
+    public function testCustomNewsCategoryIsNotDeletedByDefault()
     {
-        $this->assertEquals("enabled", $this->newsCategory->getStatus());
+        $this->assertFalse($this->newsCategory->isDeleted());
     }
 
-    public function testDisablingCustomNewsCategory()
+    public function testCustomNewsCategoryIsNotReadOnlyByDefault()
     {
-        $this->newsCategory->disableCategory();
-        $this->assertEquals("disabled", $this->newsCategory->getStatus());
-    }
-
-    public function testDisablingDisabledCustomNewsCategory()
-    {
-        $this->newsCategory->disableCategory();
-        $this->assertEquals("disabled", $this->newsCategory->getStatus());
-
-        $this->newsCategory->disableCategory();
-        $this->assertEquals("disabled", $this->newsCategory->getStatus());
-    }
-
-    public function testEnableDisabledCustomNewsCategory()
-    {
-        $this->newsCategory->disableCategory();
-        $this->assertEquals("disabled", $this->newsCategory->getStatus());
-
-        $this->newsCategory->enableCategory();
-        $this->assertEquals("enabled", $this->newsCategory->getStatus());
+        $this->assertFalse($this->newsCategory->isReadOnly());
     }
 
     public function testDeletingProtectedNewsCategory()
     {
+        $this->expectException(DeletionDeniedException::class);
+
         $newsCategory = NewsCategory::get(1);
-
         $newsCategory->delete();
-        $this->assertEquals('enabled', $newsCategory->getStatus());
-
-        $this->assertArrayContainsModel($newsCategory, NewsCategory::getCategories());
     }
 
     public function testDeletingCustomNewsCategoryWithoutPosts()
     {
         $this->newsCategory->delete();
-        $this->assertEquals('deleted', $this->newsCategory->getStatus());
 
+        $this->assertTrue($this->newsCategory->isDeleted());
         $this->assertArrayDoesNotContainModel($this->newsCategory, NewsCategory::getCategories());
     }
 
     public function testDeletingCustomNewsCategoryWithPosts()
     {
-        $news = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
+        $this->expectException(DeletionDeniedException::class);
+
+        $this->createdModels[] = News::addNews(StringMocks::SampleTitleOne, StringMocks::LargeContent, $this->player_with_create_perms->getId(), $this->newsCategory->getId());
 
         $this->assertArrayLengthEquals($this->newsCategory->getNews(), 1);
 
         $this->newsCategory->delete();
-        $this->assertEquals('enabled', $this->newsCategory->getStatus());
-
-        $this->assertArrayContainsModel($this->newsCategory, NewsCategory::getCategories());
-
-        $this->wipe($news);
-    }
-
-    public function testCustomNewsCategoryQueryBuilder()
-    {
-        $qb = $this->newsCategory->getQueryBuilder();
-        $this->assertInstanceOf('QueryBuilder', $qb);
-
-        $results = $qb->where("status")->equals("enabled")->getModels();
-        $this->assertArrayLengthEquals($results, 2);
-    }
-
-    public function tearDown()
-    {
-        $this->wipe($this->newsCategory);
-        parent::tearDown();
     }
 }

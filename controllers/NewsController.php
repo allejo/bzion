@@ -61,8 +61,9 @@ class NewsController extends CRUDController
 
     private function getCategories()
     {
-        return $this->getQueryBuilder('NewsCategory')
-            ->sortBy('name')
-            ->getModels();
+        return NewsCategory::getQueryBuilder()
+            ->orderBy('name')
+            ->getModels(true)
+        ;
     }
 }

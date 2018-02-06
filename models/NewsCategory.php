@@ -8,6 +8,7 @@
 
 /**
  * @TODO Create permissions for creating, editing, and modifying categories
+ * @TODO Set up methods to modify the News Categories
  */
 
 /**
@@ -16,17 +17,15 @@
  */
 class NewsCategory extends AliasModel
 {
-    /**
-     * Whether or not the category is protected from being deleted
-     * @var bool
-     */
-    protected $protected;
+    /** @var bool Whether or not the category is protected from being deleted from the UI */
+    protected $is_protected;
+
+    /** @var bool When set to true, no new articles can be assigned this category */
+    protected $is_read_only;
 
     const DEFAULT_STATUS = 'enabled';
 
-    /**
-     * The name of the database table used for queries
-     */
+    const DELETED_COLUMN = 'is_deleted';
     const TABLE = "news_categories";
 
     /**
@@ -36,58 +35,33 @@ class NewsCategory extends AliasModel
     {
         $this->alias = $category['alias'];
         $this->name = $category['name'];
-        $this->protected = $category['protected'];
-        $this->status = $category['status'];
+        $this->is_protected = $category['is_protected'];
+        $this->is_deleted = $category['is_deleted'];
     }
 
     /**
      * Delete a category. Only delete a category if it is not protected
+     *
+     * @throws DeletionDeniedException
+     * @throws Exception
      */
     public function delete()
     {
-        // Get any articles using this category
-        $articles = News::fetchIdsFrom("category", $this->getId());
+        $hasArticles = (bool) News::getQueryBuilder()
+            ->where('category', '=', $this->getId())
+            ->active()
+            ->count()
+        ;
 
-        // Only delete a category if it is not protected and is not being used
-        if (!$this->isProtected() && count($articles) == 0) {
-            parent::delete();
+        if ($hasArticles) {
+            throw new DeletionDeniedException('This category has news articles and cannot be deleted.');
         }
-    }
 
-    /**
-     * Disable the category
-     *
-     * @return void
-     */
-    public function disableCategory()
-    {
-        if ($this->getStatus() != "disabled") {
-            $this->status = "disabled";
-            $this->update("status", "disabled");
+        if ($this->isProtected()) {
+            throw new DeletionDeniedException('This category is protected and cannot be deleted.');
         }
-    }
 
-    /**
-     * Enable the category
-     *
-     * @return void
-     */
-    public function enableCategory()
-    {
-        if ($this->getStatus() != "enabled") {
-            $this->status = "enabled";
-            $this->update("status", "enabled");
-        }
-    }
-
-    /**
-     * Get the status of the category
-     *
-     * @return string Either 'enabled', 'disabled', or 'deleted'
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        parent::delete();
     }
 
     /**
@@ -119,13 +93,23 @@ class NewsCategory extends AliasModel
     }
 
     /**
-     * Check if the category is protected from being deleted
+     * Check if the category is protected from being deleted.
      *
      * @return bool Whether or not the category is protected
      */
     public function isProtected()
     {
-        return (bool) $this->protected;
+        return (bool) $this->is_protected;
+    }
+
+    /**
+     * Check if new News article can be assigned this category.
+     *
+     * @return bool
+     */
+    public function isReadOnly()
+    {
+        return (bool) $this->is_read_only;
     }
 
     /**
@@ -138,41 +122,39 @@ class NewsCategory extends AliasModel
     public static function addCategory($name)
     {
         return self::create(array(
-            'alias'     => self::generateAlias($name),
-            'name'      => $name,
-            'protected' => 0,
-            'status'    => 'enabled'
+            'alias' => self::generateAlias($name),
+            'name'  => $name,
         ));
     }
 
     /**
      * Get all of the categories for the news
      *
+     * @throws Exception
+     *
      * @return NewsCategory[] An array of categories
      */
     public static function getCategories()
     {
-        return self::arrayIdToModel(
-            self::fetchIdsFrom(
-                "status", array("deleted"), true,
-                "ORDER BY name ASC"
-            )
-        );
+        return self::getQueryBuilder()
+            ->orderBy('name', 'ASC')
+            ->active()
+            ->getModels(true)
+        ;
     }
 
     /**
-     * Get a query builder for news categories
-     * @return QueryBuilder
+     * Get a query builder for news categories.
+     *
+     * @throws Exception
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('NewsCategory', array(
-            'columns' => array(
-                'name'   => 'name',
-                'status' => 'status'
-            ),
-            'name' => 'name',
-        ));
+        return QueryBuilderFlex::createForModel(NewsCategory::class)
+            ->setNameColumn('name')
+        ;
     }
 
     /**
