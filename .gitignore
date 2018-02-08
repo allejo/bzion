@@ -43,6 +43,8 @@ Thumbs.db
 *~
 node_modules
 .sass-cache
+.eyeglass_cache
+.php_cs
 composer.phar
 
 # IDE files #

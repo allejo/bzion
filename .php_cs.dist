@@ -1,0 +1,65 @@
+<?php
+
+/*
+ * This file is part of the BZiON project.
+ *
+ * (c) Copyright 2013-2018 Vladimir Jimenez
+ * (c) Copyright 2018 BZFlag & Associates
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
+$finder = PhpCsFixer\Finder::create()
+    ->in('app')
+    ->in('controllers')
+    ->in('migrations')
+    ->in('models')
+    ->in('src')
+    ->in('tests')
+    ->exclude('cache')
+;
+
+$licenseHeader = <<<EOL
+This file is part of the BZiON project.
+
+(c) Copyright 2013-2018 Vladimir Jimenez
+(c) Copyright 2018 BZFlag & Associates
+
+For the full copyright and license information, please view the LICENSE.md
+file that was distributed with this source code.
+EOL;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'concat_space' => ['spacing' => 'one'],
+        'header_comment' => [
+            'header' => $licenseHeader,
+            'commentType' => 'comment',
+            'location' => 'after_open',
+            'separate' => 'both',
+        ],
+        'no_short_echo_tag' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => [
+            'sortAlgorithm' => 'alpha',
+            'importsOrder' => [
+                'const',
+                'class',
+                'function',
+            ],
+        ],
+        'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
+        'phpdoc_order' => true,
+        'php_unit_fqcn_annotation' => true,    // @todo Change this when PHPUnit 6 is the new minimum version
+        'ternary_to_null_coalescing' => false, // @todo Change this when PHP 7.0 is the minimum version
+        'yoda_style' => [
+            'equal' => false,
+            'identical' => false,
+        ],
+    ])
+    ->setFinder($finder)
+    ;
