@@ -53,7 +53,7 @@ abstract class Model extends CachedModel
     /**
      * Get the models's status
      *
-     * @deprecated 0.10.3 Use isDeleted() for checking for deleted models instead.
+     * @deprecated 0.11.0 Use isDeleted() for checking for deleted models instead.
      *
      * @return string
      */

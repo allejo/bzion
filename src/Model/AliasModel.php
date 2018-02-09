@@ -50,7 +50,7 @@ abstract class AliasModel extends UrlModel implements NamedModel
     /**
      * Change the object's name
      *
-     * @return self
+     * @return static
      */
     public function setName($name)
     {

@@ -361,7 +361,7 @@ abstract class BaseModel implements ModelInterface
     /**
      * Get the MySQL columns that will be loaded as soon as the model is created
      *
-     * @todo Make this protected
+     * @deprecated 0.10.2 Replaced by static::getEagerColumnsList() in 0.11.0
      *
      * @param string $prefix The prefix that'll be prefixed to column names
      *
@@ -379,6 +379,8 @@ abstract class BaseModel implements ModelInterface
      * This is done in order to reduce the time needed to load parameters that
      * will not be requested (e.g player activation codes or permissions)
      *
+     * @deprecated 0.10.2 Replaced by static::getLazyColumnsList() in 0.11.0
+     *
      * @return string|null The columns in a format readable by MySQL or null to
      *                     fetch no columns at all
      */
@@ -389,6 +391,8 @@ abstract class BaseModel implements ModelInterface
 
     /**
      * Get a formatted string with a comma separated column list with table/alias prefixes if necessary.
+     *
+     * @deprecated 0.10.2 This function has been removed and is no longer required with the new query builder
      *
      * @param string|null $prefix  The table name or SQL alias to be prepend to these columns
      * @param array       $columns The columns to format
