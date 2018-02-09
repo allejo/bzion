@@ -191,13 +191,17 @@ class AppGlobal
     /**
      * Get a list of visible pages
      *
+     * @throws \Pixie\Exception
+     *
      * @return \Page[]
      */
     public function getPages()
     {
         return \Page::getQueryBuilder()
-            ->where('status')->equals('live')
-            ->getModels($fast = true);
+            ->active()
+            ->whereNot('is_unlisted', '=', true)
+            ->getModels($fast = true)
+        ;
     }
 
     /**

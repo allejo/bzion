@@ -18,7 +18,9 @@ class PageController extends CRUDController
 
     public function showAction(Page $page)
     {
-        return array("page" => $page);
+        return [
+            'page' => $page
+        ];
     }
 
     public function createAction(Player $me, Request $request)

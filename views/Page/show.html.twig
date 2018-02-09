@@ -22,7 +22,10 @@
 {% block title %}{{ page.name }}{% endblock %}
 
 {% block pageTitle %}
-    <h1>{{ page.name }}</h1>
+    <h1>
+        {% if page.draft %}[Draft]{% endif %}
+        {{ page.name }}
+    </h1>
 {% endblock %}
 
 {% block content %}

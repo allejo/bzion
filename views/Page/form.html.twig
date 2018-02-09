@@ -5,20 +5,35 @@
         {{ form_errors(form) }}
 
         <div class="row">
-            <div class="col-md-8 mb3">
-                {{ form_row(form.name) }}
-            </div>
-            <div class="col-md-4 mb3">
-                {{ form_row(form.status) }}
-            </div>
-        </div>
+            <div class="col-md-9">
+                {{ form_row(form.name, { container_attr: { class: 'mb3' } }) }}
 
-        <div class="mb3">
-            {{ md_editor(form.content, {
-                data: {
-                    sanitize: "false"
-                }
-            }) }}
+                <div class="mb3">
+                    {{ md_editor(form.content, {
+                        data: {
+                            sanitize: "false"
+                        }
+                    }) }}
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{ form_row(form.submit) }}
+                    </div>
+
+                    <div class="col-sm-6 text-right">
+                        {{ form_row(form.modify_draft) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 py3-md">
+                {{ form_row(form.is_unlisted, {
+                    container_attr: {
+                        class: 'c-form__checkbox--horizontal mb3'
+                    }
+                }) }}
+            </div>
         </div>
 
         <div>

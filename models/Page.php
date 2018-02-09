@@ -36,18 +36,13 @@ class Page extends AliasModel
      */
     protected $author;
 
-    /**
-     * Whether the page is the home page
-     * @var bool
-     */
-    protected $home;
+    protected $is_draft;
+    protected $is_unlisted;
 
     const DEFAULT_STATUS = 'live';
 
-    /**
-     * The name of the database table used for queries
-     */
-    const TABLE = "pages";
+    const DELETED_COLUMN = 'is_deleted';
+    const TABLE = 'pages';
 
     const CREATE_PERMISSION = Permission::CREATE_PAGE;
     const EDIT_PERMISSION = Permission::EDIT_PAGE;
@@ -62,8 +57,9 @@ class Page extends AliasModel
         $this->name = $page['name'];
         $this->alias = $page['alias'];
         $this->author = $page['author'];
-        $this->home = $page['home'];
-        $this->status = $page['status'];
+        $this->is_unlisted = $page['is_unlisted'];
+        $this->is_draft = $page['is_draft'];
+        $this->is_deleted = $page['is_deleted'];
     }
 
     /**
@@ -119,28 +115,37 @@ class Page extends AliasModel
     }
 
     /**
-     * Get the status of the page
-     * @return string
+     * Get whether or not this Page is a draft.
+     *
+     * @since 0.11.0
+     *
+     * @return bool
      */
-    public function getStatus()
+    public function isDraft()
     {
-        return $this->status;
+        return (bool)$this->is_draft;
     }
 
     /**
-     * Find out whether this is the homepage
+     * Get whether or not this Page was unlisted.
+     *
+     * An unlisted page will not appear in the secondary navigation.
+     *
+     * @since 0.11.0
+     *
      * @return bool
      */
-    public function isHomePage()
+    public function isUnlisted()
     {
-        return $this->home;
+        return (bool)$this->is_unlisted;
     }
 
     /**
      * Set the content of the page
      *
      * @param  string $content
-     * @return self
+     *
+     * @return static
      */
     public function setContent($content)
     {
@@ -148,14 +153,27 @@ class Page extends AliasModel
     }
 
     /**
-     * Set the status of the page
+     * Set the draft status for this page.
      *
-     * @param  string $status One of "live", "revision" or "disabled"
-     * @return self
+     * @param bool $draft
+     *
+     * @return static
      */
-    public function setStatus($status)
+    public function setDraft($draft)
     {
-        return $this->updateProperty($this->status, "status", $status);
+        return $this->updateProperty($this->is_draft, 'is_draft', $draft);
+    }
+
+    /**
+     * Set the unlisted status for this page.
+     *
+     * @param bool $unlisted
+     *
+     * @return static
+     */
+    public function setUnlisted($unlisted)
+    {
+        return $this->updateProperty($this->is_unlisted, 'is_unlisted', $unlisted);
     }
 
     /**
@@ -170,23 +188,27 @@ class Page extends AliasModel
     /**
      * Create a new Page
      *
-     * @param string $title    The title of the page
-     * @param string $content  The content of page
-     * @param int    $authorID The ID of the author
-     * @param string $status   Page status: 'live','disabled',or 'deleted'
+     * @param string $title       The title of the page
+     * @param string $content     The content of page
+     * @param int    $authorID    The ID of the author
+     * @param bool   $is_draft    Whether or not the page should be saved as a draft
+     * @param bool   $is_unlisted Whether or not the page should be unlisted
+     *
+     * @since 0.11.0 The former enum $status parameter has been changed to the boolean $is_draft. The $is_unlisted
+     *               argument has been added.
      *
      * @return Page An object representing the page that was just created
      */
-    public static function addPage($title, $content, $authorID, $status = "live")
+    public static function addPage($title, $content, $authorID, $is_draft = false, $is_unlisted = false)
     {
-        return self::create(array(
+        return self::create([
             'name'    => $title,
             'alias'   => self::generateAlias($title),
             'content' => $content,
             'author'  => $authorID,
-            'home'    => 0,
-            'status'  => $status,
-        ), array('created', 'updated'));
+            'is_draft' => (bool)$is_draft,
+            'is_unlisted' => (bool)$is_unlisted,
+        ], ['created', 'updated']);
     }
 
     /**
@@ -244,18 +266,42 @@ class Page extends AliasModel
     }
 
     /**
-     * Get a query builder for pages
-     * @return QueryBuilder
+     * {@inheritdoc}
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Page', array(
-            'columns' => array(
-                'name'   => 'name',
-                'status' => 'status'
-            ),
-            'name' => 'name'
-        ));
+        return QueryBuilderFlex::createForModel(Page::class)
+            ->setNameColumn('name')
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getActiveModels(QueryBuilderFlex &$qb)
+    {
+        $qb
+            ->whereNot(self::DELETED_COLUMN, '=', self::DELETED_VALUE)
+            ->whereNot('is_draft', '=', true)
+        ;
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getEagerColumnsList()
+    {
+        return [
+            'id',
+            'name',
+            'alias',
+            'author',
+            'is_draft',
+            'is_deleted',
+            'is_unlisted',
+        ];
     }
 
     /**
