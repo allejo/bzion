@@ -41,7 +41,7 @@ abstract class Model extends CachedModel
      */
     public function isActive()
     {
-        if (self::DELETED_COLUMN !== null) {
+        if (static::DELETED_COLUMN !== null) {
             return (!$this->is_deleted);
         }
 

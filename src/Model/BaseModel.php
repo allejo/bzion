@@ -241,17 +241,17 @@ abstract class BaseModel implements ModelInterface
      */
     protected static function fetchColumnValues($id)
     {
-        $table = static::TABLE;
-        $columns = static::getEagerColumns();
-
-        $results = Database::getInstance()
-            ->query("SELECT $columns FROM $table WHERE id = ? LIMIT 1", array($id));
+        $qb = QueryBuilderFlex::createForTable(static::TABLE);
+        $results = $qb
+            ->select(static::getEagerColumnsList())
+            ->find($id)
+        ;
 
         if (count($results) < 1) {
             return null;
         }
 
-        return $results[0];
+        return $results;
     }
 
     /**
@@ -407,6 +407,78 @@ abstract class BaseModel implements ModelInterface
 
         return (($prefix . '.') . implode(sprintf(',%s.', $prefix), $columns));
     }
+
+    //
+    // Query building for models
+    //
+
+    /**
+     * Get a query builder instance for this model.
+     *
+     * @throws BadMethodCallException When this function has not been configured for a particular model
+     * @throws Exception              When no database has been configured for BZiON
+     *
+     * @since 0.11.0 The expected return type has been changed from QueryBuilder to QueryBuilderFlex
+     * @since 0.9.0
+     *
+     * @return QueryBuilderFlex
+     */
+    public static function getQueryBuilder()
+    {
+        throw new BadMethodCallException(sprintf('No Query Builder has been configured for the %s model', get_called_class()));
+    }
+
+    /**
+     * Modify a QueryBuilderFlex instance to configure what conditions should be applied when fetching "active" entries.
+     *
+     * This function is called whenever a QueryBuilder calls `static::active()`. A reference to the QueryBuilderFlex
+     * instance is passed to allow you to add any necessary conditions to the query. This function should return true if
+     * the QueryBuilderInstance has been modified to stop propagation to other modifications; return false if nothing
+     * has been modified.
+     *
+     * @internal For use of QueryBuilderFlex when fetching active entries.
+     *
+     * @param \QueryBuilderFlex $qb A reference to the QBF to allow modifications.
+     *
+     * @since 0.11.0
+     *
+     * @return bool Returns true if propagation should stop and the QueryBuilderFlex should not make further modifications
+     *              in this regard.
+     */
+    public static function getActiveModels(QueryBuilderFlex &$qb)
+    {
+        return false;
+    }
+
+    /**
+     * Get the list of columns that should be eagerly loaded when a model is created from database results.
+     *
+     * @since 0.11.0
+     *
+     * @return array
+     */
+    public static function getEagerColumnsList()
+    {
+        return ['*'];
+    }
+
+    /**
+     * Get the list of columns that need to be lazily loaded in a model.
+     *
+     * This function should return an empty array if no columns need to be lazily loaded.
+     *
+     * @since 0.11.0
+     *
+     * @return array
+     */
+    public static function getLazyColumnsList()
+    {
+        return [];
+    }
+
+    //
+    // Model creation from the database
+    //
 
     /**
      * Load all the parameters of the model that were not loaded during the first

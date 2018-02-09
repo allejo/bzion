@@ -4,7 +4,9 @@ use BZIon\Debug\DatabaseQuery;
 use Pixie\QueryBuilder\QueryBuilderHandler;
 
 /**
- * @since 0.10.3
+ * The core query builder used across BZiON for creating and modifying queries for all of our entities.
+ *
+ * @since 0.11.0
  */
 class QueryBuilderFlex extends QueryBuilderHandler
 {
@@ -105,11 +107,17 @@ class QueryBuilderFlex extends QueryBuilderHandler
 
         if ($column === null) {
             @trigger_error(
-                'The use of the status column is deprecated. Update this model to use the DELETED_* constants.',
+                sprintf('The use of the status column is deprecated. Update the %s model to use the DELETED_* constants.', get_called_class()),
                 E_USER_DEPRECATED
             );
 
             return $this->whereIn('status', $type::getActiveStatuses());
+        }
+
+        $stopPropagation = $type::getActiveModels($this);
+
+        if ($stopPropagation) {
+            return $this;
         }
 
         return $this->whereNot($column, '=', $type::DELETED_VALUE);
@@ -120,6 +128,8 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @param  bool $fastFetch Whether to perform one query to load all the model data instead of fetching them one by
      *              one
+     *
+     * @throws \Pixie\Exception
      *
      * @return void
      */
@@ -195,9 +205,8 @@ class QueryBuilderFlex extends QueryBuilderHandler
     {
         /** @var Model $type */
         $type = $this->modelType;
-        $columns = ($fastFetch) ? $type::getEagerColumns() : ['*'];
 
-        $this->select($columns);
+        $this->select($type::getEagerColumnsList());
 
         $queryObject = $this->getQuery();
         $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
