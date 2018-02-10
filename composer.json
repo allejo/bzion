@@ -30,17 +30,18 @@
         "yzalis/identicon": "~1.2.0"
     },
     "require-dev": {
+        "ajgl/breakpoint-twig-extension": "^0.3.1",
         "behat/behat": "~3.0",
         "behat/mink": "~1.6",
-        "behat/mink-extension": "~2.0",
         "behat/mink-browserkit-driver": "~1.2",
+        "behat/mink-extension": "~2.0",
         "behat/symfony2-extension": "~2.1.1",
         "composer/composer": "~1.5",
+        "fzaninotto/faker": "^1.7",
         "jdorn/sql-formatter": "~1.2",
         "phpunit/phpunit": "~5.7",
         "sensio/distribution-bundle": "~3.0",
-        "sensiolabs/security-checker": "~4.1",
-        "fzaninotto/faker": "^1.7"
+        "sensiolabs/security-checker": "~4.1"
     },
 
     "scripts": {
