@@ -114,6 +114,13 @@ class QueryBuilderFlex extends QueryBuilderHandler
     public function active()
     {
         $type = $this->modelType;
+
+        // Since it's a system model, values are always handled by BZiON core meaning there will always only be "active"
+        // values in the database.
+        if ($type::SYSTEM_MODEL) {
+            return $this;
+        }
+
         $column = $type::DELETED_COLUMN;
 
         if ($column === null) {

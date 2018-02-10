@@ -74,6 +74,11 @@ abstract class BaseModel implements ModelInterface
     const DELETED_VALUE = true;
 
     /**
+     * This model is handled directly by BZiON and is not editable by users.
+     */
+    const SYSTEM_MODEL = false;
+
+    /**
      * The name of the database table used for queries
      * You can use this constant in static methods as such:
      * static::TABLE
