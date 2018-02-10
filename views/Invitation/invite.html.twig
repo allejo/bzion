@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Inviting {{ player.name }} to {{ team.name }}{% endblock %}
+
+{% block pageTitle %}
+    <h1>Invitation to "{{ team.name }}"</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <p>Are you sure you would like to invite <strong>{{ player.name }}</strong> to <strong>{{ team.name }}</strong>?</p>
+
+                {{ form_start(form) }}
+                    {{ form_row(form.invited_player, { attr: { class: 'mb3' } }) }}
+                    {{ form_row(form.message, { attr: { class: 'mb3' } }) }}
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            {{ form_row(form.submit) }}
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            {{ form_row(form.cancel) }}
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ form_rest(form) }}
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

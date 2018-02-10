@@ -3,11 +3,13 @@
 use BZIon\Event\Events;
 use BZIon\Event\TeamInviteEvent;
 use BZIon\Event\TeamJoinEvent;
+use BZIon\Form\Creator\InvitationFormCreator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class InvitationController extends CRUDController
 {
-    public function acceptAction(Invitation $invitation, Player $me)
+    public function acceptAction(Player $me, Invitation $invitation)
     {
         if (!$me->isTeamless()) {
             throw new ForbiddenException("You can't join a new team until you leave your current one.");
@@ -22,7 +24,7 @@ class InvitationController extends CRUDController
         }
 
         if ($invitation->getTeam()->isDeleted()) {
-            $invitation->updateExpiration();
+            $invitation->setExpired();
 
             throw new ForbiddenException("This invitation is for a team which has been deleted.");
         }
@@ -32,7 +34,8 @@ class InvitationController extends CRUDController
 
         return $this->showConfirmationForm(function () use ($invitation, $team, $me) {
             $team->addMember($me->getId());
-            $invitation->updateExpiration();
+            $invitation->setStatus(Invitation::STATUS_ACCEPTED);
+            $invitation->setExpired();
             Service::getDispatcher()->dispatch(Events::TEAM_JOIN, new TeamJoinEvent($team, $me));
 
             return new RedirectResponse($team->getUrl());
@@ -40,22 +43,39 @@ class InvitationController extends CRUDController
             "You are now a member of {$team->getName()}");
     }
 
-    public function inviteAction(Team $team, Player $player, Player $me)
+    public function inviteAction(Player $me, Team $team, Player $player)
     {
         if (!$me->canEdit($team)) {
             throw new ForbiddenException("You are not allowed to invite a player to that team!");
-        } elseif ($team->isMember($player->getId())) {
-            throw new ForbiddenException("The specified player is already a member of that team.");
-        } elseif (Invitation::hasOpenInvitation($player->getId(), $team->getId())) {
-            throw new ForbiddenException("This player has already been invited to join the team.");
         }
 
-        return $this->showConfirmationForm(function () use ($team, $player, $me) {
-            $invite = Invitation::sendInvite($player->getId(), $team->getId(), $me->getId());
-            Service::getDispatcher()->dispatch(Events::TEAM_INVITE, new TeamInviteEvent($invite));
+        $creator = new InvitationFormCreator($team, $me, $this);
+        $form = $creator->create()->handleRequest(self::getRequest());
 
-            return new RedirectResponse($team->getUrl());
-        },  "Are you sure you want to invite {$player->getEscapedUsername()} to {$team->getEscapedName()}?",
-            "Player {$player->getUsername()} has been invited to {$team->getName()}");
+        if ($form->isSubmitted()) {
+            $this->validate($form);
+
+            if ($form->isValid()) {
+                $clickedButton = $form->getClickedButton()->getName();
+
+                if ($clickedButton === 'submit') {
+                    $invitation = $creator->enter($form);
+
+                    self::getFlashBag()->add('success', sprintf('"%s" has been invited to "%s."', $invitation->getInvitedPlayer()->getName(), $team->getName()));
+
+                    return $this->redirectTo($team);
+                }
+
+                return (new RedirectResponse($this->getPreviousURL()));
+            }
+        } else {
+            $form->get('invited_player')->setData($player);
+        }
+
+        return [
+            'form' => $form->createView(),
+            'team' => $team,
+            'player' => $player,
+        ];
     }
 }
