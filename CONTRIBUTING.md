@@ -61,6 +61,11 @@ Before tagging a new release, here are few things that need to be done. Eventual
 
 This project follows a Git Flow-like scheme for branch management. Any branches where new features are being developed should be prepended with `feature/`; however that's the only practice that has been adopted.
 
-- **master** - This branch contains the current development version (`0.10.x`) of BZiON and should **always** be kept stable; features in development belong in their own feature branches.
-- **0.9** - This branch has been retired and contains the latest development version of the `0.9.x` pipeline.
-- **0.1** - This branch contains legacy code for a very early attempt of BZiON. This branch is only around for historical purposes.
+Due to extremely limited resources, only the latest minor version of BZiON is maintained. For example, once `0.11.0` is released, all previous releases will be reach EOL.
+
+| Branch | Version | Status | Description |
+| :----: | :-----: | :----: | ----------- |
+| master | 0.11.x  | Dev    | This branch contains the current development version (`0.11.x`) of BZiON and should **always** be kept stable; features in development belong in their own feature branches. |
+| 0.10   | 0.10.x  | Stable | This branch contains the development version of the `0.10.x` pipeline. This branch will reach EOL once 0.11.0 has been released. |
+| 0.9    | 0.9.x   | EOL    | This branch contains the development version of the `0.9.x` pipeline. |
+| 0.1    | 0.1.x   | EOL    | This branch contains legacy code for a very early attempt of BZiON. This branch is only around for historical purposes. |
