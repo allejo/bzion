@@ -118,8 +118,7 @@ class AdvancedModelType extends AbstractType
             ];
             $manualOptions = __::get($this->options, $type, []);
 
-            // @todo Replace array_merge_recursive_distinct() with __::merge() when it's available
-            $builder->add($type, TextType::class, $this->array_merge_recursive_distinct($defaultOptions, $manualOptions));
+            $builder->add($type, TextType::class, __::merge($defaultOptions, $manualOptions));
         }
 
         if ($this->multiple) {
@@ -201,23 +200,5 @@ class AdvancedModelType extends AbstractType
     public function getName()
     {
         return 'advanced_model';
-    }
-
-    /**
-     * @deprecated Will be replaced by __::merge()
-     */
-    private function array_merge_recursive_distinct(array &$array1, array &$array2)
-    {
-        $merged = $array1;
-
-        foreach ($array2 as $key => &$value) {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = $this->array_merge_recursive_distinct($merged[$key], $value);
-            } else {
-                $merged[$key] = $value;
-            }
-        }
-
-        return $merged;
     }
 }

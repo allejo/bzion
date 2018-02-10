@@ -1175,12 +1175,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maciejczyzewski/bottomline.git",
-                "reference": "b20a5856870e2d32984dcb6c617522ca72afd559"
+                "reference": "1d1fa0d851f39310ccb2df55256aa4b7585adbcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maciejczyzewski/bottomline/zipball/b20a5856870e2d32984dcb6c617522ca72afd559",
-                "reference": "b20a5856870e2d32984dcb6c617522ca72afd559",
+                "url": "https://api.github.com/repos/maciejczyzewski/bottomline/zipball/1d1fa0d851f39310ccb2df55256aa4b7585adbcd",
+                "reference": "1d1fa0d851f39310ccb2df55256aa4b7585adbcd",
                 "shasum": ""
             },
             "require": {
@@ -1217,7 +1217,7 @@
                 "library",
                 "utility"
             ],
-            "time": "2017-11-27 15:08:12"
+            "time": "2018-02-10 09:58:57"
         },
         {
             "name": "michelf/php-markdown",
