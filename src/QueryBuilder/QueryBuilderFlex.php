@@ -80,7 +80,6 @@ class QueryBuilderFlex extends QueryBuilderHandler
         $this->setFetchMode(PDO::FETCH_ASSOC);
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -89,6 +88,18 @@ class QueryBuilderFlex extends QueryBuilderHandler
         $this->resultsPerPage = $limit;
 
         return parent::limit($limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function whereHandler($key, $operator = null, $value = null, $joiner = 'AND')
+    {
+        if ($value instanceof BaseModel) {
+            $value = $value->getId();
+        }
+
+        return parent::whereHandler($key, $operator, $value, $joiner);
     }
 
     //
