@@ -5,17 +5,18 @@ class MapController extends CRUDController
     public function listAction(Map $map = null)
     {
         if ($map === null) {
-            $qb = $this->getQueryBuilder();
-
-            $maps = $qb->sortBy('name')
-                ->getModels();
+            $maps = $this->getQueryBuilder()
+                ->active()
+                ->orderBy('name')
+                ->getModels()
+            ;
         } else {
-            $maps = array($map);
+            $maps = [$map];
         }
 
-        return array(
-            "maps" => $maps
-        );
+        return [
+            'maps' => $maps
+        ];
     }
 
     public function createAction(Player $me)

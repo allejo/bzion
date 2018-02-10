@@ -65,14 +65,13 @@ class Map extends AvatarModel implements NamedModel
     protected $game_mode;
 
     /**
-     * The status of the map
-     * @var string
+     * Whether or not this map is currently not in rotation on the official game servers
+     *
+     * @var bool
      */
-    protected $status;
+    protected $is_inactive;
 
-    /**
-     * The name of the database table used for queries
-     */
+    const DELETED_COLUMN = 'is_deleted';
     const TABLE = "maps";
 
     /**
@@ -103,7 +102,8 @@ class Map extends AvatarModel implements NamedModel
         $this->ricochet = $map['ricochet'];
         $this->jumping = $map['jumping'];
         $this->game_mode = $map['game_mode'];
-        $this->status = $map['status'];
+        $this->is_inactive = $map['is_inactive'];
+        $this->is_deleted = $map['is_deleted'];
     }
 
     /**
@@ -113,18 +113,18 @@ class Map extends AvatarModel implements NamedModel
      * @param string|null $alias       The custom API-friendly alias of the map
      * @param string      $description The description of the map
      * @param string|null $avatar      An image of the map
-     * @param string      $status      The status of the map (active, hidden, disabled or deleted)
+     *
+     * @since 0.11.0 The `$status` argument has been removed
      *
      * @return static
      */
-    public static function addMap($name, $alias = null, $description = '', $avatar = null, $status = 'active')
+    public static function addMap($name, $alias = null, $description = '', $avatar = null)
     {
         return self::create(array(
             'name'        => $name,
             'alias'       => $alias,
             'description' => $description,
             'avatar'      => $avatar,
-            'status'      => $status
         ));
     }
 
@@ -209,6 +209,18 @@ class Map extends AvatarModel implements NamedModel
     public function isJumpingEnabled()
     {
         return (bool)$this->jumping;
+    }
+
+    /**
+     * Get whether or not this map is inactive.
+     *
+     * An inactive map is one that is not currently in rotation on official match servers.
+     *
+     * @return bool
+     */
+    public function isInactive()
+    {
+        return (bool)$this->is_inactive;
     }
 
     /**
@@ -309,6 +321,18 @@ class Map extends AvatarModel implements NamedModel
     }
 
     /**
+     * Set whether or not this map is in active rotation on official match servers.
+     *
+     * @param bool $inactive
+     *
+     * @return static
+     */
+    public function setInactive($inactive)
+    {
+        return $this->updateProperty($this->is_inactive, 'is_inactive', $inactive);
+    }
+
+    /**
      * Get the number of matches played on this map
      *
      * @return int
@@ -323,16 +347,28 @@ class Map extends AvatarModel implements NamedModel
 
     /**
      * Get a query builder for news
-     * @return QueryBuilder
+     *
+     * @throws Exception
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Map', array(
-            'columns' => array(
-                'name'   => 'name',
-                'status' => 'status'
-            ),
-            'name' => 'name'
-        ));
+        return QueryBuilderFlex::createForModel(Map::class)
+            ->setNameColumn('name')
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getActiveModels(QueryBuilderFlex &$qb)
+    {
+        $qb
+            ->whereNot(self::DELETED_COLUMN, '=', self::DELETED_VALUE)
+            ->whereNot('is_inactive', '=', true)
+        ;
+
+        return true;
     }
 }

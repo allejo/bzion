@@ -32,18 +32,11 @@
                     </div>
                 </section>
 
-                <section class="row">
-                    <div class="col-md-3 text-center-md">
-                        {{ form_row(form.jumping, { 'container_attr': { 'class': 'mb3' } }) }}
-                    </div>
-
-                    <div class="col-md-3 text-center-md">
-                        {{ form_row(form.ricochet, { 'container_attr': { 'class': 'mb3' } }) }}
-                    </div>
-
-                    <div class="col-md-3 text-center-md">
-                        {{ form_row(form.randomly_generated, { 'container_attr': { 'class': 'mb3' } }) }}
-                    </div>
+                <section>
+                    {{ form_row(form.jumping, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                    {{ form_row(form.ricochet, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                    {{ form_row(form.randomly_generated, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
+                    {{ form_row(form.is_inactive, { 'container_attr': { 'class': 'c-form__checkbox--horizontal mb3' } }) }}
                 </section>
 
                 <div>

@@ -113,6 +113,13 @@ class MapFormCreator extends ModelFormCreator
                 'multiple' => false,
                 'label'    => 'Game Mode',
             ])
+            ->add('is_inactive', CheckboxType::class, [
+                'label' => 'Map is inactive',
+                'required' => false,
+                'attr' => [
+                    'data-help-message' => 'By checking this box, it means this map is no longer available on the official match servers via /maplist',
+                ],
+            ])
         ;
 
         if ($this->editing) {
@@ -144,6 +151,7 @@ class MapFormCreator extends ModelFormCreator
         $form->get('jumping')->setData($map->isJumpingEnabled());
         $form->get('ricochet')->setData($map->isRicochetEnabled());
         $form->get('game_mode')->setData($map->getGameMode());
+        $form->get('is_inactive')->setData($map->isInactive());
     }
 
     /**
@@ -164,6 +172,7 @@ class MapFormCreator extends ModelFormCreator
             ->setWorldSize($form->get('world_size')->getData())
             ->setRandomlyGenerated($form->get('randomly_generated')->getData())
             ->setGameMode($form->get('game_mode')->getData())
+            ->setInactive($form->get('is_inactive')->getData())
         ;
     }
 
@@ -183,6 +192,7 @@ class MapFormCreator extends ModelFormCreator
         $map->setJumpingEnabled($form->get('jumping')->getData());
         $map->setRicochetEnabled($form->get('ricochet')->getData());
         $map->setGameMode($form->get('game_mode')->getData());
+        $map->setInactive($form->get('is_inactive')->getData());
 
         if ($form->has('delete_avatar') && $form->get('delete_avatar')->isClicked()) {
             $map->resetAvatar();
