@@ -10,7 +10,7 @@
  * A permission that is assigned to a role
  * @package    BZiON\Models
  */
-class Permission extends Model
+class Permission extends Model implements NamedModel
 {
     const ADD_BAN            = "add_ban";
     const ADD_MAP            = "add_map";
@@ -67,9 +67,7 @@ class Permission extends Model
      */
     protected $description;
 
-    /**
-     * The name of the database table used for queries
-     */
+    const SYSTEM_MODEL = true;
     const TABLE = "permissions";
 
     /**
@@ -101,13 +99,16 @@ class Permission extends Model
 
     /**
      * Get all of the existing permissions in the database
+     *
+     * @throws \Pixie\Exception
+     *
      * @return Permission[] An array of permissions
      */
     public static function getPerms()
     {
-        return parent::arrayIdToModel(
-            self::fetchIds()
-        );
+        return self::getQueryBuilder()
+            ->getModels()
+        ;
     }
 
     /**
@@ -120,18 +121,18 @@ class Permission extends Model
             return $perm_name;
         }
 
-        return self::get(
-            self::fetchIdFrom($perm_name, "name")
-        );
+        return self::getQueryBuilder()
+            ->find($perm_name, 'name')
+        ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder("Permission", array(
-            'columns' => array(
-                'name' => 'name'
-            ),
-            'name' => 'name'
-        ));
+        return QueryBuilderFlex::createForModel(Permission::class)
+            ->setNameColumn('name')
+        ;
     }
 }
