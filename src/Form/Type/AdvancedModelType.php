@@ -2,11 +2,14 @@
 
 namespace BZIon\Form\Type;
 
+use __;
 use BZIon\Form\Constraint\ValidModel;
 use BZIon\Form\Transformer\MultipleAdvancedModelTransformer;
 use BZIon\Form\Transformer\SingleAdvancedModelTransformer;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -18,6 +21,8 @@ class AdvancedModelType extends AbstractType
      * The types of the model
      */
     private $types = array();
+
+    private $options = array();
 
     /**
      * An object to always include
@@ -33,11 +38,24 @@ class AdvancedModelType extends AbstractType
 
     /**
      * Create new ModelType
+     *
      * @param string|string[] $type The types of the model
+     * @param array $options
      */
-    public function __construct($type)
+    public function __construct($type, $options = [])
     {
-        $this->types = (is_array($type)) ? $type : array($type);
+        $this->types = (is_array($type)) ? $type : [$type];
+
+        if (!is_array($type)) {
+            $options = [
+                $type => $options,
+            ];
+        }
+
+        foreach ($this->types as $t) {
+            $this->options[strtolower($t)] = __::get($options, $t, []);
+        }
+
         $this->types = array_map('strtolower', $this->types);
     }
 
@@ -72,11 +90,12 @@ class AdvancedModelType extends AbstractType
         }
 
         // Model IDs that will be manipulated by javascript
-        $builder->add('ids', 'hidden', array(
+        $label = __::get(array_column(array_values($this->options), 'label'), 0, $builderName);
+        $builder->add('ids', HiddenType::class, array(
             'attr' => array(
                 'class'         => 'select2-compatible',
                 'data-exclude'  => $exclude,
-                'data-label'    => $builderName,
+                'data-label'    => ($label === null) ? $builderName : $label,
                 'data-multiple' => $this->multiple,
                 'data-required' => $options['required']
             ),
@@ -88,17 +107,19 @@ class AdvancedModelType extends AbstractType
             $pluralType = ($this->multiple) ? Inflector::pluralize($type) : $type;
             $label = (count($this->types) > 1) ? "$builderName $pluralType" : $builderName;
 
-            $builder->add(
-                $builder->create($type, 'text', array(
-                    'attr' => array(
-                        'class'       => 'model-select',
-                        'data-type'   => $type,
-                        'placeholder' => $placeholder,
-                    ),
-                    'label'    => $label,
-                    'required' => false
-                ))
-            );
+            $defaultOptions = [
+                'attr' => [
+                    'class'       => 'model-select',
+                    'data-type'   => $type,
+                    'placeholder' => $placeholder,
+                ],
+                'label'    => $label,
+                'required' => false,
+            ];
+            $manualOptions = __::get($this->options, $type, []);
+
+            // @todo Replace array_merge_recursive_distinct() with __::merge() when it's available
+            $builder->add($type, TextType::class, $this->array_merge_recursive_distinct($defaultOptions, $manualOptions));
         }
 
         if ($this->multiple) {
@@ -180,5 +201,23 @@ class AdvancedModelType extends AbstractType
     public function getName()
     {
         return 'advanced_model';
+    }
+
+    /**
+     * @deprecated Will be replaced by __::merge()
+     */
+    private function array_merge_recursive_distinct(array &$array1, array &$array2)
+    {
+        $merged = $array1;
+
+        foreach ($array2 as $key => &$value) {
+            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
+                $merged[$key] = $this->array_merge_recursive_distinct($merged[$key], $value);
+            } else {
+                $merged[$key] = $value;
+            }
+        }
+
+        return $merged;
     }
 }
