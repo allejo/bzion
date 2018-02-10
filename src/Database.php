@@ -137,6 +137,9 @@ class Database
                 ];
             }
 
+            $config['charset'] = 'utf8';
+            $config['collation'] = 'utf8_unicode_ci';
+
             Service::setQueryBuilderConfig($config);
         }
 
