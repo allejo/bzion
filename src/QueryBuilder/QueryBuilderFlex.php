@@ -237,6 +237,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * Perform the query and get back the results in an array of names.
      *
+     * @throws \Pixie\Exception
      * @throws UnexpectedValueException When no name column has been specified
      *
      * @return string[] An array of the type $id => $name
@@ -249,8 +250,13 @@ class QueryBuilderFlex extends QueryBuilderHandler
 
         $this->select(['id', $this->modelNameColumn]);
 
+        $queryObject = $this->getQuery();
+        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
+
         /** @var array $results */
         $results = $this->get();
+
+        $debug->finish($results);
 
         return array_column($results, $this->modelNameColumn, 'id');
     }
