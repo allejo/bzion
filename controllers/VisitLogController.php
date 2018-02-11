@@ -13,8 +13,7 @@ class VisitLogController extends HTMLController
 
     public function listAction(Request $request)
     {
-        /** @var VisitQueryBuilder $qb */
-        $qb = $this->getQueryBuilder();
+        $qb = Visit::getQueryBuilder();
 
         $currentPage = $this->getCurrentPage();
 
@@ -22,20 +21,17 @@ class VisitLogController extends HTMLController
             $qb->search($request->query->get('search'));
         }
 
-        $visits = $qb->sortBy('timestamp')->reverse()
+        $visits = $qb
+            ->orderBy('timestamp', 'DESC')
             ->limit(30)->fromPage($currentPage)
-            ->getModels($fast = true);
+            ->getModels()
+        ;
 
-        return array(
-            "visits"      => $visits,
-            "currentPage" => $currentPage,
-            "totalPages"  => $qb->countPages(),
-            "search"      => $request->query->get('search')
-        );
-    }
-
-    public static function getQueryBuilder($type = "Visit")
-    {
-        return $type::getQueryBuilder();
+        return [
+            'visits'      => $visits,
+            'currentPage' => $currentPage,
+            'totalPages'  => $qb->countPages(),
+            'search'      => $request->query->get('search')
+        ];
     }
 }

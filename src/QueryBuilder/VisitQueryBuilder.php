@@ -12,21 +12,22 @@
  *
  * @package    BZiON\Models\QueryBuilder
  */
-class VisitQueryBuilder extends QueryBuilder
+class VisitQueryBuilder extends QueryBuilderFlex
 {
     /**
      * Search for a visit from the given IP or Host
      *
      * @param  string $query An IP or host to search
-     * @return self
+     *
+     * @return static
      */
     public function search($query)
     {
-        $this->whereConditions[] = "(ip LIKE CONCAT('%', ?, '%') OR host LIKE CONCAT('%', ?, '%'))";
-
-        $this->parameters[] = $query;
-        $this->parameters[] = $query;
-//        $this->parameters[] = $query;
+        $this->where(function ($qb) use ($query) {
+            /** @var static $qb */
+            $qb->where('ip', 'LIKE', "%$query%");
+            $qb->orWhere('host', 'LIKE', "%$query%");
+        });
 
         return $this;
     }

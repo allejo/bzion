@@ -37,7 +37,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
         Database::getInstance();
 
         $connection = Service::getQueryBuilderConnection();
-        $qbBase = new QueryBuilderFlex($connection);
+        $qbBase = new static($connection);
 
         $queryBuilder = $qbBase->table($tableName);
 
@@ -58,7 +58,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
         Database::getInstance();
 
         $connection = Service::getQueryBuilderConnection();
-        $qbBase = new QueryBuilderFlex($connection);
+        $qbBase = new static($connection);
 
         $queryBuilder = $qbBase->table(constant("$modelType::TABLE"));
         $queryBuilder->setModelType($modelType);

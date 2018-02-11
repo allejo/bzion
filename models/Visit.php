@@ -89,17 +89,14 @@ class Visit extends Model
 
     /**
      * Get a query builder for players
-     * @return QueryBuilder
+     *
+     * @throws Exception
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new VisitQueryBuilder('Visit', array(
-            'columns' => array(
-                'ip' => 'ip',
-                'timestamp' => 'timestamp'
-            ),
-            'name' => 'name',
-        ));
+        return VisitQueryBuilder::createForModel(Visit::class);
     }
 
     /**
