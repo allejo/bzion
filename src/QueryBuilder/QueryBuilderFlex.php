@@ -241,7 +241,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return array
      */
-    public function getModels($fastFetch = false)
+    public function getModels($fastFetch = true)
     {
         /** @var Model $type */
         $type = $this->modelType;
