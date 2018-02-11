@@ -69,8 +69,27 @@ class Server extends UrlModel implements NamedModel
     protected $updated;
 
     /**
-     * The name of the database table used for queries
+     * Whether or not this server is capable of hosting official matches.
+     *
+     * @var bool
      */
+    protected $is_official_server;
+
+    /**
+     * Whether or not this server is dedicated to being a replay server.
+     *
+     * @var bool
+     */
+    protected $is_replay_server;
+
+    /**
+     * Whether or not this server has been marked as "inactive" and is only kept for historical purposes.
+     *
+     * @var bool
+     */
+    protected $is_inactive;
+
+    const DELETED_COLUMN = 'is_deleted';
     const TABLE = "servers";
 
     const CREATE_PERMISSION = Permission::ADD_SERVER;
@@ -92,36 +111,9 @@ class Server extends UrlModel implements NamedModel
         $this->info = unserialize($server['info']);
         $this->api_key = ApiKey::get($server['api_key']);
         $this->updated = TimeDate::fromMysql($server['updated']);
-        $this->status = $server['status'];
-    }
-
-    /**
-     * Add a new server
-     *
-     * @param string $name    The name of the server
-     * @param string $domain  The domain of the server (e.g. server.com)
-     * @param string $port    The port of the server (e.g. 5154)
-     * @param int    $country The ID of the country
-     * @param int    $owner   The ID of the server owner
-     *
-     * @return Server An object that represents the sent message
-     */
-    public static function addServer($name, $domain, $port, $country, $owner)
-    {
-        $key = ApiKey::getKeyByOwner($owner);
-
-        $server = self::create(array(
-            'name'    => $name,
-            'domain'  => $domain,
-            'port'    => $port,
-            'country' => $country,
-            'owner'   => $owner,
-            'api_key' => $key->getId(),
-            'status'  => 'active',
-        ), 'updated');
-        $server->forceUpdate();
-
-        return $server;
+        $this->is_official_server = $server['is_official_server'];
+        $this->is_replay_server = $server['is_replay_server'];
+        $this->is_inactive = $server['is_inactive'];
     }
 
     /**
@@ -320,6 +312,38 @@ class Server extends UrlModel implements NamedModel
     }
 
     /**
+     * Get whether or not this server is only kept for historical purposes.
+     *
+     * The server is now "retired" or no longer used but is **not** soft deleted.
+     *
+     * @return bool
+     */
+    public function isInactive()
+    {
+        return (bool)$this->is_inactive;
+    }
+
+    /**
+     * Get whether or not this server is capable of hosting official matches
+     *
+     * @return bool
+     */
+    public function isOfficialServer()
+    {
+        return (bool)$this->is_official_server;
+    }
+
+    /**
+     * Get whether or not this server is dedicated to serving replays.
+     *
+     * @return bool
+     */
+    public function isReplayServer()
+    {
+        return (bool)$this->is_replay_server;
+    }
+
+    /**
      * Set the name of the server
      *
      * @param string $name The new name of the server
@@ -399,35 +423,103 @@ class Server extends UrlModel implements NamedModel
     }
 
     /**
-     * Get all the servers in the database that have an active status
-     * @return Server[] An array of server objects
+     * Set this server's inactivity status.
+     *
+     * @param bool $inactive
+     *
+     * @return static
      */
-    public static function getServers()
+    public function setInactive($inactive)
     {
-        return self::arrayIdToModel(self::fetchIdsFrom("status", array("active"), false, "ORDER BY name"));
+        return $this->updateProperty($this->is_inactive, 'is_inactive', $inactive);
+    }
+
+    /**
+     * Set the official match capabilities of this server.
+     *
+     * @param bool $matchServer
+     *
+     * @return static
+     */
+    public function setOfficialServer($matchServer)
+    {
+        return $this->updateProperty($this->is_official_server, 'is_official_server', $matchServer);
+    }
+
+    /**
+     * Set the replay status of this server.
+     *
+     * @param bool $replayServer
+     *
+     * @return static
+     */
+    public function setReplayServer($replayServer)
+    {
+        return $this->updateProperty($this->is_replay_server, 'is_replay_server', $replayServer);
+    }
+
+    /**
+     * Add a new server
+     *
+     * @param string $name      The name of the server
+     * @param string $domain    The domain of the server (e.g. server.com)
+     * @param string $port      The port of the server (e.g. 5154)
+     * @param int    $countryID The ID of the country
+     * @param int    $ownerID   The ID of the server owner
+     *
+     * @return Server An object that represents the sent message
+     */
+    public static function addServer($name, $domain, $port, $countryID, $ownerID)
+    {
+        $key = ApiKey::getKeyByOwner($ownerID);
+
+        $server = self::create([
+            'name'    => $name,
+            'domain'  => $domain,
+            'port'    => $port,
+            'country' => $countryID,
+            'owner'   => $ownerID,
+            'api_key' => $key->getId(),
+        ], 'updated');
+        $server->forceUpdate();
+
+        return $server;
     }
 
     /**
      * Get a query builder for servers
-     * @return QueryBuilder
+     *
+     * @throws Exception
+     *
+     * @return QueryBuilderFlex
      */
     public static function getQueryBuilder()
     {
-        return new QueryBuilder('Server', array(
-            'columns' => array(
-                'name'   => 'name',
-                'domain' => 'domain',
-                'port'   => 'port',
-                'status' => 'status',
-            ),
-            'name' => 'name'
-        ));
+        return QueryBuilderFlex::createForModel(Server::class)
+            ->setNameColumn('name')
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getActiveModels(QueryBuilderFlex &$qb)
+    {
+        $qb
+            ->whereNot(self::DELETED_COLUMN, '=', self::DELETED_VALUE)
+            ->whereNot('is_inactive', '=', true)
+        ;
+
+        return true;
     }
 
     /**
      * Get the Server model with the respective address
      *
      * @param  string $address The address in the format of `domain:port`
+     *
+     * @throws \Pixie\Exception
+     * @throws Exception
      *
      * @return static
      */
@@ -439,16 +531,15 @@ class Server extends UrlModel implements NamedModel
 
         list($domain, $port) = explode(':', $address);
 
-        $qb = self::getQueryBuilder();
-        $query = $qb
-            ->where('domain')->equals($domain)
-            ->where('port')->equals($port)
+        $results = self::getQueryBuilder()
+            ->where('domain', '=', $domain)
+            ->where('port', '=', $port)
             ->active()
-            ->getModels($fast = true)
+            ->getModels(true)
         ;
 
-        if (count($query) > 0) {
-            return $query[0];
+        if (count($results) > 0) {
+            return $results[0];
         }
 
         return Server::get(0);

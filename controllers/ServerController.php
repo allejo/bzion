@@ -10,7 +10,8 @@ class ServerController extends CRUDController
     {
         $servers = $this
             ->getQueryBuilder()
-            ->sortBy('name')
+            ->active()
+            ->orderBy('name')
             ->getModels()
         ;
 

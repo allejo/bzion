@@ -19,6 +19,16 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-8 mb3">
+                {{ form_row(form.server_type) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_row(form.inactive, { container_attr: { class: 'c-form__checkbox--horizontal' } }) }}
+        </div>
+
         <div>
             {{ form_rest(form) }}
         </div>
