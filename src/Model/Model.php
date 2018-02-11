@@ -219,6 +219,21 @@ abstract class Model extends CachedModel
     }
 
     /**
+     * Create a single model object from a database result
+     *
+     * @param array $result The MySQL row of the model
+     *
+     * @return static
+     */
+    public static function createFromDatabaseResult(&$result)
+    {
+        $model = new static($result['id'], $result);
+        $model->storeInCache();
+
+        return $model;
+    }
+
+    /**
      * Create model objects, given their MySQL entries
      *
      * @param  array $results The MySQL rows of the model
@@ -229,10 +244,7 @@ abstract class Model extends CachedModel
         $models = array();
 
         foreach ($results as $result) {
-            $model = new static($result['id'], $result);
-            $model->storeInCache();
-
-            $models[] = $model;
+            $models[] = self::createFromDatabaseResult($result);
         }
 
         return $models;

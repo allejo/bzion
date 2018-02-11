@@ -185,6 +185,28 @@ class QueryBuilderFlex extends QueryBuilderHandler
     }
 
     /**
+     * Find the first matching model in the database or return an invalid model.
+     *
+     * @param mixed  $value      The value to search for
+     * @param string $columnName The column name we'll be checking
+     *
+     * @return Model
+     */
+    public function findModel($value, $columnName = 'id')
+    {
+        $type = $this->modelType;
+
+        /** @var array $result */
+        $result = parent::find($value, $columnName);
+
+        if ($result === null) {
+            return $type::get(0);
+        }
+
+        return $type::createFromDatabaseResult($result);
+    }
+
+    /**
      * Only show results from a specific page.
      *
      * This method will automatically take care of the calculations for a correct OFFSET.

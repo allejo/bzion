@@ -122,7 +122,7 @@ class Permission extends Model implements NamedModel
         }
 
         return self::getQueryBuilder()
-            ->find($perm_name, 'name')
+            ->findModel($perm_name, 'name')
         ;
     }
 
