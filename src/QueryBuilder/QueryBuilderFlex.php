@@ -1,7 +1,9 @@
 <?php
 
 use BZIon\Debug\DatabaseQuery;
-use Pixie\QueryBuilder\QueryBuilderHandler;
+use Pecee\Pixie\Connection;
+use Pecee\Pixie\QueryBuilder\IQueryBuilderHandler;
+use Pecee\Pixie\QueryBuilder\QueryBuilderHandler;
 
 /**
  * The core query builder used across BZiON for creating and modifying queries for all of our entities.
@@ -24,6 +26,22 @@ class QueryBuilderFlex extends QueryBuilderHandler
     //
 
     /**
+     * Create a bare QueryBuilder instance.
+     *
+     * @throws Exception
+     *
+     * @return static
+     */
+    public static function createBuilder(): QueryBuilderFlex
+    {
+        Database::getInstance();
+
+        $connect = Service::getQueryBuilderConnection();
+
+        return (new static($connect));
+    }
+
+    /**
      * Create a QueryBuilder instance for a specific table.
      *
      * @param  string $tableName
@@ -32,16 +50,11 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return QueryBuilderFlex
      */
-    public static function createForTable($tableName)
+    public static function createForTable(string $tableName): QueryBuilderFlex
     {
-        Database::getInstance();
-
-        $connection = Service::getQueryBuilderConnection();
-        $qbBase = new static($connection);
-
-        $queryBuilder = $qbBase->table($tableName);
-
-        return $queryBuilder;
+        return self::createBuilder()
+            ->table($tableName)
+        ;
     }
 
     /**
@@ -53,17 +66,12 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return QueryBuilderFlex
      */
-    public static function createForModel($modelType)
+    public static function createForModel(string $modelType): QueryBuilderFlex
     {
-        Database::getInstance();
-
-        $connection = Service::getQueryBuilderConnection();
-        $qbBase = new static($connection);
-
-        $queryBuilder = $qbBase->table(constant("$modelType::TABLE"));
-        $queryBuilder->setModelType($modelType);
-
-        return $queryBuilder;
+        return self::createBuilder()
+            ->table(constant("$modelType::TABLE"))
+            ->setModelType($modelType)
+        ;
     }
 
     //
@@ -73,7 +81,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * {@inheritdoc}
      */
-    public function __construct(\Pixie\Connection $connection = null)
+    public function __construct(Connection $connection = null)
     {
         parent::__construct($connection);
 
@@ -83,7 +91,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * {@inheritdoc}
      */
-    public function limit($limit)
+    public function limit($limit): IQueryBuilderHandler
     {
         $this->resultsPerPage = $limit;
 
@@ -93,7 +101,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * {@inheritdoc}
      */
-    protected function whereHandler($key, $operator = null, $value = null, $joiner = 'AND')
+    protected function whereHandler($key, string $operator = null, $value = null, $joiner = 'AND'): IQueryBuilderHandler
     {
         if ($value instanceof BaseModel) {
             $value = $value->getId();
@@ -111,7 +119,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return static
      */
-    public function active()
+    public function active(): QueryBuilderFlex
     {
         $type = $this->modelType;
 
@@ -147,11 +155,11 @@ class QueryBuilderFlex extends QueryBuilderHandler
      * @param  bool $fastFetch Whether to perform one query to load all the model data instead of fetching them one by
      *              one
      *
-     * @throws \Pixie\Exception
+     * @throws \Pecee\Pixie\Exception
      *
      * @return void
      */
-    public function addToCache($fastFetch = true)
+    public function addToCache(bool $fastFetch = true): void
     {
         $this->getModels($fastFetch);
     }
@@ -159,9 +167,11 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * Get the amount of pages this query would have.
      *
+     * @throws \Pecee\Pixie\Exception
+     *
      * @return int
      */
-    public function countPages()
+    public function countPages(): int
     {
         return (int)ceil($this->count() / $this->resultsPerPage);
     }
@@ -173,7 +183,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return static
      */
-    public function except($model)
+    public function except($model): QueryBuilderFlex
     {
         if ($model instanceof Model) {
             $model = $model->getId();
@@ -190,9 +200,11 @@ class QueryBuilderFlex extends QueryBuilderHandler
      * @param mixed  $value      The value to search for
      * @param string $columnName The column name we'll be checking
      *
+     * @throws \Pecee\Pixie\Exception
+     *
      * @return Model
      */
-    public function findModel($value, $columnName = 'id')
+    public function findModel($value, string $columnName = 'id'): Model
     {
         $type = $this->modelType;
 
@@ -213,9 +225,11 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @param  int|null $page The page number (or null to show all pages - counting starts from 0)
      *
+     * @throws \Pecee\Pixie\Exception
+     *
      * @return static
      */
-    public function fromPage($page)
+    public function fromPage(int $page = null): QueryBuilderFlex
     {
         if ($page === null) {
             $this->offset($page);
@@ -237,11 +251,11 @@ class QueryBuilderFlex extends QueryBuilderHandler
      * @param  bool $fastFetch Whether to perform one query to load all the model data instead of fetching them one by
      *                         one (ignores cache)
      *
-     * @throws \Pixie\Exception
+     * @throws \Pecee\Pixie\Exception
      *
-     * @return array
+     * @return Model[]
      */
-    public function getModels($fastFetch = true)
+    public function getModels(bool $fastFetch = true): array
     {
         /** @var Model $type */
         $type = $this->modelType;
@@ -266,12 +280,12 @@ class QueryBuilderFlex extends QueryBuilderHandler
     /**
      * Perform the query and get back the results in an array of names.
      *
-     * @throws \Pixie\Exception
+     * @throws \Pecee\Pixie\Exception
      * @throws UnexpectedValueException When no name column has been specified
      *
      * @return string[] An array of the type $id => $name
      */
-    public function getNames()
+    public function getNames(): array
     {
         if (!$this->modelNameColumn) {
             throw new UnexpectedValueException(sprintf('The name column has not been specified for this query builder. Use %s::setNameColumn().', get_called_class()));
@@ -300,7 +314,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return $this
      */
-    public function setModelType($modelType)
+    public function setModelType(string $modelType = null): QueryBuilderFlex
     {
         $this->modelType = $modelType;
 
@@ -314,7 +328,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return static
      */
-    public function setNameColumn($columnName)
+    public function setNameColumn(string $columnName): QueryBuilderFlex
     {
         if (!is_subclass_of($this->modelType, NamedModel::class)) {
             throw new LogicException(sprintf('Setting name columns is only supported in models implementing the "%s" interface.', NamedModel::class));
@@ -337,7 +351,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return static
      */
-    public function visibleTo(Player $player, $showDeleted = false)
+    public function visibleTo(Player $player, bool $showDeleted = false): QueryBuilderFlex
     {
         $type = $this->modelType;
 

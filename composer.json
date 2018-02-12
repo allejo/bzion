@@ -18,6 +18,7 @@
         "maciejczyzewski/bottomline": "dev-master",
         "nelmio/api-doc-bundle": "~2.7",
         "nesbot/carbon": "~1.14",
+        "pecee/pixie": "~4.2.5",
         "robmorgan/phinx": "~0.8",
         "sensio/framework-extra-bundle": "~3.0",
         "swiftmailer/swiftmailer": ">=5.2.0",
@@ -26,7 +27,6 @@
         "symfony/swiftmailer-bundle": ">=2.3.0",
         "symfony/symfony": "~2.8",
         "twig/twig": "~1.18",
-        "usmanhalalit/pixie": "^2.0",
         "yzalis/identicon": "~1.2.0"
     },
     "require-dev": {

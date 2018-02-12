@@ -7,8 +7,7 @@
  */
 
 use BZIon\Cache\ModelCache;
-use Pixie\Connection;
-use Pixie\QueryBuilder\QueryBuilderHandler;
+use Pecee\Pixie\Connection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormFactory;
