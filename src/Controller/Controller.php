@@ -382,7 +382,7 @@ abstract class Controller
         $type = ($type) ?: static::getName();
 
         return $type::getQueryBuilder()
-            ->visibleTo(static::getMe(), static::getRequest()->get('showDeleted'));
+            ->visibleTo(static::getMe(), (bool)static::getRequest()->get('showDeleted'));
     }
 
      /**
