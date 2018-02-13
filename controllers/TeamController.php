@@ -34,23 +34,31 @@ class TeamController extends CRUDController
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @throws \Pecee\Pixie\Exception
+     * @throws Exception
+     *
+     * @return array
+     */
     public function listAction(Request $request)
     {
         $teamQB = Team::getQueryBuilder()
             ->active()
-            ->sortBy('elo')->reverse()
+            ->orderBy('elo', 'DESC')
         ;
 
         // Cache team captains so we don't fetch each manually
         $captains = $teamQB->getArray('leader');
         $captIDs = array_column($captains, 'leader');
         Player::getQueryBuilder()
-            ->where('id')->isOneOf($captIDs)
+            ->whereIn('id', $captIDs)
             ->addToCache()
         ;
 
         return [
-            'teams'   => $teamQB->withMatchActivity()->getModels($fast = true),
+            'teams'   => $teamQB->withMatchActivity()->getModels(),
             'showAll' => (bool)$request->get('showAll', false),
         ];
     }

@@ -85,17 +85,15 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
     protected $members;
 
     /**
-     * The team's status
+     * Whether or not the team is closed. A closed team only allows new members through invitations.
      *
-     * @var string
+     * @var bool
      */
-    protected $status;
+    protected $is_closed;
 
     const DEFAULT_STATUS = 'closed';
 
-    /**
-     * The name of the database table used for queries
-     */
+    const DELETED_COLUMN = 'is_deleted';
     const TABLE = "teams";
 
     /**
@@ -115,7 +113,6 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
     {
         $this->name = $team['name'];
         $this->alias = $team['alias'];
-        $this->description = $team['description'];
         $this->avatar = $team['avatar'];
         $this->created = TimeDate::fromMysql($team['created']);
         $this->elo = $team['elo'];
@@ -124,11 +121,17 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
         $this->matches_lost = $team['matches_lost'];
         $this->matches_draw = $team['matches_draw'];
         $this->members = $team['members'];
-        $this->status = $team['status'];
+        $this->is_closed = $team['is_closed'];
+        $this->is_deleted = $team['is_deleted'];
 
         $this->matches_total = $this->matches_won + $this->matches_lost + $this->matches_draw;
 
         $this->activity = isset($team['activity']) ? $team['activity'] : 0;
+    }
+
+    protected function assignLazyResult($result)
+    {
+        $this->description = $result['description'];
     }
 
     /**
@@ -237,6 +240,8 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
      */
     public function getDescription()
     {
+        $this->lazyLoad();
+
         return $this->description;
     }
 
@@ -605,21 +610,12 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
     /**
      * {@inheritdoc}
      */
-    public static function getActiveStatuses()
+    public static function getEagerColumnsList()
     {
-        return array('open', 'closed');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getEagerColumns($prefix = null)
-    {
-        $columns = [
+        return [
             'id',
             'name',
             'alias',
-            'description',
             'avatar',
             'created',
             'elo',
@@ -628,28 +624,31 @@ class Team extends AvatarModel implements TeamInterface, DuplexUrlInterface, Elo
             'matches_lost',
             'matches_draw',
             'members',
-            'status',
+            'is_closed',
+            'is_deleted',
         ];
-
-        return self::formatColumns($prefix, $columns);
     }
 
     /**
-     * Get a query builder for teams
+     * {@inheritdoc}
+     */
+    public static function getLazyColumnsList()
+    {
+        return [
+            'description',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @return TeamQueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new TeamQueryBuilder('Team', array(
-            'columns' => array(
-                'name'    => 'name',
-                'elo'     => 'elo',
-                'leader'  => 'leader',
-                'members' => 'members',
-                'status'  => 'status'
-            ),
-            'name' => 'name',
-        ));
+        return TeamQueryBuilder::createForModel(Team::class)
+            ->setNameColumn('name')
+        ;
     }
 
     /**

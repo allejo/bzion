@@ -84,12 +84,13 @@ class PlayerController extends JSONController
         Country::getQueryBuilder()->addToCache();
 
         if ($team) {
-            $query->where('team')->is($team);
+            $query->where('team', '=', $team);
         } else {
             // Add all teams to the cache
-            $this->getQueryBuilder('Team')
-                ->where('members')->greaterThan(0)
-                ->addToCache();
+            Team::getQueryBuilder()
+                ->where('members', '>', 0)
+                ->addToCache()
+            ;
         }
 
         if ($request->query->has('exceptMe')) {
@@ -103,24 +104,18 @@ class PlayerController extends JSONController
         $query
             ->active()
             ->withMatchActivity()
-            ->sortBy('name')
+            ->orderBy('username')
         ;
 
         if (!$request->query->get('showAll')) {
-            $query->having('activity')->greaterThan(0);
+            $query->having('activity', '>', 0);
         }
 
         if ($sortBy || $sortOrder) {
-            $sortBy = $sortBy ? $sortBy : 'callsign';
-            $sortOrder = $sortOrder ? $sortOrder : 'ASC';
+            $sortBy = $sortBy ? 'activity' : 'callsign';
+            $sortOrder = $sortOrder ? 'DESC' : 'ASC';
 
-            if ($sortBy === 'activity') {
-                $query->sortBy($sortBy);
-            }
-
-            if ($sortOrder == 'DESC') {
-                $query->reverse();
-            }
+            $query->orderBy($sortBy, $sortOrder);
         }
 
         $players = $query->getModels($fast = true);

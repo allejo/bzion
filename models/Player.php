@@ -170,9 +170,9 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
 
     private $matchActivity;
 
-    /**
-     * The name of the database table used for queries
-     */
+    private $is_disabled;
+
+    const DELETED_COLUMN = 'is_deleted';
     const TABLE = "players";
 
     /**
@@ -193,9 +193,10 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
         $this->name = $player['username'];
         $this->alias = $player['alias'];
         $this->team = $player['team'];
-        $this->status = $player['status'];
         $this->avatar = $player['avatar'];
         $this->country = $player['country'];
+        $this->is_disabled = $player['is_disabled'];
+        $this->is_deleted = $player['is_deleted'];
 
         if (array_key_exists('activity', $player)) {
             $this->matchActivity = ($player['activity'] != null) ? $player['activity'] : 0.0;
@@ -1378,20 +1379,57 @@ class Player extends AvatarModel implements NamedModel, DuplexUrlInterface, EloI
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getEagerColumnsList()
+    {
+        return [
+            'id',
+            'bzid',
+            'team',
+            'username',
+            'alias',
+            'avatar',
+            'country',
+            'is_disabled',
+            'is_deleted',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getLazyColumnsList()
+    {
+        return [
+            'email',
+            'verified',
+            'receives',
+            'confirm_code',
+            'outdated',
+            'description',
+            'theme',
+            'color_blind_enabled',
+            'timezone',
+            'joined',
+            'last_login',
+            'last_match',
+            'admin_notes',
+        ];
+    }
+
+    /**
      * Get a query builder for players
+     *
+     * @throws Exception
+     *
      * @return PlayerQueryBuilder
      */
     public static function getQueryBuilder()
     {
-        return new PlayerQueryBuilder('Player', array(
-            'columns' => array(
-                'name'     => 'username',
-                'team'     => 'team',
-                'outdated' => 'outdated',
-                'status'   => 'status',
-            ),
-            'name' => 'name',
-        ));
+        return PlayerQueryBuilder::createForModel(Player::class)
+            ->setNameColumn('username')
+        ;
     }
 
     /**

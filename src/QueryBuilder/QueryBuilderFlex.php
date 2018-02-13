@@ -13,10 +13,10 @@ use Pecee\Pixie\QueryBuilder\QueryBuilderHandler;
 class QueryBuilderFlex extends QueryBuilderHandler
 {
     /** @var string The column name of the column dedicated to storing the name of the model */
-    private $modelNameColumn;
+    protected $modelNameColumn;
 
     /** @var Model|string The FQN of the model object this QueryBuilder instance is for */
-    private $modelType = null;
+    protected $modelType = null;
 
     /** @var int The amount of results per page with regards to result pagination */
     private $resultsPerPage;
@@ -32,7 +32,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @return static
      */
-    public static function createBuilder(): QueryBuilderFlex
+    final public static function createBuilder()
     {
         Database::getInstance();
 
@@ -48,9 +48,9 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @throws Exception If there is no database connection configured.
      *
-     * @return QueryBuilderFlex
+     * @return static
      */
-    public static function createForTable(string $tableName): QueryBuilderFlex
+    final public static function createForTable(string $tableName)
     {
         return self::createBuilder()
             ->table($tableName)
@@ -64,9 +64,9 @@ class QueryBuilderFlex extends QueryBuilderHandler
      *
      * @throws Exception If there is no database connection configured.
      *
-     * @return QueryBuilderFlex
+     * @return static
      */
-    public static function createForModel(string $modelType): QueryBuilderFlex
+    final public static function createForModel(string $modelType)
     {
         return self::createBuilder()
             ->table(constant("$modelType::TABLE"))
@@ -86,6 +86,20 @@ class QueryBuilderFlex extends QueryBuilderHandler
         parent::__construct($connection);
 
         $this->setFetchMode(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @internal Use one of the QueryBuilderFlex get*() methods instead.
+     *
+     * @see self::getArray()
+     * @see self::getModels()
+     * @see self::getNames()
+     */
+    public function get(): array
+    {
+        return parent::get();
     }
 
     /**
@@ -246,6 +260,29 @@ class QueryBuilderFlex extends QueryBuilderHandler
     }
 
     /**
+     * Get the results of query as an array.
+     *
+     * @param array|string $columns
+     *
+     * @throws \Pecee\Pixie\Exception
+     *
+     * @return array
+     */
+    public function getArray($columns): array
+    {
+        $this->select($columns);
+
+        $queryObject = $this->getQuery();
+        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
+
+        $results = $this->get();
+
+        $debug->finish($results);
+
+        return $results;
+    }
+
+    /**
      * Perform the query and get the results as Models.
      *
      * @param  bool $fastFetch Whether to perform one query to load all the model data instead of fetching them one by
@@ -260,7 +297,15 @@ class QueryBuilderFlex extends QueryBuilderHandler
         /** @var Model $type */
         $type = $this->modelType;
 
-        $this->select($type::getEagerColumnsList());
+        $modelColumnsToSelect = $type::getEagerColumnsList();
+
+        if (isset($this->statements['joins'])) {
+            $modelColumnsToSelect = __::mapValues($modelColumnsToSelect, function ($value, $key, $array) use ($type) {
+                return sprintf('%s.%s', $type::TABLE, $value);
+            });
+        }
+
+        $this->select($modelColumnsToSelect);
 
         $queryObject = $this->getQuery();
         $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
