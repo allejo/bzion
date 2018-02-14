@@ -501,23 +501,30 @@ abstract class BaseModel implements ModelInterface
      * Load all the properties of the model that haven't been loaded yet
      *
      * @param  bool $force Whether to force a reload
-     * @return self
+     *
+     * @throws \Pecee\Pixie\Exception
+     * @throws Exception
+     *
+     * @return static
      */
     protected function lazyLoad($force = false)
     {
         if ((!$this->loaded || $force) && $this->valid) {
             $this->loaded = true;
 
-            $columns = $this->getLazyColumns();
+            $columns = static::getLazyColumnsList();
 
-            if ($columns !== null) {
-                $results = $this->db->query("SELECT $columns FROM {$this->table} WHERE id = ? LIMIT 1", array($this->id));
+            if (!empty($columns)) {
+                $results = static::getQueryBuilder()
+                    ->select($columns)
+                    ->find($this->getId())
+                ;
 
-                if (count($results) < 1) {
+                if (empty($results)) {
                     throw new Exception("The model has mysteriously disappeared");
                 }
 
-                $this->assignLazyResult($results[0]);
+                $this->assignLazyResult($results);
             } else {
                 $this->assignLazyResult(array());
             }
