@@ -12,6 +12,9 @@ use Pecee\Pixie\QueryBuilder\QueryBuilderHandler;
  */
 class QueryBuilderFlex extends QueryBuilderHandler
 {
+    /** @var array An array of values that'll be injected into returned database results */
+    protected $injectedValues = [];
+
     /** @var string The column name of the column dedicated to storing the name of the model */
     protected $modelNameColumn;
 
@@ -106,6 +109,10 @@ class QueryBuilderFlex extends QueryBuilderHandler
         $results = parent::get();
 
         $debug->finish($results);
+
+        foreach ($results as &$result) {
+            $result = array_merge($this->injectedValues, $result);
+        }
 
         return $results;
     }
@@ -336,6 +343,23 @@ class QueryBuilderFlex extends QueryBuilderHandler
         $results = $this->get();
 
         return array_column($results, $this->modelNameColumn, 'id');
+    }
+
+    /**
+     * Inject variables into the returned database results.
+     *
+     * These values will be merged in with values returned from database results. Database results will override any
+     * injected values.
+     *
+     * @param array $injection
+     *
+     * @return QueryBuilderFlex
+     */
+    public function injectResultValues(array $injection): QueryBuilderFlex
+    {
+        $this->injectedValues = $injection;
+
+        return $this;
     }
 
     /**
