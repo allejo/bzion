@@ -99,7 +99,15 @@ class QueryBuilderFlex extends QueryBuilderHandler
      */
     public function get(): array
     {
-        return parent::get();
+        $queryObject = $this->getQuery();
+        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
+
+        /** @var array $results */
+        $results = parent::get();
+
+        $debug->finish($results);
+
+        return $results;
     }
 
     /**
@@ -272,14 +280,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
     {
         $this->select($columns);
 
-        $queryObject = $this->getQuery();
-        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
-
-        $results = $this->get();
-
-        $debug->finish($results);
-
-        return $results;
+        return $this->get();
     }
 
     /**
@@ -307,13 +308,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
 
         $this->select($modelColumnsToSelect);
 
-        $queryObject = $this->getQuery();
-        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
-
-        /** @var array $results */
         $results = $this->get();
-
-        $debug->finish($results);
 
         if ($fastFetch) {
             return $type::createFromDatabaseResults($results);
@@ -338,13 +333,7 @@ class QueryBuilderFlex extends QueryBuilderHandler
 
         $this->select(['id', $this->modelNameColumn]);
 
-        $queryObject = $this->getQuery();
-        $debug = new DatabaseQuery($queryObject->getSql(), $queryObject->getBindings());
-
-        /** @var array $results */
         $results = $this->get();
-
-        $debug->finish($results);
 
         return array_column($results, $this->modelNameColumn, 'id');
     }
