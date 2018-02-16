@@ -1,5 +1,6 @@
 <?php
 
+use Pecee\Pixie\QueryBuilder\JoinBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
 class SeasonController extends HTMLController
@@ -16,29 +17,45 @@ class SeasonController extends HTMLController
      */
     public function showAction(Request $request, $period, $year)
     {
+        $qb = QueryBuilderFlex::createBuilder();
         $this->parseSeason($period, $year);
 
-        // Because this query can't be created efficiently using our QueryBuilder, let's do things manually
-        $db = Database::getInstance();
-        $seasonQuery = sprintf("
-            SELECT %s, e.elo_new AS elo FROM players p 
-              INNER JOIN player_elo e ON e.user_id = p.id 
-              INNER JOIN (
-                SELECT
-                  user_id, 
-                  MAX(match_id) AS last_match 
-                FROM
-                  player_elo 
-                WHERE
-                  season_period = ? AND season_year = ?
-                GROUP BY
-                  user_id
-              ) i ON i.user_id = p.id AND i.last_match = e.match_id
-            WHERE p.status = 'active'
-            ORDER BY elo DESC, p.username ASC LIMIT 10;
-        ", Player::getEagerColumns('p'));
-        $results = $db->query($seasonQuery, [$period, $year]);
-        $players_w_elos = Player::createFromDatabaseResults($results);
+        // Subquery to get the the most recent Elo for players in the specified season
+        $playerEloQuery = $qb->table('player_elo');
+        $playerEloQuery
+            ->select([
+                'user_id',
+                $qb->raw('MAX(match_id) AS last_match')
+            ])
+            ->where('season_period', '=', $period)
+            ->where('season_year', '=', $year)
+            ->groupBy('user_id')
+        ;
+
+        // Get Player models of the top 10 players
+        $playersWithElos = Player::getQueryBuilder()
+            ->select(
+                $qb->raw('player_elo.elo_new AS elo')
+            )
+            ->innerJoin('player_elo', 'player_elo.user_id', '=', 'players.id')
+            ->innerJoin(
+                $qb->subQuery($playerEloQuery, 'i'),
+                function ($table) {
+                    /** @var JoinBuilder $table */
+                    $table->on('i.user_id', '=', 'players.id');
+                    $table->on('i.last_match', '=', 'player_elo.match_id');
+                }
+            )
+            ->active()
+            ->orderBy('elo', 'DESC')
+            ->orderBy('players.username', 'ASC')
+            ->limit(10)
+            ->getModels()
+        ;
+
+        //
+        // Get total amount of matches and their classification (fm or official)
+        //
 
         $seasonRange = Season::getCurrentSeasonRange($period);
         $matchQuery = Match::getQueryBuilder();
@@ -54,62 +71,72 @@ class SeasonController extends HTMLController
         $fmCount   = $fmQuery->where('type')->equals(Match::FUN)->count();
         $offiCount = $offiQuery->where('type')->equals(Match::OFFICIAL)->count();
 
-        Map::getQueryBuilder()->addToCache();
-        $mapQuery = '
-            SELECT
-              map AS map_id,
-              COUNT(*) AS match_count
-            FROM
-              matches
-            WHERE
-              timestamp >= ? AND timestamp <= ? AND map IS NOT NULL
-            GROUP BY
-              map
-            HAVING
-              match_count > 0
-            ORDER BY
-              match_count DESC
-        ';
-        $results = $db->query($mapQuery, [
-            $seasonRange->getStartOfRange($year),
-            $seasonRange->getEndOfRange($year),
-        ]);
+        //
+        // Get map statistics; such as how many matches occurred in on each map
+        //
 
-        $mapIDs = array_column($results, 'map_id');
+        // Cache all of our non-deleted maps
+        Map::getQueryBuilder()
+            ->active()
+            ->addToCache()
+        ;
+
+        $mapMatchCounts = QueryBuilderFlex::createForTable(Match::TABLE)
+            ->where('timestamp', '>=', $seasonRange->getStartOfRange($year))
+            ->where('timestamp', '<=', $seasonRange->getEndOfRange($year))
+            ->whereNotNull('map')
+            ->groupBy('map_id')
+            ->having('match_count', '>', 0)
+            ->orderBy('match_count', 'DESC')
+            ->getArray([
+                'map' => 'map_id',
+                $qb->raw('COUNT(*) AS match_count'),
+            ])
+        ;
+
+        $mapIDs = array_column($mapMatchCounts, 'map_id');
         $maps = Map::arrayIdToModel($mapIDs);
-        $mapCount = array_combine($mapIDs, $results);
+        $mapCount = array_combine($mapIDs, $mapMatchCounts);
 
-        $matchCount = "
-            SELECT
-              p.user_id,
-              SUM(m.match_type = ?) AS match_count
-            FROM
-              match_participation p
-            INNER JOIN
-              matches m ON m.id = p.match_id
-            WHERE
-              m.timestamp >= ? AND m.timestamp < ?
-            GROUP BY
-              p.user_id
-            ORDER BY
-              match_count DESC
-            LIMIT 10
-        ";
-        $fmResults = $db->query($matchCount, [
-            'fm',
-            $seasonRange->getStartOfRange($year),
-            $seasonRange->getEndOfRange($year),
-        ]);
-        $offiResults = $db->query($matchCount, [
-            'official',
-            $seasonRange->getStartOfRange($year),
-            $seasonRange->getEndOfRange($year),
-        ]);
+        //
+        // Get match count totals for players; how many official or fun matches a player participated in
+        //
+
+        $playerMatchTotals = QueryBuilderFlex::createForTable('match_participation')->alias('p');
+        $playerMatchTotals
+            ->select([
+                'p.user_id',
+                $qb->raw('COUNT(matches.id) AS match_count')
+            ])
+            ->innerJoin('matches', 'matches.id', '=', 'p.match_id')
+            ->where('matches.timestamp', '>=', $seasonRange->getStartOfRange($year))
+            ->where('matches.timestamp', '<', $seasonRange->getEndOfRange($year))
+            ->groupBy('p.user_id')
+            ->orderBy('match_count', 'DESC')
+            ->limit(10)
+        ;
+
+        $fmResults   = (clone $playerMatchTotals)->where('matches.match_type', '=', Match::FUN)->get();
+        $offiResults = (clone $playerMatchTotals)->where('matches.match_type', '=', Match::OFFICIAL)->get();
+
+        // Get the unique player IDs from the above queries to cache them so we don't have individual queries for each
+        // player.
+        $matchTotalsPlayerIDs = array_unique(
+            array_merge(
+                array_column($fmResults, 'user_id'),
+                array_column($offiResults, 'user_id')
+            )
+        );
+
+        Player::getQueryBuilder()
+            ->whereIn('id', $matchTotalsPlayerIDs)
+            ->addToCache()
+        ;
 
         return [
             'season'  => ucfirst($period),
             'year'    => $year,
-            'players' => $players_w_elos,
+            'players' => $playersWithElos,
             'fmCount' => $fmCount,
             'offiCount' => $offiCount,
             'maps'    => $maps,
