@@ -119,6 +119,8 @@ class QueryBuilderFlex extends QueryBuilderHandler
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function limit($limit): IQueryBuilderHandler
     {
@@ -132,8 +134,12 @@ class QueryBuilderFlex extends QueryBuilderHandler
      */
     protected function whereHandler($key, string $operator = null, $value = null, $joiner = 'AND'): IQueryBuilderHandler
     {
+        // For certain type of objects, we convert them into something the query builder can handle correctly
         if ($value instanceof BaseModel) {
             $value = $value->getId();
+        }
+        elseif ($value instanceof DateTime) {
+            $value = (string)$value;
         }
 
         return parent::whereHandler($key, $operator, $value, $joiner);
