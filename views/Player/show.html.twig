@@ -348,7 +348,7 @@
                                 {% for ban in bans %}
                                     <article class="mb2">
                                         <h2 class="t1">
-                                            <a href="{{ ban.url }}">Banned on {{ ban.date | date('M d, Y') }}</a>
+                                            <a href="{{ ban.url }}">Banned on {{ ban.created | date('M d, Y') }}</a>
                                         </h2>
 
                                         <div class="s-markdown">
