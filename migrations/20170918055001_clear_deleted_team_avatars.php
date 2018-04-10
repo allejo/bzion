@@ -9,24 +9,42 @@ class ClearDeletedTeamAvatars extends KernelReadyMigration
      */
     public function up()
     {
-        $players = Player::getQueryBuilder()
-            ->where('status')->isOneOf(['deleted', 'disabled'])
-            ->getModels($fast = true)
+        $playersTable = $this->table('players');
+        $playersTable
+            ->changeColumn('avatar', 'string', [
+                'limit' => 200,
+                'null' => true,
+                'comment' => "The path to the player's avatar relative to the bzion project root",
+            ])
+            ->update()
         ;
 
-        /** @var Player $player */
-        foreach ($players as $player) {
-            $player->resetAvatar();
-        }
+        $this->execute("
+            UPDATE
+                players
+            SET
+                avatar = NULL 
+            WHERE
+                status IN ('deleted', 'disabled')
+        ");
 
-        $teams = Team::getQueryBuilder()
-            ->where('status')->isOneOf(['deleted', 'disabled'])
-            ->getModels($fast = true)
+        $teamsTable = $this->table('teams');
+        $teamsTable
+            ->changeColumn('avatar', 'string', [
+                'limit' => 200,
+                'null' => true,
+                'comment' => "The path to the player's avatar relative to the bzion project root",
+            ])
+            ->update()
         ;
 
-        /** @var Team $team */
-        foreach ($teams as $team) {
-            $team->resetAvatar();
-        }
+        $this->execute("
+            UPDATE
+                teams
+            SET
+                avatar = NULL
+            WHERE
+                status IN ('deleted', 'disabled')
+        ");
     }
 }

@@ -6,7 +6,7 @@ class MatchServerRelationship extends KernelReadyMigration
 {
     public function up()
     {
-        $matches = $this->table(Match::TABLE);
+        $matches = $this->table('matches');
         $matches
             ->addColumn('server_id', 'integer', [
                 'after'   => 'match_details',
@@ -21,38 +21,39 @@ class MatchServerRelationship extends KernelReadyMigration
 
         // Build a cache for server addresses
         $address = [];
-        $servers = Server::getQueryBuilder()->getModels($fast = true);
+        $servers = $this->fetchAll('SELECT * FROM servers');
 
-        /** @var Server $server */
         foreach ($servers as $server) {
-            $address[$server->getAddress()] = $server->getId();
+            $fqdn = sprintf('%s:%s', $server['domain'], $server['port']);
+            $address[$fqdn] = $server['id'];
         }
 
         // Get all of the matches we can work with
-        $matchQB = new MatchQueryBuilder('Match', [
-            'columns' => [
-                'server' => 'server',
-            ]
-        ]);
-        $query = $matchQB
-            ->where('server')->isNotNull()
-            ->where('server')->notEquals('')
-            ->limit(1000);
+        $countQuery = "SELECT COUNT(*) FROM matches WHERE server IS NOT NULL AND server != ''";
+        $matchesQuery = "
+            SELECT
+                *
+            FROM
+                matches
+            WHERE
+                server IS NOT NULL AND server != '' AND 
+                id > {id}
+            LIMIT 1000
+        ";
 
-        $pageCount = $query->countPages();
+        $pageCount = ceil($this->fetchRow($countQuery)[0] / 1000);
+        $lastID = 0;
 
         for ($i = 1; $i <= $pageCount; $i++) {
-            $matches = $query
-                ->fromPage($i)
-                ->getModels($fast = true)
-            ;
+            $matches = $this->fetchAll(strtr($matchesQuery, [
+                '{id}' => $lastID
+            ]));
 
-            /** @var Match $match */
             foreach ($matches as $match) {
-                $match_address = $match->getServerAddress();
+                $match_address = $match['server'];
 
                 if (isset($address[$match_address])) {
-                    $match->setServer($address[$match_address]);
+                    $this->execute("UPDATE matches SET server_id = {$address[$match_address]} WHERE id = {$match['id']} LIMIT 1");
                 }
             }
         }
