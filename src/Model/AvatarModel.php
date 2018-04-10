@@ -81,7 +81,7 @@ abstract class AvatarModel extends AliasModel implements NamedModel
      */
     public function getAvatar($url = false)
     {
-        if (empty($this->avatar) && $this->avatar !== null) {
+        if (empty($this->avatar) || $this->avatar === null) {
             $this->resetAvatar();
         }
 
